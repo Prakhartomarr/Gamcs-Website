@@ -1,0 +1,36 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# isolated production build dir (NEXT_DIST_DIR)
+.next-build/
+.env.local
+
+# internal working documents — not for a public repository
+GAMCS_Website_Copy_FINAL_2.docx
+content.md
+
+# plugin cache
+.impeccable/

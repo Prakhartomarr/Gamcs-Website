@@ -1,0 +1,1289 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   GAMCS design system — ported verbatim from the original single-file
+   HTML redesign. Element/class selectors below intentionally win over
+   Tailwind's preflight (they are declared after the @tailwind directives).
+   ===================================================================== */
+:root{
+  --blue:#0F5E97;
+  --blue-dark:#0A4169;
+  --yellow:#F2C230;
+  --charcoal:#464646;
+  --ink:#202020;
+  --muted:#6B6B6B;
+  --paper:#FEFEFE;
+  --soft:#F1F3F4;
+  --line:#D9DEE1;
+  --dark:#232323;
+  --dark-2:#2D2D2D;
+  --white:#fff;
+  --radius:24px;
+  --bg-soft:#F2F3F5;
+  --gray:#5B6067;
+  /* motion tokens — one home for curves and durations */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 160ms;
+  --dur-hover: 200ms;
+  --dur-panel: 260ms;
+  --dur-reveal: 560ms;
+}
+/* ---------------------------------------------------------------
+   shadcn/Kokonut token layer (Tailwind v3 form), mapped to GAMCS
+   brand colours so imported components inherit our identity.
+   --------------------------------------------------------------- */
+:root{
+  --background:0 0% 100%;
+  --foreground:0 0% 12.5%;
+  --card:0 0% 100%;
+  --card-foreground:0 0% 12.5%;
+  --popover:0 0% 100%;
+  --popover-foreground:0 0% 12.5%;
+  --primary:203 73% 33%;          /* GAMCS blue #0F5E97 */
+  --primary-foreground:0 0% 100%;
+  --secondary:200 12% 95%;
+  --secondary-foreground:0 0% 27%;
+  --muted-bg:200 12% 95%;
+  --muted-foreground:210 5% 45%;
+  --accent:44 87% 57%;            /* GAMCS yellow #F2C230 */
+  --accent-foreground:0 0% 13%;
+  --destructive:353 51% 47%;
+  --destructive-foreground:0 0% 100%;
+  --border:200 13% 87%;
+  --input:200 13% 87%;
+  --ring:203 73% 33%;
+  --radius:0.75rem;
+  /* Bklit chart palette -> GAMCS brand (overrides its greyscale defaults) */
+  --chart-1:#0F5E97;
+  --chart-2:#F2C230;
+  --chart-3:#2E8AC9;
+  --chart-4:#A8B7BF;
+  --chart-5:#0A4169;
+  --chart-line-primary:#0F5E97;
+  --chart-line-secondary:#F2C230;
+  --chart-grid:#E3E7EA;
+  --chart-foreground:#5A6167;
+  --chart-foreground-muted:#98A0A6;
+  --chart-label:#98A0A6;
+  --chart-background:#FFFFFF;
+}
+.dark{
+  --background:0 0% 13.7%;
+  --foreground:0 0% 98%;
+  --card:0 0% 17.6%;
+  --card-foreground:0 0% 98%;
+  --popover:0 0% 17.6%;
+  --popover-foreground:0 0% 98%;
+  --primary:203 60% 55%;
+  --primary-foreground:0 0% 10%;
+  --secondary:0 0% 22%;
+  --secondary-foreground:0 0% 98%;
+  --muted-bg:0 0% 22%;
+  --muted-foreground:210 8% 70%;
+  --accent:44 87% 57%;
+  --accent-foreground:0 0% 13%;
+  --border:0 0% 26%;
+  --input:0 0% 26%;
+  --ring:203 60% 55%;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font-family:"Open Sauce Sans","Open Sans",Arial,sans-serif;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit}
+/* Visible keyboard focus everywhere (Tailwind's preflight removes the default). */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.magnetic:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:999px}
+/* on dark/blue surfaces the ring needs to be light to stay visible */
+.hero-diagonal ~ * a:focus-visible,.system-section a:focus-visible,.contact-box a:focus-visible,.contact-box button:focus-visible,.quote a:focus-visible{outline-color:#fff}
+h1,h2,h3,h4,.nav,.eyebrow,.btn,.metric-value,.stat-value,.card-kicker,.footer-title,.dashboard-label,.dashboard-number{font-family:Montserrat,sans-serif}
+h1,h2,h3,p{margin-top:0}
+/* Full-bleed: no card, no inset, no radius. Section backgrounds run edge
+   to edge; the measure is held by .container inside them. */
+.shell{width:100%;margin:0;background:var(--paper);overflow:clip}
+.container{width:min(1440px,calc(100% - 96px));margin:auto}
+/* NAV */
+/* blends into the hero's light field (no white bar / hard rule), while staying
+   legible as a light bar when it sticks over the darker sections below */
+.site-nav{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(242,243,245,.88);backdrop-filter:saturate(1.1) blur(10px);position:sticky;top:0;z-index:50}
+.nav-left{display:flex;align-items:center;gap:clamp(20px,2.2vw,34px);min-width:0}
+.brand{display:flex;align-items:center;gap:11px}
+.brand img{height:30px;width:auto;display:block}
+.brand-name strong{display:block;font:800 0.8889rem Montserrat;letter-spacing:-.03em;color:var(--charcoal);white-space:nowrap}
+.brand-name span{display:block;font:600 0.6667rem Montserrat;letter-spacing:.14em;color:#9AA0A3;margin-top:3px;white-space:nowrap}
+.nav{display:flex;gap:clamp(10px,1.1vw,16px);align-items:center;font-size:0.7778rem;font-weight:600;color:#5A6165;letter-spacing:.01em}
+.nav>a{white-space:nowrap}
+.nav>a{position:relative;transition:color var(--dur-hover) var(--ease-out)}
+.nav>a:hover{color:var(--ink)}
+.nav>a:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
+.nav>a:hover:after{transform:scaleX(1)}
+.nav-actions{display:flex;align-items:center;gap:16px;flex:none}
+.nav-mail{font:700 0.7778rem Montserrat;white-space:nowrap;color:var(--charcoal);letter-spacing:-.01em;white-space:nowrap;transition:color var(--dur-hover) var(--ease-out)}
+.nav-mail:hover{color:var(--blue)}
+.btn:active{transform:scale(.97)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:0 20px;white-space:nowrap;border-radius:999px;font-size:0.7778rem;font-weight:700;letter-spacing:-.01em;border:1px solid var(--blue);transition:box-shadow .25s var(--ease-out),background .25s var(--ease-out),border-color .25s var(--ease-out),transform var(--dur-press) var(--ease-out)}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 10px 24px rgba(15,94,151,.28)}
+.btn-blue:hover{box-shadow:0 16px 32px rgba(15,94,151,.34)}
+.btn-yellow{background:var(--yellow);color:#222;border-color:var(--yellow)}
+.btn-white{background:#fff;color:var(--charcoal);border-color:#fff}
+.btn-ghost{background:#fff;color:var(--charcoal);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+.mobile{display:none;width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:50%}
+/* ============================================================
+   HERO — geometry ported from the reference build, GAMCS brand.
+   Static composition is the source of truth; motion rides on top.
+   ============================================================ */
+/* One viewport, measured from under the header. `dvh` first so mobile
+   browser chrome does not clip it; the vh line is the fallback. */
+.hero{position:relative;display:flex;flex-direction:column;
+  min-height:calc(100vh - var(--header-h));
+  min-height:calc(100dvh - var(--header-h));
+  background:var(--bg-soft);color:var(--ink);overflow:hidden;isolation:isolate}
+.hero-inner{position:relative;z-index:6;display:flex;flex-direction:column;
+  flex:1;min-height:0;padding:72px 0 56px}
+.hero-copy{position:relative;z-index:6}
+
+/* diagonal brand band + ghost frames (implied product surfaces) */
+.hero-bg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none}
+.band{position:absolute;inset:0;background:linear-gradient(118deg,var(--blue-dark) 0%,var(--blue) 55%,#2E8AC9 100%);clip-path:polygon(0% 79.3%,100% 38.1%,100% 54%,0% 100%)}
+.ghost{position:absolute;border:1.5px solid rgba(255,255,255,.15);border-radius:16px;transform:rotate(-4deg) skewX(-6deg)}
+.ghost .sp{position:absolute;top:12px;left:12px;color:rgba(255,255,255,.45);font-size:0.7778rem}
+.hero-sparkle{position:absolute;color:var(--blue);opacity:.30;font-size:0.7778rem;pointer-events:none}
+.hero-sparkle.s1{left:63%;top:14%;font-size:1.0556rem}
+.hero-sparkle.s2{left:88%;top:30%}
+.hero-sparkle.s3{left:57%;top:33%;opacity:.22}
+.ghost.g1{width:150px;height:185px;left:47%;top:60%}
+.ghost.g2{width:120px;height:150px;left:59%;top:64%}
+
+/* headline */
+.hero h1{font-size:clamp(42px,5.6vw,72px);line-height:.86;font-weight:700;letter-spacing:-.038em;color:var(--ink);margin:0}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.02em}
+.hero h1 .line-inner{display:block}
+@media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
+.hero-rule{display:flex;align-items:center;gap:10px;margin-top:24px}
+.hero-rule-line{display:block;width:64px;height:2px;border-radius:2px;background:var(--blue)}
+.sub{margin-top:20px;max-width:475px;font-size:1rem;line-height:1.55;color:var(--gray);font-weight:400}
+.ctas{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+
+/* product card cluster */
+.cards{position:absolute;perspective:1500px;z-index:4;inset:0;pointer-events:none}
+/* GSAP writes this layer's transform directly (see Hero.tsx) — driving it
+   from CSS vars on the hero root restyled the whole subtree every frame. */
+.cards-tilt{position:absolute;inset:0;transform-style:preserve-3d}
+.card{position:absolute;background:#fff;border-radius:17px;box-shadow:0 34px 64px -22px rgba(10,45,75,.34),0 6px 16px -8px rgba(0,0,0,.1);padding:13px 16px 30px;transform-style:preserve-3d;pointer-events:auto;transition:box-shadow .35s var(--ease-out),border-color .35s var(--ease-out);border:1px solid transparent}
+.card.illuminated{border-color:rgba(15,94,151,.45);box-shadow:0 40px 76px -22px rgba(15,94,151,.45)}
+.card-icon{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:8px;border-radius:7px;background:var(--blue);color:#fff;font-size:0.6111rem;line-height:1;flex:none}
+.card-more{position:absolute;right:16px;bottom:9px;font:700 0.6667rem Montserrat;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:5px;opacity:.85;transition:opacity .2s var(--ease-out),gap .2s var(--ease-out)}
+.card-more:hover{opacity:1;gap:9px}
+.card-head{display:flex;align-items:center;gap:7px;font:600 0.8333rem Montserrat;color:#2A2E38;margin-bottom:9px;letter-spacing:-.01em}
+.spark{color:var(--blue);font-size:0.8333rem}
+.card1{width:322px;top:144px;right:6px;transform:rotateY(-32deg) rotateX(7deg) rotateZ(-5deg);z-index:3}
+.card2{width:330px;top:242px;right:126px;transform:rotateY(-32deg) rotateX(7deg) rotateZ(-5deg);z-index:2}
+.card3{width:330px;top:348px;right:246px;transform:rotateY(-32deg) rotateX(7deg) rotateZ(-5deg);z-index:1}
+.avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#3E9BD6);float:left;margin:0 12px 4px 0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9444rem}
+.card1 p{font-size:0.7778rem;line-height:1.55;color:#565B66;margin:0}
+.row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:0.7778rem;border-top:1px solid #F0F1F3}
+.row:first-of-type{border-top:none}
+.row .l{display:flex;align-items:center;gap:8px;color:#3A3F4A;font-weight:600;min-width:0}
+.row .amt{color:#20242D;font-weight:600;white-space:nowrap}
+.row.rowend{justify-content:flex-end;gap:9px;border-top:none;padding-top:10px}
+.chip-logo{width:20px;height:20px;flex:none;border-radius:6px;background:#EAF2F8;color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:0.7222rem;font-weight:800}
+.completion{font-size:0.7778rem;color:#8A8F98;margin-bottom:6px;font-weight:600}
+.up{color:#16A34A}.down{color:#DC2626}
+.spinner{width:17px;height:17px;border:2px solid #DCE6EE;border-top-color:var(--blue);border-radius:50%;animation:rot 1s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.caret{width:22px;height:22px;border-radius:50%;background:#EAF2F8;color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:0.7778rem}
+
+/* Bklit-style mini bar chart (reused site-wide) */
+.bklit{clear:both;margin-top:10px;padding-top:9px;border-top:1px solid #F0F1F3}
+.bklit .cap{font:600 0.7222rem Montserrat;color:#9AA0AA;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.bars{display:flex;align-items:flex-end;gap:5px;height:38px}
+.bars i{flex:1;background:linear-gradient(180deg,#3E9BD6,var(--blue));border-radius:3px 3px 0 0;transform-origin:bottom;display:block}
+
+/* floating integration chips */
+.chips{position:absolute;inset:0;z-index:5;pointer-events:none}
+.chipwrap{position:absolute;pointer-events:auto}
+/* Orbital diagram. Geometry is inset/margin only, never transform: GSAP owns
+   transform on .chipwrap/.chips and reduced-motion force-clears it here. */
+.orbit{position:absolute;left:-7px;top:456px;width:226px;height:122px;pointer-events:none}
+.orbit-ring{position:absolute;border:1px solid rgba(15,94,151,.20);border-radius:50%;pointer-events:none}
+.orbit-ring.r3{inset:0;border-color:rgba(96,168,214,.42)}
+.orbit-ring.r2{inset:15%;border-color:rgba(96,168,214,.50)}
+.orbit-ring.r1{inset:29%;border-color:rgba(96,168,214,.58)}
+.orbit::before{content:"";position:absolute;left:50%;top:50%;width:360px;height:250px;margin:-125px 0 0 -180px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(78,166,222,.34) 0%,rgba(15,94,151,.14) 46%,transparent 72%);pointer-events:none}
+.orbit-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(140,205,245,.9);box-shadow:0 0 6px 2px rgba(126,196,238,.55);pointer-events:none}
+.orbit-dot.o1{left:18%;top:16%}
+.orbit-dot.o2{left:88%;top:62%}
+.orbit-dot.o3{left:46%;top:6%}
+.orbit-dot.o4{left:62%;top:93%}
+.orbit-dot.o5{left:8%;top:78%}
+.ga-core{position:absolute;left:50%;top:50%;margin:-33px 0 0 -33px;width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#4EA6DE 0%,var(--blue) 46%,var(--blue-dark) 100%);box-shadow:0 0 0 8px rgba(15,94,151,.08),0 0 26px 6px rgba(15,94,151,.30),0 14px 30px -12px rgba(10,45,75,.45);color:#fff;font:800 0.8889rem Montserrat;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ichip{position:relative;width:58px;height:58px;background:#fff;border-radius:16px;box-shadow:0 16px 32px -12px rgba(10,45,75,.34);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8333rem;will-change:transform;transition:box-shadow .3s var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.ichip:hover{box-shadow:0 26px 46px -12px rgba(10,45,75,.42)}}
+.ichip svg{width:32px;height:32px}
+.chipwrap.c4 .ichip svg{width:40px;height:28px}
+.chip-tip{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%) translateY(5px);background:var(--ink);color:#fff;font:700 0.7222rem Montserrat;letter-spacing:.02em;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
+.ichip:hover .chip-tip{opacity:1;transform:translateX(-50%) translateY(0)}
+.chipwrap{margin:-29px 0 0 -29px}
+.chipwrap.c1{left:58.8%;top:0.0%;transform:rotate(4deg)}
+.chipwrap.c3{left:46.9%;top:96.7%;transform:rotate(3deg)}
+.chipwrap.c7{left:46.0%;top:34.4%;transform:rotate(-5deg)}
+.chipwrap.c5{left:82.3%;top:100.0%;transform:rotate(-4deg)}
+.chipwrap.c5 .ichip{width:74px}
+.chipwrap.c5 .ichip svg{width:54px;height:16px}
+.chipwrap.c4{left:15.5%;top:11.5%;transform:rotate(5deg)}
+.chipwrap.c2{left:0.0%;top:36.9%;transform:rotate(-6deg)}
+.chipwrap.c6{left:100.0%;top:46.7%;transform:rotate(6deg)}
+
+/* muted placeholder client strip */
+.hero-clients{position:relative;top:auto;left:auto;width:100%;margin-top:auto;
+  z-index:6;pointer-events:none}
+.hero-clients .clients-row{width:100%;max-width:none}
+/* the row spans the full container even though its text starts at 48%, so it
+   would swallow hover on the orbit chips underneath it. */
+/* justify-end rather than a 72.3% left pad: that percentage was tuned to
+   the old 1160px container and overflows at 1440. */
+.clients-row{display:flex;align-items:center;justify-content:flex-end;
+  gap:clamp(10px,1.2vw,16px);pointer-events:none}
+.clients-label,.client{pointer-events:auto}
+.client{flex:none;font:600 0.8889rem Montserrat;letter-spacing:-.01em;color:#98A0A8;opacity:1;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
+.client svg{width:15px;height:15px;stroke:#8E9299;fill:none;stroke-width:1.7}
+.clients-label{flex:none;font:700 0.6111rem Montserrat;letter-spacing:.14em;text-transform:uppercase;color:#9AA0A7}
+.clients-rule{flex:1 1 auto;min-width:20px;height:1px;background:var(--line)}
+
+.client.is-accent{color:var(--blue)}
+@media (hover:hover) and (pointer:fine){.client:hover{opacity:1;transform:translateY(-2px)}}
+
+/* KokonutUI-style shimmer CTA */
+.btn-shimmer{position:relative;background:var(--blue);color:#fff;border-color:var(--blue);overflow:hidden;isolation:isolate}
+.btn-shimmer .btn-label{position:relative;z-index:2;display:inline-flex;align-items:center;gap:10px}
+.btn-shimmer::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.30),transparent);transform:skewX(-20deg);animation:sheen 3.4s ease-in-out infinite;z-index:1}
+@keyframes sheen{0%{left:-60%}55%{left:140%}100%{left:140%}}
+.btn-shimmer::before{content:"";position:absolute;inset:-2px;border-radius:999px;z-index:-1;background:conic-gradient(from 0deg,var(--blue),#7FC4EE,var(--blue),var(--blue-dark),var(--blue-dark),var(--blue));filter:blur(7px);opacity:.5;animation:spin 6s linear infinite;animation-play-state:paused}
+.hero .btn-shimmer::before,.btn-shimmer:hover::before{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-light{background:#fff;color:var(--ink);border-color:#DCDEE2}
+.btn-light:hover{background:#f6f7f8}
+.btn-light .btn-label{display:inline-flex;align-items:center;gap:10px}
+
+/* entrance gate with a pure-CSS safety net if the bundle never executes */
+.hero[data-anim="pending"] .line-inner,.hero[data-anim="pending"] .sub,.hero[data-anim="pending"] .ctas,
+.hero[data-anim="pending"] .hero-rule,.hero[data-anim="pending"] .orbit-ring,.hero[data-anim="pending"] .ga-core,
+.hero[data-anim="pending"] .card,.hero[data-anim="pending"] .chipwrap,.hero[data-anim="pending"] .hero-clients{opacity:0;animation:animGateFallback .5s ease 2.9s forwards}
+@keyframes animGateFallback{to{opacity:1}}
+/* navigation entrance */
+@keyframes navIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.site-nav .brand{animation:navIn .5s ease .05s both}
+.site-nav .nav a{animation:navIn .45s ease both}
+.site-nav .nav a:nth-child(1){animation-delay:.15s}
+.site-nav .nav a:nth-child(2){animation-delay:.2s}
+.site-nav .nav a:nth-child(3){animation-delay:.25s}
+.site-nav .nav a:nth-child(4){animation-delay:.3s}
+.site-nav .nav a:nth-child(5){animation-delay:.35s}
+.site-nav .nav-actions{animation:navIn .45s ease .4s both}
+.site-nav .mobile{animation:navIn .45s ease .2s both}
+
+@media (prefers-reduced-motion: reduce){
+  /* Motion applies its `initial` state before useReducedMotion() resolves, which
+     left the footer's first block permanently at opacity:0/blur(4px) for
+     reduced-motion users. CSS guarantees the resting state regardless. */
+  .footer-anim{opacity:1!important;filter:none!important;transform:none!important}
+  .hero[data-anim] .line-inner,.hero[data-anim] .sub,.hero[data-anim] .ctas,
+  .hero[data-anim] .hero-rule,.hero[data-anim] .orbit-ring,.hero[data-anim] .ga-core,
+  .hero[data-anim] .card,.hero[data-anim] .chipwrap,.hero[data-anim] .hero-clients{opacity:1 !important;transform:none !important;animation:none !important}
+  .spinner,.btn-shimmer::after,.btn-shimmer::before,.ichip{animation:none !important}
+  .bars i{transform:scaleY(1) !important}
+  .site-nav .brand,.site-nav .nav a,.site-nav .nav-actions,.site-nav .mobile{animation:none !important;opacity:1 !important;transform:none !important}
+  .reveal{opacity:1 !important;transform:none !important}
+}
+/* TRUST STRIP */
+.trust{border-bottom:1px solid #E7E8E9;background:#fff;padding:22px 0}.trust-row{display:grid;grid-template-columns:repeat(3,1fr);text-align:center}.trust-item{padding:5px 20px;border-right:1px solid #DDE0E1}.trust-item:last-child{border-right:0}.trust-item strong{font:700 2rem Montserrat;letter-spacing:-.05em;color:var(--charcoal)}.trust-item span{display:block;font-size:0.6667rem;color:#7A7A7A;margin-top:3px}
+/* SECTION BASE */
+.section{padding:108px 0}.section-head{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:46px}.section-head h2{font-size:clamp(38px,4.5vw,61px);line-height:.98;letter-spacing:-.06em;margin:10px 0 0;max-width:720px}.section-head h2 em{font-style:normal;color:var(--blue)}.section-head>p{max-width:380px;color:#6E6E6E;font-size:0.8889rem;margin:0}.section-kicker{font:700 0.7222rem Montserrat;letter-spacing:.18em;color:var(--blue)}
+/* MODEL */
+.model{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.model h2{font:700 clamp(34px,4vw,54px) Montserrat;line-height:1;letter-spacing:-.06em;margin:10px 0 22px}.model p{font-size:0.8889rem;color:#696969;max-width:620px}.model-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}.model-card{padding:22px;border:1px solid #E1E4E5;border-radius:17px;background:#fff}.model-card span{display:block;font:700 0.6667rem Montserrat;letter-spacing:.13em;color:var(--blue);margin-bottom:9px}.model-card b{font:700 0.9444rem Montserrat;letter-spacing:-.03em}.model-card p{font-size:0.7778rem;margin:8px 0 0}
+/* SERVICES */
+.services{background:var(--soft);padding:108px 0}.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.service{border-radius:22px;padding:30px;min-height:290px;border:1px solid #DCE0E1;position:relative;overflow:hidden;background:#fff}.service.dark{background:var(--dark);color:#fff;border-color:var(--dark)}.service.blue{background:var(--blue);color:#fff;border-color:var(--blue)}.service .num{font:700 0.7222rem Montserrat;letter-spacing:.15em;opacity:.72}.service h3{font-size:1.6667rem;line-height:1.05;letter-spacing:-.055em;max-width:390px;margin:48px 0 12px}.service p{font-size:0.7778rem;max-width:420px;color:#707070}.service.dark p,.service.blue p{color:#D4D9DC}.service-link{position:absolute;right:25px;bottom:24px;width:38px;height:38px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font:700 0.8889rem Montserrat}.service .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}.tag{border:1px solid #DCE1E3;padding:7px 9px;border-radius:30px;font:600 0.6667rem Montserrat;color:#666}.dark .tag,.blue .tag{border-color:rgba(255,255,255,.25);color:#fff}.service-graphic{position:absolute;right:22px;top:26px;width:150px;height:150px;border:1px solid rgba(255,255,255,.18);border-radius:50%;opacity:.35}.service-graphic:before,.service-graphic:after{content:"";position:absolute;inset:20px;border:1px solid currentColor;border-radius:50%}.service-graphic:after{inset:50px;background:var(--yellow);border:0;opacity:.9}
+/* SERVICES — bento grid (Kokonut spotlight-card pattern, GAMCS content) */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bento-card{position:relative;display:flex;flex-direction:column;border-radius:22px;padding:30px;min-height:290px;border:1px solid #DCE0E1;background:linear-gradient(180deg,#FFFFFF,#FBFCFC);overflow:hidden;transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out),transform .3s var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.bento-card:hover{border-color:#C3CCD1;box-shadow:0 26px 54px rgba(16,45,68,.12)}}
+.bento-card.md\:col-span-2{grid-column:span 2}
+.bento-card.md\:col-span-1{grid-column:span 1}
+.bento-card.blue{background:linear-gradient(180deg,var(--blue),#0C5387);border-color:var(--blue);color:#fff}
+.bento-card.dark{background:linear-gradient(180deg,var(--dark),#1C1C1C);border-color:var(--dark);color:#fff}
+.bento-num{font:700 0.7222rem Montserrat;letter-spacing:.15em;opacity:.72}
+.bento-card h3{font-size:1.6667rem;line-height:1.05;letter-spacing:-.055em;max-width:390px;margin:44px 0 12px}
+.bento-card p{font-size:0.7778rem;max-width:430px;color:#707070;margin:0}
+.bento-card.blue p,.bento-card.dark p{color:#D4D9DC}
+.bento-spotlight{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;padding:0}
+.bento-spotlight li{display:inline-flex;align-items:center;gap:6px;border:1px solid #DCE1E3;padding:7px 10px;border-radius:30px;font:600 0.6667rem Montserrat;letter-spacing:.06em;color:#666;text-transform:uppercase}
+.bento-card.blue .bento-spotlight li,.bento-card.dark .bento-spotlight li{border-color:rgba(255,255,255,.25);color:#fff}
+.bento-spotlight .dot{width:5px;height:5px;border-radius:50%;background:var(--blue)}
+.bento-card.blue .bento-spotlight .dot,.bento-card.dark .bento-spotlight .dot{background:var(--yellow)}
+.bento-link{position:absolute;right:25px;bottom:24px;width:38px;height:38px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font:700 0.8889rem Montserrat;transition:background .25s var(--ease-out),color .25s var(--ease-out)}
+.bento-link:hover{background:currentColor}
+.bento-card:not(.blue):not(.dark) .bento-link:hover{color:#fff;background:var(--blue);border-color:var(--blue)}
+/* shimmer kicker — the component ships a centred 3xl demo scale; pull it back
+   to the GAMCS section-kicker scale and brand gradient */
+.shimmer-kicker>div{padding:0;justify-content:flex-start}
+.shimmer-kicker>div>div{padding:0}
+.shimmer-kicker span{font:700 0.7222rem Montserrat!important;letter-spacing:.18em!important;text-transform:uppercase;background-image:linear-gradient(90deg,var(--blue),#8FB6CF,var(--blue))!important}
+/* METRICS */
+.metrics{padding:108px 0}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{padding:25px 22px;border-top:2px solid var(--blue);min-height:155px}.metric-value{font-size:2.5rem;letter-spacing:-.06em;color:var(--charcoal)}.metric b{display:block;font:700 0.7778rem Montserrat;margin:8px 0}.metric p{font-size:0.7222rem;color:#7A7A7A;margin:0}.metric.feature{background:var(--dark);color:#fff;border-radius:17px;padding:25px;border-top:0}.metric.feature .metric-value,.metric.feature b{color:#fff}.metric.feature p{color:#C6CCCF}
+/* SYSTEM */
+.system-section{background:var(--dark);color:#fff;padding:108px 0;position:relative;overflow:hidden;isolation:isolate}
+.beams-slot{position:absolute;inset:0}
+.system-beams{position:absolute;inset:0;z-index:0;opacity:.55;pointer-events:none}
+.system-beams>div{position:absolute;inset:0;height:100%;width:100%}
+.system-section>.container{position:relative;z-index:1}.system-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:center}.system-wrap h2{font:700 clamp(38px,4.4vw,60px) Montserrat;line-height:.98;letter-spacing:-.06em;margin:10px 0 22px}.system-wrap h2 em{font-style:normal;color:#fff}.system-wrap p{color:#C7CDD0;font-size:0.8889rem}.system-points{margin-top:28px}.system-point{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.12)}.system-point span{font:700 0.6667rem Montserrat;color:var(--yellow)}.system-point b{font:700 0.7778rem Montserrat}.system-point small{display:block;color:#AAB3B7;font-size:0.7222rem;margin-top:3px}.hub{background:#F7F8F8;color:var(--ink);border-radius:22px;padding:16px}.hub-head{display:flex;justify-content:space-between;padding:5px 7px 14px;font:700 0.6667rem Montserrat;color:#777;letter-spacing:.1em}.hub-head b{color:var(--blue)}.hub-window{background:#fff;border-radius:15px;padding:17px;border:1px solid #E2E5E6}.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sys{border:1px solid #E3E6E7;border-radius:12px;padding:15px;position:relative}.sys strong{font:700 0.7778rem Montserrat}.sys small{display:block;font-size:0.6667rem;color:#8A8A8A;margin-top:3px}.sys i{position:absolute;right:11px;top:11px;width:17px;height:17px;border-radius:50%;background:#E9F3EF;color:#2A8768;font-style:normal;font-size:0.7222rem;text-align:center}.flow-line{height:46px;border-left:1px dashed #BFC7CB;border-right:1px dashed #BFC7CB;margin:0 18%;position:relative}.flow-line:after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:2px solid var(--blue)}.decision{border:1px solid #E2E5E6;border-radius:12px;padding:17px}.decision small{font:700 0.6667rem Montserrat;letter-spacing:.14em;color:#888}.decision strong{display:block;font:700 1rem Montserrat;letter-spacing:-.04em;margin:8px 0 15px}.decision-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.decision-stats div{background:#F3F5F5;border-radius:9px;padding:10px;font-size:0.6667rem;color:#777}.decision-stats b{display:block;font:700 0.9444rem Montserrat;color:var(--blue)}
+/* CASE */
+.case{padding:108px 0}.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.case-panel{border-radius:22px;padding:32px;background:#EEF1F2;min-height:430px}.case-panel.blue{background:var(--blue);color:#fff}.case-kicker{font:700 0.6667rem Montserrat;letter-spacing:.15em;opacity:.7}.case h3{font-size:2.1667rem;line-height:.98;letter-spacing:-.06em;max-width:500px;margin:55px 0 17px}.case p{font-size:0.7778rem;color:#777;max-width:500px}.case-panel.blue p{color:#D8E6EE}.case-result{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:28px}.result{background:#fff;border:1px solid #E1E4E5;border-radius:13px;padding:16px}.result b{display:block;font:700 0.7222rem Montserrat}.result span{display:block;font-size:0.6667rem;color:#888;margin-top:5px}.case-panel.blue .result{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}.case-panel.blue .result span{color:#D7E3E9}.spend-visual{height:100%;min-height:360px;background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:19px;position:relative;overflow:hidden}.spend-top{display:flex;justify-content:space-between;font:700 0.6667rem Montserrat;color:#888;letter-spacing:.12em}.spend-top b{color:var(--blue)}.spend-number{font:700 3.3889rem Montserrat;letter-spacing:-.07em;color:var(--charcoal);margin-top:45px}.spend-label{font:700 0.6667rem Montserrat;color:#999;letter-spacing:.12em}/* spend visual is now a real Bklit chart (see SpendChart.tsx) */
+.bars-chart{margin-top:14px;margin-bottom:30px}
+.chart-skeleton{aspect-ratio:16/9;border-radius:12px;background:linear-gradient(90deg,#F1F4F6 25%,#E7ECEF 37%,#F1F4F6 63%);background-size:400% 100%;animation:chartShimmer 1.4s ease-in-out infinite}
+@keyframes chartShimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.bars-chart .spend-chart{width:100%}.case-bottom{position:absolute;left:19px;right:19px;bottom:18px;display:flex;justify-content:space-between;font:600 0.6667rem Montserrat;color:#777}
+/* PEOPLE / TESTIMONIAL */
+.people{background:var(--soft);padding:108px 0}.people-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:12px}.leader{background:#fff;border-radius:22px;padding:30px;min-height:390px;position:relative;overflow:hidden}.leader .initials{width:120px;height:120px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 2.2222rem Montserrat;margin-bottom:70px}.leader small,.person small{font:700 0.6667rem Montserrat;letter-spacing:.14em;color:var(--blue)}.leader h3{font-size:1.7222rem;margin:8px 0 4px}.leader p{font-size:0.7778rem;color:#777}.people-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.person{background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:21px;min-height:185px}.person .avatar{width:38px;height:38px;border-radius:50%;background:#EAF0F3;color:var(--blue);display:grid;place-items:center;font:700 0.7222rem Montserrat;margin-bottom:30px}.person b{display:block;font:700 0.7778rem Montserrat}.person span{display:block;font-size:0.7222rem;color:#858585;margin-top:4px}.quote{background:var(--blue);color:#fff;padding:86px 0}.quote-inner{max-width:900px;margin:auto;text-align:center}.quote-mark{font:700 3.6667rem Georgia;color:var(--yellow);line-height:.5}.quote blockquote{font:700 clamp(28px,4vw,48px) Montserrat;line-height:1.06;letter-spacing:-.055em;margin:28px 0}.quote cite{font-style:normal;color:#D9E5EB;font-size:0.7222rem}.quote cite b{color:#fff;font-family:Montserrat}
+/* CONTACT */
+.contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:700 clamp(38px,4.5vw,60px) Montserrat;line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.mail{display:inline-block;margin-top:20px;color:#fff;font:700 0.7778rem Montserrat;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:6px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem Montserrat;letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
+/* FOOTER */
+/* legacy footer element styling removed: components/ui/footer-section.tsx
+   styles the footer with utilities, and an element selector would beat them */.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}.footer-brand strong{font:700 0.8889rem Montserrat;color:var(--charcoal)}.footer-brand p{font-size:0.7222rem;max-width:260px;margin-top:10px}.footer-title{font-size:0.6667rem;letter-spacing:.12em;color:#777;margin-bottom:13px}.footer-links{display:grid;gap:7px;font-size:0.7222rem;color:#666}.footer-bottom{display:flex;justify-content:space-between;border-top:1px solid #E7E8E8;margin-top:38px;padding-top:18px;font-size:0.6667rem;color:#8A8A8A}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}.reveal.visible{opacity:1;transform:none}
+
+/* Mobile nav open state — the original toggled these via inline JS styles. */
+
+/* Accessibility — honour reduced-motion (reveal content stays visible) */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+
+@layer base {
+  .theme {
+    --font-heading:var(--font-sans);
+    --font-sans:var(--font-sans);
+  }
+  :root {
+    --background:oklch(1 0 0);
+    --foreground:oklch(0.145 0 0);
+    --card:oklch(1 0 0);
+    --card-foreground:oklch(0.145 0 0);
+    --popover:oklch(1 0 0);
+    --popover-foreground:oklch(0.145 0 0);
+    --primary:oklch(0.205 0 0);
+    --primary-foreground:oklch(0.985 0 0);
+    --secondary:oklch(0.97 0 0);
+    --secondary-foreground:oklch(0.205 0 0);
+    --muted:oklch(0.97 0 0);
+    --muted-foreground:oklch(0.556 0 0);
+    --accent:oklch(0.97 0 0);
+    --accent-foreground:oklch(0.205 0 0);
+    --destructive:oklch(0.577 0.245 27.325);
+    --border:oklch(0.922 0 0);
+    --input:oklch(0.922 0 0);
+    --ring:oklch(0.708 0 0);
+    --chart-1:oklch(0.32 0 none);
+    --chart-2:oklch(0.41 0 none);
+    --chart-3:oklch(0.54 0 none);
+    --chart-4:oklch(0.71 0 none);
+    --chart-5:oklch(0.89 0 none);
+    --radius:0.625rem;
+    --sidebar:oklch(0.985 0 0);
+    --sidebar-foreground:oklch(0.145 0 0);
+    --sidebar-primary:oklch(0.205 0 0);
+    --sidebar-primary-foreground:oklch(0.985 0 0);
+    --sidebar-accent:oklch(0.97 0 0);
+    --sidebar-accent-foreground:oklch(0.205 0 0);
+    --sidebar-border:oklch(0.922 0 0);
+    --sidebar-ring:oklch(0.708 0 0);
+    --chart-background:oklch(1 0 0);
+    --chart-foreground:oklch(0.145 0.004 285);
+    --chart-foreground-muted:oklch(0.55 0.014 260);
+    --chart-line-primary:var(--chart-1);
+    --chart-line-secondary:var(--chart-2);
+    --chart-crosshair:oklch(0.4 0.1828 274.34);
+    --chart-grid:oklch(0.9 0 0);
+    --chart-brush-border:var(--chart-grid);
+    --chart-tooltip-background:oklch(0.21 0.006 285 / 0.8);
+    --chart-tooltip-foreground:oklch(0.985 0 0);
+    --chart-tooltip-muted:oklch(0.65 0.01 260);
+    --chart-marker-background:oklch(0.97 0.005 260);
+    --chart-marker-border:oklch(0.85 0.01 260);
+    --chart-marker-foreground:oklch(0.3 0.01 260);
+    --chart-label:oklch(0.45 0.01 260);
+    --chart-scale-01:oklch(0.98 0.003 106);
+    --chart-scale-02:oklch(0.92 0.008 106);
+    --chart-scale-03:oklch(0.82 0.015 106);
+    --chart-scale-04:oklch(0.68 0.02 106);
+    --chart-scale-05:oklch(0.55 0.025 106);
+    --chart-scale-pattern-color:oklch(0.96 0.005 106);
+  }
+  .dark {
+    --background:oklch(0.145 0 0);
+    --foreground:oklch(0.985 0 0);
+    --card:oklch(0.205 0 0);
+    --card-foreground:oklch(0.985 0 0);
+    --popover:oklch(0.205 0 0);
+    --popover-foreground:oklch(0.985 0 0);
+    --primary:oklch(0.922 0 0);
+    --primary-foreground:oklch(0.205 0 0);
+    --secondary:oklch(0.269 0 0);
+    --secondary-foreground:oklch(0.985 0 0);
+    --muted:oklch(0.269 0 0);
+    --muted-foreground:oklch(0.708 0 0);
+    --accent:oklch(0.269 0 0);
+    --accent-foreground:oklch(0.985 0 0);
+    --destructive:oklch(0.704 0.191 22.216);
+    --border:oklch(1 0 0 / 10%);
+    --input:oklch(1 0 0 / 15%);
+    --ring:oklch(0.556 0 0);
+    --chart-1:oklch(1 0 none);
+    --chart-2:oklch(0.73 0 none);
+    --chart-3:oklch(0.51 0 none);
+    --chart-4:oklch(0.39 0 none);
+    --chart-5:oklch(0.32 0 none);
+    --sidebar:oklch(0.205 0 0);
+    --sidebar-foreground:oklch(0.985 0 0);
+    --sidebar-primary:oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground:oklch(0.985 0 0);
+    --sidebar-accent:oklch(0.269 0 0);
+    --sidebar-accent-foreground:oklch(0.985 0 0);
+    --sidebar-border:oklch(1 0 0 / 10%);
+    --sidebar-ring:oklch(0.556 0 0);
+    --chart-background:oklch(0.145 0 0);
+    --chart-foreground:oklch(0.45 0 0);
+    --chart-foreground-muted:oklch(0.65 0.01 260);
+    --chart-crosshair:oklch(0.45 0 0);
+    --chart-grid:oklch(0.25 0 0);
+    --chart-brush-border:var(--chart-grid);
+    --chart-marker-background:oklch(0.25 0.01 260);
+    --chart-marker-border:oklch(0.4 0.01 260);
+    --chart-marker-foreground:oklch(0.9 0 0);
+    --chart-label:oklch(0.75 0.01 260);
+    --chart-scale-01:oklch(0.28 0.03 270);
+    --chart-scale-02:oklch(0.38 0.04 270);
+    --chart-scale-03:oklch(0.48 0.05 270);
+    --chart-scale-04:oklch(0.58 0.06 270);
+    --chart-scale-05:oklch(0.68 0.07 270);
+    --chart-scale-pattern-color:oklch(0.145 0 0);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ============================================================
+   Sections rebuilt from live-site copy
+   ============================================================ */
+.who{padding:104px 0 88px}
+.who .section-head h2{max-width:16ch}
+.why-grid{margin-top:56px}
+.why-list{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.why-item{position:relative;overflow:hidden;display:flex;flex-direction:column;background:#fff;border:1px solid #E1E4E5;border-radius:18px;padding:24px 24px 26px;min-height:178px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
+.why-item:hover{border-color:#C3CCD1;box-shadow:0 22px 44px rgba(16,45,68,.10)}
+.why-mark{color:var(--blue);flex:none;font-size:0.7778rem;line-height:1.6}
+
+.solution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.solution-card{position:relative;overflow:hidden;border-radius:22px;padding:30px;border:1px solid #DCE0E1;background:linear-gradient(180deg,#FFFFFF,#FBFCFC);transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
+.solution-card:hover{border-color:#C3CCD1;box-shadow:0 26px 54px rgba(16,45,68,.12)}
+.solution-card.blue{background:linear-gradient(180deg,var(--blue),#0C5387);border-color:var(--blue);color:#fff}
+.solution-card.dark{background:linear-gradient(180deg,var(--dark),#1C1C1C);border-color:var(--dark);color:#fff}
+.solution-list{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:0}
+.solution-list li{font:600 0.8333rem Montserrat;letter-spacing:-.01em;padding:11px 0;border-top:1px solid rgba(16,45,68,.09);color:#4A5560}
+.solution-card.blue .solution-list li,.solution-card.dark .solution-list li{color:#E4EAEE;border-top-color:rgba(255,255,255,.14)}
+.solution-list li:first-child{border-top:0}
+
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.team-grid .person{background:#fff;border:1px solid #E0E3E4;border-radius:18px;padding:24px;min-height:auto}
+.team-grid .person b{display:block;font:700 0.8889rem Montserrat;letter-spacing:-.02em;margin-top:18px}
+.team-grid .person span{display:block;font-size:0.7778rem;color:#7A828A;margin-top:6px;line-height:1.5}
+.team-grid .avatar{width:44px;height:44px;border-radius:12px;background:#EAF2F8;color:var(--blue);display:grid;place-items:center;font:800 0.8333rem Montserrat;margin:0}
+
+.quote-section{background:var(--soft);padding:104px 0}
+.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.quote-card{background:#fff;border:1px solid #E0E3E4;border-radius:22px;padding:32px;margin:0;display:flex;flex-direction:column}
+.quote-card .quote-mark{font:700 2.7222rem Georgia;color:var(--yellow);line-height:.6;margin-bottom:12px}
+.quote-card blockquote{margin:0;font-size:0.8889rem;line-height:1.62;color:#4A5560}
+.quote-card figcaption{margin-top:22px;padding-top:18px;border-top:1px solid #EEF1F2}
+.quote-card figcaption b{display:block;font:700 0.8333rem Montserrat;letter-spacing:-.02em}
+.quote-card figcaption span{display:block;font-size:0.7778rem;color:#8A9198;margin-top:4px}
+
+.contact-box .mail{display:block;width:fit-content}
+.contact-box .mail + .mail{margin-top:10px}
+
+.page-head{background:var(--bg-soft);padding:96px 0 56px}
+.page-head h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch}
+.page-head p{max-width:620px;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
+.case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
+.case-item:hover{border-color:#C3CCD1;box-shadow:0 24px 48px rgba(16,45,68,.11)}
+.case-no{font:700 0.6667rem Montserrat;letter-spacing:.16em;color:var(--blue);text-transform:uppercase}
+.case-item h3{font-size:1.0556rem;line-height:1.25;letter-spacing:-.03em;margin:12px 0 10px}
+.case-item p{font-size:0.8333rem;color:#6E767D;line-height:1.55;margin:0}
+
+/* client strip now shows named clients as text */
+
+/* hero cards list real service names */
+.card-list{list-style:none;margin:4px 0 0;padding:0}
+.card-list li{position:relative;font-size:0.7222rem;color:#4A5560;padding:5px 0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid #EDEFF1}
+.card-list li:last-child{border-bottom:0}
+.card-list li:first-child{border-top:0}
+
+
+/* =====================================================================
+   RESPONSIVE
+   Three tiers, because most visits are touch:
+     ≤1100px  touch tier — drawer nav, 44px targets, no cursor-driven motion
+     769–980  tablet     — two columns, wider measure
+     ≤768     phone      — single column, larger type, upright hero cards
+   Desktop (≥1101px) keeps the approved type scale and 3D composition intact.
+   ===================================================================== */
+
+/* ---------- touch tier: drawer navigation + real hit areas ---------- */
+@media(max-width:1279px){
+  .nav{display:none}
+  .mobile{display:grid;place-items:center;width:44px;height:44px;font-size:1.0556rem;flex:none}
+  .nav-actions{gap:12px}
+  .nav-mail{display:none}                     /* email lives in contact + footer */
+  .site-nav{height:70px;padding:0 20px;gap:12px}
+  .brand img{height:26px;width:auto}
+  .brand-name strong{font-size:0.8333rem}
+  .brand-name span{display:none}
+
+  /* drawer: full-width panel under the bar, generous targets */
+  .nav.open{display:flex;position:absolute;top:calc(100% + 6px);left:12px;right:12px;
+    flex-direction:column;align-items:stretch;gap:0;padding:8px;background:#fff;
+    border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 50px rgba(16,45,68,.16);z-index:60}
+  .nav.open a{min-height:52px;display:flex;align-items:center;padding:0 14px;
+    font-size:0.8889rem;font-weight:600;color:var(--charcoal);border-radius:12px}
+  .nav.open a:after{display:none}             /* underline sweep is a pointer affordance */
+  .nav.open a:active{background:var(--bg-soft)}
+
+  /* pointer-only depth is switched off for touch */
+  .cards-tilt{transform:none!important}
+  .chips{transform:none!important}
+
+  /* comfortable tap size for every inline link */
+  .btn{min-height:48px;padding:0 22px;font-size:0.7778rem}
+  .footer-links a{min-height:40px;display:flex;align-items:center}
+  .client{min-height:40px;align-items:center}
+  /* remaining touch targets: logo and the contact links were 32px / 25px tall */
+  .brand{min-height:44px}
+  /* DOM order puts Training first; the site leads with Business Solutions */
+  .card1{order:1}.card2{order:2}.card3{order:3}
+  .contact-box .mail{min-height:44px;display:inline-flex;align-items:center}
+  /* uppercase micro-labels: 10px -> 11px so tracking stays legible on glass */
+  .section-kicker,.bento-num,.footer-title{font-size:0.7778rem}
+
+  /* type scale lifted for reading at arm's length — applies to phone AND tablet */
+  .section-head h2{font-size:clamp(28px,7.6vw,36px)}
+  .section-head>p,.who .section-head p{font-size:0.8889rem;line-height:1.6}
+  .section-kicker{font-size:0.7222rem;letter-spacing:.14em}
+  .why-item{font-size:0.8889rem;padding:18px}
+  .solution-list li{font-size:0.8889rem;padding:13px 0}
+  .bento-num{font-size:0.7222rem;letter-spacing:.12em}
+  .metric-value{font-size:2rem}
+  .metric p{font-size:0.8333rem}
+  .team-grid .person b{font-size:0.9444rem}
+  .team-grid .person span{font-size:0.8333rem}
+  .quote-card blockquote{font-size:0.8889rem}
+  .quote-card figcaption b{font-size:0.8889rem}
+  .quote-card figcaption span{font-size:0.7778rem}
+  .case-item h3{font-size:1.0556rem}
+  .case-item p{font-size:0.8889rem}
+  .page-head h1{font-size:clamp(30px,8.4vw,40px)}
+  .page-head p{font-size:0.8889rem}
+  .field label{font-size:0.7778rem;letter-spacing:.08em}
+  .field input,.field textarea{font-size:0.9444rem;padding:13px 14px}  /* 16px avoids iOS zoom-on-focus */
+  .footer-brand strong{font-size:0.8889rem}
+  .footer-brand p{font-size:0.8333rem}
+  .footer-title{font-size:0.7222rem}
+  .footer-links{font-size:0.8333rem}
+  .footer-bottom{display:block;font-size:0.7778rem}
+  .footer-bottom span{display:block;margin-bottom:8px}
+  .card-head{font-size:0.8889rem}
+  .card-list li{font-size:0.8333rem;padding:8px 0;white-space:normal}
+  .sub{font-size:0.9444rem;line-height:1.6}
+  .client{font-size:0.8889rem}
+}
+
+/* ---------- tablet: two columns, not a stretched phone ---------- */
+@media(min-width:768px) and (max-width:1279px){
+  .container{width:min(920px,calc(100% - 56px))}
+  /* the hero is one viewport at every width now; it grows past that
+     only if its own content needs the room */
+  .hero-inner{min-height:auto;padding:44px 0 72px}
+  .hero h1{font-size:clamp(40px,6.2vw,58px)}
+  .sub{font-size:0.9444rem;max-width:60ch}
+  .ghost{display:none}
+  .band{clip-path:polygon(0% 76%,100% 58%,100% 78%,0% 100%)}
+
+  /* the cluster becomes an upright two-up grid, no 3D, no float loops */
+  .cards{position:relative;inset:auto;perspective:none;margin-top:40px;pointer-events:auto}
+  .cards-tilt{position:relative;inset:auto;transform-style:flat;display:grid;
+    grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .card{position:relative;inset:auto;width:auto;transform:none!important;
+    box-shadow:0 18px 40px -18px rgba(10,45,75,.28)}
+  .card3{grid-column:1/-1}
+  .chips{display:none}
+  /* auto, not a fixed gap: the hero is a full viewport at these widths
+     too, so the row rides its foot instead of leaving dead space below. */
+  .hero-clients{position:relative;top:auto;margin-top:auto;padding-top:36px}
+  .clients-row{padding-left:0;gap:14px;flex-wrap:wrap}
+
+  .why-list,.solution-grid,.team-grid,.quote-grid,.case-list{grid-template-columns:1fr 1fr}
+  .metric-grid{grid-template-columns:1fr 1fr}
+  .contact-box{grid-template-columns:1fr;padding:38px}
+  .form{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1.4fr 1fr 1fr}
+  .section-head{flex-direction:column;align-items:flex-start;gap:16px}
+  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:80px 0}
+}
+
+/* ---------- phone: single column, upright cards, readable type ---------- */
+@media(max-width:767px){
+  .container{width:calc(100% - 36px)}
+  /* the bar can't hold brand + CTA + burger at this width; the same CTA sits in
+     the hero directly below and at the foot of the drawer */
+  .nav-cta{display:none}
+  .nav.open{padding-bottom:8px}
+  .nav.open .drawer-cta{margin:6px 6px 2px;min-height:52px;width:auto;justify-content:center}
+  .shell{width:100%;margin:0}
+  /* the hero is one viewport at every width now; it grows past that
+     only if its own content needs the room */
+  .hero-inner{min-height:auto;padding:32px 0 56px}
+  .hero h1{font-size:clamp(32px,9.2vw,40px);line-height:1.02}
+  .hero h1 .line{padding-bottom:.12em;margin-bottom:-.04em}
+  .sub{font-size:0.9444rem;line-height:1.6;margin-top:16px;max-width:none}
+  .ctas{gap:10px;margin-top:26px}
+  .ctas .btn{width:100%}
+  .ghost,.chips{display:none}
+  .band{clip-path:polygon(0% 80%,100% 66%,100% 84%,0% 100%)}
+
+  /* two upright cards as a product preview; the full lists live in Solutions */
+  .cards{position:relative;inset:auto;perspective:none;margin-top:34px;pointer-events:auto}
+  .cards-tilt{position:relative;inset:auto;transform-style:flat;display:grid;gap:12px}
+  .card-more{right:18px;bottom:14px;font-size:0.7222rem}
+  .card{position:relative;inset:auto;width:auto;transform:none!important;padding:18px 18px 44px;
+    box-shadow:0 16px 34px -16px rgba(10,45,75,.26)}
+  .card3{display:none}
+  .card-head{font-size:0.8889rem;margin-bottom:12px}
+  .card-list li{font-size:0.8889rem;padding:9px 0;white-space:normal}
+
+  /* auto, not a fixed gap: the hero is a full viewport at these widths
+     too, so the row rides its foot instead of leaving dead space below. */
+  .hero-clients{position:relative;top:auto;margin-top:auto;padding-top:36px}
+  .clients-row{padding-left:0;flex-wrap:wrap;gap:10px 14px}
+  .clients-rule{display:none}
+  .client{font-size:0.8889rem;opacity:.75}
+
+  /* type scale lifted for reading at arm's length (phone/tablet only) */
+
+  .why-list,.solution-grid,.team-grid,.quote-grid,.case-list,.metric-grid,
+  .contact-box,.form,.footer-grid{grid-template-columns:1fr}
+  .footer-grid{gap:26px}
+  .field.full{grid-column:auto}
+  .contact-box{padding:26px;gap:28px}
+  .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
+  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:60px 0}
+  .page-head{padding:44px 0 32px}
+}
+
+/* very narrow phones */
+@media(max-width:380px){
+  .container{width:calc(100% - 28px)}
+  .hero h1{font-size:1.7778rem}
+  .metric-value{font-size:1.7778rem}
+}
+
+/* =====================================================================
+   HEADER — mega-menu navigation (Tiger Analytics pattern), GAMCS brand
+   ===================================================================== */
+.site-nav{position:sticky;top:0;z-index:60}
+.nav-trigger{display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;white-space:nowrap;
+  font:600 0.7778rem Montserrat;letter-spacing:.01em;color:#5A6165;cursor:pointer;position:relative;
+  transition:color var(--dur-hover) var(--ease-out)}
+.nav-trigger:hover,.nav-trigger.is-open{color:var(--ink)}
+.nav-trigger:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);
+  transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
+.nav-trigger:hover:after,.nav-trigger.is-open:after{transform:scaleX(1)}
+.nav-chev{width:11px;height:11px;transition:transform var(--dur-hover) var(--ease-out)}
+.nav-trigger.is-open .nav-chev{transform:rotate(180deg)}
+.nav-arrow{width:13px;height:13px;flex:none;opacity:.55}
+
+/* the panel drops from the bar, full width of the shell */
+.mega{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  box-shadow:0 26px 50px -20px rgba(16,45,68,.22);opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
+.mega.is-open{opacity:1;transform:translateY(0);pointer-events:auto}
+.mega-inner{width:min(1160px,calc(100% - 48px));margin:auto;display:grid;gap:44px;padding:34px 0 38px}
+.mega-1{grid-template-columns:minmax(0,320px)}
+.mega-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mega-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mega-head{display:inline-flex;align-items:center;gap:7px;font:700 0.7778rem Montserrat;letter-spacing:-.01em;
+  color:var(--blue);transition:color var(--dur-hover) var(--ease-out)}
+.mega-head:hover{color:var(--blue-dark)}
+.mega-head.as-label{color:#98A0A6;font-size:0.7222rem;letter-spacing:.16em;text-transform:uppercase}
+.mega-col ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:1px}
+.mega-col li a{display:block;padding:7px 0;font-size:0.8333rem;color:#5A6165;
+  transition:color var(--dur-hover) var(--ease-out),padding-left var(--dur-hover) var(--ease-out)}
+.mega-col li a:hover{color:var(--ink);padding-left:5px}
+
+/* ---- mobile drawer with drill-down ---- */
+.drawer{position:fixed;inset:56px 0 0;background:#fff;z-index:70;overflow-y:auto;
+  padding:8px 16px 40px;-webkit-overflow-scrolling:touch}
+.drawer-list{list-style:none;margin:0;padding:0}
+.drawer-list li a,.drawer-list li button,.drawer-group-head,.drawer-group li a,.drawer-back{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;
+  padding:0 6px;background:none;border:0;border-bottom:1px solid #EFF1F2;
+  font:600 0.9444rem Montserrat;color:var(--charcoal);text-align:left;cursor:pointer}
+.drawer-list li a:active,.drawer-list li button:active{background:var(--bg-soft)}
+.drawer-back{justify-content:flex-start;gap:8px;color:var(--blue);border-bottom:0;font-size:0.8889rem;min-height:48px}
+.drawer-back span{font-size:1.1667rem;line-height:1}
+.drawer-group{margin-top:14px}
+.drawer-group-head{color:var(--blue);font-size:0.8889rem}
+.drawer-group ul{list-style:none;margin:0;padding:0}
+.drawer-group li a{font-weight:500;font-size:0.8889rem;color:#5A6165}
+
+/* =====================================================================
+   TEAM PAGE
+   ===================================================================== */
+.team-page{padding-top:64px}
+.team-intro{max-width:720px;margin-bottom:56px}
+.team-intro p{font-size:0.9444rem;line-height:1.65;color:var(--gray);margin:0 0 12px}
+.team-mission{color:var(--ink)!important;font-weight:600}
+.team-block{margin-top:48px}
+.team-block .section-kicker{margin-bottom:18px}
+.member-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.member{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:26px;
+  transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out)}
+.member:hover{border-color:#C3CCD1;box-shadow:0 24px 48px rgba(16,45,68,.11)}
+.member-photo{width:72px;height:72px;border-radius:18px;background:#EAF2F8;display:grid;place-items:center;
+  color:var(--blue);font:800 1.1667rem Montserrat;letter-spacing:-.02em}
+.member h3{font-size:1.0556rem;letter-spacing:-.025em;margin:20px 0 6px}
+.member p{font-size:0.8333rem;line-height:1.55;color:#7A828A;margin:0}
+.member-link{display:inline-flex;min-height:40px;align-items:center;margin-top:10px;
+  font:700 0.7778rem Montserrat;color:var(--blue)}
+
+@media(min-width:768px) and (max-width:1279px){
+  .member-grid{grid-template-columns:1fr 1fr}
+  .mega{display:none}
+}
+@media(max-width:767px){
+  .member-grid{grid-template-columns:1fr}
+  .team-page{padding-top:40px}
+  .team-intro{margin-bottom:36px}
+  .team-block{margin-top:34px}
+  .mega{display:none}
+}
+
+/* --- brand wordmark (replaces the raster mark in the bar) --- */
+.brand-lockup{display:inline-flex;align-items:center;gap:8px;line-height:1}
+.brand-ga{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;color:var(--blue)}
+/* the GA mark stands in for the .brand-ga text; height matches the
+   two stacked words so the lockup optically aligns */
+.brand-mark{height:30px;width:auto;flex:none;display:block}
+.brand-words{display:flex;flex-direction:column;gap:1px}
+.brand-w1{font-size:0.7222rem;font-weight:700;letter-spacing:.07em;color:var(--ink)}
+.brand-w2{font-size:0.7222rem;font-weight:400;letter-spacing:.07em;color:#8A9198}
+@media(max-width:767px){
+  .brand-ga{font-size:1.3333rem}
+  .brand-mark{height:26px}
+  .brand-w1,.brand-w2{font-size:0.7222rem;letter-spacing:.08em}
+}
+
+/* =====================================================================
+   Global type scale-up (size only)
+   Root 112.5% = 18px base. Every px font-size in this file was converted to
+   rem against that root, using a floor-raise rather than a flat multiply:
+   text at 6.5-10px moved to 12-13px, mid sizes +14%, display sizes +6%.
+   A flat x1.1875 would have left 40 declarations under 12px.
+   Weights, letter-spacing, font-families and line-heights are unchanged.
+   ===================================================================== */
+html{font-size:112.5%}
+
+/* =====================================================================
+   scroll-reel-testimonials
+   The reference snippet ships only the two @keyframes; the classes its
+   JSX references (.scroll-reel-char / .scroll-reel-exit) are not in it,
+   so they are defined here. Duration must stay in step with EXIT_MS
+   (240ms) in components/ui/scroll-reel-testimonials.tsx.
+   ===================================================================== */
+@keyframes scroll-reel-char-rise{to{opacity:1;transform:translateY(0)}}
+@keyframes scroll-reel-exit{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-12px)}}
+
+.scroll-reel-char{display:inline-block;opacity:0;transform:translateY(.42em);animation:scroll-reel-char-rise .46s cubic-bezier(.22,1,.36,1) forwards}
+.scroll-reel-exit{animation:scroll-reel-exit 240ms cubic-bezier(.65,0,.35,1) forwards}
+/* kill in-flight rises so the block leaves as one piece */
+.scroll-reel-exit .scroll-reel-char{animation:none;opacity:1;transform:none}
+
+/* The global reduced-motion rule zeroes animation-duration but not the
+   inline animation-delay, which would leave characters invisible for up
+   to a second and then pop. Opt these out completely. */
+@media(prefers-reduced-motion:reduce){
+  .scroll-reel-char{animation:none!important;animation-delay:0ms!important;opacity:1;transform:none}
+  .scroll-reel-exit{animation:none!important}
+}
+
+/* ---------- /contact details list ---------- */
+.contact-details{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:18px}
+.contact-details li{display:flex;flex-direction:column;gap:4px}
+.contact-details-label{font:700 0.6111rem Montserrat;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.contact-details-value{color:#fff;font:700 0.8333rem Montserrat;letter-spacing:-.01em;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:6px;width:fit-content;min-height:34px;display:inline-flex;align-items:center;transition:border-color .2s var(--ease-out)}
+.contact-details-value:hover{border-color:rgba(255,255,255,.8)}
+.contact-details-value.as-text{border-bottom:0;font-weight:600;color:rgba(255,255,255,.85)}
+@media(max-width:767px){
+  .contact-details{gap:14px}
+  .contact-details-value{font-size:0.8889rem}
+}
+
+/* ---------- globe feature section (homepage contact) ---------- */
+.globe-feature{position:relative;overflow:hidden;border-radius:24px;background:var(--soft);border:1px solid var(--line);min-height:352px;display:flex;align-items:center}
+.globe-feature-copy{position:relative;z-index:2;max-width:560px;padding:56px}
+.globe-feature-lead{margin:0;font:700 1.2222rem Montserrat;line-height:1.42;letter-spacing:-.02em;color:var(--ink)}
+.globe-feature-lead span{font-weight:600;color:#8A9198}
+.globe-feature-cta{margin-top:28px;display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font:700 0.7778rem Montserrat;letter-spacing:-.01em;transition:background .2s var(--ease-out),gap .2s var(--ease-out)}
+.globe-feature-cta:hover{background:var(--blue);gap:14px}
+.globe-feature-stage{position:absolute;right:-9%;bottom:-32%;width:700px;max-width:70%;aspect-ratio:1;pointer-events:none}
+.globe-feature-canvas{width:100%;height:100%;opacity:0;transition:opacity .6s var(--ease-out);contain:layout paint size}
+
+@media(max-width:1279px){
+  .globe-feature-copy{padding:44px;max-width:none}
+  .globe-feature-stage{right:-20%;bottom:-30%;width:560px;max-width:74%;opacity:.8}
+}
+@media(max-width:767px){
+  .globe-feature{min-height:0;flex-direction:column;align-items:stretch}
+  .globe-feature-copy{padding:30px 24px 26px;order:2}
+  .globe-feature-lead{font-size:1.0556rem}
+  .globe-feature-stage{position:relative;order:1;right:auto;top:auto;transform:none;width:min(340px,86%);max-width:none;margin:22px auto -34px;opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .globe-feature-canvas{transition:none}
+}
+.globe-pin{position:absolute;left:0;top:0;width:11px;height:11px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(15,94,151,.18),0 0 10px 2px rgba(15,94,151,.35);opacity:0;will-change:transform,opacity;pointer-events:none}
+
+/* ---------- achievements bento ---------- */
+.stat-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.stat-hero{grid-column:span 3;border-radius:22px;padding:40px 36px;min-height:214px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.stat-hero.is-blue{background:var(--blue);color:#fff}
+.stat-hero.is-dark{background:var(--dark);color:#fff}
+/* soft corner light, same device as the hero cards */
+.stat-hero::after{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);pointer-events:none}
+.stat-hero-value{font:800 clamp(42px,4.4vw,66px)/1 Montserrat;letter-spacing:-.055em;position:relative}
+.stat-hero-label{margin:18px 0 0;font-size:0.8889rem;line-height:1.5;color:rgba(255,255,255,.74);max-width:24ch;position:relative}
+
+.stat-tile{grid-column:span 2;border-radius:18px;background:#fff;border:1px solid var(--line);padding:26px 24px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out)}
+.stat-tile-value{font:800 clamp(29px,2.5vw,40px)/1 Montserrat;letter-spacing:-.05em;color:var(--ink)}
+.stat-tile-label{margin:14px 0 0;font-size:0.8333rem;line-height:1.5;color:#6B7480}
+@media(hover:hover) and (pointer:fine){
+  .stat-tile:hover{border-color:#C3CCD1;box-shadow:0 24px 48px -26px rgba(16,45,68,.24)}
+}
+
+@media(max-width:1279px){
+  .stat-hero{grid-column:span 3;padding:32px 28px;min-height:190px}
+  .stat-tile{grid-column:span 3;min-height:150px}
+}
+@media(max-width:767px){
+  .stat-bento{grid-template-columns:1fr;gap:10px}
+  .stat-hero,.stat-tile{grid-column:1/-1;min-height:0}
+  .stat-hero{padding:28px 24px}
+  .stat-tile{padding:22px 20px}
+  .stat-hero-label,.stat-tile-label{max-width:none}
+}
+
+/* ---------- how-we-help feature cards ---------- */
+.why-meta{display:flex;align-items:center;gap:8px}
+.why-item .why-mark{color:var(--blue);flex:none;font-size:0.7222rem;line-height:1}
+.why-index{font:800 0.6667rem Montserrat;letter-spacing:.18em;color:#A9B2BA;transition:color .3s var(--ease-out)}
+.why-text{margin-top:auto;padding-top:22px;font:700 1rem Montserrat;letter-spacing:-.02em;line-height:1.34;color:var(--ink)}
+.why-rule{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--blue);transition:width .5s var(--ease-out)}
+@media(hover:hover) and (pointer:fine){
+  .why-item:hover{border-color:#C3CCD1;box-shadow:0 24px 48px -26px rgba(16,45,68,.22)}
+  .why-item:hover .why-rule{width:100%}
+  .why-item:hover .why-index{color:var(--blue)}
+}
+@media(max-width:1279px){
+  .why-item{min-height:162px;padding:22px 20px 24px}
+  .why-text{font-size:0.9444rem;padding-top:18px}
+}
+@media(max-width:767px){
+  .why-item{min-height:0;padding:20px 18px 22px}
+  .why-text{padding-top:14px;font-size:0.9444rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .why-rule{transition:none}
+}
+
+/* ---------- services panels ---------- */
+.solution-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.solution-count{font:800 0.6667rem Montserrat;letter-spacing:.08em;line-height:1;padding:5px 10px;border-radius:999px;border:1px solid rgba(16,45,68,.15);color:#6B7480;flex:none}
+.solution-card.blue .solution-count,.solution-card.dark .solution-count{border-color:rgba(255,255,255,.26);color:rgba(255,255,255,.82)}
+/* same corner light as the achievement panels, so the two sections rhyme */
+.solution-card.blue::after,.solution-card.dark::after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13) 0%,rgba(255,255,255,0) 70%);pointer-events:none}
+.solution-card > *{position:relative}
+@media(hover:hover) and (pointer:fine){
+  .solution-card:hover{box-shadow:0 30px 60px -28px rgba(16,45,68,.32)}
+  .solution-card:not(.blue):not(.dark):hover{border-color:#C3CCD1}
+}
+@media(max-width:767px){
+  .solution-count{font-size:0.6111rem;padding:4px 8px}
+}
+
+/* ---------- who-we-are story column ---------- */
+.who-story{max-width:520px;display:grid;gap:13px}
+.who-lead{margin:0;font-size:0.9444rem;line-height:1.6;color:var(--charcoal)}
+.who-network{margin:0;font-size:0.9444rem;line-height:1.6;color:var(--gray)}
+.who-mission{margin:2px 0 0;padding-left:16px;border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;color:var(--ink);font-weight:600}
+@media(max-width:1279px){ .who-story{max-width:none} }
+@media(max-width:767px){
+  .who-lead,.who-network,.who-mission{font-size:0.8889rem}
+  .who-story{gap:11px}
+}
+
+
+/* =====================================================================
+   LAUNCH PASS — skip link, breadcrumbs, FAQ, 404, thank-you, legal,
+   case-study structure, form states, sticky mobile CTA.
+   All of it reuses the existing tokens; no new colours are introduced.
+   ===================================================================== */
+
+/* --- skip link: the first tab stop on every page ------------------- */
+.skip-link{position:fixed;top:10px;left:10px;z-index:200;transform:translateY(-160%);
+  background:var(--blue);color:#fff;font:700 0.7778rem Montserrat;letter-spacing:.04em;
+  padding:12px 18px;border-radius:12px;transition:transform .18s var(--ease-out)}
+.skip-link:focus-visible{transform:translateY(0)}
+
+/* --- breadcrumbs --------------------------------------------------- */
+.crumbs{margin-bottom:22px}
+.crumbs ol{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;padding:0}
+.crumbs li{display:flex;align-items:center;gap:8px;font:600 0.7222rem Montserrat;letter-spacing:.02em}
+.crumbs a{color:var(--gray);text-decoration:none;transition:color .2s var(--ease-out)}
+.crumbs a:hover{color:var(--blue)}
+.crumbs [aria-current="page"]{color:var(--ink)}
+.crumbs-sep{color:#B4BCC2}
+
+/* --- FAQ ----------------------------------------------------------- */
+.faq-section{background:var(--soft)}
+.faq-section .section-head>p a{color:var(--blue);font-weight:700}
+/* Full container width, like every other card grid on the site; the answer
+   copy is what gets the measure cap, not the card. */
+.faq-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.faq-item{background:#fff;border:1px solid #E0E3E4;border-radius:18px;
+  transition:border-color .25s var(--ease-out),box-shadow .25s var(--ease-out)}
+.faq-item[open]{border-color:#C3CCD1;box-shadow:0 18px 40px rgba(16,45,68,.08)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:space-between;gap:22px;padding:22px 26px;min-height:64px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:18px}
+.faq-q{font:700 0.9444rem Montserrat;letter-spacing:-.02em;color:var(--ink);line-height:1.3}
+/* plus that becomes a minus — two bars, one rotated */
+.faq-icon{position:relative;flex:0 0 20px;width:20px;height:20px}
+.faq-icon::before,.faq-icon::after{content:"";position:absolute;inset:50% 0 auto 0;height:2px;
+  background:var(--blue);border-radius:2px;transform:translateY(-50%);transition:transform .28s var(--ease-out)}
+.faq-icon::after{transform:translateY(-50%) rotate(90deg)}
+.faq-item[open] .faq-icon::after{transform:translateY(-50%) rotate(0deg)}
+.faq-a{padding:0 26px 24px}
+.faq-a p{margin:0;font-size:0.8889rem;line-height:1.65;color:#5B6067;max-width:68ch}
+
+/* --- case study: problem / solution / outcome ---------------------- */
+.case-steps{margin:18px 0 0;padding:18px 0 0;border-top:1px solid #EEF1F2;display:grid;gap:12px}
+.case-steps>div{display:grid;gap:4px}
+.case-steps dt{font:700 0.6667rem Montserrat;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.case-steps dd{margin:0;font-size:0.8333rem;line-height:1.55;color:#6E767D}
+.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius);background:var(--dark);
+  color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
+.case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
+.team-cta-section{padding-top:0}
+
+/* --- 404 ------------------------------------------------------------ */
+.notfound{padding-top:132px;text-align:left}
+.notfound-code{font:800 clamp(88px,17vw,196px) Montserrat;line-height:.82;letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:2px var(--line);margin:0 0 18px}
+.notfound-title{font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:-.04em;margin:12px 0 16px;max-width:16ch}
+.notfound-title em{font-style:normal;color:var(--blue)}
+.notfound-body{max-width:52ch;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
+.notfound-ctas{margin-top:34px}
+.notfound-links{margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.notfound-links h2{font-size:0.8889rem;letter-spacing:-.01em;margin:0 0 16px}
+.notfound-links ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.notfound-links li a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;
+  border:1px solid var(--line);border-radius:999px;background:#fff;font:600 0.7778rem Montserrat;
+  color:var(--charcoal);transition:border-color .2s var(--ease-out),color .2s var(--ease-out)}
+.notfound-links li a:hover{border-color:var(--blue);color:var(--blue)}
+.notfound-hint{margin:18px 0 0;font-size:0.7778rem;color:#8A9198}
+
+/* --- thank-you steps ------------------------------------------------ */
+.next-steps{list-style:none;margin:0 0 44px;padding:0;display:grid;gap:12px;
+  grid-template-columns:repeat(3,1fr);max-width:1080px}
+.next-steps li{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;display:grid;gap:14px;align-content:start}
+.next-steps-no{font:700 0.6667rem Montserrat;letter-spacing:.16em;color:var(--blue)}
+.next-steps h2{font-size:1.0556rem;line-height:1.25;letter-spacing:-.03em;margin:0 0 8px}
+.next-steps p{margin:0;font-size:0.8333rem;line-height:1.6;color:#6E767D}
+.next-steps a{color:var(--blue);font-weight:600}
+
+/* --- legal pages ---------------------------------------------------- */
+.legal-page{padding-top:64px}
+.legal-draft{max-width:760px;margin:0 0 40px;padding:16px 20px;border-radius:14px;
+  background:#FDF4D8;border:1px solid #EBD696;color:#5B4708;font-size:0.8333rem;line-height:1.6}
+.legal-body{max-width:760px}
+.legal-body h2{font-size:1.1111rem;letter-spacing:-.03em;margin:38px 0 12px}
+.legal-body h2:first-child{margin-top:0}
+.legal-body p,.legal-body li{font-size:0.8889rem;line-height:1.7;color:#4A5560}
+.legal-body p{margin:0 0 12px}
+.legal-body ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px}
+.legal-body a{color:var(--blue);font-weight:600}
+/* deliberately loud: an unfilled placeholder must not survive a review */
+.tbc{display:inline-block;background:#FFF1F1;color:#8A1F1F;border:1px dashed #D98A8A;
+  border-radius:8px;padding:2px 8px;font-size:0.7778rem;font-weight:600}
+
+/* --- contact page extras -------------------------------------------- */
+.contact-privacy{margin:28px 0 0;font-size:0.7778rem;line-height:1.6;color:#AEB7BA;max-width:38ch}
+.contact-privacy a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.directions{margin-top:32px}
+.directions-address{margin:12px 0 14px;font-style:normal;font-size:0.8333rem;line-height:1.6;color:#C5CCCF}
+.directions-map{width:100%;aspect-ratio:16/10;border:0;border-radius:14px;background:#2D2D2D}
+
+/* --- form states ---------------------------------------------------- */
+.field-error{margin:2px 0 0;font-size:0.7222rem;line-height:1.4;color:#FFB4B4}
+.field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#C86B6B}
+.form button[disabled]{opacity:.62;cursor:progress}
+.form-status{grid-column:1/-1;margin:0;font-size:0.7778rem;line-height:1.5;color:#FFB4B4}
+.form-status:empty{display:none}
+.form-status a{color:#fff;text-decoration:underline}
+
+/* --- sticky mobile CTA ---------------------------------------------- */
+/* Below the header's stacking level, so an open drawer covers it. */
+.sticky-cta{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:55;display:none;opacity:0;transform:translateY(120%);pointer-events:none;
+  transition:opacity .26s var(--ease-out),transform .32s var(--ease-out)}
+.sticky-cta[data-show]{opacity:1;transform:translateY(0);pointer-events:auto}
+.sticky-cta .btn{width:100%;justify-content:center;min-height:52px;
+  box-shadow:0 14px 34px rgba(15,94,151,.34)}
+.sticky-cta-note{margin:6px 0 0;text-align:center;font-size:0.6667rem;color:var(--gray)}
+
+@media (max-width:767px){
+  .sticky-cta{display:block}
+  .case-cta{padding:30px 26px}
+  .next-steps{grid-template-columns:1fr}
+  .notfound{padding-top:104px}
+  .notfound-links ul{flex-direction:column;align-items:stretch}
+  .notfound-links li a{justify-content:center}
+  .faq-item summary{padding:18px 20px;gap:16px}
+  .faq-a{padding:0 20px 20px}
+  .faq-q{font-size:0.8889rem}
+  .legal-draft,.legal-body{max-width:none}
+}
+
+@media (min-width:768px) and (max-width:1279px){
+  .next-steps{grid-template-columns:1fr 1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sticky-cta,.faq-icon::before,.faq-icon::after,.skip-link{transition:none}
+}
+.page-head-ctas{margin-top:30px}
+@media (max-width:767px){.page-head-ctas .btn{width:100%;justify-content:center}}
+.faq-a ul{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:9px}
+.faq-a li{position:relative;padding-left:20px;font-size:0.8889rem;line-height:1.6;color:#5B6067;max-width:84ch}
+.faq-a li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;
+  border-radius:2px;background:var(--yellow)}
+
+
+/* =====================================================================
+   COOKIE CONSENT — bottom banner + native <dialog> preferences panel
+   Same tokens, type and radii as the rest of the site; nothing new.
+   ===================================================================== */
+
+/* Above the sticky CTA (55) and the header (60), below the mobile
+   drawer (70) so an open nav is never obscured by it. */
+.cookie-banner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:65;background:#fff;border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 26px 64px rgba(16,45,68,.20);
+  animation:cookie-rise .38s var(--ease-out) both}
+@keyframes cookie-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.cookie-banner-inner{max-width:1160px;margin:0 auto;padding:22px 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px}
+.cookie-banner-copy{max-width:62ch}
+.cookie-banner-copy h2{font-size:0.9444rem;letter-spacing:-.02em;margin:0 0 6px}
+.cookie-banner-copy p{margin:0;font-size:0.8333rem;line-height:1.6;color:#5B6067}
+.cookie-banner-actions{display:flex;align-items:center;gap:10px;flex:none;flex-wrap:wrap}
+.cookie-banner-actions .btn{min-height:44px}
+
+/* shared text-button treatment for "Manage preferences" / "Cancel" */
+.cookie-link{background:none;border:0;padding:0 4px;min-height:44px;cursor:pointer;
+  font:600 0.7778rem Montserrat;color:var(--gray);text-decoration:underline;
+  text-underline-offset:4px;transition:color .2s var(--ease-out)}
+.cookie-link:hover{color:var(--blue)}
+
+/* --- preferences panel: native dialog, so modality is the platform's job -- */
+.cookie-panel{border:0;padding:0;background:transparent;max-width:min(520px,calc(100vw - 24px));
+  width:100%;color:var(--ink)}
+.cookie-panel::backdrop{background:rgba(16,45,68,.46)}
+.cookie-panel[open]{animation:cookie-pop .26s var(--ease-out) both}
+@keyframes cookie-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.cookie-panel-inner{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px}
+.cookie-panel-inner h2{font-size:1.1111rem;letter-spacing:-.03em;margin:0 0 20px}
+.cookie-cats{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:14px}
+.cookie-cats li{border:1px solid #E7EAEC;border-radius:14px;padding:16px 18px;background:var(--soft)}
+.cookie-cats p{margin:8px 0 0;font-size:0.7778rem;line-height:1.55;color:#6E767D}
+.cookie-cat-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.cookie-cat-name{font:700 0.8333rem Montserrat;letter-spacing:-.01em;color:var(--ink)}
+label.cookie-cat-name{cursor:pointer}
+.cookie-cat-locked{font:700 0.6667rem Montserrat;letter-spacing:.12em;text-transform:uppercase;color:#98A0A6}
+
+/* a real checkbox, drawn as a switch — keyboard and AT behaviour unchanged */
+.cookie-switch{appearance:none;-webkit-appearance:none;margin:0;flex:none;cursor:pointer;
+  width:44px;height:26px;border-radius:999px;background:#C9D0D5;position:relative;
+  transition:background .22s var(--ease-out)}
+.cookie-switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;
+  border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);
+  transition:transform .22s var(--ease-out)}
+.cookie-switch:checked{background:var(--blue)}
+.cookie-switch:checked::after{transform:translateX(18px)}
+.cookie-switch:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+.cookie-panel-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cookie-panel-actions .btn{min-height:44px}
+.cookie-panel-note{margin:18px 0 0;font-size:0.7222rem;color:#8A9198}
+.cookie-panel-note a{color:var(--blue);font-weight:600}
+
+/* one bar at a time on a phone: the CTA stands down until a choice is made */
+html[data-cookie-banner] .sticky-cta{display:none}
+
+/* "open the preferences panel now", inline in the privacy policy prose */
+.legal-inline-button{background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+@media (max-width:900px){
+  .cookie-banner-inner{flex-direction:column;align-items:stretch;gap:18px;padding:20px}
+  .cookie-banner-actions{flex-direction:column;align-items:stretch}
+  .cookie-banner-actions .btn{width:100%;justify-content:center}
+  .cookie-banner-copy{max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cookie-banner,.cookie-panel[open]{animation:none}
+  .cookie-switch,.cookie-switch::after,.cookie-link{transition:none}
+}
+
+
+/* =====================================================================
+   AGENCY-LANDING PASS
+   Reference: hirael.com agency-landing, restated in the GAMCS palette.
+   Measured from the source: headings 500-weight at 67.2/51.2px, tracking
+   -0.03/-0.02em, leading 1.08/1.12; body 17px/1.6; bands #FFF / #F5F5F5;
+   ink #0D1828. Orange becomes #0F5E97; #F2C230 stays as a minor accent.
+   Montserrat is kept as the brand face but drops from 700/800 to 600 —
+   the reference's weight is most of why it reads editorial rather than loud.
+   The contact/CTA section and the footer are deliberately untouched.
+   ===================================================================== */
+
+:root{
+  --ink-deep:#0D1828;      /* headings + any dark band */
+  --band-white:#FFFFFF;
+  --band-soft:#EFEFEF;
+  --band-hero:#EFEFEF;
+  --pill-line:rgba(13,24,40,.14);
+  --ink-muted:#55606F;
+  /* measured height of the sticky header bar; the hero subtracts it */
+  --header-h:76px;
+}
+
+/* ---- hero ribbon field (canvas, upscaled + composited blur) ---- */
+.ribbon-field{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  background:var(--band-hero)}
+/* The canvas is 320px wide and stretched; the blur is a compositor pass, not
+   a per-frame CPU filter. Together they are the whole "soft bleed" effect. */
+.ribbon-canvas{display:block;width:106%;height:106%;margin:-3% 0 0 -3%;
+  filter:blur(13px) saturate(1.08) contrast(1.04)}
+@media (max-width:767px){.ribbon-canvas{filter:blur(9px) saturate(1.08)}}
+
+/* ---- type scale ---- */
+.hero h1{font-size:clamp(38px,5.2vw,67px);line-height:1.08;font-weight:600;
+  letter-spacing:-.03em;color:var(--ink-deep);margin:0}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em}
+@media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
+.hero .sub{margin-top:26px;max-width:52ch;font-size:0.9444rem;line-height:1.6;
+  color:var(--ink-muted);font-weight:500}
+.hero .ctas{margin-top:34px}
+
+.section-head h2,.who .section-head h2,.page-head h1{
+  font-size:clamp(32px,3.9vw,51px);line-height:1.12;font-weight:600;
+  letter-spacing:-.02em;color:var(--ink-deep)}
+.section-head h2 em{font-style:normal;color:var(--blue)}
+
+/* ---- numbered eyebrow ---- */
+.eyebrow-row{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.eyebrow-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--blue);color:#fff;font:600 0.6667rem Montserrat;flex:none}
+.eyebrow-pill{display:inline-flex;align-items:center;height:28px;padding:0 15px;
+  border:1px solid var(--pill-line);border-radius:999px;background:#fff;
+  font:500 0.7222rem Montserrat;letter-spacing:0;color:var(--ink-deep);white-space:nowrap}
+
+/* ---- section bands + rhythm ---- */
+.who,.services,.metrics,.people,.quote-section,.faq-section{padding:112px 0}
+.who{background:var(--band-white)}
+.services{background:var(--band-soft)}
+.metrics{background:var(--band-white)}
+.people{background:var(--band-soft)}
+.quote-section{background:var(--band-white)}
+.faq-section{background:var(--band-soft)}
+.section-head{align-items:start;margin-bottom:52px}
+.section-head>p{font-size:0.9444rem;line-height:1.6;color:var(--ink-muted);max-width:34ch}
+
+@media (max-width:767px){
+  .who,.services,.metrics,.people,.quote-section,.faq-section{padding:72px 0}
+  .section-head{margin-bottom:36px}
+  .eyebrow-row{margin-bottom:20px}
+}
+
+/* ---- hero shader stack (replaces the canvas ribbon field) ---- */
+.hero-shader,
+.hero-shader-fallback{position:absolute;inset:0;z-index:0;pointer-events:none}
+
+/* ---- abstract panels (photography stand-ins) ---- */
+.abstract-panel{width:100%;overflow:hidden;border-radius:16px;background:var(--band-soft)}
+.abstract-panel svg{display:block;width:100%;height:100%}
+@media (min-width:640px){.abstract-panel{border-radius:18px}}
+
+/* ---- who-we-are: reference "About" composition ---- */
+.who-grid{display:grid;grid-template-columns:26% 1fr 48%;align-items:end;gap:26px;margin-top:64px}
+.who-grid-copy{align-self:start;display:flex;flex-direction:column;align-items:flex-start}
+.who-grid-copy p{margin:0;font-size:0.9444rem;line-height:1.65;font-weight:500;color:var(--ink-deep)}
+.who-grid-copy .btn{margin-top:26px}
+@media (max-width:1023px){
+  .who-grid{grid-template-columns:1fr;gap:22px;margin-top:40px}
+  .who-grid-copy{align-self:auto}
+  .who-panels{display:flex;flex-direction:column;gap:16px}
+}
+@media (min-width:640px) and (max-width:1023px){
+  .who-panels{flex-direction:row}
+  .who-panels>*:first-child{width:45%}
+  .who-panels>*:last-child{width:55%}
+}
+.who-heading{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
+  letter-spacing:-.02em;color:var(--ink-deep);margin:0;max-width:22ch}
+.who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
+  border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.6;
+  color:var(--ink-deep);font-weight:600}
+.who .why-grid{margin-top:88px}
+@media (max-width:767px){
+  .who .who-mission{margin-top:36px}
+  .who .why-grid{margin-top:56px}
+}
+@media (min-width:640px){:root{--header-h:84px}}

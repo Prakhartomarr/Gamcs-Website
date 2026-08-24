@@ -1,0 +1,47 @@
+{
+  "name": "gamcs-integrated-finance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GA Management Consultants (GAMCS) — Integrated Finance redesign",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.7.0",
+    "@number-flow/react": "^0.6.2",
+    "@visx/event": "^4.0.1-alpha.0",
+    "@visx/gradient": "^4.0.1-alpha.0",
+    "@visx/grid": "^4.0.1-alpha.0",
+    "@visx/pattern": "^4.0.1-alpha.0",
+    "@visx/responsive": "^4.0.1-alpha.0",
+    "@visx/scale": "^4.0.1-alpha.0",
+    "@visx/shape": "^4.0.1-alpha.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cobe": "^0.6.3",
+    "d3-array": "^3.2.4",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.32.0",
+    "motion": "^13.1.0",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "shaders": "^3.1.459",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3"
+  }
+}
