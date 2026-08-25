@@ -1487,3 +1487,73 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .brand-mark-wipe{transition:none}
 }
+
+
+/* =====================================================================
+   SOLUTIONS PILLARS — sticky panel + accordion
+   Sticky rather than a ScrollTrigger pin: no ScrollSmoother here, and a pin
+   injects spacers that fight the sticky header and the one-viewport hero.
+   ===================================================================== */
+.pillars{display:grid;gap:96px;margin-top:8px}
+/* stretch, not start: a sticky element travels inside its containing
+   block, so the column must be as tall as the row or there is nowhere
+   to stick to. With align-items:start the column collapsed to the
+   panel height and the panel simply scrolled away. */
+.pillar-row{display:grid;grid-template-columns:42% 1fr;gap:48px;align-items:stretch}
+.pillar-panel-col{height:100%}
+
+.pillar-panel{position:sticky;top:calc(var(--header-h) + 28px);
+  background:linear-gradient(150deg,var(--blue) 0%,var(--blue-dark) 100%);
+  color:#fff;border-radius:var(--radius);padding:40px 38px 36px;
+  min-height:340px;display:flex;flex-direction:column}
+.pillar-panel-eyebrow{display:inline-flex;align-items:center;gap:12px;
+  font:700 0.6667rem Montserrat;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.72)}
+.pillar-panel-n{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,.16);color:#fff;letter-spacing:0}
+.pillar-panel h2{margin:22px 0 14px;font-size:clamp(24px,2.5vw,34px);line-height:1.12;
+  letter-spacing:-.03em;color:#fff;max-width:18ch}
+.pillar-panel p{margin:0;font-size:0.8611rem;line-height:1.62;color:#D3E3EF;max-width:44ch}
+.pillar-panel-cta{margin-top:auto;padding-top:26px;display:inline-flex;align-items:center;gap:9px;
+  font:700 0.7778rem Montserrat;color:#fff;width:fit-content}
+.pillar-panel-cta span{transition:transform .25s var(--ease-out)}
+.pillar-panel-cta:hover span{transform:translateX(4px)}
+
+/* ---- accordion ---- */
+.acc{list-style:none;margin:0;padding:0}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-item:first-child{border-top:1px solid var(--line)}
+.acc-h{margin:0;font-size:inherit;font-weight:inherit}
+.acc-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:none;border:0;padding:22px 4px;cursor:pointer;text-align:left;
+  font:600 0.9444rem Montserrat;letter-spacing:-.015em;color:var(--ink-deep);
+  transition:color .2s var(--ease-out)}
+.acc-btn:hover{color:var(--blue)}
+.acc-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:6px}
+/* chevron, rotating on expand */
+.acc-chev{flex:none;width:11px;height:11px;border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);
+  transition:transform .28s var(--ease-out)}
+.acc-btn[aria-expanded="true"] .acc-chev{transform:rotate(225deg) translate(-3px,-3px)}
+.acc-btn[aria-expanded="true"]{color:var(--blue)}
+
+.acc-panel{display:grid;grid-template-rows:1fr;transition:grid-template-rows .3s var(--ease-out)}
+.acc-panel-inner{overflow:hidden}
+.acc-panel p{margin:0 0 24px;padding-right:40px;font-size:0.8611rem;line-height:1.68;color:var(--ink-muted);max-width:62ch}
+
+@media (max-width:1023px){
+  .pillars{gap:64px}
+  .pillar-row{grid-template-columns:1fr;gap:28px}
+  /* stacked: nothing to pin against */
+  .pillar-panel{position:static;min-height:0;padding:32px 28px 30px}
+}
+@media (max-width:767px){
+  .pillars{gap:52px}
+  .acc-btn{font-size:0.8889rem;padding:18px 2px}
+  .acc-panel p{padding-right:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  /* no scroll-coupled positioning, no expand animation */
+  .pillar-panel{position:static}
+  .acc-panel,.acc-chev,.pillar-panel-cta span{transition:none}
+}
