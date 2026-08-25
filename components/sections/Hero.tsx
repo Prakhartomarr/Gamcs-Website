@@ -13,7 +13,6 @@ import dynamic from "next/dynamic";
 const HeroShader = dynamic(() => import("@/components/hero/HeroShader"), {
   ssr: false,
 });
-import CustomerLogoRow from "@/components/hero/CustomerLogoRow";
 import ShimmerCTA from "@/components/motion/ShimmerCTA";
 import { hero, primaryCta } from "@/lib/content/gamcs";
 
@@ -34,8 +33,6 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       gsap.set(".line-inner", { yPercent: 115 });
       gsap.set([".sub", ".ctas"], { opacity: 0, y: 16 });
-      gsap.set(".ribbon-field", { opacity: 0 });
-      gsap.set(".hero-clients", { opacity: 0, y: 18 });
       root.dataset.anim = "ready";
 
       const tl = gsap.timeline({
@@ -44,11 +41,9 @@ export default function Hero() {
            so the hero is not left holding a dozen composited layers. */
         onComplete: () => gsap.set(".line-inner", { willChange: "auto" }),
       });
-      tl.to(".ribbon-field", { opacity: 1, duration: 1.1, ease: "power1.out" }, 0)
-        .to(".line-inner", { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.55")
+      tl.to(".line-inner", { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.55")
         .to(".sub", { opacity: 1, y: 0, duration: 0.6 }, "-=0.35")
-        .to(".ctas", { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-        .to(".hero-clients", { opacity: 1, y: 0, duration: 0.7 }, "-=0.5");
+        .to(".ctas", { opacity: 1, y: 0, duration: 0.6 }, "-=0.4");
 
       failsafe = window.setTimeout(() => {
         if (tl.progress() === 0) tl.progress(1);
@@ -93,7 +88,6 @@ export default function Hero() {
           </div>
         </div>
 
-        <CustomerLogoRow />
       </div>
     </section>
   );
