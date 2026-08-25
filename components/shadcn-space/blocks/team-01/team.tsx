@@ -1,24 +1,18 @@
 "use client";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Globe } from "lucide-react";
+import { Mail } from "lucide-react";
 import { motion } from "motion/react";
-import { site, team } from "@/lib/content/gamcs";
+import { team } from "@/lib/content/gamcs";
 
-const LinkedinIcon = ({ size = 16 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clipPath="url(#clip-linkedin-team01)">
-      <path d="M13.633 13.633h-2.37V9.92c0-.885-.017-2.025-1.234-2.025-1.235 0-1.424.965-1.424 1.96v3.778h-2.37V5.998H8.51v1.043h.031a2.5 2.5 0 0 1 2.246-1.233c2.403 0 2.846 1.58 2.846 3.637zM3.56 4.954a1.376 1.376 0 1 1 0-2.751 1.376 1.376 0 0 1 0 2.751m1.185 8.679H2.372V5.998h2.373zM14.815.001H1.18A1.17 1.17 0 0 0 0 1.154v13.691A1.17 1.17 0 0 0 1.18 16h13.635A1.17 1.17 0 0 0 16 14.845V1.153A1.17 1.17 0 0 0 14.815 0" fill="currentColor" />
-    </g>
-    <defs>
-      <clipPath id="clip-linkedin-team01">
-        <rect width="16" height="16" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
-type Member = { name: string; role: string; linkedin?: boolean; photo?: string };
+type Member = {
+  name: string;
+  role: string;
+  photo?: string;
+  experience?: string;
+  location?: string;
+  email?: string;
+};
 
 /*
  * The upstream block ships four stock people (Logan Dang, Ana Belić, …) with
@@ -30,8 +24,15 @@ type Member = { name: string; role: string; linkedin?: boolean; photo?: string }
  * no layout change — the square box is reserved either way.
  */
 const teamData: Member[] = [
-  ...team.leadership.map((m) => ({ name: m.name, role: m.title, linkedin: true, photo: m.photo })),
-  ...team.advisory.map((m) => ({ name: m.name, role: m.title })),
+  ...team.leadership.map((m) => ({
+    name: m.name, role: m.title, photo: m.photo,
+    experience: m.experience, location: m.location, email: m.email,
+  })),
+  ...team.advisory.map((m) => ({
+    name: m.name, role: m.title,
+    experience: m.experience,
+    location: "location" in m ? m.location : undefined,
+  })),
 ];
 
 const initials = (name: string) =>
@@ -89,12 +90,12 @@ const Team = () => {
                         alt={`Portrait of ${value.name}, ${value.role}`}
                         fill
                         sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
-                        className="object-cover object-top transition-all duration-300 group-hover:grayscale"
+                        className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03] group-focus-within:scale-[1.03]"
                       />
                     </div>
                   ) : (
                     <div
-                      className="w-full aspect-square grid place-items-center rounded-md bg-muted text-primary transition-all duration-300 group-hover:grayscale"
+                      className="w-full aspect-square grid place-items-center rounded-md bg-muted text-primary transition-transform duration-500 ease-out group-hover:scale-[1.03] group-focus-within:scale-[1.03]"
                       aria-hidden="true"
                     >
                       <span className="text-4xl font-medium tracking-tight">{initials(value.name)}</span>
@@ -109,28 +110,27 @@ const Team = () => {
                         {value.role}
                       </p>
                     </div>
-                    <div className="flex gap-2">
-                      <a
-                        href={site.url}
-                        className="p-2 hover:bg-accent/80 rounded-full"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${value.name} — website`}
-                      >
-                        <Globe size={16} />
-                      </a>
-                      {value.linkedin && (
+                    {/* Experience and location are always visible: real
+                        information must not sit behind a hover. */}
+                    {(value.experience || value.location) && (
+                      <p className="text-xs text-muted-foreground text-center">
+                        {[value.experience, value.location].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
+                    {value.email && (
+                      <div className="flex gap-2">
+                        {/* A real personal address. The previous Globe and
+                            LinkedIn icons both pointed at company-wide URLs
+                            while being labelled as this person's. */}
                         <a
-                          href={site.linkedin}
+                          href={`mailto:${value.email}`}
                           className="p-2 hover:bg-accent/80 rounded-full"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${value.name} — LinkedIn`}
+                          aria-label={`Email ${value.name}`}
                         >
-                          <LinkedinIcon size={16} />
+                          <Mail size={16} />
                         </a>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );

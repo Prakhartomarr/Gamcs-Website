@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Team from "@/components/shadcn-space/blocks/team-01/team";
-import { primaryCta, story } from "@/lib/content/gamcs";
+import { primaryCta, story, team } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -19,8 +19,8 @@ export default function TeamPage() {
         <div className="container">
           <Breadcrumbs trail={[{ label: "Team", href: "/team" }]} />
           <div className="section-kicker">TEAM</div>
-          <h1>{story.lead}</h1>
-          <p>{story.network}</p>
+          <h1>{team.h1}</h1>
+          <p>{team.body}</p>
           <p className="team-mission">{story.mission}</p>
           <div className="ctas page-head-ctas">
             <Link
@@ -48,7 +48,7 @@ export default function TeamPage() {
       <section className="section team-cta-section">
         <div className="container">
           <div className="case-cta">
-            <h2>Work with them directly.</h2>
+            <h2>{team.closingCta}</h2>
             <Link
               className="btn btn-shimmer"
               href={primaryCta.href}

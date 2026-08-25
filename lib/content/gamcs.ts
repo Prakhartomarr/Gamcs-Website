@@ -133,31 +133,40 @@ export const achievements = {
 
 export const team = {
   headingLines: ["The people you call for", "Solutions you can trust"],
+  /** Doc page 10. */
+  h1: "Led by Operators Who've Sat in Your Seat",
+  body:
+    "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. Our team isn't generalist consultants — it's specialists in the specific problems CFOs and investment teams actually face.",
+  closingCta: "Want to work with this team directly?",
   /**
-   * Names and titles are verbatim from the live site, which groups them as
-   * Leadership and Advisory. The site shows photographs but publishes no
-   * biographies, so none are invented here \u2014 add `photo` and `bio` when the
-   * real assets and copy are supplied.
+   * Names, titles, years of experience and locations are all from the copy
+   * doc (page 10). `experience` and `location` are shown on the card, so no
+   * real information sits behind a hover.
+   *
+   * Nobody has a biography — not the founders either — so there is no detail
+   * page. Everything known about a person fits on their card. Add a `bio` and
+   * a /team/[slug] route becomes worth building.
+   *
+   * Gaurav stays "Founder" rather than the doc's "Co-Founder & Partner":
+   * that correction was an explicit client instruction in Phase 1.
    */
   leadership: [
-    // Founder first, then Co-Founder. gamcs.in currently labels both
-    // "Co-Founder"; corrected here on the client's instruction.
-    { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", linkedin: true, photo: "/team/gaurav-malik.jpg", email: "gaurav.malik@gamcs.in" },
-    { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", linkedin: true, photo: "/team/abhinav-aggarwal.jpg", email: "abhinav.aggarwal@gamcs.in" },
+    { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/gaurav-malik.jpg", email: "gaurav.malik@gamcs.in" },
+    { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/abhinav-aggarwal.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
   advisory: [
-    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation" },
+    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years" },
+    { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years" },
+    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE" },
+    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years" },
+    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India" },
     { name: "Amit Garg", title: "Audit & IPO Advisor" },
-    { name: "Saurabh Aggarwal", title: "Audit & Compliance Specialist" },
-    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory" },
-    { name: "Asif Masani", title: "FP&A Automation & BI Specialist" },
     { name: "Prashant Sharma", title: "Risk & Regulatory Advisor" },
-    { name: "Sumit Chatterjee", title: "Shared Services Operations" },
   ],
   get members() {
     return [...this.leadership, ...this.advisory];
   },
-} as const;
+};
 
 export const testimonials = {
   heading: "What our clients say about us",
