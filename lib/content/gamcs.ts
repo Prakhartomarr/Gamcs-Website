@@ -241,17 +241,25 @@ export const contact = {
 export const footer = {
   links: [
     { label: "Who we are", href: "/#who-we-are" },
+    { label: "Solutions", href: "/solutions" },
     { label: "How we help", href: "/#how-we-help" },
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],
-  /** The three service groups, anchored to their cards on the homepage. */
+  /**
+   * The six pillar pages. Left as a literal rather than derived from
+   * `solutions[]` because that array is declared after `footer` in this file;
+   * the route list is asserted against it in the build check.
+   */
   solutions: [
-    { label: "Business Solutions", href: "/#business-solutions" },
-    { label: "Technology Solutions", href: "/#technology-solutions" },
-    { label: "Training Programs", href: "/#training-programs" },
+    { label: "FP&A & Strategic Finance", href: "/solutions/fpa-strategic-finance" },
+    { label: "BI & Decision Intelligence", href: "/solutions/bi-decision-intelligence" },
+    { label: "Offshoring & Centers of Excellence", href: "/solutions/offshoring-centers-of-excellence" },
+    { label: "Technology & Systems Implementation", href: "/solutions/technology-systems-implementation" },
+    { label: "Transaction Advisory & Due Diligence", href: "/solutions/transaction-advisory-due-diligence" },
+    { label: "Finance Capability Building", href: "/solutions/finance-capability-building" },
   ],
   /**
    * Privacy Policy is an internal page describing what this build actually
@@ -326,3 +334,364 @@ export const faq = {
     },
   ] satisfies FaqItem[],
 };
+
+
+/* ===================================================================
+ * SOLUTIONS — hub + six pillar pages
+ *
+ * Copy is verbatim from GAMCS_Website_Copy_FINAL_3.docx, pages 2-8.
+ * The six pages do not share one rigid shape (Offshoring carries a build
+ * sequence and a numbers strip that the others do not), so each page is a
+ * list of typed blocks rather than a fixed set of fields. ServicePageLayout
+ * renders whatever blocks a page declares, in order.
+ * =================================================================== */
+
+export type SolutionBlock =
+  | { kind: "bullets"; heading: string; items: { lead: string; body: string }[] }
+  | { kind: "steps"; heading: string; items: { lead: string; body: string }[] }
+  | { kind: "prose"; heading: string; body: string }
+  | { kind: "callout"; body: string }
+  | { kind: "stats"; heading: string; items: string[] };
+
+export type Solution = {
+  slug: string;
+  /** Short form, for nav and footer. */
+  navLabel: string;
+  title: string;
+  titleTag: string;
+  metaDescription: string;
+  h1: string;
+  intro: string;
+  /** Scannable sub-service list shown above the detail blocks. */
+  atAGlance: string[];
+  blocks: SolutionBlock[];
+  seeItInAction?: { heading: string; paragraphs: string[] };
+  closingLine: string;
+};
+
+export const solutions: Solution[] = [
+  {
+    slug: "fpa-strategic-finance",
+    navLabel: "FP&A & Strategic Finance",
+    title: "FP&A & Strategic Finance",
+    titleTag: "FP&A Advisory Services for CFOs & CXOs | GAMCS",
+    metaDescription:
+      "Outsourced FP&A advisory — budgeting, forecasting, rolling cash flow models, revenue/RevOps forecasting, and board-ready reporting for growth-stage companies and PE portfolios.",
+    h1: "FP&A That Moves at the Speed of Your Business — Not Your Month-End Close",
+    intro:
+      "If your finance team is still built for controllership and statutory reporting, you already have a strategic FP&A gap. Financial statements tell you what happened. FP&A tells you what to do about it.",
+    atAGlance: [
+      "Budgeting & Forecasting",
+      "Rolling Cash Flow Models",
+      "Revenue/RevOps Forecasting",
+      "Accelerated Month-End Close",
+      "Scenario & Sensitivity Analysis",
+      "Variance Analysis & Commentary",
+      "Tiered Delivery (Excel → BI → Enterprise FP&A)",
+    ],
+    blocks: [
+      {
+        kind: "prose",
+        heading: "The problem we solve",
+        body: "Month-end close eating 10–15 days. Board packs stitched together the night before. Cash visibility that's stale within a week. Forecasts that don't survive the first bad month.",
+      },
+      {
+        kind: "bullets",
+        heading: "What you get",
+        items: [
+          { lead: "Budgeting, forecasting & rolling models", body: "annual, medium-term, and long-term plans, plus dynamic re-forecasting and 13-week rolling cash flow." },
+          { lead: "Revenue forecasting tied to RevOps", body: "pipeline-driven revenue models built on the same CAC, ROAS, and channel data your BI dashboards already track, so sales and finance forecast off one number, not two." },
+          { lead: "Accelerated month-end close & real-time visibility", body: "faster close cycles and management reporting that's current, not three weeks stale. Day-to-day bookkeeping and close execution runs through our Offshoring & CoE team; this is where it becomes forward-looking analysis." },
+          { lead: "Scenario & sensitivity analysis", body: "best/base/worst-case modeling for the decisions that matter." },
+          { lead: "Variance analysis with real commentary", body: "line-item packs that explain why, built for boards and lenders." },
+          { lead: "A delivery model matched to your stage", body: "Excel-based FP&A live in 2–3 weeks for early-stage teams; Power BI/Tableau-driven planning for growth-stage; full enterprise FP&A for mature and PE-backed platforms." },
+        ],
+      },
+    ],
+    seeItInAction: {
+      heading: "See it in action",
+      paragraphs: [
+        "After a transformative acquisition tripled its revenue in a year, a fast-scaling, NSE-listed VFX/media group needed consolidated, forecast-ready financials across 5 entities, 3 currencies, and 2 time zones — in time for statutory audit and a planned capital raise. We built the forecasting and scenario-modeling engine that got them there.",
+      ],
+    },
+    closingLine:
+      "Every deliverable answers the question a CFO actually asks — not \"what were our numbers,\" but \"what should we do next.\"",
+  },
+  {
+    slug: "bi-decision-intelligence",
+    navLabel: "BI & Decision Intelligence",
+    title: "BI & Decision Intelligence",
+    titleTag: "BI, Analytics & RevOps Consulting for CFOs | GAMCS",
+    metaDescription:
+      "Real-time Power BI and Tableau dashboards, RevOps and revenue analytics, board reporting, and AI-assisted commentary — decision intelligence for finance and investment teams.",
+    h1: "Real-Time Dashboards That Replace the Manual Board Deck",
+    intro:
+      "Financial statements are backward-looking by definition. By the time a problem shows up in the P&L, the window to act on it has already closed. BI & Decision Intelligence closes that gap.",
+    atAGlance: [
+      "Real-Time Dashboards",
+      "RevOps & Revenue Analytics",
+      "Operational & Profitability Analytics",
+      "Board & Investor Reporting",
+      "KPI Tracking & Benchmarking",
+      "Predictive & AI-Assisted Analytics",
+    ],
+    blocks: [
+      {
+        kind: "bullets",
+        heading: "What you get",
+        items: [
+          { lead: "Real-time interactive dashboards", body: "Power BI and Tableau, connected directly to your ERP, CRM, and HR systems, refreshing automatically." },
+          { lead: "RevOps & revenue analytics", body: "CAC, ROAS, pipeline velocity, and channel-level revenue attribution that give sales, marketing, and finance one shared view of revenue performance instead of three disconnected spreadsheets." },
+          { lead: "Operational analytics tied to the P&L", body: "project/customer profitability, utilization and cohort analysis, retention and LTV." },
+          { lead: "Stakeholder & board reporting", body: "board decks, investor updates, and lender/covenant tracking generated automatically instead of assembled by hand every cycle." },
+          { lead: "KPI tracking & benchmarking", body: "balanced scorecards, OKRs, and industry benchmarking." },
+          { lead: "Practical AI", body: "anomaly detection, predictive cash-stress modeling (4–8 week liquidity forecasts), and automated commentary that cuts manual analysis time by roughly 70%." },
+        ],
+      },
+      {
+        kind: "callout",
+        body: "The data warehouse, cloud infrastructure, and underlying CRM/ERP feeding these dashboards is scoped and built under Technology & Systems Implementation — the two pillars work together.",
+      },
+    ],
+    seeItInAction: {
+      heading: "See it in action",
+      paragraphs: [
+        "Our multi-channel sales command center for Two Brothers Organic Farms tracks nine sales channels — from D2C and quick commerce to international marketplaces — in one real-time view, replacing manual monthly reconciliation across every channel.",
+        "For a listed VFX/media group post-acquisition, we went further — automated daily alerts across finance, HR, and IT (overdue vendor payments, receivables aging, attrition spikes, SLA breaches) turned dashboards into a system that flags problems before anyone has to go looking.",
+      ],
+    },
+    closingLine:
+      "You stop finding out about a problem in the monthly close — and start finding out about it in real time, while there's still a window to act.",
+  },
+  {
+    slug: "offshoring-centers-of-excellence",
+    navLabel: "Offshoring & Centers of Excellence",
+    title: "Offshoring & Centers of Excellence",
+    titleTag: "Finance Offshoring & Centers of Excellence for PE/VC | GAMCS",
+    metaDescription:
+      "Embedded offshore Finance & Analytics Centers of Excellence — accounting, bookkeeping, and reporting — for PE/VC portfolios and advisory firms. 30–50% cost optimization.",
+    h1: "One Team, Every Portfolio Company, One View",
+    intro:
+      "Most PE and VC portfolios have reporting. Very few have strategic FP&A depth. Each portfolio company runs a different ERP, a different chart of accounts, and different KPI definitions — so comparing performance across the fund becomes a manual reconciliation exercise every quarter.",
+    atAGlance: [
+      "Accounting, Bookkeeping & Close",
+      "FP&A & Management Reporting",
+      "Data Warehousing & BI",
+      "RPA & Workflow Automation",
+      "Multi-Entity, Multi-GAAP Delivery",
+      "Standardized Portfolio-Wide KPI Framework",
+    ],
+    blocks: [
+      {
+        kind: "prose",
+        heading: "Our answer",
+        body: "We build and run dedicated Finance, Analytics, and Automation Centers of Excellence — offshore teams embedded in your portfolio companies' finance operations, standardized around one methodology so your investment committee finally gets an apples-to-apples view across the fund.",
+      },
+      {
+        kind: "bullets",
+        heading: "What our CoE teams run day to day",
+        items: [
+          { lead: "Accounting, bookkeeping & month-end close", body: "Global GAAP-compliant financials (Ind AS, US GAAP, IFRS), reconciliations, AP/AR support, and financial consolidation, so the FP&A work upstream has clean, current books to run on." },
+          { lead: "FP&A & management reporting", body: "delivered in partnership with our FP&A & Strategic Finance pillar." },
+          { lead: "Data warehousing & BI dashboards", body: "in partnership with BI & Decision Intelligence." },
+          { lead: "RPA, workflow & AI-driven automation", body: "process automation across the finance stack." },
+        ],
+      },
+      {
+        kind: "steps",
+        heading: "How we build it",
+        items: [
+          { lead: "Assessment & Blueprint Design", body: "scope, operating model, and transition roadmap." },
+          { lead: "Transition & Stabilization", body: "knowledge transfer, documentation, SLA setup." },
+          { lead: "Scale & Optimize", body: "process automation and data-driven governance." },
+          { lead: "Transform & Innovate", body: "predictive analytics and AI deployed to sharpen decisions." },
+        ],
+      },
+      {
+        kind: "stats",
+        heading: "The numbers",
+        items: [
+          "30–50% cost optimization through offshoring",
+          "90% reduction in turnaround time for critical reports",
+          "100% accuracy in financial and compliance reporting",
+          "10,000+ hours saved annually through automation",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Beyond corporates and portfolios — our delivery partners",
+        body: "We also run this exact model for other advisory firms. We're the embedded finance and analytics team behind Three Sixty Finance (UK) and Akshar Business Consulting (UK) — delivering their client work from behind the scenes, so they get delivery capacity without adding onshore headcount. If you're an advisory firm evaluating a similar arrangement, this is precisely the model we run.",
+      },
+    ],
+    closingLine:
+      "One standardized view across every company in your portfolio — and a finance cost structure that scales with the portfolio, not with headcount.",
+  },
+  {
+    slug: "technology-systems-implementation",
+    navLabel: "Technology & Systems Implementation",
+    title: "Technology & Systems Implementation",
+    titleTag: "Platform-Agnostic ERP, CRM & FP&A Implementation | GAMCS",
+    metaDescription:
+      "ERP, CRM, and FP&A platform implementation — NetSuite, Salesforce, Aimplan, Vena, Anaplan, Unit4, and more — configured by a team with no vendor allegiance.",
+    h1: "The Right Platform, Implemented by People Who Actually Use It — Not Just Sell It",
+    intro:
+      "Buying enterprise software solves nothing on its own. Half the value of an ERP, CRM, or FP&A platform gets lost in a bad implementation — a chart of accounts that doesn't match how you actually run the business, a CRM nobody trained the sales team to use, or a forecasting tool configured for data entry instead of real planning. We're platform-agnostic on purpose: we implement whatever's right for your business, not the tool we happen to have a reseller relationship with.",
+    atAGlance: [
+      "ERP Implementation",
+      "CRM Implementation",
+      "FP&A Platform Implementation",
+      "Custom Software Development",
+      "Data Warehousing & Cloud Infrastructure",
+      "Post-Go-Live Support",
+    ],
+    blocks: [
+      {
+        kind: "bullets",
+        heading: "What you get",
+        items: [
+          { lead: "ERP Implementation & Optimization", body: "NetSuite, SAP, QuickBooks, and others, configured around your actual chart of accounts and reporting needs." },
+          { lead: "CRM Implementation", body: "Salesforce and other CRM platforms, configured so your revenue and pipeline data actually connects to your financial reporting — the foundation for RevOps and revenue analytics, not just a system of record for sales." },
+          { lead: "FP&A Platform Implementation", body: "Aimplan, Vena, Anaplan, Unit4, PivotXL, and beyond. If your team already has a preferred platform, we work in it — we're not wedded to a shortlist." },
+          { lead: "Custom Software Development", body: "When no off-the-shelf tool fits the gap, we build bespoke tools (MERN stack and beyond) instead of forcing a workaround." },
+          { lead: "Data Warehousing & Cloud Infrastructure", body: "Azure, AWS, and Google Cloud/Microsoft Fabric foundations, so the BI and analytics layer on top has clean, reliable data to work from." },
+          { lead: "Post-Go-Live Support", body: "We don't disappear after go-live. Ongoing optimization and troubleshooting as your usage — and your business — matures." },
+        ],
+      },
+      {
+        kind: "callout",
+        body: "Platform-agnostic, on purpose. We don't have a reseller margin riding on which system you choose — our incentive is that it works for you, not that you buy a specific license.",
+      },
+    ],
+    seeItInAction: {
+      heading: "See it in action",
+      paragraphs: [
+        "For a fast-scaling, NSE-listed VFX/media group, we built a full Azure SQL data warehouse and Power BI reporting layer — with Power Automate handling refreshes and alerts and Azure Active Directory enforcing role-level security — from scratch, live in 16 weeks across 5 entities and 3 currencies.",
+      ],
+    },
+    closingLine:
+      "The best system is the one your team actually uses correctly, every month, without a consultant standing over their shoulder.",
+  },
+  {
+    slug: "transaction-advisory-due-diligence",
+    navLabel: "Transaction Advisory & Due Diligence",
+    title: "Transaction Advisory & Due Diligence",
+    titleTag: "M&A, IPO Advisory, Due Diligence & Debt Refinancing | GAMCS",
+    metaDescription:
+      "Buy-side and sell-side due diligence, M&A advisory, IPO readiness, debt refinancing, and investor/pitch deck preparation for CFOs, PE, and VC-backed companies.",
+    h1: "Deal-Ready Finance — Before the Term Sheet, Not After",
+    intro:
+      "The worst time to discover a gap in your financials is during due diligence, when a buyer, investor, or lead underwriter is already asking the hard questions. Most companies find out their numbers aren't deal-ready exactly when it matters most — mid-transaction, under time pressure, with leverage already shifting away from them.",
+    atAGlance: [
+      "M&A Advisory",
+      "Financial Due Diligence",
+      "Quality of Earnings & Quality of Assets",
+      "Fundraise & Exit Readiness",
+      "Investor & Pitch Deck Preparation",
+      "Debt Refinancing Advisory",
+      "IPO Advisory",
+    ],
+    blocks: [
+      {
+        kind: "bullets",
+        heading: "What you get",
+        items: [
+          { lead: "M&A Advisory", body: "buy-side and sell-side support through diligence, negotiation, and close, from a team that's actually built the models, not just reviewed them." },
+          { lead: "Due Diligence & DD Support", body: "financial due diligence, quality of earnings (QoE) and quality of assets (QoA) analysis, risk assessment, and legal/compliance reviews." },
+          { lead: "Fundraise & Exit Readiness", body: "getting your financial house in order before you're in a data room: clean historicals, defensible forecasts, and a management pack that survives real scrutiny." },
+          { lead: "Investor & Pitch Deck Preparation", body: "the actual decks — fundraise pitch decks, investor updates, and board presentation materials — built on numbers your own diligence-ready models can defend, not just polished slides." },
+          { lead: "Debt Refinancing Advisory", body: "preparing the financial package and providing negotiation support for a refinancing, so lenders see the same clean, defensible numbers a PE buyer or IPO underwriter would." },
+          { lead: "IPO Advisory", body: "readiness assessments and reporting infrastructure built to the standard public-market investors and regulators expect." },
+        ],
+      },
+    ],
+    seeItInAction: {
+      heading: "Proof points",
+      paragraphs: [
+        "We've helped a client secure a $525M PE acquisition deal — hands-on support through the numbers that mattered most in the room. And for a fast-scaling, NSE-listed VFX/media group, our platform enabled a ₹85 Cr QIP by cutting five-year financial data retrieval for merchant banker requests from weeks to hours.",
+      ],
+    },
+    closingLine:
+      "Due diligence doesn't wait for you to be ready. We make sure you already are — the numbers and the story.",
+  },
+  {
+    slug: "finance-capability-building",
+    navLabel: "Finance Capability Building",
+    title: "Finance Capability Building",
+    titleTag: "Finance Training Programs | FP&A, Modelling, ESG, Analytics | GAMCS",
+    metaDescription:
+      "FP&A, financial modelling, ESG, and data analytics training built specifically for finance teams — hands-on, practical, and tool-agnostic.",
+    h1: "Build the Capability In-House, Not Just the Deliverable",
+    intro:
+      "Not every engagement should end with a dependency on us. Sometimes the highest-value thing we can do is train your existing finance team to run the models, dashboards, and frameworks themselves.",
+    atAGlance: [
+      "FP&A Training",
+      "Financial Modelling Training",
+      "ESG Training",
+      "Tool-Based Finance Training",
+      "Data Analytics for Finance Teams",
+    ],
+    blocks: [
+      {
+        kind: "bullets",
+        heading: "What you get",
+        items: [
+          { lead: "FP&A Training", body: "practical, hands-on training in budgeting, forecasting, and variance analysis frameworks your team can run independently." },
+          { lead: "Financial Modelling Training", body: "building bespoke, audit-ready models from scratch, not just filling in templates." },
+          { lead: "ESG Training", body: "reporting frameworks and metrics for teams building out ESG capability for the first time." },
+          { lead: "Tool-Based Finance Training", body: "hands-on enablement in whichever platform you're actually running (often paired with a Technology & Systems Implementation engagement, so your team is trained the moment a new system goes live)." },
+          { lead: "Data Analytics for Finance Professionals", body: "SQL and Python fundamentals aimed specifically at finance teams, not generic data science courses." },
+        ],
+      },
+    ],
+    closingLine:
+      "The best outcome of a GAMCS engagement is a finance team that needs us less over time — not more.",
+  },
+];
+
+/** Doc page 2 — the hub. `blurb` and `linkLabel` are per-pillar, verbatim. */
+export const solutionsHub = {
+  titleTag: "Solutions | FP&A, BI, Offshoring, Systems & Transaction Advisory | GAMCS",
+  metaDescription:
+    "Explore GAMCS's six solution pillars: FP&A & Strategic Finance, BI & Decision Intelligence, Offshoring & CoE, Technology & Systems Implementation, Transaction Advisory & Due Diligence, and Finance Capability Building.",
+  h1: "Solutions Built for Every Stage of the Finance Maturity Curve",
+  subhead:
+    "From your first forecast to a fully embedded offshore Center of Excellence to getting deal-ready for a raise, refinancing, or exit — start where you are, and scale as you grow.",
+  previews: [
+    { slug: "fpa-strategic-finance", blurb: "Budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to your RevOps data — a forward-looking view instead of a rear-view mirror.", linkLabel: "Explore FP&A" },
+    { slug: "bi-decision-intelligence", blurb: "Real-time Power BI and Tableau dashboards, revenue/RevOps analytics, and board-ready stakeholder reporting that flag problems before they hit the P&L.", linkLabel: "Explore BI & Decision Intelligence" },
+    { slug: "offshoring-centers-of-excellence", blurb: "A dedicated, standardized Finance & Analytics CoE — accounting, bookkeeping, and reporting — built for single companies, PE/VC portfolios, and advisory firms who need embedded delivery capacity.", linkLabel: "Explore Offshoring" },
+    { slug: "technology-systems-implementation", blurb: "ERP, CRM, and FP&A platforms — implemented agnostically. NetSuite or SAP, Salesforce, Aimplan, Vena, or Anaplan — we implement what's right for you.", linkLabel: "Explore Systems Implementation" },
+    { slug: "transaction-advisory-due-diligence", blurb: "M&A advisory, IPO readiness, due diligence, debt refinancing, and investor/pitch deck preparation — so your numbers hold up under real scrutiny.", linkLabel: "Explore Transaction Advisory" },
+    { slug: "finance-capability-building", blurb: "FP&A, financial modelling, ESG, and data analytics training that builds lasting capability inside your own finance team.", linkLabel: "Explore Capability Building" },
+  ],
+} as const;
+
+/** Doc page 1, section 3 — homepage. */
+export const maturityCurve = {
+  heading: "Every Finance Function Sits Somewhere on This Curve. Where Are You?",
+  stages: [
+    { n: "Stage 1", name: "Financial Reporting", body: "Statutory compliance, monthly close, historical statements. Necessary, but backward-looking by design." },
+    { n: "Stage 2", name: "Basic MIS", body: "Manual Excel-based management packs. Better visibility, still slow, still fragmented." },
+    { n: "Stage 3", name: "BI & Dashboards", body: "Real-time, automated dashboards replacing manual reporting." },
+    { n: "Stage 4", name: "Decision Intelligence", body: "Predictive and prescriptive analytics, AI-assisted commentary, anomaly detection — finance stops reporting the past and starts shaping the next decision." },
+  ],
+  footnote:
+    "Most companies — and most PE portfolios — are stuck between Stage 1 and Stage 2. We build the bridge to Stage 4.",
+  cta: { label: "See How We Get You There", href: "/solutions" },
+} as const;
+
+/**
+ * Doc page 1, section 6 — homepage.
+ *
+ * TODO(business): the doc names Three Sixty Finance (UK) and Akshar Business
+ * Consulting (UK) as delivery partners. Naming a partner publicly needs their
+ * permission, so `partners` is left empty and the section renders a neutral
+ * placeholder until that is granted. Add the names here and the row fills in.
+ */
+export const partners = {
+  heading: "Trusted by Advisory Firms, Not Just Their Clients",
+  body:
+    "We don't only build Centers of Excellence for direct corporate and PE clients — we're also the embedded finance and analytics delivery team behind respected advisory firms who need capacity without adding onshore headcount.",
+  names: [] as string[],
+  cta: { label: "Considering a similar back-office arrangement? Schedule a Call", href: "/contact" },
+} as const;

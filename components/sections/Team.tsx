@@ -26,7 +26,7 @@ export default function Team() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow n={5} label="Founders" />
+            <SectionEyebrow n={7} label="Founders" />
             <h2>
               {team.headingLines[0]} <em>{team.headingLines[1]}</em>
             </h2>

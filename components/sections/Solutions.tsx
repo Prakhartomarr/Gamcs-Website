@@ -20,7 +20,7 @@ export default function Solutions() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow n={3} label="Our services" />
+            <SectionEyebrow n={4} label="Our services" />
             <h2>{services.intro}</h2>
           </div>
         </div>

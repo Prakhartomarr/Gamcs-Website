@@ -15,13 +15,22 @@ import { faqSchema } from "@/lib/schema";
  * Every answer is assembled from copy already on the site (see `faq` in
  * lib/content/gamcs.ts), which is what makes the FAQPage schema honest.
  */
-export default function FAQ() {
+export default function FAQ({
+  /**
+   * FAQPage structured data belongs on one URL. /faq is the canonical home
+   * for these questions, so the homepage copy of the accordion renders
+   * without the schema rather than duplicating it across two pages.
+   */
+  withSchema = false,
+}: {
+  withSchema?: boolean;
+} = {}) {
   return (
     <section className="section faq-section" id="faq">
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow n={7} label="Questions" />
+            <SectionEyebrow n={9} label="Questions" />
             <h2>{faq.heading}</h2>
           </div>
           <p>
@@ -47,7 +56,7 @@ export default function FAQ() {
         </ul>
       </div>
 
-      <JsonLd data={faqSchema()} />
+      {withSchema && <JsonLd data={faqSchema()} />}
     </section>
   );
 }
