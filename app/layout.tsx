@@ -6,6 +6,7 @@ import MotionLayer from "@/components/motion/MotionLayer";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import HeaderHeight from "@/components/HeaderHeight";
+import Preloader from "@/components/Preloader";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
@@ -66,6 +67,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/*
+          Runs during HTML parse, before first paint, so a visitor who has
+          already seen the preloader this session never gets a flash of it.
+          Doing this in an effect would paint the overlay for a frame first.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('gamcs_preloaded'))document.documentElement.setAttribute('data-preloaded','')}catch(e){}",
+          }}
+        />
+        <Preloader />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

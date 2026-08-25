@@ -1417,3 +1417,49 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .pillar-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
   background:var(--blue);color:#fff;font:600 0.6667rem Montserrat}
 .pillar-card h2{margin-top:16px}
+
+
+/* =====================================================================
+   PRELOADER
+   Dark ground on purpose: it masks the hero shader's mount (a
+   dynamic(ssr:false) import that fades in over 1.1s) and gives the wipe
+   real contrast against the light page underneath.
+   ===================================================================== */
+.preloader{position:fixed;inset:0;z-index:200;background:var(--ink-deep);
+  color:var(--paper);display:grid;place-items:center;
+  clip-path:inset(0 0 0 0);will-change:clip-path}
+/* Repeat visit in the same session: never painted at all. The attribute is
+   set by a blocking inline script before first paint. */
+html[data-preloaded] .preloader{display:none}
+
+.preloader-inner{width:min(1440px,calc(100% - 48px));
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.preloader-edge{font:500 0.6667rem ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.28em;color:rgba(255,255,255,.42);white-space:nowrap}
+.preloader-edge.is-right{text-align:right}
+
+.preloader-mark{display:flex;align-items:center;gap:18px}
+.preloader-ga{font:800 2.4444rem Montserrat,sans-serif;letter-spacing:-.04em;color:var(--paper)}
+.preloader-rule{width:1px;height:38px;background:rgba(255,255,255,.22)}
+.preloader-count{font:500 1.3333rem ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums;color:var(--blue-on-dark,#7FB6DE);letter-spacing:.02em}
+
+@media (max-width:767px){
+  .preloader-inner{width:calc(100% - 32px);flex-direction:column;gap:22px;text-align:center}
+  .preloader-edge.is-right{display:none}
+  .preloader-ga{font-size:2rem}
+  .preloader-count{font-size:1.1111rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .preloader{will-change:auto}
+}
+
+/* Scroll lock for the preloader.
+   An inline overflow:hidden is not enough on this site: body carries
+   overflow-x, so body's overflow propagates to the viewport, and a wheel
+   event still scrolls. Pinning both boxes to the viewport height leaves
+   nothing to scroll, and overscroll-behavior stops rubber-banding. */
+html.is-locked,
+html.is-locked body{overflow:hidden!important;height:100%!important;
+  overscroll-behavior:none;touch-action:none}

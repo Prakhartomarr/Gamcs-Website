@@ -695,3 +695,11 @@ export const partners = {
   names: [] as string[],
   cta: { label: "Considering a similar back-office arrangement? Schedule a Call", href: "/contact" },
 } as const;
+
+/** Preloader. Copy lives here rather than in the component, like everything else. */
+export const preloader = {
+  /** Mirrored on both edges, in the reference's monospace treatment. */
+  label: "LOADING",
+  /** Static, announced once. The counter itself is aria-hidden. */
+  srLabel: "Loading GA Management Consultants",
+} as const;
