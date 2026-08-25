@@ -70,10 +70,14 @@ export default function Preloader() {
 
     /* --- what "loaded" actually means here --- */
     const shaderUp = new Promise<void>((resolve) => {
+      /* Only the homepage mounts the shader. Waiting for it anywhere else
+         burned the full ceiling before the overlay would lift — measured at
+         6.1s on /solutions and 6.9s on /team. */
+      if (!document.querySelector(".hero")) return resolve();
       let tries = 0;
       const poll = () => {
         if (document.querySelector(".hero-shader canvas, .hero-shader-fallback")) return resolve();
-        if (++tries > 120) return resolve(); // ~4s ceiling; never hang on it
+        if (++tries > 60) return resolve(); // ~2s ceiling; never hang on a slow GPU
         window.setTimeout(poll, 33);
       };
       poll();

@@ -1463,3 +1463,27 @@ html[data-preloaded] .preloader{display:none}
 html.is-locked,
 html.is-locked body{overflow:hidden!important;height:100%!important;
   overscroll-behavior:none;touch-action:none}
+
+/* ---- logo hover: an ink wipe across the GA mark ----
+   The overlay masks a small alpha-only copy of the real logo, so the shape is
+   the actual brand mark rather than a redrawn approximation, and the colour
+   comes from a token. Absolutely positioned, so hovering shifts nothing.
+
+   Wiping to --ink-deep, not --blue: the mark is already blue, so a blue wipe
+   was invisible except for flattening one small yellow detail. Resolving to
+   ink also unifies the lockup, since the wordmark beside it is already ink. */
+.brand-mark-wrap{position:relative;display:inline-flex;flex:none;line-height:0}
+.brand-mark-wipe{position:absolute;inset:0;pointer-events:none;
+  background:var(--ink-deep);
+  -webkit-mask:url('/brand/logo-mask.png') no-repeat center/contain;
+  mask:url('/brand/logo-mask.png') no-repeat center/contain;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path .3s var(--ease-out)}
+/* hover only where hovering is real, so touch never sticks */
+@media (hover:hover) and (pointer:fine){
+  .brand-lockup:hover .brand-mark-wipe{clip-path:inset(0 0 0 0)}
+}
+.brand-lockup:focus-visible .brand-mark-wipe{clip-path:inset(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){
+  .brand-mark-wipe{transition:none}
+}

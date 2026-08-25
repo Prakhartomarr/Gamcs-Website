@@ -202,15 +202,21 @@ export function Header() {
 				{/* GA mark + the words set in type. The link carries the accessible
 				    name, so the mark itself is decorative. */}
 				<Link href="/" aria-label={`${site.name} home`} className="brand-lockup shrink-0">
-					<Image
-						src={site.logo}
-						alt=""
-						width={534}
-						height={339}
-						sizes="(max-width: 767px) 42px, 48px"
-						priority
-						className="brand-mark"
-					/>
+					<span className="brand-mark-wrap">
+						<Image
+							src={site.logo}
+							alt=""
+							width={534}
+							height={339}
+							sizes="(max-width: 767px) 42px, 48px"
+							priority
+							className="brand-mark"
+						/>
+						{/* Decorative: the real mark's alpha, masked and filled with the
+						    brand blue, wiped across on hover. Using the actual asset
+						    rather than a redrawn SVG keeps the logo exact. */}
+						<span className="brand-mark-wipe" aria-hidden="true" />
+					</span>
 					<span className="brand-words">
 						<span className="brand-w1">MANAGEMENT</span>
 						<span className="brand-w2">CONSULTANTS</span>
