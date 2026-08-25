@@ -6,7 +6,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
-import { primaryCta, site, solutions } from '@/lib/content/gamcs';
+import { caseStudies, primaryCta, site, solutions } from '@/lib/content/gamcs';
 
 /* ------------------------------------------------------------------ *
  * Floating pill header.
@@ -20,15 +20,28 @@ import { primaryCta, site, solutions } from '@/lib/content/gamcs';
  * real action; GAMCS has no login or self-serve signup.
  * ------------------------------------------------------------------ */
 
-type Panel = 'solutions';
+type Panel = 'solutions' | 'case' | 'who';
 type Item = { label: string; href: string } | { label: string; panel: Panel };
 
+/* Restored to the pre-Phase-2 set at the client's request. This deliberately
+   differs from the copy doc's GLOBAL ELEMENTS nav (Home / Solutions / Case
+   Studies / Team / FAQ) — the original was asked for back. FAQ stays reachable
+   from the Who We Are panel, now pointing at the standalone /faq page. */
 const items: Item[] = [
-	{ label: 'Home', href: '/' },
+	{ label: 'Who We Are', panel: 'who' },
+	{ label: 'How We Help', href: '/#how-we-help' },
 	{ label: 'Solutions', panel: 'solutions' },
-	{ label: 'Case Studies', href: '/case-study' },
+	{ label: 'Case Study', panel: 'case' },
 	{ label: 'Team', href: '/team' },
-	{ label: 'FAQ', href: '/faq' },
+];
+
+const whoLinks = [
+	{ title: 'Our Story', href: '/#who-we-are' },
+	{ title: 'How We Help', href: '/#how-we-help' },
+	{ title: 'Our Team', href: '/team' },
+	{ title: 'What clients say', href: '/#testimonials' },
+	/* the standalone page now, not the homepage section it used to hit */
+	{ title: 'FAQ', href: '/faq' },
 ];
 
 /* Derived from `solutions[]`, so the menu can never list a pillar that has no
@@ -154,7 +167,47 @@ export function Header() {
 							))}
 						</div>
 			);
-		return null;
+		if (key === 'case')
+			return (
+						<div className="mega-inner mega-2">
+							<div className="mega-col">
+								<Link className="mega-head" href="/case-study" onClick={closeAll}>
+									All case studies <Arrow />
+								</Link>
+								<ul>
+									{caseStudies.items.slice(0, 5).map((c) => (
+										<li key={c.no}>
+											<Link href="/case-study" onClick={closeAll}>{c.title}</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+							<div className="mega-col">
+								<span className="mega-head as-label">More</span>
+								<ul>
+									{caseStudies.items.slice(5).map((c) => (
+										<li key={c.no}>
+											<Link href="/case-study" onClick={closeAll}>{c.title}</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
+			);
+		return (
+						<div className="mega-inner mega-1">
+							<div className="mega-col">
+								<span className="mega-head as-label">Who We Are</span>
+								<ul>
+									{whoLinks.map((l) => (
+										<li key={l.title}>
+											<Link href={l.href} onClick={closeAll}>{l.title}</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
+		);
 	};
 
 	/* The sheet covers the page but the page stays focusable, so Tab used to walk
@@ -336,6 +389,27 @@ export function Header() {
 										</ul>
 									</div>
 								))}
+
+							{sub === 'case' && (
+								<div className="drawer-group">
+									<Link className="drawer-group-head" href="/case-study" onClick={closeAll}>All case studies</Link>
+									<ul>
+										{caseStudies.items.map((c) => (
+											<li key={c.no}><Link href="/case-study" onClick={closeAll}>{c.title}</Link></li>
+										))}
+									</ul>
+								</div>
+							)}
+
+							{sub === 'who' && (
+								<div className="drawer-group">
+									<ul>
+										{whoLinks.map((l) => (
+											<li key={l.title}><Link href={l.href} onClick={closeAll}>{l.title}</Link></li>
+										))}
+									</ul>
+								</div>
+							)}
 
 						</div>
 					)}

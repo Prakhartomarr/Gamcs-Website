@@ -65,7 +65,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    /* The preloader's guard script stamps data-preloaded on <html> during
+       parse, before hydration, so React sees an attribute the server never
+       rendered and warns. This is the sanctioned escape hatch for exactly
+       that pattern — the same one theme switchers use. It suppresses the
+       warning on this element only, not on its subtree. */
+    <html lang="en" suppressHydrationWarning>
       <body>
         {/*
           Runs during HTML parse, before first paint, so a visitor who has
