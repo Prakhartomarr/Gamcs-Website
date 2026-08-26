@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQ from "@/components/sections/FAQ";
-import { faq } from "@/lib/content/gamcs";
+import Link from "next/link";
+import { faq, primaryCta } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Frequently Asked Questions",
-  description:
-    "Answers to common questions about GAMCS's FP&A, BI & analytics, offshoring, systems implementation, transaction advisory, and training services.",
+  description: faq.intro,
   path: "/faq",
 });
 
@@ -25,13 +25,16 @@ export default function FaqPage() {
       <section className="page-head">
         <div className="container">
           <Breadcrumbs trail={[{ label: "FAQ", href: "/faq" }]} />
-          <div className="section-kicker">FAQ</div>
-          <h1>Frequently Asked Questions</h1>
-          <p>{faq.heading}</p>
+          <div className="section-kicker">{faq.kicker}</div>
+          <h1>{faq.heading}</h1>
+          <p>{faq.intro}</p>
+          <p className="faq-head-cta">
+            {faq.cta} <Link href={primaryCta.href}>{primaryCta.label}</Link>
+          </p>
         </div>
       </section>
 
-      <FAQ withSchema />
+      <FAQ />
     </>
   );
 }

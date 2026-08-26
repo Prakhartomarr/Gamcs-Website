@@ -50,7 +50,7 @@ export default function Hero() {
       }, 2800);
 
       const st = { trigger: root, start: "top top", end: "bottom top", scrub: true as const };
-      gsap.to(".hero-copy", { yPercent: -12, autoAlpha: 0.55, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
+      gsap.to(".hero-inner", { yPercent: -12, autoAlpha: 0.55, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
     }, rootRef);
 
     return () => {
@@ -64,17 +64,25 @@ export default function Hero() {
       <HeroShader />
 
       <div className="container hero-inner">
-        <div className="hero-copy">
+        {/* top: headline only. The right of the hero stays deliberately empty. */}
+        <div className="hero-copy hero-top">
           <h1 className="hero-title">
             <span className="line">
               <span className="line-inner">{hero.line1}</span>
             </span>
             <span className="line">
+              <span className="line-inner">{hero.line2}</span>
+            </span>
+            <span className="line">
               <span className="line-inner">
-                <em>{hero.line2}</em>
+                <em>{hero.line3}</em>
               </span>
             </span>
           </h1>
+        </div>
+
+        {/* bottom: paragraph left, both buttons right, one shared baseline */}
+        <div className="hero-bottom">
           <p className="sub">{hero.subhead}</p>
           <div className="ctas">
             <ShimmerCTA href={primaryCta.href} cta="hero">
@@ -87,7 +95,6 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-
       </div>
     </section>
   );

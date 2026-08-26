@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import SolutionPillars from "@/components/sections/SolutionPillars";
+import SolutionCards from "@/components/sections/SolutionCards";
 import { primaryCta, solutionsHub } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
 
@@ -16,18 +16,27 @@ export const metadata: Metadata = pageMetadata({
 export default function SolutionsHubPage() {
   return (
     <>
-      <section className="page-head">
+      {/* Centred only here, to match the services reference. Every other
+          page-head on the site stays left-aligned, so the modifier is scoped
+          rather than applied to .page-head itself. The breadcrumb stays put —
+          centring it reads oddly and it is worth keeping for navigation. */}
+      <section className="page-head is-centred">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Solutions", href: "/solutions" }]} />
-          <div className="section-kicker">SOLUTIONS</div>
-          <h1>{solutionsHub.h1}</h1>
-          <p>{solutionsHub.subhead}</p>
+          <div className="page-head-centre">
+            <span className="eyebrow-pill">Solutions</span>
+            <h1>
+              {solutionsHub.h1Lead}{" "}
+              <em>{solutionsHub.h1Accent}</em>
+            </h1>
+            <p>{solutionsHub.subhead}</p>
+          </div>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <SolutionPillars />
+          <SolutionCards />
 
           <div className="case-cta reveal">
             <h2>Not sure which pillar you need? Start with a conversation.</h2>

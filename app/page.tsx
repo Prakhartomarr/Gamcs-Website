@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import LogoCloudSwap from "@/components/ui/logo-clouds";
 import WhoWeAre from "@/components/sections/WhoWeAre";
+import HowWeHelp from "@/components/sections/HowWeHelp";
 import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
 import OurPartners from "@/components/sections/OurPartners";
 import Achievements from "@/components/sections/Achievements";
 import Team from "@/components/sections/Team";
 import Testimonials from "@/components/sections/Testimonials";
-import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/content/gamcs";
@@ -40,13 +40,13 @@ export default function HomePage() {
         subtitle="Platform-agnostic by design — we implement and optimise whichever tools are right for your business, not the ones we're incentivised to sell."
       />
       <WhoWeAre />
+      <HowWeHelp />
       <MaturityCurve />
       <Solutions />
       <OurPartners />
       <Achievements />
       <Team />
       <Testimonials />
-      <FAQ />
       <Contact />
     </>
   );

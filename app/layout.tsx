@@ -7,6 +7,7 @@ import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
 import HeaderHeight from "@/components/HeaderHeight";
 import Preloader from "@/components/Preloader";
+import { GaLogoSprite } from "@/components/ui/GaLogo";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
@@ -83,6 +84,7 @@ export default function RootLayout({
               "try{if(sessionStorage.getItem('gamcs_preloaded'))document.documentElement.setAttribute('data-preloaded','')}catch(e){}",
           }}
         />
+        <GaLogoSprite />
         <Preloader />
         <a className="skip-link" href="#main">
           Skip to content

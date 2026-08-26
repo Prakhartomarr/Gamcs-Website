@@ -43,8 +43,11 @@ export const site = {
 /** Hero headline and subhead, per the copy doc. Split across two lines the
  *  way the design sets them; the second line carries the blue accent. */
 export const hero = {
-  line1: "From Reporting to Real-Time",
-  line2: "Decision Intelligence",
+  /* Doc page 1 H1, broken across three lines for the hero's rhythm. The words
+     are unchanged: "From Reporting to Real-Time Decision Intelligence". */
+  line1: "From Reporting",
+  line2: "to Real-Time",
+  line3: "Decision Intelligence",
   subhead:
     "GA Management Consultants embeds forward-looking FP&A, live BI dashboards, and scalable offshore finance teams into growth companies and investment portfolios \u2014 so every number you see is ready before you need to ask for it.",
 } as const;
@@ -75,19 +78,38 @@ export const nav = [
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
 
 /** "Why Us" section */
+/**
+ * "How We Help" — doc page 1, section 4 (v3).
+ *
+ * Seven points, each a lead and a body. The earlier six were one-line labels
+ * transcribed from the live site; the doc's version carries the explanation
+ * too, which is what the carousel cards need.
+ */
 export const whyUs = {
+  heading: "Expert Solutions, Cost-Efficient Results",
+  /* Same sentence, split so one phrase can take the accent tint and its drawn
+     underline. `heading` stays whole for the carousel's aria-label. */
+  headingLead: "Expert Solutions,",
+  headingAccent: "Cost-Efficient",
+  headingTail: "Results.",
   points: [
-    "Expert solutions, Cost-efficient results",
-    "Tailored Solutions for Your Unique Needs",
-    "End-to-End Integration of Finance, Human Resource, Analytics & Technology",
-    "Proven Track Record Across Diverse Clients",
-    "Full-Cycle Support, From Planning to Execution",
-    "Real-Time Operational Insights",
+    { lead: "Tailored to Your Business", body: "Client-centric customization and industry-specific expertise, not off-the-shelf templates." },
+    { lead: "One Integrated Team", body: "Finance, revenue, and technology under one roof instead of three vendors who don't talk to each other." },
+    { lead: "Platform-Agnostic by Design", body: "We implement the right ERP, CRM, or FP&A tool for your business — not the one we're incentivized to sell." },
+    { lead: "AI Built In, Not Bolted On", body: "Anomaly detection, predictive alerts, and automated commentary ship as standard in every dashboard and model we build — not an add-on module you buy later." },
+    { lead: "Deal-Ready When It Counts", body: "Due diligence, fundraise, and refinancing support so your numbers hold up under real scrutiny, not just internal review." },
+    { lead: "Proven Across Industries", body: "A track record spanning SaaS, D2C/consumer, hospitality, healthcare, pharma, non-profits, and professional services." },
+    { lead: "Cost Structure That Scales With You", body: "Offshore delivery models that flex from a single analyst to a full Center of Excellence." },
   ],
 } as const;
 
 export const services = {
   intro: "We offer a variety of services tailored to client needs.",
+  /* Same sentence, split so one word can take the accent tint, as the
+     reference does. `intro` stays whole for anywhere that needs the full line. */
+  introLead: "We offer a variety of",
+  introAccent: "services",
+  introTail: "tailored to client needs.",
   business: [
     "Budgeting & Forecasting",
     "Business Intelligence & Analytics",
@@ -300,6 +322,10 @@ export const faq = {
   heading: "Frequently Asked Questions",
   kicker: "FAQ",
   cta: "Still have questions?",
+  /* Doc page 11 meta description. Feeds both the <meta> tag and the /faq
+     intro line, so the two cannot drift apart. */
+  intro:
+    "Answers to common questions about GAMCS's FP&A, BI & analytics, offshoring, systems implementation, transaction advisory, and training services.",
   items: [
     {
       q: "What is FP&A advisory, and how is it different from accounting or bookkeeping?",
@@ -663,6 +689,10 @@ export const solutionsHub = {
   metaDescription:
     "Explore GAMCS's six solution pillars: FP&A & Strategic Finance, BI & Decision Intelligence, Offshoring & CoE, Technology & Systems Implementation, Transaction Advisory & Due Diligence, and Finance Capability Building.",
   h1: "Solutions Built for Every Stage of the Finance Maturity Curve",
+  /* Same sentence, split so the trailing phrase can carry the accent tint.
+     Kept alongside `h1` because the metadata title still wants it whole. */
+  h1Lead: "Solutions Built for Every Stage of the",
+  h1Accent: "Finance Maturity Curve",
   subhead:
     "From your first forecast to a fully embedded offshore Center of Excellence to getting deal-ready for a raise, refinancing, or exit — start where you are, and scale as you grow.",
   previews: [
@@ -686,6 +716,14 @@ export const maturityCurve = {
   ],
   footnote:
     "Most companies — and most PE portfolios — are stuck between Stage 1 and Stage 2. We build the bridge to Stage 4.",
+  /* Shown when a visitor taps a stage to place themselves. Copy supplied in
+     the reference build; `b` marks the phrase that takes the accent colour. */
+  stageNotes: [
+    "You're at Stage 1 — compliant, but reading the past. The climb to Stage 4 starts with visibility.",
+    "You're at Stage 2 — where most companies stall. This is exactly the gap we bridge to Stage 4.",
+    "You're at Stage 3 — real-time and automated. One step from finance that shapes the decision.",
+    "Stage 4 — Decision Intelligence. This is where we get you: finance stops reporting the past and starts shaping the next decision.",
+  ],
   cta: { label: "See How We Get You There", href: "/solutions" },
 } as const;
 

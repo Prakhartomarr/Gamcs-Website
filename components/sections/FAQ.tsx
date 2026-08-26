@@ -1,7 +1,5 @@
-import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
-import SectionEyebrow from "@/components/SectionEyebrow";
-import { faq, primaryCta } from "@/lib/content/gamcs";
+import { faq } from "@/lib/content/gamcs";
 import { faqSchema } from "@/lib/schema";
 
 /**
@@ -14,31 +12,18 @@ import { faqSchema } from "@/lib/schema";
  *
  * Every answer is assembled from copy already on the site (see `faq` in
  * lib/content/gamcs.ts), which is what makes the FAQPage schema honest.
+ *
+ * Renders the list only. It previously carried a numbered eyebrow and an <h2>
+ * for its homepage placement; with /faq as the sole consumer that stacked a
+ * third heading beneath the page's own kicker and H1, and the "9" referred to
+ * a sequence a standalone page does not have. The page owns the heading, this
+ * owns the questions. The schema is unconditional for the same reason: one URL
+ * carries these questions now.
  */
-export default function FAQ({
-  /**
-   * FAQPage structured data belongs on one URL. /faq is the canonical home
-   * for these questions, so the homepage copy of the accordion renders
-   * without the schema rather than duplicating it across two pages.
-   */
-  withSchema = false,
-}: {
-  withSchema?: boolean;
-} = {}) {
+export default function FAQ() {
   return (
     <section className="section faq-section" id="faq">
       <div className="container">
-        <div className="section-head reveal">
-          <div>
-            <SectionEyebrow n={9} label="Questions" />
-            <h2>{faq.heading}</h2>
-          </div>
-          <p>
-            {faq.cta}{" "}
-            <Link href={primaryCta.href}>{primaryCta.label}</Link>
-          </p>
-        </div>
-
         <ul className="faq-list">
           {faq.items.map((item) => (
             <li key={item.q} className="reveal">
@@ -56,7 +41,7 @@ export default function FAQ({
         </ul>
       </div>
 
-      {withSchema && <JsonLd data={faqSchema()} />}
+      <JsonLd data={faqSchema()} />
     </section>
   );
 }
