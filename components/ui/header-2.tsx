@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import GaLogo from '@/components/ui/GaLogo';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
-import { caseStudies, primaryCta, services, site } from '@/lib/content/gamcs';
+import { caseStudies, primaryCta, site, solutions } from '@/lib/content/gamcs';
 
 /* ------------------------------------------------------------------ *
  * Floating pill header.
@@ -23,6 +23,10 @@ import { caseStudies, primaryCta, services, site } from '@/lib/content/gamcs';
 type Panel = 'solutions' | 'case' | 'who';
 type Item = { label: string; href: string } | { label: string; panel: Panel };
 
+/* Restored to the pre-Phase-2 set at the client's request. This deliberately
+   differs from the copy doc's GLOBAL ELEMENTS nav (Home / Solutions / Case
+   Studies / Team / FAQ) — the original was asked for back. FAQ stays reachable
+   from the Who We Are panel, now pointing at the standalone /faq page. */
 const items: Item[] = [
 	{ label: 'Who We Are', panel: 'who' },
 	{ label: 'How We Help', href: '/#how-we-help' },
@@ -31,19 +35,22 @@ const items: Item[] = [
 	{ label: 'Team', href: '/team' },
 ];
 
-const solutionColumns = [
-	{ heading: 'Business Solutions', href: '/#business-solutions', links: services.business },
-	{ heading: 'Technology Solutions', href: '/#technology-solutions', links: services.technology },
-	{ heading: 'Training Programs', href: '/#training-programs', links: services.training },
-];
-
 const whoLinks = [
 	{ title: 'Our Story', href: '/#who-we-are' },
 	{ title: 'How We Help', href: '/#how-we-help' },
 	{ title: 'Our Team', href: '/team' },
 	{ title: 'What clients say', href: '/#testimonials' },
-	{ title: 'FAQ', href: '/#faq' },
+	/* the standalone page now, not the homepage section it used to hit */
+	{ title: 'FAQ', href: '/faq' },
 ];
+
+/* Derived from `solutions[]`, so the menu can never list a pillar that has no
+   page — or miss one that does. Three columns, wrapping to two rows of three. */
+const solutionColumns = solutions.map((s) => ({
+	heading: s.navLabel,
+	href: `/solutions/${s.slug}`,
+	links: s.atAGlance.slice(0, 4),
+}));
 
 const Arrow = () => (
 	<svg viewBox="0 0 16 16" className="nav-arrow" aria-hidden="true">
@@ -245,23 +252,8 @@ export function Header() {
 				className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-6 px-5 py-4 sm:px-8 sm:py-5 lg:px-12" 
 				aria-label="Primary"
 			>
-				{/* GA mark + the words set in type. The link carries the accessible
-				    name, so the mark itself is decorative. */}
-				<Link href="/" aria-label={`${site.name} home`} className="brand-lockup shrink-0">
-					<Image
-						src={site.logo}
-						alt=""
-						width={534}
-						height={339}
-						sizes="(max-width: 767px) 42px, 48px"
-						priority
-						className="brand-mark"
-					/>
-					<span className="brand-words">
-						<span className="brand-w1">MANAGEMENT</span>
-						<span className="brand-w2">CONSULTANTS</span>
-					</span>
-				</Link>
+				{/* Mark always visible; the words reveal on hover/focus. */}
+				<GaLogo className="shrink-0" />
 
 				{/* full nav only where it comfortably fits the pill */}
 				<div className="nav hidden xl:flex">
@@ -397,6 +389,7 @@ export function Header() {
 									</ul>
 								</div>
 							)}
+
 						</div>
 					)}
 				</div>

@@ -28,9 +28,13 @@ next-env.d.ts
 .next-build/
 .env.local
 
-# internal working documents — not for a public repository
-GAMCS_Website_Copy_FINAL_2.docx
+# internal working documents — not for a public repository.
+# Globbed, not named: an exact filename only covered FINAL_2, so FINAL_3 and
+# the v2 conversion were both staged for a public repo.
+GAMCS_Website_Copy*.docx
+*.docx
 content.md
+content-v*.md
 
 # plugin cache
 .impeccable/

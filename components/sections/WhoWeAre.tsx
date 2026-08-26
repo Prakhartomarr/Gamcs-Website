@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AbstractPanel from "@/components/AbstractPanel";
 import SectionEyebrow from "@/components/SectionEyebrow";
-import { primaryCta, site, story, whyUs } from "@/lib/content/gamcs";
+import { primaryCta, site, story } from "@/lib/content/gamcs";
 
 /**
  * Who we are + how we help.
@@ -10,9 +10,8 @@ import { primaryCta, site, story, whyUs } from "@/lib/content/gamcs";
  * heading, then a three-column band of panel / copy + CTA / panel. The photo
  * slots are filled with `AbstractPanel` rather than stock imagery — the
  * layout rhythm without depicting people who are not GAMCS.
- *
- * The six "how we help" points keep their own numbered block below, so the
- * section still carries both ideas.
+
+ * "How we help" now lives in its own section (HowWeHelp) as a carousel.
  */
 export default function WhoWeAre() {
   return (
@@ -43,25 +42,6 @@ export default function WhoWeAre() {
 
         <p className="who-mission reveal">{story.mission}</p>
 
-        <div className="why-grid" id="how-we-help">
-          <div className="reveal">
-            <SectionEyebrow n={2} label="How we help" />
-          </div>
-          <ul className="why-list">
-            {whyUs.points.map((point, i) => (
-              <li className="why-item reveal" key={point} data-lift>
-                <span className="why-meta" aria-hidden="true">
-                  <span className="why-mark">✦</span>
-                  <span className="why-index">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </span>
-                <span className="why-text">{point}</span>
-                <span className="why-rule" aria-hidden="true" />
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </section>
   );

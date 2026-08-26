@@ -75,16 +75,20 @@ const config: Config = {
         "6xl": "3rem",
       },
       fontFamily: {
-        heading: ["Montserrat", "sans-serif"],
-        body: ['"Open Sans"', "Arial", "sans-serif"],
+        heading: ["Sora", "sans-serif"],
+        body: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
       },
       keyframes: {
+        /* Base UI, not Radix: this project has no @radix-ui packages, and
+           --radix-accordion-content-height is never set, so these keyframes
+           animated 0 -> 0 and the panel appeared to snap. Base UI's
+           collapsible exposes --accordion-panel-height. */
         "accordion-down": {
           from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "var(--accordion-panel-height)" },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
+          from: { height: "var(--accordion-panel-height)" },
           to: { height: "0" },
         },
       },

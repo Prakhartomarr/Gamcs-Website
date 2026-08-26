@@ -80,7 +80,7 @@ function FlickeringText({
 			const MAX_SIZE = Math.floor(h * 0.82);
 
 			const setFont = (px: number, track: number) => {
-				mctx.font = `800 ${px}px Montserrat, system-ui, sans-serif`;
+				mctx.font = `700 ${px}px Sora, system-ui, sans-serif`;
 				try {
 					(mctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = `${track}px`;
 				} catch {

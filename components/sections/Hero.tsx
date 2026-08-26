@@ -13,7 +13,6 @@ import dynamic from "next/dynamic";
 const HeroShader = dynamic(() => import("@/components/hero/HeroShader"), {
   ssr: false,
 });
-import CustomerLogoRow from "@/components/hero/CustomerLogoRow";
 import ShimmerCTA from "@/components/motion/ShimmerCTA";
 import { hero, primaryCta } from "@/lib/content/gamcs";
 
@@ -34,8 +33,6 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       gsap.set(".line-inner", { yPercent: 115 });
       gsap.set([".sub", ".ctas"], { opacity: 0, y: 16 });
-      gsap.set(".ribbon-field", { opacity: 0 });
-      gsap.set(".hero-clients", { opacity: 0, y: 18 });
       root.dataset.anim = "ready";
 
       const tl = gsap.timeline({
@@ -44,18 +41,16 @@ export default function Hero() {
            so the hero is not left holding a dozen composited layers. */
         onComplete: () => gsap.set(".line-inner", { willChange: "auto" }),
       });
-      tl.to(".ribbon-field", { opacity: 1, duration: 1.1, ease: "power1.out" }, 0)
-        .to(".line-inner", { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.55")
+      tl.to(".line-inner", { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.55")
         .to(".sub", { opacity: 1, y: 0, duration: 0.6 }, "-=0.35")
-        .to(".ctas", { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-        .to(".hero-clients", { opacity: 1, y: 0, duration: 0.7 }, "-=0.5");
+        .to(".ctas", { opacity: 1, y: 0, duration: 0.6 }, "-=0.4");
 
       failsafe = window.setTimeout(() => {
         if (tl.progress() === 0) tl.progress(1);
       }, 2800);
 
       const st = { trigger: root, start: "top top", end: "bottom top", scrub: true as const };
-      gsap.to(".hero-copy", { yPercent: -12, autoAlpha: 0.55, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
+      gsap.to(".hero-inner", { yPercent: -12, autoAlpha: 0.55, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
     }, rootRef);
 
     return () => {
@@ -69,17 +64,25 @@ export default function Hero() {
       <HeroShader />
 
       <div className="container hero-inner">
-        <div className="hero-copy">
+        {/* top: headline only. The right of the hero stays deliberately empty. */}
+        <div className="hero-copy hero-top">
           <h1 className="hero-title">
             <span className="line">
               <span className="line-inner">{hero.line1}</span>
             </span>
             <span className="line">
+              <span className="line-inner">{hero.line2}</span>
+            </span>
+            <span className="line">
               <span className="line-inner">
-                <em>{hero.line2}</em>
+                <em>{hero.line3}</em>
               </span>
             </span>
           </h1>
+        </div>
+
+        {/* bottom: paragraph left, both buttons right, one shared baseline */}
+        <div className="hero-bottom">
           <p className="sub">{hero.subhead}</p>
           <div className="ctas">
             <ShimmerCTA href={primaryCta.href} cta="hero">
@@ -92,8 +95,6 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-
-        <CustomerLogoRow />
       </div>
     </section>
   );

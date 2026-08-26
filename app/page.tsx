@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
+import LogoCloudSwap from "@/components/ui/logo-clouds";
 import WhoWeAre from "@/components/sections/WhoWeAre";
+import HowWeHelp from "@/components/sections/HowWeHelp";
+import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
+import OurPartners from "@/components/sections/OurPartners";
 import Achievements from "@/components/sections/Achievements";
 import Team from "@/components/sections/Team";
 import Testimonials from "@/components/sections/Testimonials";
-import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/content/gamcs";
@@ -26,12 +29,24 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      {/*
+        The platform trust bar from the copy doc's hero section, given its own
+        band directly under the fold. Titled for what these actually are —
+        the platforms GAMCS implements and works in — rather than "trusted by",
+        which would read as a client list. SAP and AWS are not GAMCS clients.
+      */}
+      <LogoCloudSwap
+        title="The platforms your finance stack already runs on"
+        subtitle="Platform-agnostic by design — we implement and optimise whichever tools are right for your business, not the ones we're incentivised to sell."
+      />
       <WhoWeAre />
+      <HowWeHelp />
+      <MaturityCurve />
       <Solutions />
+      <OurPartners />
       <Achievements />
       <Team />
       <Testimonials />
-      <FAQ />
       <Contact />
     </>
   );
