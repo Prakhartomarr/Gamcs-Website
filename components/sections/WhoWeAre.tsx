@@ -1,35 +1,44 @@
+import Image from "next/image";
 import Link from "next/link";
-import AbstractPanel from "@/components/AbstractPanel";
+import CountUp from "@/components/motion/CountUp";
 import SectionEyebrow from "@/components/SectionEyebrow";
-import { primaryCta, site, story } from "@/lib/content/gamcs";
+import { achievements, primaryCta, site, story, team } from "@/lib/content/gamcs";
 
 /**
- * Who we are + how we help.
+ * Who we are: copy and CTA on the left, a founder portrait on the right, and a
+ * band of four figures underneath.
  *
- * Composed like the reference's "About" block: numbered badge, one large
- * heading, then a three-column band of panel / copy + CTA / panel. The photo
- * slots are filled with `AbstractPanel` rather than stock imagery — the
- * layout rhythm without depicting people who are not GAMCS.
-
- * "How we help" now lives in its own section (HowWeHelp) as a carousel.
+ * The portrait is a real founder rather than stock photography — the reason
+ * the previous version of this section used `AbstractPanel` was that it would
+ * not depict people who are not GAMCS, and a founder satisfies that while
+ * still putting a face on the firm.
+ *
+ * The four figures are the published ones, pulled from `achievements` by value
+ * so there is a single source for them: they also appear in the Achievements
+ * section, and this way the two can never drift apart. `CountUp` is how that
+ * section already renders them, and it degrades to plain server-rendered text
+ * without JS or under prefers-reduced-motion.
  */
+const FIGURES = ["$525Mn", "10,000+", "90%", "100+"] as const;
+
 export default function WhoWeAre() {
+  const stats = FIGURES.map((v) =>
+    achievements.items.find((i) => i.value === v)
+  ).filter((i): i is (typeof achievements.items)[number] => Boolean(i));
+
+  const founder = team.leadership[0];
+  /* "Founder | FP&A & Due Diligence Specialist" -> "Founder" */
+  const role = founder.title.split("|")[0].trim();
+
   return (
     <section className="section who" id="who-we-are">
       <div className="container">
-        <div className="reveal">
-          <SectionEyebrow n={1} label="Who we are" />
-          <h2 className="who-heading">{site.tagline}</h2>
-        </div>
-
-        <div className="who-grid reveal">
-          <AbstractPanel variant="rings" ratio="438 / 346" />
-
-          <div className="who-grid-copy">
-            <p>{story.lead}</p>
-            <p style={{ marginTop: 14, color: "var(--ink-muted)" }}>
-              {story.network}
-            </p>
+        <div className="who-row">
+          <div className="who-copy reveal">
+            <SectionEyebrow n={1} label="Who we are" />
+            <h2 className="who-heading">{site.tagline}</h2>
+            <p className="who-lead">{story.lead}</p>
+            <p className="who-sub">{story.network}</p>
             <Link className="btn btn-shimmer" href={primaryCta.href} data-press>
               <span className="btn-label">
                 About our firm <span aria-hidden="true">↗</span>
@@ -37,11 +46,29 @@ export default function WhoWeAre() {
             </Link>
           </div>
 
-          <AbstractPanel variant="ribbons" ratio="3 / 2" />
+          <div className="who-portrait reveal">
+            <Image
+              src={founder.photo}
+              alt={`${founder.name}, ${role}`}
+              width={880}
+              height={1056}
+              sizes="(max-width: 1023px) 92vw, 440px"
+            />
+          </div>
         </div>
 
         <p className="who-mission reveal">{story.mission}</p>
 
+        <ul className="who-stats reveal">
+          {stats.map((s) => (
+            <li key={s.value}>
+              <div className="who-stat-value">
+                <CountUp value={s.value} />
+              </div>
+              <p className="who-stat-label">{s.label}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

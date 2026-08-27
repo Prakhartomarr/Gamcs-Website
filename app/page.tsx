@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
-import LogoCloudSwap from "@/components/ui/logo-clouds";
+import ClientLogos from "@/components/sections/ClientLogos";
 import WhoWeAre from "@/components/sections/WhoWeAre";
 import HowWeHelp from "@/components/sections/HowWeHelp";
 import MaturityCurve from "@/components/sections/MaturityCurve";
@@ -30,15 +30,13 @@ export default function HomePage() {
     <>
       <Hero />
       {/*
-        The platform trust bar from the copy doc's hero section, given its own
-        band directly under the fold. Titled for what these actually are —
-        the platforms GAMCS implements and works in — rather than "trusted by",
-        which would read as a client list. SAP and AWS are not GAMCS clients.
+        Client logo wall. This band used to hold the platform trust bar (Power
+        BI, SAP, AWS); those are tools GAMCS implements, not customers, so the
+        "trusted by" framing that would have been wrong for them is accurate
+        for the real client list that replaced it. Platform-agnosticism is
+        still claimed in `whoWeAre` and on the systems-implementation page.
       */}
-      <LogoCloudSwap
-        title="The platforms your finance stack already runs on"
-        subtitle="Platform-agnostic by design — we implement and optimise whichever tools are right for your business, not the ones we're incentivised to sell."
-      />
+      <ClientLogos />
       <WhoWeAre />
       <HowWeHelp />
       <MaturityCurve />

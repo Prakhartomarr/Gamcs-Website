@@ -13,8 +13,7 @@ import dynamic from "next/dynamic";
 const HeroShader = dynamic(() => import("@/components/hero/HeroShader"), {
   ssr: false,
 });
-import ShimmerCTA from "@/components/motion/ShimmerCTA";
-import { hero, primaryCta } from "@/lib/content/gamcs";
+import { hero } from "@/lib/content/gamcs";
 
 export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -81,13 +80,12 @@ export default function Hero() {
           </h1>
         </div>
 
-        {/* bottom: paragraph left, both buttons right, one shared baseline */}
+        {/* bottom: paragraph left, button right, one shared baseline.
+            The hero's "Schedule a Call" was removed — the header keeps a
+            persistent one, so the fold no longer repeats it. */}
         <div className="hero-bottom">
           <p className="sub">{hero.subhead}</p>
           <div className="ctas">
-            <ShimmerCTA href={primaryCta.href} cta="hero">
-              {primaryCta.label} <span aria-hidden="true">↗</span>
-            </ShimmerCTA>
             <Link className="btn btn-light" href="/#how-we-help" data-press>
               <span className="btn-label">
                 How We Help <span aria-hidden="true">→</span>

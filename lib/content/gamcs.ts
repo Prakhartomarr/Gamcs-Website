@@ -740,7 +740,77 @@ export const partners = {
   body:
     "We don't only build Centers of Excellence for direct corporate and PE clients — we're also the embedded finance and analytics delivery team behind respected advisory firms who need capacity without adding onshore headcount.",
   names: [] as string[],
+  /**
+   * The advisory firms GAMCS delivers behind, shown as marks rather than the
+   * `names` row above — which is why that row is still empty. These three moved
+   * here out of the client wall: they are partners, not customers, and the
+   * section heading only holds if the logos under it are actually advisory
+   * firms. Assets live in /public/logos/partners, processed the same way as the
+   * client marks. All three read cleanly on this section's grey band without
+   * any tile behind them.
+   */
+  logos: [
+    { name: "Akshar Business Consulting", file: "akshar.png" },
+    { name: "Threesixty Finance", file: "threesixty.png" },
+    { name: "CFO Bridge", file: "cfo-bridge.png" },
+  ] as { name: string; file: string }[],
   cta: { label: "Considering a similar back-office arrangement? Schedule a Call", href: "/contact" },
+} as const;
+
+/**
+ * Client logo wall, in the band directly under the hero.
+ *
+ * These are real clients, unlike the platform trust bar this replaced — so the
+ * "trusted by" framing is accurate here in a way it would not have been for
+ * SAP or AWS.
+ *
+ * `file` points at a processed asset in /public/logos/clients. Each source file
+ * was cropped to the mark alone, had its scraped background removed, and was
+ * scaled so every logo carries roughly the same optical weight rather than the
+ * same bounding box — a wide wordmark and a square emblem look equally sized
+ * only if you normalise on ink area, not on width.
+ *
+ * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
+ * still does: its monogram is white and exists only against that orange.
+ *
+ * Basilic Fly, Two Brothers and Cumin Co. used to be panels too. Their artwork
+ * was lifted off the tile by solving the blend for each pixel's coverage, then
+ * anything that would have been invisible on white was repainted in the tile's
+ * own colour — Two Brothers' cream type became its green, Basilic Fly's white
+ * type became its navy. Artwork that already read on white kept its real
+ * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
+ */
+export const clients = {
+  heading: "Trusted by clients worldwide",
+  subtitle:
+    "Pharmaceuticals, logistics, hospitality, packaging, VFX, agriculture and consumer brands — finance teams on four continents run their reporting, forecasting and analytics with us.",
+  logos: [
+    { name: "WWF", file: "wwf.png" },
+    { name: "Servier", file: "servier.png" },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png" },
+    { name: "SkyNet Worldwide Express", file: "skynet.png" },
+    { name: "The Lalit", file: "the-lalit.png" },
+
+    { name: "HungerRush", file: "hungerrush.png" },
+    { name: "CoreStack", file: "corestack.png" },
+    { name: "NewRocket", file: "newrocket.png" },
+    { name: "GX Group", file: "gx-group.png", tile: true },
+    { name: "ProcDNA", file: "procdna.png" },
+
+    { name: "Edulog", file: "edulog.png" },
+    { name: "Two Brothers Organic Farms", file: "two-brothers.png" },
+    { name: "sugar.fit", file: "sugar-fit.png" },
+    { name: "Jupiter Group", file: "jupiter-group.png" },
+
+    { name: "The CPG CFO", file: "the-cpg-cfo.png" },
+    { name: "Cumin Co.", file: "cumin-co.png" },
+    { name: "Passionfruit", file: "passionfruit.png" },
+    { name: "CBC Group", file: "cbc-group.png" },
+
+    { name: "Caribbean CAGE", file: "caribbean-cage.png" },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png" },
+    { name: "ANOTHR", file: "anothr.png" },
+  ] as { name: string; file: string; tile?: boolean }[],
 } as const;
 
 /** Preloader. Copy lives here rather than in the component, like everything else. */
