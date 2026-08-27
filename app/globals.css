@@ -1452,23 +1452,34 @@ html[data-cookie-banner] .sticky-cta{display:none}
    set by a blocking inline script before first paint. */
 html[data-preloaded] .preloader{display:none}
 
-.preloader-inner{width:min(1440px,calc(100% - 48px));
-  display:flex;align-items:center;justify-content:space-between;gap:24px}
-.preloader-edge{font:500 0.6667rem ui-monospace,SFMono-Regular,Menlo,monospace;
-  letter-spacing:.28em;color:rgba(255,255,255,.42);white-space:nowrap}
-.preloader-edge.is-right{text-align:right}
+/* The dots and the lockup share one grid cell, so handing over from one to
+   the other is a cross-fade in place — nothing jumps between two layouts. */
+.preloader-stage{display:grid;place-items:center}
+.preloader-stage>*{grid-area:1/1}
 
-.preloader-mark{display:flex;align-items:center;gap:18px}
-.preloader-ga{font:800 2.4444rem Sora,sans-serif;letter-spacing:-.04em;color:var(--paper)}
-.preloader-rule{width:1px;height:38px;background:rgba(255,255,255,.22)}
-.preloader-count{font:500 1.3333rem ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-variant-numeric:tabular-nums;color:var(--blue-on-dark,#7FB6DE);letter-spacing:.02em}
+.pl-dots{display:flex;align-items:center;gap:18px}
+/* Both start hidden in CSS: the overlay is server-rendered, so without this
+   the finished lockup and a static row of dots paint for the frames before
+   GSAP takes over. */
+.pl-dots>span{display:block;width:13px;height:13px;border-radius:50%;
+  background:var(--paper);opacity:0;will-change:transform,opacity}
+
+.pl-lockup{display:flex;flex-direction:column;align-items:center;gap:16px;
+  opacity:0;will-change:transform,opacity}
+/* The mark is blue in the sprite; on this ground it has to be white, and the
+   yellow swoosh is the one part that keeps its own colour. */
+.pl-mark{height:58px;width:auto;aspect-ratio:183 / 116.5;display:block;
+  color:var(--paper)}
+.pl-word{overflow:hidden;display:block}
+.pl-word>span{display:block;font:600 0.7778rem Sora,sans-serif;
+  letter-spacing:.30em;text-transform:uppercase;color:rgba(255,255,255,.62);
+  white-space:nowrap;will-change:clip-path}
 
 @media (max-width:767px){
-  .preloader-inner{width:calc(100% - 32px);flex-direction:column;gap:22px;text-align:center}
-  .preloader-edge.is-right{display:none}
-  .preloader-ga{font-size:2rem}
-  .preloader-count{font-size:1.1111rem}
+  .pl-dots{gap:14px}
+  .pl-dots>span{width:11px;height:11px}
+  .pl-mark{height:46px}
+  .pl-word>span{font-size:0.6667rem;letter-spacing:.22em}
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -5,8 +5,8 @@ import { gsap } from "gsap";
 import { preloader, site } from "@/lib/content/gamcs";
 
 /**
- * First-paint overlay: a counter to 100, then a wipe that lifts to reveal the
- * hero.
+ * First-paint overlay: three dots that resolve into the GA lockup, then a
+ * wipe that lifts to reveal the hero.
  *
  * Rendered on the server so there is no flash of unstyled page before it
  * mounts. Repeat visits inside a session never see it at all — a blocking
@@ -19,21 +19,29 @@ import { preloader, site } from "@/lib/content/gamcs";
  * logos on a loading screen reads as sponsorship, which is not something this
  * site should imply.
  *
- * Progress is real: fonts, window load, and the hero's WebGL canvas actually
- * existing. The counter eases to 90 while those resolve and only then
- * completes, with a floor on total on-screen time so it never flashes.
+ * The sequence: three dots fade in scattered, settle into an evenly spaced
+ * row, then open out into the lockup — the mark scaling up from the middle
+ * dot while the descriptor wipes in beneath it. Then the whole overlay lifts.
+ *
+ * Progress is still real: fonts, window load, and the hero's WebGL canvas
+ * actually existing. Those gate the hand-off from the dots to the lockup, so
+ * the animation cannot finish before the page behind it is ready, and a floor
+ * on total on-screen time keeps it from flashing on a fast connection.
  */
 const MIN_ON_SCREEN = 1200;
 
 export default function Preloader() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const numRef = useRef<HTMLSpanElement>(null);
+  const dotsRef = useRef<HTMLDivElement>(null);
+  const lockRef = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLSpanElement>(null);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
     const root = rootRef.current;
-    const num = numRef.current;
-    if (!root || !num) return;
+    const dots = dotsRef.current;
+    const lock = lockRef.current;
+    if (!root || !dots || !lock) return;
 
     /* Already shown this session — the inline script has hidden it; just drop
        it from the tree without animating. */
@@ -93,10 +101,12 @@ export default function Preloader() {
     ]);
 
     if (reduce) {
+      /* No dots and no assembly: show the finished lockup and fade it. */
+      gsap.set(dots, { autoAlpha: 0 });
+      gsap.set(lock, { autoAlpha: 1 });
       ready.then(() => {
         const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
         window.setTimeout(() => {
-          num.textContent = "100";
           gsap.to(root, {
             autoAlpha: 0,
             duration: 0.2,
@@ -110,43 +120,84 @@ export default function Preloader() {
       return;
     }
 
-    const counter = { n: 0 };
     const ctx = gsap.context(() => {
-      /* Ease to 90 while the real signals resolve, then finish. */
-      gsap.to(counter, {
-        n: 90,
-        duration: 1.6,
-        ease: "power2.out",
-        onUpdate: () => {
-          num.textContent = String(Math.round(counter.n)).padStart(3, "0");
-        },
+      const dot = gsap.utils.toArray<HTMLElement>(dots.children);
+
+      /* Scattered starting offsets, in px from the row position. Fixed rather
+         than random so the sequence is the same every time — a loading screen
+         that plays differently on each visit reads as a glitch. */
+      const scatter = [
+        { x: -14, y: -18 },
+        { x: 16, y: 12 },
+        { x: -6, y: 22 },
+      ];
+
+      gsap.set(lock, { autoAlpha: 0 });
+      gsap.set(dot, { scale: 0, autoAlpha: 0 });
+      dot.forEach((d, i) => gsap.set(d, scatter[i]));
+
+      const tl = gsap.timeline();
+
+      /* 1. dots arrive, scattered */
+      tl.to(dot, {
+        scale: 1,
+        autoAlpha: 1,
+        duration: 0.5,
+        ease: "back.out(2)",
+        stagger: 0.11,
       });
 
-      ready.then(() => {
-        const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
-        gsap.to(counter, {
-          n: 100,
-          duration: 0.35,
-          delay: wait / 1000,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            num.textContent = String(Math.round(counter.n)).padStart(3, "0");
-          },
-          onComplete: () => {
-            gsap.to(root, {
-              /* wipe upward off the top edge */
-              clipPath: "inset(100% 0 0 0)",
-              duration: 0.85,
-              delay: 0.2,
-              ease: "power3.inOut",
-              onComplete: () => {
-                release();
-                setGone(true);
-              },
-            });
-          },
+      /* 2. they settle into the evenly spaced row */
+      tl.to(dot, {
+        x: 0,
+        y: 0,
+        duration: 0.75,
+        ease: "power3.inOut",
+        stagger: 0.05,
+      }, "+=0.18");
+
+      /* 3. hold on the row until the page behind is actually ready, and until
+            the floor has elapsed. addPause keeps the timeline honest instead
+            of guessing a duration. */
+      tl.addPause("+=0.15", () => {
+        ready.then(() => {
+          const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
+          window.setTimeout(() => tl.play(), wait);
         });
       });
+
+      /* 4. the row opens out into the lockup */
+      tl.to(dot, {
+        scale: 0,
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: "power2.in",
+        stagger: 0.04,
+      });
+      tl.fromTo(
+        lock,
+        { autoAlpha: 0, scale: 0.94 },
+        { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
+        "-=0.18"
+      );
+      /* the descriptor wipes in from the left beneath the mark */
+      tl.fromTo(
+        wordRef.current,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out" },
+        "-=0.32"
+      );
+
+      /* 5. hold, then lift the whole overlay off the top edge */
+      tl.to(root, {
+        clipPath: "inset(100% 0 0 0)",
+        duration: 0.85,
+        ease: "power3.inOut",
+        onComplete: () => {
+          release();
+          setGone(true);
+        },
+      }, "+=0.55");
     }, rootRef);
 
     return () => {
@@ -164,18 +215,23 @@ export default function Preloader() {
           it is not re-read on every frame. */}
       <span className="sr-only">{preloader.srLabel}</span>
 
-      <div className="preloader-inner" aria-hidden="true">
-        <span className="preloader-edge">{preloader.label}</span>
+      <div className="preloader-stage" aria-hidden="true">
+        {/* The three dots and the lockup occupy the same cell, so the hand-off
+            is a cross-fade in place rather than a jump between two layouts. */}
+        <div className="pl-dots" ref={dotsRef}>
+          <span />
+          <span />
+          <span />
+        </div>
 
-        <span className="preloader-mark">
-          <span className="preloader-ga">GA</span>
-          <span className="preloader-rule" />
-          <span className="preloader-count">
-            <span ref={numRef}>000</span>%
+        <div className="pl-lockup" ref={lockRef}>
+          <svg className="pl-mark" focusable="false">
+            <use href="#ga-mark-light" />
+          </svg>
+          <span className="pl-word">
+            <span ref={wordRef}>{preloader.wordmark}</span>
           </span>
-        </span>
-
-        <span className="preloader-edge is-right">{preloader.label}</span>
+        </div>
       </div>
       <span className="sr-only">{site.name}</span>
     </div>
