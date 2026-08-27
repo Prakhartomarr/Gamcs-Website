@@ -1531,6 +1531,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   min-height:44px;
   --ga-h:34px;                              /* mark height          */
   --ga-brand:#175E8F;                       /* the logo's own blue  */
+  /* Per-line tracking, measured not guessed: at equal tracking CONSULTANTS
+     sets 2.66px wider than MANAGEMENT, so line 1 carries the difference over
+     its 9 gaps to bring both lines to the same 154.7px ink width. */
+  --ga-ls-1:.0828em;                        /* MANAGEMENT           */
+  --ga-ls-2:.06em;                          /* CONSULTANTS          */
   --ga-dur:560ms;                           /* reveal speed         */
   --ga-ease:cubic-bezier(.22,1,.36,1);
   display:inline-flex;align-items:center;text-decoration:none;line-height:1;
@@ -1545,16 +1550,34 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    own natural width, so nothing has to be measured or hardcoded. */
 .ga-logo-reveal{display:grid;grid-template-columns:0fr;
   transition:grid-template-columns var(--ga-dur) var(--ga-ease)}
-/* padding starts at 0 and animates in: a collapsed 0fr track still cannot
+/* One word per line, uppercase, both lines the same weight and the mark's own
+   blue, so the lockup reads as a single object rather than mark + caption.
+   .54 sizes the pair so the caps of line 1 and the baseline of line 2 span the
+   mark's height: line-height(1.12) + cap-height(.73) = 1.85em of ink across
+   two lines, and .54 * 1.85 ~= 1 x --ga-h.
+   padding-left starts at 0 and animates in: a collapsed 0fr track still cannot
    compress its item's padding, which otherwise left a 5px phantom gap after
    the mark at rest. */
 .ga-logo-reveal-inner{overflow:hidden;min-width:0;color:var(--ga-brand);
-  font:600 calc(var(--ga-h) * .46)/1 Sora,system-ui,sans-serif;
-  letter-spacing:-.01em;padding-left:0;
+  font:600 calc(var(--ga-h) * .54)/1.12 Sora,system-ui,sans-serif;
+  text-transform:uppercase;padding-left:0;
   opacity:0;transform:translateX(-.18em);
   transition:opacity calc(var(--ga-dur) * .75) var(--ga-ease),
              transform calc(var(--ga-dur) * .75) var(--ga-ease),
              padding-left var(--ga-dur) var(--ga-ease)}
+
+/* The two lines are edge-aligned: tracking is tuned per line so MANAGEMENT and
+   CONSULTANTS occupy the same width, which is what makes a stacked wordmark
+   look set rather than merely wrapped. The values are measured, not guessed --
+   see the note above --ga-ls-2. letter-spacing also applies after the LAST
+   glyph, so each line subtracts that phantom trailing space back off, or the
+   two right edges would sit at different places despite matching widths. */
+.ga-logo-word{display:block;white-space:nowrap;
+  letter-spacing:var(--ga-ls,var(--ga-ls-2));
+  margin-right:calc(var(--ga-ls,var(--ga-ls-2)) * -1)}
+/* MANAGEMENT: the narrower of the two at equal tracking, so it carries more. */
+.ga-logo-word:first-child{--ga-ls:var(--ga-ls-1)}
+.ga-logo-word:last-child{--ga-ls:var(--ga-ls-2)}
 
 /* pointer, keyboard on the link itself, and keyboard anywhere inside it */
 .ga-logo:hover .ga-logo-reveal,
