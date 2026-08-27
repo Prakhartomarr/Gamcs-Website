@@ -1245,7 +1245,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 /* ---- section bands + rhythm ---- */
 .who,.services,.metrics,.people,.quote-section,.faq-section{padding:112px 0}
 .who{background:var(--band-white)}
-.services{background:var(--band-soft)}
+.services{background:var(--band-white)}
 /* Tightened on its own rather than through the shared rule above, which also
    governs Who We Are, Team, Testimonials and the FAQ. */
 .services{padding:88px 0}
@@ -1415,7 +1415,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 
 
 /* ---- partners ---- */
-.partners{background:var(--band-soft)}
+.partners{background:var(--band-white)}
 .partners-heading{font-size:clamp(28px,3.4vw,46px);line-height:1.14;font-weight:600;
   letter-spacing:-.025em;color:var(--ink-deep);margin:0 0 18px;max-width:24ch}
 .partners-body{margin:0;max-width:66ch;font-size:0.9444rem;line-height:1.65;color:var(--ink-muted)}
