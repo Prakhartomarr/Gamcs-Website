@@ -123,81 +123,115 @@ export default function Preloader() {
     const ctx = gsap.context(() => {
       const dot = gsap.utils.toArray<HTMLElement>(dots.children);
 
-      /* Scattered starting offsets, in px from the row position. Fixed rather
-         than random so the sequence is the same every time — a loading screen
-         that plays differently on each visit reads as a glitch. */
-      const scatter = [
-        { x: -14, y: -18 },
-        { x: 16, y: 12 },
-        { x: -6, y: 22 },
-      ];
+      /* The dots ride an ellipse. Orbiting and then flattening that ellipse
+         is what the reference actually does: as the vertical radius eases to
+         zero the orbit becomes a horizontal row, so "tumbling" and "settling"
+         are one continuous motion rather than two tweens stitched together.
+         That continuity is the whole reason it reads as smooth. */
+      const N = dot.length;
+      const orbit = { angle: -Math.PI / 2, rx: 38, ry: 33, spread: 0, depth: 1 };
+
+      const place = () => {
+        for (let i = 0; i < N; i++) {
+          const a = orbit.angle + (i * 2 * Math.PI) / N;
+          /* spread blends from the orbit position to an evenly spaced row, so
+             the landing is exact instead of wherever the angle happened to
+             stop. */
+          const ox = Math.cos(a) * orbit.rx;
+          const oy = Math.sin(a) * orbit.ry;
+          const rowX = (i - (N - 1) / 2) * 32;
+          /* Size and brightness track the orbit: a dot at the near side of
+             the ellipse is bigger and brighter than one at the far side. This
+             is what makes it read as a tumble in space rather than a flat
+             spin — the reference has it and its absence was most of why the
+             first version looked mechanical. `depth` fades the effect out as
+             the dots settle, so the row ends up uniform. */
+          const near = (1 + Math.sin(a)) / 2;
+          const k = orbit.depth;
+          gsap.set(dot[i], {
+            x: ox + (rowX - ox) * orbit.spread,
+            y: oy * (1 - orbit.spread),
+            scale: 1 + (0.62 + 0.5 * near - 1) * k,
+            opacity: 1 - (1 - (0.55 + 0.45 * near)) * k,
+          });
+        }
+      };
 
       gsap.set(lock, { autoAlpha: 0 });
-      gsap.set(dot, { scale: 0, autoAlpha: 0 });
-      dot.forEach((d, i) => gsap.set(d, scatter[i]));
+      gsap.set(dots, { autoAlpha: 0 });
+      place();
 
       const tl = gsap.timeline();
 
-      /* 1. dots arrive, scattered */
-      tl.to(dot, {
-        scale: 1,
-        autoAlpha: 1,
-        duration: 0.5,
-        ease: "back.out(2)",
-        stagger: 0.11,
-      });
+      /* 1. the cluster fades up as a whole — per-dot scale and opacity belong
+            to `place()`, so animating them here would fight it. */
+      tl.fromTo(dots, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, ease: "power2.out" });
 
-      /* 2. they settle into the evenly spaced row */
-      tl.to(dot, {
-        x: 0,
-        y: 0,
-        duration: 0.75,
-        ease: "power3.inOut",
-        stagger: 0.05,
-      }, "+=0.18");
+      /* 2. a little over one revolution, decelerating the whole way */
+      tl.to(orbit, {
+        angle: orbit.angle + Math.PI * 2.4,
+        duration: 2.0,
+        ease: "power1.inOut",
+        onUpdate: place,
+      }, 0.15);
 
-      /* 3. hold on the row until the page behind is actually ready, and until
-            the floor has elapsed. addPause keeps the timeline honest instead
-            of guessing a duration. */
-      tl.addPause("+=0.15", () => {
+      /* 3. the ellipse flattens and the dots resolve onto the row. Overlaps
+            the rotation, so there is never a moment of no motion. */
+      tl.to(orbit, {
+        ry: 0,
+        rx: 32,
+        spread: 1,
+        depth: 0,
+        duration: 1.15,
+        ease: "power2.inOut",
+        onUpdate: place,
+      }, 1.25);
+
+      /* 4. hold on the row until the page behind is genuinely ready */
+      tl.addPause(">-0.05", () => {
         ready.then(() => {
           const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
           window.setTimeout(() => tl.play(), wait);
         });
       });
 
-      /* 4. the row opens out into the lockup */
+      /* 5. the dots open into rings and expand away — the reference turns them
+            into the counters of its letterforms; the GA mark has no matching
+            counters, so they expand through it instead of pretending to. */
       tl.to(dot, {
-        scale: 0,
-        autoAlpha: 0,
-        duration: 0.4,
-        ease: "power2.in",
-        stagger: 0.04,
+        scale: 2.6,
+        borderWidth: 6,
+        backgroundColor: "rgba(254,254,254,0)",
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.inOut",
+        stagger: 0.06,
       });
+
+      /* 6. the mark grows out of the same centre as they go */
       tl.fromTo(
         lock,
-        { autoAlpha: 0, scale: 0.94 },
-        { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
-        "-=0.18"
+        { autoAlpha: 0, scale: 0.88 },
+        { autoAlpha: 1, scale: 1, duration: 0.9, ease: "power3.out" },
+        "-=0.62"
       );
-      /* the descriptor wipes in from the left beneath the mark */
       tl.fromTo(
         wordRef.current,
         { clipPath: "inset(0 100% 0 0)" },
-        { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.out" },
-        "-=0.32"
+        { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power2.out" },
+        "-=0.5"
       );
 
-      /* 5. hold, then lift the whole overlay off the top edge */
+      /* 7. hold on the finished lockup, then lift */
       tl.to(root, {
         clipPath: "inset(100% 0 0 0)",
-        duration: 0.85,
+        duration: 0.9,
         ease: "power3.inOut",
         onComplete: () => {
           release();
           setGone(true);
         },
-      }, "+=0.55");
+      }, "+=0.7");
     }, rootRef);
 
     return () => {
