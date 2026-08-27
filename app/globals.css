@@ -731,6 +731,15 @@ h1,h2,h3,p{margin-top:0}
   font:600 0.7778rem Sora;letter-spacing:.01em;color:#5A6165;cursor:pointer;position:relative;
   transition:color var(--dur-hover) var(--ease-out)}
 .nav-trigger:hover,.nav-trigger.is-open{color:var(--ink)}
+/* Solutions is a link plus a caret: the label navigates, the caret discloses
+   the panel. The link inherits the trigger's colour so the pair still reads as
+   one control, and the caret carries its own 24x44 target (WCAG 2.5.8) rather
+   than relying on the label's box. */
+.nav-trigger>a{color:inherit;text-decoration:none}
+.nav-caret{display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;min-height:44px;margin:-10px -4px -10px 0;padding:0;
+  background:none;border:0;color:inherit;cursor:pointer}
+.nav-caret:focus-visible{outline:2px solid var(--blue);outline-offset:-6px;border-radius:6px}
 .nav-trigger:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);
   transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
 .nav-trigger:hover:after,.nav-trigger.is-open:after{transform:scaleX(1)}
@@ -2018,4 +2027,88 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:620px){
   .partners-logos{gap:24px 28px}
   .partners-logos img{max-width:140px;max-height:48px}
+}
+
+/* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
+/* Jump rail. Sticks under the 90px header, scrolls sideways rather than
+   wrapping to two rows, which at 6 pillars it otherwise would below ~1200px. */
+.pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
+  border-bottom:1px solid rgba(16,45,68,.10)}
+.pillar-rail ul{list-style:none;margin:0;padding:0;display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:none}
+.pillar-rail ul::-webkit-scrollbar{display:none}
+.pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
+  padding:0 13px;white-space:nowrap;text-decoration:none;
+  font:600 0.7222rem Sora,sans-serif;letter-spacing:.02em;color:var(--ink-muted);
+  border-bottom:2px solid transparent;transition:color .2s var(--ease-out),
+  border-color .2s var(--ease-out)}
+.pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+.pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
+
+.pillars{display:grid;gap:clamp(64px,7vw,104px)}
+/* scroll-margin clears the sticky rail so an anchor jump does not tuck the
+   block's first line underneath it */
+.pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(28px,3.4vw,56px);align-items:start;
+  scroll-margin-top:calc(var(--header-h) + 64px)}
+/* odd blocks swap sides. Source order is unchanged, so the card is still read
+   before its list. */
+.pillar[data-flip] .pillar-card{order:2}
+
+/* The card reuses the .solution-card.blue treatment already used for these six
+   pillars elsewhere, rather than introducing a second gradient. */
+/* Not sticky: measured across all six pillars the card is 57-131px TALLER
+   than its list, so a sticky card would have negative travel and never move.
+   (.shell is overflow:clip anyway, which would have capped it regardless.) */
+.pillar-card{position:relative;overflow:hidden;isolation:isolate;
+  border-radius:var(--radius-lg);padding:clamp(26px,2.6vw,38px);
+  background:linear-gradient(180deg,var(--blue),#0C5387);color:#fff}
+.pillar-card::after{content:"";position:absolute;right:-80px;top:-100px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
+  pointer-events:none}
+.pillar-card > *{position:relative;z-index:1}
+.pillar-label{display:inline-flex;align-items:center;height:26px;padding:0 12px;
+  border-radius:999px;border:1px solid rgba(255,255,255,.30);
+  font:600 0.6667rem Sora,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.88)}
+.pillar-card h2{margin:18px 0 0;color:#fff;
+  font:600 clamp(25px,2.5vw,36px)/1.14 Sora,sans-serif;letter-spacing:-.03em;
+  max-width:18ch}
+.pillar-card p{margin:14px 0 0;max-width:46ch;color:#D8E4EC;
+  font-size:0.8889rem;line-height:1.62}
+.pillar-cta{margin-top:24px}
+/* the pillar's own icon, blurred to a soft field so it reads as texture and
+   never competes with the headline */
+.pillar-glyph{position:absolute;right:-28px;bottom:-40px;width:210px;height:210px;
+  z-index:0;pointer-events:none}
+.pillar-glyph svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2.2;
+  filter:blur(11px);opacity:.30}
+
+.pillar-list{list-style:none;margin:0;padding:0}
+.pillar-list li{border-top:1px solid rgba(16,45,68,.12)}
+.pillar-list li:last-child{border-bottom:1px solid rgba(16,45,68,.12)}
+.pillar-list summary{display:flex;align-items:center;justify-content:space-between;
+  gap:16px;cursor:pointer;list-style:none;padding:17px 2px;min-height:44px;
+  font:600 0.9444rem/1.35 Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep);
+  transition:color .2s var(--ease-out)}
+.pillar-list summary::-webkit-details-marker{display:none}
+.pillar-list summary:hover{color:var(--blue)}
+.pillar-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
+.pillar-list summary svg{width:16px;height:16px;flex:none;color:var(--ink-muted);
+  transition:transform .25s var(--ease-out),color .2s var(--ease-out)}
+.pillar-list details[open] summary{color:var(--blue)}
+.pillar-list details[open] summary svg{transform:rotate(180deg);color:var(--blue)}
+.pillar-list details p{margin:0 0 19px;padding-right:34px;max-width:60ch;
+  color:var(--ink-muted);font-size:0.8611rem;line-height:1.62}
+
+/* Below 1023 the two columns stop fitting side by side: the card's headline
+   drops to three or four lines and the rows lose their tap width. */
+@media (max-width:1023px){
+  .pillar{grid-template-columns:1fr;gap:24px}
+  .pillar[data-flip] .pillar-card{order:0}
+  .pillar-glyph{width:160px;height:160px;right:-24px;bottom:-32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pillar-list summary svg{transition:none}
 }
