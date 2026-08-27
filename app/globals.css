@@ -1529,7 +1529,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Every knob is a variable, so the nav and a display placement differ by
    one custom property rather than a second rule set.
    ===================================================================== */
+/* The mark stays 34px; min-height only grows the hit area to the 44px touch
+   floor. The header band is 76px tall, so nothing moves. */
 .ga-logo{
+  min-height:44px;
   --ga-h:34px;                              /* mark height          */
   --ga-brand:#175E8F;                       /* the logo's own blue  */
   --ga-dur:560ms;                           /* reveal speed         */
@@ -1966,6 +1969,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .clients-grid img{max-height:64px}
   .clients{padding:80px 0}}
 @media (max-width:767px){.hwh{padding:56px 0}.fmc{padding:64px 0}}
+/* .btn sets white-space:nowrap, which at phone widths pushed the longest label
+   ("Considering a similar back-office arrangement? Schedule a Call") 474px wide
+   inside a 292px button - 91px of it outside the button, cut silently by the
+   body's overflow-x:hidden. Let labels wrap instead. */
+@media (max-width:767px){
+  .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
+  .btn-label{white-space:normal;text-align:center}
+}
 @media (max-width:620px){.clients-grid{gap:30px 18px}
   .clients-grid li{flex-basis:calc((100% - 18px) / 2);min-height:64px}
   .clients-grid img{max-height:64px}
