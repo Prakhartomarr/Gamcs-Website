@@ -241,3 +241,31 @@ elements 252–322px tall** with no press feedback and a 26px radius found nowhe
 else. They are stage selectors, not CTAs, so I have left them out of the
 tiering — but they are the largest interactive targets on the homepage and no
 tier currently describes them.
+
+---
+
+# LOGGED — deferred, deliberately not fixed
+
+Recorded during Phase 2 at your instruction. None of these were touched.
+
+| # | Issue | Location | Why deferred |
+|---|---|---|---|
+| L1 | **"About our firm ↗" points at `/contact`** while its label promises firm information. The CTA was demoted to SECONDARY, but the label/href mismatch is untouched. | `components/sections/WhoWeAre.tsx` (`primaryCta.href`) | Content decision — you will decide whether the label or the href is wrong. |
+| L2 | **`--radius-md` is referenced but never defined.** `rounded-[min(var(--radius-md),10px)]` at `components/ui/button.tsx:25, 26, 30, 32` makes the `min()` invalid, so the `xs`/`sm`/`icon-xs`/`icon-sm` variants silently fall back to `rounded-lg`. Dormant: the only surviving consumer is the nav toggle at `header-2.tsx:299`, which uses `size="icon"` and is unaffected. | `components/ui/button.tsx` | Out of scope; `button.tsx` kept per option (a). |
+| L3 | **`.fmc-card` uses a 26px border-radius found nowhere else**, on four `<button>` elements 252–322px tall. Not CTAs, no tier describes them. | `app/globals.css` (`.fmc-card`) | Radius outlier for the later radius migration. |
+| L4 | **`.fin-btn` and `.globe-feature-cta` are now unreferenced** — their call sites moved to the shared component. Their CSS remains. | `app/globals.css` | Dead-code removal, not unification. Will be caught by the next dead-code pass. |
+| L5 | **78 classes fall into DEAD when markdown is excluded** from the reference set (7 → 85), across 112 all-dead rules / 10,129 bytes. Four of them (`.btn-*`) were deleted in their own commit; the other 74 were not. | `app/globals.css` | Reported only, per instruction — no deletion from that re-run. |
+
+## Verification note — a gap in my own method
+
+The 45-screenshot sweep used to verify this and the two preceding tasks hides
+overlays with `[class*="consent"],[class*="cookie"],[class*="sticky"]`. The site
+header carries Tailwind's `sticky` class (`components/ui/header-2.tsx:245`), so
+**that selector has been hiding the header in every sweep I have run** — including
+the dead-code and `--radius` verifications. No sweep ever photographed the
+header.
+
+The header CTA in this task was therefore verified separately, with viewport
+captures (`position: fixed` chrome is not composited by `captureBeyondViewport`)
+against a stashed pre-change tree. The sweep selector should be narrowed to
+`.cookie-banner,.cookie-panel,.sticky-cta` before it is trusted again.
