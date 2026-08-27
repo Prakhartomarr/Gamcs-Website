@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import CTA from "@/components/CTA";
 import {
   CONSENT_CHANGED,
   OPEN_PREFERENCES,
@@ -100,20 +101,12 @@ export default function CookieConsent() {
             </div>
 
             <div className="cookie-banner-actions">
-              <button
-                type="button"
-                className="btn btn-shimmer"
-                onClick={() => decide(true)}
-              >
-                <span className="btn-label">Accept all</span>
-              </button>
-              <button
-                type="button"
-                className="btn btn-light"
-                onClick={() => decide(false)}
-              >
-                <span className="btn-label">Reject non-essential</span>
-              </button>
+              <CTA type="button" onClick={() => decide(true)}>
+                Accept all
+              </CTA>
+              <CTA tier="secondary" type="button" onClick={() => decide(false)}>
+                Reject non-essential
+              </CTA>
               <button type="button" className="cookie-link" onClick={openPanel}>
                 Manage preferences
               </button>
@@ -163,13 +156,9 @@ export default function CookieConsent() {
           </ul>
 
           <div className="cookie-panel-actions">
-            <button
-              type="button"
-              className="btn btn-shimmer"
-              onClick={() => decide(analytics)}
-            >
-              <span className="btn-label">Save preferences</span>
-            </button>
+            <CTA type="button" onClick={() => decide(analytics)}>
+              Save preferences
+            </CTA>
             {/* Cancel leaves the banner up if no choice has been made yet —
                 closing the panel is not itself a decision. */}
             <button

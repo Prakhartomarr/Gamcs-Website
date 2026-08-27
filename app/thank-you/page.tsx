@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { site } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -88,16 +89,12 @@ export default function ThankYouPage() {
           </ol>
 
           <div className="ctas">
-            <Link className="btn btn-shimmer" href="/" data-cta="thankyou-home" data-press>
-              <span className="btn-label">
-                Back to home <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-            <Link className="btn btn-light" href="/case-study" data-press>
-              <span className="btn-label">
-                Read case studies <span aria-hidden="true">→</span>
-              </span>
-            </Link>
+            <CTA href="/" data-cta="thankyou-home" icon="arrow">
+              Back to home
+            </CTA>
+            <CTA href="/case-study" tier="secondary" icon="arrow">
+              Read case studies
+            </CTA>
           </div>
         </div>
       </section>

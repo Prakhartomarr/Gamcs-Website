@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = pageMetadata({
   title: "Case Studies | Finance, FP&A, BI & Transaction Engagements",
@@ -22,21 +23,13 @@ export default function CaseStudyPage() {
           <h1>{caseStudies.heading}</h1>
           <p>{caseStudies.intro}</p>
           <div className="ctas page-head-ctas">
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta="case-study-hero"
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
-            <Link className="btn btn-light" href="/#solutions" data-press>
-              <span className="btn-label">
-                See our services <span aria-hidden="true">→</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta="case-study-hero" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
+            <CTA href="/#solutions" tier="secondary" icon="arrow">
+              See our services
+            </CTA>
           </div>
         </div>
       </section>
@@ -61,16 +54,10 @@ export default function CaseStudyPage() {
 
           <div className="case-cta">
             <h2>Recognise your own numbers in any of these?</h2>
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta="case-study-footer"
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta="case-study-footer" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
           </div>
         </div>
       </section>

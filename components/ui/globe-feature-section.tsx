@@ -1,9 +1,9 @@
 "use client";
 
 import createGlobe from "cobe";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { COBEOptions, Marker } from "cobe";
+import CTA from "@/components/CTA";
 
 /* ----------------------------------------------------------------
  * GlobeFeatureSection
@@ -175,10 +175,9 @@ export function GlobeFeatureSection({
         <p className="globe-feature-lead">
           {lead} <span>{body}</span>
         </p>
-        <Link className="globe-feature-cta" href={ctaHref} data-cta="globe">
+        <CTA icon="arrow" href={ctaHref} data-cta="globe">
           {ctaLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
+        </CTA>
       </div>
 
       <div className="globe-feature-stage" aria-hidden="true">

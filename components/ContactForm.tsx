@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { track } from "@/lib/analytics";
 import { contact, site } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 type Errors = Partial<Record<string, string>>;
 
@@ -175,19 +176,15 @@ export default function ContactForm() {
         );
       })}
 
-      <button
-        className="btn btn-shimmer"
+      <CTA
         type="submit"
+        icon="diagonal"
         data-cta="contact-form"
-        data-press
         disabled={status === "sending"}
         aria-busy={status === "sending"}
       >
-        <span className="btn-label">
-          {status === "sending" ? "Opening your email…" : contact.submit}{" "}
-          <span aria-hidden="true">↗</span>
-        </span>
-      </button>
+        {status === "sending" ? "Opening your email…" : contact.submit}
+      </CTA>
 
       {/* Live region: empty until something needs announcing. */}
       <p className="form-status" role="status" aria-live="polite">

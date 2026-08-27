@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import CountUp from "@/components/motion/CountUp";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { achievements, primaryCta, site, story, team } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /**
  * Who we are: copy and CTA on the left, a founder portrait on the right, and a
@@ -39,11 +39,9 @@ export default function WhoWeAre() {
             <h2 className="who-heading">{site.tagline}</h2>
             <p className="who-lead">{story.lead}</p>
             <p className="who-sub">{story.network}</p>
-            <Link className="btn btn-shimmer" href={primaryCta.href} data-press>
-              <span className="btn-label">
-                About our firm <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href} tier="secondary" icon="diagonal">
+              About our firm
+            </CTA>
           </div>
 
           <div className="who-portrait reveal">

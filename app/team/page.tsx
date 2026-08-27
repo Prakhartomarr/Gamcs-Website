@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Team from "@/components/shadcn-space/blocks/team-01/team";
 import { primaryCta, story, team } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = pageMetadata({
   title: "Our Team | Founders & Advisors",
@@ -23,21 +24,13 @@ export default function TeamPage() {
           <p>{team.body}</p>
           <p className="team-mission">{story.mission}</p>
           <div className="ctas page-head-ctas">
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta="team-hero"
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
-            <Link className="btn btn-light" href="/case-study" data-press>
-              <span className="btn-label">
-                Their work <span aria-hidden="true">→</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta="team-hero" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
+            <CTA href="/case-study" tier="secondary" icon="arrow">
+              Their work
+            </CTA>
           </div>
         </div>
       </section>
@@ -49,16 +42,10 @@ export default function TeamPage() {
         <div className="container">
           <div className="case-cta">
             <h2>{team.closingCta}</h2>
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta="team-footer"
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta="team-footer" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
           </div>
         </div>
       </section>

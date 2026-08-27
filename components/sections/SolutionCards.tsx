@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import { solutions, solutionsHub } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /**
  * The six pillars as a card grid — the single source for this card, shared by
@@ -39,15 +39,15 @@ export default function SolutionCards() {
               {STROKE_ICONS[s.slug]}
             </svg>
           </span>
-          <Link
-            className="fsvc-link"
+          <CTA
+            tier="tertiary"
             href={`/solutions/${s.slug}`}
             data-cta={`svc-${s.slug}`}
+            srSuffix={`about ${s.title}`}
           >
             Learn more
-            <span className="sr-only"> about {s.title}</span>
             {ARROW}
-          </Link>
+          </CTA>
         </li>
       ))}
     </ul>
