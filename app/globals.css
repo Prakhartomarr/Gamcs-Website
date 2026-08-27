@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+/* Sora 800 is requested by 13 rules in this file (every stat numeral); without
+   it in the import the browser silently renders them at 700. */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -320,6 +322,8 @@ h1,h2,h3,p{margin-top:0}
   .hero[data-anim] .hero-rule,.hero[data-anim] .orbit-ring,.hero[data-anim] .ga-core,
   .hero[data-anim] .card,.hero[data-anim] .chipwrap,.hero[data-anim] .hero-clients{opacity:1 !important;transform:none !important;animation:none !important}
   .spinner,.btn-shimmer::after,.btn-shimmer::before,.ichip{animation:none !important}
+  .who-portrait{transition:none !important}
+  .who-portrait:hover{transform:none !important}
   .bars i{transform:scaleY(1) !important}
   .site-nav .brand,.site-nav .nav a,.site-nav .nav-actions,.site-nav .mobile{animation:none !important;opacity:1 !important;transform:none !important}
   .reveal{opacity:1 !important;transform:none !important}
@@ -1262,6 +1266,9 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who,.services,.metrics,.people,.quote-section,.faq-section{padding:112px 0}
 .who{background:var(--band-white)}
 .services{background:var(--band-soft)}
+/* Tightened on its own rather than through the shared rule above, which also
+   governs Who We Are, Team, Testimonials and the FAQ. */
+.services{padding:88px 0}
 .metrics{background:var(--band-white)}
 .people{background:var(--band-soft)}
 .quote-section{background:var(--band-white)}
@@ -1293,26 +1300,55 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .abstract-panel svg{display:block;width:100%;height:100%}
 @media (min-width:640px){.abstract-panel{border-radius:18px}}
 
-/* ---- who-we-are: reference "About" composition ---- */
-.who-grid{display:grid;grid-template-columns:26% 1fr 48%;align-items:end;gap:26px;margin-top:64px}
-.who-grid-copy{align-self:start;display:flex;flex-direction:column;align-items:flex-start}
-.who-grid-copy p{margin:0;font-size:0.9444rem;line-height:1.65;font-weight:500;color:var(--ink-deep)}
-.who-grid-copy .btn{margin-top:26px}
-@media (max-width:1023px){
-  .who-grid{grid-template-columns:1fr;gap:22px;margin-top:40px}
-  .who-grid-copy{align-self:auto}
-  .who-panels{display:flex;flex-direction:column;gap:16px}
+/* ---- who-we-are: copy left, founder portrait right, figures beneath ---- */
+.who-row{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:80px;align-items:center}
+.who-copy{display:flex;flex-direction:column;align-items:flex-start}
+.who-lead{margin:24px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
+  font-weight:500;color:var(--ink-deep)}
+.who-sub{margin:14px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
+  font-weight:500;color:var(--ink-muted)}
+.who-copy .btn{margin-top:30px}
+/* The 5:6 box is the crop, not the file: the source portrait is 3:4, so the
+   image covers and the box decides what is shown. */
+/* 24px literal, not var(--radius): the shadcn token layer further down
+   redefines --radius to 0.75rem, so the token resolves to 13.5px here. */
+.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:5/6;
+  background:var(--band-soft);box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
+  transition:transform .6s var(--ease-out)}
+.who-portrait img{display:block;width:100%;height:100%;object-fit:cover}
+@media (hover:hover) and (pointer:fine){.who-portrait:hover{transform:scale(1.015)}}
+.who-stats{list-style:none;margin:64px 0 0;padding:44px 0 0;
+  border-top:1px solid var(--hair);display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:40px}
+/* Same numerals as the Achievements tiles, so the figures read as one set
+   wherever they appear. */
+/* 2.8vw so the ceiling is actually reached at 1440 - at the Achievements
+   tiles' 2.5vw these would top out at 36px and never hit the 40px the design
+   specifies. */
+.who-stat-value{font:800 clamp(29px,2.8vw,40px)/1 Sora,sans-serif;
+  letter-spacing:-.05em;color:var(--ink)}
+.who-stat-label{margin:14px 0 0;font-size:0.8333rem;line-height:1.5;color:#6B7480}
+/* Stacks at 1279, not 1023: from 768-1279 .container is pinned to 920px, so a
+   fixed 440px portrait track would leave the copy 400px - narrower than the
+   image beside it, and the heading would wrap to three lines. */
+@media (max-width:1279px){
+  .who-row{grid-template-columns:1fr;gap:36px}
+  /* Capped rather than full-bleed: a portrait that spans a tablet column is
+     taller than the copy beside it ever was. */
+  .who-portrait{max-width:420px}
 }
-@media (min-width:640px) and (max-width:1023px){
-  .who-panels{flex-direction:row}
-  .who-panels>*:first-child{width:45%}
-  .who-panels>*:last-child{width:55%}
+@media (max-width:767px){
+  .who-row{gap:28px}
+  .who-copy .btn{width:100%;justify-content:center;margin-top:26px}
+  .who-stats{margin-top:40px;padding-top:34px;
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px}
+  .who-stat-label{margin-top:12px;font-size:0.7778rem}
 }
 .who-heading{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
   letter-spacing:-.02em;color:var(--ink-deep);margin:0;max-width:22ch}
 .who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
-  border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.6;
-  color:var(--ink-deep);font-weight:600}
+  border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
+  color:var(--ink);font-weight:600}
 .who .why-grid{margin-top:88px}
 @media (max-width:767px){
   .who .who-mission{margin-top:36px}
@@ -1587,10 +1623,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    the copy right; even steps mirror it, so the run reads as one path.
    Replaced a drag carousel — no JS remains in this section.
    ===================================================================== */
-.hwh{background:var(--band-soft)}
-.hwh-panel{background:#fff;border:1px solid #ECEFF2;border-radius:34px;
-  box-shadow:0 40px 90px -60px rgba(16,45,68,.35);
-  padding:clamp(40px,5vw,64px) clamp(24px,5vw,72px) clamp(48px,6vw,72px)}
+/* No card. This was the only section on the site that floated a bordered white
+   panel on a grey band; the step run now sits straight on the page, inside the
+   same container gutters as every other section so the copy lines up with the
+   sections above and below. Tighter than the 108px section default because
+   without a frame around it the block no longer needs the extra room.
+
+   The panel's white used to cover `.fin-sec::before`; with it gone that glow
+   shows through, which is how Solutions and the maturity curve already read. */
+.hwh{background:var(--band-white);padding:72px 0}
+.hwh-panel{padding:0}
 .hwh-head{text-align:center}
 .hwh-h2{margin:20px auto 0;max-width:21ch;font:700 clamp(1.7rem,3vw,2.3rem)/1.1 Sora,sans-serif;
   letter-spacing:-.022em;color:var(--ink-deep)}
@@ -1642,7 +1684,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    both sides of the centre and a phone has neither. Placement is by explicit
    grid-column/grid-row so it holds whichever order the DOM emits. */
 @media (max-width:767px){
-  .hwh-panel{border-radius:24px}
   .hwh-h2{max-width:none}
   /* the spine's offset and the node's column are derived from the same two
      numbers, so the line cannot drift off the nodes (it was 2px out when the
@@ -1775,7 +1816,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,1.8vw,24px)}
 .fsvc-card{position:relative;overflow:hidden;isolation:isolate;
   border:1px solid #E7EEF4;border-radius:22px;padding:28px 28px 24px;
-  min-height:620px;display:flex;flex-direction:column;
+  /* The glyph below the copy is flex:1, so this height sets the empty area,
+     not just the card: at 620px it left ~400px of blur under three lines of
+     text. */
+  min-height:440px;display:flex;flex-direction:column;
   background:linear-gradient(180deg,#FFF 0%,#F4FAFE 20%,#DCEDF9 44%,#BFDCF2 70%,#A3CBEA 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
   transition:transform .55s var(--ease-fin),box-shadow .55s var(--ease-fin)}
@@ -1811,7 +1855,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .fsvc-grid{grid-template-columns:1fr}
   /* one card per row on a phone: the tall portrait proportion stops earning
      its height once it is full-width, so the glyph area gives some back */
-  .fsvc-card{padding:26px 24px 22px;min-height:470px}
+  .fsvc-card{padding:26px 24px 22px;min-height:380px}
   .fin-center{text-align:left}
   .fin-center .fin-lead{margin-left:0}
 }
@@ -1820,8 +1864,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- MATURITY CURVE (reference treatment) ---- */
-.fmc{background:#fff}
-.fmc-stage{position:relative;margin-top:clamp(52px,6vw,90px);min-height:560px}
+.fmc{background:#fff;padding:88px 0}
+/* No min-height: the stagger on .fmc-stages already sets how tall this needs
+   to be, and the fixed 560px left 95px of empty stage under the lowest card.
+   The connector's viewBox is measured from this element by a ResizeObserver,
+   so it follows the new height on its own. */
+.fmc-stage{position:relative;margin-top:clamp(52px,6vw,90px)}
 .fmc-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1;pointer-events:none}
 .fmc-line-bg{fill:none;stroke:var(--hair-2);stroke-width:2}
 .fmc-line{fill:none;stroke:url(#fmcGrad);stroke-width:1.8;stroke-linecap:round}
@@ -1890,7 +1938,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .fmc-flag .bead{width:11px;height:11px;border-radius:50%;background:var(--blue);
   box-shadow:0 0 0 4px rgba(15,94,151,.24)}
 
-.fmc-foot{margin-top:clamp(150px,17vw,220px);display:flex;flex-wrap:wrap;gap:26px 40px;
+.fmc-foot{margin-top:clamp(64px,7vw,90px);display:flex;flex-wrap:wrap;gap:26px 40px;
   align-items:center;justify-content:space-between;border-top:1px solid var(--hair);padding-top:34px}
 .fmc-note{margin:0;max-width:52ch;color:var(--ink-deep);
   font:500 clamp(1.02rem,1.4vw,1.3rem)/1.42 Sora,sans-serif;letter-spacing:-.01em}
@@ -1914,4 +1962,60 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 @media (prefers-reduced-motion:reduce){
   .fmc-card,.fmc-cap b,.fmc-flag{transition:none}
+}
+
+/* ---- client logo wall (band under the hero) ---- */
+.clients{padding:96px 0;background:var(--band-white)}
+.clients-head{text-align:center;margin:0 auto 54px}
+.clients-head h2{font-size:clamp(28px,3.4vw,46px);line-height:1.14;font-weight:600;
+  letter-spacing:-.03em;color:var(--ink-deep);margin:0}
+.clients-head p{margin:18px auto 0;max-width:64ch;font-size:0.9444rem;line-height:1.65;
+  color:var(--ink-muted)}
+.clients-grid{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;
+  justify-content:center;gap:44px 22px}
+/* Seven across, three even rows for 21 logos. Eleven across fitted the marks
+   into ~105px cells capped at 46px tall, which is fine for a wordmark but
+   illegible for the stacked lockups — Two Brothers, Cumin Co. and Basilic Fly
+   are three lines of type each, and height is what they need. Flex rather than
+   grid so any future odd count centres its last row instead of leaving a hole
+   at the right. */
+.clients-grid li{flex:0 0 calc((100% - 6 * 22px) / 7);
+  display:flex;align-items:center;justify-content:center;min-height:76px}
+.clients-grid img{width:auto;height:auto;max-width:100%;max-height:76px;
+  object-fit:contain}
+/* GX Group is the only logo still on a brand panel; softening its corner makes
+   it read as a deliberate mark rather than an un-removed background. */
+.clients-grid .is-tile img{border-radius:6px}
+@media (max-width:1279px){.clients-grid{gap:40px 22px}
+  .clients-grid li{flex-basis:calc((100% - 4 * 22px) / 5);min-height:68px}
+  .clients-grid img{max-height:68px}}
+@media (max-width:900px){.clients-grid{gap:36px 24px}
+  .clients-grid li{flex-basis:calc((100% - 3 * 24px) / 4);min-height:64px}
+  .clients-grid img{max-height:64px}
+  .clients{padding:80px 0}}
+@media (max-width:767px){.hwh{padding:56px 0}.fmc{padding:64px 0}}
+@media (max-width:620px){.clients-grid{gap:30px 18px}
+  .clients-grid li{flex-basis:calc((100% - 18px) / 2);min-height:64px}
+  .clients-grid img{max-height:64px}
+  .clients{padding:60px 0}
+  .clients-head{margin-bottom:36px}}
+
+/* ---- partners: copy left, partner marks right ---- */
+.partners-layout{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:72px;align-items:center}
+.partners-logos{list-style:none;margin:0;padding:0;display:flex;
+  flex-direction:column;gap:30px;align-items:flex-start}
+.partners-logos li{display:flex;align-items:center;min-height:56px}
+.partners-logos img{width:auto;height:auto;max-width:210px;max-height:70px;
+  object-fit:contain}
+/* Below the two-column breakpoint the marks sit under the copy as a row, so
+   the section keeps reading top-to-bottom rather than squeezing a column. */
+@media (max-width:900px){
+  .partners-layout{grid-template-columns:1fr;gap:38px}
+  .partners-logos{flex-direction:row;flex-wrap:wrap;gap:28px 40px;align-items:center}
+  .partners-logos img{max-width:170px;max-height:58px}
+}
+@media (max-width:620px){
+  .partners-logos{gap:24px 28px}
+  .partners-logos img{max-width:140px;max-height:48px}
 }
