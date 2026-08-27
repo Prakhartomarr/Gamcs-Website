@@ -24,7 +24,7 @@
   --dark:#232323;
   --dark-2:#2D2D2D;
   --white:#fff;
-  --radius:24px;
+  --radius-lg:24px;
   --bg-soft:#F2F3F5;
   --gray:#5B6067;
   /* motion tokens — one home for curves and durations */
@@ -1022,7 +1022,7 @@ html{font-size:112.5%}
 .case-steps>div{display:grid;gap:4px}
 .case-steps dt{font:700 0.6667rem Sora;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
 .case-steps dd{margin:0;font-size:0.8333rem;line-height:1.55;color:#6E767D}
-.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius);background:var(--dark);
+.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);background:var(--dark);
   color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
 .case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
 .team-cta-section{padding-top:0}
