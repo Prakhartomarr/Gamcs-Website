@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { primaryCta, services, site } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -40,21 +41,13 @@ export default function NotFound() {
         </p>
 
         <div className="ctas notfound-ctas">
-          <Link className="btn btn-shimmer" href="/" data-cta="404-home" data-press>
-            <span className="btn-label">
-              Back to home <span aria-hidden="true">→</span>
-            </span>
-          </Link>
-          <Link
-            className="btn btn-light"
-            href={primaryCta.href}
-            data-cta="404-contact"
-            data-press
-          >
-            <span className="btn-label">
-              {primaryCta.label} <span aria-hidden="true">↗</span>
-            </span>
-          </Link>
+          <CTA href="/" data-cta="404-home" icon="arrow">
+            Back to home
+          </CTA>
+          <CTA href={primaryCta.href}
+            data-cta="404-contact" tier="secondary" icon="diagonal">
+            {primaryCta.label}
+          </CTA>
         </div>
 
         <div className="notfound-links">

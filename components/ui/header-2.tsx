@@ -2,7 +2,8 @@
 import React from 'react';
 import Link from 'next/link';
 import GaLogo from '@/components/ui/GaLogo';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
+import CTA from '@/components/CTA';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
@@ -290,9 +291,9 @@ export function Header() {
 				</div>
 
 				<div className="hidden shrink-0 xl:block">
-					<Link href={primaryCta.href} data-cta="header" className={buttonVariants({ size: 'lg' })}>
+					<CTA href={primaryCta.href} data-cta="header">
 						{primaryCta.label}
-					</Link>
+					</CTA>
 				</div>
 
 				<Button
@@ -345,9 +346,9 @@ export function Header() {
 									</li>
 								))}
 							</ul>
-							<Link href={primaryCta.href} onClick={closeAll} data-cta="mobile-drawer" className={cn(buttonVariants({ size: 'lg' }), 'mt-auto w-full')}>
+							<CTA href={primaryCta.href} onClick={closeAll} data-cta="mobile-drawer" className="mt-auto w-full">
 								{primaryCta.label}
-							</Link>
+							</CTA>
 						</>
 					)}
 

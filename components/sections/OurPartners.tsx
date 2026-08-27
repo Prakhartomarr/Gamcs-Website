@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { partners } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /**
  * Delivery partners.
@@ -21,7 +21,7 @@ export default function OurPartners() {
       <div className="container">
         <div className="partners-layout">
           <div className="partners-copy reveal">
-            <SectionEyebrow n={5} label="Our partners" />
+            <SectionEyebrow label="Our partners" />
             <h2 className="partners-heading">{partners.heading}</h2>
             <p className="partners-body">{partners.body}</p>
           </div>
@@ -51,16 +51,10 @@ export default function OurPartners() {
         )}
 
         <div className="reveal">
-          <Link
-            className="btn btn-light partners-cta"
-            href={partners.cta.href}
-            data-cta="partners"
-            data-press
-          >
-            <span className="btn-label">
-              {partners.cta.label} <span aria-hidden="true">→</span>
-            </span>
-          </Link>
+          <CTA href={partners.cta.href}
+            data-cta="partners" tier="secondary" className="partners-cta" icon="arrow">
+            {partners.cta.label}
+          </CTA>
         </div>
       </div>
     </section>

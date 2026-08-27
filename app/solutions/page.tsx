@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import SolutionCards from "@/components/sections/SolutionCards";
 import { primaryCta, solutionsHub } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = pageMetadata({
   title: "Solutions",
@@ -40,16 +41,10 @@ export default function SolutionsHubPage() {
 
           <div className="case-cta reveal">
             <h2>Not sure which pillar you need? Start with a conversation.</h2>
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta="solutions-hub"
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta="solutions-hub" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
           </div>
         </div>
       </section>

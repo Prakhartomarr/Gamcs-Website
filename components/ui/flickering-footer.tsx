@@ -218,7 +218,7 @@ export function FlickeringFooter() {
 			<div className="mx-auto w-full max-w-6xl px-6 pt-14 pb-10 lg:pt-16">
 				<div className="grid gap-10 lg:grid-cols-[1.1fr_1.4fr] lg:gap-16">
 					<div>
-						<Link href="/" className="flex w-fit items-center gap-2.5" aria-label={`${site.name} home`}>
+						<Link href="/" className="flex min-h-[44px] w-fit items-center gap-2.5" aria-label={`${site.name} home`}>
 							<Image
 								src={site.logo}
 								alt={`${site.name} — the GA monogram in blue`}
@@ -232,7 +232,7 @@ export function FlickeringFooter() {
 						<p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{intro}</p>
 						<a
 							href={`mailto:${site.email}`}
-							className="mt-6 inline-flex min-h-[40px] items-center text-sm font-semibold text-charcoal transition-colors hover:text-blue"
+							className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-charcoal transition-colors hover:text-blue"
 						>
 							{site.email}
 						</a>
@@ -245,7 +245,7 @@ export function FlickeringFooter() {
 								<ul className="mt-4 space-y-2.5">
 									{g.links.map((l) => {
 										const cls =
-											'inline-flex min-h-[32px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground';
+											'inline-flex min-h-[44px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground';
 										return (
 											<li key={l.title}>
 												{'external' in l && l.external ? (
@@ -264,7 +264,7 @@ export function FlickeringFooter() {
 									    a link: it changes state rather than navigating. */}
 									{g.label === 'Legal' && (
 										<li>
-											<CookiePreferencesLink className="inline-flex min-h-[32px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground" />
+											<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground" />
 										</li>
 									)}
 								</ul>

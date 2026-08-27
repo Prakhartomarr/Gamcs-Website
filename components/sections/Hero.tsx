@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
@@ -14,6 +13,7 @@ const HeroShader = dynamic(() => import("@/components/hero/HeroShader"), {
   ssr: false,
 });
 import { hero } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -86,11 +86,9 @@ export default function Hero() {
         <div className="hero-bottom">
           <p className="sub">{hero.subhead}</p>
           <div className="ctas">
-            <Link className="btn btn-light" href="/#how-we-help" data-press>
-              <span className="btn-label">
-                How We Help <span aria-hidden="true">→</span>
-              </span>
-            </Link>
+            <CTA href="/#how-we-help" tier="secondary" icon="arrow">
+              How We Help
+            </CTA>
           </div>
         </div>
       </div>

@@ -62,8 +62,9 @@ export default function GaLogo({
   display?: boolean;
 }) {
   /* Derived from site.name so the wordmark can never drift from the brand.
-     Non-breaking space keeps "Management Consultants" on one line mid-reveal. */
-  const words = site.name.replace(/^GA\s+/, "").replace(/ /g, "\u00a0");
+     One word per line: "MANAGEMENT" over "CONSULTANTS". The uppercasing is
+     CSS, not content, so the accessible name on the link is unaffected. */
+  const words = site.name.replace(/^GA\s+/, "").split(/\s+/);
 
   return (
     <Link
@@ -76,7 +77,13 @@ export default function GaLogo({
       </svg>
       {/* Decorative duplicate of the accessible name already on the link. */}
       <span className="ga-logo-reveal" aria-hidden="true">
-        <span className="ga-logo-reveal-inner">{words}</span>
+        <span className="ga-logo-reveal-inner">
+          {words.map((word) => (
+            <span key={word} className="ga-logo-word">
+              {word}
+            </span>
+          ))}
+        </span>
       </span>
     </Link>
   );

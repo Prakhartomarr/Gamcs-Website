@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { primaryCta, site } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /** Routes where a persistent CTA would be redundant or in the way. */
 const HIDDEN_ON = ["/contact", "/thank-you"];
@@ -64,17 +65,14 @@ export default function StickyMobileCTA() {
 
   return (
     <div className="sticky-cta" data-show={show ? "" : undefined} aria-hidden={!show}>
-      <a
-        className="btn btn-shimmer"
+      <CTA
         href={primaryCta.href}
+        icon="diagonal"
         data-cta="sticky-mobile"
-        data-press
         tabIndex={show ? undefined : -1}
       >
-        <span className="btn-label">
-          {primaryCta.label} <span aria-hidden="true">↗</span>
-        </span>
-      </a>
+        {primaryCta.label}
+      </CTA>
       {/* Rendered only if the business has stated a real reply time. */}
       {site.responseTime ? (
         <p className="sticky-cta-note">{site.responseTime}</p>

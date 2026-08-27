@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ARROW } from "@/components/ui/stroke-icons";
 import { maturityCurve } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /**
  * The four maturity stages as light cards stepping up a connecting run.
@@ -273,10 +273,9 @@ export default function MaturityCurve() {
           <p className="fmc-note" aria-live="polite">
             {note}
           </p>
-          <Link className="fin-btn" href={maturityCurve.cta.href} data-cta="maturity">
+          <CTA tier="secondary" icon="arrow" href={maturityCurve.cta.href} data-cta="maturity">
             {maturityCurve.cta.label}
-            <span className="ico">{ARROW}</span>
-          </Link>
+          </CTA>
         </footer>
       </div>
     </section>

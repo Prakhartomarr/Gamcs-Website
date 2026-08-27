@@ -3,6 +3,7 @@ import AbstractPanel from "@/components/AbstractPanel";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { primaryCta, type Solution } from "@/lib/content/gamcs";
+import CTA from "@/components/CTA";
 
 /**
  * The shared rhythm for the six pillar pages:
@@ -100,7 +101,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
           {s.seeItInAction && (
             <div className="service-proof reveal">
               <div>
-                <SectionEyebrow n={s.blocks.length + 1} label={s.seeItInAction.heading} />
+                <SectionEyebrow label={s.seeItInAction.heading} />
                 {s.seeItInAction.paragraphs.map((para) => (
                   <p key={para}>{para}</p>
                 ))}
@@ -114,16 +115,10 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
 
           <div className="case-cta reveal">
             <h2>{s.closingLine}</h2>
-            <Link
-              className="btn btn-shimmer"
-              href={primaryCta.href}
-              data-cta={`solution-${s.slug}`}
-              data-press
-            >
-              <span className="btn-label">
-                {primaryCta.label} <span aria-hidden="true">↗</span>
-              </span>
-            </Link>
+            <CTA href={primaryCta.href}
+              data-cta={`solution-${s.slug}`} icon="diagonal">
+              {primaryCta.label}
+            </CTA>
           </div>
         </div>
       </section>

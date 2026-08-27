@@ -7,7 +7,6 @@ import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
 import OurPartners from "@/components/sections/OurPartners";
 import Achievements from "@/components/sections/Achievements";
-import Team from "@/components/sections/Team";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import { pageMetadata } from "@/lib/seo";
@@ -43,7 +42,6 @@ export default function HomePage() {
       <Solutions />
       <OurPartners />
       <Achievements />
-      <Team />
       <Testimonials />
       <Contact />
     </>
