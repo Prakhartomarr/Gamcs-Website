@@ -129,12 +129,6 @@ h1,h2,h3,p{margin-top:0}
 .nav-mail:hover{color:var(--blue)}
 .btn:active{transform:scale(.97)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:0 20px;white-space:nowrap;border-radius:999px;font-size:0.7778rem;font-weight:700;letter-spacing:-.01em;border:1px solid var(--blue);transition:box-shadow .25s var(--ease-out),background .25s var(--ease-out),border-color .25s var(--ease-out),transform var(--dur-press) var(--ease-out)}
-.btn-blue{background:var(--blue);color:#fff;box-shadow:0 10px 24px rgba(15,94,151,.28)}
-.btn-blue:hover{box-shadow:0 16px 32px rgba(15,94,151,.34)}
-.btn-yellow{background:var(--yellow);color:#222;border-color:var(--yellow)}
-.btn-white{background:#fff;color:var(--charcoal);border-color:#fff}
-.btn-ghost{background:#fff;color:var(--charcoal);border-color:var(--line)}
-.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
 
 /* ============================================================
    HERO — geometry ported from the reference build, GAMCS brand.
