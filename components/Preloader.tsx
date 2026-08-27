@@ -9,10 +9,10 @@ import { preloader, site } from "@/lib/content/gamcs";
  * wipe that lifts to reveal the hero.
  *
  * Rendered on the server so there is no flash of unstyled page before it
- * mounts. Repeat visits inside a session never see it at all — a blocking
- * inline script in the layout stamps `data-preloaded` on <html> before first
- * paint, and CSS hides this outright. Doing that in an effect instead would
- * show the overlay for a frame on every navigation.
+ * mounts. It plays on every full page load, by request — there is no session
+ * memory. Client-side navigation does not replay it: this lives in the root
+ * layout, which does not remount between routes, so once it has finished it
+ * stays gone until the next real load.
  *
  * The mark is the GA lockup, not the platform logo cloud. The cloud is a
  * trust bar of third-party products (Power BI, SAP, AWS); parading vendor
@@ -43,13 +43,6 @@ export default function Preloader() {
     const lock = lockRef.current;
     if (!root || !dots || !lock) return;
 
-    /* Already shown this session — the inline script has hidden it; just drop
-       it from the tree without animating. */
-    if (document.documentElement.hasAttribute("data-preloaded")) {
-      setGone(true);
-      return;
-    }
-
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const started = Date.now();
 
@@ -68,12 +61,6 @@ export default function Preloader() {
     const release = () => {
       html.classList.remove("is-locked");
       document.body.style.paddingRight = prevPad;
-      try {
-        sessionStorage.setItem("gamcs_preloaded", "1");
-      } catch {
-        /* private mode — the overlay simply shows again next navigation */
-      }
-      document.documentElement.setAttribute("data-preloaded", "");
     };
 
     /* --- what "loaded" actually means here --- */

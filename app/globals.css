@@ -1448,9 +1448,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .preloader{position:fixed;inset:0;z-index:200;background:var(--ink-deep);
   color:var(--paper);display:grid;place-items:center;
   clip-path:inset(0 0 0 0);will-change:clip-path}
-/* Repeat visit in the same session: never painted at all. The attribute is
-   set by a blocking inline script before first paint. */
-html[data-preloaded] .preloader{display:none}
 
 /* The dots and the lockup share one grid cell, so handing over from one to
    the other is a cross-fade in place — nothing jumps between two layouts. */
