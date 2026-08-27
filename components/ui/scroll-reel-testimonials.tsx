@@ -40,6 +40,14 @@ export interface ScrollReelTestimonialsProps {
   charStaggerMs?: number;
   /** Extra classes for the outer container */
   className?: string;
+  /**
+   * How the featured image sits in its tile. `cover` crops to fill and is
+   * right for a portrait; `contain` shows the whole image and skips the
+   * desaturation blend, which is what a company logo needs.
+   */
+  imageFit?: "cover" | "contain";
+  /** Advance every N ms. Omit or 0 to leave the reel manual. */
+  autoAdvanceMs?: number;
 }
 
 /* Geometry — middle column pitch between portrait centers:
@@ -77,10 +85,12 @@ function Featured({
   src,
   alt,
   monogram,
+  fit = "cover",
 }: {
   src?: string;
   alt?: string;
   monogram?: string;
+  fit?: "cover" | "contain";
 }) {
   return (
     <div
@@ -92,7 +102,11 @@ function Featured({
           src={src}
           alt={alt ?? ""}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+          className={
+            fit === "contain"
+              ? "absolute inset-0 h-full w-full object-contain p-4"
+              : "absolute inset-0 h-full w-full object-cover object-[center_30%]"
+          }
         />
       ) : (
         <div
@@ -105,7 +119,7 @@ function Featured({
         </div>
       )}
       {/* desaturate via saturation blend — only meaningful over a photo */}
-      {src && (
+      {src && fit === "cover" && (
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-[2] bg-white mix-blend-saturation"
@@ -175,6 +189,8 @@ export function ScrollReelTestimonials({
   testimonials,
   charStaggerMs = 6,
   className,
+  imageFit = "cover",
+  autoAdvanceMs = 0,
 }: ScrollReelTestimonialsProps) {
   /* Navigation state vs display state are kept separate so the
    * exiting block and the entering block never render together. */
@@ -203,8 +219,9 @@ export function ScrollReelTestimonials({
   const paginate = React.useCallback(
     (dir: 1 | -1) => {
       if (animating.current) return;
-      const next = index + dir;
-      if (next < 0 || next >= count) return;
+      /* Wrap rather than stop: autoplay loops, so the ends are not walls. */
+      const next = (index + dir + count) % count;
+      if (next === index) return;
       animating.current = true;
 
       setIndex(next);
@@ -224,6 +241,35 @@ export function ScrollReelTestimonials({
     },
     [index, count]
   );
+
+  /* Autoplay.
+   *
+   * Paused four ways: the visitor's own play/pause control, pointer hover,
+   * keyboard focus anywhere inside the reel, and prefers-reduced-motion —
+   * which switches it off entirely rather than merely pausing it, since a
+   * viewer who asks for less motion should not have to press a button.
+   *
+   * WCAG 2.2.2 wants a mechanism to stop content that moves automatically;
+   * the visible control is that mechanism. */
+  const [playing, setPlaying] = React.useState(true);
+  const [held, setHeld] = React.useState(false);
+  const [reduceMotion, setReduceMotion] = React.useState(false);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const autoOn = autoAdvanceMs > 0 && playing && !held && !reduceMotion && count > 1;
+
+  React.useEffect(() => {
+    if (!autoOn) return;
+    const id = setInterval(() => paginate(1), autoAdvanceMs);
+    return () => clearInterval(id);
+  }, [autoOn, autoAdvanceMs, paginate]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -270,6 +316,13 @@ export function ScrollReelTestimonials({
       aria-label="Testimonials"
       tabIndex={0}
       onKeyDown={onKeyDown}
+      /* Hold autoplay while the pointer is over the reel or focus is anywhere
+         inside it — onFocus/onBlur bubble in React, so this covers the quote,
+         the arrows and the pause control alike. */
+      onMouseEnter={() => setHeld(true)}
+      onMouseLeave={() => setHeld(false)}
+      onFocus={() => setHeld(true)}
+      onBlur={() => setHeld(false)}
       className={cn(
         "relative flex w-full max-w-[1060px] flex-col items-stretch gap-2.5 overflow-hidden rounded-xl border border-border bg-muted shadow-[inset_0_2px_0_rgba(255,255,255,1)] outline-none focus-visible:ring-2 focus-visible:ring-ring lg:min-h-[320px] lg:flex-row",
         "dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
@@ -312,6 +365,7 @@ export function ScrollReelTestimonials({
                   src={testimonials[item.i].image}
                   alt={testimonials[item.i].alt}
                   monogram={testimonials[item.i].monogram}
+                  fit={imageFit}
                 />
               ) : (
                 <Cell key={i} />
@@ -384,10 +438,34 @@ export function ScrollReelTestimonials({
 
         {/* Controls */}
         <div className="mt-6 flex items-center gap-1.5 lg:mt-0">
+          {autoAdvanceMs > 0 && !reduceMotion && count > 1 && (
+            <button
+              type="button"
+              onClick={() => setPlaying((p) => !p)}
+              aria-label={playing ? "Pause testimonials" : "Play testimonials"}
+              aria-pressed={!playing}
+              className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:scale-[1.08] active:scale-[0.94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <svg
+                className="h-3 w-3 opacity-70"
+                viewBox="0 0 12 12"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                {playing ? (
+                  <>
+                    <rect x="2.5" y="2" width="2.5" height="8" rx="0.6" />
+                    <rect x="7" y="2" width="2.5" height="8" rx="0.6" />
+                  </>
+                ) : (
+                  <path d="M3.5 2.2 10 6l-6.5 3.8Z" />
+                )}
+              </svg>
+            </button>
+          )}
           <button
             type="button"
             onClick={() => paginate(-1)}
-            disabled={index === 0}
             aria-label="Previous testimonial"
             className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:enabled:scale-[1.08] active:enabled:scale-[0.94] disabled:cursor-default disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
@@ -406,7 +484,6 @@ export function ScrollReelTestimonials({
           <button
             type="button"
             onClick={() => paginate(1)}
-            disabled={index === count - 1}
             aria-label="Next testimonial"
             className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:enabled:scale-[1.08] active:enabled:scale-[0.94] disabled:cursor-default disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
