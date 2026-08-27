@@ -1234,10 +1234,8 @@ html[data-cookie-banner] .sticky-cta{display:none}
   letter-spacing:-.02em;color:var(--ink-deep)}
 .section-head h2 em{font-style:normal;color:var(--blue)}
 
-/* ---- numbered eyebrow ---- */
+/* ---- section eyebrow ---- */
 .eyebrow-row{display:flex;align-items:center;gap:10px;margin-bottom:26px}
-.eyebrow-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;
-  background:var(--blue);color:#fff;font:600 0.6667rem Sora;flex:none}
 .eyebrow-pill{display:inline-flex;align-items:center;height:28px;padding:0 15px;
   border:1px solid var(--pill-line);border-radius:999px;background:#fff;
   font:500 0.7222rem Sora;letter-spacing:0;color:var(--ink-deep);white-space:nowrap}

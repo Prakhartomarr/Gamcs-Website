@@ -21,7 +21,7 @@ export default function OurPartners() {
       <div className="container">
         <div className="partners-layout">
           <div className="partners-copy reveal">
-            <SectionEyebrow n={5} label="Our partners" />
+            <SectionEyebrow label="Our partners" />
             <h2 className="partners-heading">{partners.heading}</h2>
             <p className="partners-body">{partners.body}</p>
           </div>

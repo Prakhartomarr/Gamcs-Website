@@ -101,7 +101,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
           {s.seeItInAction && (
             <div className="service-proof reveal">
               <div>
-                <SectionEyebrow n={s.blocks.length + 1} label={s.seeItInAction.heading} />
+                <SectionEyebrow label={s.seeItInAction.heading} />
                 {s.seeItInAction.paragraphs.map((para) => (
                   <p key={para}>{para}</p>
                 ))}

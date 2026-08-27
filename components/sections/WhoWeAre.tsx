@@ -35,7 +35,7 @@ export default function WhoWeAre() {
       <div className="container">
         <div className="who-row">
           <div className="who-copy reveal">
-            <SectionEyebrow n={1} label="Who we are" />
+            <SectionEyebrow label="Who we are" />
             <h2 className="who-heading">{site.tagline}</h2>
             <p className="who-lead">{story.lead}</p>
             <p className="who-sub">{story.network}</p>
