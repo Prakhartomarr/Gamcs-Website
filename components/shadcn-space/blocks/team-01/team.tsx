@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mail } from "lucide-react";
 import { motion } from "motion/react";
 import { team } from "@/lib/content/gamcs";
+import { initials } from '@/lib/utils';
 
 type Member = {
   name: string;
@@ -35,12 +36,6 @@ const teamData: Member[] = [
   })),
 ];
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2);
 
 const Team = () => {
   return (

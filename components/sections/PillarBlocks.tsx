@@ -1,6 +1,6 @@
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import type { SolutionBlock } from "@/lib/content/gamcs";
-import { solutions, solutionsHub } from "@/lib/content/gamcs";
+import { previewBySlug, solutions } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
 /**
@@ -21,13 +21,6 @@ import CTA from "@/components/CTA";
  * browser's in-page search even when collapsed, and correct before hydration.
  */
 export default function PillarBlocks() {
-  /* Explicitly keyed by `string`. `solutionsHub` is `as const`, so an inferred
-     Map takes the literal slug union as its key type and rejects `s.slug`,
-     which is a plain string on Solution. SolutionCards.tsx:24 does the same. */
-  const blurbFor = new Map<string, (typeof solutionsHub.previews)[number]>(
-    solutionsHub.previews.map((p) => [p.slug, p])
-  );
-
   return (
     <div className="pillars">
       {solutions.map((s, i) => {
@@ -38,7 +31,7 @@ export default function PillarBlocks() {
             b.kind === "bullets"
         );
         const rows = bullets?.items ?? [];
-        const preview = blurbFor.get(s.slug);
+        const preview = previewBySlug.get(s.slug);
 
         return (
           <section
