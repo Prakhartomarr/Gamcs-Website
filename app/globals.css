@@ -1120,8 +1120,14 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media (max-width:767px){}
 
 /* ---- type scale ---- */
-.hero h1{font-size:clamp(44px,6.4vw,92px);line-height:.98;font-weight:500;
-  letter-spacing:-.03em;color:var(--ink-deep);margin:0}
+/* font-size and line-height deliberately NOT set here. This rule is
+   unconditional and sits ~950 lines after the three @media overrides at
+   :555 (768-1279), :593 (<=767) and :633 (<=380). Media queries add no
+   specificity, so re-declaring those two properties here silently killed all
+   three and pinned the headline to the 44px clamp floor on every phone. The
+   base rule at :168 supplies them with identical values, so the desktop
+   result is unchanged; only the tracking and colour restyle belong here. */
+.hero h1{font-weight:500;letter-spacing:-.03em;color:var(--ink-deep);margin:0}
 .hero h1 em{font-style:normal;color:var(--blue)}
 .hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
