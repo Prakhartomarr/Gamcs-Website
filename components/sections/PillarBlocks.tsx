@@ -21,7 +21,12 @@ import CTA from "@/components/CTA";
  * browser's in-page search even when collapsed, and correct before hydration.
  */
 export default function PillarBlocks() {
-  const blurbFor = new Map(solutionsHub.previews.map((p) => [p.slug, p]));
+  /* Explicitly keyed by `string`. `solutionsHub` is `as const`, so an inferred
+     Map takes the literal slug union as its key type and rejects `s.slug`,
+     which is a plain string on Solution. SolutionCards.tsx:24 does the same. */
+  const blurbFor = new Map<string, (typeof solutionsHub.previews)[number]>(
+    solutionsHub.previews.map((p) => [p.slug, p])
+  );
 
   return (
     <div className="pillars">
