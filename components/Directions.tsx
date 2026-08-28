@@ -1,15 +1,18 @@
+import Image from "next/image";
+
 import { site } from "@/lib/content/gamcs";
 
 /**
  * Office location and directions.
  *
- * Renders nothing until `site.address` is filled in. GAMCS publishes no
- * postal address anywhere — not on gamcs.in, not in the privacy policy — and
- * a map pinned to a guessed location is worse than no map at all.
+ * Renders nothing while `site.address` is null, so removing the address
+ * removes this block, the PostalAddress in the Organization JSON-LD and the
+ * homepage map card in one edit.
  *
- * TODO(business): set `site.address` in lib/content/gamcs.ts. This block, the
- * PostalAddress in the Organization JSON-LD and a "Get directions" link all
- * start rendering from that one edit — no further code changes needed.
+ * The map is a static image, not a Google Maps iframe. The iframe version
+ * loaded a third-party frame — and its cookies — on every visit to this page,
+ * before the visitor had answered the cookie banner. This asks nothing of
+ * anyone until they click through to directions, which is a deliberate act.
  */
 export default function Directions() {
   const a = site.address;
@@ -29,16 +32,20 @@ export default function Directions() {
         <br />
         {a.locality}, {a.region} {a.postalCode}
       </address>
-      <iframe
-        className="directions-map"
-        title={`Map showing the ${site.short} office at ${query}`}
-        src={`https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      />
+      <div className="directions-map">
+        <Image
+          src={a.map}
+          alt={`Map showing the ${site.short} office at ${query}`}
+          width={960}
+          height={720}
+          unoptimized
+        />
+        {/* ODbL requires the credit wherever the tiles are shown */}
+        <span className="directions-attrib">© OpenStreetMap</span>
+      </div>
       <a
         className="contact-details-value"
-        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`}
+        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(a.coords)}`}
         target="_blank"
         rel="noopener"
       >
