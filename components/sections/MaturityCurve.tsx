@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { ARROW } from "@/components/ui/stroke-icons";
 import { maturityCurve } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 

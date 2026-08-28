@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CaseStudyCard from "@/components/CaseStudyCard";
