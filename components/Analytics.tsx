@@ -53,7 +53,7 @@ export default function Analytics() {
     const onClick = (e: MouseEvent) => {
       const el = e.target as HTMLElement | null;
       const link = el?.closest<HTMLAnchorElement | HTMLButtonElement>(
-        "a.btn, a.globe-feature-cta, [data-cta]"
+        "a.btn, [data-cta]"
       );
       if (!link) return;
       track("cta_click", {

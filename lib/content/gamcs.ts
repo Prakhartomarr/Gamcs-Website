@@ -20,18 +20,35 @@ export const site = {
   /** Brand mark. Overwrite public/brand/logo.png to change it everywhere. */
   logo: "/brand/logo.png",
   /**
-   * TODO(business): gamcs.in publishes no phone number or postal address.
-   * Fill these in and the contact page, the directions map and the
-   * Organization JSON-LD all start rendering them automatically. Leaving
-   * them null is deliberate — an invented address is worse than none.
+   * TODO(business): gamcs.in publishes no phone number. Fill it in and the
+   * contact page and the Organization JSON-LD render it automatically.
+   * Leaving it null is deliberate — an invented number is worse than none.
    */
   phone: null as string | null,
-  address: null as {
+  /**
+   * `coords` and `map` are part of the address, not decoration: the map
+   * links route to the coordinates rather than to the text (geocoding the
+   * written address alone lands ~400m off), and `map` is a static basemap
+   * rendered for exactly that centre. Move the office and all three change
+   * together, or the pin quietly points at the old one.
+   */
+  address: {
+    street:
+      "2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32",
+    locality: "Gurugram",
+    region: "Haryana",
+    postalCode: "122001",
+    country: "IN", // ISO 3166-1 alpha-2
+    coords: "28.4443371,77.0436624",
+    map: "/map/gurugram-sector32.webp",
+  } as {
     street: string;
     locality: string;
     region: string;
     postalCode: string;
-    country: string; // ISO 3166-1 alpha-2
+    country: string;
+    coords: string;
+    map: string;
   } | null,
   /**
    * TODO(business): real reply-time commitment, e.g. "within 1 business day".
