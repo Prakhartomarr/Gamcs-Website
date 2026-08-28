@@ -7,7 +7,7 @@ import CTA from '@/components/CTA';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
-import { caseStudies, primaryCta, site, solutions } from '@/lib/content/gamcs';
+import { caseStudies, primaryCta, solutions } from '@/lib/content/gamcs';
 
 /* ------------------------------------------------------------------ *
  * Floating pill header.
