@@ -1432,11 +1432,16 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who-sub{margin:14px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
   font-weight:500;color:var(--ink-muted)}
 .who-copy .btn{margin-top:30px}
-/* The 5:6 box is the crop, not the file: the source portrait is 3:4, so the
-   image covers and the box decides what is shown. */
+/* Portrait plus its link, so the button tracks the image column rather than
+   the copy column. */
+.who-figure{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.who-figure .who-portrait{width:100%}
+/* The box matches the photograph's own aspect (880x852). The two founders are
+   spread across the frame, so a taller box on `cover` would trim ~11% off each
+   side — which is exactly where their outer shoulders are. */
 /* 24px literal, not var(--radius): the shadcn token layer further down
    redefines --radius to 0.75rem, so the token resolves to 13.5px here. */
-.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:5/6;
+.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:880/852;
   background:var(--band-soft);box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
   transition:transform .6s var(--ease-out)}
 .who-portrait img{display:block;width:100%;height:100%;object-fit:cover}
