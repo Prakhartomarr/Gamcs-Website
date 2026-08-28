@@ -167,7 +167,7 @@ h1,h2,h3,p{margin-top:0}
 /* headline */
 .hero h1{font-size:clamp(44px,6.4vw,92px);line-height:.98;font-weight:500;letter-spacing:-.032em;color:var(--ink);margin:0}
 .hero h1 em{font-style:normal;color:var(--blue)}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.02em;padding-right:.06em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em;padding-right:.06em}
 .hero h1 .line-inner{display:block}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
 
@@ -575,7 +575,10 @@ h1,h2,h3,p{margin-top:0}
   .form{grid-template-columns:1fr 1fr}
   
   .section-head{flex-direction:column;align-items:flex-start;gap:16px}
-  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:80px 0}
+  /* .services/.metrics/.people/.quote-section/.who dropped: the section-band
+     system at :1147 supersedes them unconditionally, so they never took this
+     value. .section and .contact are not in that system and still need it. */
+  .section,.contact{padding:80px 0}
 }
 
 /* ---------- phone: single column, upright cards, readable type ---------- */
@@ -623,7 +626,7 @@ h1,h2,h3,p{margin-top:0}
   .field.full{grid-column:auto}
   .contact-box{padding:26px;gap:28px}
   .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
-  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:60px 0}
+  .section,.contact{padding:60px 0}
   .page-head{padding:44px 0 32px}
 }
 
@@ -1129,7 +1132,12 @@ html[data-cookie-banner] .sticky-cta{display:none}
    result is unchanged; only the tracking and colour restyle belong here. */
 .hero h1{font-weight:500;letter-spacing:-.03em;color:var(--ink-deep);margin:0}
 .hero h1 em{font-style:normal;color:var(--blue)}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em}
+/* padding-bottom/margin-bottom moved up to the base rule so the <=767px
+   override at :597 can apply. .line is overflow:hidden and masks the
+   line-reveal, so its padding is what stops descenders being clipped —
+   the mobile rule raises it to .12em precisely because the mobile
+   line-height (1.02) is looser. Both halves of that pairing were dead. */
+.hero h1 .line{display:block;overflow:hidden}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
 .hero .sub{margin-top:26px;max-width:52ch;font-size:0.9444rem;line-height:1.6;
   color:var(--ink-muted);font-weight:500}
