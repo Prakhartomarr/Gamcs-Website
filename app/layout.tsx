@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/ui/header-2";
-import { FlickeringFooter } from "@/components/ui/flickering-footer";
+import { SiteFooter } from "@/components/ui/site-footer";
 import MotionLayer from "@/components/motion/MotionLayer";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
@@ -66,24 +66,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    /* The preloader's guard script stamps data-preloaded on <html> during
-       parse, before hydration, so React sees an attribute the server never
-       rendered and warns. This is the sanctioned escape hatch for exactly
-       that pattern — the same one theme switchers use. It suppresses the
-       warning on this element only, not on its subtree. */
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        {/*
-          Runs during HTML parse, before first paint, so a visitor who has
-          already seen the preloader this session never gets a flash of it.
-          Doing this in an effect would paint the overlay for a frame first.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{if(sessionStorage.getItem('gamcs_preloaded'))document.documentElement.setAttribute('data-preloaded','')}catch(e){}",
-          }}
-        />
         <GaLogoSprite />
         <Preloader />
         <a className="skip-link" href="#main">
@@ -92,7 +76,7 @@ export default function RootLayout({
         <div className="shell">
           <Header />
           <main id="main">{children}</main>
-          <FlickeringFooter />
+          <SiteFooter />
         </div>
         <HeaderHeight />
         <MotionLayer />

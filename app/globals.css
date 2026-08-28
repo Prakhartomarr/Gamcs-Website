@@ -324,7 +324,7 @@ h1,h2,h3,p{margin-top:0}
 /* TRUST STRIP */
 .trust{border-bottom:1px solid #E7E8E9;background:#fff;padding:22px 0}.trust-item{padding:5px 20px;border-right:1px solid #DDE0E1}.trust-item:last-child{border-right:0}.trust-item strong{font:700 2rem Sora;letter-spacing:-.05em;color:var(--charcoal)}.trust-item span{display:block;font-size:0.6667rem;color:#7A7A7A;margin-top:3px}
 /* SECTION BASE */
-.section{padding:108px 0}.section-head{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:46px}.section-head h2{font-size:clamp(38px,4.5vw,61px);line-height:.98;letter-spacing:-.06em;margin:10px 0 0;max-width:720px}.section-head h2 em{font-style:normal;color:var(--blue)}.section-head>p{max-width:380px;color:#6E6E6E;font-size:0.8889rem;margin:0}.section-kicker{font:700 0.7222rem Sora;letter-spacing:.18em;color:var(--blue)}
+.section{padding:108px 0}.section-head{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:46px}.section-head h2{margin:10px 0 0;max-width:720px}.section-head h2 em{font-style:normal;color:var(--blue)}.section-head>p{max-width:380px;color:#6E6E6E;font-size:0.8889rem;margin:0}.section-kicker{font:700 0.7222rem Sora;letter-spacing:.18em;color:var(--blue)}
 /* MODEL */
 .model{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.model h2{font:700 clamp(34px,4vw,54px) Sora;line-height:1;letter-spacing:-.06em;margin:10px 0 22px}.model p{font-size:0.8889rem;color:#696969;max-width:620px}.model-card{padding:22px;border:1px solid #E1E4E5;border-radius:17px;background:#fff}.model-card span{display:block;font:700 0.6667rem Sora;letter-spacing:.13em;color:var(--blue);margin-bottom:9px}.model-card b{font:700 0.9444rem Sora;letter-spacing:-.03em}.model-card p{font-size:0.7778rem;margin:8px 0 0}
 /* SERVICES */
@@ -374,6 +374,9 @@ h1,h2,h3,p{margin-top:0}
    styles the footer with utilities, and an element selector would beat them */.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}.footer-brand strong{font:700 0.8889rem Sora;color:var(--charcoal)}.footer-brand p{font-size:0.7222rem;max-width:260px;margin-top:10px}.footer-title{font-size:0.6667rem;letter-spacing:.12em;color:#777;margin-bottom:13px}.footer-links{display:grid;gap:7px;font-size:0.7222rem;color:#666}.footer-bottom{display:flex;justify-content:space-between;border-top:1px solid #E7E8E8;margin-top:38px;padding-top:18px;font-size:0.6667rem;color:#8A8A8A}
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}.reveal.visible{opacity:1;transform:none}
+/* Without scripting nothing ever adds .visible, so every section would stay
+   invisible and the page would read as blank. Content beats animation. */
+@media (scripting:none){.reveal{opacity:1;transform:none}}
 
 /* Mobile nav open state — the original toggled these via inline JS styles. */
 
@@ -603,8 +606,10 @@ h1,h2,h3,p{margin-top:0}
   /* uppercase micro-labels: 10px -> 11px so tracking stays legible on glass */
   .section-kicker,.bento-num,.footer-title{font-size:0.7778rem}
 
-  /* type scale lifted for reading at arm's length — applies to phone AND tablet */
-  .section-head h2{font-size:clamp(28px,7.6vw,36px)}
+  /* type scale lifted for reading at arm's length — applies to phone AND tablet.
+     The heading is no longer overridden here: its shared clamp already lands at
+     30px by 768px, and a per-class override would put this section at a
+     different size from every other one below 1280px. */
   .section-head>p,.who .section-head p{font-size:0.8889rem;line-height:1.6}
   .section-kicker{font-size:0.7222rem;letter-spacing:.14em}
   
@@ -731,6 +736,15 @@ h1,h2,h3,p{margin-top:0}
   font:600 0.7778rem Sora;letter-spacing:.01em;color:#5A6165;cursor:pointer;position:relative;
   transition:color var(--dur-hover) var(--ease-out)}
 .nav-trigger:hover,.nav-trigger.is-open{color:var(--ink)}
+/* Solutions is a link plus a caret: the label navigates, the caret discloses
+   the panel. The link inherits the trigger's colour so the pair still reads as
+   one control, and the caret carries its own 24x44 target (WCAG 2.5.8) rather
+   than relying on the label's box. */
+.nav-trigger>a{color:inherit;text-decoration:none}
+.nav-caret{display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;min-height:44px;margin:-10px -4px -10px 0;padding:0;
+  background:none;border:0;color:inherit;cursor:pointer}
+.nav-caret:focus-visible{outline:2px solid var(--blue);outline-offset:-6px;border-radius:6px}
 .nav-trigger:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);
   transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
 .nav-trigger:hover:after,.nav-trigger.is-open:after{transform:scaleX(1)}
@@ -1229,9 +1243,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
   color:var(--ink-muted);font-weight:500}
 .hero .ctas{margin-top:34px}
 
-.section-head h2,.who .section-head h2,.page-head h1{
-  font-size:clamp(32px,3.9vw,51px);line-height:1.12;font-weight:600;
-  letter-spacing:-.02em;color:var(--ink-deep)}
+
 .section-head h2 em{font-style:normal;color:var(--blue)}
 
 /* ---- section eyebrow ---- */
@@ -1321,8 +1333,19 @@ html[data-cookie-banner] .sticky-cta{display:none}
     grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px}
   .who-stat-label{margin-top:12px;font-size:0.7778rem}
 }
-.who-heading{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
-  letter-spacing:-.02em;color:var(--ink-deep);margin:0;max-width:22ch}
+/* One section-heading typography, shared by every section. These used to be
+   five separate specs — 30/32/28px floors, 50/51/46px ceilings, weights 600
+   and 700, two of them via the `font:` shorthand — which is why no two
+   headings on the page were the same size. Layout (margin, measure) stays
+   per-section; only the type is unified. */
+.who-heading,
+.section-head h2,
+.page-head h1,
+.partners-heading,
+.hwh-h2,
+.fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
+  font-family:Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
+.who-heading{margin:0;max-width:22ch}
 .who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
   border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
   color:var(--ink);font-weight:600}
@@ -1414,8 +1437,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 
 /* ---- partners ---- */
 .partners{background:var(--band-white)}
-.partners-heading{font-size:clamp(28px,3.4vw,46px);line-height:1.14;font-weight:600;
-  letter-spacing:-.025em;color:var(--ink-deep);margin:0 0 18px;max-width:24ch}
+.partners-heading{margin:0 0 18px;max-width:24ch}
 .partners-body{margin:0;max-width:66ch;font-size:0.9444rem;line-height:1.65;color:var(--ink-muted)}
 .partners-row{list-style:none;margin:34px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px}
 .partners-row li{background:#fff;border:1px solid var(--line);border-radius:14px;
@@ -1439,27 +1461,38 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .preloader{position:fixed;inset:0;z-index:200;background:var(--ink-deep);
   color:var(--paper);display:grid;place-items:center;
   clip-path:inset(0 0 0 0);will-change:clip-path}
-/* Repeat visit in the same session: never painted at all. The attribute is
-   set by a blocking inline script before first paint. */
-html[data-preloaded] .preloader{display:none}
 
-.preloader-inner{width:min(1440px,calc(100% - 48px));
-  display:flex;align-items:center;justify-content:space-between;gap:24px}
-.preloader-edge{font:500 0.6667rem ui-monospace,SFMono-Regular,Menlo,monospace;
-  letter-spacing:.28em;color:rgba(255,255,255,.42);white-space:nowrap}
-.preloader-edge.is-right{text-align:right}
+/* The dots and the lockup share one grid cell, so handing over from one to
+   the other is a cross-fade in place — nothing jumps between two layouts. */
+.preloader-stage{display:grid;place-items:center}
+.preloader-stage>*{grid-area:1/1}
 
-.preloader-mark{display:flex;align-items:center;gap:18px}
-.preloader-ga{font:800 2.4444rem Sora,sans-serif;letter-spacing:-.04em;color:var(--paper)}
-.preloader-rule{width:1px;height:38px;background:rgba(255,255,255,.22)}
-.preloader-count{font:500 1.3333rem ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-variant-numeric:tabular-nums;color:var(--blue-on-dark,#7FB6DE);letter-spacing:.02em}
+/* The dots are absolutely placed and driven by transforms, not flex order:
+   they travel an ellipse, so their positions cannot come from layout. */
+.pl-dots{position:relative;width:0;height:0;opacity:0}
+/* Both start hidden in CSS: the overlay is server-rendered, so without this
+   the finished lockup and a static row of dots paint for the frames before
+   GSAP takes over. */
+.pl-dots>span{position:absolute;left:-6.5px;top:-6.5px;
+  display:block;width:13px;height:13px;border-radius:50%;box-sizing:border-box;
+  background:var(--paper);border:0 solid var(--paper);
+  will-change:transform,opacity}
+
+.pl-lockup{display:flex;flex-direction:column;align-items:center;gap:16px;
+  opacity:0;will-change:transform,opacity}
+/* The mark is blue in the sprite; on this ground it has to be white, and the
+   yellow swoosh is the one part that keeps its own colour. */
+.pl-mark{height:58px;width:auto;aspect-ratio:183 / 116.5;display:block;
+  color:var(--paper)}
+.pl-word{overflow:hidden;display:block}
+.pl-word>span{display:block;font:600 0.7778rem Sora,sans-serif;
+  letter-spacing:.30em;text-transform:uppercase;color:rgba(255,255,255,.62);
+  white-space:nowrap;will-change:clip-path}
 
 @media (max-width:767px){
-  .preloader-inner{width:calc(100% - 32px);flex-direction:column;gap:22px;text-align:center}
-  .preloader-edge.is-right{display:none}
-  .preloader-ga{font-size:2rem}
-  .preloader-count{font-size:1.1111rem}
+  .pl-dots>span{width:11px;height:11px;left:-5.5px;top:-5.5px}
+  .pl-mark{height:46px}
+  .pl-word>span{font-size:0.6667rem;letter-spacing:.22em}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1626,8 +1659,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .hwh{background:var(--band-white);padding:72px 0}
 .hwh-panel{padding:0}
 .hwh-head{text-align:center}
-.hwh-h2{margin:20px auto 0;max-width:21ch;font:700 clamp(1.7rem,3vw,2.3rem)/1.1 Sora,sans-serif;
-  letter-spacing:-.022em;color:var(--ink-deep)}
+.hwh-h2{margin:20px auto 0;max-width:21ch}
 .hwh-h2 .accent{color:var(--blue)}
 
 .hwh-steps{list-style:none;position:relative;margin:clamp(34px,4vw,52px) 0 0;padding:0}
@@ -1770,8 +1802,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .fin-eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--blue);
   box-shadow:0 0 0 4px rgba(15,94,151,.16)}
 
-.fin-h2{font:700 clamp(2.1rem,4.6vw,3.7rem)/1.04 Sora,sans-serif;letter-spacing:-.022em;
-  color:var(--ink-deep);margin:22px 0 0}
+.fin-h2{margin:22px 0 0}
 .fin-h2 .accent{color:var(--blue);position:relative;white-space:nowrap}
 /* underline is drawn once the heading scrolls in */
 .fin-h2 .accent.uline::after{content:"";position:absolute;left:0;right:0;bottom:-.02em;
@@ -1848,6 +1879,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* one card per row on a phone: the tall portrait proportion stops earning
      its height once it is full-width, so the glyph area gives some back */
   .fsvc-card{padding:26px 24px 22px;min-height:380px}
+  /* centred headings do not survive a phone measure — a two-line heading
+     centred at 390px reads as ragged on both edges. As originally shipped. */
   .fin-center{text-align:left}
   .fin-center .fin-lead{margin-left:0}
 }
@@ -2018,4 +2051,88 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:620px){
   .partners-logos{gap:24px 28px}
   .partners-logos img{max-width:140px;max-height:48px}
+}
+
+/* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
+/* Jump rail. Sticks under the 90px header, scrolls sideways rather than
+   wrapping to two rows, which at 6 pillars it otherwise would below ~1200px. */
+.pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
+  border-bottom:1px solid rgba(16,45,68,.10)}
+.pillar-rail ul{list-style:none;margin:0;padding:0;display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:none}
+.pillar-rail ul::-webkit-scrollbar{display:none}
+.pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
+  padding:0 13px;white-space:nowrap;text-decoration:none;
+  font:600 0.7222rem Sora,sans-serif;letter-spacing:.02em;color:var(--ink-muted);
+  border-bottom:2px solid transparent;transition:color .2s var(--ease-out),
+  border-color .2s var(--ease-out)}
+.pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+.pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
+
+.pillars{display:grid;gap:clamp(64px,7vw,104px)}
+/* scroll-margin clears the sticky rail so an anchor jump does not tuck the
+   block's first line underneath it */
+.pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(28px,3.4vw,56px);align-items:start;
+  scroll-margin-top:calc(var(--header-h) + 64px)}
+/* odd blocks swap sides. Source order is unchanged, so the card is still read
+   before its list. */
+.pillar[data-flip] .pillar-card{order:2}
+
+/* The card reuses the .solution-card.blue treatment already used for these six
+   pillars elsewhere, rather than introducing a second gradient. */
+/* Not sticky: measured across all six pillars the card is 57-131px TALLER
+   than its list, so a sticky card would have negative travel and never move.
+   (.shell is overflow:clip anyway, which would have capped it regardless.) */
+.pillar-card{position:relative;overflow:hidden;isolation:isolate;
+  border-radius:var(--radius-lg);padding:clamp(26px,2.6vw,38px);
+  background:linear-gradient(180deg,var(--blue),#0C5387);color:#fff}
+.pillar-card::after{content:"";position:absolute;right:-80px;top:-100px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
+  pointer-events:none}
+.pillar-card > *{position:relative;z-index:1}
+.pillar-label{display:inline-flex;align-items:center;height:26px;padding:0 12px;
+  border-radius:999px;border:1px solid rgba(255,255,255,.30);
+  font:600 0.6667rem Sora,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.88)}
+.pillar-card h2{margin:18px 0 0;color:#fff;
+  font:600 clamp(25px,2.5vw,36px)/1.14 Sora,sans-serif;letter-spacing:-.03em;
+  max-width:18ch}
+.pillar-card p{margin:14px 0 0;max-width:46ch;color:#D8E4EC;
+  font-size:0.8889rem;line-height:1.62}
+.pillar-cta{margin-top:24px}
+/* the pillar's own icon, blurred to a soft field so it reads as texture and
+   never competes with the headline */
+.pillar-glyph{position:absolute;right:-28px;bottom:-40px;width:210px;height:210px;
+  z-index:0;pointer-events:none}
+.pillar-glyph svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2.2;
+  filter:blur(11px);opacity:.30}
+
+.pillar-list{list-style:none;margin:0;padding:0}
+.pillar-list li{border-top:1px solid rgba(16,45,68,.12)}
+.pillar-list li:last-child{border-bottom:1px solid rgba(16,45,68,.12)}
+.pillar-list summary{display:flex;align-items:center;justify-content:space-between;
+  gap:16px;cursor:pointer;list-style:none;padding:17px 2px;min-height:44px;
+  font:600 0.9444rem/1.35 Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep);
+  transition:color .2s var(--ease-out)}
+.pillar-list summary::-webkit-details-marker{display:none}
+.pillar-list summary:hover{color:var(--blue)}
+.pillar-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
+.pillar-list summary svg{width:16px;height:16px;flex:none;color:var(--ink-muted);
+  transition:transform .25s var(--ease-out),color .2s var(--ease-out)}
+.pillar-list details[open] summary{color:var(--blue)}
+.pillar-list details[open] summary svg{transform:rotate(180deg);color:var(--blue)}
+.pillar-list details p{margin:0 0 19px;padding-right:34px;max-width:60ch;
+  color:var(--ink-muted);font-size:0.8611rem;line-height:1.62}
+
+/* Below 1023 the two columns stop fitting side by side: the card's headline
+   drops to three or four lines and the rows lose their tap width. */
+@media (max-width:1023px){
+  .pillar{grid-template-columns:1fr;gap:24px}
+  .pillar[data-flip] .pillar-card{order:0}
+  .pillar-glyph{width:160px;height:160px;right:-24px;bottom:-32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pillar-list summary svg{transition:none}
 }

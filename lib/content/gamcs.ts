@@ -817,6 +817,8 @@ export const clients = {
 export const preloader = {
   /** Mirrored on both edges, in the reference's monospace treatment. */
   label: "LOADING",
-  /** Static, announced once. The counter itself is aria-hidden. */
+  /** Static, announced once. The animation itself is aria-hidden. */
   srLabel: "Loading GA Management Consultants",
+  /** Sits under the mark on the loading screen, tracked out. */
+  wordmark: "Management Consultants",
 } as const;

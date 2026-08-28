@@ -5,42 +5,43 @@ import { gsap } from "gsap";
 import { preloader, site } from "@/lib/content/gamcs";
 
 /**
- * First-paint overlay: a counter to 100, then a wipe that lifts to reveal the
- * hero.
+ * First-paint overlay: three dots that resolve into the GA lockup, then a
+ * wipe that lifts to reveal the hero.
  *
  * Rendered on the server so there is no flash of unstyled page before it
- * mounts. Repeat visits inside a session never see it at all — a blocking
- * inline script in the layout stamps `data-preloaded` on <html> before first
- * paint, and CSS hides this outright. Doing that in an effect instead would
- * show the overlay for a frame on every navigation.
+ * mounts. It plays on every full page load, by request — there is no session
+ * memory. Client-side navigation does not replay it: this lives in the root
+ * layout, which does not remount between routes, so once it has finished it
+ * stays gone until the next real load.
  *
  * The mark is the GA lockup, not the platform logo cloud. The cloud is a
  * trust bar of third-party products (Power BI, SAP, AWS); parading vendor
  * logos on a loading screen reads as sponsorship, which is not something this
  * site should imply.
  *
- * Progress is real: fonts, window load, and the hero's WebGL canvas actually
- * existing. The counter eases to 90 while those resolve and only then
- * completes, with a floor on total on-screen time so it never flashes.
+ * The sequence: three dots fade in scattered, settle into an evenly spaced
+ * row, then open out into the lockup — the mark scaling up from the middle
+ * dot while the descriptor wipes in beneath it. Then the whole overlay lifts.
+ *
+ * Progress is still real: fonts, window load, and the hero's WebGL canvas
+ * actually existing. Those gate the hand-off from the dots to the lockup, so
+ * the animation cannot finish before the page behind it is ready, and a floor
+ * on total on-screen time keeps it from flashing on a fast connection.
  */
 const MIN_ON_SCREEN = 1200;
 
 export default function Preloader() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const numRef = useRef<HTMLSpanElement>(null);
+  const dotsRef = useRef<HTMLDivElement>(null);
+  const lockRef = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLSpanElement>(null);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
     const root = rootRef.current;
-    const num = numRef.current;
-    if (!root || !num) return;
-
-    /* Already shown this session — the inline script has hidden it; just drop
-       it from the tree without animating. */
-    if (document.documentElement.hasAttribute("data-preloaded")) {
-      setGone(true);
-      return;
-    }
+    const dots = dotsRef.current;
+    const lock = lockRef.current;
+    if (!root || !dots || !lock) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const started = Date.now();
@@ -60,12 +61,6 @@ export default function Preloader() {
     const release = () => {
       html.classList.remove("is-locked");
       document.body.style.paddingRight = prevPad;
-      try {
-        sessionStorage.setItem("gamcs_preloaded", "1");
-      } catch {
-        /* private mode — the overlay simply shows again next navigation */
-      }
-      document.documentElement.setAttribute("data-preloaded", "");
     };
 
     /* --- what "loaded" actually means here --- */
@@ -93,10 +88,12 @@ export default function Preloader() {
     ]);
 
     if (reduce) {
+      /* No dots and no assembly: show the finished lockup and fade it. */
+      gsap.set(dots, { autoAlpha: 0 });
+      gsap.set(lock, { autoAlpha: 1 });
       ready.then(() => {
         const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
         window.setTimeout(() => {
-          num.textContent = "100";
           gsap.to(root, {
             autoAlpha: 0,
             duration: 0.2,
@@ -110,43 +107,118 @@ export default function Preloader() {
       return;
     }
 
-    const counter = { n: 0 };
     const ctx = gsap.context(() => {
-      /* Ease to 90 while the real signals resolve, then finish. */
-      gsap.to(counter, {
-        n: 90,
-        duration: 1.6,
-        ease: "power2.out",
-        onUpdate: () => {
-          num.textContent = String(Math.round(counter.n)).padStart(3, "0");
-        },
-      });
+      const dot = gsap.utils.toArray<HTMLElement>(dots.children);
 
-      ready.then(() => {
-        const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
-        gsap.to(counter, {
-          n: 100,
-          duration: 0.35,
-          delay: wait / 1000,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            num.textContent = String(Math.round(counter.n)).padStart(3, "0");
-          },
-          onComplete: () => {
-            gsap.to(root, {
-              /* wipe upward off the top edge */
-              clipPath: "inset(100% 0 0 0)",
-              duration: 0.85,
-              delay: 0.2,
-              ease: "power3.inOut",
-              onComplete: () => {
-                release();
-                setGone(true);
-              },
-            });
-          },
+      /* The dots ride an ellipse. Orbiting and then flattening that ellipse
+         is what the reference actually does: as the vertical radius eases to
+         zero the orbit becomes a horizontal row, so "tumbling" and "settling"
+         are one continuous motion rather than two tweens stitched together.
+         That continuity is the whole reason it reads as smooth. */
+      const N = dot.length;
+      const orbit = { angle: -Math.PI / 2, rx: 38, ry: 33, spread: 0, depth: 1 };
+
+      const place = () => {
+        for (let i = 0; i < N; i++) {
+          const a = orbit.angle + (i * 2 * Math.PI) / N;
+          /* spread blends from the orbit position to an evenly spaced row, so
+             the landing is exact instead of wherever the angle happened to
+             stop. */
+          const ox = Math.cos(a) * orbit.rx;
+          const oy = Math.sin(a) * orbit.ry;
+          const rowX = (i - (N - 1) / 2) * 32;
+          /* Size and brightness track the orbit: a dot at the near side of
+             the ellipse is bigger and brighter than one at the far side. This
+             is what makes it read as a tumble in space rather than a flat
+             spin — the reference has it and its absence was most of why the
+             first version looked mechanical. `depth` fades the effect out as
+             the dots settle, so the row ends up uniform. */
+          const near = (1 + Math.sin(a)) / 2;
+          const k = orbit.depth;
+          gsap.set(dot[i], {
+            x: ox + (rowX - ox) * orbit.spread,
+            y: oy * (1 - orbit.spread),
+            scale: 1 + (0.62 + 0.5 * near - 1) * k,
+            opacity: 1 - (1 - (0.55 + 0.45 * near)) * k,
+          });
+        }
+      };
+
+      gsap.set(lock, { autoAlpha: 0 });
+      gsap.set(dots, { autoAlpha: 0 });
+      place();
+
+      const tl = gsap.timeline();
+
+      /* 1. the cluster fades up as a whole — per-dot scale and opacity belong
+            to `place()`, so animating them here would fight it. */
+      tl.fromTo(dots, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, ease: "power2.out" });
+
+      /* 2. a little over one revolution, decelerating the whole way */
+      tl.to(orbit, {
+        angle: orbit.angle + Math.PI * 2.4,
+        duration: 2.0,
+        ease: "power1.inOut",
+        onUpdate: place,
+      }, 0.15);
+
+      /* 3. the ellipse flattens and the dots resolve onto the row. Overlaps
+            the rotation, so there is never a moment of no motion. */
+      tl.to(orbit, {
+        ry: 0,
+        rx: 32,
+        spread: 1,
+        depth: 0,
+        duration: 1.15,
+        ease: "power2.inOut",
+        onUpdate: place,
+      }, 1.25);
+
+      /* 4. hold on the row until the page behind is genuinely ready */
+      tl.addPause(">-0.05", () => {
+        ready.then(() => {
+          const wait = Math.max(0, MIN_ON_SCREEN - (Date.now() - started));
+          window.setTimeout(() => tl.play(), wait);
         });
       });
+
+      /* 5. the dots open into rings and expand away — the reference turns them
+            into the counters of its letterforms; the GA mark has no matching
+            counters, so they expand through it instead of pretending to. */
+      tl.to(dot, {
+        scale: 2.6,
+        borderWidth: 6,
+        backgroundColor: "rgba(254,254,254,0)",
+        opacity: 0,
+        duration: 0.85,
+        ease: "power2.inOut",
+        stagger: 0.06,
+      });
+
+      /* 6. the mark grows out of the same centre as they go */
+      tl.fromTo(
+        lock,
+        { autoAlpha: 0, scale: 0.88 },
+        { autoAlpha: 1, scale: 1, duration: 0.9, ease: "power3.out" },
+        "-=0.62"
+      );
+      tl.fromTo(
+        wordRef.current,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power2.out" },
+        "-=0.5"
+      );
+
+      /* 7. hold on the finished lockup, then lift */
+      tl.to(root, {
+        clipPath: "inset(100% 0 0 0)",
+        duration: 0.9,
+        ease: "power3.inOut",
+        onComplete: () => {
+          release();
+          setGone(true);
+        },
+      }, "+=0.7");
     }, rootRef);
 
     return () => {
@@ -164,18 +236,23 @@ export default function Preloader() {
           it is not re-read on every frame. */}
       <span className="sr-only">{preloader.srLabel}</span>
 
-      <div className="preloader-inner" aria-hidden="true">
-        <span className="preloader-edge">{preloader.label}</span>
+      <div className="preloader-stage" aria-hidden="true">
+        {/* The three dots and the lockup occupy the same cell, so the hand-off
+            is a cross-fade in place rather than a jump between two layouts. */}
+        <div className="pl-dots" ref={dotsRef}>
+          <span />
+          <span />
+          <span />
+        </div>
 
-        <span className="preloader-mark">
-          <span className="preloader-ga">GA</span>
-          <span className="preloader-rule" />
-          <span className="preloader-count">
-            <span ref={numRef}>000</span>%
+        <div className="pl-lockup" ref={lockRef}>
+          <svg className="pl-mark" focusable="false">
+            <use href="#ga-mark-light" />
+          </svg>
+          <span className="pl-word">
+            <span ref={wordRef}>{preloader.wordmark}</span>
           </span>
-        </span>
-
-        <span className="preloader-edge is-right">{preloader.label}</span>
+        </div>
       </div>
       <span className="sr-only">{site.name}</span>
     </div>

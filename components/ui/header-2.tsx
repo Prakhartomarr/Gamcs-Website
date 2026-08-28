@@ -22,7 +22,12 @@ import { caseStudies, primaryCta, site, solutions } from '@/lib/content/gamcs';
  * ------------------------------------------------------------------ */
 
 type Panel = 'solutions' | 'case' | 'who';
-type Item = { label: string; href: string } | { label: string; panel: Panel };
+type Item =
+	| { label: string; href: string }
+	/* `href` alongside `panel` makes the label a link AND keeps its menu:
+	   the label navigates, a separate caret button discloses the panel.
+	   One control per action, so neither is ambiguous to a screen reader. */
+	| { label: string; panel: Panel; href?: string };
 
 /* Restored to the pre-Phase-2 set at the client's request. This deliberately
    differs from the copy doc's GLOBAL ELEMENTS nav (Home / Solutions / Case
@@ -31,7 +36,7 @@ type Item = { label: string; href: string } | { label: string; panel: Panel };
 const items: Item[] = [
 	{ label: 'Who We Are', panel: 'who' },
 	{ label: 'How We Help', href: '/#how-we-help' },
-	{ label: 'Solutions', panel: 'solutions' },
+	{ label: 'Solutions', panel: 'solutions', href: '/solutions' },
 	{ label: 'Case Study', panel: 'case' },
 	{ label: 'Team', href: '/team' },
 ];
@@ -259,12 +264,39 @@ export function Header() {
 				{/* full nav only where it comfortably fits the pill */}
 				<div className="nav hidden xl:flex">
 					{items.map((item) =>
-						'href' in item ? (
+						/* Discriminate on `panel`, not `href`: Solutions carries both, and
+						   testing `href` first would send it down this plain-link branch and
+						   silently drop its menu. */
+						!('panel' in item) ? (
 							<Link key={item.label} href={item.href} onClick={closeAll}>
 								{item.label}
 							</Link>
 						) : (
 							<React.Fragment key={item.label}>
+								{/* With an href the label navigates and the caret discloses the
+								    panel; without one the whole trigger is the disclosure. Hover
+								    opens the panel either way, so pointer users are unaffected. */}
+								{item.href ? (
+									<span
+										className={panel === item.panel ? 'nav-trigger is-open' : 'nav-trigger'}
+										onMouseEnter={() => hoverOpen(item.panel)}
+									>
+										<Link href={item.href} onClick={closeAll} onFocus={() => hoverOpen(item.panel)}>
+											{item.label}
+										</Link>
+										<button
+											type="button"
+											className="nav-caret"
+											aria-expanded={panel === item.panel}
+											aria-controls={`${baseId}-${item.panel}`}
+											aria-label={`${item.label} menu`}
+											onFocus={() => hoverOpen(item.panel)}
+											onClick={() => setPanel(panel === item.panel ? null : item.panel)}
+										>
+											<Chevron />
+										</button>
+									</span>
+								) : (
 								<button
 									type="button"
 									className={panel === item.panel ? 'nav-trigger is-open' : 'nav-trigger'}
@@ -277,6 +309,7 @@ export function Header() {
 									{item.label}
 									<Chevron />
 								</button>
+								)}
 								<div
 									id={`${baseId}-${item.panel}`}
 									className={cn('mega', panel === item.panel && 'is-open')}
@@ -335,7 +368,7 @@ export function Header() {
 							<ul className="drawer-list">
 								{items.map((item) => (
 									<li key={item.label}>
-										{'href' in item ? (
+										{!('panel' in item) ? (
 											<Link href={item.href} onClick={closeAll}>{item.label}</Link>
 										) : (
 											<button type="button" onClick={() => setSub(item.panel)}>
@@ -358,6 +391,11 @@ export function Header() {
 								<span aria-hidden="true">‹</span> Go back
 							</button>
 
+							{sub === 'solutions' && (
+								<Link className="mega-head" href="/solutions" onClick={closeAll}>
+									All solutions <Arrow />
+								</Link>
+							)}
 							{sub === 'solutions' &&
 								solutionColumns.map((col) => (
 									<div className="drawer-group" key={col.heading}>
