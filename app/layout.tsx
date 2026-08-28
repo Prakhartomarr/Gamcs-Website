@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/ui/header-2";
-import { SiteFooter } from "@/components/ui/site-footer";
+import { FlickeringFooter } from "@/components/ui/flickering-footer";
 import MotionLayer from "@/components/motion/MotionLayer";
 import Analytics from "@/components/Analytics";
 import CookieConsent from "@/components/CookieConsent";
@@ -76,7 +76,7 @@ export default function RootLayout({
         <div className="shell">
           <Header />
           <main id="main">{children}</main>
-          <SiteFooter />
+          <FlickeringFooter />
         </div>
         <HeaderHeight />
         <MotionLayer />
