@@ -5,13 +5,14 @@ import { achievements, primaryCta, site, story, team } from "@/lib/content/gamcs
 import CTA from "@/components/CTA";
 
 /**
- * Who we are: copy and CTA on the left, a founder portrait on the right, and a
- * band of four figures underneath.
+ * Who we are: copy and CTA on the left, the founders' portrait on the right
+ * over a link to the team page, and a band of four figures underneath.
  *
- * The portrait is a real founder rather than stock photography — the reason
- * the previous version of this section used `AbstractPanel` was that it would
- * not depict people who are not GAMCS, and a founder satisfies that while
- * still putting a face on the firm.
+ * The portrait is the real founders rather than stock photography — the reason
+ * an earlier version used `AbstractPanel` was that it would not depict people
+ * who are not GAMCS, and the founders satisfy that while putting a face on the
+ * firm. The box now matches the photograph's own aspect so neither of them is
+ * cropped out of frame.
  *
  * The four figures are the published ones, pulled from `achievements` by value
  * so there is a single source for them: they also appear in the Achievements
@@ -26,9 +27,8 @@ export default function WhoWeAre() {
     achievements.items.find((i) => i.value === v)
   ).filter((i): i is (typeof achievements.items)[number] => Boolean(i));
 
-  const founder = team.leadership[0];
-  /* "Founder | FP&A & Due Diligence Specialist" -> "Founder" */
-  const role = founder.title.split("|")[0].trim();
+  /* Left of frame, then right — the order the alt text names them in. */
+  const founders = team.leadership;
 
   return (
     <section className="section who" id="who-we-are">
@@ -44,14 +44,19 @@ export default function WhoWeAre() {
             </CTA>
           </div>
 
-          <div className="who-portrait reveal">
-            <Image
-              src={founder.photo}
-              alt={`${founder.name}, ${role}`}
-              width={880}
-              height={1056}
-              sizes="(max-width: 1023px) 92vw, 440px"
-            />
+          <div className="who-figure reveal">
+            <div className="who-portrait">
+              <Image
+                src={team.foundersPhoto}
+                alt={`${founders[0].name} and ${founders[1].name}, founders of ${site.name}`}
+                width={880}
+                height={852}
+                sizes="(max-width: 1023px) 92vw, 440px"
+              />
+            </div>
+            <CTA href="/team" tier="secondary" icon="arrow" data-cta="who-founders">
+              Meet our founders
+            </CTA>
           </div>
         </div>
 

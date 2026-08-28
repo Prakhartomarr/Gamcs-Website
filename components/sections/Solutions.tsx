@@ -1,11 +1,12 @@
-import SolutionCards from "@/components/sections/SolutionCards";
+import ServiceAccordion from "@/components/sections/ServiceAccordion";
 import { services } from "@/lib/content/gamcs";
 
 /**
- * Homepage services section: tall gradient cards with a soft-focus glyph.
+ * Homepage services section: the six pillars as an accordion beside a panel
+ * of the active pillar's real capabilities.
  *
- * The cards themselves live in SolutionCards so this section and the
- * /solutions hub cannot drift apart again.
+ * This replaced a six-card grid (SolutionCards), which is now unused by the
+ * homepage; /solutions renders the pillars through PillarBlocks.
  *
  * This was a client component only to drive the icons' draw-on-scroll effect
  * (stroke-dashoffset tweened from each path's measured length). That effect is
@@ -33,7 +34,7 @@ export default function Solutions() {
           </p>
         </div>
 
-        <SolutionCards />
+        <ServiceAccordion />
       </div>
     </section>
   );

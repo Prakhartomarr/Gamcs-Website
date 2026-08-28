@@ -189,6 +189,10 @@ export const team = {
    * Gaurav stays "Founder" rather than the doc's "Co-Founder & Partner":
    * that correction was an explicit client instruction in Phase 1.
    */
+  /** Both founders, for the homepage Who-we-are block. Order matters:
+      leadership[0] is on the left of the frame, [1] on the right, which is
+      what the alt text describes. */
+  foundersPhoto: "/team/founders.webp",
   leadership: [
     { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/gaurav-malik.jpg", email: "gaurav.malik@gamcs.in" },
     { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/abhinav-aggarwal.jpg", email: "abhinav.aggarwal@gamcs.in" },
