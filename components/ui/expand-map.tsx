@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 /* ----------------------------------------------------------------
  * LocationMap
@@ -23,6 +23,9 @@ import { useCallback, useId, useRef, useState } from "react";
  * The tiles are OpenStreetMap. `attribution` renders the credit their
  * licence requires; do not remove it while the image is OSM-derived.
  * ---------------------------------------------------------------- */
+
+/** How long the card holds open on its one-time peek. */
+const PEEK_MS = 1600;
 
 export type LocationMapProps = {
   /** Short human label, e.g. "Gurugram, Haryana". */
@@ -49,29 +52,82 @@ export default function LocationMap({
 }: LocationMapProps) {
   const [open, setOpen] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const peekTimer = useRef<number | null>(null);
   const panelId = useId();
+
+  /* Once the visitor engages, the peek has done its job — closing the card
+     under their cursor would be fighting them. */
+  const cancelPeek = useCallback(() => {
+    if (peekTimer.current !== null) {
+      window.clearTimeout(peekTimer.current);
+      peekTimer.current = null;
+    }
+  }, []);
+
+  /* Peek once, then rest closed.
+     Collapsed, this card gave a visitor almost nothing to go on: a hint that
+     only appeared on hover, which on touch never happens at all. So the first
+     time it scrolls into view it opens itself, holds long enough to read as a
+     map with an address and a directions button, and closes again. After that
+     it is an ordinary button and the click toggle is the only thing driving it.
+
+     Skipped entirely under prefers-reduced-motion: the size transitions are
+     disabled there, so a peek would snap open and shut rather than animate. */
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        setOpen(true);
+        peekTimer.current = window.setTimeout(() => {
+          peekTimer.current = null;
+          setOpen(false);
+        }, PEEK_MS);
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelPeek();
+    };
+  }, [cancelPeek]);
 
   /* The tilt writes to the node directly rather than through state: a
      setState per pointermove would re-render the card ~60 times a second
      to change one transform. */
   const onPointerMove = useCallback((e: React.PointerEvent) => {
+    cancelPeek();
     const el = cardRef.current;
     if (!el || e.pointerType !== "mouse") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const r = el.getBoundingClientRect();
     const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
     const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+    /* Drop the transform transition for the duration of the gesture so the
+       card is glued to the pointer rather than easing toward it. */
+    el.classList.add("is-tracking");
     el.style.transform = `rotateX(${(-dy * 7).toFixed(2)}deg) rotateY(${(dx * 7).toFixed(2)}deg)`;
-  }, []);
+  }, [cancelPeek]);
 
   const resetTilt = useCallback(() => {
     const el = cardRef.current;
-    if (el) el.style.transform = "";
+    if (!el) return;
+    /* Hand the transition back before clearing, so it settles home instead of
+       snapping. */
+    el.classList.remove("is-tracking");
+    el.style.transform = "";
   }, []);
 
   return (
     <div
       className={["locmap", className].filter(Boolean).join(" ")}
+      ref={wrapRef}
       onPointerMove={onPointerMove}
       onPointerLeave={resetTilt}
     >
@@ -152,7 +208,10 @@ export default function LocationMap({
           className="locmap-toggle"
           aria-expanded={open}
           aria-controls={panelId}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            cancelPeek();
+            setOpen((v) => !v);
+          }}
         >
           <span className="sr-only">
             {open ? `Hide the ${location} address` : `Show the ${location} address`}

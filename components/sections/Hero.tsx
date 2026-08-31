@@ -86,7 +86,7 @@ export default function Hero() {
         <div className="hero-bottom">
           <p className="sub">{hero.subhead}</p>
           <div className="ctas">
-            <CTA href="/#how-we-help" tier="secondary" icon="arrow">
+            <CTA href="/#how-we-help" icon="arrow">
               How We Help
             </CTA>
           </div>
