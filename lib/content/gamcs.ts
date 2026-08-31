@@ -217,7 +217,7 @@ export const testimonials = {
     {
       name: "Amol Khedkar",
       title: "Deputy Manager",
-      company: "TBOF, India",
+      company: "Two Brothers India Farms",
       quote:
         "We had the pleasure of working with GA Managements and their expertise was instrumental in delivering actionable insights for us. Their meticulous approach to their work has consistently exceeded our expectations. The strategic approach and attention to detail made a significant impact in our day to day working. We highly recommend their services for anyone seeking top-tier FP&A consultancy.",
     },
@@ -233,7 +233,7 @@ export const testimonials = {
 
 /** The only two clients named anywhere on the live site (both via testimonials). */
 export const namedClients = [
-  { name: "TBOF", region: "India" },
+  { name: "Two Brothers India Farms", region: "India" },
   { name: "Three Sixty Finance", region: "UK" },
 ] as const;
 
@@ -802,15 +802,14 @@ export const partners = {
  * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
  */
 export const clients = {
-  heading: "Trusted by clients worldwide",
+  heading: "Trusted by Clients across 4 Continents",
+  /* The sectors as a delimited list rather than a sentence, supplied verbatim. */
   subtitle:
-    "Pharmaceuticals, logistics, hospitality, packaging, VFX, agriculture and consumer brands — finance teams on four continents run their reporting, forecasting and analytics with us.",
+    "SaaS | Hospitality | D2C/ Consumer | VFX | Logistics | Services | NPO | Pharmaceuticals",
   logos: [
     { name: "WWF", file: "wwf.png" },
-    { name: "Servier", file: "servier.png" },
     { name: "Basilic Fly Studio", file: "basilic-fly.png" },
     { name: "SkyNet Worldwide Express", file: "skynet.png" },
-    { name: "The Lalit", file: "the-lalit.png" },
 
     { name: "HungerRush", file: "hungerrush.png" },
     { name: "CoreStack", file: "corestack.png" },
@@ -819,18 +818,20 @@ export const clients = {
     { name: "ProcDNA", file: "procdna.png" },
 
     { name: "Edulog", file: "edulog.png" },
-    { name: "Two Brothers Organic Farms", file: "two-brothers.png" },
-    { name: "sugar.fit", file: "sugar-fit.png" },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png" },
     { name: "Jupiter Group", file: "jupiter-group.png" },
 
-    { name: "The CPG CFO", file: "the-cpg-cfo.png" },
     { name: "Cumin Co.", file: "cumin-co.png" },
     { name: "Passionfruit", file: "passionfruit.png" },
     { name: "CBC Group", file: "cbc-group.png" },
 
     { name: "Caribbean CAGE", file: "caribbean-cage.png" },
     { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png" },
-    { name: "ANOTHR", file: "anothr.png" },
+
+    { name: "The Park Hotels", file: "the-park-hotels.png" },
+    { name: "Aditya", file: "aditya.png" },
+    { name: "Gaurs", file: "gaurs.png" },
+    { name: "BetterCloud", file: "bettercloud.png" },
   ] as { name: string; file: string; tile?: boolean }[],
 } as const;
 

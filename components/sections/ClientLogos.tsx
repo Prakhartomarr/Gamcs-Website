@@ -1,5 +1,23 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import Image from "next/image";
 import { clients } from "@/lib/content/gamcs";
+
+const LOGO_DIR = path.join(process.cwd(), "public", "logos", "clients");
+
+/**
+ * A PNG's real pixel size, straight out of its IHDR header.
+ *
+ * next/image needs a width and a height, and passing one fixed pair for every
+ * logo is what made them all render at the same box: the declared aspect won,
+ * so a tall mark and a flat wordmark were scaled identically and the CSS
+ * max-height never got to bind. Each mark is trimmed to its own artwork now,
+ * so it has to declare its own size for that trim to mean anything.
+ */
+function pngSize(file: string) {
+  const b = readFileSync(path.join(LOGO_DIR, file));
+  return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
+}
 
 /**
  * The client logo wall that sits in the band under the hero, replacing the
@@ -15,6 +33,15 @@ import { clients } from "@/lib/content/gamcs";
  * client list, which is the whole point of the section.
  */
 export default function ClientLogos() {
+  /* A logo whose file has not been added yet is skipped rather than rendered
+     as a broken image. This is a server component, so the check is a build-time
+     disk read, not a runtime cost — and it means an entry can be added to the
+     content before its artwork lands. A tile that never appears means the file
+     is missing or the name does not match. */
+  const logos = clients.logos
+    .filter((l) => existsSync(path.join(LOGO_DIR, l.file)))
+    .map((l) => ({ ...l, ...pngSize(l.file) }));
+
   return (
     <section className="clients" id="clients" aria-labelledby="clients-heading">
       <div className="container">
@@ -24,13 +51,13 @@ export default function ClientLogos() {
         </div>
 
         <ul className="clients-grid reveal">
-          {clients.logos.map((logo) => (
+          {logos.map((logo) => (
             <li key={logo.file} className={logo.tile ? "is-tile" : undefined}>
               <Image
                 src={`/logos/clients/${logo.file}`}
                 alt={logo.name}
-                width={400}
-                height={168}
+                width={logo.width}
+                height={logo.height}
               />
             </li>
           ))}
