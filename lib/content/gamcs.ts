@@ -66,7 +66,7 @@ export const hero = {
   line2: "to Real-Time",
   line3: "Decision Intelligence",
   subhead:
-    "GA Management Consultants embeds forward-looking FP&A, live BI dashboards, and scalable offshore finance teams into growth companies and investment portfolios \u2014 so every number you see is ready before you need to ask for it.",
+    "GA Management Consultants (GAMCS) transforms finance from reporting into decision intelligence \u2014 combining FP&A, BI, automation and finance expertise into one operating layer.",
 } as const;
 
 export const intro =
@@ -103,20 +103,22 @@ export const primaryCta = { label: "Schedule a Call", href: "/contact" } as cons
  * too, which is what the carousel cards need.
  */
 export const whyUs = {
-  heading: "Expert Solutions, Cost-Efficient Results",
+  heading: "Built Differently. Delivered End-to-End.",
   /* Same sentence, split so one phrase can take the accent tint and its drawn
-     underline. `heading` stays whole for the carousel's aria-label. */
-  headingLead: "Expert Solutions,",
-  headingAccent: "Cost-Efficient",
-  headingTail: "Results.",
+     underline. `heading` stays whole for anywhere that needs the full line. */
+  headingLead: "Built Differently.",
+  headingAccent: "Delivered End-to-End.",
+  headingTail: "",
+  /* `lead` doubles as the key into STEP_ICONS — change one and change both, or
+     the step renders an empty glyph. The "01 —" prefixes are not stored here:
+     the component numbers the list from its index. */
   points: [
-    { lead: "Tailored to Your Business", body: "Client-centric customization and industry-specific expertise, not off-the-shelf templates." },
-    { lead: "One Integrated Team", body: "Finance, revenue, and technology under one roof instead of three vendors who don't talk to each other." },
-    { lead: "Platform-Agnostic by Design", body: "We implement the right ERP, CRM, or FP&A tool for your business — not the one we're incentivized to sell." },
-    { lead: "AI Built In, Not Bolted On", body: "Anomaly detection, predictive alerts, and automated commentary ship as standard in every dashboard and model we build — not an add-on module you buy later." },
-    { lead: "Deal-Ready When It Counts", body: "Due diligence, fundraise, and refinancing support so your numbers hold up under real scrutiny, not just internal review." },
-    { lead: "Proven Across Industries", body: "A track record spanning SaaS, D2C/consumer, hospitality, healthcare, pharma, non-profits, and professional services." },
-    { lead: "Cost Structure That Scales With You", body: "Offshore delivery models that flex from a single analyst to a full Center of Excellence." },
+    { lead: "One Team. One Integrated Finance Engine.", body: "We bring finance, data, revenue, and technology together under one roof\u2014so the numbers, systems, insights, and decisions actually connect." },
+    { lead: "Independent by Design. Outcomes Above Platforms.", body: "We recommend and implement the right ERP, CRM, BI, or FP&A platform for your business\u2014not the one we're incentivized to sell. Every solution is built around your business model, KPIs, systems, and goals." },
+    { lead: "Intelligence Built In. Not Bolted On.", body: "We don't stop at reporting. Our dashboards, models, and finance solutions are designed to surface anomalies, explain performance, improve forecasting, and turn data into actionable insight from day one." },
+    { lead: "Boardroom Ready. Deal Room Proven.", body: "We build finance functions that stand up to management scrutiny, investor questions, due diligence, fundraising, refinancing, and M&A\u2014not just the monthly reporting cycle." },
+    { lead: "Industry-Agnostic. Business-Specific.", body: "We don't rely on industry templates. We build around how your business makes money, what drives performance, and what decisions matter. Our experience spans SaaS, Hospitality, D2C / Consumer, VFX, Logistics, Professional Services, Non-Profits, Pharmaceuticals, and beyond." },
+    { lead: "Scale Capability. Not Overhead.", body: "From a single specialist to a full Finance or Centre of Excellence, our delivery model scales with your needs\u2014giving you senior expertise and execution capacity without requiring you to build everything in-house." },
   ],
 } as const;
 

@@ -1423,6 +1423,11 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .quote-section{background:var(--band-white)}
 .faq-section{background:var(--band-soft)}
 .section-head{align-items:start;margin-bottom:52px}
+/* Testimonials centres its head. Scoped to the section rather than changing
+   .section-head, which every other section relies on being left-aligned.
+   .eyebrow-row is flex, so the pill needs justify-content, not text-align. */
+.quote-section .section-head{justify-content:center;text-align:center}
+.quote-section .eyebrow-row{justify-content:center}
 .section-head>p{font-size:0.9444rem;line-height:1.6;color:var(--ink-muted);max-width:34ch}
 
 @media (max-width:767px){

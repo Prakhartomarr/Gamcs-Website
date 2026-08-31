@@ -72,14 +72,7 @@ export const ARROW = (
  * lib/content/gamcs.ts.
  */
 export const STEP_ICONS: Record<string, ReactNode> = {
-  "Tailored to Your Business": (
-    <>
-      <circle cx="12" cy="12" r="8.2" />
-      <circle cx="12" cy="12" r="3.6" />
-      <path d="M12 1.8v2.6M12 19.6v2.6M1.8 12h2.6M19.6 12h2.6" />
-    </>
-  ),
-  "One Integrated Team": (
+  "One Team. One Integrated Finance Engine.": (
     <>
       <circle cx="9" cy="8.4" r="3.1" />
       <path d="M3.4 19.4a5.9 5.9 0 0 1 11.2 0" />
@@ -87,7 +80,7 @@ export const STEP_ICONS: Record<string, ReactNode> = {
       <path d="M18.8 19.4a5.4 5.4 0 0 0-3.1-4.8" />
     </>
   ),
-  "Platform-Agnostic by Design": (
+  "Independent by Design. Outcomes Above Platforms.": (
     <>
       <circle cx="5.6" cy="6" r="2.4" />
       <circle cx="18.4" cy="6" r="2.4" />
@@ -95,27 +88,27 @@ export const STEP_ICONS: Record<string, ReactNode> = {
       <path d="M7.8 7.2l2.6 9M16.2 7.2l-2.6 9M8 6h8" />
     </>
   ),
-  "AI Built In, Not Bolted On": (
+  "Intelligence Built In. Not Bolted On.": (
     <>
       <path d="M9.4 2.6l1.7 4.5 4.5 1.7-4.5 1.7-1.7 4.5-1.7-4.5L3.2 8.8l4.5-1.7z" />
       <path d="M17.6 14l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z" />
     </>
   ),
-  "Deal-Ready When It Counts": (
+  "Boardroom Ready. Deal Room Proven.": (
     <>
       <path d="M13.6 2.8H6.8a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h10.4a2 2 0 0 0 2-2V8.2z" />
       <path d="M13.6 2.8v5.4h5.6" />
       <path d="M8.8 15.4l2 2 3.8-4.2" />
     </>
   ),
-  "Proven Across Industries": (
+  "Industry-Agnostic. Business-Specific.": (
     <>
       <path d="M12 3.2l8.4 4-8.4 4-8.4-4z" />
       <path d="M3.6 12l8.4 4 8.4-4" />
       <path d="M3.6 16.4l8.4 4 8.4-4" />
     </>
   ),
-  "Cost Structure That Scales With You": (
+  "Scale Capability. Not Overhead.": (
     <>
       <path d="M4 20V13.4M9.6 20V9.4M15.2 20v-6.6M20.8 20V5" />
       <path d="M3.4 8.2l5.4-3.6 4.6 2.6 6.4-4" />
