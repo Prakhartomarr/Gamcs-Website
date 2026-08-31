@@ -56,8 +56,8 @@ const CELL = 121.33;
 const GAP = 8;
 const STEP = 3 * (CELL + GAP);
 
-const EXIT_MS = 240; // old text removed / new text mounted
-const SLIDE_MS = 800; // column slide duration + interaction lock
+const EXIT_MS = 200; // old text removed / new text mounted
+const SLIDE_MS = 520; // column slide duration
 
 const EASE_INOUT = "cubic-bezier(0.65,0,0.35,1)";
 
@@ -198,7 +198,6 @@ export function ScrollReelTestimonials({
   const [displayIndex, setDisplayIndex] = React.useState(0);
   const [exiting, setExiting] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
-  const animating = React.useRef(false);
   const timeouts = React.useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const count = testimonials.length;
@@ -218,11 +217,23 @@ export function ScrollReelTestimonials({
 
   const paginate = React.useCallback(
     (dir: 1 | -1) => {
-      if (animating.current) return;
       /* Wrap rather than stop: autoplay loops, so the ends are not walls. */
       const next = (index + dir + count) % count;
       if (next === index) return;
-      animating.current = true;
+
+      /* No transition lock. A press mid-slide used to be dropped on the floor
+         for the whole 800ms slide, which is the one thing an interface must
+         never do: input is never refused because something is still moving.
+         Re-targeting instead is safe because the columns animate with a CSS
+         transition, and a transition re-pointed mid-flight interpolates from
+         its current computed value — so the reel bends toward the new slide
+         rather than jumping to it.
+
+         The pending text swap has to be torn down first, or an in-flight
+         EXIT_MS timer from the previous press would land after this one and
+         show the wrong quote. */
+      timeouts.current.forEach(clearTimeout);
+      timeouts.current.length = 0;
 
       setIndex(next);
       setExiting(true);
@@ -232,11 +243,6 @@ export function ScrollReelTestimonials({
           setDisplayIndex(next);
           setExiting(false);
         }, EXIT_MS)
-      );
-      timeouts.current.push(
-        setTimeout(() => {
-          animating.current = false;
-        }, SLIDE_MS)
       );
     },
     [index, count]
@@ -324,7 +330,12 @@ export function ScrollReelTestimonials({
       onFocus={() => setHeld(true)}
       onBlur={() => setHeld(false)}
       className={cn(
-        "relative flex w-full max-w-[1060px] flex-col items-stretch gap-2.5 overflow-hidden rounded-xl border border-border bg-muted shadow-[inset_0_2px_0_rgba(255,255,255,1)] outline-none focus-visible:ring-2 focus-visible:ring-ring lg:min-h-[320px] lg:flex-row",
+        /* No border: the panel's background is already the same white as the
+           section behind it, so the 1px line was the only thing drawing a box
+           around the reel. Removing it is the whole change — the rounded clip
+           stays, because it is what trims the tile grid at the edges, and the
+           focus ring stays as the keyboard affordance. */
+        "relative flex w-full max-w-[1060px] flex-col items-stretch gap-2.5 overflow-hidden rounded-xl bg-muted shadow-[inset_0_2px_0_rgba(255,255,255,1)] outline-none focus-visible:ring-2 focus-visible:ring-ring lg:min-h-[320px] lg:flex-row",
         "dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
         className
       )}
@@ -402,14 +413,25 @@ export function ScrollReelTestimonials({
             className="relative w-full max-w-[560px] overflow-hidden"
             aria-live="polite"
           >
-            {/* Invisible in-flow copy sizes the stage to the current
-             * quote at any viewport width, so wrapped text never clips. */}
+            {/* Invisible in-flow copy sizes the stage at any viewport width, so
+             * wrapped text never clips. It renders EVERY quote, stacked in one
+             * grid cell, not just the current one: sized to the current quote
+             * the stage changed height on each advance, which resized the page
+             * under the reader every few seconds. Stacked, its height is the
+             * tallest quote and never moves. */}
             <div
               aria-hidden="true"
-              className="invisible flex min-h-[140px] flex-col gap-[19px]"
+              className="invisible grid min-h-[140px]"
             >
-              <p className={QUOTE_CLASSES}>{current.quote}</p>
-              <p className={AUTHOR_CLASSES}>{current.author}</p>
+              {testimonials.map((t, i) => (
+                <div
+                  key={i}
+                  className="col-start-1 row-start-1 flex flex-col gap-[19px]"
+                >
+                  <p className={QUOTE_CLASSES}>{t.quote}</p>
+                  <p className={AUTHOR_CLASSES}>{t.author}</p>
+                </div>
+              ))}
             </div>
             <div
               key={displayIndex}

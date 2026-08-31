@@ -890,7 +890,12 @@ html{font-size:112.5%}
    Six pillars on the left, one open at a time, beside a brand-blue card
    showing that pillar's real `atAGlance` capabilities. */
 .svca{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:44px}
-.svca-list{display:grid;gap:4px}
+/* Reserved to the tallest state (six pillars, one open at a time, WITH the
+   auto-advance progress bar showing) so an advance never resizes the page.
+   The bar is worth calling out: it only renders while autoplay is running, so
+   clicking through the pillars to measure them silently removes 18px from
+   every reading. Re-measure if the blurbs change — with autoplay left alone. */
+.svca-list{display:grid;gap:4px;min-height:616px;align-content:start}
 .svca-item{border-radius:16px;padding:14px 18px;
   transition:background .35s var(--ease-out)}
 .svca-item.is-open{background:rgba(15,94,151,.06)}
@@ -904,9 +909,13 @@ html{font-size:112.5%}
 .is-open .svca-ico{border-color:#BBD4E6}
 .svca-title{font:700 0.8889rem Sora,sans-serif;letter-spacing:-.01em;color:var(--ink)}
 .svca-head:hover .svca-title{color:var(--blue)}
-.svca-body{max-height:0;opacity:0;overflow:hidden;
+/* The transition lives on the OPEN rule only, so a body animates open but
+   collapses instantly. With it on the base rule, the outgoing and incoming
+   bodies were both mid-transition during a swap and the list briefly grew
+   taller than either resting state — which is what pumped the page height. */
+.svca-body{max-height:0;opacity:0;overflow:hidden}
+.is-open .svca-body{max-height:260px;opacity:1;margin-top:10px;
   transition:max-height .42s var(--ease-out),opacity .3s var(--ease-out),margin .42s var(--ease-out)}
-.is-open .svca-body{max-height:260px;opacity:1;margin-top:10px}
 .svca-body p{margin:0 0 12px;padding-left:47px;font-size:0.8333rem;line-height:1.6;color:var(--ink-muted)}
 .svca-body .fsvc-link{margin-left:47px}
 .svca-prog{display:block;height:2px;margin:14px 0 2px 47px;border-radius:2px;
@@ -937,11 +946,14 @@ html{font-size:112.5%}
 
 @media(max-width:1279px){
   .svca{grid-template-columns:1fr;gap:34px}
-  .svca-card{min-height:0;padding:28px;order:2}
-  .svca-list{order:1}
+  /* Stacked, the card's height feeds straight into the page height, and the
+     panel's chip count differs per pillar — so it gets a floor too. */
+  .svca-card{min-height:440px;padding:28px;order:2}
+  .svca-list{order:1;min-height:592px}
 }
 @media(max-width:767px){
   .svca-item{padding:12px 14px}
+  .svca-list{min-height:640px}
   .svca-body p,.svca-body .fsvc-link,.svca-prog{padding-left:0;margin-left:0}
   .svca-card{padding:20px;border-radius:20px}
   .svca-panel{padding:20px}
@@ -958,12 +970,21 @@ html{font-size:112.5%}
 .locmap-card{position:relative;overflow:hidden;border-radius:16px;background:#fff;border:1px solid var(--line);
   width:320px;height:180px;transform-style:preserve-3d;box-shadow:0 22px 46px -24px rgba(6,32,55,.46);
   transition:width .52s var(--ease-out),height .52s var(--ease-out),transform .18s ease-out,box-shadow .35s var(--ease-out)}
+/* While the pointer is driving the tilt the card tracks it 1:1 — a transition
+   on transform here means the card trails the cursor, which is the one thing
+   direct manipulation must not do. The transform transition exists only to
+   settle the card back to rest once the pointer leaves. */
+.locmap-card.is-tracking{transition:width .52s var(--ease-out),height .52s var(--ease-out),
+  box-shadow .35s var(--ease-out)}
 .locmap-card.is-open{width:480px;height:340px;box-shadow:0 38px 70px -30px rgba(6,32,55,.55)}
 .locmap-grid{position:absolute;inset:0;opacity:.06;pointer-events:none;transition:opacity .3s var(--ease-out);
   background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);
   background-size:20px 20px}
 .is-open .locmap-grid{opacity:0}
-.locmap-layer{position:absolute;inset:0;opacity:0;pointer-events:none;background:#F3F4F5;
+/* Visible even when collapsed, just held back: an empty grid told a visitor
+   nothing about what this card is. Dimmed, it reads as a map at a glance and
+   the place name still sits clear of it. */
+.locmap-layer{position:absolute;inset:0;opacity:.34;pointer-events:none;background:#F3F4F5;
   transition:opacity .38s var(--ease-out)}
 .is-open .locmap-layer{opacity:1}
 /* 4:3 source, cover-cropped from the centre at every card size — so the office
@@ -1008,6 +1029,10 @@ html{font-size:112.5%}
 
 @media(max-width:1279px){
   .contact-panel{grid-template-columns:1fr;gap:0;padding:44px;min-height:0}
+  /* Stacked, the card's expand would otherwise push everything below it down
+     and back up for the whole animation. Reserving its open height keeps the
+     page still; the closed card sits centred in that space. */
+  .locmap{height:340px;display:flex;align-items:center;justify-content:center}
   .contact-panel-copy{order:2;max-width:none}
   .contact-panel-stage{order:1;width:auto;height:auto;justify-content:flex-start;margin-bottom:32px}
   .locmap{width:min(480px,100%)}
