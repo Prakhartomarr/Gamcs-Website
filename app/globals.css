@@ -290,7 +290,7 @@ h1,h2,h3,p{margin-top:0}
 .btn-light .btn-label{display:inline-flex;align-items:center;gap:10px}
 
 /* entrance gate with a pure-CSS safety net if the bundle never executes */
-.hero[data-anim="pending"] .line-inner,.hero[data-anim="pending"] .sub,.hero[data-anim="pending"] .ctas,
+.hero[data-anim="pending"] .line-inner,.hero[data-anim="pending"] .hero-lede,.hero[data-anim="pending"] .ctas,
 .hero[data-anim="pending"] .hero-rule,.hero[data-anim="pending"] .orbit-ring,.hero[data-anim="pending"] .ga-core,
 .hero[data-anim="pending"] .card,.hero[data-anim="pending"] .chipwrap,.hero[data-anim="pending"] .hero-clients{opacity:0;animation:animGateFallback .5s ease 2.9s forwards}
 @keyframes animGateFallback{to{opacity:1}}
@@ -311,7 +311,7 @@ h1,h2,h3,p{margin-top:0}
      left the footer's first block permanently at opacity:0/blur(4px) for
      reduced-motion users. CSS guarantees the resting state regardless. */
   .footer-anim{opacity:1!important;filter:none!important;transform:none!important}
-  .hero[data-anim] .line-inner,.hero[data-anim] .sub,.hero[data-anim] .ctas,
+  .hero[data-anim] .line-inner,.hero[data-anim] .hero-lede,.hero[data-anim] .ctas,
   .hero[data-anim] .hero-rule,.hero[data-anim] .orbit-ring,.hero[data-anim] .ga-core,
   .hero[data-anim] .card,.hero[data-anim] .chipwrap,.hero[data-anim] .hero-clients{opacity:1 !important;transform:none !important;animation:none !important}
   .spinner,.btn-shimmer::after,.btn-shimmer::before,.ichip{animation:none !important}
@@ -1403,6 +1403,30 @@ html[data-cookie-banner] .sticky-cta{display:none}
   color:var(--ink-muted);font-weight:500}
 .hero .ctas{margin-top:34px}
 
+/* ---- hero lead-in ----
+   The measure moves up to the wrapper. Left on the paragraph it would let the
+   hook run wider than the text it introduces, and the two would stop reading
+   as one column. Must out-specify .hero .sub above, hence .hero-lede .sub.
+   The font-size is not cosmetic: `ch` resolves against the element's OWN font,
+   so 52ch on an unstyled wrapper inherits body 18px and measures 685px, not
+   the paragraph's 647px. Matching .sub's size keeps the paragraph's line
+   breaks exactly where they were. */
+.hero-lede{max-width:52ch;font-size:0.9444rem}
+.hero-lede .sub{margin-top:20px;max-width:none}
+/* Two-tone on the sentence boundary — the same accent device the H1 already
+   uses on its third line. The spans are display:block so the break is the
+   colour change itself, never a wrap the measure happens to produce.
+   #8A9198 is the site's existing receded-text grey (quote captions, hints). */
+.hero-hook{margin:0;font-family:Sora,sans-serif;
+  font-size:clamp(1.1667rem,3.4vw,1.6667rem);line-height:1.22;font-weight:600;
+  letter-spacing:-.026em}
+/* Each sentence is its own block, so `balance` evens that sentence's own rag.
+   Without it the narrow widths orphan the last word ("Stop Reporting What /
+   Happened."), which reads as a mistake rather than a line break. */
+.hero-hook span{display:block;text-wrap:balance}
+.hero-hook .was{color:#8A9198}
+.hero-hook .now{color:var(--blue)}
+
 
 .section-head h2 em{font-style:normal;color:var(--blue)}
 
@@ -1773,14 +1797,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-inner{justify-content:flex-start;padding:40px 20px 44px}
   .hero-top{max-width:none}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:0;margin-top:28px}
-  .hero-bottom .sub{max-width:none}
+  .hero-bottom .hero-lede{max-width:none}
+  .hero-lede .sub{margin-top:16px}
   .hero-bottom .ctas{margin-top:24px}
 }
 @media (min-width:768px) and (max-width:1023px){
   .hero-inner{padding:56px 28px 36px}
   .hero-top{max-width:82%}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:26px}
-  .hero-bottom .sub{max-width:min(62%,560px)}
+  .hero-bottom .hero-lede{max-width:min(62%,560px)}
 }
 
 

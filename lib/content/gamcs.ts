@@ -65,6 +65,12 @@ export const hero = {
   line1: "From Reporting",
   line2: "to Real-Time",
   line3: "Decision Intelligence",
+  /* Two-tone lead-in above the subhead. Two strings, not one, because the
+     colour break IS the point — the first sentence is the old way and
+     recedes, the second is the new one and carries the brand blue. A single
+     string could not be split without the component guessing where. */
+  leadWas: "Stop Reporting What Happened.",
+  leadNow: "Start Knowing What To Do Next.",
   subhead:
     "GA Management Consultants (GAMCS) transforms finance from reporting into decision intelligence \u2014 combining FP&A, BI, automation and finance expertise into one operating layer.",
 } as const;
