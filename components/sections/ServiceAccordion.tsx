@@ -15,12 +15,22 @@ import { solutions, solutionsHub } from "@/lib/content/gamcs";
  * pillar's real `atAGlance` capabilities instead — content that already exists
  * on each solution page.
  *
+ * Pointing at a pillar opens it — no click needed. The click is kept all the
+ * same: there is no hover on a phone, and the header is the keyboard control.
+ *
  * Auto-advance is pausable, which WCAG 2.2.2 requires of anything that moves
  * on its own: it holds while the pointer is over the list or focus is inside
- * it, and stops for good the moment someone picks an item themselves. Under
- * prefers-reduced-motion it never starts.
+ * it, and stops for good the moment someone picks an item themselves — which
+ * now includes the first hover. Under prefers-reduced-motion it never starts.
  */
 const ADVANCE_MS = 5200;
+/**
+ * Intent, not arrival. Reaching the sixth pillar drags the pointer across the
+ * five above it; opening on the bare pointerenter strobes the panel through
+ * every one of them on the way past. 100ms is under the ~150ms it takes to
+ * notice a change, so aiming at a pillar still feels instant.
+ */
+const HOVER_MS = 100;
 
 export default function ServiceAccordion() {
   const previewFor = new Map<string, (typeof solutionsHub.previews)[number]>(
@@ -54,6 +64,31 @@ export default function ServiceAccordion() {
   }, []);
 
   const listRef = useRef<HTMLDivElement>(null);
+  const hoverTimer = useRef<number | null>(null);
+
+  const cancelHover = useCallback(() => {
+    if (hoverTimer.current !== null) {
+      window.clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
+  }, []);
+
+  /* Mouse only. A tap fires pointerenter too, and on a phone that would open
+     the item under the finger before the click that was actually aimed at it. */
+  const hover = useCallback(
+    (i: number, type: string) => {
+      if (type !== "mouse") return;
+      cancelHover();
+      hoverTimer.current = window.setTimeout(() => {
+        hoverTimer.current = null;
+        pick(i);
+      }, HOVER_MS);
+    },
+    [cancelHover, pick]
+  );
+
+  /* A pending open must not fire after the section is gone. */
+  useEffect(() => cancelHover, [cancelHover]);
 
   const s = solutions[active];
   const link = previewFor.get(s.slug);
@@ -73,14 +108,28 @@ export default function ServiceAccordion() {
         {solutions.map((item, i) => {
           const open = i === active;
           return (
-            <div className={`svca-item${open ? " is-open" : ""}`} key={item.slug}>
+            /* The handler belongs on the item, not on the header button.
+               Opening one pillar collapses another, which slides every header
+               below it by ~200px — under a pointer that has not moved. Because
+               the item grows to cover the pointer, it keeps the hover and no
+               second pointerenter fires; hang this off .svca-head instead and
+               the list walks itself down the pillars. */
+            <div
+              className={`svca-item${open ? " is-open" : ""}`}
+              key={item.slug}
+              onPointerEnter={(e) => hover(i, e.pointerType)}
+              onPointerLeave={cancelHover}
+            >
               <h3 className="svca-h">
                 <button
                   type="button"
                   className="svca-head"
                   aria-expanded={open}
                   aria-controls={`svca-body-${item.slug}`}
-                  onClick={() => pick(i)}
+                  onClick={() => {
+                    cancelHover();
+                    pick(i);
+                  }}
                 >
                   <span className="svca-ico" aria-hidden="true">
                     <svg viewBox="0 0 24 24">{STROKE_ICONS[item.slug]}</svg>
