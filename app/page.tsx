@@ -37,10 +37,13 @@ export default function HomePage() {
       */}
       <ClientLogos />
       <WhoWeAre />
+      {/* Directly after Who We Are: the firm story now ends by handing off to
+          /who-we-are, and "we are also the delivery team behind other advisory
+          firms" is the same argument continued, not a separate proof band. */}
+      <OurPartners />
       <HowWeHelp />
       <MaturityCurve />
       <Solutions />
-      <OurPartners />
       <Achievements />
       <Testimonials />
       <Contact />
