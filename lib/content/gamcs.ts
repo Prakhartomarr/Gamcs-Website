@@ -79,14 +79,32 @@ export const intro =
   "With more than combined 100+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.";
 
 
-/** Company story, transcribed from https://www.gamcs.in/who-we-are */
+/**
+ * Company story. `heading` and `lead` carry the homepage section; `body` and
+ * `close` only ever render on /who-we-are, which is where the homepage's
+ * "About our firm" hands off. Splitting it that way is the whole point: the
+ * full story is ~1,400 characters, and a homepage section that ran it in one
+ * column stood 1,090px tall beside a 440px portrait.
+ */
 export const story = {
+  /*
+   * NOT site.tagline. That one string is also the document title, the OG and
+   * Twitter cards, the manifest name and the Organization slogan; a
+   * 108-character sentence breaks all four, so the section heading is its own
+   * field and "Driving Change, Delivering Results" stays the tagline.
+   */
+  heading:
+    "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
   lead:
-    "GAMCS is a high-impact management consulting firm that partners with growth-focused businesses to modernize and scale their finance functions.",
-  network:
-    "The firm operates as part of a global FP&A consulting network, serving startups through enterprises.",
+    "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.",
+  body: [
+    "We partner with growth-focused businesses, founders, CFOs, and investment teams to modernize, strengthen, and scale their finance functions. Our work brings together FP&A, business intelligence, financial analytics, automation, technology, and finance operations to help organizations move beyond simply understanding what happened to knowing why it happened, what happens next, and what they should do about it.",
+    "GAMCS also works as a delivery and execution partner to consulting and advisory firms, extending their capabilities with hands-on expertise across FP&A, financial modelling, BI, reporting, automation, and transaction support. Our growing partner network includes firms such as Akshar Business Consulting, Three 6ixty Finance, and CFO Bridge, among others.",
+  ],
+  close:
+    "Through this combination of strategic thinking and hands-on execution, GAMCS supports organizations ranging from startups and high-growth companies to established enterprises and investment portfolios\u2014helping them build finance functions that are more connected, intelligent, scalable, and decision-ready.",
   mission:
-    "Our mission: shift finance from a reporting function to a strategic engine\u2014built on data, technology, and insight.",
+    "Our mission is simple: make finance a source of insight, not just information.",
 } as const;
 
 export const nav = [
@@ -200,7 +218,7 @@ export const team = {
   /** Both founders, for the homepage Who-we-are block. Order matters:
       leadership[0] is on the left of the frame, [1] on the right, which is
       what the alt text describes. */
-  foundersPhoto: "/team/founders.webp",
+  foundersPhoto: "/team/founders-light.webp",
   leadership: [
     { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/gaurav-malik.jpg", email: "gaurav.malik@gamcs.in" },
     { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/abhinav-aggarwal.jpg", email: "abhinav.aggarwal@gamcs.in" },

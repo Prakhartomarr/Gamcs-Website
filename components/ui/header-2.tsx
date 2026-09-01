@@ -42,7 +42,7 @@ const items: Item[] = [
 ];
 
 const whoLinks = [
-	{ title: 'Our Story', href: '/#who-we-are' },
+	{ title: 'Our Story', href: '/who-we-are' },
 	{ title: 'How We Help', href: '/#how-we-help' },
 	{ title: 'Our Team', href: '/team' },
 	{ title: 'What clients say', href: '/#testimonials' },

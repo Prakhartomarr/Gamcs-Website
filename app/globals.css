@@ -1483,8 +1483,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who-copy{display:flex;flex-direction:column;align-items:flex-start}
 .who-lead{margin:24px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
   font-weight:500;color:var(--ink-deep)}
-.who-sub{margin:14px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
-  font-weight:500;color:var(--ink-muted)}
 .who-copy .btn{margin-top:30px}
 /* Portrait plus its link, so the button tracks the image column rather than
    the copy column. */
@@ -1495,8 +1493,15 @@ html[data-cookie-banner] .sticky-cta{display:none}
    side — which is exactly where their outer shoulders are. */
 /* 24px literal, not var(--radius): the shadcn token layer further down
    redefines --radius to 0.75rem, so the token resolves to 13.5px here. */
-.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:880/852;
-  background:var(--band-soft);box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
+/* The founders' photograph is square now, and it sits on a light ground:
+   #EBEBEB at its lightest corner against the section's white is 1.16:1, so the
+   top and left edges of the frame all but vanish while the darker bottom-right
+   still reads — the card fades out unevenly rather than cleanly. The hairline
+   is what the site already puts round a white surface on a white band
+   (.locmap-card, .stat-tile, .mega). */
+.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:1/1;
+  background:var(--band-soft);border:1px solid var(--line);
+  box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
   transition:transform .6s var(--ease-out)}
 .who-portrait img{display:block;width:100%;height:100%;object-fit:cover}
 @media (hover:hover) and (pointer:fine){.who-portrait:hover{transform:scale(1.015)}}
@@ -1543,6 +1548,20 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
   border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
   color:var(--ink);font-weight:600}
+
+/* ---- /who-we-are: the rest of the firm story ----
+   620px so the body lines up exactly under .page-head p above it rather than
+   stepping out to a second measure halfway down the page. */
+.firm-story{padding:88px 0}
+.firm-story p{max-width:620px;margin:0 0 22px;font-size:0.9444rem;
+  line-height:1.7;font-weight:500;color:var(--ink-deep)}
+.firm-story .firm-close{color:var(--ink-muted)}
+/* 620px, not the .who-mission default of 60ch: at 60ch it measured 738px and
+   stepped out past the body text it closes, breaking the page's one right
+   edge. The 18px rule still hangs to the left of the text. */
+.firm-story .who-mission{margin:44px 0 0;max-width:620px}
+.firm-story .ctas{margin-top:44px}
+@media (max-width:767px){.firm-story{padding:56px 0}}
 .who .why-grid{margin-top:88px}
 @media (max-width:767px){
   .who .who-mission{margin-top:36px}
