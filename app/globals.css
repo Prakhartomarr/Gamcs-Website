@@ -100,7 +100,7 @@ a{color:inherit;text-decoration:none}
 button,input,textarea{font:inherit}
 /* Visible keyboard focus everywhere (Tailwind's preflight removes the default). */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-.magnetic:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:999px}
+
 /* on dark/blue surfaces the ring needs to be light to stay visible */
 .hero-diagonal ~ * a:focus-visible,.system-section a:focus-visible,.contact-box a:focus-visible,.contact-box button:focus-visible,.quote a:focus-visible{outline-color:#fff}
 h1,h2,h3,h4,.nav,.eyebrow,.btn,.metric-value,.stat-value,.card-kicker,.footer-title,.dashboard-label,.dashboard-number{font-family:Sora,sans-serif}
@@ -113,11 +113,9 @@ h1,h2,h3,p{margin-top:0}
 /* blends into the hero's light field (no white bar / hard rule), while staying
    legible as a light bar when it sticks over the darker sections below */
 
-
 .brand{display:flex;align-items:center;gap:11px}
 .brand img{height:30px;width:auto;display:block}
-.brand-name strong{display:block;font:800 0.8889rem Sora;letter-spacing:-.03em;color:var(--charcoal);white-space:nowrap}
-.brand-name span{display:block;font:600 0.6667rem Sora;letter-spacing:.14em;color:#9AA0A3;margin-top:3px;white-space:nowrap}
+
 .nav{display:flex;gap:clamp(10px,1.1vw,16px);align-items:center;font-size:0.7778rem;font-weight:600;color:#5A6165;letter-spacing:.01em}
 .nav>a{white-space:nowrap}
 .nav>a{position:relative;transition:color var(--dur-hover) var(--ease-out)}
@@ -125,8 +123,6 @@ h1,h2,h3,p{margin-top:0}
 .nav>a:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
 .nav>a:hover:after{transform:scaleX(1)}
 
-.nav-mail{font:700 0.7778rem Sora;white-space:nowrap;color:var(--charcoal);letter-spacing:-.01em;white-space:nowrap;transition:color var(--dur-hover) var(--ease-out)}
-.nav-mail:hover{color:var(--blue)}
 .btn:active{transform:scale(.97)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:0 20px;white-space:nowrap;border-radius:999px;font-size:0.7778rem;font-weight:700;letter-spacing:-.01em;border:1px solid var(--blue);transition:box-shadow .25s var(--ease-out),background .25s var(--ease-out),border-color .25s var(--ease-out),transform var(--dur-press) var(--ease-out)}
 
@@ -167,25 +163,14 @@ h1,h2,h3,p{margin-top:0}
 .hero-bottom .ctas{margin-top:0;flex:none}
 
 /* diagonal brand band + ghost frames (implied product surfaces) */
-.hero-bg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none}
-
-
-
-.hero-sparkle{position:absolute;color:var(--blue);opacity:.30;font-size:0.7778rem;pointer-events:none}
-.hero-sparkle.s1{left:63%;top:14%;font-size:1.0556rem}
-.hero-sparkle.s2{left:88%;top:30%}
-.hero-sparkle.s3{left:57%;top:33%;opacity:.22}
-
-
 
 /* headline */
 .hero h1{font-size:clamp(44px,6.4vw,92px);line-height:.98;font-weight:500;letter-spacing:-.032em;color:var(--ink);margin:0}
 .hero h1 em{font-style:normal;color:var(--blue)}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.02em;padding-right:.06em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em;padding-right:.06em}
 .hero h1 .line-inner{display:block}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
-.hero-rule{display:flex;align-items:center;gap:10px;margin-top:24px}
-.hero-rule-line{display:block;width:64px;height:2px;border-radius:2px;background:var(--blue)}
+
 .sub{margin-top:20px;max-width:475px;font-size:1rem;line-height:1.55;color:var(--gray);font-weight:400}
 .ctas{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
 
@@ -197,26 +182,9 @@ h1,h2,h3,p{margin-top:0}
 .card{position:absolute;background:#fff;border-radius:17px;box-shadow:0 34px 64px -22px rgba(10,45,75,.34),0 6px 16px -8px rgba(0,0,0,.1);padding:13px 16px 30px;transform-style:preserve-3d;pointer-events:auto;transition:box-shadow .35s var(--ease-out),border-color .35s var(--ease-out);border:1px solid transparent}
 .card.illuminated{border-color:rgba(15,94,151,.45);box-shadow:0 40px 76px -22px rgba(15,94,151,.45)}
 
-.card-more{position:absolute;right:16px;bottom:9px;font:700 0.6667rem Sora;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:5px;opacity:.85;transition:opacity .2s var(--ease-out),gap .2s var(--ease-out)}
-.card-more:hover{opacity:1;gap:9px}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .up{color:#16A34A}
 
 @keyframes rot{to{transform:rotate(360deg)}}
-
 
 /* Bklit-style mini bar chart (reused site-wide) */
 .bklit{clear:both;margin-top:10px;padding-top:9px;border-top:1px solid #F0F1F3}
@@ -226,43 +194,16 @@ h1,h2,h3,p{margin-top:0}
 
 /* floating integration chips */
 
-.chipwrap{position:absolute;pointer-events:auto}
 /* Orbital diagram. Geometry is inset/margin only, never transform: GSAP owns
    transform on .chipwrap/.chips and reduced-motion force-clears it here. */
 .orbit{position:absolute;left:-7px;top:456px;width:226px;height:122px;pointer-events:none}
 
-
-
-
 .orbit::before{content:"";position:absolute;left:50%;top:50%;width:360px;height:250px;margin:-125px 0 0 -180px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(78,166,222,.34) 0%,rgba(15,94,151,.14) 46%,transparent 72%);pointer-events:none}
 
-
-
-
-
-
-.ga-core{position:absolute;left:50%;top:50%;margin:-33px 0 0 -33px;width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#4EA6DE 0%,var(--blue) 46%,var(--blue-dark) 100%);box-shadow:0 0 0 8px rgba(15,94,151,.08),0 0 26px 6px rgba(15,94,151,.30),0 14px 30px -12px rgba(10,45,75,.45);color:#fff;font:800 0.8889rem Sora;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.ichip{position:relative;width:58px;height:58px;background:#fff;border-radius:16px;box-shadow:0 16px 32px -12px rgba(10,45,75,.34);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8333rem;will-change:transform;transition:box-shadow .3s var(--ease-out)}
-@media (hover:hover) and (pointer:fine){.ichip:hover{box-shadow:0 26px 46px -12px rgba(10,45,75,.42)}}
-.ichip svg{width:32px;height:32px}
-.chipwrap.c4 .ichip svg{width:40px;height:28px}
-.chip-tip{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%) translateY(5px);background:var(--ink);color:#fff;font:700 0.7222rem Sora;letter-spacing:.02em;padding:5px 9px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
-.ichip:hover .chip-tip{opacity:1;transform:translateX(-50%) translateY(0)}
-.chipwrap{margin:-29px 0 0 -29px}
-.chipwrap.c1{left:58.8%;top:0.0%;transform:rotate(4deg)}
-.chipwrap.c3{left:46.9%;top:96.7%;transform:rotate(3deg)}
-.chipwrap.c7{left:46.0%;top:34.4%;transform:rotate(-5deg)}
-.chipwrap.c5{left:82.3%;top:100.0%;transform:rotate(-4deg)}
-.chipwrap.c5 .ichip{width:74px}
-.chipwrap.c5 .ichip svg{width:54px;height:16px}
-.chipwrap.c4{left:15.5%;top:11.5%;transform:rotate(5deg)}
-.chipwrap.c2{left:0.0%;top:36.9%;transform:rotate(-6deg)}
-.chipwrap.c6{left:100.0%;top:46.7%;transform:rotate(6deg)}
+@media (hover:hover) and (pointer:fine){}
 
 /* muted placeholder client strip */
-.hero-clients{position:relative;top:auto;left:auto;width:100%;margin-top:auto;
-  z-index:6;pointer-events:none}
-.hero-clients .clients-row{width:100%;max-width:none}
+
 /* the row spans the full container even though its text starts at 48%, so it
    would swallow hover on the orbit chips underneath it. */
 /* justify-end rather than a 72.3% left pad: that percentage was tuned to
@@ -271,8 +212,6 @@ h1,h2,h3,p{margin-top:0}
 .clients-label,.client{pointer-events:auto}
 .client{flex:none;font:600 0.8889rem Sora;letter-spacing:-.01em;color:#98A0A8;opacity:1;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
 .client svg{width:15px;height:15px;stroke:#8E9299;fill:none;stroke-width:1.7}
-
-
 
 .client.is-accent{color:var(--blue)}
 @media (hover:hover) and (pointer:fine){.client:hover{opacity:1;transform:translateY(-2px)}}
@@ -304,13 +243,7 @@ h1,h2,h3,p{margin-top:0}
 .site-nav .nav a:nth-child(4){animation-delay:.3s}
 .site-nav .nav a:nth-child(5){animation-delay:.35s}
 
-
-
 @media (prefers-reduced-motion: reduce){
-  /* Motion applies its `initial` state before useReducedMotion() resolves, which
-     left the footer's first block permanently at opacity:0/blur(4px) for
-     reduced-motion users. CSS guarantees the resting state regardless. */
-  .footer-anim{opacity:1!important;filter:none!important;transform:none!important}
   .hero[data-anim] .line-inner,.hero[data-anim] .hero-lede,.hero[data-anim] .ctas,
   .hero[data-anim] .hero-rule,.hero[data-anim] .orbit-ring,.hero[data-anim] .ga-core,
   .hero[data-anim] .card,.hero[data-anim] .chipwrap,.hero[data-anim] .hero-clients{opacity:1 !important;transform:none !important;animation:none !important}
@@ -322,56 +255,44 @@ h1,h2,h3,p{margin-top:0}
   .reveal{opacity:1 !important;transform:none !important}
 }
 /* TRUST STRIP */
-.trust{border-bottom:1px solid #E7E8E9;background:#fff;padding:22px 0}.trust-item{padding:5px 20px;border-right:1px solid #DDE0E1}.trust-item:last-child{border-right:0}.trust-item strong{font:700 2rem Sora;letter-spacing:-.05em;color:var(--charcoal)}.trust-item span{display:block;font-size:0.6667rem;color:#7A7A7A;margin-top:3px}
+.trust{border-bottom:1px solid #E7E8E9;background:#fff;padding:22px 0}
 /* SECTION BASE */
 .section{padding:108px 0}.section-head{display:flex;justify-content:space-between;gap:50px;align-items:end;margin-bottom:46px}.section-head h2{margin:10px 0 0;max-width:720px}.section-head h2 em{font-style:normal;color:var(--blue)}.section-head>p{max-width:380px;color:#6E6E6E;font-size:0.8889rem;margin:0}.section-kicker{font:700 0.7222rem Sora;letter-spacing:.18em;color:var(--blue)}
 /* MODEL */
-.model{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.model h2{font:700 clamp(34px,4vw,54px) Sora;line-height:1;letter-spacing:-.06em;margin:10px 0 22px}.model p{font-size:0.8889rem;color:#696969;max-width:620px}.model-card{padding:22px;border:1px solid #E1E4E5;border-radius:17px;background:#fff}.model-card span{display:block;font:700 0.6667rem Sora;letter-spacing:.13em;color:var(--blue);margin-bottom:9px}.model-card b{font:700 0.9444rem Sora;letter-spacing:-.03em}.model-card p{font-size:0.7778rem;margin:8px 0 0}
+.model{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.model h2{font:700 clamp(34px,4vw,54px) Sora;line-height:1;letter-spacing:-.06em;margin:10px 0 22px}.model p{font-size:0.8889rem;color:#696969;max-width:620px}
 /* SERVICES */
 .services{background:var(--soft);padding:108px 0}.service{border-radius:22px;padding:30px;min-height:290px;border:1px solid #DCE0E1;position:relative;overflow:hidden;background:#fff}.service.dark{background:var(--dark);color:#fff;border-color:var(--dark)}.service.blue{background:var(--blue);color:#fff;border-color:var(--blue)}.service .num{font:700 0.7222rem Sora;letter-spacing:.15em;opacity:.72}.service h3{font-size:1.6667rem;line-height:1.05;letter-spacing:-.055em;max-width:390px;margin:48px 0 12px}.service p{font-size:0.7778rem;max-width:420px;color:#707070}.service.dark p,.service.blue p{color:#D4D9DC}.service .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}.tag{border:1px solid #DCE1E3;padding:7px 9px;border-radius:30px;font:600 0.6667rem Sora;color:#666}.dark .tag,.blue .tag{border-color:rgba(255,255,255,.25);color:#fff}
 /* SERVICES — bento grid (Kokonut spotlight-card pattern, GAMCS content) */
 
-.bento-card{position:relative;display:flex;flex-direction:column;border-radius:22px;padding:30px;min-height:290px;border:1px solid #DCE0E1;background:linear-gradient(180deg,#FFFFFF,#FBFCFC);overflow:hidden;transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out),transform .3s var(--ease-out)}
-@media (hover:hover) and (pointer:fine){.bento-card:hover{border-color:#C3CCD1;box-shadow:0 26px 54px rgba(16,45,68,.12)}}
-.bento-card.md\:col-span-2{grid-column:span 2}
-.bento-card.md\:col-span-1{grid-column:span 1}
+@media (hover:hover) and (pointer:fine){}
+
 .bento-card.blue{background:linear-gradient(180deg,var(--blue),#0C5387);border-color:var(--blue);color:#fff}
 .bento-card.dark{background:linear-gradient(180deg,var(--dark),#1C1C1C);border-color:var(--dark);color:#fff}
 
-.bento-card h3{font-size:1.6667rem;line-height:1.05;letter-spacing:-.055em;max-width:390px;margin:44px 0 12px}
-.bento-card p{font-size:0.7778rem;max-width:430px;color:#707070;margin:0}
 .bento-card.blue p,.bento-card.dark p{color:#D4D9DC}
-
 
 .bento-card.blue .bento-spotlight li,.bento-card.dark .bento-spotlight li{border-color:rgba(255,255,255,.25);color:#fff}
 .bento-spotlight .dot{width:5px;height:5px;border-radius:50%;background:var(--blue)}
 .bento-card.blue .bento-spotlight .dot,.bento-card.dark .bento-spotlight .dot{background:var(--yellow)}
-.bento-link{position:absolute;right:25px;bottom:24px;width:38px;height:38px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font:700 0.8889rem Sora;transition:background .25s var(--ease-out),color .25s var(--ease-out)}
-.bento-link:hover{background:currentColor}
+
 .bento-card:not(.blue):not(.dark) .bento-link:hover{color:#fff;background:var(--blue);border-color:var(--blue)}
 /* shimmer kicker — the component ships a centred 3xl demo scale; pull it back
    to the GAMCS section-kicker scale and brand gradient */
-
-
 
 /* METRICS */
 .metrics{padding:108px 0}
 /* SYSTEM */
 
-.beams-slot{position:absolute;inset:0}
-
-
-.system-section>.container{position:relative;z-index:1}.system-point{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.12)}.system-point span{font:700 0.6667rem Sora;color:var(--yellow)}.system-point b{font:700 0.7778rem Sora}.system-point small{display:block;color:#AAB3B7;font-size:0.7222rem;margin-top:3px}.hub{background:#F7F8F8;color:var(--ink);border-radius:22px;padding:16px}.hub-head{display:flex;justify-content:space-between;padding:5px 7px 14px;font:700 0.6667rem Sora;color:#777;letter-spacing:.1em}.hub-head b{color:var(--blue)}.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.decision{border:1px solid #E2E5E6;border-radius:12px;padding:17px}.decision small{font:700 0.6667rem Sora;letter-spacing:.14em;color:#888}.decision strong{display:block;font:700 1rem Sora;letter-spacing:-.04em;margin:8px 0 15px}.decision-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.decision-stats div{background:#F3F5F5;border-radius:9px;padding:10px;font-size:0.6667rem;color:#777}.decision-stats b{display:block;font:700 0.9444rem Sora;color:var(--blue)}
+.system-section>.container{position:relative;z-index:1}.hub{background:#F7F8F8;color:var(--ink);border-radius:22px;padding:16px}.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.decision{border:1px solid #E2E5E6;border-radius:12px;padding:17px}.decision small{font:700 0.6667rem Sora;letter-spacing:.14em;color:#888}.decision strong{display:block;font:700 1rem Sora;letter-spacing:-.04em;margin:8px 0 15px}
 /* CASE */
-.case{padding:108px 0}.case-panel{border-radius:22px;padding:32px;background:#EEF1F2;min-height:430px}.case-panel.blue{background:var(--blue);color:#fff}.case h3{font-size:2.1667rem;line-height:.98;letter-spacing:-.06em;max-width:500px;margin:55px 0 17px}.case p{font-size:0.7778rem;color:#777;max-width:500px}.case-panel.blue p{color:#D8E6EE}.result{background:#fff;border:1px solid #E1E4E5;border-radius:13px;padding:16px}.result b{display:block;font:700 0.7222rem Sora}.result span{display:block;font-size:0.6667rem;color:#888;margin-top:5px}.case-panel.blue .result{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}.case-panel.blue .result span{color:#D7E3E9}/* spend visual is now a real Bklit chart (see SpendChart.tsx) */
+.case{padding:108px 0}.case-panel.blue{background:var(--blue);color:#fff}.case h3{font-size:2.1667rem;line-height:.98;letter-spacing:-.06em;max-width:500px;margin:55px 0 17px}.case p{font-size:0.7778rem;color:#777;max-width:500px}.case-panel.blue p{color:#D8E6EE}.result{background:#fff;border:1px solid #E1E4E5;border-radius:13px;padding:16px}.result b{display:block;font:700 0.7222rem Sora}.result span{display:block;font-size:0.6667rem;color:#888;margin-top:5px}.case-panel.blue .result{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}.case-panel.blue .result span{color:#D7E3E9}/* spend visual is now a real Bklit chart (see SpendChart.tsx) */
 
-
-@keyframes chartShimmer{0%{background-position:100% 0}100%{background-position:0 0}}.leader{background:#fff;border-radius:22px;padding:30px;min-height:390px;position:relative;overflow:hidden}.leader .initials{width:120px;height:120px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 2.2222rem Sora;margin-bottom:70px}.leader small,.person small{font:700 0.6667rem Sora;letter-spacing:.14em;color:var(--blue)}.leader h3{font-size:1.7222rem;margin:8px 0 4px}.leader p{font-size:0.7778rem;color:#777}.person{background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:21px;min-height:185px}.person .avatar{width:38px;height:38px;border-radius:50%;background:#EAF0F3;color:var(--blue);display:grid;place-items:center;font:700 0.7222rem Sora;margin-bottom:30px}.person b{display:block;font:700 0.7778rem Sora}.person span{display:block;font-size:0.7222rem;color:#858585;margin-top:4px}
+@keyframes chartShimmer{0%{background-position:100% 0}100%{background-position:0 0}}.leader .initials{width:120px;height:120px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 2.2222rem Sora;margin-bottom:70px}.leader small,.person small{font:700 0.6667rem Sora;letter-spacing:.14em;color:var(--blue)}.person{background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:21px;min-height:185px}.person .avatar{width:38px;height:38px;border-radius:50%;background:#EAF0F3;color:var(--blue);display:grid;place-items:center;font:700 0.7222rem Sora;margin-bottom:30px}.person b{display:block;font:700 0.7778rem Sora}.person span{display:block;font-size:0.7222rem;color:#858585;margin-top:4px}
 /* CONTACT */
 .contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:700 clamp(38px,4.5vw,60px) Sora;line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem Sora;letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
 /* FOOTER */
 /* legacy footer element styling removed: components/ui/footer-section.tsx
-   styles the footer with utilities, and an element selector would beat them */.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}.footer-brand strong{font:700 0.8889rem Sora;color:var(--charcoal)}.footer-brand p{font-size:0.7222rem;max-width:260px;margin-top:10px}.footer-title{font-size:0.6667rem;letter-spacing:.12em;color:#777;margin-bottom:13px}.footer-links{display:grid;gap:7px;font-size:0.7222rem;color:#666}.footer-bottom{display:flex;justify-content:space-between;border-top:1px solid #E7E8E8;margin-top:38px;padding-top:18px;font-size:0.6667rem;color:#8A8A8A}
+   styles the footer with utilities, and an element selector would beat them */
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out)}.reveal.visible{opacity:1;transform:none}
 /* Without scripting nothing ever adds .visible, so every section would stay
@@ -509,11 +430,6 @@ h1,h2,h3,p{margin-top:0}
 .who{padding:104px 0 88px}
 .who .section-head h2{max-width:16ch}
 
-
-
-
-
-
 .solution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .solution-card{position:relative;overflow:hidden;border-radius:22px;padding:30px;border:1px solid #DCE0E1;background:linear-gradient(180deg,#FFFFFF,#FBFCFC);transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
 .solution-card:hover{border-color:#C3CCD1;box-shadow:0 26px 54px rgba(16,45,68,.12)}
@@ -524,20 +440,11 @@ h1,h2,h3,p{margin-top:0}
 .solution-card.blue .solution-list li,.solution-card.dark .solution-list li{color:#E4EAEE;border-top-color:rgba(255,255,255,.14)}
 .solution-list li:first-child{border-top:0}
 
-
 .team-grid .person{background:#fff;border:1px solid #E0E3E4;border-radius:18px;padding:24px;min-height:auto}
 .team-grid .person b{display:block;font:700 0.8889rem Sora;letter-spacing:-.02em;margin-top:18px}
 .team-grid .person span{display:block;font-size:0.7778rem;color:#7A828A;margin-top:6px;line-height:1.5}
 
-
 .quote-section{background:var(--soft);padding:104px 0}
-
-.quote-card{background:#fff;border:1px solid #E0E3E4;border-radius:22px;padding:32px;margin:0;display:flex;flex-direction:column}
-.quote-card .quote-mark{font:700 2.7222rem Georgia;color:var(--yellow);line-height:.6;margin-bottom:12px}
-.quote-card blockquote{margin:0;font-size:0.8889rem;line-height:1.62;color:#4A5560}
-.quote-card figcaption{margin-top:22px;padding-top:18px;border-top:1px solid #EEF1F2}
-.quote-card figcaption b{display:block;font:700 0.8333rem Sora;letter-spacing:-.02em}
-.quote-card figcaption span{display:block;font-size:0.7778rem;color:#8A9198;margin-top:4px}
 
 .contact-box .mail{display:block;width:fit-content}
 .contact-box .mail + .mail{margin-top:10px}
@@ -556,11 +463,6 @@ h1,h2,h3,p{margin-top:0}
 
 /* hero cards list real service names */
 
-
-
-
-
-
 /* =====================================================================
    RESPONSIVE
    Three tiers, because most visits are touch:
@@ -575,11 +477,11 @@ h1,h2,h3,p{margin-top:0}
   .nav{display:none}
   
   
-  .nav-mail{display:none}                     /* email lives in contact + footer */
+                       /* email lives in contact + footer */
   
   .brand img{height:26px;width:auto}
-  .brand-name strong{font-size:0.8333rem}
-  .brand-name span{display:none}
+  
+  
 
   /* drawer: full-width panel under the bar, generous targets */
   .nav.open{display:flex;position:absolute;top:calc(100% + 6px);left:12px;right:12px;
@@ -596,7 +498,7 @@ h1,h2,h3,p{margin-top:0}
 
   /* comfortable tap size for every inline link */
   .btn{min-height:48px;padding:0 22px;font-size:0.7778rem}
-  .footer-links a{min-height:40px;display:flex;align-items:center}
+  
   .client{min-height:40px;align-items:center}
   /* remaining touch targets: logo and the contact links were 32px / 25px tall */
   .brand{min-height:44px}
@@ -619,21 +521,21 @@ h1,h2,h3,p{margin-top:0}
   
   .team-grid .person b{font-size:0.9444rem}
   .team-grid .person span{font-size:0.8333rem}
-  .quote-card blockquote{font-size:0.8889rem}
-  .quote-card figcaption b{font-size:0.8889rem}
-  .quote-card figcaption span{font-size:0.7778rem}
+  
+  
+  
   .case-item h3{font-size:1.0556rem}
   .case-item p{font-size:0.8889rem}
   .page-head h1{font-size:clamp(30px,8.4vw,40px)}
   .page-head p{font-size:0.8889rem}
   .field label{font-size:0.7778rem;letter-spacing:.08em}
   .field input,.field textarea{font-size:0.9444rem;padding:13px 14px}  /* 16px avoids iOS zoom-on-focus */
-  .footer-brand strong{font-size:0.8889rem}
-  .footer-brand p{font-size:0.8333rem}
-  .footer-title{font-size:0.7222rem}
-  .footer-links{font-size:0.8333rem}
-  .footer-bottom{display:block;font-size:0.7778rem}
-  .footer-bottom span{display:block;margin-bottom:8px}
+  
+  
+  
+  
+  
+  
   
   
   .sub{font-size:0.9444rem;line-height:1.6}
@@ -660,16 +562,19 @@ h1,h2,h3,p{margin-top:0}
   
   /* auto, not a fixed gap: the hero is a full viewport at these widths
      too, so the row rides its foot instead of leaving dead space below. */
-  .hero-clients{position:relative;top:auto;margin-top:auto;padding-top:36px}
+  
   
 
   .why-list,.solution-grid,.team-grid,.quote-grid,.case-list{grid-template-columns:1fr 1fr}
   
   .contact-box{grid-template-columns:1fr;padding:38px}
   .form{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1.4fr 1fr 1fr}
+  
   .section-head{flex-direction:column;align-items:flex-start;gap:16px}
-  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:80px 0}
+  /* .services/.metrics/.people/.quote-section/.who dropped: the section-band
+     system at :1147 supersedes them unconditionally, so they never took this
+     value. .section and .contact are not in that system and still need it. */
+  .section,.contact{padding:80px 0}
 }
 
 /* ---------- phone: single column, upright cards, readable type ---------- */
@@ -695,7 +600,7 @@ h1,h2,h3,p{margin-top:0}
   /* two upright cards as a product preview; the full lists live in Solutions */
   
   
-  .card-more{right:18px;bottom:14px;font-size:0.7222rem}
+  
   .card{position:relative;inset:auto;width:auto;transform:none!important;padding:18px 18px 44px;
     box-shadow:0 16px 34px -16px rgba(10,45,75,.26)}
   
@@ -704,7 +609,7 @@ h1,h2,h3,p{margin-top:0}
 
   /* auto, not a fixed gap: the hero is a full viewport at these widths
      too, so the row rides its foot instead of leaving dead space below. */
-  .hero-clients{position:relative;top:auto;margin-top:auto;padding-top:36px}
+  
   
   
   .client{font-size:0.8889rem;opacity:.75}
@@ -713,11 +618,11 @@ h1,h2,h3,p{margin-top:0}
 
   .why-list,.solution-grid,.team-grid,.quote-grid,.case-list,.metric-grid,
   .contact-box,.form,.footer-grid{grid-template-columns:1fr}
-  .footer-grid{gap:26px}
+  
   .field.full{grid-column:auto}
   .contact-box{padding:26px;gap:28px}
   .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
-  .section,.services,.metrics,.people,.quote-section,.contact,.who{padding:60px 0}
+  .section,.contact{padding:60px 0}
   .page-head{padding:44px 0 32px}
 }
 
@@ -789,18 +694,9 @@ h1,h2,h3,p{margin-top:0}
    TEAM PAGE
    ===================================================================== */
 
-
-
 .team-mission{color:var(--ink)!important;font-weight:600}
 
 .team-block .section-kicker{margin-bottom:18px}
-
-
-
-
-
-
-
 
 @media(min-width:768px) and (max-width:1279px){
   
@@ -816,12 +712,8 @@ h1,h2,h3,p{margin-top:0}
 
 /* --- brand wordmark (replaces the raster mark in the bar) --- */
 
-
 /* the GA mark stands in for the .brand-ga text; height matches the
    two stacked words so the lockup optically aligns */
-
-.brand-words{display:flex;flex-direction:column;gap:1px}
-
 
 @media(max-width:767px){
   
@@ -1088,10 +980,6 @@ html{font-size:112.5%}
 
 /* ---------- how-we-help feature cards ---------- */
 
-
-
-
-
 @media(hover:hover) and (pointer:fine){
   
   
@@ -1134,7 +1022,6 @@ html{font-size:112.5%}
   .who-lead,.who-network,.who-mission{font-size:0.8889rem}
   
 }
-
 
 /* =====================================================================
    LAUNCH PASS — skip link, breadcrumbs, FAQ, 404, thank-you, legal,
@@ -1285,7 +1172,6 @@ html{font-size:112.5%}
 .faq-a li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;
   border-radius:2px;background:var(--yellow)}
 
-
 /* =====================================================================
    COOKIE CONSENT — bottom banner + native <dialog> preferences panel
    Same tokens, type and radii as the rest of the site; nothing new.
@@ -1363,7 +1249,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
   .cookie-switch,.cookie-switch::after,.cookie-link{transition:none}
 }
 
-
 /* =====================================================================
    AGENCY-LANDING PASS
    Reference: hirael.com agency-landing, restated in the GAMCS palette.
@@ -1394,10 +1279,21 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media (max-width:767px){}
 
 /* ---- type scale ---- */
-.hero h1{font-size:clamp(44px,6.4vw,92px);line-height:.98;font-weight:500;
-  letter-spacing:-.03em;color:var(--ink-deep);margin:0}
+/* font-size and line-height deliberately NOT set here. This rule is
+   unconditional and sits ~950 lines after the three @media overrides at
+   :555 (768-1279), :593 (<=767) and :633 (<=380). Media queries add no
+   specificity, so re-declaring those two properties here silently killed all
+   three and pinned the headline to the 44px clamp floor on every phone. The
+   base rule at :168 supplies them with identical values, so the desktop
+   result is unchanged; only the tracking and colour restyle belong here. */
+.hero h1{font-weight:500;letter-spacing:-.03em;color:var(--ink-deep);margin:0}
 .hero h1 em{font-style:normal;color:var(--blue)}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.05em}
+/* padding-bottom/margin-bottom moved up to the base rule so the <=767px
+   override at :597 can apply. .line is overflow:hidden and masks the
+   line-reveal, so its padding is what stops descenders being clipped —
+   the mobile rule raises it to .12em precisely because the mobile
+   line-height (1.02) is looser. Both halves of that pairing were dead. */
+.hero h1 .line{display:block;overflow:hidden}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
 .hero .sub{margin-top:26px;max-width:52ch;font-size:0.9444rem;line-height:1.6;
   color:var(--ink-muted);font-weight:500}
@@ -1426,7 +1322,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .hero-hook span{display:block;text-wrap:balance}
 .hero-hook .was{color:#8A9198}
 .hero-hook .now{color:var(--blue)}
-
 
 .section-head h2 em{font-style:normal;color:var(--blue)}
 
@@ -1569,7 +1464,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 }
 @media (min-width:640px){:root{--header-h:84px}}
 
-
 /* =====================================================================
    SOLUTIONS — hub grid + pillar page rhythm
    Reuses the existing tokens, card treatment and CTA band; no new palette.
@@ -1631,22 +1525,12 @@ html[data-cookie-banner] .sticky-cta{display:none}
 
 /* ---- maturity curve ---- */
 
-
-
-
-
-
-
-
-
 .maturity-stage.is-goal{background:var(--blue);border-color:var(--blue)}
 .maturity-stage.is-goal .maturity-rail{background:rgba(255,255,255,.28)}
 .maturity-stage.is-goal .maturity-rail>span{background:var(--yellow)}
 .maturity-stage.is-goal .maturity-n{color:var(--yellow)}
 .maturity-stage.is-goal h3{color:#fff}
 .maturity-stage.is-goal p{color:#D3E3EF}
-
-
 
 /* ---- partners ---- */
 .partners{background:var(--band-white)}
@@ -1663,7 +1547,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
   
   .maturity-foot .btn,.partners-cta{width:100%;justify-content:center}
 }
-
 
 /* =====================================================================
    PRELOADER
@@ -1703,7 +1586,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    was invisible except for flattening one small yellow detail. Resolving to
    ink also unifies the lockup, since the wordmark beside it is already ink. */
 
-
 /* hover only where hovering is real, so touch never sticks */
 @media (hover:hover) and (pointer:fine){
   
@@ -1712,7 +1594,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   
 }
-
 
 /* =====================================================================
    SOLUTIONS PILLARS — sticky panel + accordion
@@ -1724,10 +1605,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    to stick to. With align-items:start the column collapsed to the
    panel height and the panel simply scrolled away. */
 
-
 /* ---- accordion ---- */
 /* chevron, rotating on expand */
-
 
 @media (max-width:1023px){
     /* stacked: nothing to pin against */
@@ -1735,7 +1614,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   /* no scroll-coupled positioning, no expand animation */
 }
-
 
 /* =====================================================================
    GA LOGO — mark always visible, wordmark reveals on hover/focus
@@ -1826,7 +1704,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-bottom{flex-direction:column;align-items:stretch;gap:26px}
   .hero-bottom .hero-lede{max-width:min(62%,560px)}
 }
-
 
 /* =====================================================================
    HOW WE HELP — alternating step run
@@ -1926,7 +1803,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* the section no longer carries a head, so it needs less top room */
 .faq-section{padding-top:0}
 
-
 /* =====================================================================
    SOLUTIONS — services card grid (replaces the pinned panel + accordion)
    ===================================================================== */
@@ -1954,7 +1830,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .svc-head-centre{align-items:flex-start;text-align:left;margin-bottom:30px}
   .svc-head-centre h2{max-width:none}
 }
-
 
 /* =====================================================================
    FINTECH-REFERENCE SECTIONS — shared parts
@@ -2003,20 +1878,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .fin-center .fin-lead{margin-left:auto;margin-right:auto}
 
 /* gradient pill button with a trailing icon disc */
-.fin-btn{display:inline-flex;align-items:center;gap:14px;background:var(--grad-blue);
-  color:#fff;padding:9px 9px 9px 26px;border-radius:999px;
-  font:600 1rem Sora,sans-serif;letter-spacing:-.01em;white-space:nowrap;
-  box-shadow:0 16px 34px -12px var(--ring), inset 0 1px 0 rgba(255,255,255,.25);
-  transition:transform .5s var(--ease-fin),box-shadow .5s var(--ease-fin),filter .4s var(--ease-fin)}
-.fin-btn .ico{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;
-  border-radius:50%;background:rgba(255,255,255,.18);
-  transition:transform .5s var(--ease-fin),background .4s var(--ease-fin)}
-.fin-btn .ico svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.7;
-  stroke-linecap:round;stroke-linejoin:round}
-.fin-btn:hover{transform:translateY(-2px);filter:brightness(1.05);
-  box-shadow:0 26px 50px -14px var(--ring), inset 0 1px 0 rgba(255,255,255,.25)}
-.fin-btn:hover .ico{background:rgba(255,255,255,.3);transform:translate(3px,-1px)}
-.fin-btn:active{transform:scale(.98)}
 
 /* ---- SERVICES (reference treatment) ---- */
 /* Tall gradient card: a white-to-blue vertical wash with a soft-focus glyph

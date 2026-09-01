@@ -3,13 +3,8 @@ import path from "node:path";
 import { ScrollReelTestimonials } from "@/components/ui/scroll-reel-testimonials";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { testimonials } from "@/lib/content/gamcs";
+import { initials } from "@/lib/utils";
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2);
 
 /**
  * Both testimonials, quoted in full, in the scroll-reel carousel.

@@ -752,6 +752,17 @@ export const solutionsHub = {
   ],
 } as const;
 
+/** Preview copy keyed by slug, built once.
+ *
+ *  Typed `Map<string, …>` deliberately: `solutionsHub` is `as const`, so an
+ *  INFERRED map takes the literal slug union as its key and rejects
+ *  `Solution.slug`, which is a plain `string`. That exact mismatch failed a
+ *  production build — see PillarBlocks. Keeping one shared map means the
+ *  annotation cannot be forgotten at a new call site. */
+export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[number]>(
+  solutionsHub.previews.map((p) => [p.slug, p])
+);
+
 /** Doc page 1, section 3 — homepage. */
 export const maturityCurve = {
   heading: "Every Finance Function Sits Somewhere on This Curve. Where Are You?",

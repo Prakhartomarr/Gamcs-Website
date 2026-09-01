@@ -1,5 +1,5 @@
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
-import { solutions, solutionsHub } from "@/lib/content/gamcs";
+import { previewBySlug, solutions } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
 /**
@@ -21,16 +21,12 @@ import CTA from "@/components/CTA";
  * visually-hidden suffix naming its pillar.
  */
 export default function SolutionCards() {
-  const previewFor = new Map<string, (typeof solutionsHub.previews)[number]>(
-    solutionsHub.previews.map((p) => [p.slug, p])
-  );
-
   return (
     <ul className="fsvc-grid">
       {solutions.map((s) => (
         <li className="fsvc-card reveal" key={s.slug}>
           <h3>{s.title}</h3>
-          <p>{previewFor.get(s.slug)?.blurb ?? s.intro}</p>
+          <p>{previewBySlug.get(s.slug)?.blurb ?? s.intro}</p>
           <span className="fsvc-glyph" aria-hidden="true">
             <svg className="fsvc-cast" viewBox="0 0 24 24">
               {STROKE_ICONS[s.slug]}
