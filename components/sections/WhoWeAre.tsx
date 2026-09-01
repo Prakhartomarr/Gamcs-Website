@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CountUp from "@/components/motion/CountUp";
 import SectionEyebrow from "@/components/SectionEyebrow";
-import { achievements, primaryCta, site, story, team } from "@/lib/content/gamcs";
+import { achievements, site, story, team } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
 /**
@@ -36,10 +36,11 @@ export default function WhoWeAre() {
         <div className="who-row">
           <div className="who-copy reveal">
             <SectionEyebrow label="Who we are" />
-            <h2 className="who-heading">{site.tagline}</h2>
+            <h2 className="who-heading">{story.heading}</h2>
             <p className="who-lead">{story.lead}</p>
-            <p className="who-sub">{story.network}</p>
-            <CTA href={primaryCta.href} tier="secondary" icon="diagonal">
+            {/* The section opens the story and hands the rest to /who-we-are.
+                It used to point at /contact, which is not what the label says. */}
+            <CTA href="/who-we-are" tier="secondary" icon="diagonal">
               About our firm
             </CTA>
           </div>
@@ -50,7 +51,7 @@ export default function WhoWeAre() {
                 src={team.foundersPhoto}
                 alt={`${founders[0].name} and ${founders[1].name}, founders of ${site.name}`}
                 width={880}
-                height={852}
+                height={880}
                 sizes="(max-width: 1023px) 92vw, 440px"
               />
             </div>

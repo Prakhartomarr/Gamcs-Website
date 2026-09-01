@@ -31,7 +31,9 @@ export default function Hero() {
     let failsafe = 0;
     const ctx = gsap.context(() => {
       gsap.set(".line-inner", { yPercent: 115 });
-      gsap.set([".sub", ".ctas"], { opacity: 0, y: 16 });
+      /* The hook and the paragraph rise as one block: they are a single
+         thought, and staggering them reads as two separate arrivals. */
+      gsap.set([".hero-lede", ".ctas"], { opacity: 0, y: 16 });
       root.dataset.anim = "ready";
 
       const tl = gsap.timeline({
@@ -41,7 +43,7 @@ export default function Hero() {
         onComplete: () => gsap.set(".line-inner", { willChange: "auto" }),
       });
       tl.to(".line-inner", { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.55")
-        .to(".sub", { opacity: 1, y: 0, duration: 0.6 }, "-=0.35")
+        .to(".hero-lede", { opacity: 1, y: 0, duration: 0.6 }, "-=0.35")
         .to(".ctas", { opacity: 1, y: 0, duration: 0.6 }, "-=0.4");
 
       failsafe = window.setTimeout(() => {
@@ -84,7 +86,16 @@ export default function Hero() {
             The hero's "Schedule a Call" was removed — the header keeps a
             persistent one, so the fold no longer repeats it. */}
         <div className="hero-bottom">
-          <p className="sub">{hero.subhead}</p>
+          {/* .hero-bottom is a two-child flex on space-between (copy left,
+              button right). The hook and the paragraph share one wrapper so it
+              stays two children — a third would strand the button mid-row. */}
+          <div className="hero-lede">
+            <p className="hero-hook">
+              <span className="was">{hero.leadWas}</span>
+              <span className="now">{hero.leadNow}</span>
+            </p>
+            <p className="sub">{hero.subhead}</p>
+          </div>
           <div className="ctas">
             <CTA href="/#how-we-help" icon="arrow">
               How We Help
