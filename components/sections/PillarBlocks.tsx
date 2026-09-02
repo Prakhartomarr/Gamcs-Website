@@ -2,6 +2,7 @@ import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import type { SolutionBlock } from "@/lib/content/gamcs";
 import { previewBySlug, solutions } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
+import PillarMesh from "@/components/PillarMesh";
 
 /**
  * The six pillars as full-width blocks: a gradient card stating the pillar's
@@ -43,6 +44,7 @@ export default function PillarBlocks() {
             aria-labelledby={`${s.slug}-h`}
           >
             <div className="pillar-card reveal">
+              <PillarMesh />
               <span className="pillar-label">{s.navLabel}</span>
               <h2 id={`${s.slug}-h`}>{s.h1}</h2>
               <p>{preview?.blurb ?? s.intro}</p>

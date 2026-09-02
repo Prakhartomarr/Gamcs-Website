@@ -163,10 +163,8 @@ export default function ServiceAccordion() {
       </div>
 
       <div className="svca-card">
-        <span className="svca-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24">{STROKE_ICONS[s.slug]}</svg>
-        </span>
-
+        {/* The oversized pillar glyph that used to bleed off this corner is gone:
+            over the fluting it read as a second pattern rather than as texture. */}
         <div className="svca-panel" key={s.slug}>
           <span className="svca-kicker">At a glance</span>
           <p className="svca-panel-title">{s.title}</p>
