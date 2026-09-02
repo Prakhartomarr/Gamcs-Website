@@ -133,8 +133,9 @@ h1,h2,h3,p{margin-top:0}
 /* One viewport, measured from under the header. `dvh` first so mobile
    browser chrome does not clip it; the vh line is the fallback. */
 .hero{position:relative;display:flex;flex-direction:column;
-  min-height:calc(100vh - var(--header-h));
-  min-height:calc(100dvh - var(--header-h));
+  margin-top:calc(-1 * var(--header-h));
+  min-height:100vh;
+  min-height:100dvh;
   background:var(--bg-soft);color:var(--ink);overflow:hidden;isolation:isolate}
 /* Breaks out of the global .container: flush-left at 32px on any width, so
    the headline hugs the viewport edge the way the reference does. The measures
@@ -143,7 +144,7 @@ h1,h2,h3,p{margin-top:0}
    with the 48px gutter the sections below use. */
 .hero-inner{position:relative;z-index:6;display:flex;flex-direction:column;
   justify-content:space-between;flex:1;min-height:0;
-  width:100%;max-width:none;padding:64px 32px 40px}
+  width:100%;max-width:none;padding:calc(var(--header-h) + 32px) 32px 40px}
 .hero-copy{position:relative;z-index:6}
 /* Capped in em, not per cent.
    The .line masks use overflow:hidden for the GSAP entrance, so a box narrower
@@ -1692,7 +1693,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- hero layout, phone: reading order, full width, no bottom pinning ---- */
 @media (max-width:767px){
-  .hero-inner{justify-content:flex-start;padding:40px 20px 44px}
+  .hero-inner{justify-content:flex-start;padding:calc(var(--header-h) + 16px) 20px 44px}
   .hero-top{max-width:none}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:0;margin-top:28px}
   .hero-bottom .hero-lede{max-width:none}
@@ -1700,7 +1701,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-bottom .ctas{margin-top:24px}
 }
 @media (min-width:768px) and (max-width:1023px){
-  .hero-inner{padding:56px 28px 36px}
+  .hero-inner{padding:calc(var(--header-h) + 20px) 28px 36px}
   .hero-top{max-width:82%}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:26px}
   .hero-bottom .hero-lede{max-width:min(62%,560px)}
@@ -2317,6 +2318,40 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .tr-shot img{transition:none !important}
   .tr-card:hover .tr-shot img{transform:none !important}
+}
+
+/* =====================================================================
+   HEADER — a floating pill, inset from the page edges
+   The <header> stays transparent and sticky so it keeps its place in the
+   layout; the pill inside is what you see. Translucent white with a blur,
+   so the hero's shader reads through it, and it firms up once scrolled
+   because over the white sections below there is nothing behind it.
+   ===================================================================== */
+.site-head{padding:14px 0;background:transparent}
+.site-bar{position:relative;width:min(1440px,calc(100% - 40px));margin:auto;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:11px 12px 11px 22px;border-radius:18px;
+  background:rgba(255,255,255,.80);
+  -webkit-backdrop-filter:saturate(150%) blur(14px);
+  backdrop-filter:saturate(150%) blur(14px);
+  border:1px solid rgba(13,24,40,.07);
+  box-shadow:0 10px 30px -14px rgba(13,24,40,.20);
+  transition:background .3s var(--ease-out),box-shadow .3s var(--ease-out),
+    border-color .3s var(--ease-out)}
+.site-head.is-stuck .site-bar{background:rgba(255,255,255,.94);
+  border-color:rgba(13,24,40,.10);
+  box-shadow:0 14px 38px -14px rgba(13,24,40,.26)}
+/* Safari and Firefox without backdrop-filter get an opaque pill rather than
+   a milky one — the nav has to stay legible over the shader either way. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .site-bar{background:rgba(255,255,255,.96)}
+}
+@media (max-width:767px){
+  .site-head{padding:10px 0}
+  .site-bar{width:calc(100% - 24px);padding:9px 10px 9px 16px;border-radius:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .site-bar{transition:none}
 }
 
 

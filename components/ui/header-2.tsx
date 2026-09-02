@@ -242,22 +242,18 @@ export function Header() {
 			ref={barRef}
 			onMouseLeave={hoverClose}
 			onKeyDown={trapTab}
-			/* A solid full-width white bar, not a floating pill: the reference
-			   header spans the page and sits flush above the hero. `scrolled`
-			   now only earns a hairline and a shadow, so there is still a
-			   separation once the #EFEFEF hero has moved up behind it. */
-			className={cn(
-				'sticky top-0 z-50 w-full bg-white transition-shadow duration-300',
-				{
-					'border-b border-border shadow-sm': scrolled || open,
-					'border-b border-transparent': !scrolled && !open,
-				},
-			)}
+			/* A floating pill inset from the page edges, translucent white over
+			   whatever is behind it. The <header> itself stays transparent and
+			   sticky so it keeps its place in the flow — only the hero pulls up
+			   underneath it, which is what lets the shader run to the top of the
+			   page without every other page needing its own top clearance.
+			   `scrolled` firms the pill up rather than adding a border, since
+			   over white sections there is nothing for a hairline to separate. */
+			className={cn('site-head sticky top-0 z-50 w-full', {
+				'is-stuck': scrolled || open,
+			})}
 		>
-			<nav
-				className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-6 px-5 py-4 sm:px-8 sm:py-5 lg:px-12" 
-				aria-label="Primary"
-			>
+			<nav className="site-bar" aria-label="Primary">
 				{/* Mark always visible; the words reveal on hover/focus. */}
 				<GaLogo className="shrink-0" />
 
