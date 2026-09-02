@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHeadArt from "@/components/PageHeadArt";
 import CTA from "@/components/CTA";
 import { primaryCta, story } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
@@ -26,13 +27,14 @@ export const metadata: Metadata = pageMetadata({
 export default function WhoWeArePage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Who We Are", href: "/who-we-are" }]} />
           <div className="section-kicker">WHO WE ARE</div>
           <h1>{story.heading}</h1>
           <p>{story.lead}</p>
         </div>
+              <PageHeadArt src="/page-art/who-we-are.webp" />
       </section>
 
       <section className="section firm-story">

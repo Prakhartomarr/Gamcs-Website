@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHeadArt from "@/components/PageHeadArt";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQ from "@/components/sections/FAQ";
 import Link from "next/link";
@@ -22,7 +23,7 @@ export const metadata: Metadata = pageMetadata({
 export default function FaqPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "FAQ", href: "/faq" }]} />
           <div className="section-kicker">{faq.kicker}</div>
@@ -32,6 +33,7 @@ export default function FaqPage() {
             {faq.cta} <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </p>
         </div>
+              <PageHeadArt src="/page-art/faq.webp" />
       </section>
 
       <FAQ />

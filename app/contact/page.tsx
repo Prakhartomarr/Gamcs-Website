@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
@@ -34,7 +35,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Contact", href: "/contact" }]} />
           <div className="section-kicker">CONTACT</div>
@@ -44,6 +45,7 @@ export default function ContactPage() {
             do. One of the founders reads every enquiry.
           </p>
         </div>
+              <PageHeadArt src="/page-art/contact.webp" />
       </section>
 
       <section className="contact" id="contact">

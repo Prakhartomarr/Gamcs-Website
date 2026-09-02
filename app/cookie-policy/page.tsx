@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CookiePreferencesLink from "@/components/CookiePreferencesLink";
@@ -24,7 +25,7 @@ export const metadata: Metadata = pageMetadata({
 export default function CookiePolicyPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Cookie Policy", href: "/cookie-policy" }]} />
           <div className="section-kicker">LEGAL</div>
@@ -34,6 +35,7 @@ export default function CookiePolicyPage() {
             technologies when you visit our website.
           </p>
         </div>
+              <PageHeadArt src="/page-art/cookie-policy.webp" />
       </section>
 
       <section className="section legal-page">

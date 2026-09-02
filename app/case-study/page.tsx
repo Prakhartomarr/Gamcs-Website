@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHeadArt from "@/components/PageHeadArt";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
@@ -15,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function CaseStudyPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Case Studies", href: "/case-study" }]} />
           <div className="section-kicker">CASE STUDY</div>
@@ -31,6 +32,7 @@ export default function CaseStudyPage() {
             </CTA>
           </div>
         </div>
+              <PageHeadArt src="/page-art/case-study.webp" />
       </section>
 
       <section className="section">

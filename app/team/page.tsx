@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function TeamPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Team", href: "/team" }]} />
           <div className="section-kicker">TEAM</div>

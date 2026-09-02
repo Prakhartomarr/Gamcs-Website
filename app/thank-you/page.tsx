@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHeadArt from "@/components/PageHeadArt";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { site } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Thank you", href: "/thank-you" }]} />
           <div className="section-kicker">MESSAGE READY</div>
@@ -42,6 +43,7 @@ export default function ThankYouPage() {
             us directly.
           </p>
         </div>
+              <PageHeadArt src="/page-art/thank-you.webp" />
       </section>
 
       <section className="section">

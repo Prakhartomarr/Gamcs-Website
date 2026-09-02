@@ -450,7 +450,10 @@ h1,h2,h3,p{margin-top:0}
 .contact-box .mail{display:block;width:fit-content}
 .contact-box .mail + .mail{margin-top:10px}
 
-.page-head{background:var(--bg-soft);padding:96px 0 56px}
+/* `position:relative` and the clip are for PageHeadArt. Without a photograph
+   nothing about this changes — the band stays pale with dark type. */
+.page-head{position:relative;overflow:hidden;background:var(--bg-soft);padding:96px 0 56px}
+.page-head>.container{position:relative;z-index:2}
 .page-head h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch}
 .page-head p{max-width:620px;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -2354,4 +2357,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .site-bar{transition:none}
 }
 
+/* =====================================================================
+   PAGE-HEAD ARTWORK — a photograph behind the whole band, white type on it
+   The scrim is not decoration: the photographs run to near-white in places
+   and white type dies over them. Measured per page, not assumed.
+   ===================================================================== */
+.page-head-art{position:absolute;inset:0;z-index:0;pointer-events:none}
+.page-head-art img{object-fit:cover;object-position:50% 42%}
+.page-head-art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(6,20,34,.53),rgba(6,20,34,.66))}
 
+/* The class and the picture go together: this alone is white on pale grey. */
+.page-head--art{background:#0B1622}
+.page-head--art h1{color:#fff}
+.page-head--art>.container>p{color:rgba(255,255,255,.88);max-width:620px}
+.page-head--art .section-kicker{color:#9CCBEA}
+.page-head--art .crumbs a{color:rgba(255,255,255,.72)}
+.page-head--art .crumbs a:hover{color:#fff}
+.page-head--art .crumbs [aria-current="page"]{color:#fff}
+.page-head--art .crumbs-sep{color:rgba(255,255,255,.45)}
+.page-head--art .eyebrow-pill{background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.32);color:#fff}
+/* page-specific lines that live inside these bands */
+/* !important to beat `.team-mission{color:var(--ink)!important}` above, which
+   otherwise leaves this line dark on a dark photograph. */
+.page-head--art .team-mission{color:#fff!important;border-left-color:#9CCBEA}
+.page-head--art .faq-head-cta{color:rgba(255,255,255,.82)}
+.page-head--art .faq-head-cta a{color:#9CCBEA}
+.page-head--art .tbc{color:rgba(255,255,255,.88)}

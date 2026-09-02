@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHeadArt from "@/components/PageHeadArt";
 import PillarBlocks from "@/components/sections/PillarBlocks";
 import { primaryCta, solutions, solutionsHub } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
@@ -28,7 +29,7 @@ export const metadata: Metadata = pageMetadata({
 export default function SolutionsHubPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head page-head--art">
         <div className="container">
           <Breadcrumbs trail={[{ label: "Solutions", href: "/solutions" }]} />
           <span className="eyebrow-pill">Solutions</span>
@@ -37,6 +38,7 @@ export default function SolutionsHubPage() {
           </h1>
           <p>{solutionsHub.subhead}</p>
         </div>
+              <PageHeadArt src="/page-art/solutions.webp" />
       </section>
 
       <nav className="pillar-rail" aria-label="Solution pillars">
