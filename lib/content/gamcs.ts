@@ -205,12 +205,17 @@ export const team = {
   closingCta: "Want to work with this team directly?",
   /**
    * Names, titles, years of experience and locations are all from the copy
-   * doc (page 10). `experience` and `location` are shown on the card, so no
-   * real information sits behind a hover.
+   * doc (page 10).
    *
-   * Nobody has a biography — not the founders either — so there is no detail
-   * page. Everything known about a person fits on their card. Add a `bio` and
-   * a /team/[slug] route becomes worth building.
+   * `bio` is optional and currently unset for everyone: nobody has one written
+   * yet. The roster's panel renders whatever a person does have, so a missing
+   * bio costs a paragraph rather than leaving an empty dialog — fill one in and
+   * it appears with no other change.
+   *
+   * `linkedinUrl` is a real personal profile, not the company page. Only the
+   * two founders publish one; an earlier version of this page linked a
+   * per-person icon at the company URL, which is why the field is a URL rather
+   * than a boolean.
    *
    * Gaurav stays "Founder" rather than the doc's "Co-Founder & Partner":
    * that correction was an explicit client instruction in Phase 1.
@@ -220,17 +225,17 @@ export const team = {
       what the alt text describes. */
   foundersPhoto: "/team/founders-light.webp",
   leadership: [
-    { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/gaurav-malik.jpg", email: "gaurav.malik@gamcs.in" },
-    { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedin: true, photo: "/team/abhinav-aggarwal.jpg", email: "abhinav.aggarwal@gamcs.in" },
+    { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
+    { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
   advisory: [
-    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years" },
-    { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years" },
-    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE" },
-    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years" },
-    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India" },
-    { name: "Amit Garg", title: "Audit & IPO Advisor" },
-    { name: "Prashant Sharma", title: "Risk & Regulatory Advisor" },
+    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years", photo: "/team/sanjay-rikhy.jpg" },
+    { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years", photo: "/team/sumit-chatterjee.jpg" },
+    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
+    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years", photo: "/team/saurabh-aggarwal.jpg" },
+    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
+    { name: "Amit Garg", title: "Audit & IPO Advisor", photo: "/team/amit-garg.jpg" },
+    { name: "Prashant Sharma", title: "Risk & Regulatory Advisor", photo: "/team/prashant-sharma.jpg" },
   ],
   get members() {
     return [...this.leadership, ...this.advisory];

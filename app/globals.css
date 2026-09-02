@@ -1437,6 +1437,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .page-head h1,
 .partners-heading,
 .hwh-h2,
+.tr-h,
 .fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
   font-family:Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
 .who-heading{margin:0;max-width:22ch}
@@ -2185,3 +2186,137 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .pillar-list summary svg{transition:none}
 }
+
+/* =====================================================================
+   TEAM ROSTER — founders staggered, advisers three across
+   Founders keep the reference's own 400x520; advisers run 329 wide with
+   146 between them, the ~0.45 gap-to-card ratio measured off the layout
+   this follows. Both use one card: the caption sits on the photograph
+   over a gradient, with the plus hanging off the bottom-right corner.
+   ===================================================================== */
+.tr{padding:96px 0 120px}
+.tr-h{max-width:9ch}
+.tr-count{display:block;margin:16px 0 0;font:600 0.6667rem Sora,sans-serif;
+  letter-spacing:.16em;text-transform:uppercase;color:#8A9198}
+
+/* founders: heading in the left column, the staggered cards beside it */
+.tr-sec{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:start}
+.tr-block{margin-top:130px}
+.tr-mid{text-align:center;max-width:640px;margin:0 auto 60px}
+.tr-mid .tr-h{max-width:none}
+.tr-mid .tr-count{margin-top:16px}
+
+/* Cards alternate sides inside a fixed band and overlap vertically, so the two
+   columns interlock. Document order is untouched, which keeps tab order and
+   screen readers in the order people read — the obvious two-column markup
+   would have reordered them. */
+.tr-stack{width:900px}
+.tr-stack .tr-card{width:400px}
+.tr-stack .tr-card:nth-child(odd){margin-left:auto}
+.tr-stack .tr-card:nth-child(even){margin-right:auto}
+.tr-stack .tr-card + .tr-card{margin-top:-190px}
+.tr-stack .tr-shot{height:520px}
+.tr-stack .tr-plus{right:-38px;bottom:-38px;width:76px;height:76px}
+
+.tr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:84px 146px}
+.tr-grid .tr-shot{aspect-ratio:3/4}
+.tr-grid .tr-cap{padding:0 22px 22px}
+.tr-grid .tr-name{font-size:1.1667rem}
+.tr-grid .tr-role{font-size:0.7222rem}
+.tr-grid .tr-rule{width:22px;margin-bottom:12px}
+.tr-grid .tr-plus{right:-26px;bottom:-26px;width:56px;height:56px}
+
+.tr-card{display:block;position:relative;width:100%;padding:0;border:0;background:none;
+  font:inherit;color:inherit;text-align:left;cursor:pointer}
+.tr-card:focus-visible{outline:2px solid var(--blue);outline-offset:8px}
+.tr-shot{position:relative;display:block;overflow:hidden;background:var(--band-soft)}
+/* Greyscale in CSS, not on disk: nine photographs shot in nine places read as
+   one set this way, and the colour originals stay untouched. */
+.tr-shot img{object-fit:cover;filter:grayscale(1) contrast(1.04);
+  transition:transform .6s var(--ease-out)}
+.tr-card:hover .tr-shot img,.tr-card:focus-visible .tr-shot img{transform:scale(1.04)}
+.tr-cap{position:absolute;left:0;right:0;bottom:0;padding:0 26px 26px;
+  background:linear-gradient(to top,rgba(13,24,40,.9),rgba(13,24,40,.55) 42%,rgba(13,24,40,0))}
+.tr-rule{display:block;width:26px;height:2px;margin:0 0 14px;background:var(--blue-light)}
+.tr-name{display:block;font:600 1.3333rem Sora,sans-serif;letter-spacing:-.025em;color:#fff}
+.tr-role{display:block;margin-top:5px;font-size:0.7778rem;line-height:1.4;
+  font-style:italic;color:rgba(255,255,255,.86)}
+/* centred on the card's bottom-right corner, hanging outside it */
+.tr-plus{position:absolute;display:grid;place-items:center;background:#fff;color:var(--blue);
+  box-shadow:0 18px 34px -18px rgba(13,24,40,.45);
+  transition:color .2s var(--ease-out),box-shadow .3s var(--ease-out)}
+.tr-plus svg{width:22px;height:22px}
+.tr-grid .tr-plus svg{width:17px;height:17px}
+.tr-card:hover .tr-plus{color:var(--blue-dark);box-shadow:0 22px 40px -18px rgba(13,24,40,.55)}
+
+/* ---- the bio panel ----
+   A large panel with an inset block inside it, the reading column narrow and
+   long, the portrait small at the top right breaking the block's edge, and the
+   close outside it. ~1000x830 with a 470 column and a 216 portrait. */
+.tr-ovwrap{position:fixed;inset:0;z-index:200;display:flex;align-items:center;
+  justify-content:center;padding:40px;background:rgba(13,24,40,.58)}
+.tr-ov{position:relative;width:min(1000px,100%);max-height:100%;background:#fff;
+  color:var(--ink-deep);border-radius:24px;padding:64px;
+  box-shadow:0 60px 140px -50px rgba(13,24,40,.55)}
+.tr-ov:focus{outline:none}
+/* 300px is the floor the portrait needs, not the height the design draws at.
+   With a bio in place the block grows to roughly 600 on its own; without one it
+   would otherwise ship as a half-empty box. */
+.tr-ovin{position:relative;background:var(--band-soft);border-radius:16px;
+  padding:74px 76px 64px;min-height:300px;max-height:100%;overflow:auto}
+.tr-ovin h3{margin:0;font:600 2.1111rem Sora,sans-serif;letter-spacing:-.03em}
+.tr-ovrole{margin:12px 0 0;max-width:26ch;font-size:0.8333rem;line-height:1.5;
+  color:var(--ink-muted)}
+.tr-ovmeta{margin:7px 0 0;font-size:0.7222rem;letter-spacing:.02em;color:#8A9198}
+/* one narrow column, long — the shape a 250-word bio makes */
+.tr-ovbody{max-width:470px;margin:30px 0 0}
+.tr-bio{margin:0;font-size:0.8333rem;line-height:1.75;color:var(--ink-muted);
+  white-space:pre-line}
+.tr-ovlinks{display:flex;gap:10px;margin-top:30px}
+.tr-ovlinks a{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 17px;
+  border-radius:999px;background:#fff;color:var(--ink-deep);border:1px solid #DCDEE2;
+  font:600 0.7222rem Sora,sans-serif;transition:background .2s var(--ease-out)}
+.tr-ovlinks a:hover{background:#f6f7f8;color:var(--ink-deep)}
+.tr-ovshot{position:absolute;top:-38px;right:76px;width:216px}
+.tr-ovshot span{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;
+  overflow:hidden;background:#fff}
+.tr-ovshot img{object-fit:cover;filter:grayscale(1)}
+.tr-ovshot i{display:block;height:1px;margin-top:20px;background:var(--line)}
+.tr-close{position:absolute;top:24px;right:24px;width:46px;height:46px;border:0;
+  border-radius:999px;display:grid;place-items:center;cursor:pointer;
+  background:transparent;color:var(--ink-deep);transition:background .2s var(--ease-out)}
+.tr-close:hover{background:rgba(13,24,40,.07)}
+
+@media (max-width:1279px){
+  .tr-sec{grid-template-columns:1fr;gap:36px}
+  .tr-stack{width:100%;max-width:820px}
+  .tr-grid{gap:64px 72px}
+}
+@media (max-width:1023px){
+  .tr-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:56px}
+}
+@media (max-width:767px){
+  .tr{padding:64px 0 80px}
+  .tr-block{margin-top:72px}
+  .tr-mid{margin-bottom:36px}
+  /* no room to interlock at this width: one column, no overlap */
+  .tr-stack{max-width:none}
+  .tr-stack .tr-card{width:100%;margin-left:0;margin-right:0}
+  .tr-stack .tr-card + .tr-card{margin-top:26px}
+  .tr-stack .tr-shot{height:auto;aspect-ratio:3/4}
+  .tr-stack .tr-plus{right:-22px;bottom:-22px;width:56px;height:56px}
+  .tr-grid{grid-template-columns:1fr;gap:36px}
+  .tr-ovwrap{padding:16px}
+  .tr-ov{padding:20px;border-radius:18px}
+  .tr-ovin{padding:96px 22px 30px;min-height:0}
+  .tr-ovin h3{font-size:1.4444rem}
+  .tr-ovbody{max-width:none}
+  .tr-ovshot{position:static;width:132px;margin:0 0 22px}
+  .tr-ovshot i{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .tr-shot img{transition:none !important}
+  .tr-card:hover .tr-shot img{transform:none !important}
+}
+
+
