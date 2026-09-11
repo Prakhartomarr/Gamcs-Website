@@ -36,15 +36,16 @@ export default function HomePage() {
         still claimed in `whoWeAre` and on the systems-implementation page.
       */}
       <ClientLogos />
-      <WhoWeAre />
-      {/* Directly after Who We Are: the firm story now ends by handing off to
-          /who-we-are, and "we are also the delivery team behind other advisory
-          firms" is the same argument continued, not a separate proof band. */}
+      {/* Directly after the client wall, and deliberately so: two logo bands
+          run back to back because they make one widening claim — "these are
+          our clients", then "and these advisory firms hand us their delivery".
+          Each keeps its own heading so the two claims stay distinct. */}
       <OurPartners />
       <HowWeHelp />
       <MaturityCurve />
       <Solutions />
       <Achievements />
+      <WhoWeAre />
       <Testimonials />
       <Contact />
     </>
