@@ -768,26 +768,158 @@ export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[numb
   solutionsHub.previews.map((p) => [p.slug, p])
 );
 
-/** Doc page 1, section 3 — homepage. */
+/**
+ * Doc page 1, section 3 — homepage.
+ *
+ * Unlike the rest of this file, the maturity-curve copy is NOT transcribed
+ * from gamcs.in: the live site's four-stage band was replaced by this
+ * five-stage interactive curve, and the stage questions, quotes, capability
+ * tags and comparison grid were supplied in the reference build. Treat it as
+ * authored marketing copy, not a mirror of the live site.
+ *
+ * `metrics` on stages 03–05 and every figure inside `tiles` / `ladder` /
+ * `signals` are ILLUSTRATIVE — the section labels them as such wherever they
+ * render. They are not client figures and must not be presented as any.
+ *
+ * `visual` discriminates which figure the detail panel draws, and the extra
+ * keys each variant carries (`tiles`, `ladder`, `signals` + `outputs`) are
+ * narrowed off it — so a stage cannot carry a ladder and claim to be a
+ * dashboard without TypeScript noticing.
+ */
 export const maturityCurve = {
-  heading: "Every Finance Function Sits Somewhere on This Curve. Where Are You?",
+  eyebrow: "The maturity curve",
+  heading: "Where is your finance",
+  headingAccent: "function today?",
+  lead:
+    "Five stages. One direction: from reporting to continuous decisioning. Every finance function sits somewhere on this curve — the question isn't whether you need more data, it's how fast you can turn what you already have into a decision.",
+  hint: "Click a stage — this is also your self-assessment",
+  /** Sits above the comparison grid. */
+  comparisonLabel: "What actually changes as you move up",
+  /** Repeated under every panel that shows a number. */
+  illustrative: "Illustrative example — not a real client figure.",
+  /** The engine node in the stage-05 diagram. */
+  engineName: `${site.short} Intelligence Engine`,
   stages: [
-    { n: "Stage 1", name: "Financial Reporting", body: "Statutory compliance, monthly close, historical statements. Necessary, but backward-looking by design." },
-    { n: "Stage 2", name: "Basic MIS", body: "Manual Excel-based management packs. Better visibility, still slow, still fragmented." },
-    { n: "Stage 3", name: "BI & Dashboards", body: "Real-time, automated dashboards replacing manual reporting." },
-    { n: "Stage 4", name: "Decision Intelligence", body: "Predictive and prescriptive analytics, AI-assisted commentary, anomaly detection — finance stops reporting the past and starts shaping the next decision." },
+    {
+      n: "01",
+      name: "Financial Reporting",
+      short: "Reporting",
+      question: "What happened?",
+      teaser: "“What happened?”",
+      quote:
+        "I can tell you what happened last month — it just takes seven to ten days to produce.",
+      tags: ["Excel", "ERP reports", "Month-end close", "Statutory reporting"],
+      metrics: [
+        { value: "7–10 days", label: "Turnaround" },
+        { value: "Fragmented", label: "Data" },
+        { value: "Low", label: "Decision support" },
+      ],
+      visual: "metrics",
+      next: "The move to Stage 02 is consolidation — one version of the numbers, produced once instead of rebuilt every month.",
+    },
+    {
+      n: "02",
+      name: "Management Information",
+      short: "MIS",
+      question: "How are we doing?",
+      teaser: "“How are we doing?”",
+      quote:
+        "I finally have a monthly pack — but by the time it lands, the month is already over.",
+      tags: ["MIS", "Monthly packs", "KPI reporting", "Variance analysis"],
+      metrics: [
+        { value: "5–7 days", label: "Turnaround" },
+        { value: "Consolidated", label: "Data" },
+        { value: "Limited", label: "Decision support" },
+      ],
+      visual: "metrics",
+      next: "The move to Stage 03 is automation — the pack stops being assembled and starts being queried.",
+    },
+    {
+      n: "03",
+      name: "Business Intelligence",
+      short: "BI",
+      question: "Why did it happen?",
+      teaser: "“Why did it happen?”",
+      quote: "I can see almost everything now. I still have to go figure out why.",
+      tags: ["Power BI", "Live dashboards", "Profitability analysis", "Drill-down analytics"],
+      metrics: [
+        { value: "1–2 days", label: "Turnaround" },
+        { value: "Connected", label: "Data" },
+        { value: "Moderate", label: "Decision support" },
+      ],
+      visual: "dashboard",
+      /** `bars` is the sparkline, oldest to newest; the last bar reads as current. */
+      tiles: [
+        { label: "Gross margin", value: "38.4%", bars: [52, 61, 47, 66, 58, 71, 63] },
+        { label: "Working capital", value: "62 days", bars: [70, 64, 68, 55, 59, 48, 44] },
+        { label: "Segment B", value: "−11.2%", bars: [64, 58, 60, 45, 39, 34, 28] },
+      ],
+      next: "The move to Stage 04 is interpretation — the system explains the variance instead of only exposing it.",
+    },
+    {
+      n: "04",
+      name: "Decision Intelligence",
+      short: "Decision intel.",
+      question: "What happens next?",
+      teaser: "“What happens next?”",
+      quote:
+        "The system tells me what changed, why it changed, and what it’s likely to mean.",
+      tags: ["Driver-based planning", "Forecasting", "Scenario analysis", "Anomaly detection"],
+      metrics: [
+        { value: "+8.2%", label: "Revenue" },
+        { value: "−3.8%", label: "EBITDA" },
+        { value: "−280 bps", label: "Gross margin" },
+      ],
+      visual: "ladder",
+      /** Last row is the payoff and takes the highlighted treatment. */
+      ladder: [
+        { q: "What happened?", a: "Revenue grew." },
+        { q: "Why?", a: "Volume declined, but pricing more than offset it." },
+        { q: "What’s next?", a: "Forecast points to further margin pressure." },
+        { q: "What should we do?", a: "Pricing and mix intervention in Segment B." },
+      ],
+      next: "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",
+    },
+    {
+      n: "05",
+      name: "Continuous Decisioning",
+      short: "Continuous",
+      question: "What should we do now?",
+      teaser: "“What should we do now?”",
+      quote:
+        "Finance stops reporting the business and starts sensing it — signals become recommendations, recommendations become actions.",
+      tags: ["Real-time signals", "Automated commentary", "Alerts", "Accountability loops"],
+      metrics: [
+        { value: "Continuous", label: "Turnaround" },
+        { value: "Real-time", label: "Data" },
+        { value: "Prescriptive", label: "Decision support" },
+      ],
+      visual: "signals",
+      signals: [
+        { label: "Revenue", dir: "up" },
+        { label: "Margin", dir: "down" },
+        { label: "Cash", dir: "down" },
+        { label: "Forecast", dir: "up" },
+      ],
+      /* `tone` maps onto the brand palette in the component — there is no
+         red/amber/green semantic scale in this design system. */
+      outputs: [
+        { label: "Margin risk", tone: "risk" },
+        { label: "Cash pressure", tone: "watch" },
+        { label: "Revenue opportunity", tone: "good" },
+      ],
+      next: "This is the end of the curve — the work here is holding the loop: keeping signals trusted and recommendations owned.",
+    },
   ],
-  footnote:
-    "Most companies — and most PE portfolios — are stuck between Stage 1 and Stage 2. We build the bridge to Stage 4.",
-  /* Shown when a visitor taps a stage to place themselves. Copy supplied in
-     the reference build; `b` marks the phrase that takes the accent colour. */
-  stageNotes: [
-    "You're at Stage 1 — compliant, but reading the past. The climb to Stage 4 starts with visibility.",
-    "You're at Stage 2 — where most companies stall. This is exactly the gap we bridge to Stage 4.",
-    "You're at Stage 3 — real-time and automated. One step from finance that shapes the decision.",
-    "Stage 4 — Decision Intelligence. This is where we get you: finance stops reporting the past and starts shaping the next decision.",
+  /** One row per dimension; `values` is indexed by stage, so it stays 5 long. */
+  tableRows: [
+    { dimension: "Data", values: ["Fragmented", "Consolidated", "Connected", "Integrated", "Real-time"] },
+    { dimension: "Insight", values: ["Historical", "Descriptive", "Diagnostic", "Predictive", "Prescriptive"] },
+    { dimension: "Planning", values: ["Periodic", "Budget-led", "Driver-based", "Dynamic", "Continuous"] },
+    { dimension: "Technology", values: ["Excel / ERP", "Excel / ERP", "BI", "BI + AI", "Intelligence layer"] },
+    { dimension: "Decision cycle", values: ["Monthly", "Monthly", "Weekly", "Daily", "Continuous"] },
   ],
-  cta: { label: "See How We Get You There", href: "/solutions" },
+  cta: primaryCta,
 } as const;
 
 /**

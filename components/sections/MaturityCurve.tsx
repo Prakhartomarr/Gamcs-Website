@@ -1,281 +1,451 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
+import { useRef, useState, type CSSProperties } from "react";
 import { maturityCurve } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
 /**
- * The four maturity stages as light cards stepping up a connecting run.
+ * The finance maturity curve — five stages as an ascending staircase, a detail
+ * panel that swaps per stage, a comparison grid whose active column lights up,
+ * and a stage-aware CTA.
  *
- * The connector is drawn, not laid out: for each consecutive pair it runs from
- * the right edge of one card to the left edge of the next, a fixed distance
- * below each card's top, so the line climbs because the cards do. Those points
- * are measured from the DOM rather than derived from the CSS, which is what
- * lets the card heights stay content-driven.
+ * ALL COPY LIVES IN `maturityCurve` (lib/content/gamcs.ts), not here — this
+ * file is markup and interaction only. Stage figures are illustrative and the
+ * panel says so wherever a number appears.
  *
- * Clicking a stage places the visitor: the card takes a selected ring, a "You
- * are here" flag moves to it, and the footnote swaps to that stage's note in a
- * live region.
+ * Two conventions worth naming, because this section is the odd one out:
  *
- * The travelling marker is gone. It rode MotionPathPlugin along one continuous
- * curve; the connector is now three separate segments with gaps between the
- * cards, and a marker would jump those gaps. The line still draws itself in —
- * a single stroke-dashoffset sweep crosses all three subpaths in order.
+ *   1. Section components in this codebase carry no Tailwind utilities; they
+ *      compose semantic classes from globals.css. This one is utility-styled
+ *      because it must not add global CSS. The section SHELL still uses the
+ *      shared primitives (.section / .fin-sec / .container / .fin-eyebrow /
+ *      .fin-h2 / .fin-lead / CTA) so the band reads as part of the page; only
+ *      the interactive internals are utilities, and every colour, radius and
+ *      shadow among them resolves to a token already declared in globals.css.
+ *
+ *   2. 900px, not a Tailwind breakpoint, is where the staircase unstacks —
+ *      it is the width this section has always broken at, and `min-[900px]:`
+ *      spells it without touching tailwind.config.
+ *
+ * The previous build's drawn SVG connector and GSAP sweep are gone with it:
+ * the climb is now carried by the card heights themselves, so there is no
+ * measured geometry to keep in sync and no animation to tear down.
  */
 
-/** below this width the run becomes a plain vertical rail */
-const MOBILE = 900;
+/** 11px/700/.18em Sora — the micro-label used throughout this design system. */
+const LABEL = "font-heading text-[11px] font-bold uppercase tracking-[0.18em]";
 
-/** bloom strength per stage — the light climbs toward Decision Intelligence */
-const LIT = [0.16, 0.34, 0.6, 1];
+/** Soft hairline (--hair) and the harder one (--hair-2), as border utilities. */
+const HAIR = "border-[color:var(--hair)]";
 
 /**
- * Position of `el` relative to `root`, accumulated up the offsetParent chain.
- *
- * offsetLeft/offsetTop rather than getBoundingClientRect, because the stages
- * carry `.reveal` — held at translateY(22px) until they scroll in. A rect
- * measured before that resolves is 22px low and the whole connector sits off
- * its cards by exactly that much. Offsets are layout positions and ignore
- * transforms entirely.
- *
- * The chain has to be walked rather than read once: an element's offset is
- * relative to its offsetParent, and *any* transformed ancestor becomes one —
- * `.reveal` itself does, while its transform is still applied.
+ * Signal tone -> brand palette. There is no red/amber/green semantic scale in
+ * this design system, so risk borrows --destructive (the one token that means
+ * "bad"), watch takes the yellow accent, and good takes brand blue.
  */
-const offsetIn = (el: HTMLElement, root: HTMLElement) => {
-  let x = 0;
-  let y = 0;
-  let n: HTMLElement | null = el;
-  while (n && n !== root) {
-    x += n.offsetLeft;
-    y += n.offsetTop;
-    n = n.offsetParent as HTMLElement | null;
-  }
-  return { x, y };
+const TONE: Record<string, string> = {
+  risk: "bg-destructive",
+  watch: "bg-yellow",
+  good: "bg-blue",
 };
 
+/* ------------------------------------------------------------ small pieces */
+
+function Tag({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className={`rounded-full border ${HAIR} bg-white px-3 py-1.5 text-[12px] font-medium text-[color:var(--ink-muted)]`}
+    >
+      {children}
+    </span>
+  );
+}
+
+type Metric = { value: string; label: string };
+
+function Metrics({ items }: { items: readonly Metric[] }) {
+  return (
+    <div className="flex flex-wrap gap-x-10 gap-y-5">
+      {items.map((m) => (
+        <div key={m.label}>
+          <div className="font-heading text-[19px] font-semibold tabular-nums tracking-tight text-[color:var(--ink-deep)]">
+            {m.value}
+          </div>
+          <div className="mt-0.5 text-[13px] text-[color:var(--ink-muted)]">{m.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Stage 03 — a live dashboard, sketched. Bars run oldest to newest. */
+function DashboardMock({
+  tiles,
+}: {
+  tiles: readonly { label: string; value: string; bars: readonly number[] }[];
+}) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-3">
+      {tiles.map((t) => (
+        <div key={t.label} className={`rounded-[14px] border ${HAIR} bg-white p-4`}>
+          <div className="text-[12px] text-[color:var(--ink-muted)]">{t.label}</div>
+          <div className="mt-1 font-heading text-[18px] font-semibold tabular-nums text-[color:var(--ink-deep)]">
+            {t.value}
+          </div>
+          <div className="mt-3 flex h-10 items-end gap-1" aria-hidden="true">
+            {t.bars.map((h, i) => (
+              <div
+                key={i}
+                style={{ height: `${h}%` }}
+                className={`flex-1 rounded-[2px] ${
+                  i === t.bars.length - 1 ? "bg-blue" : "bg-blue/20"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Stage 04 — the question ladder. The last rung is the payoff. */
+function Ladder({ rows }: { rows: readonly { q: string; a: string }[] }) {
+  return (
+    <div className={`max-w-xl overflow-hidden rounded-[14px] border ${HAIR}`}>
+      {rows.map((r, i) => {
+        const last = i === rows.length - 1;
+        return (
+          <div
+            key={r.q}
+            className={`grid grid-cols-[minmax(120px,150px)_1fr] gap-4 px-4 py-3 text-[13px] ${
+              last ? "bg-blue/[0.07]" : "bg-white"
+            } ${i > 0 ? `border-t ${HAIR}` : ""}`}
+          >
+            <div
+              className={`font-medium ${last ? "text-blue" : "text-[color:var(--ink-muted)]"}`}
+            >
+              {r.q}
+            </div>
+            <div className="text-[color:var(--ink-deep)]">{r.a}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Stage 05 — signals in, recommendations out. */
+function SignalFlow({
+  signals,
+  outputs,
+  engine,
+}: {
+  signals: readonly { label: string; dir: string }[];
+  outputs: readonly { label: string; tone: string }[];
+  engine: string;
+}) {
+  const arrow = (
+    <div aria-hidden="true" className="hidden text-[color:var(--ink-muted)] sm:block">
+      &rarr;
+    </div>
+  );
+  return (
+    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-2">
+        {signals.map((s) => (
+          <div
+            key={s.label}
+            className={`flex items-center justify-between gap-4 rounded-[10px] border ${HAIR} bg-white px-3 py-1.5 text-[13px] text-[color:var(--ink-deep)]`}
+          >
+            <span>{s.label}</span>
+            <span aria-hidden="true" className="text-[color:var(--ink-muted)]">
+              {s.dir === "up" ? "↑" : "↓"}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {arrow}
+
+      <div className="rounded-[14px] bg-blue-dark px-5 py-4 text-center font-heading text-[13px] font-semibold leading-snug text-white shadow-[var(--shadow-fin)]">
+        {engine.split(" ").map((w) => (
+          <div key={w}>{w}</div>
+        ))}
+      </div>
+
+      {arrow}
+
+      <div className="flex flex-col gap-2">
+        {outputs.map((o) => (
+          <div
+            key={o.label}
+            className={`flex items-center gap-2.5 rounded-[10px] border ${HAIR} bg-white px-3 py-1.5 text-[13px] text-[color:var(--ink-deep)]`}
+          >
+            <span
+              aria-hidden="true"
+              className={`h-2 w-2 rounded-full ${TONE[o.tone] ?? "bg-blue"}`}
+            />
+            {o.label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ section */
+
 export default function MaturityCurve() {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const lineRef = useRef<SVGPathElement>(null);
-  const lineBgRef = useRef<SVGPathElement>(null);
-  const dotsRef = useRef<SVGGElement>(null);
-  const flagRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const { stages, tableRows } = maturityCurve;
+  const stage = stages[active];
 
-  useEffect(() => {
-    const stage = stageRef.current;
-    const svg = svgRef.current;
-    const line = lineRef.current;
-    const lineBg = lineBgRef.current;
-    const dots = dotsRef.current;
-    if (!stage || !svg || !line || !lineBg || !dots) return;
-
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const cards = Array.from(stage.querySelectorAll<HTMLElement>(".fmc-card"));
-    let played = reduce;
-
-    /**
-     * The six points the connector touches: each card's right edge, then the
-     * next card's left edge.
-     *
-     * Anchored a constant distance below each card's top, NOT at its vertical
-     * centre. The cards' heights are content-driven and differ by ~90px, so
-     * their centres do not step evenly — measured at 281/234/174/161, a last
-     * step of only 13px, which flattened the segments into barely-visible
-     * hooks. Anchoring off the top makes the climb exactly the CSS stagger,
-     * which is even and stays even at any width.
-     */
-    const ANCHOR = 64;
-    const layout = () => {
-      if (window.innerWidth <= MOBILE) return;
-      svg.setAttribute("viewBox", `0 0 ${stage.offsetWidth} ${stage.offsetHeight}`);
-
-      const box = cards.map((c) => {
-        const o = offsetIn(c, stage);
-        return { left: o.x, right: o.x + c.offsetWidth, mid: o.y + ANCHOR };
-      });
-
-      const seg: string[] = [];
-      const pts: { x: number; y: number }[] = [];
-      for (let i = 0; i < box.length - 1; i++) {
-        const a = { x: box[i].right, y: box[i].mid };
-        const b = { x: box[i + 1].left, y: box[i + 1].mid };
-        const dx = (b.x - a.x) / 2;
-        seg.push(`M ${a.x} ${a.y} C ${a.x + dx} ${a.y} ${b.x - dx} ${b.y} ${b.x} ${b.y}`);
-        pts.push(a, b);
-      }
-      const d = seg.join(" ");
-      line.setAttribute("d", d);
-      lineBg.setAttribute("d", d);
-
-      dots.innerHTML = "";
-      const r = played ? 4.5 : 0;
-      pts.forEach((pt, i) => {
-        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", String(pt.x));
-        c.setAttribute("cy", String(pt.y));
-        c.setAttribute("r", String(r));
-        /* the last point is the one that lands on Decision Intelligence */
-        c.setAttribute("class", `fmc-dot${i === pts.length - 1 ? " is-goal" : ""}`);
-        dots.appendChild(c);
-      });
-
-      /* prime the draw, or set it drawn if it has already played */
-      const len = line.getTotalLength() || 1;
-      line.style.strokeDasharray = String(len);
-      line.style.strokeDashoffset = played ? "0" : String(len);
-    };
-
-    layout();
-    const ro = new ResizeObserver(layout);
-    ro.observe(stage);
-    window.addEventListener("resize", layout);
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting || played) continue;
-          played = true;
-          io.disconnect();
-          if (window.innerWidth <= MOBILE) return;
-          gsap.to(line, {
-            strokeDashoffset: 0,
-            duration: 1.5,
-            ease: "power2.inOut",
-          });
-          gsap.to(Array.from(dots.children), {
-            attr: { r: 4.5 },
-            duration: 0.4,
-            stagger: 0.16,
-            delay: 0.35,
-            ease: "back.out(2)",
-          });
-        }
-      },
-      { threshold: 0.3 }
-    );
-    io.observe(stage);
-
-    return () => {
-      ro.disconnect();
-      io.disconnect();
-      window.removeEventListener("resize", layout);
-      gsap.killTweensOf([line, ...Array.from(dots.children)]);
-    };
-  }, []);
-
-  /* Flag position tracks the selected card, measured from the DOM so it stays
-     correct at any width without duplicating the layout maths. */
-  useEffect(() => {
-    const stage = stageRef.current;
-    const flag = flagRef.current;
-    if (!stage || !flag || active === null) return;
-    if (window.innerWidth <= MOBILE) return;
-    const card = stage.querySelectorAll<HTMLElement>(".fmc-card")[active];
-    if (!card) return;
-    /* Same offset-based space as the dots, or the flag drifts from them. */
-    const o = offsetIn(card, stage);
-    flag.style.left = `${o.x + card.offsetWidth / 2}px`;
-    flag.style.top = `${o.y}px`;
-  }, [active]);
-
-  const note =
-    active === null ? maturityCurve.footnote : maturityCurve.stageNotes[active];
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const last = stages.length - 1;
+    let next: number | null = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = Math.min(active + 1, last);
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = Math.max(active - 1, 0);
+    if (e.key === "Home") next = 0;
+    if (e.key === "End") next = last;
+    if (next === null) return;
+    e.preventDefault();
+    setActive(next);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
-    <section className="section fin-sec fmc" id="maturity-curve">
+    <section className="section fin-sec" id="maturity-curve">
       <div className="container">
         <div className="reveal">
           <span className="fin-eyebrow">
             <i aria-hidden="true" />
-            The maturity curve
+            {maturityCurve.eyebrow}
           </span>
           <h2 className="fin-h2">
-            Every finance function sits on this curve.
-            <br />
-            <span className="accent">Where are you?</span>
+            {maturityCurve.heading}
+            <br className="hidden sm:block" />{" "}
+            <span className="accent">{maturityCurve.headingAccent}</span>
           </h2>
-          <p className="fin-lead">
-            Four stages separate finance that records the past from finance that
-            shapes the next decision. Choose a stage to place yourself.
-          </p>
+          <p className="fin-lead">{maturityCurve.lead}</p>
+          <p className={`${LABEL} mt-7 text-[color:var(--ink-muted)]`}>{maturityCurve.hint}</p>
         </div>
 
-        <div className="fmc-stage" ref={stageRef}>
-          <svg
-            className="fmc-svg"
-            ref={svgRef}
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient id="fmcGrad" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0" stopColor="#0F5E97" />
-                <stop offset="1" stopColor="#4A93C9" />
-              </linearGradient>
-            </defs>
-            <path className="fmc-line-bg" ref={lineBgRef} />
-            <path className="fmc-line" ref={lineRef} />
-            <g ref={dotsRef} />
-          </svg>
+        {/* ------------------------------------------------------- the curve */}
+        {/*
+          Bottoms align and each card is taller than the last, so the run reads
+          as a climb without anything being drawn: `items-end` plus a per-card
+          --h. Below 900px the heights are dropped entirely and the cards
+          become a full-width stack.
+        */}
+        <div
+          role="tablist"
+          aria-label="Finance maturity stages"
+          onKeyDown={onKeyDown}
+          className="mt-10 flex flex-col gap-3 min-[900px]:mt-14 min-[900px]:flex-row min-[900px]:items-end"
+        >
+          {stages.map((s, i) => {
+            const isActive = i === active;
+            /* later stages sit deeper in brand blue */
+            const tint = 0.05 + i * 0.035 + (isActive ? 0.06 : 0);
+            return (
+              <button
+                key={s.n}
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
+                role="tab"
+                id={`stage-tab-${s.n}`}
+                aria-selected={isActive}
+                aria-controls="stage-panel"
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActive(i)}
+                style={{ "--h": `${186 + i * 28}px` } as CSSProperties}
+                className={[
+                  "group relative flex-1 overflow-hidden rounded-[18px] border bg-white p-5 text-left",
+                  /* --dur-panel is the site's 260ms token, set as an arbitrary
+                     property: an arbitrary duration-* value is ambiguous under
+                     tailwindcss-animate (it claims duration-* too), so Tailwind
+                     emitted nothing and the cards ran at the 150ms default. */
+                  "transition-[border-color,box-shadow,transform] ease-reel [transition-duration:var(--dur-panel)]",
+                  "min-[900px]:h-[var(--h)]",
+                  isActive
+                    ? "border-blue shadow-[var(--shadow-fin)]"
+                    : `${HAIR} hover:border-blue/40 hover:-translate-y-1 hover:shadow-[var(--shadow-fin)]`,
+                ].join(" ")}
+              >
+                {/* pinstripes, fading downward */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "repeating-linear-gradient(to right, var(--hair) 0 1px, transparent 1px 26px)",
+                    maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
+                    WebkitMaskImage:
+                      "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
+                  }}
+                />
+                {/* brand wash, deepening up the curve */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3"
+                  style={{
+                    background: `linear-gradient(to top, rgba(15,94,151,${tint}), transparent)`,
+                  }}
+                />
 
-          <ol className="fmc-stages">
-            {maturityCurve.stages.map((stage, i) => (
-              /*
-               * `reveal` sits on the <li>, not the button.
-               *
-               * MotionLayer adds `.visible` imperatively with classList. React
-               * owns the button's className (it toggles `is-sel`), so the
-               * re-render on click rewrote that attribute and stripped
-               * `visible` — the clicked card snapped back to opacity:0 and
-               * disappeared. The <li>'s className is static, so React never
-               * touches it.
-               */
-              <li className="reveal" key={stage.n}>
-                <button
-                  type="button"
-                  className={`fmc-card${active === i ? " is-sel" : ""}`}
-                  style={{ "--lit": LIT[i] } as React.CSSProperties}
-                  aria-pressed={active === i}
-                  onClick={() => setActive(i)}
-                >
-                  <span className="fmc-label">{stage.n}</span>
-                  <span className="fmc-body">{stage.body}</span>
-                  <span className="fmc-num" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
+                <span className="relative flex h-full flex-col">
+                  <span
+                    className={`${LABEL} ${isActive ? "text-blue" : "text-[color:var(--ink-muted)]"}`}
+                  >
+                    Stage {s.n}
                   </span>
-                  <span className="fmc-name">{stage.name}</span>
-                  <span className="fmc-cap" aria-hidden="true">
-                    <b style={{ width: `${((i + 1) / maturityCurve.stages.length) * 100}%` }} />
+                  <span className="mt-3 block font-heading text-[17px] font-semibold leading-snug text-[color:var(--ink-deep)]">
+                    {s.name}
                   </span>
-                </button>
-              </li>
+                  <span className="mt-1.5 block text-[13px] italic text-[color:var(--ink-muted)]">
+                    {s.teaser}
+                  </span>
+
+                  <span className="mt-auto block pt-6">
+                    <span className="block h-[3px] w-full rounded-full bg-soft">
+                      <span
+                        className="block h-full rounded-full bg-blue transition-[width] duration-500 ease-reel"
+                        style={{ width: `${((i + 1) / stages.length) * 100}%` }}
+                      />
+                    </span>
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ---------------------------------------------------- detail panel */}
+        <div
+          id="stage-panel"
+          role="tabpanel"
+          aria-labelledby={`stage-tab-${stage.n}`}
+          className={`mt-6 rounded-[24px] border ${HAIR} bg-white p-6 shadow-[var(--shadow-fin)] sm:p-9`}
+        >
+          <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
+
+          <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[color:var(--ink-deep)] sm:text-[30px]">
+            {stage.question}
+          </h3>
+
+          <blockquote className="mt-5 max-w-[62ch] border-l-2 border-blue pl-4 text-[15px] italic leading-relaxed text-[color:var(--ink-muted)]">
+            “{stage.quote}”
+          </blockquote>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {stage.tags.map((t) => (
+              <Tag key={t}>{t}</Tag>
             ))}
-          </ol>
-
-          <div
-            className={`fmc-flag${active !== null ? " is-show" : ""}`}
-            ref={flagRef}
-            aria-hidden="true"
-          >
-            <span className="tag">You are here</span>
-            <span className="stem" />
-            <span className="bead" />
           </div>
+
+          <div className="mt-8 space-y-7">
+            <Metrics items={stage.metrics} />
+            {stage.visual === "dashboard" && <DashboardMock tiles={stage.tiles} />}
+            {stage.visual === "ladder" && <Ladder rows={stage.ladder} />}
+            {stage.visual === "signals" && (
+              <SignalFlow
+                signals={stage.signals}
+                outputs={stage.outputs}
+                engine={maturityCurve.engineName}
+              />
+            )}
+          </div>
+
+          {/* Every stage from 03 up puts a figure on screen; say so. */}
+          {stage.visual !== "metrics" && (
+            <p className="mt-6 text-[12px] text-[color:var(--ink-muted)]">
+              {maturityCurve.illustrative}
+            </p>
+          )}
         </div>
 
-        <footer className="fmc-foot">
-          {/* aria-live: the note is the answer to the button the visitor just
-              pressed, so it needs announcing without moving focus. */}
-          <p className="fmc-note" aria-live="polite">
-            {note}
-          </p>
-          <CTA tier="secondary" icon="arrow" href={maturityCurve.cta.href} data-cta="maturity">
+        {/* ------------------------------------------------------ comparison */}
+        <p className={`${LABEL} mt-16 text-[color:var(--ink-muted)]`}>
+          {maturityCurve.comparisonLabel}
+        </p>
+
+        {/* The scroller is the bounded box, not the page: min-w on the table
+            keeps the columns readable and the overflow stays in here. */}
+        <div className={`mt-4 overflow-x-auto rounded-[18px] border ${HAIR} bg-white`}>
+          <table className="w-full min-w-[760px] border-collapse text-left text-[14px]">
+            <thead>
+              <tr>
+                <th scope="col" className={`${LABEL} bg-soft px-5 py-4 text-[color:var(--ink-muted)]`}>
+                  Dimension
+                </th>
+                {stages.map((s, i) => (
+                  <th
+                    key={s.n}
+                    scope="col"
+                    aria-current={i === active ? "true" : undefined}
+                    className={`${LABEL} px-5 py-4 transition-colors ${
+                      i === active ? "bg-blue/10 text-blue" : "bg-soft text-[color:var(--ink-muted)]"
+                    }`}
+                  >
+                    {s.n} {s.short}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.map((row) => (
+                <tr key={row.dimension} className={`border-t ${HAIR}`}>
+                  <th
+                    scope="row"
+                    className="px-5 py-4 font-heading text-[14px] font-semibold text-[color:var(--ink-deep)]"
+                  >
+                    {row.dimension}
+                  </th>
+                  {row.values.map((v, i) => (
+                    <td
+                      key={i}
+                      className={`px-5 py-4 transition-colors ${
+                        i === active
+                          ? "bg-blue/[0.05] font-medium text-[color:var(--ink-deep)]"
+                          : "text-[color:var(--ink-muted)]"
+                      }`}
+                    >
+                      {v}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ------------------------------------------------------------ CTA */}
+        <div
+          className={`mt-10 flex flex-col gap-6 rounded-[24px] border ${HAIR} bg-soft p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`}
+        >
+          {/* aria-live: this is the answer to the stage the visitor just
+              chose, so it needs announcing without moving focus. */}
+          <div className="max-w-[62ch]" aria-live="polite">
+            <div className="font-heading text-[17px] font-semibold text-[color:var(--ink-deep)]">
+              If you’re at Stage {stage.n} — {stage.name}
+            </div>
+            <p className="mt-1.5 text-[15px] leading-relaxed text-[color:var(--ink-muted)]">
+              {stage.next}
+            </p>
+          </div>
+          <CTA
+            tier="primary"
+            icon="diagonal"
+            href={maturityCurve.cta.href}
+            className="shrink-0"
+            data-cta="maturity"
+          >
             {maturityCurve.cta.label}
           </CTA>
-        </footer>
+        </div>
       </div>
     </section>
   );
