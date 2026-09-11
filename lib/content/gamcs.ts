@@ -122,9 +122,9 @@ export const primaryCta = { label: "Schedule a Call", href: "/contact" } as cons
 /**
  * "How We Help" — doc page 1, section 4 (v3).
  *
- * Seven points, each a lead and a body. The earlier six were one-line labels
+ * Six points, each a lead and a body. The earlier six were one-line labels
  * transcribed from the live site; the doc's version carries the explanation
- * too, which is what the carousel cards need.
+ * too, which the How We Help stack shows in its detail panel.
  */
 export const whyUs = {
   heading: "Built Differently. Delivered End-to-End.",
@@ -132,10 +132,15 @@ export const whyUs = {
      underline. `heading` stays whole for anywhere that needs the full line. */
   headingLead: "Built Differently.",
   headingAccent: "Delivered End-to-End.",
-  headingTail: "",
-  /* `lead` doubles as the key into STEP_ICONS — change one and change both, or
-     the step renders an empty glyph. The "01 —" prefixes are not stored here:
-     the component numbers the list from its index. */
+  /* Under the heading. Not on gamcs.in — supplied with the isometric-stack
+     redesign of this section. */
+  sub: "Every layer of the finance function we build is designed to hold up on its own \u2014 and to connect to the one above it.",
+  /* `lead` doubles as the key into STEP_ICONS (components/ui/stroke-icons.tsx)
+     and into the layer artwork in HowWeHelpStack — rename a lead and rename
+     both. The artwork map is typed on these literals, so a missed rename there
+     fails the build; STEP_ICONS is not, and would just render an empty glyph.
+     The rail label is the lead's first sentence, and the "01" numbers come
+     from position — neither is stored here. */
   points: [
     { lead: "One Team. One Integrated Finance Engine.", body: "We bring finance, data, revenue, and technology together under one roof\u2014so the numbers, systems, insights, and decisions actually connect." },
     { lead: "Independent by Design. Outcomes Above Platforms.", body: "We recommend and implement the right ERP, CRM, BI, or FP&A platform for your business\u2014not the one we're incentivized to sell. Every solution is built around your business model, KPIs, systems, and goals." },

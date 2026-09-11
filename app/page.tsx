@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ClientLogos from "@/components/sections/ClientLogos";
 import WhoWeAre from "@/components/sections/WhoWeAre";
-import HowWeHelp from "@/components/sections/HowWeHelp";
+import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
 import OurPartners from "@/components/sections/OurPartners";
@@ -41,7 +41,7 @@ export default function HomePage() {
           our clients", then "and these advisory firms hand us their delivery".
           Each keeps its own heading so the two claims stay distinct. */}
       <OurPartners />
-      <HowWeHelp />
+      <HowWeHelpStack />
       <MaturityCurve />
       <Solutions />
       <Achievements />

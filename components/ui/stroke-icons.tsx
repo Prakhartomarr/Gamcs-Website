@@ -66,7 +66,7 @@ export const ARROW = (
 );
 
 /**
- * Glyphs for the seven "how we help" steps, keyed by each point's `lead` so a
+ * Glyphs for the six "how we help" steps, keyed by each point's `lead` so a
  * reordered `whyUs.points` cannot silently pair the wrong icon with the wrong
  * copy. Icons are not copy, which is why they live here and not in
  * lib/content/gamcs.ts.
