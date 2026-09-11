@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import CTA from "@/components/CTA";
+import Partners from "@/components/Partners";
 import { primaryCta, story } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
 
@@ -54,6 +55,8 @@ export default function WhoWeArePage() {
           </div>
         </div>
       </section>
+
+      <Partners />
     </>
   );
 }
