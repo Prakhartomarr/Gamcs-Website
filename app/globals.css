@@ -1958,29 +1958,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   letter-spacing:-.03em;color:var(--ink-deep);margin:0}
 .clients-head p{margin:18px auto 0;max-width:64ch;font-size:0.9444rem;line-height:1.65;
   color:var(--ink-muted)}
-.clients-grid{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;
-  justify-content:center;gap:44px 16px}
-/* Ten across, two even rows for 20 logos. The column gap is tightened from 22
-   to 16 to buy the cells back some width, because width is what sets the
-   rendered height here: every mark shares a 400x168 canvas, so a narrower cell
-   scales the whole thing down. The stacked lockups — Two Brothers, Cumin Co.,
-   Basilic Fly, each three lines of type — are the ones this costs. Flex rather
-   than grid so any future odd count centres its last row instead of leaving a
-   hole at the right. */
-.clients-grid li{flex:0 0 calc((100% - 9 * 16px) / 10);
-  display:flex;align-items:center;justify-content:center;min-height:76px}
-.clients-grid img{width:auto;height:auto;max-width:100%;max-height:76px;
-  object-fit:contain}
-/* GX Group is the only logo still on a brand panel; softening its corner makes
-   it read as a deliberate mark rather than an un-removed background. */
-.clients-grid .is-tile img{border-radius:6px}
-@media (max-width:1279px){.clients-grid{gap:40px 22px}
-  .clients-grid li{flex-basis:calc((100% - 4 * 22px) / 5);min-height:68px}
-  .clients-grid img{max-height:68px}}
-@media (max-width:900px){.clients-grid{gap:36px 24px}
-  .clients-grid li{flex-basis:calc((100% - 3 * 24px) / 4);min-height:64px}
-  .clients-grid img{max-height:64px}
-  .clients{padding:80px 0}}
+@media (max-width:900px){.clients{padding:80px 0}}
 @media (max-width:767px){.fmc{padding:64px 0}}
 /* .btn sets white-space:nowrap, which at phone widths pushed the longest label
    ("Considering a similar back-office arrangement? Schedule a Call") 474px wide
@@ -1990,10 +1968,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
   .btn-label{white-space:normal;text-align:center}
 }
-@media (max-width:620px){.clients-grid{gap:30px 18px}
-  .clients-grid li{flex-basis:calc((100% - 18px) / 2);min-height:64px}
-  .clients-grid img{max-height:64px}
-  .clients{padding:60px 0}
+@media (max-width:620px){.clients{padding:60px 0}
   .clients-head{margin-bottom:36px}}
 
 /* ---- partners: copy left, partner marks right ---- */
