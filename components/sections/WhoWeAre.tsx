@@ -3,10 +3,12 @@ import CountUp from "@/components/motion/CountUp";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { achievements, site, story, team } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
+import PartnersDock from "@/components/PartnersDock";
 
 /**
  * Who we are: copy and CTA on the left, the founders' portrait on the right
- * over a link to the team page, and a band of four figures underneath.
+ * over a link to the team page, the mission line with the partners dock
+ * beside it, and a band of four figures underneath.
  *
  * The portrait is the real founders rather than stock photography — the reason
  * an earlier version used `AbstractPanel` was that it would not depict people
@@ -61,7 +63,13 @@ export default function WhoWeAre() {
           </div>
         </div>
 
-        <p className="who-mission reveal">{story.mission}</p>
+        {/* One row, on the same columns as .who-row: the mission line on the
+            left, the partners dock under the founders column on the right —
+            the space beside the mission that used to sit empty. */}
+        <div className="who-under">
+          <p className="who-mission reveal">{story.mission}</p>
+          <PartnersDock className="reveal" />
+        </div>
 
         <ul className="who-stats reveal">
           {stats.map((s) => (

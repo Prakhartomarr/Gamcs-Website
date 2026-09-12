@@ -1446,6 +1446,20 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
   border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
   color:var(--ink);font-weight:600}
+/* Mission line and partners dock share one row, on .who-row's own columns, so
+   the dock sits under the founders column — in the space beside the mission
+   that used to stay empty — instead of lengthening that column and pushing
+   the whole row down. */
+.who-under{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:80px;
+  align-items:center;margin-top:22px}
+.who .who-under .who-mission{margin:0}
+.who-under + .who-stats{margin-top:44px}
+@media (max-width:1279px){
+  .who-under{grid-template-columns:1fr;gap:28px;margin-top:28px}
+  /* one column: keep the dock directly under "Meet our founders" */
+  .who-under .partners-dock{order:-1}
+}
+@media (max-width:767px){.who-under + .who-stats{margin-top:36px}}
 
 /* ---- /who-we-are: the rest of the firm story ----
    620px so the body lines up exactly under .page-head p above it rather than
