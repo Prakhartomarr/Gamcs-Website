@@ -64,7 +64,6 @@ export default function ClientLogos() {
       <div className="container">
         <div className="clients-head reveal">
           <h2 id="clients-heading">{clients.heading}</h2>
-          <p>{clients.subtitle}</p>
         </div>
 
         {/* A shorter fade than the component's default, which runs all the way
