@@ -1013,6 +1013,38 @@ export const clients = {
   ] as { name: string; file: string; tile?: boolean }[],
 } as const;
 
+/**
+ * "The gap" — the band straight after the client logos. Copy as written in the
+ * "Cascade" direction of the GAMCS — Data to Decision design canvas; it is not
+ * on gamcs.in.
+ */
+export const dataToDecision = {
+  eyebrow: "The gap",
+  headingLead: "Your Numbers Aren't the Problem.",
+  headingAccent: "The Distance to the Decision Is.",
+  body:
+    "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks \u201cwhy?\u201d Finance goes back and investigates manually \u2014 pulling the same data apart a second time, days after the decision actually needed to be made.",
+  today: {
+    label: "Today, the path from data to decision looks like this",
+    /** Step 01: the systems the data is scattered across. */
+    sources: ["ERP", "CRM", "Excel", "HRIS", "Operations"],
+    /** Steps 02–05. `detour` steps (drawn dashed) exist only because the report
+     *  didn't answer the question it was built for. */
+    steps: [
+      { label: "Reporting", detour: false },
+      { label: "\u201cWhy?\u201d", detour: true },
+      { label: "Manual investigation", detour: true },
+      { label: "Decision delayed", detour: true },
+    ],
+  },
+  gamcs: {
+    label: "With GAMCS, it looks like this",
+    steps: ["Data", "Insight", "Decision", "Action"],
+  },
+  closeLead: "More reporting doesn't close that gap.",
+  closeAccent: "A shorter distance between the number and the decision does.",
+} as const;
+
 /** Preloader. Copy lives here rather than in the component, like everything else. */
 export const preloader = {
   /** Mirrored on both edges, in the reference's monospace treatment. */

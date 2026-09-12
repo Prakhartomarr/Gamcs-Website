@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ClientLogos from "@/components/sections/ClientLogos";
+import DataToDecision from "@/components/sections/DataToDecision";
 import WhoWeAre from "@/components/sections/WhoWeAre";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
@@ -36,10 +37,11 @@ export default function HomePage() {
         still claimed in `whoWeAre` and on the systems-implementation page.
       */}
       <ClientLogos />
-      {/* Directly after the client wall, and deliberately so: two logo bands
-          run back to back because they make one widening claim — "these are
-          our clients", then "and these advisory firms hand us their delivery".
-          Each keeps its own heading so the two claims stay distinct. */}
+      {/* The gap: straight after the proof, the problem — the distance between
+          the number and the decision — before anything about how GAMCS works. */}
+      <DataToDecision />
+      {/* The advisory firms that hand GAMCS their delivery. This sat directly
+          under the client wall until the gap band took that slot. */}
       <OurPartners />
       <HowWeHelpStack />
       <MaturityCurve />
