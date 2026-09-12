@@ -60,11 +60,10 @@ export const site = {
 /** Hero headline and subhead, per the copy doc. Split across two lines the
  *  way the design sets them; the second line carries the blue accent. */
 export const hero = {
-  /* Doc page 1 H1, broken across three lines for the hero's rhythm. The words
-     are unchanged: "From Reporting to Real-Time Decision Intelligence". */
-  line1: "From Reporting",
-  line2: "to Real-Time",
-  line3: "Decision Intelligence",
+  /* Doc page 1 H1, "From Reporting to Decision Intelligence", on two lines:
+     the break falls after "to" so the blue accent line stays whole. */
+  line1: "From Reporting to",
+  line2: "Decision Intelligence",
   /* Two-tone lead-in above the subhead. Two strings, not one, because the
      colour break IS the point — the first sentence is the old way and
      recedes, the second is the new one and carries the brand blue. A single
@@ -72,7 +71,10 @@ export const hero = {
   leadWas: "Stop Reporting What Happened.",
   leadNow: "Start Knowing What To Do Next.",
   subhead:
-    "GA Management Consultants (GAMCS) transforms finance from reporting into decision intelligence \u2014 combining FP&A, BI, automation and finance expertise into one operating layer.",
+    "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact by combining FP&A, BI, automation and finance expertise into one operating layer.",
+  /* The hero's one button. The copy doc sends it to the "Case Study Section";
+     that is the /case-study page — the homepage has no case study band. */
+  cta: { label: "See Decision Intelligence in Action", href: "/case-study" },
 } as const;
 
 export const intro =

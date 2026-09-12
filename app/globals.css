@@ -597,7 +597,9 @@ h1,h2,h3,p{margin-top:0}
   /* the hero is one viewport at every width now; it grows past that
      only if its own content needs the room */
   .hero-inner{min-height:auto;padding:32px 0 56px}
-  .hero h1{font-size:clamp(32px,9.2vw,40px);line-height:1.02}
+  /* 8.9vw, not 9.2: "From Reporting to" is ~8.8em wide, and between about
+     381 and 410px 9.2vw overran its line by up to 3px, leaving "to" alone on a row */
+  .hero h1{font-size:clamp(32px,8.9vw,40px);line-height:1.02}
   .hero h1 .line{padding-bottom:.12em;margin-bottom:-.04em}
   .sub{font-size:0.9444rem;line-height:1.6;margin-top:16px;max-width:none}
   .ctas{gap:10px;margin-top:26px}

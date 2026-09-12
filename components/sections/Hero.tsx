@@ -72,11 +72,8 @@ export default function Hero() {
               <span className="line-inner">{hero.line1}</span>
             </span>
             <span className="line">
-              <span className="line-inner">{hero.line2}</span>
-            </span>
-            <span className="line">
               <span className="line-inner">
-                <em>{hero.line3}</em>
+                <em>{hero.line2}</em>
               </span>
             </span>
           </h1>
@@ -97,8 +94,8 @@ export default function Hero() {
             <p className="sub">{hero.subhead}</p>
           </div>
           <div className="ctas">
-            <CTA href="/#how-we-help" icon="arrow">
-              How We Help
+            <CTA href={hero.cta.href} icon="arrow" data-cta="hero">
+              {hero.cta.label}
             </CTA>
           </div>
         </div>
