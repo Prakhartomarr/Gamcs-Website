@@ -1004,7 +1004,7 @@ export const partners = {
  * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
  */
 export const clients = {
-  heading: "Trusted by leading advisory firms for delivery",
+  heading: "Trusted by growth-focused businesses across the world",
   logos: [
     { name: "WWF", file: "wwf.png" },
     { name: "Basilic Fly Studio", file: "basilic-fly.png" },
