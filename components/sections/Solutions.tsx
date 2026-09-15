@@ -5,8 +5,8 @@ import { services } from "@/lib/content/gamcs";
  * Homepage services section: the six pillars as an accordion beside a panel
  * of the active pillar's real capabilities.
  *
- * This replaced a six-card grid (SolutionCards), which is now unused by the
- * homepage; /solutions renders the pillars through PillarBlocks.
+ * This replaced a six-card grid (SolutionCards, since deleted); /solutions
+ * renders the pillars through PillarBlocks.
  *
  * This was a client component only to drive the icons' draw-on-scroll effect
  * (stroke-dashoffset tweened from each path's measured length). That effect is

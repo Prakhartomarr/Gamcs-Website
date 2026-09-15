@@ -1809,33 +1809,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* gradient pill button with a trailing icon disc */
 
-/* ---- SERVICES (reference treatment) ---- */
-/* Tall gradient card: a white-to-blue vertical wash with a soft-focus glyph
-   floating in the lower half. The wash is cut from GAMCS blue rather than a
-   cooler periwinkle, so the section still reads as this brand. */
-.fsvc-grid{list-style:none;margin:clamp(48px,6vw,72px) 0 0;padding:0;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,1.8vw,24px)}
-.fsvc-card{position:relative;overflow:hidden;isolation:isolate;
-  border:1px solid #E7EEF4;border-radius:22px;padding:28px 28px 24px;
-  /* The glyph below the copy is flex:1, so this height sets the empty area,
-     not just the card: at 620px it left ~400px of blur under three lines of
-     text. */
-  min-height:440px;display:flex;flex-direction:column;
-  background:linear-gradient(180deg,#FFF 0%,#F4FAFE 20%,#DCEDF9 44%,#BFDCF2 70%,#A3CBEA 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
-  transition:transform .55s var(--ease-fin),box-shadow .55s var(--ease-fin)}
-.fsvc-card h3{font:600 1.06rem/1.3 Sora,sans-serif;letter-spacing:-.01em;
-  margin:0;color:var(--ink-deep)}
-.fsvc-card p{color:var(--ink-muted);font-size:.86rem;line-height:1.5;margin:8px 0 0}
-
-/* the glyph, drawn twice — blue cast beneath, white core on top */
-.fsvc-glyph{position:relative;flex:1;margin:14px 0 0;display:block}
-.fsvc-glyph svg{position:absolute;left:2%;top:0;width:96%;height:96%;
-  fill:none;stroke-linecap:round;stroke-linejoin:round}
-.fsvc-cast{stroke:#2C7CBA;stroke-width:2.5;filter:blur(15px);opacity:.45;
-  transform:translate(9px,14px)}
-.fsvc-light{stroke:#fff;stroke-width:2.15;filter:blur(8px)}
-
+/* ---- the tertiary CTA (CTA tier="tertiary") ----
+   A white pill with a trailing arrow. It outlived the six-card services grid
+   it was drawn for (SolutionCards, since deleted): the services accordion
+   still uses it. */
 .fsvc-link{display:inline-flex;align-items:center;gap:9px;margin-top:10px;
   padding:10px 18px;border-radius:999px;background:#fff;border:1px solid #D7E2EC;
   font:600 .8rem "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink-deep);
@@ -1844,26 +1821,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .fsvc-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease-fin)}
 
-@media (hover:hover) and (pointer:fine){
-  .fsvc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-fin)}
-  .fsvc-card:hover .fsvc-link{border-color:var(--blue);color:var(--blue)}
-  .fsvc-card:hover .fsvc-link svg{transform:translateX(5px)}
-}
 .fsvc-link:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 
-@media (max-width:980px){.fsvc-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){
-  .fsvc-grid{grid-template-columns:1fr}
-  /* one card per row on a phone: the tall portrait proportion stops earning
-     its height once it is full-width, so the glyph area gives some back */
-  .fsvc-card{padding:26px 24px 22px;min-height:380px}
   /* centred headings do not survive a phone measure — a two-line heading
      centred at 390px reads as ragged on both edges. As originally shipped. */
   .fin-center{text-align:left}
   .fin-center .fin-lead{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){
-  .fsvc-card,.fsvc-ico,.fsvc-link svg,.fin-h2 .accent.uline::after{transition:none}
+  .fsvc-link svg,.fin-h2 .accent.uline::after{transition:none}
 }
 
 /* ---- MATURITY CURVE (reference treatment) ---- */
