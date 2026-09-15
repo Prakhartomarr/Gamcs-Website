@@ -10,8 +10,9 @@ import { faqSchema } from "@/lib/schema";
  * zero JavaScript and zero new dependencies. A hand-rolled ARIA accordion
  * would add a client bundle to reproduce what the platform already does.
  *
- * Every answer is assembled from copy already on the site (see `faq` in
- * lib/content/gamcs.ts), which is what makes the FAQPage schema honest.
+ * Every question and answer is verbatim from GAMCS_Web_View_1.html
+ * (2026-09-15), held in `faq` in lib/content/gamcs.ts; the FAQPage schema is
+ * built from the same list.
  *
  * Renders the list only. It previously carried a numbered eyebrow and an <h2>
  * for its homepage placement; with /faq as the sole consumer that stacked a

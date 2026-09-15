@@ -177,6 +177,10 @@ export default function Preloader() {
     const release = () => {
       html.classList.remove("is-locked");
       document.body.style.paddingRight = prevPad;
+      /* the lock clamped the browser's own jump to the URL's fragment (a
+         redirect's #tools / #analytics, a hub deep link), so make it now.
+         "instant", because html has scroll-behavior:smooth. */
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: "instant" });
     };
 
     /* --- what "loaded" actually means here --- */

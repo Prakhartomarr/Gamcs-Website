@@ -24,8 +24,9 @@ export function generateMetadata({
       description: s.metaDescription,
       path: `/solutions/${s.slug}`,
     }),
-    /* The doc's title tag already carries "| GAMCS", so it is set absolute to
-       stop the layout template appending the brand a second time. */
+    /* The title tag (from GAMCS_Web_View_1.html) already carries "| GAMCS", so
+       it is set absolute to stop the layout template appending the brand a
+       second time. */
     title: { absolute: s.titleTag },
   };
 }

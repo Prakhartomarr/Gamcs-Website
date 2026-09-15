@@ -7,9 +7,9 @@ import { pageMetadata } from "@/lib/seo";
 import CTA from "@/components/CTA";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Case Studies | Finance, FP&A, BI & Transaction Engagements",
+  title: "Case Studies | Finance, FP&A, BI & Deal Engagements",
   description:
-    "Real GAMCS engagements across D2C, SaaS, healthcare, hospitality, pharma, and non-profits — FP&A, BI dashboards, systems implementation, and a $525M PE transaction.",
+    "Real GAMCS engagements across D2C, SaaS, healthcare, hospitality, pharma, and non-profits — FP&A, BI dashboards, digital transformation, and a $525M PE deal.",
   path: "/case-study",
 });
 

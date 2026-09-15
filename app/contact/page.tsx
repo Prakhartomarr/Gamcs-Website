@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
   description:
-    "Schedule a call with GA Management Consultants to discuss FP&A, BI & analytics, offshoring, systems implementation, transaction advisory, or finance training.",
+    "Schedule a call with GA Management Consultants to discuss FP&A and CFO advisory, finance team extension, digital transformation, deal advisory, or training.",
   path: "/contact",
 });
 

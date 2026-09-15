@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import CTA from "@/components/CTA";
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
-import { solutions, solutionsHub } from "@/lib/content/gamcs";
+import { solutions } from "@/lib/content/gamcs";
 
 /**
- * The six pillars as an auto-advancing accordion beside a visual panel.
+ * The five pillars as an auto-advancing accordion beside a visual panel.
  *
  * Replaces the six-card grid. The reference this follows pairs each item with
  * a product screenshot; GAMCS has no product to screenshot, and inventing
  * dashboard metrics for a finance consultancy would be fabricating exactly the
  * kind of number this firm is hired to get right. So the panel carries the
  * pillar's real `atAGlance` capabilities instead — content that already exists
- * on each solution page.
+ * on each solution page. Each open item shows the pillar's `tagline`.
  *
  * Pointing at a pillar opens it — no click needed. The click is kept all the
  * same: there is no hover on a phone, and the header is the keyboard control.
@@ -25,18 +25,14 @@ import { solutions, solutionsHub } from "@/lib/content/gamcs";
  */
 const ADVANCE_MS = 5200;
 /**
- * Intent, not arrival. Reaching the sixth pillar drags the pointer across the
- * five above it; opening on the bare pointerenter strobes the panel through
+ * Intent, not arrival. Reaching the last pillar drags the pointer across the
+ * four above it; opening on the bare pointerenter strobes the panel through
  * every one of them on the way past. 100ms is under the ~150ms it takes to
  * notice a change, so aiming at a pillar still feels instant.
  */
 const HOVER_MS = 100;
 
 export default function ServiceAccordion() {
-  const previewFor = new Map<string, (typeof solutionsHub.previews)[number]>(
-    solutionsHub.previews.map((p) => [p.slug, p])
-  );
-
   const [active, setActive] = useState(0);
   /** Set once the visitor drives it themselves — auto-advance never resumes. */
   const [taken, setTaken] = useState(false);
@@ -91,7 +87,6 @@ export default function ServiceAccordion() {
   useEffect(() => cancelHover, [cancelHover]);
 
   const s = solutions[active];
-  const link = previewFor.get(s.slug);
 
   return (
     <div className="svca">
@@ -139,19 +134,19 @@ export default function ServiceAccordion() {
               </h3>
 
               <div className="svca-body" id={`svca-body-${item.slug}`} role="region">
-                <p>{previewFor.get(item.slug)?.blurb ?? item.intro}</p>
+                <p>{item.tagline}</p>
                 <CTA
                   tier="tertiary"
                   href={`/solutions/${item.slug}`}
                   data-cta={`svca-${item.slug}`}
                   srSuffix={`about ${item.title}`}
                 >
-                  {previewFor.get(item.slug)?.linkLabel ?? "Learn more"}
+                  Learn more
                   {ARROW}
                 </CTA>
                 {/* Fills over one dwell. Mounted in the open item only, so each
-                    pillar starts a fresh bar: rendered in every body, all six
-                    ran together and pillars 2-6 opened on a bar already full. */}
+                    pillar starts a fresh bar: rendered in every body, they all
+                    ran together and every later pillar opened on a bar already full. */}
                 {running && open ? (
                   <span className="svca-prog" aria-hidden="true">
                     <i style={{ animationDuration: `${ADVANCE_MS}ms` }} />
@@ -170,7 +165,9 @@ export default function ServiceAccordion() {
           <span className="svca-kicker">At a glance</span>
           <p className="svca-panel-title">{s.title}</p>
           <ul className="svca-chips">
-            {s.atAGlance.map((c) => (
+            {/* FP&A's glance list opens with the pillar's own name, which reads
+                as a repeat directly under the same title */}
+            {s.atAGlance.filter((c) => c !== s.title).map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
@@ -181,7 +178,7 @@ export default function ServiceAccordion() {
           and only once the visitor is driving it: while it auto-advances the
           region is off, or a screen reader heard a new pillar every 5.2s. */}
       <p className="sr-only" aria-live={running ? "off" : "polite"}>
-        {s.title} — {link?.blurb ?? s.intro}
+        {s.title} — {s.tagline}
       </p>
     </div>
   );

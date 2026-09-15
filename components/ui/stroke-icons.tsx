@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 
 /**
- * Line icons for the six solution pillars, ported from the supplied
- * reference.
+ * Line icons for the five solution pillars, ported from the supplied
+ * reference. Digital Transformation keeps the glyph of Technology & Systems
+ * Implementation, one of the two pillars it merged; the BI chart glyph went
+ * with the other, since FP&A's trend line already reads as a chart.
  *
  * The `data-draw` attributes are vestigial: the services section used to tween
  * stroke-dashoffset so each icon drew itself on scroll, but the glyph is now
@@ -14,21 +16,13 @@ import type { ReactNode } from "react";
  * it.
  */
 export const STROKE_ICONS: Record<string, ReactNode> = {
-  "fpa-strategic-finance": (
+  "fpa-cfo-advisory": (
     <>
       <polyline data-draw points="3 16.5 9.5 10 13.5 14 21 6" />
       <polyline data-draw points="15.5 6 21 6 21 11.5" />
     </>
   ),
-  "bi-decision-intelligence": (
-    <>
-      <line data-draw x1="5" y1="20" x2="19" y2="20" />
-      <line data-draw x1="7.5" y1="20" x2="7.5" y2="13" />
-      <line data-draw x1="12" y1="20" x2="12" y2="8" />
-      <line data-draw x1="16.5" y1="20" x2="16.5" y2="11" />
-    </>
-  ),
-  "offshoring-centers-of-excellence": (
+  "finance-team-extension": (
     <>
       <circle data-draw cx="8.5" cy="8" r="3" />
       <circle data-draw cx="16" cy="9.5" r="2.4" />
@@ -36,7 +30,7 @@ export const STROKE_ICONS: Record<string, ReactNode> = {
       <path data-draw d="M14.5 18.5c.2-2.3 1.7-3.9 3.8-3.9 1.6 0 2.9 1 3.2 2.7" />
     </>
   ),
-  "technology-systems-implementation": (
+  "digital-transformation": (
     <>
       <line data-draw x1="4" y1="8" x2="20" y2="8" />
       <line data-draw x1="4" y1="16" x2="20" y2="16" />
@@ -44,13 +38,13 @@ export const STROKE_ICONS: Record<string, ReactNode> = {
       <circle data-draw cx="15" cy="16" r="2.4" />
     </>
   ),
-  "transaction-advisory-due-diligence": (
+  "deal-advisory": (
     <>
       <path data-draw d="M12 3l7 2.6v5.2c0 4.2-2.9 7.2-7 8.4-4.1-1.2-7-4.2-7-8.4V5.6L12 3z" />
       <polyline data-draw points="8.5 11.5 11 14 15.5 9" />
     </>
   ),
-  "finance-capability-building": (
+  "training-enablement": (
     <>
       <polygon data-draw points="12 5 21 9 12 13 3 9 12 5" />
       <path data-draw d="M7 10.8v4.2c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.2" />

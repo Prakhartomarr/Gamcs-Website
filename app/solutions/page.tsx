@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     description: solutionsHub.metaDescription,
     path: "/solutions",
   }),
-  /* The copy doc's title tag carries "| GAMCS" itself, so it is set absolute. */
+  /* The title tag carries "| GAMCS" itself, so it is set absolute. */
   title: { absolute: solutionsHub.titleTag },
 };
 
 /**
  * The solutions hub: a statement of what GAMCS does, a rail to jump to any
- * pillar, then the six pillars at full width.
+ * pillar, then the five pillars at full width.
  *
  * It used to be a grid of six equal cards, which gave every pillar the same
  * two-line blurb and no room to say what it delivers. The page now leads with

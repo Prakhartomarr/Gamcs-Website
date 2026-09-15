@@ -1,9 +1,11 @@
 import ServiceAccordion from "@/components/sections/ServiceAccordion";
-import { services } from "@/lib/content/gamcs";
 
 /**
- * Homepage services section: the six pillars as an accordion beside a panel
+ * Homepage services section: the five pillars as an accordion beside a panel
  * of the active pillar's real capabilities.
+ *
+ * The heading is the one GAMCS_Web_View_1.html (2026-09-15) gives this
+ * section. The eyebrow and the lead are the site's own: the file has neither.
  *
  * This replaced a six-card grid (SolutionCards, since deleted); /solutions
  * renders the pillars through PillarBlocks.
@@ -24,9 +26,8 @@ export default function Solutions() {
             Services
           </span>
           <h2 className="fin-h2">
-            A variety of{" "}
-            <span className="accent uline">{services.introAccent}</span> tailored
-            to client needs.
+            Everything You Need to Build a{" "}
+            <span className="accent uline">Decision-Ready Finance Function</span>
           </h2>
           <p className="fin-lead">
             From forward-looking planning to deal-ready diligence — engaged

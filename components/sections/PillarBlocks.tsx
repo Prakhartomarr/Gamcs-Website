@@ -5,16 +5,15 @@ import CTA from "@/components/CTA";
 import PillarMesh from "@/components/PillarMesh";
 
 /**
- * The six pillars as full-width blocks: a gradient card stating the pillar's
+ * The five pillars as full-width blocks: a gradient card stating the pillar's
  * argument, beside an expandable list of what it actually delivers.
  *
  * Blocks alternate sides down the page so the eye zig-zags rather than running
- * down one rail, and the card is sticky on desktop so it stays with its list
- * while that list scrolls.
+ * down one rail.
  *
  * Every string here already existed. The card headline is the pillar's own
  * `h1` — the same sentence its detail page leads with — and the rows are the
- * pillar's `bullets` block, whose items were already written as a short label
+ * pillar's service list, whose items were already written as a short label
  * plus an explanation. Nothing is authored here, so the page cannot drift from
  * /solutions/[slug].
  *
@@ -25,13 +24,19 @@ export default function PillarBlocks() {
   return (
     <div className="pillars">
       {solutions.map((s, i) => {
-        /* Every pillar has exactly one `bullets` block; offshoring also has a
-           `steps` block, which is a process and not a service list. */
+        /* The rows are the pillar's first `bullets` block. Team Extension has a
+           second one (what its CoE teams run day to day) and a `steps` process,
+           both left to the detail page. Digital Transformation has no `bullets`
+           block — its services sit in its two arms — so its rows are arm 1's
+           list, then arm 2's. */
         const bullets = s.blocks.find(
           (b): b is Extract<SolutionBlock, { kind: "bullets" }> =>
             b.kind === "bullets"
         );
-        const rows = bullets?.items ?? [];
+        const arms = s.blocks.find(
+          (b): b is Extract<SolutionBlock, { kind: "arms" }> => b.kind === "arms"
+        );
+        const rows = bullets?.items ?? arms?.items.flatMap((a) => a.bullets) ?? [];
         const preview = previewBySlug.get(s.slug);
 
         return (

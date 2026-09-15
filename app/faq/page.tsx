@@ -14,7 +14,8 @@ export const metadata: Metadata = pageMetadata({
 
 /**
  * Doc page 11, promoted from a homepage section to its own route because the
- * doc gives it a title tag and meta description of its own.
+ * doc gives it a title tag and meta description of its own. The questions and
+ * answers now come verbatim from GAMCS_Web_View_1.html (2026-09-15).
  *
  * The accordion component is reused verbatim — this page only adds the H1 and
  * the breadcrumb, and switches the FAQPage schema on, since /faq is now the

@@ -14,8 +14,8 @@ import { caseStudies, primaryCta, solutions } from '@/lib/content/gamcs';
  *
  * Chrome (sticky pill that narrows and lifts on scroll, animated menu
  * icon, full-screen mobile sheet) follows the reference component. The
- * mega-menu panels and mobile drill-down are kept, so the 19 service
- * links and 10 case studies stay reachable.
+ * mega-menu panels and mobile drill-down are kept, so every pillar's
+ * service links and the 10 case studies stay reachable.
  *
  * The reference's Sign In / Get Started pair is replaced by the single
  * real action; GAMCS has no login or self-serve signup.
@@ -51,11 +51,12 @@ const whoLinks = [
 ];
 
 /* Derived from `solutions[]`, so the menu can never list a pillar that has no
-   page — or miss one that does. Three columns, wrapping to two rows of three. */
+   page — or miss one that does. Three columns: the five pillars wrap to a row
+   of three and a row of two. */
 const solutionColumns = solutions.map((s) => ({
 	heading: s.navLabel,
 	href: `/solutions/${s.slug}`,
-	links: s.atAGlance.slice(0, 4),
+	links: s.atAGlance.filter((l) => l !== s.navLabel).slice(0, 4),
 }));
 
 const Arrow = () => (

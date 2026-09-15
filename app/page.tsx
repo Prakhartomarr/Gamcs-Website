@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ...pageMetadata({
     title: "From Reporting to Decision Intelligence",
     description:
-      "GAMCS helps CFOs, CXOs, and PE/VC portfolios move from static reporting to real-time decision intelligence — FP&A, BI & analytics, offshoring, systems implementation, and transaction advisory.",
+      "GAMCS helps CFOs and PE/VC portfolios move from reporting to real-time decision intelligence — FP&A, team extension, digital transformation, and deal advisory.",
     path: "/",
   }),
   /* The <title> leads with the brand, so it is set absolute to keep the
@@ -35,7 +35,7 @@ export default function HomePage() {
         BI, SAP, AWS); those are tools GAMCS implements, not customers, so the
         "trusted by" framing that would have been wrong for them is accurate
         for the real client list that replaced it. Platform-agnosticism is
-        still claimed in `whoWeAre` and on the systems-implementation page.
+        still claimed in `whyUs` and on the Digital Transformation page.
       */}
       <ClientLogos />
       {/* The gap: straight after the proof, the problem — the distance between

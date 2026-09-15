@@ -10,6 +10,19 @@ const nextConfig = {
     /* Modern formats first; Next falls back to the original for old clients. */
     formats: ["image/avif", "image/webp"],
   },
+  /* The six original pillar URLs, retired when the solutions were regrouped
+     into five (GAMCS_Web_View_1.html, 2026-09-15). The two pillars that merged
+     into Digital Transformation each land on their own arm. */
+  async redirects() {
+    return [
+      { source: "/solutions/fpa-strategic-finance", destination: "/solutions/fpa-cfo-advisory", permanent: true },
+      { source: "/solutions/offshoring-centers-of-excellence", destination: "/solutions/finance-team-extension", permanent: true },
+      { source: "/solutions/bi-decision-intelligence", destination: "/solutions/digital-transformation#analytics", permanent: true },
+      { source: "/solutions/technology-systems-implementation", destination: "/solutions/digital-transformation#tools", permanent: true },
+      { source: "/solutions/transaction-advisory-due-diligence", destination: "/solutions/deal-advisory", permanent: true },
+      { source: "/solutions/finance-capability-building", destination: "/solutions/training-enablement", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

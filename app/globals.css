@@ -802,15 +802,17 @@ html{font-size:112.5%}
 .contact-panel-stage{width:520px;height:368px;display:flex;align-items:center;justify-content:center}
 
 /* ---------- services accordion (homepage) ----------
-   Six pillars on the left, one open at a time, beside a brand-blue card
+   Five pillars on the left, one open at a time, beside a brand-blue card
    showing that pillar's real `atAGlance` capabilities. */
 .svca{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:44px}
-/* Reserved to the tallest state (six pillars, one open at a time, WITH the
+/* Reserved to the tallest state (five pillars, one open at a time, WITH the
    auto-advance progress bar showing) so an advance never resizes the page.
    The bar is worth calling out: it only renders while autoplay is running, so
    clicking through the pillars to measure them silently removes 18px from
-   every reading. Re-measure if the blurbs change — with autoplay left alone. */
-.svca-list{display:grid;gap:4px;min-height:616px;align-content:start}
+   every reading. Re-measure if the taglines change — with autoplay left alone.
+   Measured 2026-09-15: 472px + the 18px bar for every pillar from 768px up,
+   where each tagline holds one line. */
+.svca-list{display:grid;gap:4px;min-height:490px;align-content:start}
 .svca-item{border-radius:16px;padding:14px 18px;
   transition:background .35s var(--ease-out)}
 .svca-item.is-open{background:rgba(15,94,151,.06)}
@@ -870,13 +872,15 @@ html{font-size:112.5%}
 @media(max-width:1279px){
   .svca{grid-template-columns:1fr;gap:34px}
   /* Stacked, the card's height feeds straight into the page height, and the
-     panel's chip count differs per pillar — so it gets a floor too. */
+     panel's chip count differs per pillar — so it gets a floor too. Tallest:
+     Digital Transformation's nine chips, 364px here and 435px at a 320px phone. */
   .svca-card{min-height:440px;padding:28px;order:2}
-  .svca-list{order:1;min-height:592px}
+  .svca-list{order:1}
 }
 @media(max-width:767px){
   .svca-item{padding:12px 14px}
-  .svca-list{min-height:640px}
+  /* the floor is the phone case (≤390px), where every tagline wraps to two lines: 476px + the bar */
+  .svca-list{min-height:494px}
   /* only the paragraph carries the 47px indent as padding; the link and the
      bar carry it as margin, and the link's own padding is its pill */
   .svca-body p{padding-left:0}
@@ -1088,6 +1092,7 @@ html{font-size:112.5%}
 .case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);background:var(--dark);
   color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
 .case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
+.service-body .case-cta h2{max-width:30ch;text-wrap:balance}
 .team-cta-section{padding-top:0}
 
 /* --- 404 ------------------------------------------------------------ */
@@ -1530,6 +1535,24 @@ html[data-cookie-banner] .sticky-cta{display:none}
   grid-template-columns:repeat(4,1fr);gap:12px}
 .service-stats li{background:var(--blue);color:#fff;border-radius:18px;padding:24px;
   font-size:0.8333rem;line-height:1.5;font-weight:600}
+.service-stats strong{display:block;margin-bottom:6px;
+  font:700 clamp(28px,2.6vw,36px)/1.1 Sora;letter-spacing:-.025em}
+
+/* the page's problem statement, in the list-card treatment, above the glance */
+.service-problem{background:#fff;border:1px solid #E0E3E4;border-radius:16px;
+  padding:22px 26px}
+.service-problem h2{margin:0 0 10px}
+
+/* Digital Transformation's two arms: glance-tinted cards, a pill heading each */
+.service-arms{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.service-arm{background:var(--band-soft);border-radius:18px;padding:26px}
+/* .eyebrow-pill, allowed to wrap: a badge this long outgrows a phone column */
+.service-arm h2{height:auto;min-height:28px;margin:0 0 16px;padding:4px 15px;
+  /* 12px gap plus the 22px .reveal travel of the wrapper, which is still
+     offset when a redirect's fragment jump lands */
+  line-height:1.35;white-space:normal;scroll-margin-top:calc(var(--header-h) + 34px)}
+.service-arm .service-prose{margin-bottom:20px}
+.service-arm .service-callout{margin-top:20px;background:#fff}
 
 .service-callout{margin:0;padding:20px 24px;border-left:3px solid var(--yellow);
   background:var(--band-soft);border-radius:0 14px 14px 0;
@@ -1548,12 +1571,17 @@ html[data-cookie-banner] .sticky-cta{display:none}
   /* stacked, the decorative panel took the full width at 3:2: a ~920x610 box
      of stripes that read as an image that had failed to load */
   .service-proof .abstract-panel{max-width:420px}
+  /* half a tablet row is too narrow for a mark column beside the text */
+  .service-arm .service-list li{flex-direction:column;gap:8px;padding:18px 20px}
 }
 @media (max-width:767px){
     .service-body>.container>*+*{margin-top:40px}
   .glance{flex-direction:column;padding:18px 20px}
+  .service-problem{padding:18px 20px}
   .service-stats{grid-template-columns:1fr}
   .service-list li{flex-direction:column;gap:8px;padding:18px 20px}
+  .service-arms{grid-template-columns:1fr}
+  .service-arm{padding:20px}
 }
 
 /* ---- maturity curve ---- */
@@ -1848,6 +1876,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      centred at 390px reads as ragged on both edges. As originally shipped. */
   .fin-center{text-align:left}
   .fin-center .fin-lead{margin-left:0}
+  /* An underlined accent is nowrap so its drawn ::after stays in one piece,
+     but "Decision-Ready Finance Function" is ~500px on one line at 30px, wider
+     than a phone. Here it wraps, and each line takes a plain text underline,
+     since the ::after cannot follow a wrapped span. */
+  .fin-h2 .accent.uline{white-space:normal;text-decoration-line:underline;
+    text-decoration-color:var(--blue);text-decoration-thickness:.11em;
+    text-underline-offset:.12em;text-decoration-skip-ink:none}
+  .fin-h2 .accent.uline::after{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .fsvc-link svg,.pillar-cta svg,.fin-h2 .accent.uline::after{transition:none}
@@ -2050,10 +2086,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
 /* Jump rail. Sticks under the 90px header, scrolls sideways rather than
-   wrapping to two rows, which at 6 pillars it otherwise would below ~1200px. */
+   wrapping to two rows, which the original six pillars did below ~1200px. */
 .pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
   border-bottom:1px solid rgba(16,45,68,.10)}
-/* It scrolls sideways once the six labels outgrow the row, so it has to look
+/* It scrolls sideways once the labels outgrow the row, so it has to look
    like it: a hidden scrollbar and no fade cut the last pillars off with nothing
    to say they existed. */
 .pillar-rail ul{list-style:none;margin:0;padding:0 40px 0 0;display:flex;gap:6px;
@@ -2078,10 +2114,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    before its list. */
 .pillar[data-flip] .pillar-card{order:2}
 
-/* The card reuses the .solution-card.blue treatment already used for these six
+/* The card reuses the .solution-card.blue treatment already used for these
    pillars elsewhere, rather than introducing a second gradient. */
-/* Not sticky: measured across all six pillars the card is 57-131px TALLER
-   than its list, so a sticky card would have negative travel and never move.
+/* Not sticky: measured across the original six pillars the card was 57-131px
+   TALLER than its list, so a sticky card would have negative travel and never move.
    (.shell is overflow:clip anyway, which would have capped it regardless.) */
 .pillar-card{position:relative;overflow:hidden;isolation:isolate;
   border-radius:var(--radius-lg);padding:clamp(26px,2.6vw,38px);
