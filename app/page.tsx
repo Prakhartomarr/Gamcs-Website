@@ -38,14 +38,16 @@ export default function HomePage() {
         still claimed in `whyUs` and on the Digital Transformation page.
       */}
       <ClientLogos />
+      {/* The advisory firms that hand GAMCS their delivery, straight under the
+          client wall: both halves of the proof, then the problem. */}
+      <OurPartners />
       {/* The gap: straight after the proof, the problem — the distance between
           the number and the decision — before anything about how GAMCS works. */}
       <DataToDecision />
-      {/* The advisory firms that hand GAMCS their delivery. This sat directly
-          under the client wall until the gap band took that slot. */}
-      <OurPartners />
-      <HowWeHelpStack />
       <MaturityCurve />
+      {/* After the curve, not before it: once a visitor has placed themselves
+          on it, how GAMCS builds each layer, then the pillars that do it. */}
+      <HowWeHelpStack />
       <Solutions />
       <Achievements />
       <WhoWeAre />
