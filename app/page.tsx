@@ -15,13 +15,14 @@ import { site } from "@/lib/content/gamcs";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: `${site.name} | From Reporting to Decision Intelligence`,
+    title: "From Reporting to Decision Intelligence",
     description:
       "GAMCS helps CFOs, CXOs, and PE/VC portfolios move from static reporting to real-time decision intelligence — FP&A, BI & analytics, offshoring, systems implementation, and transaction advisory.",
     path: "/",
   }),
-  /* The homepage title already contains the brand, so the layout's
-     "| GA Management Consultants" suffix is suppressed here. */
+  /* The <title> leads with the brand, so it is set absolute to keep the
+     layout's "| GA Management Consultants" suffix off it. pageMetadata gets the
+     bare page name, because it appends the brand to og:title itself. */
   title: { absolute: `${site.name} | From Reporting to Decision Intelligence` },
 };
 

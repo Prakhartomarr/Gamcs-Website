@@ -35,11 +35,13 @@ export default function Analytics() {
     return () => window.removeEventListener(CONSENT_CHANGED, sync);
   }, []);
 
-  /* Consent Mode: the one thing that stops GA's own automatic collection
-     after the script is already in the page. Only meaningful once gtag
-     exists, which is why it is keyed on `allowed` rather than run on mount. */
+  /* Withdrawal after the script has loaded. Consent Mode 'denied' only stops
+     GA writing cookies; it keeps sending cookieless hits (a page_view on every
+     client-side navigation). The ga-disable flag is checked on every hit, so it
+     is what actually stops them. Keyed on `allowed` so it runs on each change. */
   useEffect(() => {
     if (!GA_ID) return;
+    (window as unknown as Record<string, unknown>)[`ga-disable-${GA_ID}`] = !allowed;
     window.gtag?.("consent", "update", {
       analytics_storage: allowed ? "granted" : "denied",
     });

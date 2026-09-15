@@ -827,8 +827,10 @@ html{font-size:112.5%}
    collapses instantly. With it on the base rule, the outgoing and incoming
    bodies were both mid-transition during a swap and the list briefly grew
    taller than either resting state — which is what pumped the page height. */
-.svca-body{max-height:0;opacity:0;overflow:hidden}
-.is-open .svca-body{max-height:260px;opacity:1;margin-top:10px;
+.svca-body{max-height:0;opacity:0;overflow:hidden;visibility:hidden}
+/* visibility is not animated, so it flips at once: it is what takes a closed
+   body's link out of the tab order, which max-height and opacity never did */
+.is-open .svca-body{max-height:260px;opacity:1;margin-top:10px;visibility:visible;
   transition:max-height .42s var(--ease-out),opacity .3s var(--ease-out),margin .42s var(--ease-out)}
 .svca-body p{margin:0 0 12px;padding-left:47px;font-size:0.8333rem;line-height:1.6;color:var(--ink-muted)}
 .svca-body .fsvc-link{margin-left:47px}
@@ -1190,8 +1192,8 @@ html{font-size:112.5%}
    Same tokens, type and radii as the rest of the site; nothing new.
    ===================================================================== */
 
-/* Above the sticky CTA (55) and the header (60), below the mobile
-   drawer (70) so an open nav is never obscured by it. */
+/* Above the sticky CTA (55), below the header (70), whose stacking context
+   holds the mobile drawer, so an open nav is never obscured by it. */
 .cookie-banner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));
   z-index:65;background:#fff;border:1px solid var(--line);border-radius:20px;
   box-shadow:0 26px 64px rgba(16,45,68,.20);
@@ -1594,6 +1596,10 @@ html[data-cookie-banner] .sticky-cta{display:none}
    in Preloader.tsx. */
 .pl-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 
+/* Server-rendered, and only ever lifted by script: with scripting off it would
+   cover the page for good, so then it is not shown at all. */
+@media (scripting:none){.preloader{display:none}}
+
 @media (prefers-reduced-motion:reduce){
   .preloader{will-change:auto}
 }
@@ -1784,7 +1790,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   --grad-card:linear-gradient(150deg,var(--blue) 0%,#2C79B4 55%,var(--blue-light) 100%);
   --hair:rgba(13,24,40,.08);
   --hair-2:rgba(13,24,40,.14);
-  --ring:rgba(15,94,151,.34);
+  /* not --ring: Tailwind reads that one as hsl(var(--ring)), and an rgba here
+     made every ring-* utility an invalid colour, so no focus ring was drawn */
+  --ring-fin:rgba(15,94,151,.34);
   --ease-fin:cubic-bezier(.32,.72,0,1);
   --shadow-fin:0 22px 55px -26px rgba(16,45,68,.34), 0 8px 20px -12px rgba(16,45,68,.16);
 }
@@ -1914,7 +1922,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .fmc-flag.is-show{opacity:1}
 .fmc-flag .tag{font:700 11px Sora,sans-serif;letter-spacing:.12em;text-transform:uppercase;
   color:#fff;background:var(--grad-blue);padding:5px 11px;border-radius:999px;white-space:nowrap;
-  box-shadow:0 8px 18px -8px var(--ring)}
+  box-shadow:0 8px 18px -8px var(--ring-fin)}
 .fmc-flag .stem{width:2px;height:16px;background:var(--blue)}
 .fmc-flag .bead{width:11px;height:11px;border-radius:50%;background:var(--blue);
   box-shadow:0 0 0 4px rgba(15,94,151,.24)}

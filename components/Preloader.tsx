@@ -367,6 +367,7 @@ export default function Preloader() {
             autoAlpha: 0,
             duration: 0.2,
             onComplete: () => {
+              window.removeEventListener("resize", size);
               release();
               setGone(true);
             },
@@ -412,6 +413,10 @@ export default function Preloader() {
         ease: "power2.inOut",
         onComplete: () => {
           cancelAnimationFrame(raf);
+          /* setGone renders null but does not unmount, so the effect's cleanup
+             never runs: without this, every resize kept reallocating two
+             detached full-viewport canvases */
+          window.removeEventListener("resize", size);
           release();
           setGone(true);
         },

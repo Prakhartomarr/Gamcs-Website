@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   description:
     "That page does not exist. Head back to the homepage or get in touch with GA Management Consultants.",
   robots: { index: false, follow: true },
+  /* Without these the 404 inherits the root canonical and og:url, so a
+     mistyped link shared in chat unfurled as the homepage. Replacing the
+     openGraph and twitter objects drops the inherited url with them. */
+  alternates: { canonical: null },
+  openGraph: { title: "Page not found" },
+  twitter: { title: "Page not found" },
 };
 
 /**

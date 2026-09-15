@@ -6,11 +6,15 @@ import { primaryCta, solutions, solutionsHub } from "@/lib/content/gamcs";
 import { pageMetadata } from "@/lib/seo";
 import CTA from "@/components/CTA";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Solutions",
-  description: solutionsHub.metaDescription,
-  path: "/solutions",
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "Solutions",
+    description: solutionsHub.metaDescription,
+    path: "/solutions",
+  }),
+  /* The copy doc's title tag carries "| GAMCS" itself, so it is set absolute. */
+  title: { absolute: solutionsHub.titleTag },
+};
 
 /**
  * The solutions hub: a statement of what GAMCS does, a rail to jump to any

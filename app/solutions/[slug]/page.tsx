@@ -18,13 +18,16 @@ export function generateMetadata({
 }): Metadata {
   const s = solutions.find((x) => x.slug === params.slug);
   if (!s) return {};
-  return pageMetadata({
+  return {
+    ...pageMetadata({
+      title: s.title,
+      description: s.metaDescription,
+      path: `/solutions/${s.slug}`,
+    }),
     /* The doc's title tag already carries "| GAMCS", so it is set absolute to
        stop the layout template appending the brand a second time. */
-    title: s.title,
-    description: s.metaDescription,
-    path: `/solutions/${s.slug}`,
-  });
+    title: { absolute: s.titleTag },
+  };
 }
 
 export default function SolutionPage({ params }: { params: { slug: string } }) {

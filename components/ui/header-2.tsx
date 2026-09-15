@@ -137,6 +137,9 @@ export function Header() {
 		};
 	}, []);
 
+	/* Hover already opens a panel, so a pointer click on its trigger must not
+	   toggle it shut under the pointer: a pointer click (detail > 0) always
+	   opens, and only keyboard activation (detail 0) toggles. */
 	const hoverOpen = (k: Panel) => {
 		window.clearTimeout(closeTimer.current);
 		setPanel(k);
@@ -248,8 +251,10 @@ export function Header() {
 			   underneath it, which is what lets the shader run to the top of the
 			   page without every other page needing its own top clearance.
 			   `scrolled` firms the pill up rather than adding a border, since
-			   over white sections there is nothing for a hairline to separate. */
-			className={cn('site-head sticky top-0 z-50 w-full', {
+			   over white sections there is nothing for a hairline to separate.
+			   z-[70], not 50: the mobile sheet lives inside this stacking context,
+			   and at 50 the sticky CTA (55) and cookie banner (65) painted over it. */
+			className={cn('site-head sticky top-0 z-[70] w-full', {
 				'is-stuck': scrolled || open,
 			})}
 		>
@@ -287,7 +292,7 @@ export function Header() {
 											aria-controls={`${baseId}-${item.panel}`}
 											aria-label={`${item.label} menu`}
 											onFocus={() => hoverOpen(item.panel)}
-											onClick={() => setPanel(panel === item.panel ? null : item.panel)}
+											onClick={(e) => setPanel(e.detail === 0 && panel === item.panel ? null : item.panel)}
 										>
 											<Chevron />
 										</button>
@@ -300,7 +305,7 @@ export function Header() {
 									aria-controls={`${baseId}-${item.panel}`}
 									onMouseEnter={() => hoverOpen(item.panel)}
 									onFocus={() => hoverOpen(item.panel)}
-									onClick={() => setPanel(panel === item.panel ? null : item.panel)}
+									onClick={(e) => setPanel(e.detail === 0 && panel === item.panel ? null : item.panel)}
 								>
 									{item.label}
 									<Chevron />
@@ -351,7 +356,7 @@ export function Header() {
 				aria-modal="true"
 				aria-label="Navigation"
 				className={cn(
-					'fixed inset-x-0 bottom-0 top-14 z-50 flex flex-col overflow-y-auto border-y bg-white xl:hidden',
+					'fixed inset-x-0 bottom-0 top-[var(--header-h)] z-50 flex flex-col overflow-y-auto border-y bg-white xl:hidden',
 					open ? 'block' : 'hidden',
 				)}
 			>
@@ -427,6 +432,17 @@ export function Header() {
 
 						</div>
 					)}
+
+					{/* aria-modal keeps a screen reader inside this sheet, and the toggle
+					    that closes it sits outside, so the sheet carries its own close.
+					    Hidden until it has keyboard focus. */}
+					<button
+						type="button"
+						onClick={closeAll}
+						className="sr-only focus-visible:not-sr-only focus-visible:self-start focus-visible:rounded-full focus-visible:border focus-visible:px-4 focus-visible:py-2"
+					>
+						Close navigation
+					</button>
 				</div>
 			</div>
 		</header>

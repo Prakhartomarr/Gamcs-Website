@@ -149,10 +149,11 @@ export default function ServiceAccordion() {
                   {previewFor.get(item.slug)?.linkLabel ?? "Learn more"}
                   {ARROW}
                 </CTA>
-                {/* Fills over one dwell. Keyed to the slug so it restarts on
-                    each change rather than continuing a half-run animation. */}
-                {running ? (
-                  <span className="svca-prog" key={item.slug} aria-hidden="true">
+                {/* Fills over one dwell. Mounted in the open item only, so each
+                    pillar starts a fresh bar: rendered in every body, all six
+                    ran together and pillars 2-6 opened on a bar already full. */}
+                {running && open ? (
+                  <span className="svca-prog" aria-hidden="true">
                     <i style={{ animationDuration: `${ADVANCE_MS}ms` }} />
                   </span>
                 ) : null}
@@ -176,9 +177,10 @@ export default function ServiceAccordion() {
         </div>
       </div>
 
-      {/* The panel swaps on a timer, so its change is announced once rather
-          than the whole card being re-read. */}
-      <p className="sr-only" aria-live="polite">
+      {/* Announced once per change rather than the whole card being re-read,
+          and only once the visitor is driving it: while it auto-advances the
+          region is off, or a screen reader heard a new pillar every 5.2s. */}
+      <p className="sr-only" aria-live={running ? "off" : "polite"}>
         {s.title} — {link?.blurb ?? s.intro}
       </p>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /* ----------------------------------------------------------------
@@ -98,10 +99,11 @@ function Featured({
       style={{ width: CELL, height: CELL, boxShadow: FEATURED_SHADOW }}
     >
       {src ? (
-        <img
+        <Image
           src={src}
           alt={alt ?? ""}
-          loading="lazy"
+          fill
+          sizes={`${Math.ceil(CELL)}px`}
           className={
             fit === "contain"
               ? "absolute inset-0 h-full w-full object-contain p-4"
@@ -411,7 +413,9 @@ export function ScrollReelTestimonials({
           {/* Text stage */}
           <div
             className="relative w-full max-w-[560px] overflow-hidden"
-            aria-live="polite"
+            /* off while it autoplays, or a screen reader would read out a new
+               quote every 4s; polite once the visitor is driving it */
+            aria-live={autoOn ? "off" : "polite"}
           >
             {/* Invisible in-flow copy sizes the stage at any viewport width, so
              * wrapped text never clips. It renders EVERY quote, stacked in one
