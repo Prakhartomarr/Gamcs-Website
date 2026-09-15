@@ -110,6 +110,11 @@ function paintMark(
 function packMark(width: number) {
   const scale = width / VB.w;
   const height = Math.round(VB.h * scale);
+  /* A viewport with no width (a collapsed or hidden frame at load) makes a
+     zero-size mark, and getImageData throws on that. Thrown from the effect it
+     took down the whole root layout, so the page rendered blank. No dots is
+     the right answer: the panel still lifts on its normal timeline. */
+  if (width < 1 || height < 1) return { pts: [] as Particle[], height };
   const c = document.createElement("canvas");
   c.width = width;
   c.height = height;
@@ -281,7 +286,10 @@ export default function Preloader() {
       const gold = Math.max(0, Math.min(1, (S.t - 0.78) / 0.22));
       const dotsAlpha = S.alpha;
 
-      if (dotsAlpha > 0.004 && lctx) {
+      /* The layer is zero-size while the viewport has no width, and drawImage
+         throws on a zero-size source. The reduced-motion path calls this from
+         inside the effect, where that throw would blank the page too. */
+      if (dotsAlpha > 0.004 && lctx && layer.width > 0 && layer.height > 0) {
         lctx.clearRect(0, 0, vw, vh);
         lctx.save();
         lctx.translate(vw / 2, vh / 2);
