@@ -684,8 +684,9 @@ h1,h2,h3,p{margin-top:0}
 .mega-head.as-label{color:#98A0A6;font-size:0.7222rem;letter-spacing:.16em;text-transform:uppercase}
 .mega-col ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:1px}
 .mega-col li a{display:block;padding:7px 0;font-size:0.8333rem;color:#5A6165;
-  transition:color var(--dur-hover) var(--ease-out),padding-left var(--dur-hover) var(--ease-out)}
-.mega-col li a:hover{color:var(--ink);padding-left:5px}
+  transition:color var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
+/* the hover nudge is a transform, not padding-left: animating padding reflowed the list */
+.mega-col li a:hover{color:var(--ink);transform:translateX(5px)}
 
 /* ---- mobile drawer with drill-down ---- */
 
