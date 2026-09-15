@@ -36,7 +36,7 @@ export default function ThankYouPage() {
         <div className="container">
           <Breadcrumbs trail={[{ label: "Thank you", href: "/thank-you" }]} />
           <div className="section-kicker">MESSAGE READY</div>
-          <h1>Thanks — your details are on their way.</h1>
+          <h1>Thanks&nbsp;— your details are on their way.</h1>
           <p>
             Submitting the form opens your own email app with everything you
             entered, addressed to {site.email}. Press send there and it reaches

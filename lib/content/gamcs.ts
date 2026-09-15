@@ -471,7 +471,7 @@ export const solutions: Solution[] = [
     titleTag: "FP&A Advisory Services for CFOs & CXOs | GAMCS",
     metaDescription:
       "Outsourced FP&A advisory — budgeting, forecasting, rolling cash flow models, revenue/RevOps forecasting, and board-ready reporting for growth-stage companies and PE portfolios.",
-    h1: "FP&A That Moves at the Speed of Your Business — Not Your Month-End Close",
+    h1: "FP&A That Moves at the Speed of Your Business\u00a0— Not Your Month-End Close", // \u00a0 keeps the dash off the start of a balanced line
     intro:
       "If your finance team is still built for controllership and statutory reporting, you already have a strategic FP&A gap. Financial statements tell you what happened. FP&A tells you what to do about it.",
     atAGlance: [
@@ -627,7 +627,7 @@ export const solutions: Solution[] = [
     titleTag: "Platform-Agnostic ERP, CRM & FP&A Implementation | GAMCS",
     metaDescription:
       "ERP, CRM, and FP&A platform implementation — NetSuite, Salesforce, Aimplan, Vena, Anaplan, Unit4, and more — configured by a team with no vendor allegiance.",
-    h1: "The Right Platform, Implemented by People Who Actually Use It — Not Just Sell It",
+    h1: "The Right Platform, Implemented by People Who Actually Use It\u00a0— Not Just Sell It",
     intro:
       "Buying enterprise software solves nothing on its own. Half the value of an ERP, CRM, or FP&A platform gets lost in a bad implementation — a chart of accounts that doesn't match how you actually run the business, a CRM nobody trained the sales team to use, or a forecasting tool configured for data entry instead of real planning. We're platform-agnostic on purpose: we implement whatever's right for your business, not the tool we happen to have a reseller relationship with.",
     atAGlance: [
@@ -672,7 +672,7 @@ export const solutions: Solution[] = [
     titleTag: "M&A, IPO Advisory, Due Diligence & Debt Refinancing | GAMCS",
     metaDescription:
       "Buy-side and sell-side due diligence, M&A advisory, IPO readiness, debt refinancing, and investor/pitch deck preparation for CFOs, PE, and VC-backed companies.",
-    h1: "Deal-Ready Finance — Before the Term Sheet, Not After",
+    h1: "Deal-Ready Finance\u00a0— Before the Term Sheet, Not After",
     intro:
       "The worst time to discover a gap in your financials is during due diligence, when a buyer, investor, or lead underwriter is already asking the hard questions. Most companies find out their numbers aren't deal-ready exactly when it matters most — mid-transaction, under time pressure, with leverage already shifting away from them.",
     atAGlance: [

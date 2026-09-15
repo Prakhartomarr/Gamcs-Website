@@ -168,7 +168,7 @@ function SignalFlow({
 
       {arrow}
 
-      <div className="rounded-[14px] bg-blue-dark px-5 py-4 text-center font-heading text-[13px] font-semibold leading-snug text-white shadow-[var(--shadow-fin)]">
+      <div className="rounded-[14px] bg-blue-dark px-5 py-4 text-center font-heading text-[13px] font-semibold leading-snug text-white [box-shadow:var(--shadow-fin)]">
         {engine.split(" ").map((w) => (
           <div key={w}>{w}</div>
         ))}
@@ -270,9 +270,12 @@ export default function MaturityCurve() {
                      emitted nothing and the cards ran at the 150ms default. */
                   "transition-[border-color,box-shadow,transform] ease-reel [transition-duration:var(--dur-panel)]",
                   "min-[900px]:h-[var(--h)]",
+                  /* an arbitrary box-shadow property, not the shadow utility:
+                     given a bare var() that utility is read as a shadow colour,
+                     so no shadow was drawn at all */
                   isActive
-                    ? "border-blue shadow-[var(--shadow-fin)]"
-                    : `${HAIR} hover:border-blue/40 hover:-translate-y-1 hover:shadow-[var(--shadow-fin)]`,
+                    ? "border-blue [box-shadow:var(--shadow-fin)]"
+                    : `${HAIR} hover:border-blue/40 hover:-translate-y-1 hover:[box-shadow:var(--shadow-fin)]`,
                 ].join(" ")}
               >
                 {/* pinstripes, fading downward */}
@@ -328,7 +331,7 @@ export default function MaturityCurve() {
           id="stage-panel"
           role="tabpanel"
           aria-labelledby={`stage-tab-${stage.n}`}
-          className={`mt-6 rounded-[24px] border ${HAIR} bg-white p-6 shadow-[var(--shadow-fin)] sm:p-9`}
+          className={`mt-6 rounded-[24px] border ${HAIR} bg-white p-6 [box-shadow:var(--shadow-fin)] sm:p-9`}
         >
           <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
 

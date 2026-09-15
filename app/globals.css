@@ -294,7 +294,7 @@ h1,h2,h3,p{margin-top:0}
 
 @keyframes chartShimmer{0%{background-position:100% 0}100%{background-position:0 0}}.leader .initials{width:120px;height:120px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 2.2222rem Sora;margin-bottom:70px}.leader small,.person small{font:700 0.6667rem Sora;letter-spacing:.14em;color:var(--blue)}.person{background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:21px;min-height:185px}.person .avatar{width:38px;height:38px;border-radius:50%;background:#EAF0F3;color:var(--blue);display:grid;place-items:center;font:700 0.7222rem Sora;margin-bottom:30px}.person b{display:block;font:700 0.7778rem Sora}.person span{display:block;font-size:0.7222rem;color:#858585;margin-top:4px}
 /* CONTACT */
-.contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:700 clamp(38px,4.5vw,60px) Sora;line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem Sora;letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
+.contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:700 clamp(38px,4.5vw,60px) Sora;line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem Sora;letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
 /* FOOTER */
 /* legacy footer element styling removed: components/ui/footer-section.tsx
    styles the footer with utilities, and an element selector would beat them */
@@ -458,7 +458,7 @@ h1,h2,h3,p{margin-top:0}
    nothing about this changes — the band stays pale with dark type. */
 .page-head{position:relative;overflow:hidden;background:var(--bg-soft);padding:96px 0 56px}
 .page-head>.container{position:relative;z-index:2}
-.page-head h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch}
+.page-head h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch;text-wrap:balance}
 .page-head p{max-width:620px;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
@@ -554,8 +554,10 @@ h1,h2,h3,p{margin-top:0}
 @media(min-width:768px) and (max-width:1279px){
   .container{width:min(920px,calc(100% - 56px))}
   /* the hero is one viewport at every width now; it grows past that
-     only if its own content needs the room */
-  .hero-inner{min-height:auto;padding:44px 0 72px}
+     only if its own content needs the room. The top clears the floating
+     header the hero runs under: a bare 44px left 1024-1279 with the
+     headline behind the pill (768-1023 is corrected again further down) */
+  .hero-inner{min-height:auto;padding:calc(var(--header-h) + 20px) 0 72px}
   .hero h1{font-size:clamp(40px,6.2vw,58px)}
   .sub{font-size:0.9444rem;max-width:60ch}
   
@@ -872,7 +874,10 @@ html{font-size:112.5%}
 @media(max-width:767px){
   .svca-item{padding:12px 14px}
   .svca-list{min-height:640px}
-  .svca-body p,.svca-body .fsvc-link,.svca-prog{padding-left:0;margin-left:0}
+  /* only the paragraph carries the 47px indent as padding; the link and the
+     bar carry it as margin, and the link's own padding is its pill */
+  .svca-body p{padding-left:0}
+  .svca-body .fsvc-link,.svca-prog{margin-left:0}
   .svca-card{padding:20px;border-radius:20px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -1084,8 +1089,11 @@ html{font-size:112.5%}
 
 /* --- 404 ------------------------------------------------------------ */
 .notfound{padding-top:132px;text-align:left}
-.notfound-code{font:800 clamp(88px,17vw,196px) Sora;line-height:.82;letter-spacing:-.06em;
-  color:transparent;-webkit-text-stroke:2px var(--line);margin:0 0 18px}
+/* Sora is served as a variable font, and a bare stroke outlines its
+   overlapping contours too (a box inside each 4). Stroke first, then an opaque
+   fill in the page colour over its inner half, so only the outer edge shows. */
+.notfound-code{font:800 clamp(88px,17vw,196px) Sora;line-height:.82;letter-spacing:-.02em;
+  color:var(--paper);-webkit-text-stroke:4px var(--line);paint-order:stroke fill;margin:0 0 18px}
 .notfound-title{font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:-.04em;margin:12px 0 16px;max-width:16ch}
 .notfound-title em{font-style:normal;color:var(--blue)}
 .notfound-body{max-width:52ch;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
@@ -1350,7 +1358,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 /* Testimonials centres its head. Scoped to the section rather than changing
    .section-head, which every other section relies on being left-aligned.
    .eyebrow-row is flex, so the pill needs justify-content, not text-align. */
-.quote-section .section-head{justify-content:center;text-align:center}
+.quote-section .section-head{justify-content:center;align-items:center;text-align:center}
 .quote-section .eyebrow-row{justify-content:center}
 .section-head>p{font-size:0.9444rem;line-height:1.6;color:var(--ink-muted);max-width:34ch}
 
@@ -1534,6 +1542,9 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media (max-width:1279px){
   .service-stats{grid-template-columns:repeat(2,1fr)}
   .service-proof{grid-template-columns:1fr;gap:26px}
+  /* stacked, the decorative panel took the full width at 3:2: a ~920x610 box
+     of stripes that read as an image that had failed to load */
+  .service-proof .abstract-panel{max-width:420px}
 }
 @media (max-width:767px){
     .service-body>.container>*+*{margin-top:40px}
@@ -1731,7 +1742,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .page-head .faq-head-cta{margin-top:14px;font-size:0.8889rem;color:var(--ink-muted)}
 .page-head .faq-head-cta a{color:var(--blue);font-weight:700}
 /* the section no longer carries a head, so it needs less top room */
-.faq-section{padding-top:0}
+.faq-section{padding-top:56px}
 
 /* =====================================================================
    SOLUTIONS — services card grid (replaces the pinned panel + accordion)
@@ -1812,13 +1823,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* ---- the tertiary CTA (CTA tier="tertiary") ----
    A white pill with a trailing arrow. It outlived the six-card services grid
    it was drawn for (SolutionCards, since deleted): the services accordion
-   still uses it. */
+   still uses it, and the pillar CTAs borrow its arrow. */
 .fsvc-link{display:inline-flex;align-items:center;gap:9px;margin-top:10px;
   padding:10px 18px;border-radius:999px;background:#fff;border:1px solid #D7E2EC;
   font:600 .8rem "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink-deep);
   width:fit-content;box-shadow:0 1px 2px rgba(16,45,68,.06);
   transition:border-color .35s var(--ease-fin),color .35s var(--ease-fin)}
-.fsvc-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;
+.fsvc-link svg,.pillar-cta svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease-fin)}
 
 .fsvc-link:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
@@ -1830,7 +1841,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .fin-center .fin-lead{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){
-  .fsvc-link svg,.fin-h2 .accent.uline::after{transition:none}
+  .fsvc-link svg,.pillar-cta svg,.fin-h2 .accent.uline::after{transition:none}
 }
 
 /* ---- MATURITY CURVE (reference treatment) ---- */
@@ -2033,9 +2044,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    wrapping to two rows, which at 6 pillars it otherwise would below ~1200px. */
 .pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
   border-bottom:1px solid rgba(16,45,68,.10)}
-.pillar-rail ul{list-style:none;margin:0;padding:0;display:flex;gap:6px;
-  overflow-x:auto;scrollbar-width:none}
-.pillar-rail ul::-webkit-scrollbar{display:none}
+/* It scrolls sideways once the six labels outgrow the row, so it has to look
+   like it: a hidden scrollbar and no fade cut the last pillars off with nothing
+   to say they existed. */
+.pillar-rail ul{list-style:none;margin:0;padding:0 40px 0 0;display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);
+  mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
 .pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
   padding:0 13px;white-space:nowrap;text-decoration:none;
   font:600 0.7222rem Sora,sans-serif;letter-spacing:.02em;color:var(--ink-muted);
@@ -2108,7 +2123,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
   pointer-events:none}
 .pillar-card > *{position:relative;z-index:1}
-.pillar-label{display:inline-flex;align-items:center;height:26px;padding:0 12px;
+.pillar-label{display:inline-flex;align-items:center;min-height:26px;padding:4px 12px;line-height:1.3;
   border-radius:999px;border:1px solid rgba(255,255,255,.30);
   font:600 0.6667rem Sora,sans-serif;letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.88)}
@@ -2187,7 +2202,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 .tr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:84px 146px}
 .tr-grid .tr-shot{aspect-ratio:3/4}
-.tr-grid .tr-cap{padding:0 22px 22px}
+.tr-grid .tr-cap{padding:0 22px 38px}
 .tr-grid .tr-name{font-size:1.1667rem}
 .tr-grid .tr-role{font-size:0.7222rem}
 .tr-grid .tr-rule{width:22px;margin-bottom:12px}
@@ -2202,7 +2217,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-shot img{object-fit:cover;filter:grayscale(1) contrast(1.04);
   transition:transform .6s var(--ease-out)}
 .tr-card:hover .tr-shot img,.tr-card:focus-visible .tr-shot img{transform:scale(1.04)}
-.tr-cap{position:absolute;left:0;right:0;bottom:0;padding:0 26px 26px;
+/* the bottom padding clears the '+' tile, which hangs 38px up into the card
+   (34px on a phone), so no role line runs under it */
+.tr-cap{position:absolute;left:0;right:0;bottom:0;padding:0 26px 46px;
   background:linear-gradient(to top,rgba(13,24,40,.9),rgba(13,24,40,.55) 42%,rgba(13,24,40,0))}
 .tr-rule{display:block;width:26px;height:2px;margin:0 0 14px;background:var(--blue-light)}
 .tr-name{display:block;font:600 1.3333rem Sora,sans-serif;letter-spacing:-.025em;color:#fff}
@@ -2271,7 +2288,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .tr-stack .tr-card{width:100%;margin-left:0;margin-right:0}
   .tr-stack .tr-card + .tr-card{margin-top:26px}
   .tr-stack .tr-shot{height:auto;aspect-ratio:3/4}
-  .tr-stack .tr-plus{right:-22px;bottom:-22px;width:56px;height:56px}
+  /* an 18px gutter here (14px under 380): hung further than 10px past the
+     card, the tile ran off the screen and was clipped flat */
+  .tr-stack .tr-plus{right:-10px;bottom:-22px;width:56px;height:56px}
+  .tr-grid .tr-plus{right:-10px}
   .tr-grid{grid-template-columns:1fr;gap:36px}
   .tr-ovwrap{padding:16px}
   .tr-ov{padding:20px;border-radius:18px}
