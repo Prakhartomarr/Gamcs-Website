@@ -21,26 +21,30 @@ export default function OurPartners() {
   return (
     <section className="section partners" id="partners">
       <div className="container">
-        <div className="partners-layout">
-          <div className="partners-copy reveal">
-            <SectionEyebrow label="Our partners" />
-            <h2 className="partners-heading">{partners.heading}</h2>
-          </div>
+        {/* The pill sits on its own row so the marks can centre on the HEADING
+            line rather than on the pill and heading together, which left them
+            riding high above the line they belong to. */}
+        <div className="partners-layout reveal">
+          <SectionEyebrow label="Our partners" />
 
-          {partners.logos.length > 0 && (
-            <ul className="partners-logos reveal">
-              {partners.logos.map((logo) => (
-                <li key={logo.file}>
-                  <Image
-                    src={`/logos/partners/${logo.file}`}
-                    alt={logo.name}
-                    width={400}
-                    height={168}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="partners-line">
+            <h2 className="partners-heading">{partners.heading}</h2>
+
+            {partners.logos.length > 0 && (
+              <ul className="partners-logos">
+                {partners.logos.map((logo) => (
+                  <li key={logo.file}>
+                    <Image
+                      src={`/logos/partners/${logo.file}`}
+                      alt={logo.name}
+                      width={400}
+                      height={168}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         {partners.names.length > 0 && (
