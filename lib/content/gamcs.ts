@@ -802,7 +802,7 @@ export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[numb
  * Unlike the rest of this file, the maturity-curve copy is NOT transcribed
  * from gamcs.in: the live site's four-stage band was replaced by this
  * five-stage interactive curve, and the stage questions, quotes, capability
- * tags and comparison grid were supplied in the reference build. Treat it as
+ * tags were supplied in the reference build. Treat it as
  * authored marketing copy, not a mirror of the live site.
  *
  * `metrics` on stages 03–05 and every figure inside `tiles` / `ladder` /
@@ -821,8 +821,6 @@ export const maturityCurve = {
   lead:
     "Five stages. One direction: from reporting to continuous decisioning. Every finance function sits somewhere on this curve — the question isn't whether you need more data, it's how fast you can turn what you already have into a decision.",
   hint: "Click a stage — this is also your self-assessment",
-  /** Sits above the comparison grid. */
-  comparisonLabel: "What actually changes as you move up",
   /** Repeated under every panel that shows a number. */
   illustrative: "Illustrative example — not a real client figure.",
   /** The engine node in the stage-05 diagram. */
@@ -833,7 +831,6 @@ export const maturityCurve = {
       name: "Financial Reporting",
       short: "Reporting",
       question: "What happened?",
-      teaser: "“What happened?”",
       quote:
         "I can tell you what happened last month — it just takes seven to ten days to produce.",
       tags: ["Excel", "ERP reports", "Month-end close", "Statutory reporting"],
@@ -850,7 +847,6 @@ export const maturityCurve = {
       name: "Management Information",
       short: "MIS",
       question: "How are we doing?",
-      teaser: "“How are we doing?”",
       quote:
         "I finally have a monthly pack — but by the time it lands, the month is already over.",
       tags: ["MIS", "Monthly packs", "KPI reporting", "Variance analysis"],
@@ -867,7 +863,6 @@ export const maturityCurve = {
       name: "Business Intelligence",
       short: "BI",
       question: "Why did it happen?",
-      teaser: "“Why did it happen?”",
       quote: "I can see almost everything now. I still have to go figure out why.",
       tags: ["Power BI", "Live dashboards", "Profitability analysis", "Drill-down analytics"],
       metrics: [
@@ -887,18 +882,10 @@ export const maturityCurve = {
     {
       n: "04",
       name: "Decision Intelligence",
-      short: "Decision intel.",
-      /**
-       * The stepper's label below 768px, where each of the five stages holds
-       * one column of a 354px row — ~70px. "Decision intel." breaks over three
-       * lines in that width; "Decision" fits on one. Every other stage's step
-       * label is just its `short`, which is why this key sits on stage 04
-       * alone. The comparison grid keeps `short` — it has a 760px table to
-       * spend and the abbreviation reads better there.
-       */
-      stepLabel: "Decision",
+      /* The stepper's label below 768px, where each stage holds ~70px of a
+         354px row: "Decision intel." broke over three lines there. */
+      short: "Decision",
       question: "What happens next?",
-      teaser: "“What happens next?”",
       quote:
         "The system tells me what changed, why it changed, and what it’s likely to mean.",
       tags: ["Driver-based planning", "Forecasting", "Scenario analysis", "Anomaly detection"],
@@ -922,7 +909,6 @@ export const maturityCurve = {
       name: "Continuous Decisioning",
       short: "Continuous",
       question: "What should we do now?",
-      teaser: "“What should we do now?”",
       quote:
         "Finance stops reporting the business and starts sensing it — signals become recommendations, recommendations become actions.",
       tags: ["Real-time signals", "Automated commentary", "Alerts", "Accountability loops"],
@@ -947,14 +933,6 @@ export const maturityCurve = {
       ],
       next: "This is the end of the curve — the work here is holding the loop: keeping signals trusted and recommendations owned.",
     },
-  ],
-  /** One row per dimension; `values` is indexed by stage, so it stays 5 long. */
-  tableRows: [
-    { dimension: "Data", values: ["Fragmented", "Consolidated", "Connected", "Integrated", "Real-time"] },
-    { dimension: "Insight", values: ["Historical", "Descriptive", "Diagnostic", "Predictive", "Prescriptive"] },
-    { dimension: "Planning", values: ["Periodic", "Budget-led", "Driver-based", "Dynamic", "Continuous"] },
-    { dimension: "Technology", values: ["Excel / ERP", "Excel / ERP", "BI", "BI + AI", "Intelligence layer"] },
-    { dimension: "Decision cycle", values: ["Monthly", "Monthly", "Weekly", "Daily", "Continuous"] },
   ],
   cta: primaryCta,
 } as const;
