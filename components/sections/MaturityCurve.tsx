@@ -1,47 +1,46 @@
 "use client";
 
-import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { maturityCurve } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
 /**
- * The finance maturity curve — five stages as a 01–05 stepper, a detail
- * panel that swaps per stage, and a stage-aware CTA.
+ * The finance maturity curve — one stage card whose top edge is a five-tab
+ * bar (01–05), a body that swaps per stage, and a stage-aware footer CTA.
  *
  * ALL COPY LIVES IN `maturityCurve` (lib/content/gamcs.ts), not here — this
  * file is markup and interaction only. Stage figures are illustrative and the
  * panel says so wherever a number appears.
  *
- * Two things worth naming, because this section is the odd one out:
+ * Section components in this codebase carry no Tailwind utilities; they
+ * compose semantic classes from globals.css. This one is utility-styled
+ * because it must not add global CSS. The section SHELL still uses the shared
+ * primitives (.section / .fin-sec / .container / .fin-eyebrow / .fin-h2 /
+ * .fin-lead / CTA) so the band reads as part of the page; only the card is
+ * utilities, and every colour, radius and shadow in it resolves to a token
+ * already declared in globals.css.
  *
- *   1. Section components in this codebase carry no Tailwind utilities; they
- *      compose semantic classes from globals.css. This one is utility-styled
- *      because it must not add global CSS. The section SHELL still uses the
- *      shared primitives (.section / .fin-sec / .container / .fin-eyebrow /
- *      .fin-h2 / .fin-lead / CTA) so the band reads as part of the page; only
- *      the interactive internals are utilities, and every colour, radius and
- *      shadow among them resolves to a token already declared in globals.css.
+ * The card, top to bottom: a tab bar along its top edge (one tablist, five
+ * tabs), the active stage's panel, and a footer that answers the chosen stage
+ * with the CTA. Everything inside the card is left-aligned; only the heading
+ * block above it centres (.fin-center).
  *
- *   2. The stage selector is a 01–05 stepper at every width: a 45px row from
- *      768 and 56px below it, so picking one of five costs almost no scroll.
- *      Its two layouts split at 768 (see the tablist) and are the same five
- *      tabs, so there is exactly one tablist, one set of tab ids and one set
- *      of refs.
+ *   ≥1280      tabs: number, name and question. Body: two columns.
+ *   1024–1279  tabs: number and name. Body: one column.
+ *   <1024      tabs: the circle over the short name. Body: one column.
  *
- * At every width the order is the text, then the stage card at full
- * container width, then the stepper. Only the active stage's card is laid
- * out, so the card hugs its content and a switch changes its height; select()
- * scrolls the page by the difference so the stepper stays under the pointer.
- *
- * Earlier builds' drawn SVG connector, GSAP sweep and card staircase are all
- * gone: the numbers on the rail carry the order, so there is no measured
- * geometry to keep in sync and no animation to tear down.
+ * The breakpoints come from measurements, and the tab bar, body and page
+ * showed no overflow at any tested width from 360 to 1920. The tabs sit above
+ * the body, so a switch only resizes the card below them. Measured at 1440,
+ * 1366, 1280, 1024 and 390, across clicks and arrow keys, the tab bar, the
+ * body's top edge and scrollY did not move while the card height changed by
+ * up to 581px, so a switch needs no scroll compensation.
  */
 
 /** 11px/700/.18em Sora — the micro-label used throughout this design system. */
 const LABEL = "font-heading text-[11px] font-bold uppercase tracking-[0.18em]";
 
-/** Soft hairline (--hair) and the harder one (--hair-2), as border utilities. */
+/** The soft hairline (--hair) as a border colour. */
 const HAIR = "border-[color:var(--hair)]";
 
 /**
@@ -71,10 +70,10 @@ type Metric = { value: string; label: string };
 
 function Metrics({ items }: { items: readonly Metric[] }) {
   return (
-    <div className="flex flex-wrap gap-x-10 gap-y-5 min-[621px]:justify-center">
+    <div className="flex flex-wrap gap-x-10 gap-y-5">
       {items.map((m) => (
         <div key={m.label}>
-          <div className="font-heading text-[19px] font-semibold tabular-nums tracking-tight text-[color:var(--ink-deep)]">
+          <div className="font-heading text-[19px] font-semibold leading-[1.3] tabular-nums tracking-[-0.01em] text-[color:var(--ink-deep)]">
             {m.value}
           </div>
           <div className="mt-0.5 text-[13px] text-[color:var(--ink-muted)]">{m.label}</div>
@@ -95,7 +94,7 @@ function DashboardMock({
       {tiles.map((t) => (
         <div key={t.label} className={`rounded-[14px] border ${HAIR} bg-white p-4`}>
           <div className="text-[12px] text-[color:var(--ink-muted)]">{t.label}</div>
-          <div className="mt-1 font-heading text-[18px] font-semibold tabular-nums text-[color:var(--ink-deep)]">
+          <div className="mt-1 font-heading text-[18px] font-semibold leading-[1.3] tabular-nums text-[color:var(--ink-deep)]">
             {t.value}
           </div>
           <div className="mt-3 flex h-10 items-end gap-1" aria-hidden="true">
@@ -118,7 +117,7 @@ function DashboardMock({
 /** Stage 04 — the question ladder. The last rung is the payoff. */
 function Ladder({ rows }: { rows: readonly { q: string; a: string }[] }) {
   return (
-    <div className={`max-w-xl overflow-hidden rounded-[14px] border ${HAIR} text-left min-[621px]:mx-auto`}>
+    <div className={`max-w-xl overflow-hidden rounded-[14px] border ${HAIR}`}>
       {rows.map((r, i) => {
         const last = i === rows.length - 1;
         return (
@@ -152,12 +151,18 @@ function SignalFlow({
   engine: string;
 }) {
   const arrow = (
-    <div aria-hidden="true" className="hidden text-[color:var(--ink-muted)] sm:block">
-      &rarr;
-    </div>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="hidden h-[14px] w-[14px] flex-none fill-none stroke-current stroke-2 text-[color:var(--ink-muted)] sm:block"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
   );
   return (
-    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center min-[621px]:items-center min-[621px]:justify-center">
+    <div className="flex flex-col items-start gap-[14px] sm:flex-row sm:items-center">
       <div className="flex flex-col gap-2">
         {signals.map((s) => (
           <div
@@ -174,7 +179,7 @@ function SignalFlow({
 
       {arrow}
 
-      <div className="rounded-[14px] bg-blue-dark px-5 py-4 text-center font-heading text-[13px] font-semibold leading-snug text-white [box-shadow:var(--shadow-fin)]">
+      <div className="flex-none rounded-[14px] bg-blue-dark px-[20px] py-4 text-center font-heading text-[13px] font-semibold leading-[1.35] text-white [box-shadow:var(--shadow-fin)]">
         {engine.split(" ").map((w) => (
           <div key={w}>{w}</div>
         ))}
@@ -190,7 +195,7 @@ function SignalFlow({
           >
             <span
               aria-hidden="true"
-              className={`h-2 w-2 rounded-full ${TONE[o.tone] ?? "bg-blue"}`}
+              className={`h-2 w-2 flex-none rounded-full ${TONE[o.tone] ?? "bg-blue"}`}
             />
             {o.label}
           </div>
@@ -205,13 +210,16 @@ function SignalFlow({
 type Stage = (typeof maturityCurve.stages)[number];
 
 /**
- * One stage's card. All five are rendered so each tab's aria-controls has a
+ * One stage's body. All five are rendered so each tab's aria-controls has a
  * target; only the active one is laid out, the rest are display:none.
  *
- * Its contents centre from 621px, the width at which the section's
- * .fin-center heading does, so on phones both stay left-aligned together.
- * The stage-04 ladder is the exception: its rows stay left-aligned so the
- * questions and answers line up and scan.
+ * From 1280 it splits: quote and tags on the left (5fr), figures and visual
+ * on the right (6fr) behind a hairline, 48px gap and 48px inset. The right
+ * column is narrowest at 1280 (a 1184px container, so 525px of content), and
+ * the widest visual, the stage-05 signal diagram, needs 493px there (437px of
+ * nodes plus four 14px gaps), so it fits with 33px spare. From 1024 to 1279
+ * the container is 920px, which would leave the right column 381px, so the
+ * columns stack there with no divider.
  */
 function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
   return (
@@ -219,48 +227,51 @@ function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
       id={`stage-panel-${stage.n}`}
       role="tabpanel"
       aria-labelledby={`stage-tab-${stage.n}`}
-      className={[
-        `rounded-[24px] border ${HAIR} bg-white p-6 [box-shadow:var(--shadow-fin)] sm:p-9 min-[621px]:text-center`,
-        active ? "" : "hidden",
-      ].join(" ")}
+      className={
+        active
+          ? "min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] min-[1280px]:gap-x-[48px]"
+          : "hidden"
+      }
     >
-      <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
+      <div>
+        <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
 
-      <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[color:var(--ink-deep)] sm:text-[30px]">
-        {stage.question}
-      </h3>
+        <h3 className="mt-2 text-[26px] font-semibold leading-[1.2] tracking-[-0.02em] text-[color:var(--ink-deep)] sm:text-[30px]">
+          {stage.question}
+        </h3>
 
-      {/* The left bar marks the quote while the card reads left to right;
-          centred, it would hang off one side, so it goes. */}
-      <blockquote className="mt-5 max-w-[62ch] border-l-2 border-blue pl-4 text-[15px] italic leading-relaxed text-[color:var(--ink-muted)] min-[621px]:mx-auto min-[621px]:border-l-0 min-[621px]:pl-0">
-        “{stage.quote}”
-      </blockquote>
+        <blockquote className="mt-5 max-w-[62ch] border-l-2 border-blue pl-4 text-[15px] italic leading-relaxed text-[color:var(--ink-muted)]">
+          “{stage.quote}”
+        </blockquote>
 
-      <div className="mt-6 flex flex-wrap gap-2 min-[621px]:justify-center">
-        {stage.tags.map((t) => (
-          <Tag key={t}>{t}</Tag>
-        ))}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {stage.tags.map((t) => (
+            <Tag key={t}>{t}</Tag>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-8 space-y-7">
+      <div className={`mt-8 ${HAIR} min-[1280px]:mt-0 min-[1280px]:border-l min-[1280px]:pl-[48px]`}>
         <Metrics items={stage.metrics} />
-        {stage.visual === "dashboard" && <DashboardMock tiles={stage.tiles} />}
-        {stage.visual === "ladder" && <Ladder rows={stage.ladder} />}
-        {stage.visual === "signals" && (
-          <SignalFlow
-            signals={stage.signals}
-            outputs={stage.outputs}
-            engine={maturityCurve.engineName}
-          />
+
+        {stage.visual !== "metrics" && (
+          <div className="mt-7">
+            {stage.visual === "dashboard" && <DashboardMock tiles={stage.tiles} />}
+            {stage.visual === "ladder" && <Ladder rows={stage.ladder} />}
+            {stage.visual === "signals" && (
+              <SignalFlow
+                signals={stage.signals}
+                outputs={stage.outputs}
+                engine={maturityCurve.engineName}
+              />
+            )}
+            {/* Every stage from 03 up puts a figure on screen; say so. */}
+            <p className="mt-6 text-[12px] text-[color:var(--ink-muted)]">
+              {maturityCurve.illustrative}
+            </p>
+          </div>
         )}
       </div>
-
-      {/* Every stage from 03 up puts a figure on screen; say so. */}
-      {stage.visual !== "metrics" && (
-        <p className="mt-6 text-[12px] text-[color:var(--ink-muted)]">
-          {maturityCurve.illustrative}
-        </p>
-      )}
     </div>
   );
 }
@@ -273,25 +284,6 @@ export default function MaturityCurve() {
   const { stages } = maturityCurve;
   const stage = stages[active];
 
-  /* The card sits above the tabs and hugs its content, so a switch resizes
-     it and would move the whole row under the pointer or the focused tab. Note where the row is before the switch and scroll by however
-     far it moved. Scroll anchoring can't be relied on for this: its anchor is
-     often inside the panel that just got hidden, and Safari has none. */
-  const rowTop = useRef<number | null>(null);
-  const select = (i: number) => {
-    rowTop.current = tabRefs.current[i]?.parentElement?.getBoundingClientRect().top ?? null;
-    setActive(i);
-  };
-  useLayoutEffect(() => {
-    const before = rowTop.current;
-    rowTop.current = null;
-    const row = tabRefs.current[active]?.parentElement;
-    if (before === null || !row) return;
-    const moved = row.getBoundingClientRect().top - before;
-    /* instant: html's scroll-behavior:smooth would otherwise animate it */
-    if (moved) window.scrollBy({ top: moved, behavior: "instant" });
-  }, [active]);
-
   const onKeyDown = (e: React.KeyboardEvent) => {
     const last = stages.length - 1;
     let next: number | null = null;
@@ -301,19 +293,21 @@ export default function MaturityCurve() {
     if (e.key === "End") next = last;
     if (next === null) return;
     e.preventDefault();
-    select(next);
+    setActive(next);
     tabRefs.current[next]?.focus();
   };
 
   return (
-    <section className="section fin-sec" id="maturity-curve">
+    /* 72px top and bottom from 768, where .section is 108px (or 80px at
+       768–1279). .section is a plain globals.css class that comes after the
+       utilities, so a bare py-[4rem] would lose; [&.section] raises the
+       specificity to 0,2,0 (measured: 72px from 768 to 1920). Below 768,
+       .section's own 60px is already smaller and stays. */
+    <section
+      className="section fin-sec min-[768px]:[&.section]:py-[4rem]"
+      id="maturity-curve"
+    >
       <div className="container">
-        {/* The text, then the stage card under it at full width — the same
-            stack at every width, so the card reads as the answer to the
-            stepper directly below it. The text is centred with .fin-center,
-            like the Solutions and How We Help heads, and so goes left-aligned
-            at 620px and below; the card's contents stay left-aligned. */}
-        <div className="grid gap-10">
         <div className="fin-center reveal">
           <span className="fin-eyebrow">
             <i aria-hidden="true" />
@@ -325,94 +319,85 @@ export default function MaturityCurve() {
             <span className="accent">{maturityCurve.headingAccent}</span>
           </h2>
           <p className="fin-lead">{maturityCurve.lead}</p>
-          <p className={`${LABEL} mt-7 text-[color:var(--ink-muted)]`}>{maturityCurve.hint}</p>
+          <p className={`${LABEL} mt-6 text-[color:var(--ink-muted)]`}>{maturityCurve.hint}</p>
         </div>
 
-        <div className="reveal">
-          {stages.map((s, i) => (
-            <StagePanel key={s.n} stage={s} active={i === active} />
-          ))}
-        </div>
-        </div>
-
-        {/* ----------------------------------------------------- the stepper */}
-        {/*
-          One tablist, two layouts — the tabs, their ids and the roving
-          tabIndex are the same set at every width; only the layout changes.
-
-            ≥768    a flex row of steps: circle, two-line label, and a rail
-                    between each pair taking the leftover width.
-            <768    five equal grid columns: circle over a centred label, one
-                    continuous rail behind the circles.
-
-          The steps carry no gap of their own (the rails and the grid columns
-          do the spacing).
-        */}
         <div
-          role="tablist"
-          aria-label="Finance maturity stages"
-          onKeyDown={onKeyDown}
-          className="relative mt-10 grid grid-cols-5 min-[768px]:flex min-[768px]:items-center"
+          className={`reveal mt-10 overflow-hidden rounded-[24px] border ${HAIR} bg-white [box-shadow:var(--shadow-fin)]`}
         >
-          {/* Below 768 a single rail runs behind all five circles at their
-              centre — top 17px is half the 34px circle — inset half a column
-              (10% of five columns) at each end so it starts and stops under
-              the outer circles instead of running to the container edge. */}
-          <span
-            aria-hidden="true"
-            className="absolute left-[10%] right-[10%] top-[17px] h-px bg-line min-[768px]:hidden"
-          />
+          {/* ------------------------------------------------- the tab bar */}
+          {/*
+            Five equal columns on --soft, a hairline under the bar and between
+            tabs. The active tab turns white with a 3px --blue top border, and
+            a 1px white ::after strip covers the bar's hairline under it, so it
+            joins the body. A −1px bottom margin would do the same, but it
+            shrinks the row by 1px whenever the active tab is the only tallest
+            one ("Management Information" alone wraps at 1353–1535), and the
+            body would jump on a switch. With the strip, the bar height does
+            not depend on the active tab at any width from 360 to 1920.
 
-          {stages.map((s, i) => {
-            const isActive = i === active;
-            return (
-              <Fragment key={s.n}>
-                {/* From 768 the rail sits between two steps and absorbs the
-                    slack. A step is 36 + 9 + its label and the five measure
-                    548px (stage 02 widest at 118.1px); with 8px of margin a
-                    side, each rail is (container − 548 − 64) ÷ 4. Measured:
-                    24.9px at 768 (712px container), 38.9px at 899 (768),
-                    76.9px at 1024 (920), 142.9px at 1280 (1184), 166.9px at
-                    1440 (1280) and 206.9px at 1920 (1440). The row spans the
-                    container at every width, as the approved 899px artboard
-                    does, so a wide screen lengthens the rails, never the
-                    steps. At 768 each rail is 4.9px above its 20px floor, so
-                    the floor binds only once the steps grow ~20px between
-                    them, and then the row overflows rather than shrinks —
-                    which is what the 76px cap and [hyphens:auto] hold off.
-                    Hidden below 768, where the absolute rail above draws the
-                    line instead. */}
-                {i > 0 && (
-                  <span
-                    aria-hidden="true"
-                    className="mx-[8px] hidden h-px min-w-[20px] flex-1 bg-line min-[768px]:block"
-                  />
-                )}
+            Tab widths are the container minus the card border, split five
+            ways: 66px at 360, 153px at 900–1023 (the container is 768px
+            there), 184px at 1024–1279 and 236px at 1280.
 
-                {/* The button is the hit target, not the circle: 34px of
-                    circle stacked on a label clears 44px on its own below 768
-                    (34 + 9 + a 13px line = 56, in a 70px column), but the row
-                    from 768 is one 36px line, so `py-1` — 4.5px at this 18px
-                    root — takes it to 45px. `relative` keeps the white
-                    circles painting over the absolute rail below 768, which
-                    would otherwise draw across them; the radius shapes the
-                    focus ring. */}
+              ≥1024  circle beside the full name (13.5px Sora). The widest
+                     word, "Management", measures 91.2px. At 1024 a tab
+                     leaves 98.6px for the name (184 − 1 hairline − 40
+                     padding − 32 circle − 12 gap). At 900–1023 it leaves
+                     68px, or 84px even with 12px padding, and the word broke
+                     mid-letter there.
+              ≥1280  the question line joins the name. The longest,
+                     "What should we do now?", is 149.7px in 151.4px, and
+                     at worst it would wrap to a second line.
+              <1024  compact: the circle over the short name, 10px, or
+                     11.5px from 768, in the body font as the old phone
+                     stepper used. "Continuous", the widest short label, is
+                     55.8px in it (60.4px in Sora) in a 66px tab at 360.
+
+            The smallest tab is 66×77.5px, at 360. The shortest is 71px tall,
+            at 1024–1279. Every target clears 44px.
+
+            The focus ring is drawn inside the tab (outline-offset −4px)
+            because the card's overflow:hidden clips anything outside it.
+          */}
+          <div
+            role="tablist"
+            aria-label="Finance maturity stages"
+            onKeyDown={onKeyDown}
+            className={`grid grid-cols-5 border-b ${HAIR} bg-soft`}
+          >
+            {stages.map((s, i) => {
+              const isActive = i === active;
+              const tabText = `leading-[1.3] [overflow-wrap:anywhere] ${
+                isActive
+                  ? "font-semibold text-[color:var(--ink-deep)]"
+                  : "font-medium text-[color:var(--ink-muted)]"
+              }`;
+              return (
                 <button
+                  key={s.n}
                   ref={(el) => {
                     tabRefs.current[i] = el;
                   }}
+                  type="button"
                   role="tab"
                   id={`stage-tab-${s.n}`}
                   aria-selected={isActive}
                   aria-controls={`stage-panel-${s.n}`}
                   tabIndex={isActive ? 0 : -1}
-                  onClick={() => select(i)}
-                  className="relative flex flex-col items-center gap-[9px] rounded-[18px] text-center min-[768px]:flex-row min-[768px]:py-1 min-[768px]:text-left"
+                  onClick={() => setActive(i)}
+                  className={[
+                    "flex min-w-0 flex-col items-center gap-[7px] border-t-[3px] pb-3 pt-[9px] text-center focus-visible:-outline-offset-4",
+                    "min-[1024px]:flex-row min-[1024px]:gap-[12px] min-[1024px]:px-[20px] min-[1024px]:pb-[17px] min-[1024px]:pt-[16px] min-[1024px]:text-left",
+                    i < stages.length - 1 ? "border-r border-r-[color:var(--hair)]" : "",
+                    isActive
+                      ? "relative border-t-blue bg-white after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-white"
+                      : "border-t-transparent",
+                  ].join(" ")}
                 >
                   <span
                     className={[
-                      "grid h-[34px] w-[34px] flex-none place-items-center rounded-full border font-heading text-[12px] font-semibold leading-none tracking-[0.02em]",
-                      "min-[768px]:h-[36px] min-[768px]:w-[36px] min-[768px]:text-[12.5px]",
+                      "grid h-[32px] w-[32px] flex-none place-items-center rounded-full border font-heading text-[12px] font-semibold leading-none",
                       isActive
                         ? "border-blue bg-blue text-white shadow-[0_10px_20px_-12px] shadow-blue/75"
                         : "border-[color:var(--hair)] bg-white text-[color:var(--ink-muted)]",
@@ -421,58 +406,54 @@ export default function MaturityCurve() {
                     {s.n}
                   </span>
 
-                  <span
-                    className={[
-                      /* hyphens + overflow-wrap are the guard for a label
-                         that outgrows its column; text-wrap:balance is not,
-                         every step label is a single word. */
-                      "text-[10px] leading-[1.3] [hyphens:auto] [overflow-wrap:break-word]",
-                      "min-[768px]:max-w-[76px] min-[768px]:text-[11.5px] min-[768px]:leading-[1.35]",
-                      isActive
-                        ? "font-bold text-[color:var(--ink-deep)]"
-                        : "font-medium text-[color:var(--ink-muted)]",
-                    ].join(" ")}
-                  >
-                    {/* A column is ~70px at 354px, so below 768 the label is
-                        the short name. */}
-                    <span className="min-[768px]:hidden">{s.short}</span>
-                    {/* From 768 the full stage name, a word to a line — both
-                        words of every name fit the 76px cap. */}
-                    <span className="hidden min-[768px]:flex min-[768px]:flex-col">
-                      {s.name.split(" ").map((w) => (
-                        <span key={w}>{w}</span>
-                      ))}
+                  <span className="flex min-w-0 flex-col gap-[3px]">
+                    <span
+                      className={`${tabText} text-[10px] min-[768px]:text-[11.5px] min-[1024px]:hidden`}
+                    >
+                      {s.short}
+                    </span>
+                    <span className={`${tabText} hidden font-heading text-[13.5px] min-[1024px]:block`}>
+                      {s.name}
+                    </span>
+                    <span className="hidden text-[12px] italic [line-height:normal] text-[color:var(--ink-muted)] min-[1280px]:block">
+                      “{s.question}”
                     </span>
                   </span>
                 </button>
-              </Fragment>
-            );
-          })}
-        </div>
-
-        {/* ------------------------------------------------------------ CTA */}
-        <div
-          className={`mt-10 flex flex-col gap-6 rounded-[24px] border ${HAIR} bg-soft p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`}
-        >
-          {/* aria-live: this is the answer to the stage the visitor just
-              chose, so it needs announcing without moving focus. */}
-          <div className="max-w-[62ch]" aria-live="polite">
-            <div className="font-heading text-[17px] font-semibold text-[color:var(--ink-deep)]">
-              If you’re at Stage {stage.n} — {stage.name}
-            </div>
-            <p className="mt-1.5 text-[15px] leading-relaxed text-[color:var(--ink-muted)]">
-              {stage.next}
-            </p>
+              );
+            })}
           </div>
-          <CTA
-            tier="primary"
-            icon="diagonal"
-            href={maturityCurve.cta.href}
-            className="shrink-0"
-            data-cta="maturity"
-          >
-            {maturityCurve.cta.label}
-          </CTA>
+
+          <div className="p-6 sm:p-9">
+            {stages.map((s, i) => (
+              <StagePanel key={s.n} stage={s} active={i === active} />
+            ))}
+
+            {/* ------------------------------------------------- the footer */}
+            <div
+              className={`mt-8 flex flex-col gap-6 border-t ${HAIR} pt-[28px] sm:flex-row sm:items-center sm:justify-between sm:gap-[32px]`}
+            >
+              {/* aria-live: this is the answer to the stage the visitor just
+                  chose, so it needs announcing without moving focus. */}
+              <div className="max-w-[62ch]" aria-live="polite">
+                <div className="font-heading text-[17px] font-semibold leading-[1.35] text-[color:var(--ink-deep)]">
+                  If you’re at Stage {stage.n} — {stage.name}
+                </div>
+                <p className="mt-[7px] text-[15px] leading-relaxed text-[color:var(--ink-muted)]">
+                  {stage.next}
+                </p>
+              </div>
+              <CTA
+                tier="primary"
+                icon="diagonal"
+                href={maturityCurve.cta.href}
+                className="shrink-0"
+                data-cta="maturity"
+              >
+                {maturityCurve.cta.label}
+              </CTA>
+            </div>
+          </div>
         </div>
       </div>
     </section>

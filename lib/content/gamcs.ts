@@ -882,8 +882,9 @@ export const maturityCurve = {
     {
       n: "04",
       name: "Decision Intelligence",
-      /* The stepper's label below 768px, where each stage holds ~70px of a
-         354px row: "Decision intel." broke over three lines there. */
+      /* The compact tab label below 1024px, where this tab leaves 65px for
+         text at 360: "Decision intel." wrapped to two lines there, while
+         "Continuous", the widest short label, is 55.8px and stays on one. */
       short: "Decision",
       question: "What happens next?",
       quote:
