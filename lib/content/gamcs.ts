@@ -943,8 +943,6 @@ export const maturityCurve = {
  * logo wall: a heading and the partner firms' marks, with no body copy or call
  * to action, so it reads as the lower part of the client section rather than a
  * section of its own.
- *
- * The same `logos` list feeds the partners dock (components/PartnersDock.tsx).
  */
 export const partners = {
   heading: "Trusted by Advisory Firms, Not Just Their Clients",

@@ -1394,7 +1394,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .abstract-panel svg{display:block;width:100%;height:100%}
 @media (min-width:640px){.abstract-panel{border-radius:18px}}
 
-/* ---- who-we-are: copy left, founder portrait right, figures beneath ---- */
+/* ---- who-we-are: copy left, founder portrait right, mission line beneath ---- */
 .who-row{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:80px;align-items:center}
 .who-copy{display:flex;flex-direction:column;align-items:flex-start}
 .who-lead{margin:24px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
@@ -1414,24 +1414,13 @@ html[data-cookie-banner] .sticky-cta{display:none}
    top and left edges of the frame all but vanish while the darker bottom-right
    still reads — the card fades out unevenly rather than cleanly. The hairline
    is what the site already puts round a white surface on a white band
-   (.locmap-card, .stat-tile, .mega). */
+   (.locmap-card, .mega). */
 .who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:1/1;
   background:var(--band-soft);border:1px solid var(--line);
   box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
   transition:transform .6s var(--ease-out)}
 .who-portrait img{display:block;width:100%;height:100%;object-fit:cover}
 @media (hover:hover) and (pointer:fine){.who-portrait:hover{transform:scale(1.015)}}
-.who-stats{list-style:none;margin:64px 0 0;padding:44px 0 0;
-  border-top:1px solid var(--hair);display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:40px}
-/* Same numerals as the Achievements tiles, so the figures read as one set
-   wherever they appear. */
-/* 2.8vw so the ceiling is actually reached at 1440 - at the Achievements
-   tiles' 2.5vw these would top out at 36px and never hit the 40px the design
-   specifies. */
-.who-stat-value{font:800 clamp(29px,2.8vw,40px)/1 Sora,sans-serif;
-  letter-spacing:-.05em;color:var(--ink)}
-.who-stat-label{margin:14px 0 0;font-size:0.8333rem;line-height:1.5;color:#6B7480}
 /* Stacks at 1279, not 1023: from 768-1279 .container is pinned to 920px, so a
    fixed 440px portrait track would leave the copy 400px - narrower than the
    image beside it, and the heading would wrap to three lines. */
@@ -1444,9 +1433,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media (max-width:767px){
   .who-row{gap:28px}
   .who-copy .btn{width:100%;justify-content:center;margin-top:26px}
-  .who-stats{margin-top:40px;padding-top:34px;
-    grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 24px}
-  .who-stat-label{margin-top:12px;font-size:0.7778rem}
 }
 /* One section-heading typography, shared by every section. These used to be
    five separate specs — 30/32/28px floors, 50/51/46px ceilings, weights 600
@@ -1460,23 +1446,14 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
   font-family:Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
 .who-heading{margin:0;max-width:22ch}
-.who .who-mission{margin:56px 0 0;max-width:60ch;padding-left:18px;
+.who .who-mission{margin:69px 0 0;max-width:60ch;padding-left:18px;
   border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
   color:var(--ink);font-weight:600}
-/* Mission line and partners dock share one row, on .who-row's own columns, so
-   the dock sits under the founders column — in the space beside the mission
-   that used to stay empty — instead of lengthening that column and pushing
-   the whole row down. */
-.who-under{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:80px;
-  align-items:center;margin-top:22px}
-.who .who-under .who-mission{margin:0}
-.who-under + .who-stats{margin-top:44px}
-@media (max-width:1279px){
-  .who-under{grid-template-columns:1fr;gap:28px;margin-top:28px}
-  /* one column: keep the dock directly under "Meet our founders" */
-  .who-under .partners-dock{order:-1}
-}
-@media (max-width:767px){.who-under + .who-stats{margin-top:36px}}
+/* The section's last block: no bottom margin, so the gap to the next section
+   is the section's own padding. 69px from 1280 up is the distance it already
+   sat from the row above; stacked, 56px under "Meet our founders", and 36px on
+   phones (below). */
+@media (max-width:1279px){.who .who-mission{margin-top:56px}}
 
 /* ---- /who-we-are: the rest of the firm story ----
    620px so the body lines up exactly under .page-head p above it rather than
