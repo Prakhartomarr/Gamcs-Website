@@ -71,7 +71,7 @@ type Metric = { value: string; label: string };
 
 function Metrics({ items }: { items: readonly Metric[] }) {
   return (
-    <div className="flex flex-wrap gap-x-10 gap-y-5">
+    <div className="flex flex-wrap gap-x-10 gap-y-5 min-[621px]:justify-center">
       {items.map((m) => (
         <div key={m.label}>
           <div className="font-heading text-[19px] font-semibold tabular-nums tracking-tight text-[color:var(--ink-deep)]">
@@ -118,7 +118,7 @@ function DashboardMock({
 /** Stage 04 — the question ladder. The last rung is the payoff. */
 function Ladder({ rows }: { rows: readonly { q: string; a: string }[] }) {
   return (
-    <div className={`max-w-xl overflow-hidden rounded-[14px] border ${HAIR}`}>
+    <div className={`max-w-xl overflow-hidden rounded-[14px] border ${HAIR} text-left min-[621px]:mx-auto`}>
       {rows.map((r, i) => {
         const last = i === rows.length - 1;
         return (
@@ -157,7 +157,7 @@ function SignalFlow({
     </div>
   );
   return (
-    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center min-[621px]:items-center min-[621px]:justify-center">
       <div className="flex flex-col gap-2">
         {signals.map((s) => (
           <div
@@ -207,6 +207,11 @@ type Stage = (typeof maturityCurve.stages)[number];
 /**
  * One stage's card. All five are rendered so each tab's aria-controls has a
  * target; only the active one is laid out, the rest are display:none.
+ *
+ * Its contents centre from 621px, the width at which the section's
+ * .fin-center heading does, so on phones both stay left-aligned together.
+ * The stage-04 ladder is the exception: its rows stay left-aligned so the
+ * questions and answers line up and scan.
  */
 function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
   return (
@@ -215,7 +220,7 @@ function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
       role="tabpanel"
       aria-labelledby={`stage-tab-${stage.n}`}
       className={[
-        `rounded-[24px] border ${HAIR} bg-white p-6 [box-shadow:var(--shadow-fin)] sm:p-9`,
+        `rounded-[24px] border ${HAIR} bg-white p-6 [box-shadow:var(--shadow-fin)] sm:p-9 min-[621px]:text-center`,
         active ? "" : "hidden",
       ].join(" ")}
     >
@@ -225,11 +230,13 @@ function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
         {stage.question}
       </h3>
 
-      <blockquote className="mt-5 max-w-[62ch] border-l-2 border-blue pl-4 text-[15px] italic leading-relaxed text-[color:var(--ink-muted)]">
+      {/* The left bar marks the quote while the card reads left to right;
+          centred, it would hang off one side, so it goes. */}
+      <blockquote className="mt-5 max-w-[62ch] border-l-2 border-blue pl-4 text-[15px] italic leading-relaxed text-[color:var(--ink-muted)] min-[621px]:mx-auto min-[621px]:border-l-0 min-[621px]:pl-0">
         “{stage.quote}”
       </blockquote>
 
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-6 flex flex-wrap gap-2 min-[621px]:justify-center">
         {stage.tags.map((t) => (
           <Tag key={t}>{t}</Tag>
         ))}
