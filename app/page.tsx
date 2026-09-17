@@ -50,8 +50,8 @@ export default function HomePage() {
       <HowWeHelpStack />
       <Solutions />
       <Achievements />
-      <WhoWeAre />
       <Testimonials />
+      <WhoWeAre />
       <Contact />
     </>
   );
