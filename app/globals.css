@@ -1456,7 +1456,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .who-heading,
 .section-head h2,
 .page-head h1,
-.partners-heading,
 .tr-h,
 .fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
   font-family:Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
@@ -1595,19 +1594,17 @@ html[data-cookie-banner] .sticky-cta{display:none}
 
 /* ---- partners ---- */
 .partners{background:var(--band-white)}
-.partners-heading{margin:0 0 18px;max-width:24ch}
-.partners-body{margin:0;max-width:66ch;font-size:0.9444rem;line-height:1.65;color:var(--ink-muted)}
+/* Off the shared section-heading scale above on purpose: this is a sub-heading
+   of the client wall (whose heading is clamp(28px,3.4vw,46px)), not a peer of
+   it. 30px from 1364px wide up, 22px from 1000px down. 24ch with balance
+   breaks it after "Firms," at every width. */
+.partners-heading{margin:0;max-width:24ch;font:600 clamp(22px,2.2vw,30px)/1.2 Sora,sans-serif;
+  letter-spacing:-.02em;color:var(--ink-deep);text-wrap:balance}
 .partners-row{list-style:none;margin:34px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px}
 .partners-row li{background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:16px 24px;font:700 0.8889rem Sora;color:var(--ink-deep)}
-.partners-cta{margin-top:34px}
 
 @media (max-width:1279px){}
-@media (max-width:767px){
-  
-  
-  .maturity-foot .btn,.partners-cta{width:100%;justify-content:center}
-}
 
 /* =====================================================================
    PRELOADER
@@ -1991,21 +1988,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- client logo wall (band under the hero) ---- */
-.clients{padding:96px 0;background:var(--band-white)}
+/* Bottom padding = .clients-head's margin, and the partners block under it has
+   no top padding, so this is the whole gap to its pill: logo images to pill
+   measure 72px, the same as heading to logo images (54px + the strip's 18px
+   py-4); 54px both ways at 620 and below. */
+.clients{padding:96px 0 54px;background:var(--band-white)}
 .clients-head{text-align:center;margin:0 auto 54px}
 .clients-head h2{font-size:clamp(28px,3.4vw,46px);line-height:1.14;font-weight:600;
   letter-spacing:-.03em;color:var(--ink-deep);margin:0}
-@media (max-width:900px){.clients{padding:80px 0}}
+@media (max-width:900px){.clients{padding:80px 0 54px}}
 @media (max-width:767px){.fmc{padding:64px 0}}
-/* .btn sets white-space:nowrap, which at phone widths pushed the longest label
-   ("Considering a similar back-office arrangement? Schedule a Call") 474px wide
-   inside a 292px button - 91px of it outside the button, cut silently by the
-   body's overflow-x:hidden. Let labels wrap instead. */
+/* .btn sets white-space:nowrap, which at phone widths let a long label run
+   wider than its button, cut silently by the body's overflow-x:hidden. Let
+   labels wrap instead. */
 @media (max-width:767px){
   .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
   .btn-label{white-space:normal;text-align:center}
 }
-@media (max-width:620px){.clients{padding:60px 0}
+@media (max-width:620px){.clients{padding:60px 0 36px}
   .clients-head{margin-bottom:36px}}
 
 /* ---- the gap (data to decision): two panels — the typical path from data to
@@ -2180,25 +2180,56 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2d-close{margin-top:40px;padding-top:20px}
 }
 
-/* ---- partners: copy left, partner marks right ---- */
+/* ---- partners: the lower part of the client wall. Pill and heading left,
+   the three partner marks in one row right. ----
+   No top padding (see .clients). The bottom padding, 96/80/60px, mirrors the
+   client wall's top padding at the same breakpoints, so the joined block is
+   spaced like one section and the section after keeps its spacing.
+
+   A row, not a stack: stacked, the marks made a 270px column beside a 126px
+   pill + heading; as a row they are 70px tall, centred on the copy. The
+   heading's longer line needs 390px at 30px and 365px at 28px (1279 wide):
+   - 1280 up (container 1184+): 167x70 marks, 580px row + 72px gap, 532px+
+     left for the heading.
+   - 1024-1279 (container 920): marks drop to 138x58, 470px row + 48px gap,
+     402px left.
+   - 1023 down (container 768 or less): 250px would be left for a 293px line,
+     so the marks move to a row under the heading. Keeping them beside it would
+     take the phone-size marks, and even those stop fitting below about 790px.
+   - 620 down: a three-column grid rather than a wrapping row. At 48px tall a
+     mark is 114.3px wide, so three with 28px gaps need 399px (a 435px
+     viewport); narrower, CFO Bridge dropped to a row of its own. Up to 434px
+     the gaps close to 16px and the columns shrink the marks, to 100x42 at 360.
+*/
+.partners{padding:0 0 96px}
 .partners-layout{display:grid;grid-template-columns:minmax(0,1fr) auto;
   gap:72px;align-items:center}
 .partners-logos{list-style:none;margin:0;padding:0;display:flex;
-  flex-direction:column;gap:30px;align-items:flex-start}
-.partners-logos li{display:flex;align-items:center;min-height:56px}
+  flex-wrap:wrap;gap:24px 40px;align-items:center}
+.partners-logos li{display:flex;align-items:center}
 .partners-logos img{width:auto;height:auto;max-width:210px;max-height:70px;
   object-fit:contain}
-/* Below the two-column breakpoint the marks sit under the copy as a row, so
-   the section keeps reading top-to-bottom rather than squeezing a column. */
-@media (max-width:900px){
-  .partners-layout{grid-template-columns:1fr;gap:38px}
-  .partners-logos{flex-direction:row;flex-wrap:wrap;gap:28px 40px;align-items:center}
+/* Optical size. The PNGs share a 400x168 canvas but not their padding, so
+   Akshar's artwork drew at about half Threesixty's area and the end marks sat
+   16-24px in from the edges they align to. Same factors as SCALE in
+   components/PartnersDock.tsx; scale only paints, so nothing reflows. */
+.partners-logos img[src*="akshar"]{scale:1.35}
+.partners-logos img[src*="cfo-bridge"]{scale:1.15}
+@media (max-width:1279px){
+  .partners-layout{gap:48px}
+  .partners-logos{gap:24px 28px}
   .partners-logos img{max-width:170px;max-height:58px}
 }
-@media (max-width:620px){
-  .partners-logos{gap:24px 28px}
-  .partners-logos img{max-width:140px;max-height:48px}
+@media (max-width:1023px){
+  .partners-layout{grid-template-columns:1fr;gap:28px}
 }
+@media (max-width:900px){.partners{padding-bottom:80px}}
+@media (max-width:620px){
+  .partners{padding-bottom:60px}
+  .partners-logos{display:grid;grid-template-columns:repeat(3,minmax(0,115px))}
+  .partners-logos img{max-width:100%;max-height:48px}
+}
+@media (max-width:434px){.partners-logos{column-gap:16px}}
 
 /* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
 /* Jump rail. Sticks under the 90px header, scrolls sideways rather than

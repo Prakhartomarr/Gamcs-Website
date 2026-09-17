@@ -939,17 +939,15 @@ export const maturityCurve = {
 } as const;
 
 /**
- * Doc page 1, section 6 — homepage.
+ * Doc page 1, section 6 — homepage. The Our Partners block under the client
+ * logo wall: a heading and the partner firms' marks, with no body copy or call
+ * to action, so it reads as the lower part of the client section rather than a
+ * section of its own.
  *
- * TODO(business): the doc names Three Sixty Finance (UK) and Akshar Business
- * Consulting (UK) as delivery partners. Naming a partner publicly needs their
- * permission, so `partners` is left empty and the section renders a neutral
- * placeholder until that is granted. Add the names here and the row fills in.
+ * The same `logos` list feeds the partners dock (components/PartnersDock.tsx).
  */
 export const partners = {
   heading: "Trusted by Advisory Firms, Not Just Their Clients",
-  body:
-    "We don't only build Centers of Excellence for direct corporate and PE clients — we're also the embedded finance and analytics delivery team behind respected advisory firms who need capacity without adding onshore headcount.",
   names: [] as string[],
   /**
    * The advisory firms GAMCS delivers behind, shown as marks rather than the
@@ -957,15 +955,14 @@ export const partners = {
    * here out of the client wall: they are partners, not customers, and the
    * section heading only holds if the logos under it are actually advisory
    * firms. Assets live in /public/logos/partners, processed the same way as the
-   * client marks. All three read cleanly on this section's grey band without
-   * any tile behind them.
+   * client marks. All three read cleanly on the white band without any tile
+   * behind them.
    */
   logos: [
     { name: "Akshar Business Consulting", file: "akshar.png" },
     { name: "Threesixty Finance", file: "threesixty.png" },
     { name: "CFO Bridge", file: "cfo-bridge.png" },
   ] as { name: string; file: string }[],
-  cta: { label: "Considering a similar back-office arrangement? Schedule a Call", href: "/contact" },
 } as const;
 
 /**

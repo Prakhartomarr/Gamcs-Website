@@ -1,14 +1,16 @@
 import Image from "next/image";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { partners } from "@/lib/content/gamcs";
-import CTA from "@/components/CTA";
 
 /**
- * Delivery partners.
+ * Delivery partners, set as the lower part of the client logo wall: same white
+ * band, no divider, and the gap from the client logos to the "Our partners"
+ * pill matches the one between the client heading and those logos. The heading
+ * is sized as a sub-heading of that section, not a peer of its heading.
  *
- * The firms are identified by their marks, set beside the copy rather than
- * under it — the section's right-hand column was empty space on desktop, and
- * the logos read as evidence for the heading when they sit level with it.
+ * Just the pill, the heading and the three firms' marks. The marks sit in one
+ * row beside the heading from 1024px up and in a row under it below that; the
+ * measurements behind the breakpoints are in app/globals.css.
  *
  * `partners.names` stays empty on purpose. It was the text fallback for naming
  * firms before permission came through; the logos do that job now, and
@@ -23,7 +25,6 @@ export default function OurPartners() {
           <div className="partners-copy reveal">
             <SectionEyebrow label="Our partners" />
             <h2 className="partners-heading">{partners.heading}</h2>
-            <p className="partners-body">{partners.body}</p>
           </div>
 
           {partners.logos.length > 0 && (
@@ -49,13 +50,6 @@ export default function OurPartners() {
             ))}
           </ul>
         )}
-
-        <div className="reveal">
-          <CTA href={partners.cta.href}
-            data-cta="partners" tier="secondary" className="partners-cta" icon="arrow">
-            {partners.cta.label}
-          </CTA>
-        </div>
       </div>
     </section>
   );
