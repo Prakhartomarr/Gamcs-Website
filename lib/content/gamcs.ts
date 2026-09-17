@@ -888,6 +888,15 @@ export const maturityCurve = {
       n: "04",
       name: "Decision Intelligence",
       short: "Decision intel.",
+      /**
+       * The stepper's label below 768px, where each of the five stages holds
+       * one column of a 354px row — ~70px. "Decision intel." breaks over three
+       * lines in that width; "Decision" fits on one. Every other stage's step
+       * label is just its `short`, which is why this key sits on stage 04
+       * alone. The comparison grid keeps `short` — it has a 760px table to
+       * spend and the abbreviation reads better there.
+       */
+      stepLabel: "Decision",
       question: "What happens next?",
       teaser: "“What happens next?”",
       quote:

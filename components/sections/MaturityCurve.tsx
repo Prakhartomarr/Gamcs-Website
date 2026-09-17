@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { maturityCurve } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
@@ -25,7 +25,12 @@ import CTA from "@/components/CTA";
  *
  *   2. 900px, not a Tailwind breakpoint, is where the staircase unstacks —
  *      it is the width this section has always broken at, and `min-[900px]:`
- *      spells it without touching tailwind.config.
+ *      spells it without touching tailwind.config. Below 900 the same five
+ *      tabs render as a 01–05 stepper instead of cards: the stacked cards
+ *      measured 837px tall at both 390 and 899, which is a whole screen of
+ *      scroll for a control that picks one of five. Both faces live inside
+ *      the one tab button and swap with CSS, so there is still exactly one
+ *      tablist, one set of tab ids and one set of refs.
  *
  * From 1400px the stage card sits beside the heading instead of under the
  * staircase. Every stage's card is rendered into one grid cell; there the
@@ -334,94 +339,189 @@ export default function MaturityCurve() {
 
         {/* ------------------------------------------------------- the curve */}
         {/*
-          Bottoms align and each card is taller than the last, so the run reads
-          as a climb without anything being drawn: `items-end` plus a per-card
-          --h. Below 900px the heights are dropped entirely and the cards
-          become a full-width stack.
+          One tablist, three layouts — the tabs, their ids and the roving
+          tabIndex are the same set at every width; only the face changes.
+
+            ≥900    the staircase. Bottoms align and each card is taller than
+                    the last, so the run reads as a climb without anything
+                    being drawn: `items-end` plus a per-card --h.
+            768–899 a flex row of steps: circle, two-line label, and a rail
+                    between each pair taking the leftover width.
+            <768    five equal grid columns: circle over a centred label, one
+                    continuous rail behind the circles.
+
+          The steps carry no gap of their own below 900 (the rails and the
+          grid columns do the spacing), so `gap-3` is scoped to ≥900.
         */}
         <div
           role="tablist"
           aria-label="Finance maturity stages"
           onKeyDown={onKeyDown}
-          className="mt-10 flex flex-col gap-3 min-[900px]:mt-14 min-[900px]:flex-row min-[900px]:items-end"
+          className="relative mt-10 grid grid-cols-5 min-[768px]:flex min-[768px]:items-center min-[900px]:mt-14 min-[900px]:items-end min-[900px]:gap-3"
         >
+          {/* Below 768 a single rail runs behind all five circles at their
+              centre — top 17px is half the 34px circle — inset half a column
+              (10% of five columns) at each end so it starts and stops under
+              the outer circles instead of running to the container edge. */}
+          <span
+            aria-hidden="true"
+            className="absolute left-[10%] right-[10%] top-[17px] h-px bg-line min-[768px]:hidden"
+          />
+
           {stages.map((s, i) => {
             const isActive = i === active;
             /* later stages sit deeper in brand blue */
             const tint = 0.05 + i * 0.035 + (isActive ? 0.06 : 0);
             return (
-              <button
-                key={s.n}
-                ref={(el) => {
-                  tabRefs.current[i] = el;
-                }}
-                role="tab"
-                id={`stage-tab-${s.n}`}
-                aria-selected={isActive}
-                aria-controls={`stage-panel-${s.n}`}
-                tabIndex={isActive ? 0 : -1}
-                onClick={() => select(i)}
-                style={{ "--h": `${186 + i * 28}px` } as CSSProperties}
-                className={[
-                  "group relative flex-1 overflow-hidden rounded-[18px] border bg-white p-5 text-left",
-                  /* --dur-panel is the site's 260ms token, set as an arbitrary
-                     property: an arbitrary duration-* value is ambiguous under
-                     tailwindcss-animate (it claims duration-* too), so Tailwind
-                     emitted nothing and the cards ran at the 150ms default. */
-                  "transition-[border-color,box-shadow,transform] ease-reel [transition-duration:var(--dur-panel)]",
-                  "min-[900px]:h-[var(--h)]",
-                  /* an arbitrary box-shadow property, not the shadow utility:
-                     given a bare var() that utility is read as a shadow colour,
-                     so no shadow was drawn at all */
-                  isActive
-                    ? "border-blue [box-shadow:var(--shadow-fin)]"
-                    : `${HAIR} hover:border-blue/40 hover:-translate-y-1 hover:[box-shadow:var(--shadow-fin)]`,
-                ].join(" ")}
-              >
-                {/* pinstripes, fading downward */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(to right, var(--hair) 0 1px, transparent 1px 26px)",
-                    maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
-                    WebkitMaskImage:
-                      "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
-                  }}
-                />
-                {/* brand wash, deepening up the curve */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3"
-                  style={{
-                    background: `linear-gradient(to top, rgba(15,94,151,${tint}), transparent)`,
-                  }}
-                />
-
-                <span className="relative flex h-full flex-col">
+              <Fragment key={s.n}>
+                {/* 768–899 the rail sits between two steps and absorbs the
+                    slack: a step is 36 + 9 + its label, and the widest step is
+                    stage 02 at 118.1px, so the five measure 548px of the 712px
+                    container at 768px wide (768 − 56) and the four rails split
+                    the remaining 164px — 24.9px each plus 8px of margin a side,
+                    4.9px above their 20px floor. Wider they grow until the
+                    container caps at 768px, so 38.9px from about 824 up.
+                    The floor binds only if a label gains ~4px,
+                    and then the row overflows rather than shrinks — which is
+                    what the 76px cap and [hyphens:auto] hold off.
+                    Hidden below 768, where the absolute rail above draws the
+                    line instead, and above 899, where the cards take over. */}
+                {i > 0 && (
                   <span
-                    className={`${LABEL} ${isActive ? "text-blue" : "text-[color:var(--ink-muted)]"}`}
-                  >
-                    Stage {s.n}
-                  </span>
-                  <span className="mt-3 block font-heading text-[17px] font-semibold leading-snug text-[color:var(--ink-deep)]">
-                    {s.name}
-                  </span>
-                  <span className="mt-1.5 block text-[13px] italic text-[color:var(--ink-muted)]">
-                    {s.teaser}
-                  </span>
+                    aria-hidden="true"
+                    className="mx-[8px] hidden h-px min-w-[20px] flex-1 bg-line min-[768px]:block min-[900px]:hidden"
+                  />
+                )}
 
-                  <span className="mt-auto block pt-6">
-                    <span className="block h-[3px] w-full rounded-full bg-soft">
-                      <span
-                        className="block h-full rounded-full bg-blue transition-[width] duration-500 ease-reel"
-                        style={{ width: `${((i + 1) / stages.length) * 100}%` }}
-                      />
+                <button
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
+                  role="tab"
+                  id={`stage-tab-${s.n}`}
+                  aria-selected={isActive}
+                  aria-controls={`stage-panel-${s.n}`}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => select(i)}
+                  style={{ "--h": `${186 + i * 28}px` } as CSSProperties}
+                  className={[
+                    "group relative rounded-[18px] text-left",
+                    /* --dur-panel is the site's 260ms token, set as an arbitrary
+                       property: an arbitrary duration-* value is ambiguous under
+                       tailwindcss-animate (it claims duration-* too), so Tailwind
+                       emitted nothing and the cards ran at the 150ms default. */
+                    "transition-[border-color,box-shadow,transform] ease-reel [transition-duration:var(--dur-panel)]",
+                    /* Every card utility is scoped to ≥900. Below that the tab
+                       is the step face alone: no border, no padding, no card
+                       background, and overflow left visible so the active
+                       circle's glow is not clipped. `flex-1` in particular has
+                       to stay off between 768 and 899 — a growing step would
+                       eat the width the rails are there to take. */
+                    "min-[900px]:h-[var(--h)] min-[900px]:flex-1 min-[900px]:overflow-hidden min-[900px]:border min-[900px]:bg-white min-[900px]:p-5",
+                    /* an arbitrary box-shadow property, not the shadow utility:
+                       given a bare var() that utility is read as a shadow colour,
+                       so no shadow was drawn at all */
+                    isActive
+                      ? "min-[900px]:border-blue min-[900px]:[box-shadow:var(--shadow-fin)]"
+                      : "min-[900px]:border-[color:var(--hair)] min-[900px]:hover:border-blue/40 min-[900px]:hover:-translate-y-1 min-[900px]:hover:[box-shadow:var(--shadow-fin)]",
+                  ].join(" ")}
+                >
+                  {/* pinstripes, fading downward */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 hidden min-[900px]:block"
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(to right, var(--hair) 0 1px, transparent 1px 26px)",
+                      maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
+                      WebkitMaskImage:
+                        "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 78%)",
+                    }}
+                  />
+                  {/* brand wash, deepening up the curve */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-2/3 min-[900px]:block"
+                    style={{
+                      background: `linear-gradient(to top, rgba(15,94,151,${tint}), transparent)`,
+                    }}
+                  />
+
+                  {/* ------------------------------------------ step face */}
+                  {/* The hit target is this span, not the circle: 34px of
+                      circle stacked on a label clears 44px on its own below
+                      768 (34 + 9 + a 13px line = 56, in a 70px column), but
+                      the 768–899 row is one 36px line, so `py-1` — 4.5px at
+                      this 18px root — takes it to 45px. The padding sits on
+                      the face rather than the button so it cannot collide
+                      with the card's `p-5` in the ≥900 cascade. */}
+                  <span className="flex flex-col items-center gap-[9px] text-center min-[768px]:flex-row min-[768px]:py-1 min-[768px]:text-left min-[900px]:hidden">
+                    <span
+                      className={[
+                        "grid h-[34px] w-[34px] flex-none place-items-center rounded-full border font-heading text-[12px] font-semibold leading-none tracking-[0.02em]",
+                        "min-[768px]:h-[36px] min-[768px]:w-[36px] min-[768px]:text-[12.5px]",
+                        isActive
+                          ? "border-blue bg-blue text-white shadow-[0_10px_20px_-12px] shadow-blue/75"
+                          : "border-[color:var(--hair)] bg-white text-[color:var(--ink-muted)]",
+                      ].join(" ")}
+                    >
+                      {s.n}
+                    </span>
+
+                    <span
+                      className={[
+                        /* hyphens + overflow-wrap are the guard for a label
+                           that outgrows its column; text-wrap:balance is not,
+                           every step label is a single word. */
+                        "text-[10px] leading-[1.3] [hyphens:auto] [overflow-wrap:break-word]",
+                        "min-[768px]:max-w-[76px] min-[768px]:text-[11.5px] min-[768px]:leading-[1.35]",
+                        isActive
+                          ? "font-bold text-[color:var(--ink-deep)]"
+                          : "font-medium text-[color:var(--ink-muted)]",
+                      ].join(" ")}
+                    >
+                      {/* A column is ~70px at 354px, so below 768 the label is
+                          the short name. Stage 04 overrides it: `short` is
+                          "Decision intel." for the comparison grid, which is
+                          three lines here. */}
+                      <span className="min-[768px]:hidden">
+                        {"stepLabel" in s ? s.stepLabel : s.short}
+                      </span>
+                      {/* From 768 the full stage name, a word to a line — both
+                          words of every name fit the 76px cap. */}
+                      <span className="hidden min-[768px]:flex min-[768px]:flex-col">
+                        {s.name.split(" ").map((w) => (
+                          <span key={w}>{w}</span>
+                        ))}
+                      </span>
                     </span>
                   </span>
-                </span>
-              </button>
+
+                  {/* ------------------------------------------ card face */}
+                  <span className="relative hidden h-full flex-col min-[900px]:flex">
+                    <span
+                      className={`${LABEL} ${isActive ? "text-blue" : "text-[color:var(--ink-muted)]"}`}
+                    >
+                      Stage {s.n}
+                    </span>
+                    <span className="mt-3 block font-heading text-[17px] font-semibold leading-snug text-[color:var(--ink-deep)]">
+                      {s.name}
+                    </span>
+                    <span className="mt-1.5 block text-[13px] italic text-[color:var(--ink-muted)]">
+                      {s.teaser}
+                    </span>
+
+                    <span className="mt-auto block pt-6">
+                      <span className="block h-[3px] w-full rounded-full bg-soft">
+                        <span
+                          className="block h-full rounded-full bg-blue transition-[width] duration-500 ease-reel"
+                          style={{ width: `${((i + 1) / stages.length) * 100}%` }}
+                        />
+                      </span>
+                    </span>
+                  </span>
+                </button>
+              </Fragment>
             );
           })}
         </div>
