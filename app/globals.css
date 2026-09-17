@@ -1,6 +1,7 @@
-/* Sora 800 is requested by 13 rules in this file (every stat numeral); without
-   it in the import the browser silently renders them at 700. */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+/* Every weight requested below has to be in this import, or the browser
+   silently substitutes the nearest one it has: 800 (the bold numerals) would
+   render at 700, and 300 (the Achievements figures) at 400. */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -985,40 +986,52 @@ html{font-size:112.5%}
   .locmap-img{transform:none !important}
 }
 
-/* ---------- achievements bento ---------- */
-.stat-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.stat-hero{grid-column:span 3;border-radius:22px;padding:40px 36px;min-height:214px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.stat-hero.is-blue{background:var(--blue);color:#fff}
-.stat-hero.is-dark{background:var(--dark);color:#fff}
-/* soft corner light, same device as the hero cards */
-.stat-hero::after{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);pointer-events:none}
-.stat-hero-value{font:800 clamp(42px,4.4vw,66px)/1 Sora;letter-spacing:-.055em;position:relative}
-.stat-hero-label{margin:18px 0 0;font-size:0.8889rem;line-height:1.5;color:rgba(255,255,255,.74);max-width:24ch;position:relative}
-
-.stat-tile{grid-column:span 2;border-radius:18px;background:#fff;border:1px solid var(--line);padding:26px 24px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out)}
-.stat-tile-value{font:800 clamp(29px,2.5vw,40px)/1 Sora;letter-spacing:-.05em;color:var(--ink)}
-.stat-tile-label{margin:14px 0 0;font-size:0.8333rem;line-height:1.5;color:#6B7480}
-@media(hover:hover) and (pointer:fine){
-  .stat-tile:hover{border-color:#C3CCD1;box-shadow:0 24px 48px -26px rgba(16,45,68,.24)}
+/* ---------- achievements: photo card + three figures ----------
+   Breakpoint measurements are in components/sections/Achievements.tsx. */
+.metrics .section-head{margin-bottom:48px}
+.ach-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);column-gap:72px}
+.ach-card{position:relative;overflow:hidden;min-height:clamp(360px,27.78vw,400px);
+  border-radius:24px;background:var(--ink-deep);padding:44px 48px;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.ach-card img{object-fit:cover}
+.ach-card::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.5) 45%,rgba(8,14,22,.12) 100%)}
+.ach-card-value,.ach-card-label{position:relative;z-index:1}
+.ach-card-value{font:300 clamp(60px,7.2222vw,104px)/1 Sora,sans-serif;letter-spacing:-.035em;color:var(--white)}
+.ach-card-label{margin:18px 0 0;font-size:1rem;line-height:1.4;color:rgba(255,255,255,.88)}
+.ach-figures{display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}
+.ach-figure{display:flex;flex-direction:column;justify-content:flex-end}
+.ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-muted);text-wrap:balance}
+.ach-figure-value{margin-top:10px;font:300 clamp(44px,4.1667vw,60px)/1 Sora,sans-serif;
+  letter-spacing:-.035em;color:var(--ink-deep)}
+/* the container is pinned at 920 here, so the type holds still with it */
+@media(min-width:1024px) and (max-width:1279px){
+  .ach-card-value{font-size:74px}
+  .ach-figure-value{font-size:44px}
 }
 
-@media(max-width:1279px){
-  .stat-hero{grid-column:span 3;padding:32px 28px;min-height:190px}
-  .stat-tile{grid-column:span 3;min-height:150px}
+@media(max-width:1023px){
+  .ach-grid{grid-template-columns:1fr;row-gap:48px}
+  .ach-card{min-height:320px}
+  .ach-figures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;padding:0}
 }
 @media(max-width:767px){
-  .stat-bento{grid-template-columns:1fr;gap:10px}
-  .stat-hero,.stat-tile{grid-column:1/-1;min-height:0}
-  .stat-hero{padding:28px 24px}
-  .stat-tile{padding:22px 20px}
-  .stat-hero-label,.stat-tile-label{max-width:none}
+  .metrics .section-head{margin-bottom:32px}
+  .ach-grid{row-gap:32px}
+  .ach-card{min-height:260px;border-radius:20px;padding:26px 24px}
+  .ach-card::after{background:linear-gradient(0deg,rgba(8,14,22,.82) 0%,rgba(8,14,22,.45) 60%,rgba(8,14,22,.2) 100%)}
+  .ach-card-value{font-size:60px}
+  .ach-card-label{margin-top:12px;font-size:0.8333rem;color:rgba(255,255,255,.9)}
+  .ach-figures{display:flex;flex-direction:column;gap:28px}
+  .ach-figure-label{font-size:0.7778rem}
+  .ach-figure-value{margin-top:8px;font-size:44px}
 }
 
 /* ---------- services panels ---------- */
 .solution-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
 .solution-count{font:800 0.6667rem Sora;letter-spacing:.08em;line-height:1;padding:5px 10px;border-radius:999px;border:1px solid rgba(16,45,68,.15);color:#6B7480;flex:none}
 .solution-card.blue .solution-count,.solution-card.dark .solution-count{border-color:rgba(255,255,255,.26);color:rgba(255,255,255,.82)}
-/* same corner light as the achievement panels, so the two sections rhyme */
+/* soft corner light on the coloured solution cards */
 .solution-card.blue::after,.solution-card.dark::after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13) 0%,rgba(255,255,255,0) 70%);pointer-events:none}
 .solution-card > *{position:relative}
 @media(hover:hover) and (pointer:fine){
