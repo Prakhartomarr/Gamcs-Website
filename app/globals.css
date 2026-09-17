@@ -2008,59 +2008,175 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:620px){.clients{padding:60px 0}
   .clients-head{margin-bottom:36px}}
 
-/* ---- the gap (data to decision): the today path cascades away from the
-   decision while the GAMCS path runs straight. From the design canvas's
-   "Cascade" direction, on site tokens: its sampled ink/blue map to
-   --ink-deep/--blue, and its pale greys are darkened to --ink-muted wherever
-   they carry text (the step numbers measured ~1.8:1 as drawn). ---- */
-.d2d{background:var(--band-white)}
+/* ---- the gap (data to decision): two panels — the typical path from data to
+   a decision, and the same path with GAMCS. From the gap-panels design canvas,
+   on site tokens: its #F1F3F4 / #D9DEE1 / #0F5E97 / #0D1828 / #55606F are
+   --soft / --line / --blue / --ink-deep / --ink-muted, and its two panel
+   washes are the same color-mix of --blue the canvas sampled them from. The
+   accents are the exception: the canvas's #B0554E and #3F7F5C both measure
+   4.43:1 on their own panel, so they are darkened one notch here (same hue
+   family) to 4.9:1 — they carry the rail labels.
+
+   The connectors are CSS, not the canvas's fixed-coordinate SVG, because the
+   panel is 612px only at 1440. Each lane is a grid with the same column count
+   and gap as the chips or the cards it meets, and every cell paints a 1px stem
+   plus a half-rail reaching the next cell's centre — chained, that is the
+   horizontal rail, on the card centres at any width. Below 1280/900 the grids
+   lose columns, so the lane loses the matching cells and the stub that would
+   otherwise overshoot past the last one. ---- */
+.d2d{background:var(--band-white);--gap-red:#A74E48;--gap-green:#3A7755}
 .d2d .fin-h2{text-wrap:balance}
 .d2d .fin-lead{max-width:66ch}
 .d2d-accent{color:var(--blue)}
-.d2d-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;
-  align-items:start;margin-top:64px}
-.d2d-label{display:block;font:600 12px/1.5 Sora,sans-serif;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink-muted)}
-.d2d-path{list-style:none;margin:20px 0 0;padding:0;--step:28px;--link:var(--line)}
-/* each step sits --i notches right; the first (sources) row has none */
-.d2d-path>li{padding-left:calc(var(--i,0) * var(--step))}
-/* the connector drops from this row's chip (22px number + 16px gap = 38px in);
-   the next row starts a notch further right, so the path visibly drifts */
-.d2d-path>li:not(:last-child)::after{content:"";display:block;width:1px;height:26px;
-  margin-left:38px;background:var(--link)}
-.d2d-row{display:flex;align-items:center;gap:16px}
-.d2d-row--wrap{align-items:flex-start}
-.d2d-no{flex:none;width:22px;font:600 12px/1 Sora,sans-serif;letter-spacing:.06em;
-  color:var(--ink-muted)}
-.d2d-row--wrap .d2d-no{padding-top:15px}
-.d2d-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
-.d2d-plus{font-size:13px;color:var(--ink-muted)}
-.d2d-chip{display:inline-flex;align-items:center;padding:12px 18px;background:var(--white);
-  border:1px solid var(--line);border-radius:10px;font-size:.7778rem;font-weight:500;
-  line-height:1.2;color:var(--ink-deep)}
-.d2d-chip--src{padding:11px 15px}
-/* steps that exist only because the report didn't answer the question */
-.d2d-chip--detour{background:var(--soft);border-style:dashed;color:var(--ink-muted)}
-/* the last one fades a notch further; 92% keeps it at 4.7:1 on --soft */
-.d2d-chip--end{color:color-mix(in srgb,var(--ink-muted) 92%,var(--white))}
-.d2d-panel{padding:34px 36px 38px;border-radius:20px;
+.d2d-grid{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:56px;margin-top:64px}
+
+/* panels */
+.d2d-panel{--cols:4;--card-gap:28px;--chip-cols:3;--chip-gap:10px;
+  --accent:var(--gap-red);--flow:color-mix(in srgb,var(--line) 85%,var(--ink-muted));
+  display:flex;flex-direction:column;padding:26px 26px 24px;border-radius:20px;
+  background:var(--soft);border:1px solid var(--line)}
+.d2d-panel--gamcs{--accent:var(--gap-green);
+  --flow:color-mix(in srgb,var(--blue) 30%,var(--white));
   background:color-mix(in srgb,var(--blue) 5%,var(--white));
-  border:1px solid color-mix(in srgb,var(--blue) 14%,var(--white))}
-.d2d-panel .d2d-label{color:var(--blue)}
-.d2d-panel .d2d-path{margin-top:22px;--link:color-mix(in srgb,var(--blue) 35%,var(--white))}
-.d2d-panel .d2d-path>li:not(:last-child)::after{height:22px}
-.d2d-panel .d2d-no{color:var(--blue)}
-.d2d-chip--gamcs{padding:14px 22px;border-color:var(--blue);font-size:.8333rem;
-  font-weight:600;color:var(--blue)}
-.d2d-chip--act{background:var(--blue);color:var(--white);
-  box-shadow:0 12px 26px -16px color-mix(in srgb,var(--blue) 95%,transparent)}
+  border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
+.d2d-p-title{margin:0;font:600 .7222rem/1.3 Sora,sans-serif;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-deep)}
+.d2d-panel--gamcs .d2d-p-title{color:var(--blue)}
+.d2d-p-sub{margin:7px 0 0;font-size:.6944rem;line-height:1.5;color:var(--ink-muted)}
+
+/* the canvas's line idiom, shared with the rest of the site's stroke icons */
+.d2d-chip svg,.d2d-card-ico svg,.d2d-arrow,.d2d-turn svg{fill:none;stroke:currentColor;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* chips: the systems feeding the path */
+.d2d-chips{display:grid;grid-template-columns:repeat(var(--chip-cols),minmax(0,1fr));
+  gap:var(--chip-gap);list-style:none;margin:20px 0 0;padding:0}
+/* Three columns only while the container is the full 1280, which measures a
+   612px panel and leaves 110px+ of label. Below 1280 the container is pinned to
+   920px or less, a panel is 442px, and three columns leave exactly 70px — under
+   "Automation" at 70.2px, the widest label word that cannot break, which then
+   splits as "Automatio / n". Two columns from there down. `anywhere` is the
+   guard either way: it is the one overflow-wrap value that also shrinks
+   min-content, so a label longer than its column breaks instead of escaping
+   the chip. */
+.d2d-chip{display:flex;align-items:center;gap:9px;padding:11px 12px;background:var(--white);
+  border:1px solid var(--line);border-radius:10px;font-size:.6944rem;font-weight:500;
+  line-height:1.2;color:var(--ink-deep);overflow-wrap:anywhere;hyphens:auto}
+.d2d-chip svg{flex:none;width:18px;height:18px}
+.d2d-panel--gamcs .d2d-chip{border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
+.d2d-panel--gamcs .d2d-chip svg{color:var(--blue)}
+
+/* connectors */
+.d2d-lane{display:grid;height:22px}
+.d2d-lane+.d2d-lane{height:34px}
+.d2d-flow--hub .d2d-lane,.d2d-flow--hub .d2d-lane+.d2d-lane{height:16px}
+/* the canvas draws the hub's own drop shorter than the chips' — 18 + 30, not 22 + 34 */
+.d2d-hub+.d2d-flow .d2d-lane{height:18px}
+.d2d-hub+.d2d-flow .d2d-lane+.d2d-lane{height:30px}
+.d2d-lane--chips{grid-template-columns:repeat(var(--chip-cols),minmax(0,1fr));gap:var(--chip-gap)}
+.d2d-lane--cards{grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:var(--card-gap)}
+.d2d-lane--one{grid-template-columns:1fr}
+.d2d-lane i{position:relative;
+  background:linear-gradient(var(--flow),var(--flow)) 50% 0/1px 100% no-repeat}
+.d2d-lane i:not(:last-child)::before{content:"";position:absolute;left:50%;height:1px;
+  background:var(--flow)}
+.d2d-lane--chips i:not(:last-child)::before{right:calc(-50% - var(--chip-gap))}
+.d2d-lane--cards i:not(:last-child)::before{right:calc(-50% - var(--card-gap))}
+/* both lanes draw the rail on the edge they share, so it spans the wider of the two */
+.d2d-lane:first-child i::before{bottom:0}
+.d2d-lane+.d2d-lane i::before{top:0}
+/* where a connector meets a card */
+.d2d-lane+.d2d-lane--cards i::after{content:"";position:absolute;left:50%;bottom:0;
+  width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--accent)}
+
+/* the one place the three feeds meet */
+.d2d-hub{display:flex;flex-direction:column;align-items:center;gap:3px;width:max-content;
+  max-width:100%;margin:0 auto;padding:14px 30px;background:var(--white);border-radius:14px;
+  border:1px solid color-mix(in srgb,var(--blue) 30%,var(--white));
+  box-shadow:0 14px 30px -20px color-mix(in srgb,var(--blue) 90%,transparent)}
+.d2d-hub-name{font:700 .9444rem/1.2 Sora,sans-serif;letter-spacing:-.01em;color:var(--blue)}
+.d2d-hub-sub{font-size:.5833rem;font-weight:500;line-height:1.3;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-muted);text-align:center}
+
+/* the path */
+.d2d-cards{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));
+  gap:var(--card-gap);list-style:none;margin:0;padding:0}
+.d2d-card{position:relative;display:flex;flex-direction:column;gap:9px;padding:15px 13px 16px;
+  background:var(--white);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 10px 22px -18px rgba(16,45,68,.45)}
+.d2d-panel--gamcs .d2d-card{border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
+.d2d-card-ico{line-height:0;color:var(--ink-muted)}
+.d2d-card-ico svg{width:22px;height:22px}
+.d2d-panel--gamcs .d2d-card-ico{color:var(--blue)}
+/* the stage the whole panel is about: delayed, or acted on */
+.d2d-cards li:last-child .d2d-card-ico{color:var(--accent)}
+/* At 1280-1348, where four cards first fit one row, the card's content box is
+   78.5px and "investigation" is 87px: hyphenate rather than crowd the right
+   padding. Not on the caption — measured there, it only added a line and left
+   the same 1.7px of "Spreadsheets," in the padding. */
+.d2d-card-t{font:600 .7222rem/1.3 Sora,sans-serif;letter-spacing:-.01em;
+  color:var(--ink-deep);hyphens:auto}
+.d2d-card-c{font-size:.6389rem;line-height:1.45;color:var(--ink-muted)}
+/* sits in the gap before its own card, so it only exists while the row is one line */
+.d2d-arrow{position:absolute;top:50%;left:calc(var(--card-gap) / -2 - 6px);margin-top:-6px;
+  width:12px;height:12px;stroke-width:1.8;
+  color:color-mix(in srgb,var(--ink-muted) 55%,var(--white))}
+.d2d-panel--gamcs .d2d-arrow{color:color-mix(in srgb,var(--blue) 45%,var(--white))}
+
+/* how long the path takes */
+.d2d-rail{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:22px;
+  color:var(--accent)}
+.d2d-rail-ln{flex:1;height:1px;background:currentColor;opacity:.4}
+.d2d-rail-dot{flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
+.d2d-rail-lbl{font:600 .6111rem/1 Sora,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+
+/* the turn from one path to the other */
+.d2d-turn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;
+  place-items:center;width:32px;height:32px;border-radius:50%;background:var(--white);
+  border:1px solid var(--line);box-shadow:0 8px 18px -12px rgba(16,45,68,.4)}
+.d2d-turn svg{width:14px;height:14px;stroke-width:2;color:var(--ink-muted)}
+
 .d2d-close{margin-top:64px;padding-top:28px;border-top:1px solid var(--line)}
 .d2d-close p{margin:0;max-width:1000px;font:500 clamp(19px,1.8vw,26px)/1.5 Sora,sans-serif;
   letter-spacing:-.015em;color:var(--ink-deep)}
-@media (max-width:900px){
+
+/* Chips and cards drop together at the same edge, because the same pinned
+   container drives both: below 1280 .container is 920px or less, a side-by-side
+   panel is 442px, four cards across that is four words a line, and three chip
+   columns leave 70px of label against a 70.2px "Automation". Two per row from
+   here down, stacked panels included. The arrow lives in the gap of a single
+   row, so it goes with it. */
+@media (max-width:1279px){
+  .d2d-panel{--cols:2;--card-gap:12px;--chip-cols:2}
+  .d2d-lane--cards i:nth-child(n+3){display:none}
+  .d2d-lane--cards i:nth-child(2)::before{display:none}
+  .d2d-lane--chips i:nth-child(3){display:none}
+  .d2d-lane--chips i:nth-child(2)::before{display:none}
+  /* an odd last chip takes the row rather than leaving a hole beside it */
+  .d2d-chip:last-child:nth-child(odd){grid-column:1/-1}
+  .d2d-arrow{display:none}
+  .d2d-grid{gap:36px}
+}
+@media (max-width:899px){
   .d2d-grid{grid-template-columns:1fr;gap:40px;margin-top:40px}
-  .d2d-path{--step:18px}
-  .d2d-panel{padding:24px 20px 26px;border-radius:18px}
+  .d2d-panel{--chip-gap:8px;--card-gap:10px;padding:20px 18px 18px;
+    border-radius:18px}
+  .d2d-p-title{font-size:.6667rem}
+  .d2d-p-sub{margin-top:6px;font-size:.6667rem}
+  .d2d-chip{gap:8px;padding:10px 11px;font-size:.6667rem}
+  .d2d-chip svg{width:17px;height:17px}
+  .d2d-hub{padding:12px 26px}
+  .d2d-hub-name{font-size:.8889rem}
+  .d2d-card{gap:8px;padding:14px 12px 15px}
+  .d2d-card-ico svg{width:21px;height:21px}
+  .d2d-card-t{font-size:.6944rem}
+  .d2d-card-c{font-size:.6111rem}
+  .d2d-rail{gap:10px;padding-top:18px}
+  .d2d-rail-dot{width:6px;height:6px}
+  .d2d-rail-lbl{font-size:.5556rem}
+  /* the turn only means anything while the two panels sit side by side */
+  .d2d-turn{display:none}
   .d2d-close{margin-top:40px;padding-top:20px}
 }
 

@@ -1035,32 +1035,61 @@ export const clients = {
 } as const;
 
 /**
- * "The gap" — the band straight after the client logos. Copy as written in the
- * "Cascade" direction of the GAMCS — Data to Decision design canvas; it is not
- * on gamcs.in.
+ * "The gap" — the band straight after the client logos. Two panels: the
+ * typical path from data to a decision, and the same path with GAMCS. Copy,
+ * chips, cards and rail labels as written in the gap-panels design canvas; it
+ * is not on gamcs.in. Each `icon` keys into GAP_ICONS in
+ * components/ui/stroke-icons.tsx — icons are not copy, so they live there.
  */
 export const dataToDecision = {
   eyebrow: "The gap",
   headingLead: "Your Numbers Aren't the Problem.",
   headingAccent: "The Distance to the Decision Is.",
   body:
-    "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks \u201cwhy?\u201d Finance goes back and investigates manually \u2014 pulling the same data apart a second time, days after the decision actually needed to be made.",
+    "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks “why?” Finance goes back and investigates manually — pulling the same data apart a second time, days after the decision actually needed to be made.",
   today: {
-    label: "Today, the path from data to decision looks like this",
-    /** Step 01: the systems the data is scattered across. */
-    sources: ["ERP", "CRM", "Excel", "HRIS", "Operations"],
-    /** Steps 02–05. `detour` steps (drawn dashed) exist only because the report
-     *  didn't answer the question it was built for. */
-    steps: [
-      { label: "Reporting", detour: false },
-      { label: "\u201cWhy?\u201d", detour: true },
-      { label: "Manual investigation", detour: true },
-      { label: "Decision delayed", detour: true },
+    title: "The typical reality",
+    subtitle: "Disconnected data. Longer paths. Delayed decisions.",
+    /** The systems the data is scattered across — all feeding the same manual path. */
+    chips: [
+      { label: "ERP", icon: "database" },
+      { label: "CRM", icon: "contacts" },
+      { label: "Excel", icon: "sheet" },
+      { label: "HRIS", icon: "people" },
+      { label: "Operations", icon: "gear" },
+      { label: "Other tools", icon: "more" },
     ],
+    /** The path itself. The last stage carries the panel's accent colour. */
+    steps: [
+      { label: "Reporting", caption: "What happened?", icon: "report" },
+      { label: "Questions", caption: "Why did it happen?", icon: "question" },
+      {
+        label: "Manual investigation",
+        caption: "Spreadsheets, multiple systems, email threads",
+        icon: "search",
+      },
+      { label: "Decision delayed", caption: "Opportunities lost", icon: "clock" },
+    ],
+    /** How long that path takes, on the rail under the cards. */
+    rail: "Days / weeks",
   },
   gamcs: {
-    label: "With GAMCS, it looks like this",
-    steps: ["Data", "Insight", "Decision", "Action"],
+    title: "A better way with GAMCS",
+    subtitle: "Connected data. Clear insight. Faster decisions.",
+    chips: [
+      { label: "Data integration", icon: "database" },
+      { label: "Automation", icon: "cycle" },
+      { label: "AI & analytics", icon: "sparkle" },
+    ],
+    /** The one place the three feeds meet, between the chips and the path. */
+    hub: { name: "GAMCS", caption: "Finance · Data · Technology" },
+    steps: [
+      { label: "Data", caption: "Integrated and reliable", icon: "database" },
+      { label: "Insight", caption: "What's happening and why", icon: "bars" },
+      { label: "Decision", caption: "What should we do?", icon: "bulb" },
+      { label: "Action", caption: "Measurable impact", icon: "rocket" },
+    ],
+    rail: "Hours / days",
   },
   closeLead: "More reporting doesn't close that gap.",
   closeAccent: "A shorter distance between the number and the decision does.",
