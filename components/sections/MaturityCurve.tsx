@@ -303,9 +303,11 @@ export default function MaturityCurve() {
       <div className="container">
         {/* The text, then the stage card under it at full width — the same
             stack at every width, so the card reads as the answer to the
-            stepper directly below it. */}
+            stepper directly below it. The text is centred with .fin-center,
+            like the Solutions and How We Help heads, and so goes left-aligned
+            at 620px and below; the card's contents stay left-aligned. */}
         <div className="grid gap-10">
-        <div className="reveal">
+        <div className="fin-center reveal">
           <span className="fin-eyebrow">
             <i aria-hidden="true" />
             {maturityCurve.eyebrow}
