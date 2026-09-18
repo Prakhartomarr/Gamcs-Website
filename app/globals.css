@@ -2192,7 +2192,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .d2d-pn-h{display:flex;align-items:center;gap:7px}
 .d2d-pn-h i{flex:none;width:7px;height:7px;border-radius:2px;background:var(--acc)}
 .d2d-pn-h b{font:600 13.5px/1.2 Sora,sans-serif;color:var(--ink-deep)}
-.d2d-pn-s{margin:2px 0 0;font-size:11.5px;line-height:1.3;color:var(--ink-muted)}
+.d2d-pn-s{margin:2px 0 0;font-size:12px;line-height:1.3;color:var(--ink-muted)}
 .d2d-pn-chips{display:flex;flex-wrap:wrap;gap:5px;list-style:none;margin:8px 0 0;padding:0}
 .d2d-pn-chips li{display:inline-flex;align-items:center;height:22px;padding:0 8px;
   border:1px solid var(--line);border-radius:999px;background:#fff;
@@ -2217,7 +2217,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .d2d-steps{flex:1;min-width:0;list-style:none;margin:0;padding:8px 0 0}
 .d2d-steps li{height:30px}
 .d2d-steps b{display:block;font:600 13px/1.15 Sora,sans-serif;color:var(--ink-deep)}
-.d2d-steps span{display:block;font-size:11px;line-height:1.25;color:var(--ink-muted);
+.d2d-steps span{display:block;font-size:12px;line-height:1.25;color:var(--ink-muted);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .d2d-hubrow{display:flex;align-items:center;gap:7px}
 .d2d-steps .d2d-hubrow{height:22px}
@@ -2321,7 +2321,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .partners{padding-bottom:60px}
   .partners-logos img{max-width:100%;max-height:40px}
 }
-@media (max-width:434px){.partners-logos{gap:16px}}
+@media (max-width:434px){.partners-logos{gap:16px}
+  .partners-logos img[src*="akshar"]{scale:1.2}}
 
 /* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
 /* Jump rail. Sticks under the 90px header, scrolls sideways rather than

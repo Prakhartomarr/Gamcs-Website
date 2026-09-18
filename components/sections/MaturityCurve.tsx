@@ -408,7 +408,7 @@ export default function MaturityCurve() {
 
                   <span className="flex min-w-0 flex-col gap-[3px]">
                     <span
-                      className={`${tabText} text-[10px] min-[768px]:text-[11.5px] min-[1024px]:hidden`}
+                      className={`${tabText} text-[11px] min-[768px]:text-[11.5px] min-[1024px]:hidden`}
                     >
                       {s.short}
                     </span>
