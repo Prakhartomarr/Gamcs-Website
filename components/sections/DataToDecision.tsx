@@ -479,6 +479,9 @@ export default function DataToDecision() {
     <section className="section d2d" id="data-to-decision" aria-labelledby="d2d-heading" ref={rootRef}>
       <div className="container">
         <div className="d2d-head reveal">
+          <span className="eyebrow-num" aria-hidden="true">
+            01
+          </span>
           <span className="eyebrow-pill">{d.eyebrow}</span>
           <h2 id="d2d-heading" className="fin-h2">
             {d.headingLead}

@@ -55,7 +55,7 @@ export default function Testimonials() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow label="Testimonials" />
+            <SectionEyebrow label="Testimonials" index="06" />
             <h2>{testimonials.heading}</h2>
           </div>
         </div>

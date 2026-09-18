@@ -22,7 +22,7 @@ export default function WhoWeAre() {
       <div className="container">
         <div className="who-row">
           <div className="who-copy reveal">
-            <SectionEyebrow label="Who we are" />
+            <SectionEyebrow label="Who we are" index="07" />
             <h2 className="who-heading">{story.heading}</h2>
             <p className="who-lead">{story.lead}</p>
             {/* The section opens the story and hands the rest to /who-we-are.

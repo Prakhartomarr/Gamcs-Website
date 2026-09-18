@@ -1389,6 +1389,25 @@ html[data-cookie-banner] .sticky-cta{display:none}
   .eyebrow-row{margin-bottom:20px}
 }
 
+/* ---- numbered eyebrows, phones only ----
+   On phones the homepage sections count themselves: "05 —— OUR ACHIEVEMENTS"
+   replaces the pill. The number is an aria-hidden span rendered before each
+   pill (SectionEyebrow's `index`, or inline in the sections that draw their
+   own .fin-eyebrow / .eyebrow-pill); the hairline is its ::after. Above 768px
+   the span is display:none and the pill is untouched. */
+.eyebrow-num{display:none}
+@media (max-width:768px){
+  .eyebrow-num{display:inline-flex;align-items:center;gap:12px;margin-right:12px;
+    font:600 11px/1 Sora,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-deep)}
+  .eyebrow-num::after{content:"";width:24px;height:1px;background:var(--ink-deep)}
+  .eyebrow-num + .eyebrow-pill,.eyebrow-num + .fin-eyebrow{height:auto;padding:0;border:0;background:none;
+    box-shadow:none;font:600 11px/1 Sora,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
+  .eyebrow-num + .fin-eyebrow i{display:none}
+  .eyebrow-row{gap:0;margin-bottom:20px}
+  /* the inline pills have no row: 16px + the line box's 4px of slack = 20px */
+  .eyebrow-num + .fin-eyebrow + .fin-h2{margin-top:16px}
+}
+
 /* ---- hero shader stack (replaces the canvas ribbon field) ----
    The fade lives here, not in the hero's GSAP timeline. The shader is a
    dynamic(ssr:false) import, so it mounts *after* that timeline has already

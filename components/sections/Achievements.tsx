@@ -48,7 +48,7 @@ export default function Achievements() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow label={achievements.heading} />
+            <SectionEyebrow label={achievements.heading} index="05" />
             <h2>{achievements.lead}</h2>
           </div>
         </div>
