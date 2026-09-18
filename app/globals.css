@@ -1784,6 +1784,33 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-bottom{flex-direction:column;align-items:stretch;gap:26px}
   .hero-bottom .hero-lede{max-width:min(62%,560px)}
 }
+/* ---- hero, phones (<=768): one screen tall, the headline at the top and the
+   lead-in, paragraph and button pinned to its foot; the shader shows through
+   the middle. Later than the <=767 rules above so it wins at equal
+   specificity; 768 itself is a phone here, not the tablet rule's floor. ---- */
+@media (max-width:768px){
+  .hero{min-height:100vh;min-height:100svh}
+  /* width:100% again: .hero-inner is also a .container, and the <=767
+     .container rule (calc(100% - 36px)) had been insetting it a further 18px
+     a side, so the "20px" gutter measured 38px */
+  .hero-inner{justify-content:space-between;min-height:0;width:100%;
+    padding:calc(var(--header-h) + 40px) 20px calc(24px + env(safe-area-inset-bottom,0px))}
+  /* the 10.7em cap was measured for the 500 weight; at 700 it clips. The
+     tablet rule above still applies at exactly 768, hence the restated stack. */
+  .hero-title,.hero-top,.hero-bottom .hero-lede{max-width:none}
+  .hero-bottom{flex-direction:column;align-items:stretch;gap:0}
+  /* 8.4vw, not the design's 9.6: "Decision Intelligence" at Sora 700 /
+     -.03em sets ~10.2em and the line has 350px at 390 (20px gutters), so 9.6vw
+     (37.4px, 382px of ink) wrapped it. 8.4vw is 32.8px at 390 (334px), one
+     line from 360 up; the 38px cap lands at 452. */
+  .hero h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;font-weight:700;letter-spacing:-.03em;color:var(--ink-deep)}
+  .hero-hook{font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
+  .hero-hook .was{color:var(--ink-muted)}
+  .hero-lede .sub{margin-top:20px;font-size:17px;line-height:1.5;color:var(--ink);font-weight:400}
+  .hero-bottom .ctas{margin-top:32px}
+  .hero .ctas .btn{width:100%;min-height:56px;padding-top:0;padding-bottom:0;
+    font:600 16px/1.2 Sora,sans-serif;letter-spacing:-.01em}
+}
 
 /* the "still have questions" line under the /faq intro */
 .page-head .faq-head-cta{margin-top:14px;font-size:0.8889rem;color:var(--ink-muted)}
