@@ -442,7 +442,8 @@ function MobileLane({
 
 export default function DataToDecision() {
   const rootRef = useRef<HTMLElement>(null);
-  const runRef = useRef<() => void>();
+  /** Replays the run; the ≤768 run takes the delay that lets a closed lane open first. */
+  const runRef = useRef<(delay?: number) => void>();
   /** Whether the run has happened; a rebuild then shows the end state and sets no trigger. */
   const ranRef = useRef(false);
   const [started, setStarted] = useState(false);
@@ -473,7 +474,7 @@ export default function DataToDecision() {
           if (mobile) {
             /* ≤768: dots and rails only. Both rails start together; each lane's
                four dots pop evenly across its own rail time (red 1.2s, green
-               0.6s). The 0.35s delay lets the closed lane's body open first. */
+               0.6s). The label flips to Replay when the run is done. */
             const lay = root.querySelector<HTMLElement>(".d2d-mobile")!;
             const parts = (["t", "g"] as const).map((tone) => ({
               dur: tone === "t" ? 1.2 : 0.6,
@@ -488,14 +489,17 @@ export default function DataToDecision() {
               gsap.set(dots, { scale: 1 });
               runRef.current = () => {
                 ranRef.current = true;
+                setStarted(true);
               };
               return;
             }
             const tl = gsap.timeline({
               paused: true,
-              delay: 0.35,
               onStart: () => gsap.set(all, { willChange: "transform" }),
-              onComplete: () => gsap.set(all, { willChange: "auto" }),
+              onComplete: () => {
+                gsap.set(all, { willChange: "auto" });
+                setStarted(true);
+              },
             });
             parts.forEach(({ dur, fill, dots }) => {
               tl.fromTo(fill, { scaleX: 0 }, { scaleX: 1, duration: dur, ease: "none" }, 0);
@@ -508,9 +512,9 @@ export default function DataToDecision() {
               gsap.set(fills, { scaleX: 0 });
               gsap.set(dots, { scale: 0 });
             }
-            runRef.current = () => {
+            runRef.current = (delay = 0) => {
               ranRef.current = true;
-              tl.restart(true);
+              tl.delay(delay).restart(true);
             };
             return;
           }
@@ -548,6 +552,7 @@ export default function DataToDecision() {
             });
             runRef.current = () => {
               ranRef.current = true;
+              setStarted(true);
             };
             return;
           }
@@ -556,6 +561,7 @@ export default function DataToDecision() {
           lanes.forEach((l) => runLane(tl, l));
           runRef.current = () => {
             ranRef.current = true;
+            setStarted(true);
             tl.restart();
           };
           if (ranRef.current) tl.progress(1);
@@ -595,9 +601,10 @@ export default function DataToDecision() {
   }, []);
 
   const run = () => {
-    setStarted(true);
+    /* a closed lane needs its 0.4s accordion before the rails have room; two open lanes do not */
+    const delay = lanes.t && lanes.g ? 0 : 0.35;
     setLanes({ t: true, g: true });
-    runRef.current?.();
+    runRef.current?.(delay);
   };
 
   const stationStyle = (x: number, i: number): CSSProperties =>
