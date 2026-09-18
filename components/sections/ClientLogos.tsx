@@ -4,6 +4,7 @@ import {
   CinematicLogoCloud,
   type LogoCloudClient,
 } from "@/components/ui/cinematic-logo-cloud";
+import ClientMarquee from "@/components/sections/ClientMarquee";
 import { clients } from "@/lib/content/gamcs";
 
 const LOGO_DIR = path.join(process.cwd(), "public", "logos", "clients");
@@ -97,6 +98,12 @@ export default function ClientLogos() {
              them, which put its columns 32px off the partner row below. */
           innerClassName="w-full"
         />
+
+        {/* Phones (<=768): the same roster as two drifting rows of grey tiles.
+            display:none above that, where the grid is; the grid is hidden
+            at and under 768 (app/globals.css). The grid component and its
+            props above are unchanged. */}
+        <ClientMarquee logos={logos} />
       </div>
     </section>
   );

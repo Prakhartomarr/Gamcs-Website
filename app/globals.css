@@ -2095,6 +2095,40 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      inline on the image, hence the override to auto. */
   .clients-wall img{width:auto!important;height:auto!important;max-height:40px;max-width:88px}}
 
+/* ---- client wall + partners, phones (<=768) ----
+   The heading in sentence case, left, 24px; the grid swapped for two
+   edge-to-edge rows of grey tiles (components/sections/ClientMarquee.tsx)
+   drifting in opposite directions under a 24px fade at each end, every mark
+   once, grayscale; then the partners heading with the three marks in one
+   evenly spaced row. 80px above the clients heading, 64px from the wall to
+   the partners heading, 80px under the partner marks. ---- */
+.clm-wall{display:none}
+@keyframes clm-drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:768px){
+  .clients{padding:80px 0 0}
+  .clients-head{text-align:left;margin:0 0 28px}
+  .clients-head h2{max-width:320px;font:600 24px/1.2 Sora,sans-serif;letter-spacing:-.02em;text-transform:none}
+  .clients-wall{display:none}
+  .clm-wall{display:flex;flex-direction:column;gap:8px}
+  /* edge to edge: out of the .container by however much it is inset */
+  .clm-row{overflow:hidden;margin:0 calc(50% - 50vw);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
+  .clm-track{display:flex;width:max-content;animation:clm-drift 45s linear infinite}
+  .clm-row[data-dir="rtl"] .clm-track{animation-direction:reverse}
+  .clm-wall.is-paused .clm-track,.clm-wall:hover .clm-track{animation-play-state:paused}
+  /* each list carries one gap on its right, so half the track is one list */
+  .clm-list{display:flex;gap:8px;list-style:none;margin:0;padding:0 8px 0 0}
+  .clm-list li{display:flex;align-items:center;justify-content:center;flex:none;
+    width:86px;height:80px;border-radius:12px;background:var(--soft)}
+  .clm-list img{width:auto;height:auto;max-width:62px;max-height:40px;filter:grayscale(1);opacity:.85}
+  /* the partners half of this block sits after the .partners rules below */
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){
+  .clm-track{animation:none;width:auto;overflow-x:auto;padding:0 20px}
+  .clm-list[aria-hidden]{display:none}
+}
+
 /* ---- the gap: the race to the decision. One stage, two lanes from the
    start line to the dashed finish, "The decision". From the gap design
    artboards on site tokens: their #D9DEE1 / #0F5E97 / #0D1828 / #55606F are
@@ -2369,6 +2403,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 @media (max-width:434px){.partners-logos{gap:16px}
   .partners-logos img[src*="akshar"]{scale:1.2}}
+/* phones (<=768), the partners half of the client wall: no pill, the heading
+   at 24px, the three marks in one evenly spaced row. After the rules above so
+   it wins at equal specificity. */
+@media (max-width:768px){
+  .partners{padding:64px 0 80px}
+  .partners .eyebrow-row{display:none}
+  .partners-heading{max-width:none;font-size:24px;line-height:1.2}
+  .partners-logos{margin-top:28px;justify-content:space-between;gap:12px}
+  .partners-logos img{max-height:32px;max-width:30vw}
+  /* the optical scale above paints outward from the centre, which put the
+     end marks 8px and 6px past the container's edges on a space-between row */
+  .partners-logos li:first-child img{transform-origin:left center}
+  .partners-logos li:last-child img{transform-origin:right center}
+}
 
 /* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
 /* Jump rail. Sticks under the 90px header, scrolls sideways rather than
