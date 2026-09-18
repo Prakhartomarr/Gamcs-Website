@@ -1018,11 +1018,13 @@ export const clients = {
 } as const;
 
 /**
- * "The gap" — the band straight after the client logos. Two panels: the
- * typical path from data to a decision, and the same path with GAMCS. Copy,
- * chips, cards and rail labels as written in the gap-panels design canvas; it
- * is not on gamcs.in. Each `icon` keys into GAP_ICONS in
- * components/ui/stroke-icons.tsx — icons are not copy, so they live there.
+ * "The gap" — the race to the decision. Two lanes run side by side: the
+ * typical path from data to a decision (six source systems into one manual
+ * path through four stations) and the same distance with GAMCS (three feeds
+ * through one hub, four stations on a straight line). Copy, chips, stations
+ * and rail labels as written on the gap design artboards; it is not on
+ * gamcs.in. `decisionLine`, `run` and `replay` are the three labels the race
+ * needs that the panels did not: the finish line and the button's two states.
  */
 export const dataToDecision = {
   eyebrow: "The gap",
@@ -1030,47 +1032,51 @@ export const dataToDecision = {
   headingAccent: "The Distance to the Decision Is.",
   body:
     "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks “why?” Finance goes back and investigates manually — pulling the same data apart a second time, days after the decision actually needed to be made.",
+  /** The dashed finish line both lanes run to. */
+  decisionLine: "The decision",
+  /** The button before the first run, and after it. */
+  run: "Run the comparison",
+  replay: "Replay",
   today: {
     title: "The typical reality",
     subtitle: "Disconnected data. Longer paths. Delayed decisions.",
-    /** The systems the data is scattered across — all feeding the same manual path. */
+    /** The systems the data is scattered across — six feeders into one path. */
     chips: [
-      { label: "ERP", icon: "database" },
-      { label: "CRM", icon: "contacts" },
-      { label: "Excel", icon: "sheet" },
-      { label: "HRIS", icon: "people" },
-      { label: "Operations", icon: "gear" },
-      { label: "Other tools", icon: "more" },
+      { label: "ERP" },
+      { label: "CRM" },
+      { label: "Excel" },
+      { label: "HRIS" },
+      { label: "Operations" },
+      { label: "Other tools" },
     ],
-    /** The path itself. The last stage carries the panel's accent colour. */
+    /** The stations along the path. The last one carries the lane's accent. */
     steps: [
-      { label: "Reporting", caption: "What happened?", icon: "report" },
-      { label: "Questions", caption: "Why did it happen?", icon: "question" },
+      { label: "Reporting", caption: "What happened?" },
+      { label: "Questions", caption: "Why did it happen?" },
       {
         label: "Manual investigation",
         caption: "Spreadsheets, multiple systems, email threads",
-        icon: "search",
       },
-      { label: "Decision delayed", caption: "Opportunities lost", icon: "clock" },
+      { label: "Decision delayed", caption: "Opportunities lost" },
     ],
-    /** How long that path takes, on the rail under the cards. */
+    /** How long that path takes, on the lane's progress rail. */
     rail: "Days / weeks",
   },
   gamcs: {
     title: "A better way with GAMCS",
     subtitle: "Connected data. Clear insight. Faster decisions.",
     chips: [
-      { label: "Data integration", icon: "database" },
-      { label: "Automation", icon: "cycle" },
-      { label: "AI & analytics", icon: "sparkle" },
+      { label: "Data integration" },
+      { label: "Automation" },
+      { label: "AI & analytics" },
     ],
     /** The one place the three feeds meet, between the chips and the path. */
     hub: { name: "GAMCS", caption: "Finance · Data · Technology" },
     steps: [
-      { label: "Data", caption: "Integrated and reliable", icon: "database" },
-      { label: "Insight", caption: "What's happening and why", icon: "bars" },
-      { label: "Decision", caption: "What should we do?", icon: "bulb" },
-      { label: "Action", caption: "Measurable impact", icon: "rocket" },
+      { label: "Data", caption: "Integrated and reliable" },
+      { label: "Insight", caption: "What's happening and why" },
+      { label: "Decision", caption: "What should we do?" },
+      { label: "Action", caption: "Measurable impact" },
     ],
     rail: "Hours / days",
   },

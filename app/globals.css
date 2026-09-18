@@ -2049,176 +2049,227 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      inline on the image, hence the override to auto. */
   .clients-wall img{width:auto!important;height:auto!important;max-height:40px;max-width:88px}}
 
-/* ---- the gap (data to decision): two panels — the typical path from data to
-   a decision, and the same path with GAMCS. From the gap-panels design canvas,
-   on site tokens: its #F1F3F4 / #D9DEE1 / #0F5E97 / #0D1828 / #55606F are
-   --soft / --line / --blue / --ink-deep / --ink-muted, and its two panel
-   washes are the same color-mix of --blue the canvas sampled them from. The
-   accents are the exception: the canvas's #B0554E and #3F7F5C both measure
-   4.43:1 on their own panel, so they are darkened one notch here (same hue
-   family) to 4.9:1 — they carry the rail labels.
+/* ---- the gap: the race to the decision. One stage, two lanes from the
+   start line to the dashed finish, "The decision". From the gap design
+   artboards on site tokens: their #D9DEE1 / #0F5E97 / #0D1828 / #55606F are
+   --line / --blue / --ink-deep / --ink-muted. The lane accents are the
+   artboards' own #A74E48 and #3A7755 — both 5:1 on white, where they now
+   sit, and they carry the rail labels, the packets and the station rings.
 
-   The connectors are CSS, not the canvas's fixed-coordinate SVG, because the
-   panel is 612px only at 1440. Each lane is a grid with the same column count
-   and gap as the chips or the cards it meets, and every cell paints a 1px stem
-   plus a half-rail reaching the next cell's centre — chained, that is the
-   horizontal rail, on the card centres at any width. Below 1280/900 the grids
-   lose columns, so the lane loses the matching cells and the stub that would
-   otherwise overshoot past the last one. ---- */
+   DESKTOP STAGE: 410px tall at every width, the SVG stretched horizontally
+   only (preserveAspectRatio none, non-scaling strokes), every overlay at a %
+   left and a px top. Widths as % of the stage scale with the SVG; heights
+   and type do not, so the vertical gaps the artboard drew hold at the 920px
+   container, where a uniform scale measured 1–3px of collisions. The
+   breakpoint measurements are in DataToDecision.tsx. ---- */
 .d2d{background:var(--band-white);--gap-red:#A74E48;--gap-green:#3A7755}
+.d2d-t{--acc:var(--gap-red);--ring:rgba(167,78,72,.2)}
+.d2d-g{--acc:var(--gap-green);--ring:rgba(58,119,85,.2)}
 .d2d .fin-h2{text-wrap:balance}
-.d2d .fin-lead{max-width:66ch}
 .d2d-accent{color:var(--blue)}
-.d2d-grid{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:56px;margin-top:64px}
 
-/* panels */
-.d2d-panel{--cols:4;--card-gap:28px;--chip-cols:3;--chip-gap:10px;
-  --accent:var(--gap-red);--flow:color-mix(in srgb,var(--line) 85%,var(--ink-muted));
-  display:flex;flex-direction:column;padding:26px 26px 24px;border-radius:20px;
-  background:var(--soft);border:1px solid var(--line)}
-.d2d-panel--gamcs{--accent:var(--gap-green);
-  --flow:color-mix(in srgb,var(--blue) 30%,var(--white));
-  background:color-mix(in srgb,var(--blue) 5%,var(--white));
-  border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
-.d2d-p-title{margin:0;font:600 .7222rem/1.3 Sora,sans-serif;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink-deep)}
-.d2d-panel--gamcs .d2d-p-title{color:var(--blue)}
-.d2d-p-sub{margin:7px 0 0;font-size:.6944rem;line-height:1.5;color:var(--ink-muted)}
+/* head: pill and heading left, the run button top-right */
+.d2d-head{position:relative}
+/* the pill sits centred in the button's 44px row, as the artboard draws it */
+.d2d-head .eyebrow-pill{margin-top:8px}
+.d2d-head .fin-h2{margin-top:28px}
+.d2d-body{margin:14px 0 0;max-width:1184px;column-count:2;column-gap:64px;font-size:17px;
+  line-height:1.55;color:var(--ink-muted)}
+.d2d-run{position:absolute;right:0;top:0}
+.d2d-run svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linejoin:round}
 
-/* the canvas's line idiom, shared with the rest of the site's stroke icons */
-.d2d-chip svg,.d2d-card-ico svg,.d2d-arrow,.d2d-turn svg{fill:none;stroke:currentColor;
-  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* lane headers: dot, title, subtitle; rail label and rail */
+.d2d-desk{margin-top:20px}
+.d2d-lh{display:flex;align-items:center;justify-content:space-between;gap:16px;height:28px}
+.d2d-lh-l{display:flex;align-items:baseline;gap:12px;min-width:0}
+.d2d-lh-l i{align-self:center;flex:none;width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.d2d-lh-l b{font:600 18px/1.2 Sora,sans-serif;letter-spacing:-.01em;color:var(--ink-deep);
+  white-space:nowrap}
+.d2d-lh-l span{font-size:13.5px;line-height:1.3;color:var(--ink-muted)}
+.d2d-lh-r{display:flex;align-items:center;gap:14px;flex:none}
+.d2d-rail-lbl{font:700 11px/1 Sora,sans-serif;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-muted);white-space:nowrap}
+.d2d-rail{position:relative;display:block;flex:none;width:180px;height:6px;border-radius:999px;
+  background:#DFE5E9;overflow:hidden}
+/* one linear scaleX tween per run; GSAP owns the transform */
+.d2d-fill{position:absolute;inset:0;border-radius:999px;background:var(--acc);
+  transform:scaleX(0);transform-origin:0 50%}
 
-/* chips: the systems feeding the path */
-.d2d-chips{display:grid;grid-template-columns:repeat(var(--chip-cols),minmax(0,1fr));
-  gap:var(--chip-gap);list-style:none;margin:20px 0 0;padding:0}
-/* Three columns only while the container is the full 1280, which measures a
-   612px panel and leaves 110px+ of label. Below 1280 the container is pinned to
-   920px or less, a panel is 442px, and three columns leave exactly 70px — under
-   "Automation" at 70.2px, the widest label word that cannot break, which then
-   splits as "Automatio / n". Two columns from there down. `anywhere` is the
-   guard either way: it is the one overflow-wrap value that also shrinks
-   min-content, so a label longer than its column breaks instead of escaping
-   the chip. */
-.d2d-chip{display:flex;align-items:center;gap:9px;padding:11px 12px;background:var(--white);
-  border:1px solid var(--line);border-radius:10px;font-size:.6944rem;font-weight:500;
-  line-height:1.2;color:var(--ink-deep);overflow-wrap:anywhere;hyphens:auto}
-.d2d-chip svg{flex:none;width:18px;height:18px}
-.d2d-panel--gamcs .d2d-chip{border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
-.d2d-panel--gamcs .d2d-chip svg{color:var(--blue)}
+/* the stage */
+.d2d-stage{position:relative;height:410px}
+.d2d-stage>svg{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}
+.d2d-stage path{fill:none;vector-effect:non-scaling-stroke}
+.d2d-sline{stroke:rgba(13,24,40,.2);stroke-width:1;stroke-dasharray:3 5}
+.d2d-fline{stroke:rgba(13,24,40,.3);stroke-width:1;stroke-dasharray:5 5}
+.d2d-feed-t{stroke:rgba(13,24,40,.2);stroke-width:1}
+.d2d-feed-g{stroke:rgba(58,119,85,.42);stroke-width:1.2}
+.d2d-stub{stroke:var(--gap-green);stroke-width:2.4;stroke-linecap:round}
+.d2d-path-t{stroke:rgba(13,24,40,.3);stroke-width:1.6;stroke-dasharray:7 6;stroke-linecap:round}
+.d2d-path-g{stroke:url(#d2d-gx);stroke-width:2.4;stroke-linecap:round}
+.d2d-stem{stroke:rgba(13,24,40,.22);stroke-width:1}
+.d2d-lh--g{position:absolute;left:0;right:0;top:208px}
+.d2d-dline{position:absolute;top:38px;z-index:2;width:170px;margin-left:-85px;padding:3px 0;
+  text-align:center;background:var(--band-white);font:700 11px/1.2 Sora,sans-serif;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
 
-/* connectors */
-.d2d-lane{display:grid;height:22px}
-.d2d-lane+.d2d-lane{height:34px}
-.d2d-flow--hub .d2d-lane,.d2d-flow--hub .d2d-lane+.d2d-lane{height:16px}
-/* the canvas draws the hub's own drop shorter than the chips' — 18 + 30, not 22 + 34 */
-.d2d-hub+.d2d-flow .d2d-lane{height:18px}
-.d2d-hub+.d2d-flow .d2d-lane+.d2d-lane{height:30px}
-.d2d-lane--chips{grid-template-columns:repeat(var(--chip-cols),minmax(0,1fr));gap:var(--chip-gap)}
-.d2d-lane--cards{grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:var(--card-gap)}
-.d2d-lane--one{grid-template-columns:1fr}
-.d2d-lane i{position:relative;
-  background:linear-gradient(var(--flow),var(--flow)) 50% 0/1px 100% no-repeat}
-.d2d-lane i:not(:last-child)::before{content:"";position:absolute;left:50%;height:1px;
-  background:var(--flow)}
-.d2d-lane--chips i:not(:last-child)::before{right:calc(-50% - var(--chip-gap))}
-.d2d-lane--cards i:not(:last-child)::before{right:calc(-50% - var(--card-gap))}
-/* both lanes draw the rail on the edge they share, so it spans the wider of the two */
-.d2d-lane:first-child i::before{bottom:0}
-.d2d-lane+.d2d-lane i::before{top:0}
-/* where a connector meets a card */
-.d2d-lane+.d2d-lane--cards i::after{content:"";position:absolute;left:50%;bottom:0;
-  width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--accent)}
+/* source chips */
+.d2d-chips{list-style:none;margin:0;padding:0}
+.d2d-chips li{position:absolute;z-index:2;display:inline-flex;align-items:center;height:26px;
+  padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#fff;
+  font:500 12px/1 Sora,sans-serif;color:var(--ink-muted);white-space:nowrap}
+.d2d-chips--g li{border-color:rgba(58,119,85,.32);color:var(--gap-green)}
 
-/* the one place the three feeds meet */
-.d2d-hub{display:flex;flex-direction:column;align-items:center;gap:3px;width:max-content;
-  max-width:100%;margin:0 auto;padding:14px 30px;background:var(--white);border-radius:14px;
-  border:1px solid color-mix(in srgb,var(--blue) 30%,var(--white));
-  box-shadow:0 14px 30px -20px color-mix(in srgb,var(--blue) 90%,transparent)}
-.d2d-hub-name{font:700 .9444rem/1.2 Sora,sans-serif;letter-spacing:-.01em;color:var(--blue)}
-.d2d-hub-sub{font-size:.5833rem;font-weight:500;line-height:1.3;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--ink-muted);text-align:center}
+/* nodes: HTML dots, so they stay round when the SVG is stretched */
+.d2d-node{position:absolute;z-index:1;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;
+  border:2px solid var(--acc);border-radius:50%;background:#fff}
+.d2d-node--start{width:10px;height:10px;margin:-5px 0 0 -5px;border:0;background:var(--acc)}
 
-/* the path */
-.d2d-cards{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));
-  gap:var(--card-gap);list-style:none;margin:0;padding:0}
-.d2d-card{position:relative;display:flex;flex-direction:column;gap:9px;padding:15px 13px 16px;
-  background:var(--white);border:1px solid var(--line);border-radius:12px;
-  box-shadow:0 10px 22px -18px rgba(16,45,68,.45)}
-.d2d-panel--gamcs .d2d-card{border-color:color-mix(in srgb,var(--blue) 14%,var(--white))}
-.d2d-card-ico{line-height:0;color:var(--ink-muted)}
-.d2d-card-ico svg{width:22px;height:22px}
-.d2d-panel--gamcs .d2d-card-ico{color:var(--blue)}
-/* the stage the whole panel is about: delayed, or acted on */
-.d2d-cards li:last-child .d2d-card-ico{color:var(--accent)}
-/* At 1280-1348, where four cards first fit one row, the card's content box is
-   78.5px and "investigation" is 87px: hyphenate rather than crowd the right
-   padding. Not on the caption — measured there, it only added a line and left
-   the same 1.7px of "Spreadsheets," in the padding. */
-.d2d-card-t{font:600 .7222rem/1.3 Sora,sans-serif;letter-spacing:-.01em;
-  color:var(--ink-deep);hyphens:auto}
-.d2d-card-c{font-size:.6389rem;line-height:1.45;color:var(--ink-muted)}
-/* sits in the gap before its own card, so it only exists while the row is one line */
-.d2d-arrow{position:absolute;top:50%;left:calc(var(--card-gap) / -2 - 6px);margin-top:-6px;
-  width:12px;height:12px;stroke-width:1.8;
-  color:color-mix(in srgb,var(--ink-muted) 55%,var(--white))}
-.d2d-panel--gamcs .d2d-arrow{color:color-mix(in srgb,var(--blue) 45%,var(--white))}
+/* stations: buttons centred on their node by `translate`, whose y is the
+   lower of two custom properties: --d2d-hov, the hover/focus/open lift (a
+   registered property, so it transitions), and --d2d-lift, which GSAP tweens
+   during the run. GSAP must never tween the button's transform: gsap ≥3.13
+   folds a CSS `translate` into its inline transform and writes
+   `translate:none`, which killed this lift after the first run. Lane-1 cards
+   floor at the artboard's 176px: "Manual investigation" is 145.2px at
+   13.5px/600 Sora and needs the 148px inside. --d2d-cap is the open caption's
+   height cap, two 17px lines here (three at ≤1279). */
+@property --d2d-hov{syntax:"<length>";inherits:false;initial-value:0px}
+.d2d-st{position:absolute;z-index:3;width:max(13.58%,176px);--d2d-lift:0px;--d2d-cap:40px;
+  translate:-50% min(var(--d2d-lift),var(--d2d-hov));padding:11px 14px;
+  text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 1px 2px rgba(13,24,40,.04);cursor:pointer;
+  transition:--d2d-hov .34s var(--ease-out),box-shadow .34s var(--ease-out),
+    border-color .34s var(--ease-out)}
+.d2d-stop--g.d2d-st{width:12.35%}
+.d2d-st:hover,.d2d-st:focus-visible,.d2d-st.is-open{z-index:9;--d2d-hov:-3px;
+  border-color:var(--acc);box-shadow:0 10px 26px rgba(13,24,40,.12),0 0 0 1px rgba(13,24,40,.04)}
+.d2d-st:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.d2d-st-t{display:block;font:600 13.5px/22px Sora,sans-serif;letter-spacing:-.005em;
+  color:var(--ink-deep)}
+.d2d-st--end .d2d-st-t{color:var(--acc)}
+/* collapsed, the caption is also visibility:hidden (after its collapse), so
+   aria-expanded=false matches what a screen reader is given */
+.d2d-st-c{display:block;max-height:0;margin-top:0;overflow:hidden;opacity:0;visibility:hidden;
+  font-size:12px;line-height:17px;color:var(--ink-muted);
+  transition:max-height .4s var(--ease-out),opacity .26s ease,margin-top .4s var(--ease-out),
+    visibility 0s .4s}
+.d2d-st:hover .d2d-st-c,.d2d-st:focus-visible .d2d-st-c,.d2d-st.is-open .d2d-st-c{
+  max-height:var(--d2d-cap);margin-top:5px;opacity:1;visibility:visible;transition-delay:0s}
+/* the ring a passing packet lights: an overlay GSAP fades in and out */
+.d2d-ring{position:absolute;inset:-1px;border:1px solid var(--acc);border-radius:inherit;
+  box-shadow:0 0 0 5px var(--ring),0 10px 26px rgba(13,24,40,.1);opacity:0;pointer-events:none}
 
-/* how long the path takes */
-.d2d-rail{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:22px;
-  color:var(--accent)}
-.d2d-rail-ln{flex:1;height:1px;background:currentColor;opacity:.4}
-.d2d-rail-dot{flex:none;width:7px;height:7px;border-radius:50%;background:currentColor}
-.d2d-rail-lbl{font:600 .6111rem/1 Sora,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+/* the hub: a white masking border keeps the line from touching the disc */
+.d2d-hub-cap{position:absolute;top:266px;width:220px;margin-left:-110px;text-align:center;
+  font-size:12px;line-height:16px;color:var(--ink-muted)}
+.d2d-hub{position:absolute;top:292px;z-index:2;display:flex;align-items:center;
+  justify-content:center;width:60px;height:60px;margin-left:-30px;border:5px solid #fff;
+  border-radius:50%;background:var(--blue);background-clip:padding-box;
+  font:700 10.5px/1 Sora,sans-serif;letter-spacing:.06em;color:#fff}
+.d2d-hub .d2d-ring{inset:-5px;border:0;box-shadow:0 0 0 9px rgba(58,119,85,.2)}
+.d2d-hub-pulse{position:absolute;inset:-5px;border:1.5px solid var(--blue);border-radius:50%;
+  pointer-events:none;animation:d2d-pulse 3.4s var(--ease-out) infinite}
+@keyframes d2d-pulse{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(1.85);opacity:0}}
 
-/* the turn from one path to the other */
-.d2d-turn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;
-  place-items:center;width:32px;height:32px;border-radius:50%;background:var(--white);
-  border:1px solid var(--line);box-shadow:0 8px 18px -12px rgba(16,45,68,.4)}
-.d2d-turn svg{width:14px;height:14px;stroke-width:2;color:var(--ink-muted)}
+/* the two packets: hidden until GSAP parks them on the start nodes */
+.d2d-pk{position:absolute;left:0;top:0;z-index:10;width:13px;height:13px;border-radius:50%;
+  translate:-50% -50%;background:var(--acc);visibility:hidden;pointer-events:none;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 16%,transparent),
+    0 0 18px 4px color-mix(in srgb,var(--acc) 34%,transparent)}
 
-.d2d-close{margin-top:64px;padding-top:28px;border-top:1px solid var(--line)}
-.d2d-close p{margin:0;max-width:1000px;font:500 clamp(19px,1.8vw,26px)/1.5 Sora,sans-serif;
-  letter-spacing:-.015em;color:var(--ink-deep)}
+/* colour on the wrapper, so .d2d-accent's own rule wins on the second line */
+.d2d-close{margin-top:24px;color:var(--ink-deep)}
+.d2d-close p{margin:0;font:600 clamp(17px,1.6vw,23px)/1.36 Sora,sans-serif;
+  letter-spacing:-.012em}
 
-/* Chips and cards drop together at the same edge, because the same pinned
-   container drives both: below 1280 .container is 920px or less, a side-by-side
-   panel is 442px, four cards across that is four words a line, and three chip
-   columns leave 70px of label against a 70.2px "Automation". Two per row from
-   here down, stacked panels included. The arrow lives in the gap of a single
-   row, so it goes with it. */
-@media (max-width:1279px){
-  .d2d-panel{--cols:2;--card-gap:12px;--chip-cols:2}
-  .d2d-lane--cards i:nth-child(n+3){display:none}
-  .d2d-lane--cards i:nth-child(2)::before{display:none}
-  .d2d-lane--chips i:nth-child(3){display:none}
-  .d2d-lane--chips i:nth-child(2)::before{display:none}
-  /* an odd last chip takes the row rather than leaving a hole beside it */
-  .d2d-chip:last-child:nth-child(odd){grid-column:1/-1}
-  .d2d-arrow{display:none}
-  .d2d-grid{gap:36px}
+/* ---- phone: the lanes as panels, each a vertical track with the stations
+   beside it. Off at desktop widths, where the stage is. ---- */
+.d2d-phone{display:none;flex-direction:column;gap:8px;margin-top:22px}
+.d2d-pn{border:1px solid var(--hair);border-radius:14px;background:#F8F9F9;padding:11px 13px}
+.d2d-pn--g{border-color:rgba(15,94,151,.16);background:#F2F7FB}
+.d2d-pn-h{display:flex;align-items:center;gap:7px}
+.d2d-pn-h i{flex:none;width:7px;height:7px;border-radius:2px;background:var(--acc)}
+.d2d-pn-h b{font:600 13.5px/1.2 Sora,sans-serif;color:var(--ink-deep)}
+.d2d-pn-s{margin:2px 0 0;font-size:11.5px;line-height:1.3;color:var(--ink-muted)}
+.d2d-pn-chips{display:flex;flex-wrap:wrap;gap:5px;list-style:none;margin:8px 0 0;padding:0}
+.d2d-pn-chips li{display:inline-flex;align-items:center;height:22px;padding:0 8px;
+  border:1px solid var(--line);border-radius:999px;background:#fff;
+  font:500 11px/1 Sora,sans-serif;color:var(--ink-muted)}
+.d2d-pn--g .d2d-pn-chips li{border-color:rgba(15,94,151,.22);color:var(--blue-dark)}
+.d2d-pn-run{display:flex;gap:10px;margin-top:8px}
+.d2d-track{position:relative;flex:none;width:24px}
+.d2d-track svg{display:block;overflow:visible}
+.d2d-track path{fill:none;stroke-width:2;stroke-linecap:round}
+.d2d-base{stroke:#E2E6E9}
+.d2d-pn--g .d2d-base{stroke:rgba(15,94,151,.2)}
+/* the trail the packet leaves; pathLength 100, so the offset is its progress */
+.d2d-trail{stroke:var(--acc);stroke-dasharray:100;stroke-dashoffset:100}
+.d2d-pdot{position:absolute;left:12px;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;
+  border:2px solid var(--line);border-radius:50%;background:#fff}
+.d2d-pdot .d2d-ring{inset:-2px;border:0;border-radius:50%;box-shadow:none;background:var(--acc)}
+.d2d-phub{position:absolute;left:12px;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;
+  border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(15,94,151,.13)}
+.d2d-phub .d2d-ring{inset:-3px;border:0;border-radius:50%;box-shadow:0 0 0 4px rgba(58,119,85,.25)}
+.d2d-phone .d2d-pk{width:7px;height:7px;
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 15%,transparent)}
+.d2d-steps{flex:1;min-width:0;list-style:none;margin:0;padding:8px 0 0}
+.d2d-steps li{height:30px}
+.d2d-steps b{display:block;font:600 13px/1.15 Sora,sans-serif;color:var(--ink-deep)}
+.d2d-steps span{display:block;font-size:11px;line-height:1.25;color:var(--ink-muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d2d-hubrow{display:flex;align-items:center;gap:7px}
+.d2d-steps .d2d-hubrow{height:22px}
+.d2d-hubrow b{font:700 11px/1 Sora,sans-serif;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue)}
+.d2d-hubrow span{font-size:10.5px;line-height:1.2}
+.d2d-pn-rail{display:flex;align-items:center;gap:9px;margin-top:10px}
+/* rail lengths in the ratio of the two runs, 6.6s : 3.0s; they give way first */
+.d2d-pn-rail .d2d-rail{flex:0 1 208px;width:auto;height:3px;background:#E2E6E9}
+.d2d-pn--g .d2d-pn-rail .d2d-rail{flex-basis:96px;background:rgba(15,94,151,.16)}
+.d2d-pn-rail .d2d-rail-lbl{letter-spacing:.14em;color:var(--acc)}
+
+/* ≤1399: the lane-2 header 4px lower than the artboard, so an open below-path
+   lane-1 card (bottom 216px) stops above its subtitle (measured in
+   DataToDecision.tsx) */
+@media (max-width:1399px){
+  .d2d-lh--g{top:212px}
 }
-@media (max-width:899px){
-  .d2d-grid{grid-template-columns:1fr;gap:40px;margin-top:40px}
-  .d2d-panel{--chip-gap:8px;--card-gap:10px;padding:20px 18px 18px;
-    border-radius:18px}
-  .d2d-p-title{font-size:.6667rem}
-  .d2d-p-sub{margin-top:6px;font-size:.6667rem}
-  .d2d-chip{gap:8px;padding:10px 11px;font-size:.6667rem}
-  .d2d-chip svg{width:17px;height:17px}
-  .d2d-hub{padding:12px 26px}
-  .d2d-hub-name{font-size:.8889rem}
-  .d2d-card{gap:8px;padding:14px 12px 15px}
-  .d2d-card-ico svg{width:21px;height:21px}
-  .d2d-card-t{font-size:.6944rem}
-  .d2d-card-c{font-size:.6111rem}
-  .d2d-rail{gap:10px;padding-top:18px}
-  .d2d-rail-dot{width:6px;height:6px}
-  .d2d-rail-lbl{font-size:.5556rem}
-  /* the turn only means anything while the two panels sit side by side */
-  .d2d-turn{display:none}
-  .d2d-close{margin-top:40px;padding-top:20px}
+/* 1024–1279: container 920, x-scale .71. Smaller card type and padding; lane-1
+   cards floor at 160px, where "Manual investigation" (134.4px at 12.5px) stays
+   one line and its open card clears the rail label above it — at 140 it
+   wrapped and covered "Days / weeks". Captions open to three lines, and the
+   closing lines drop to 40px so the 100px open "Insight" card clears them. */
+@media (max-width:1279px){
+  .d2d-st{width:max(13.58%,160px);padding:10px 12px;--d2d-cap:51px}
+  .d2d-stop--g.d2d-st{width:12.35%}
+  .d2d-st-t{font-size:12.5px}
+  .d2d-close{margin-top:40px}
+  /* fixed-size chips on a .71 stage: "Other tools" measured 10×12px into a
+     94px "Operations"; nudged clear, its feeder still starts under the chip */
+  .d2d-chips--t li:nth-child(6){translate:12px 8px}
+}
+@media (max-width:1023px){
+  .d2d-desk{display:none}
+  .d2d-phone{display:flex}
+  .d2d-body{column-count:1}
+  .d2d-head .eyebrow-pill{margin-top:0}
+  .d2d-head .fin-h2{margin-top:12px}
+  /* relative, not static: .btn-shimmer::before is a blurred absolute glow, and
+     a static button hands it the whole head as its containing block */
+  .d2d-run{position:relative;right:auto;top:auto;width:100%;margin-top:16px}
+  /* the phone artboard's closing lines: a muted 14px body line, then the
+     15px Sora line in blue */
+  .d2d-close{margin-top:22px;color:var(--ink-muted)}
+  .d2d-close p{font:400 14px/1.45 sans-serif;font-family:inherit;letter-spacing:0}
+  .d2d-close .d2d-accent{margin-top:1px;font:600 15px/1.35 Sora,sans-serif;letter-spacing:-.01em}
+}
+@media (max-width:380px){
+  .d2d-pn{padding:11px 11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .d2d-hub-pulse{animation:none;opacity:.22;transform:scale(1.5)}
+  .d2d-st,.d2d-st-c{transition:none}
 }
 
 /* ---- partners: the lower part of the client wall. Pill and heading left,
