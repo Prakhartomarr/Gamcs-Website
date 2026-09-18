@@ -2353,6 +2353,71 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2d-st,.d2d-st-c{transition:none}
 }
 
+/* ---- the gap, phones (<=768): the design's two accordion cards on the warm
+   grey ground. .d2d-mobile is always in the DOM and display:none above 768;
+   the 769–1023 panels (.d2d-phone) are display:none here. The dots' and
+   rails' resting state is the finished one (so the section reads with JS off
+   and under reduced motion); the timeline in DataToDecision.tsx scales them
+   to 0 and pops them on "Run the comparison". Only transform and opacity
+   move, plus the grid-row accordion. ---- */
+.d2d-mobile{display:none}
+@media (max-width:768px){
+  .d2d.section{padding:64px 0;background:#F4F5F6}
+  .d2d .container{width:calc(100% - 40px)}
+  .d2d-head .fin-h2{margin:16px 0 20px;font:700 30px/1.1 Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
+  .d2d-head .d2d-accent{font-weight:300;color:var(--ink-deep)}
+  .d2d-body{margin:0 0 28px;font-size:15px;line-height:1.55;color:var(--ink)}
+  .d2d-head .d2d-run,.d2d-phone{display:none}
+  .d2d-mobile{display:block}
+  .d2dm-lane{background:#fff;border-radius:16px;padding:20px;--acc:#3A7755}
+  .d2dm-lane.d2d-t{--acc:#A33A3A}
+  .d2dm-lane + .d2dm-lane{margin-top:12px}
+  .d2dm-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;width:100%;min-height:44px;
+    margin:0;padding:0;border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+  .d2dm-head:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:4px}
+  .d2dm-head-l{flex:1;min-width:0}
+  .d2dm-head-l b{display:block;font:600 17px/1.3 Sora,sans-serif;letter-spacing:-.01em;color:var(--ink-deep)}
+  .d2dm-head-l span{display:block;margin-top:4px;font-size:13px;line-height:1.5;color:var(--ink-muted)}
+  .d2dm-tog{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);
+    display:inline-flex;align-items:center;justify-content:center}
+  .d2dm-tog svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+  .d2dm-v{transform-origin:6px 6px;transition:transform .4s var(--ease-out)}
+  .is-open .d2dm-tog{background:var(--blue);color:#fff}
+  .is-open .d2dm-v{transform:rotate(90deg)}
+  /* the accordion: a 0fr→1fr grid row, plus opacity; visibility flips after */
+  .d2dm-body{display:grid;grid-template-rows:0fr;opacity:0;visibility:hidden;
+    transition:grid-template-rows .4s var(--ease-out),opacity .4s var(--ease-out),visibility 0s .4s}
+  .is-open .d2dm-body{grid-template-rows:1fr;opacity:1;visibility:visible;transition-delay:0s}
+  .d2dm-body-in{min-height:0;overflow:hidden}
+  .d2dm-chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:20px 0 0;padding:0}
+  .d2dm-chips li{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;
+    background:var(--soft);font-size:13px;color:var(--ink)}
+  .d2dm-hub{display:flex;align-items:baseline;gap:10px;margin:20px 0 0}
+  .d2dm-hub b{font:700 13px/1 Sora,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-deep)}
+  .d2dm-hub span{font-size:13px;line-height:1.5;color:var(--ink-muted)}
+  .d2dm-steps{display:flex;flex-direction:column;gap:14px;list-style:none;margin:20px 0 0;padding:0}
+  .d2dm-steps li{position:relative;padding-left:21px}
+  .d2dm-dot{position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--ink-deep)}
+  .d2dm-steps li:last-child .d2dm-dot{background:var(--acc)}
+  .d2dm-steps b{display:block;font:600 15px/1.3 Sora,sans-serif;color:var(--ink-deep)}
+  .d2dm-steps span{display:block;margin-top:2px;font-size:13px;line-height:1.5;color:var(--ink-muted)}
+  .d2dm-dline{margin:20px 0 0;padding-top:10px;border-top:1px dashed #C9D0D6;
+    font:600 11px/1 Sora,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-deep)}
+  .d2dm-rail{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .d2dm-rail-lbl{flex:none;font:600 12px/1 Sora,sans-serif;color:var(--acc)}
+  .d2dm-line{position:relative;flex:1;height:2px;background:rgba(13,24,40,.08)}
+  .d2dm-fill{position:absolute;inset:0;background:var(--acc);transform-origin:left center}
+  .d2d-mobile .d2dm-run{width:100%;min-height:48px;margin-top:20px;padding:0 20px;background:transparent;
+    border:1.5px solid var(--blue);color:var(--blue);font:600 15px/1.2 Sora,sans-serif;letter-spacing:0}
+  .d2d-close{margin-top:40px;color:var(--ink-deep)}
+  .d2d-close p{display:inline;font:600 22px/1.3 Sora,sans-serif;letter-spacing:-.02em}
+  .d2d-close .d2d-accent{font-weight:300;color:var(--ink-deep)}
+  .d2d-close .d2d-accent::before{content:" "}
+}
+@media (max-width:768px) and (prefers-reduced-motion:reduce){
+  .d2dm-body,.d2dm-v{transition:none}
+}
+
 /* ---- partners: the lower part of the client wall. Pill and heading left,
    the three partner marks in one row right. ----
    No top padding (see .clients). The bottom padding, 96/80/60px, mirrors the

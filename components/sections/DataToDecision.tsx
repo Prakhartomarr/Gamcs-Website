@@ -58,7 +58,17 @@ import { dataToDecision as d } from "@/lib/content/gamcs";
  *           "Insight" card (bottom 434) clears them. The sixth chip is nudged
  *           12×8px: fixed-size chips on a .71 stage measured "Other tools"
  *           10×12px into "Operations".
- *   ≤1023   the phone artboard: lane 1 then lane 2 as panels, each a vertical
+ *   ≤768    the phone design (picture 4): the two lanes as white accordion
+ *           cards (typical open, GAMCS closed, each its own toggle), chips,
+ *           the steps with a 7px dot each, the dashed "The decision" line
+ *           and a 2px rail; "Run the comparison" under them opens both and
+ *           plays ONE timeline — the red rail fills over 1.2s, the green
+ *           over 0.6s, and each lane's four dots pop in evenly across its
+ *           own rail time, so the time difference is the animation. No
+ *           scroll trigger there: the race is tap-driven. Markup is always
+ *           rendered (.d2d-mobile, display:none above 768) so the server and
+ *           client agree and nothing swaps after mount.
+ *   769–1023 the earlier phone artboard: lane 1 then lane 2 as panels, each a vertical
  *           path with the stations beside it, one full-width button, rails
  *           under each panel. The stations are list items, not buttons: their
  *           captions are always visible, so there is nothing to expand. 1023
@@ -366,6 +376,70 @@ function Panel({ tone, lane }: { tone: Tone; lane: typeof d.today | typeof d.gam
   );
 }
 
+/** The ≤768 lane card: a header button that toggles the body, then chips, (hub,) steps, the decision line and the rail. */
+function MobileLane({
+  tone,
+  lane,
+  open,
+  onToggle,
+}: {
+  tone: Tone;
+  lane: typeof d.today | typeof d.gamcs;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const hub = "hub" in lane ? lane.hub : null;
+  const id = `d2dm-body-${tone}`;
+  return (
+    <div className={`d2dm-lane d2d-${tone}${open ? " is-open" : ""}`}>
+      <button type="button" className="d2dm-head" aria-expanded={open} aria-controls={id} onClick={onToggle}>
+        <span className="d2dm-head-l">
+          <b>{lane.title}</b>
+          <span>{lane.subtitle}</span>
+        </span>
+        {/* plus; the vertical bar turns 90° onto the horizontal one to read as a minus */}
+        <span className="d2dm-tog" aria-hidden="true">
+          <svg viewBox="0 0 12 12">
+            <path d="M2 6h8" />
+            <path className="d2dm-v" d="M6 2v8" />
+          </svg>
+        </span>
+      </button>
+      <div className="d2dm-body" id={id}>
+        <div className="d2dm-body-in">
+          <ul className="d2dm-chips" role="list">
+            {lane.chips.map((c) => (
+              <li key={c.label}>{c.label}</li>
+            ))}
+          </ul>
+          {hub && (
+            <p className="d2dm-hub">
+              <b>{hub.name}</b>
+              <span>{hub.caption}</span>
+            </p>
+          )}
+          <ol className="d2dm-steps" role="list">
+            {lane.steps.map((s) => (
+              <li key={s.label}>
+                <i className="d2dm-dot" aria-hidden="true" />
+                <b>{s.label}</b>
+                <span>{s.caption}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="d2dm-dline">{d.decisionLine}</p>
+          <div className="d2dm-rail">
+            <span className="d2dm-rail-lbl">{lane.rail}</span>
+            <span className="d2dm-line" aria-hidden="true">
+              <i className={`d2dm-fill d2dm-fill--${tone}`} />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DataToDecision() {
   const rootRef = useRef<HTMLElement>(null);
   const runRef = useRef<() => void>();
@@ -374,6 +448,8 @@ export default function DataToDecision() {
   const [started, setStarted] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
   const toggle = (id: string) => setOpen((o) => (o === id ? null : id));
+  /** ≤768 lane cards: typical open, GAMCS closed, each toggled on its own; the run opens both. */
+  const [lanes, setLanes] = useState({ t: true, g: false });
 
   useEffect(() => {
     const root = rootRef.current;
@@ -385,9 +461,60 @@ export default function DataToDecision() {
       mm?.revert();
       mm = gsap.matchMedia(root);
       mm.add(
-        { desk: "(min-width: 1024px)", phone: "(max-width: 1023px)", reduce: "(prefers-reduced-motion: reduce)" },
+        {
+          desk: "(min-width: 1024px)",
+          phone: "(min-width: 769px) and (max-width: 1023px)",
+          mobile: "(max-width: 768px)",
+          reduce: "(prefers-reduced-motion: reduce)",
+        },
         (ctx) => {
-          const { desk, reduce } = ctx.conditions as { desk: boolean; reduce: boolean };
+          const { desk, mobile, reduce } = ctx.conditions as { desk: boolean; mobile: boolean; reduce: boolean };
+
+          if (mobile) {
+            /* ≤768: dots and rails only. Both rails start together; each lane's
+               four dots pop evenly across its own rail time (red 1.2s, green
+               0.6s). The 0.35s delay lets the closed lane's body open first. */
+            const lay = root.querySelector<HTMLElement>(".d2d-mobile")!;
+            const parts = (["t", "g"] as const).map((tone) => ({
+              dur: tone === "t" ? 1.2 : 0.6,
+              fill: lay.querySelector<HTMLElement>(`.d2dm-fill--${tone}`)!,
+              dots: Array.from(lay.querySelectorAll<HTMLElement>(`.d2d-${tone} .d2dm-dot`)),
+            }));
+            const fills = parts.map((p) => p.fill);
+            const dots = parts.flatMap((p) => p.dots);
+            const all = [...fills, ...dots];
+            if (reduce) {
+              gsap.set(fills, { scaleX: 1 });
+              gsap.set(dots, { scale: 1 });
+              runRef.current = () => {
+                ranRef.current = true;
+              };
+              return;
+            }
+            const tl = gsap.timeline({
+              paused: true,
+              delay: 0.35,
+              onStart: () => gsap.set(all, { willChange: "transform" }),
+              onComplete: () => gsap.set(all, { willChange: "auto" }),
+            });
+            parts.forEach(({ dur, fill, dots }) => {
+              tl.fromTo(fill, { scaleX: 0 }, { scaleX: 1, duration: dur, ease: "none" }, 0);
+              const pop = dur / dots.length;
+              dots.forEach((dot, i) => tl.fromTo(dot, { scale: 0 }, { scale: 1, duration: pop, ease: "back.out(1.7)" }, i * pop));
+            });
+            if (ranRef.current) tl.progress(1);
+            else {
+              /* scale on the dots only: `scale` on a rail would zero its height too */
+              gsap.set(fills, { scaleX: 0 });
+              gsap.set(dots, { scale: 0 });
+            }
+            runRef.current = () => {
+              ranRef.current = true;
+              tl.restart(true);
+            };
+            return;
+          }
+
           const lay = root.querySelector<HTMLElement>(desk ? ".d2d-desk" : ".d2d-phone")!;
           const $ = <T extends Element = HTMLElement>(s: string) => lay.querySelector<T>(s)!;
           const $$ = (s: string) => Array.from(lay.querySelectorAll<HTMLElement>(s));
@@ -469,6 +596,7 @@ export default function DataToDecision() {
 
   const run = () => {
     setStarted(true);
+    setLanes({ t: true, g: true });
     runRef.current?.();
   };
 
@@ -609,10 +737,19 @@ export default function DataToDecision() {
           </div>
         </div>
 
-        {/* ───── phone: the two lanes as vertical panels ───── */}
+        {/* ───── 769–1023: the two lanes as vertical panels ───── */}
         <div className="d2d-phone">
           <Panel tone="t" lane={d.today} />
           <Panel tone="g" lane={d.gamcs} />
+        </div>
+
+        {/* ───── ≤768: the lanes as accordion cards, the run button under them ───── */}
+        <div className="d2d-mobile">
+          <MobileLane tone="t" lane={d.today} open={lanes.t} onToggle={() => setLanes((l) => ({ ...l, t: !l.t }))} />
+          <MobileLane tone="g" lane={d.gamcs} open={lanes.g} onToggle={() => setLanes((l) => ({ ...l, g: !l.g }))} />
+          <CTA tier="secondary" className="d2dm-run" onClick={run}>
+            {started ? d.replay : d.run}
+          </CTA>
         </div>
 
         <div className="d2d-close reveal">
