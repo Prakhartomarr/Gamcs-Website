@@ -1837,6 +1837,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero .ctas .btn{width:100%;min-height:56px;padding-top:0;padding-bottom:0;
     font:600 clamp(13.5px,3.75vw,16px)/1.2 Sora,sans-serif;letter-spacing:-.01em}
 }
+/* Phones proper (the 546px DevTools preview the user matched keeps the sizes
+   above): the same block scaled to a 360–430 line so the headline, lead and
+   paragraph take the share of the width they take in that preview — the
+   paragraph sets four lines instead of five and the lead one line each. */
+@media (max-width:480px){
+  .hero h1{font-size:clamp(27px,7.6vw,30px)}
+  .hero-hook{font-size:clamp(16.5px,4.6vw,18px)}
+  .hero-lede .sub{font-size:15px;line-height:1.5;margin-top:18px}
+  .hero-bottom .ctas{margin-top:28px}
+  .hero .ctas .btn{min-height:52px;font-size:clamp(13.5px,3.75vw,15px)}
+}
 
 /* the "still have questions" line under the /faq intro */
 .page-head .faq-head-cta{margin-top:14px;font-size:0.8889rem;color:var(--ink-muted)}
