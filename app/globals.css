@@ -2132,30 +2132,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    folds a CSS `translate` into its inline transform and writes
    `translate:none`, which killed this lift after the first run. Lane-1 cards
    floor at the artboard's 176px: "Manual investigation" is 145.2px at
-   13.5px/600 Sora and needs the 148px inside. --d2d-cap is the open caption's
-   height cap, two 17px lines here (three at ≤1279). */
+   13.5px/600 Sora and needs the 148px inside. The caption row is a 0fr grid
+   track that opens to 1fr, so its height is never guessed or clipped. */
 @property --d2d-hov{syntax:"<length>";inherits:false;initial-value:0px}
-.d2d-st{position:absolute;z-index:3;width:max(13.58%,176px);--d2d-lift:0px;--d2d-cap:40px;
+.d2d-st{position:absolute;z-index:3;display:grid;grid-template-rows:auto 0fr;
+  width:max(13.58%,176px);--d2d-lift:0px;
   translate:-50% min(var(--d2d-lift),var(--d2d-hov));padding:11px 14px;
   text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;
   box-shadow:0 1px 2px rgba(13,24,40,.04);cursor:pointer;
   transition:--d2d-hov .34s var(--ease-out),box-shadow .34s var(--ease-out),
-    border-color .34s var(--ease-out)}
+    border-color .34s var(--ease-out),grid-template-rows .4s var(--ease-out)}
 .d2d-stop--g.d2d-st{width:12.35%}
 .d2d-st:hover,.d2d-st:focus-visible,.d2d-st.is-open{z-index:9;--d2d-hov:-3px;
-  border-color:var(--acc);box-shadow:0 10px 26px rgba(13,24,40,.12),0 0 0 1px rgba(13,24,40,.04)}
+  grid-template-rows:auto 1fr;border-color:var(--acc);box-shadow:0 10px 26px rgba(13,24,40,.12),0 0 0 1px rgba(13,24,40,.04)}
 .d2d-st:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .d2d-st-t{display:block;font:600 13.5px/22px Sora,sans-serif;letter-spacing:-.005em;
   color:var(--ink-deep)}
 .d2d-st--end .d2d-st-t{color:var(--acc)}
 /* collapsed, the caption is also visibility:hidden (after its collapse), so
    aria-expanded=false matches what a screen reader is given */
-.d2d-st-c{display:block;max-height:0;margin-top:0;overflow:hidden;opacity:0;visibility:hidden;
+.d2d-st-c{min-height:0;overflow:hidden;opacity:0;visibility:hidden;
   font-size:12px;line-height:17px;color:var(--ink-muted);
-  transition:max-height .4s var(--ease-out),opacity .26s ease,margin-top .4s var(--ease-out),
-    visibility 0s .4s}
+  transition:opacity .26s ease,visibility 0s .4s}
+.d2d-st-c>span{display:block;padding-top:5px}
 .d2d-st:hover .d2d-st-c,.d2d-st:focus-visible .d2d-st-c,.d2d-st.is-open .d2d-st-c{
-  max-height:var(--d2d-cap);margin-top:5px;opacity:1;visibility:visible;transition-delay:0s}
+  opacity:1;visibility:visible;transition-delay:0s}
 /* the ring a passing packet lights: an overlay GSAP fades in and out */
 .d2d-ring{position:absolute;inset:-1px;border:1px solid var(--acc);border-radius:inherit;
   box-shadow:0 0 0 5px var(--ring),0 10px 26px rgba(13,24,40,.1);opacity:0;pointer-events:none}
@@ -2241,7 +2242,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    wrapped and covered "Days / weeks". Captions open to three lines, and the
    closing lines drop to 40px so the 100px open "Insight" card clears them. */
 @media (max-width:1279px){
-  .d2d-st{width:max(13.58%,160px);padding:10px 12px;--d2d-cap:51px}
+  .d2d-st{width:max(13.58%,160px);padding:10px 12px}
   .d2d-stop--g.d2d-st{width:12.35%}
   .d2d-st-t{font-size:12.5px}
   .d2d-close{margin-top:40px}

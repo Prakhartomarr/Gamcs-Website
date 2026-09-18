@@ -282,7 +282,7 @@ function Station({
       onClick={() => onToggle(id)}
     >
       <span className="d2d-st-t">{label}</span>
-      <span className="d2d-st-c">{caption}</span>
+      <span className="d2d-st-c"><span>{caption}</span></span>
       <Ring />
     </button>
   );
