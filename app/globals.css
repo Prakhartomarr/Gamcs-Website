@@ -1026,6 +1026,26 @@ html{font-size:112.5%}
   .ach-figure-label{font-size:0.7778rem}
   .ach-figure-value{margin-top:8px;font-size:44px}
 }
+/* phones (<=768), the design's achievements (picture 3): the grey ground with
+   64px/20px padding, the heading at 30px, a 7/8 photo card with a bottom
+   gradient and the deal figure bottom-left, then the three figures as a
+   hairlined list, number over label (column-reverse: the DOM keeps label
+   then number, so CountUp and the reading order are unchanged). */
+@media(max-width:768px){
+  /* .metrics' own padding and ground are set after the shared band rules below */
+  .metrics .container{width:calc(100% - 40px)}
+  .metrics .section-head{margin-bottom:32px}
+  .metrics .section-head h2{margin:0;font:600 30px/1.1 Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
+  .ach-grid{row-gap:24px}
+  .ach-card{aspect-ratio:7/8;min-height:0;border-radius:24px;padding:28px}
+  .ach-card::after{background:linear-gradient(180deg,rgba(13,24,40,0) 0%,rgba(13,24,40,.78) 100%)}
+  .ach-card-value{font-size:60px;letter-spacing:-.03em}
+  .ach-card-label{margin-top:10px;font-size:15px;line-height:1.4;color:#fff}
+  .ach-figures{display:flex;flex-direction:column;gap:0}
+  .ach-figure{flex-direction:column-reverse;padding:28px 0;border-top:1px solid var(--line)}
+  .ach-figure-value{margin:0;font-size:56px;letter-spacing:-.03em}
+  .ach-figure-label{margin-top:8px;font-size:14px;line-height:1.4;color:var(--ink-muted)}
+}
 
 /* ---------- services panels ---------- */
 .solution-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
@@ -1406,6 +1426,9 @@ html[data-cookie-banner] .sticky-cta{display:none}
   .eyebrow-row{gap:0;margin-bottom:20px}
   /* the inline pills have no row: 16px + the line box's 4px of slack = 20px */
   .eyebrow-num + .fin-eyebrow + .fin-h2{margin-top:16px}
+  /* achievements on the grey ground (the rest of its phone layout is with
+     the .ach-* rules); here because the band rules above set both */
+  .metrics{padding:64px 0;background:#F4F5F6}
 }
 
 /* ---- hero shader stack (replaces the canvas ribbon field) ----
