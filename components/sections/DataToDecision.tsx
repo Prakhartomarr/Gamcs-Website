@@ -59,7 +59,8 @@ import { dataToDecision as d } from "@/lib/content/gamcs";
  *           12×8px: fixed-size chips on a .71 stage measured "Other tools"
  *           10×12px into "Operations".
  *   ≤768    the phone design (picture 4): the two lanes as white accordion
- *           cards (typical open, GAMCS closed, each its own toggle), chips,
+ *           cards (both open, each its own toggle; the race plays once as
+ *           they scroll in and the button replays it), chips,
  *           the steps with a 7px dot each, the dashed "The decision" line
  *           and a 2px rail; "Run the comparison" under them opens both and
  *           plays ONE timeline — the red rail fills over 1.2s, the green
@@ -449,8 +450,8 @@ export default function DataToDecision() {
   const [started, setStarted] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
   const toggle = (id: string) => setOpen((o) => (o === id ? null : id));
-  /** ≤768 lane cards: typical open, GAMCS closed, each toggled on its own; the run opens both. */
-  const [lanes, setLanes] = useState({ t: true, g: false });
+  /** ≤768 lane cards: both open so the race is visible without a tap; each toggles on its own; the run opens both. */
+  const [lanes, setLanes] = useState({ t: true, g: true });
 
   useEffect(() => {
     const root = rootRef.current;
@@ -506,16 +507,36 @@ export default function DataToDecision() {
               const pop = dur / dots.length;
               dots.forEach((dot, i) => tl.fromTo(dot, { scale: 0 }, { scale: 1, duration: pop, ease: "back.out(1.7)" }, i * pop));
             });
-            if (ranRef.current) tl.progress(1);
-            else {
-              /* scale on the dots only: `scale` on a rail would zero its height too */
-              gsap.set(fills, { scaleX: 0 });
-              gsap.set(dots, { scale: 0 });
-            }
             runRef.current = (delay = 0) => {
               ranRef.current = true;
               tl.delay(delay).restart(true);
             };
+            if (ranRef.current) tl.progress(1);
+            else {
+              /* The CSS resting state is the finished race (no JS, reduced
+                 motion and a page loaded past the section all show it). With
+                 the lanes still below the fold, empty them and play once as
+                 they come in — 85% so the first dots are just off screen when
+                 it starts. scale on the dots only: `scale` on a rail would
+                 zero its height too. */
+              gsap.set(fills, { scaleX: 0 });
+              gsap.set(dots, { scale: 0 });
+              ScrollTrigger.create({
+                trigger: lay,
+                start: "top 85%",
+                once: true,
+                onEnter: (self) => {
+                  if (ranRef.current) return;
+                  if (self.progress === 1) {
+                    ranRef.current = true;
+                    tl.progress(1);
+                    setStarted(true);
+                    return;
+                  }
+                  runRef.current?.();
+                },
+              });
+            }
             return;
           }
 
