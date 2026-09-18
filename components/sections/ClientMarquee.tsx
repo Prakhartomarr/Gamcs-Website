@@ -14,8 +14,12 @@ import type { LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
  * seamless (each list carries the 8px gap as padding-right, so half the track
  * IS one list plus one gap). Row two runs the keyframe in reverse.
  *
+ * The marks load eagerly: lazy ones only fetched once their tile drifted into
+ * the clip, so tiles arrived as empty grey squares (the copies share URLs,
+ * and the desktop grid fetches the same files, so nothing extra is downloaded).
+ *
  * Pausing is `animation-play-state`, toggled by a class while a pointer is
- * down anywhere on the wall (and on hover, in CSS). Under
+ * down anywhere on the wall (and on hover, in CSS, only where hover exists). Under
  * prefers-reduced-motion the CSS drops the animation, hides the copies and
  * lets each row scroll sideways instead. Above 768px the whole thing is
  * display:none; the grid (CinematicLogoCloud) is what renders there. Styles:
@@ -29,7 +33,7 @@ export default function ClientMarquee({ logos }: { logos: LogoCloudClient[] }) {
     <ul className="clm-list" aria-hidden={hidden || undefined}>
       {row.map((l) => (
         <li key={l.name}>
-          <Image src={l.src!} alt={hidden ? "" : l.name} width={l.width} height={l.height} />
+          <Image src={l.src!} alt={hidden ? "" : l.name} width={l.width} height={l.height} loading="eager" />
         </li>
       ))}
     </ul>

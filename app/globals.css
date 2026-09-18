@@ -1038,7 +1038,7 @@ html{font-size:112.5%}
   .metrics .section-head h2{margin:0;font:600 30px/1.1 Sora,sans-serif;letter-spacing:-.02em;color:var(--ink-deep)}
   .ach-grid{row-gap:24px}
   .ach-card{aspect-ratio:7/8;min-height:0;border-radius:24px;padding:28px}
-  .ach-card::after{background:linear-gradient(180deg,rgba(13,24,40,0) 0%,rgba(13,24,40,.78) 100%)}
+  .ach-card::after{background:linear-gradient(180deg,rgba(13,24,40,0) 40%,rgba(13,24,40,.78) 100%)}
   .ach-card-value{font-size:60px;letter-spacing:-.03em}
   .ach-card-label{margin-top:10px;font-size:15px;line-height:1.4;color:#fff}
   .ach-figures{display:flex;flex-direction:column;gap:0}
@@ -1831,8 +1831,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-hook .was{color:var(--ink-muted)}
   .hero-lede .sub{margin-top:20px;font-size:17px;line-height:1.5;color:var(--ink);font-weight:400}
   .hero-bottom .ctas{margin-top:32px}
+  /* 16px only from 430 up: the label sets 300px of ink at 16px and shares the
+     row with the arrow, so at 360–390 (276–306px inside the pill) it wrapped
+     to "…in / Action"; 3.75vw is 13.5px at 360, 14.6 at 390, one line each */
   .hero .ctas .btn{width:100%;min-height:56px;padding-top:0;padding-bottom:0;
-    font:600 16px/1.2 Sora,sans-serif;letter-spacing:-.01em}
+    font:600 clamp(13.5px,3.75vw,16px)/1.2 Sora,sans-serif;letter-spacing:-.01em}
 }
 
 /* the "still have questions" line under the /faq intro */
@@ -2129,6 +2132,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @keyframes clm-drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:768px){
   .clients{padding:80px 0 0}
+  .clients .container,.partners .container{width:calc(100% - 40px)}
   .clients-head{text-align:left;margin:0 0 28px}
   .clients-head h2{max-width:320px;font:600 24px/1.2 Sora,sans-serif;letter-spacing:-.02em;text-transform:none}
   .clients-wall{display:none}
@@ -2139,17 +2143,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent)}
   .clm-track{display:flex;width:max-content;animation:clm-drift 45s linear infinite}
   .clm-row[data-dir="rtl"] .clm-track{animation-direction:reverse}
-  .clm-wall.is-paused .clm-track,.clm-wall:hover .clm-track{animation-play-state:paused}
+  .clm-wall.is-paused .clm-track{animation-play-state:paused}
   /* each list carries one gap on its right, so half the track is one list */
   .clm-list{display:flex;gap:8px;list-style:none;margin:0;padding:0 8px 0 0}
   .clm-list li{display:flex;align-items:center;justify-content:center;flex:none;
     width:86px;height:80px;border-radius:12px;background:var(--soft)}
-  .clm-list img{width:auto;height:auto;max-width:62px;max-height:40px;filter:grayscale(1);opacity:.85}
+  .clm-list img{width:62px;height:40px;object-fit:contain;filter:grayscale(1);opacity:.85}
   /* the partners half of this block sits after the .partners rules below */
 }
 @media (max-width:768px) and (prefers-reduced-motion:reduce){
   .clm-track{animation:none;width:auto;overflow-x:auto;padding:0 20px}
   .clm-list[aria-hidden]{display:none}
+}
+/* hover pauses only where hover exists: on touch screens :hover sticks to
+   the last tile tapped until the next tap elsewhere, which froze the rows */
+@media (max-width:768px) and (hover:hover){
+  .clm-wall:hover .clm-track{animation-play-state:paused}
 }
 
 /* ---- the gap: the race to the decision. One stage, two lanes from the
@@ -2422,6 +2431,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2dm-steps li{position:relative;padding-left:21px}
   .d2dm-dot{position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--ink-deep)}
   .d2dm-steps li:last-child .d2dm-dot{background:var(--acc)}
+  /* the artboard's 1px connector: from 2px under a dot to 2px into the next step */
+  .d2dm-steps li:not(:last-child)::after{content:"";position:absolute;left:3px;top:16px;bottom:-16px;width:1px;background:var(--line)}
   .d2dm-steps b{display:block;font:600 15px/1.3 Sora,sans-serif;color:var(--ink-deep)}
   .d2dm-steps span{display:block;margin-top:2px;font-size:13px;line-height:1.5;color:var(--ink-muted)}
   .d2dm-dline{margin:20px 0 0;padding-top:10px;border-top:1px dashed #C9D0D6;
