@@ -1827,7 +1827,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      (37.4px, 382px of ink) wrapped it. 8.4vw is 32.8px at 390 (334px), one
      line from 360 up; the 38px cap lands at 452. */
   .hero h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;font-weight:700;letter-spacing:-.03em;color:var(--ink-deep)}
-  .hero-hook{font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
+  .hero-hook{font-size:clamp(19px,5.45vw,21.5px);line-height:1.25;font-weight:600;letter-spacing:-.02em}
   .hero-hook .was{color:var(--ink-muted)}
   .hero-lede .sub{margin-top:20px;font-size:17px;line-height:1.5;color:var(--ink);font-weight:400}
   .hero-bottom .ctas{margin-top:32px}
