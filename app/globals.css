@@ -3117,3 +3117,116 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .cr-track:not([hidden]){animation:none}
 }
+
+/* ---- application overlay: a native modal <dialog>, full screen ---- */
+.ap{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--paper);color:var(--ink);overflow:hidden}
+.ap[open]{display:flex;flex-direction:column;animation:apFade .2s var(--ease-out)}
+.ap::backdrop{background:var(--paper)}
+.ap [hidden]{display:none!important}
+.ap-bar{flex:none;display:flex;align-items:center;justify-content:space-between;height:76px;padding:0 40px}
+.ap-brand{display:inline-flex;align-items:center;gap:14px;font-size:14px;font-weight:500;color:var(--ink-muted);--ga-h:30px}
+.ap-progress{flex:none;height:3px;background:#E6E9EC}
+.ap-progress div{height:3px;background:var(--blue);transform-origin:left center;transition:transform .35s var(--ease-out)}
+.ap-body{flex:1;min-height:0;display:grid;grid-template-columns:440px minmax(0,1fr);column-gap:64px;padding:28px 40px 40px}
+.ap-panel{position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:24px;padding:36px 32px 28px;color:#fff;background:linear-gradient(rgba(13,24,40,.84),rgba(13,24,40,.84)),var(--ink-deep) url(/page-art/team.webp) center/cover no-repeat;animation:apPanel .35s var(--ease-out)}
+.ap-panel .section-kicker{text-transform:uppercase}
+.ap-hint{margin:8px 0 0;font-size:13px;color:var(--ink-muted)}
+.ap-panel h1{margin:14px 0 0;font-size:40px;line-height:1.08;letter-spacing:-.02em}
+.ap-steps{list-style:none;margin:40px 0 0;padding:0}
+.ap-steps li{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding-bottom:28px}
+.ap-step-n{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.4);font-size:15px;font-weight:600;color:#fff}
+.ap-steps li[data-state="current"] .ap-step-n{background:#fff;border-color:#fff;color:var(--ink-deep)}
+.ap-steps li[data-state="done"] .ap-step-n{background:#9CC8EA;border-color:#9CC8EA;color:var(--ink-deep)}
+.ap-step-t{padding-top:2px;font-size:19px;line-height:1.3;letter-spacing:-.01em;font-weight:400}
+.ap-steps li[data-state="current"] .ap-step-t{font-weight:600}
+.ap-step-f{margin-top:3px;font-size:14px;color:#C9D6E2}
+.ap-panel-foot{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.18)}
+.ap-caps{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#C9D6E2}
+.ap-caps--blue{color:var(--blue)}
+.ap-applying{margin-top:8px;font-size:20px;font-weight:500;letter-spacing:-.01em}
+.ap-panel a:focus-visible{outline-color:#fff}
+.ap-main{min-width:0;padding:16px 4px 24px;overflow-y:auto;animation:apRise .35s var(--ease-out)}
+.ap-form,.ap-done{max-width:620px}
+.ap-main h2{margin:12px 0 6px;font-size:40px;line-height:1.08;letter-spacing:-.02em;outline:none}
+.ap-main h2:focus-visible{outline:none}
+.ap-step:not([hidden]){animation:apRise .2s var(--ease-out)}
+.ap-field{margin:22px 0 0;padding:0;border:0;min-width:0}
+.ap-field>label,.ap-field>legend{display:block;margin-bottom:8px;padding:0;font-size:14px;font-weight:600;color:var(--ink)}
+.ap-req{color:var(--blue)}
+.ap-field input[type="text"],.ap-field input[type="email"],.ap-field input[type="tel"],.ap-field input[type="url"],.ap-field select,.ap-field textarea{display:block;width:100%;height:52px;padding:0 16px;border-radius:12px;border:1px solid #7D8894;background:#fff;color:var(--ink);font:400 16px var(--font-sans)}
+.ap-field textarea{height:auto;padding:14px 16px;line-height:1.5;resize:vertical}
+.ap-field select{padding-right:44px;font-weight:500}
+.ap-field .cr-select svg{top:18px}
+.ap-field ::placeholder{color:var(--ink-muted)}
+.ap-field input:hover,.ap-field select:hover,.ap-field textarea:hover{border-color:var(--ink-muted)}
+.ap-field [aria-invalid="true"]{border-color:#B3261E!important}
+.ap-field select:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.ap-err{margin:10px 0 0;font-size:14px;font-weight:600;line-height:1.4;color:#B3261E}
+.ap-err:empty{display:none}
+.ap-err a{text-decoration:underline}
+.ap-seg{display:flex;flex-wrap:wrap;gap:8px}
+.ap-seg input,.ap-file input[type="file"]{position:absolute;opacity:0;width:1px;height:1px}
+.ap-seg label{display:inline-flex;align-items:center;height:46px;padding:0 18px;border-radius:999px;border:1px solid #7D8894;background:#fff;font-size:15px;font-weight:500;cursor:pointer;transition:background var(--dur-hover) var(--ease-out),border-color var(--dur-hover) var(--ease-out)}
+.ap-seg input:checked+label{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+.ap-seg input:focus-visible+label,.ap-file:has(input[type="file"]:focus-visible) .ap-drop{outline:2px solid var(--blue);outline-offset:3px}
+.ap-file{position:relative}
+.ap-field>label.ap-drop{display:flex;align-items:center;gap:16px;min-height:84px;margin:0;font-weight:400;padding:18px 20px;border-radius:16px;border:1.5px dashed #7D8894;background:#F4F5F6;cursor:pointer;transition:border-color .2s var(--ease-out),background-color .2s var(--ease-out)}
+.ap-field>label.ap-drop:hover,.ap-field>label.ap-drop[data-drag]{border-color:var(--blue);background:#EAF2F8}
+.ap-field>label.ap-drop[data-bad]{border-color:#B3261E;background:#FDF3F2}
+.ap-drop-icon{flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--blue)}
+.ap-drop-t{display:block;font-size:16px;font-weight:600}
+.ap-drop-t u{color:var(--blue);text-underline-offset:3px}
+.ap-drop-h{display:block;margin-top:3px;font-size:13px;color:var(--ink-muted)}
+.ap-chip{display:inline-flex;align-items:center;gap:12px;max-width:100%;min-height:56px;padding:6px 8px 6px 16px;border-radius:14px;border:1px solid var(--blue);background:#EAF2F8;color:var(--ink-muted);animation:apChip .2s var(--ease-out)}
+.ap-chip-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;font-weight:600;color:var(--blue-dark)}
+.ap-chip button{flex:none;height:44px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:var(--blue-dark);font-size:15px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.ap-consent{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;margin-top:18px;font-size:15px;line-height:1.5}
+.ap-consent input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--blue)}
+.ap-consent label{display:inline;margin:0;font-weight:400}
+.ap-consent a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.ap-actions{display:flex;justify-content:space-between;gap:12px;margin-top:32px}
+.ap-actions .btn,.ap-done .btn{min-height:48px;padding:0 24px}
+.ap-actions .btn[disabled]{opacity:.62;cursor:progress}
+.ap-helper{margin:12px 0 0;text-align:right;font-size:13px;color:var(--ink-muted)}
+.ap-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.ap-done{padding-top:72px}
+.ap-done-mark{color:var(--blue)}
+.ap-done-mark path{stroke-dasharray:1;animation:apDraw .5s .15s var(--ease-out) backwards}
+.ap-done h2{margin:28px 0 0;font-size:48px;line-height:1.06}
+.ap-done p{margin:16px 0 0;max-width:480px;font-size:17px;line-height:1.55;color:var(--ink-muted)}
+.ap-done p a{color:var(--blue);font-weight:600;text-decoration:underline}
+.ap-done .btn{margin-top:32px}
+@keyframes apFade{from{opacity:0}}
+@keyframes apPanel{from{opacity:0;transform:translateX(-24px)}}
+@keyframes apRise{from{opacity:0;transform:translateY(12px)}}
+@keyframes apChip{from{opacity:0;transform:scale(.96)}}
+@keyframes apDraw{from{stroke-dashoffset:1}}
+/* Short laptops: the step list tightens so the panel never needs a scrollbar. */
+@media (max-height:760px){
+  .ap-bar{height:64px}
+  .ap-body{padding:20px 40px 24px}
+  .ap-panel{padding:28px 28px 20px}
+  .ap-steps{margin-top:28px}
+  .ap-steps li{padding-bottom:18px}
+  .ap-main h2{font-size:34px}
+  .ap-field{margin-top:16px}
+  .ap-actions{margin-top:24px}
+}
+@media (max-width:1023px){
+  .ap-bar{height:64px;padding:0 16px}
+  .ap-body{display:block;padding:0;overflow-y:auto}
+  .ap-panel{border-radius:0;padding:20px 20px 22px;animation:none}
+  .ap-panel h1{margin-top:8px;font-size:28px}
+  .ap-steps,.ap-panel-foot,.ap-form>.ap-caps{display:none}
+  .ap-form h2{margin-top:0}
+  .ap-main{overflow:visible;padding:28px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+  .ap-main h2{font-size:30px}
+  .ap-form,.ap-done{margin-inline:auto}
+  .ap-done{padding-top:24px}
+  .ap-done h2{font-size:36px}
+}
+@media (max-width:767px){
+  .ap-actions .btn{flex:1}
+  .ap-actions>span:empty{display:none}
+  .ap-helper{text-align:left}
+}

@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CTA from "@/components/CTA";
 import PageHeadArt from "@/components/PageHeadArt";
 import SectionEyebrow from "@/components/SectionEyebrow";
+import ApplyDialog, { type ApplyRequest } from "@/components/careers/ApplyDialog";
 import { careers } from "@/lib/content/gamcs";
 
 const { open, tracks, roles, locations } = careers;
@@ -45,6 +46,7 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
   const [loc, setLoc] = useState("all");
   const [pinned, setPinned] = useState(false);
   const [bar, setBar] = useState(false);
+  const [request, setRequest] = useState<ApplyRequest | null>(null);
   const sentinel = useRef<HTMLDivElement>(null);
   const heroCtas = useRef<HTMLDivElement>(null);
 
@@ -81,9 +83,9 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
   const locLabel = (ids: string[]) =>
     locations.filter((l) => ids.includes(l.id) && (loc === "all" || l.id === loc)).map((l) => l.label).join(" · ");
 
-  const apply = (trackTitle?: string) => ({
-    href: `${mailto}?subject=${encodeURIComponent(trackTitle ? `Application: ${trackTitle}` : "Application")}`,
-  });
+  /* Every Apply opens the overlay; a track's own button pre-selects it, and a
+     chosen location filter carries into the form's location preference. */
+  const apply = (track?: string) => ({ type: "button" as const, onClick: () => setRequest({ track, loc }) });
 
   const filters = (suffix: string, className: string) => (
     <div className={className}>
@@ -172,7 +174,7 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
                       <span className="cr-chip">{locLabel(r.locations)}</span>
                     </div>
                   </div>
-                  <CTA {...apply(r.title)} icon="diagonal" data-cta={`careers-track-${r.id}`} srSuffix={`to ${r.title}`}>Apply</CTA>
+                  <CTA {...apply(tracks.some((t) => t.id === r.track) ? r.track : undefined)} icon="diagonal" data-cta={`careers-track-${r.id}`} srSuffix={`to ${r.title}`}>Apply</CTA>
                 </li>
               ))}
               {/* Survives every filter, so the list can never read as empty. */}
@@ -195,6 +197,8 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
         </div>
         <CTA {...apply()} icon="diagonal" data-cta="careers-sticky" tabIndex={bar ? undefined : -1}>{careers.applyLabel}</CTA>
       </div>
+
+      <ApplyDialog request={request} onClose={() => setRequest(null)} />
     </>
   );
 }

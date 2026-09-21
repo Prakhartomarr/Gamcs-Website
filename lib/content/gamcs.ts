@@ -1224,6 +1224,14 @@ export const careers = {
       cvSize: "Your CV needs to be 4 MB or smaller",
       consent: "Tick the box so we can review your application",
     },
+    /* Shown when the mail route is not configured yet and the form hands the
+       application to the applicant's own mail app instead. */
+    mailto: {
+      heading: "One more step: attach your CV.",
+      body: "We've opened your email app with your details filled in, addressed to careers@gamcs.in. Attach your CV there and press send — a browser can't attach it for you.",
+      retry: "Nothing opened? Write to",
+    },
+    sendError: "We couldn't send your application. Please try again, or write to",
     success: {
       heading: "Application received.",
       body: "Thanks — we read every application and reply to everyone we can take further.",
