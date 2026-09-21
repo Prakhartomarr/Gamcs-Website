@@ -1171,7 +1171,8 @@ export const careers = {
     eyebrow: "How we hire",
     heading: "Five steps, no surprises.",
     photoAlt: "Gaurav Malik and Abhinav Aggarwal, the founders of GAMCS",
-    photoCaption: "Gaurav Malik, Founder · Abhinav Aggarwal, Co-Founder",
+    /* U+2060 (word joiner, zero width) keeps "Co-Founder" on one line. */
+    photoCaption: "Gaurav Malik, Founder · Abhinav Aggarwal, Co-\u2060Founder",
     steps: [
       { title: "Application", body: "Send your CV and tell us which track you want." },
       { title: "Intro call", body: "A first conversation about your experience and what you want to work on." },
