@@ -79,8 +79,10 @@ function FlickeringText({
 			const TARGET = w * 0.9;
 			const MAX_SIZE = Math.floor(h * 0.82);
 
+			// canvas cannot read a CSS variable: take the resolved --font-sans stack
+			const family = getComputedStyle(document.body).fontFamily;
 			const setFont = (px: number, track: number) => {
-				mctx.font = `700 ${px}px Sora, system-ui, sans-serif`;
+				mctx.font = `700 ${px}px ${family}`;
 				try {
 					(mctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = `${track}px`;
 				} catch {

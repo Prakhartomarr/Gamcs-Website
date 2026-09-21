@@ -75,8 +75,8 @@ const config: Config = {
         "6xl": "3rem",
       },
       fontFamily: {
-        heading: ["Sora", "sans-serif"],
-        body: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+        heading: ["var(--font-sans)"],
+        body: ["var(--font-sans)"],
       },
       keyframes: {
         /* Base UI, not Radix: this project has no @radix-ui packages, and

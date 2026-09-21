@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/ui/header-2";
 import { FlickeringFooter } from "@/components/ui/flickering-footer";
@@ -13,6 +14,16 @@ import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { OG_IMAGE, SITE_URL, absolute } from "@/lib/seo";
 import { intro, site } from "@/lib/content/gamcs";
+
+/* The fallback face only. Apple devices resolve -apple-system (SF Pro) first in
+   --font-sans, so preload stays off: they must download no font bytes. The
+   variable file (100–900) covers every weight the CSS asks for. */
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -66,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
         <GaLogoSprite />
         <Preloader />
