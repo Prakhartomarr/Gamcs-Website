@@ -106,6 +106,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 /* on dark/blue surfaces the ring needs to be light to stay visible */
 .hero-diagonal ~ * a:focus-visible,.system-section a:focus-visible,.contact-box a:focus-visible,.contact-box button:focus-visible,.quote a:focus-visible{outline-color:#fff}
 h1,h2,h3,h4,.nav,.eyebrow,.btn,.metric-value,.stat-value,.card-kicker,.footer-title,.dashboard-label,.dashboard-number{font-family:var(--font-sans)}
+/* Headings are 500 in the SF Pro / Inter system; preflight leaves them at
+   `inherit` (400). Rules with their own weight still win. */
+h1,h2,h3,h4{font-weight:500}
 h1,h2,h3,p{margin-top:0}
 /* Full-bleed: no card, no inset, no radius. Section backgrounds run edge
    to edge; the measure is held by .container inside them. */
@@ -296,7 +299,7 @@ h1,h2,h3,p{margin-top:0}
 
 @keyframes chartShimmer{0%{background-position:100% 0}100%{background-position:0 0}}.leader .initials{width:120px;height:120px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 2.2222rem var(--font-sans);margin-bottom:70px}.leader small,.person small{font:700 0.6667rem var(--font-sans);letter-spacing:.14em;color:var(--blue)}.person{background:#fff;border:1px solid #E0E3E4;border-radius:17px;padding:21px;min-height:185px}.person .avatar{width:38px;height:38px;border-radius:50%;background:#EAF0F3;color:var(--blue);display:grid;place-items:center;font:700 0.7222rem var(--font-sans);margin-bottom:30px}.person b{display:block;font:700 0.7778rem var(--font-sans)}.person span{display:block;font-size:0.7222rem;color:#858585;margin-top:4px}
 /* CONTACT */
-.contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:700 clamp(38px,4.5vw,60px) var(--font-sans);line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem var(--font-sans);letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
+.contact{padding:108px 0}.contact-box{background:var(--dark);color:#fff;border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr .9fr;gap:60px}.contact-box h2{font:500 clamp(38px,4.5vw,60px) var(--font-sans);line-height:.98;letter-spacing:-.06em;margin:15px 0 17px}.contact-box p{color:#C5CCCF;font-size:0.8333rem;max-width:520px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font:700 0.6667rem var(--font-sans);letter-spacing:.12em;color:#AEB7BA}.field input,.field textarea{border:1px solid rgba(255,255,255,.17);background:#2D2D2D;color:#fff;border-radius:10px;padding:11px 12px;outline:none}.field textarea{min-height:90px;resize:vertical}.form button{grid-column:1/-1;justify-self:start}
 /* FOOTER */
 /* legacy footer element styling removed: components/ui/footer-section.tsx
    styles the footer with utilities, and an element selector would beat them */
@@ -799,8 +802,8 @@ html{font-size:112.5%}
   display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding:56px;min-height:480px}
 .contact-panel-copy{max-width:560px}
 .contact-panel-copy .btn{margin-top:28px}
-.contact-lead{margin:0;font:700 1.2222rem var(--font-sans);line-height:1.42;letter-spacing:-.02em;color:#fff}
-.contact-lead span{font-weight:600;color:#EAF4FF}
+.contact-lead{margin:0;font:500 1.2222rem var(--font-sans);line-height:1.42;letter-spacing:-.02em;color:#fff}
+.contact-lead span{font-weight:500;color:#EAF4FF}
 .contact-panel-stage{width:520px;height:368px;display:flex;align-items:center;justify-content:center}
 
 /* ---------- services accordion (homepage) ----------
@@ -864,7 +867,7 @@ html{font-size:112.5%}
   to{opacity:1;transform:none}}
 .svca-kicker{display:block;font:700 0.6111rem var(--font-sans);letter-spacing:.14em;
   text-transform:uppercase;color:rgba(255,255,255,.84)}
-.svca-panel-title{margin:9px 0 0;font:700 1.1111rem var(--font-sans);letter-spacing:-.025em;
+.svca-panel-title{margin:9px 0 0;font:500 1.1111rem var(--font-sans);letter-spacing:-.025em;
   line-height:1.2;color:#fff}
 .svca-chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 0;padding:0;list-style:none}
 .svca-chips li{font:600 0.6667rem var(--font-sans);letter-spacing:-.005em;color:#fff;
@@ -998,12 +1001,12 @@ html{font-size:112.5%}
 .ach-card::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.5) 45%,rgba(8,14,22,.12) 100%)}
 .ach-card-value,.ach-card-label{position:relative;z-index:1}
-.ach-card-value{font:300 clamp(60px,7.2222vw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
+.ach-card-value{font:100 clamp(60px,7.2222vw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
 .ach-card-label{margin:18px 0 0;font-size:1rem;line-height:1.4;color:rgba(255,255,255,.88)}
 .ach-figures{display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}
 .ach-figure{display:flex;flex-direction:column;justify-content:flex-end}
 .ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-muted);text-wrap:balance}
-.ach-figure-value{margin-top:10px;font:300 clamp(44px,4.1667vw,60px)/1 var(--font-sans);
+.ach-figure-value{margin-top:10px;font:100 clamp(44px,4.1667vw,60px)/1 var(--font-sans);
   letter-spacing:-.035em;color:var(--ink-deep)}
 /* the container is pinned at 920 here, so the type holds still with it */
 @media(min-width:1024px) and (max-width:1279px){
@@ -1036,7 +1039,7 @@ html{font-size:112.5%}
   /* .metrics' own padding and ground are set after the shared band rules below */
   .metrics .container{width:calc(100% - 40px)}
   .metrics .section-head{margin-bottom:32px}
-  .metrics .section-head h2{margin:0;font:600 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
+  .metrics .section-head h2{margin:0;font:500 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
   .ach-grid{row-gap:24px}
   .ach-card{aspect-ratio:7/8;min-height:0;border-radius:24px;padding:28px}
   .ach-card::after{background:linear-gradient(180deg,rgba(13,24,40,0) 40%,rgba(13,24,40,.78) 100%)}
@@ -1131,7 +1134,7 @@ html{font-size:112.5%}
 
 /* --- 404 ------------------------------------------------------------ */
 .notfound{padding-top:132px;text-align:left}
-/* Sora is served as a variable font, and a bare stroke outlines its
+/* The face is a variable font, and a bare stroke outlines its
    overlapping contours too (a box inside each 4). Stroke first, then an opaque
    fill in the page colour over its inner half, so only the outer edge shows. */
 .notfound-code{font:800 clamp(88px,17vw,196px) var(--font-sans);line-height:.82;letter-spacing:-.02em;
@@ -1369,7 +1372,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
    colour change itself, never a wrap the measure happens to produce.
    #8A9198 is the site's existing receded-text grey (quote captions, hints). */
 .hero-hook{margin:0;font-family:var(--font-sans);
-  font-size:clamp(1.1667rem,3.4vw,1.6667rem);line-height:1.22;font-weight:600;
+  font-size:clamp(1.1667rem,3.4vw,1.6667rem);line-height:1.22;font-weight:500;
   letter-spacing:-.026em}
 /* Each sentence is its own block, so `balance` evens that sentence's own rag.
    Without it the narrow widths orphan the last word ("Stop Reporting What /
@@ -1499,7 +1502,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .section-head h2,
 .page-head h1,
 .tr-h,
-.fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:600;
+.fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:500;
   font-family:var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
 .who-heading{margin:0;max-width:22ch}
 .who .who-mission{margin:69px 0 0;max-width:60ch;padding-left:18px;
@@ -1633,7 +1636,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
    716px there, and the line sets 690px at 25px. Below 1280 the copy has two
    of five columns (346px at 1024) or the full width on phones, so it wraps —
    with balance and a 24ch measure, which breaks it after "Firms,". */
-.partners-heading{margin:0;max-width:24ch;font:600 clamp(22px,2.2vw,30px)/1.2 var(--font-sans);
+.partners-heading{margin:0;max-width:24ch;font:500 clamp(22px,2.2vw,30px)/1.2 var(--font-sans);
   letter-spacing:-.02em;color:var(--ink-deep);text-wrap:balance}
 @media (min-width:1280px){
   /* The line shares its row with the marks: 1184px at 1280 less the 96px gap
@@ -1819,16 +1822,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      a side, so the "20px" gutter measured 38px */
   .hero-inner{justify-content:space-between;min-height:0;width:100%;
     padding:calc(var(--header-h) + 40px) 20px calc(24px + env(safe-area-inset-bottom,0px))}
-  /* the 10.7em cap was measured for the 500 weight; at 700 it clips. The
+  /* the 10.7em cap is lifted on phones (it was set when this rule ran at 700). The
      tablet rule above still applies at exactly 768, hence the restated stack. */
   .hero-title,.hero-top,.hero-bottom .hero-lede{max-width:none}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:0}
-  /* 8.4vw, not the design's 9.6: "Decision Intelligence" at Sora 700 /
-     -.03em sets ~10.2em and the line has 350px at 390 (20px gutters), so 9.6vw
-     (37.4px, 382px of ink) wrapped it. 8.4vw is 32.8px at 390 (334px), one
-     line from 360 up; the 38px cap lands at 452. */
-  .hero h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;font-weight:700;letter-spacing:-.03em;color:var(--ink-deep)}
-  .hero-hook{font-size:clamp(19px,5.45vw,21.5px);line-height:1.25;font-weight:600;letter-spacing:-.02em}
+  /* 8.4vw was fitted to Sora 700 (~10.2em for "Decision Intelligence"). At 500
+     the line sets 9.3em in Inter and 8.5em in SF Pro, so it is one line from
+     360 up with room to spare; the 38px cap lands at 452. */
+  .hero h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;font-weight:500;letter-spacing:-.03em;color:var(--ink-deep)}
+  .hero-hook{font-size:clamp(19px,5.45vw,21.5px);line-height:1.25;font-weight:500;letter-spacing:-.02em}
   .hero-hook .was{color:var(--ink-muted)}
   .hero-lede .sub{margin-top:20px;font-size:17px;line-height:1.5;color:var(--ink);font-weight:400}
   .hero-bottom .ctas{margin-top:32px}
@@ -2081,16 +2083,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .clients{padding:96px 0 30px;background:var(--band-white)}
 .clients-head{text-align:center;margin:0 auto 30px}
 /* Set in caps, so the tracking goes positive (tight caps close up). The size
-   is as large as one line can be: the 52-character line sets about 35.8px of
-   width per px of font size, so 35px runs 1253px inside the 1280px container
-   and 32px runs 1145px inside the 1184px at 1280. From 1280 up the line is
-   then justified, which spreads the remaining 27-40px across its seven word
+   is as large as one line can be on the wider of the two faces: at 500 the
+   52-character line sets 34.5px of width per px of font size in Inter and
+   32.7px in SF Pro. The box is 1184px at 1280, 1280px from 1376 (Tailwind caps
+   .container there) and 1440px from 1536, so 2.64vw capped at 36.5px, then
+   41px, keeps Inter at 98% of the box and SF Pro at 93%. From 1280 up the line
+   is then justified, which spreads the remainder across its six word
    gaps so it starts on the first mark's left edge and ends on the last mark's
    right edge. Narrower than that it wraps, so it stays centred. */
-.clients-head h2{margin:0;font:600 clamp(22px,2.5vw,35px)/1.25 var(--font-sans);
+.clients-head h2{margin:0;font:500 clamp(22px,2.64vw,36.5px)/1.25 var(--font-sans);
   letter-spacing:.02em;text-transform:uppercase;color:var(--ink-deep)}
 @media (min-width:1280px){
   .clients-head h2{text-align:justify;text-align-last:justify}
+}
+@media (min-width:1536px){
+  .clients-head h2{font-size:41px}
 }
 @media (max-width:900px){.clients{padding:80px 0 30px}}
 @media (max-width:767px){.fmc{padding:64px 0}}
@@ -2146,7 +2153,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .clients{padding:80px 0 0}
   .clients .container,.partners .container{width:calc(100% - 40px)}
   .clients-head{text-align:left;margin:0 0 28px}
-  .clients-head h2{max-width:320px;font:600 24px/1.2 var(--font-sans);letter-spacing:-.02em;text-transform:none}
+  .clients-head h2{max-width:320px;font:500 24px/1.2 var(--font-sans);letter-spacing:-.02em;text-transform:none}
   .clients-wall{display:none}
   .clm-wall{display:flex;flex-direction:column;gap:8px}
   /* edge to edge: out of the .container by however much it is inset */
@@ -2305,7 +2312,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* colour on the wrapper, so .d2d-accent's own rule wins on the second line */
 .d2d-close{margin-top:24px;color:var(--ink-deep)}
-.d2d-close p{margin:0;font:600 clamp(17px,1.6vw,23px)/1.36 var(--font-sans);
+.d2d-close p{margin:0;font:500 clamp(17px,1.6vw,23px)/1.36 var(--font-sans);
   letter-spacing:-.012em}
 
 /* ---- phone: the lanes as panels, each a vertical track with the stations
@@ -2408,7 +2415,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:768px){
   .d2d.section{padding:64px 0;background:#F4F5F6}
   .d2d .container{width:calc(100% - 40px)}
-  .d2d-head .fin-h2{margin:16px 0 20px;font:700 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
+  .d2d-head .fin-h2{margin:16px 0 20px;font:600 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
   .d2d-head .d2d-accent{font-weight:300;color:var(--ink-deep)}
   .d2d-body{margin:0 0 28px;font-size:15px;line-height:1.55;color:var(--ink)}
   .d2d-head .d2d-run,.d2d-phone{display:none}
@@ -2618,7 +2625,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   font:600 0.6667rem var(--font-sans);letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.88)}
 .pillar-card h2{margin:18px 0 0;color:#fff;
-  font:600 clamp(25px,2.5vw,36px)/1.14 var(--font-sans);letter-spacing:-.03em;
+  font:500 clamp(25px,2.5vw,36px)/1.14 var(--font-sans);letter-spacing:-.03em;
   max-width:18ch}
 .pillar-card p{margin:14px 0 0;max-width:46ch;color:#D8E4EC;
   font-size:0.8889rem;line-height:1.62}
@@ -2712,7 +2719,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-cap{position:absolute;left:0;right:0;bottom:0;padding:0 26px 46px;
   background:linear-gradient(to top,rgba(13,24,40,.9),rgba(13,24,40,.55) 42%,rgba(13,24,40,0))}
 .tr-rule{display:block;width:26px;height:2px;margin:0 0 14px;background:var(--blue-light)}
-.tr-name{display:block;font:600 1.3333rem var(--font-sans);letter-spacing:-.025em;color:#fff}
+.tr-name{display:block;font:500 1.3333rem var(--font-sans);letter-spacing:-.025em;color:#fff}
 .tr-role{display:block;margin-top:5px;font-size:0.7778rem;line-height:1.4;
   font-style:italic;color:rgba(255,255,255,.86)}
 /* centred on the card's bottom-right corner, hanging outside it */
@@ -2738,7 +2745,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    would otherwise ship as a half-empty box. */
 .tr-ovin{position:relative;background:var(--band-soft);border-radius:16px;
   padding:74px 76px 64px;min-height:300px;max-height:100%;overflow:auto}
-.tr-ovin h3{margin:0;font:600 2.1111rem var(--font-sans);letter-spacing:-.03em}
+.tr-ovin h3{margin:0;font:500 2.1111rem var(--font-sans);letter-spacing:-.03em}
 .tr-ovrole{margin:12px 0 0;max-width:26ch;font-size:0.8333rem;line-height:1.5;
   color:var(--ink-muted)}
 .tr-ovmeta{margin:7px 0 0;font-size:0.7222rem;letter-spacing:.02em;color:#8A9198}

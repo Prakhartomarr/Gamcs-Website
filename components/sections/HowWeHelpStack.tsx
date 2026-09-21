@@ -658,7 +658,7 @@ export default function HowWeHelpStack() {
                   {l.n}
                 </span>
                 <h3
-                  className="mt-2 text-[20px] font-semibold leading-snug tracking-[-.01em]"
+                  className="mt-2 text-[20px] font-medium leading-snug tracking-[-.01em]"
                   style={{ color: C.navy }}
                 >
                   {l.title}

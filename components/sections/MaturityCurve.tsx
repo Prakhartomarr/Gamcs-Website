@@ -236,7 +236,7 @@ function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
       <div>
         <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
 
-        <h3 className="mt-2 text-[26px] font-semibold leading-[1.2] tracking-[-0.02em] text-[color:var(--ink-deep)] sm:text-[30px]">
+        <h3 className="mt-2 text-[26px] font-medium leading-[1.2] tracking-[-0.02em] text-[color:var(--ink-deep)] sm:text-[30px]">
           {stage.question}
         </h3>
 

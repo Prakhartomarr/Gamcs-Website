@@ -11,7 +11,8 @@ import { achievements } from "@/lib/content/gamcs";
  * four stay in the content file but are not shown.
  *
  * Layout (styles in globals.css), with the measurements behind each breakpoint.
- * Numbers are Sora 300 at -0.035em; widths are the rendered ink.
+ * Numbers are weight 100 at -0.035em. The widths below were measured in Sora
+ * 300; SF Pro and Inter at 100 are narrower, so every fit quoted still holds.
  * - >=1024: card and figures side by side, minmax(0,2fr) minmax(0,1fr), 72px
  *   gap. Card min-height clamp(360px,27.78vw,400px): 400 at 1440 as designed,
  *   360 below 1296. Card number clamp(60px,7.2222vw,104px), figures
