@@ -1245,7 +1245,7 @@ html{font-size:112.5%}
 .cookie-banner-inner{max-width:1160px;margin:0 auto;padding:22px 26px;
   display:flex;align-items:center;justify-content:space-between;gap:32px}
 .cookie-banner-copy{max-width:62ch}
-.cookie-banner-copy h2{font-size:0.9444rem;letter-spacing:-.02em;margin:0 0 6px}
+.cookie-banner-copy h2{font-size:0.9444rem;font-weight:400;letter-spacing:-.02em;margin:0 0 6px}
 .cookie-banner-copy p{margin:0;font-size:0.8333rem;line-height:1.6;color:#5B6067}
 .cookie-banner-actions{display:flex;align-items:center;gap:10px;flex:none;flex-wrap:wrap}
 .cookie-banner-actions .btn{min-height:44px}
@@ -1404,6 +1404,8 @@ html[data-cookie-banner] .sticky-cta{display:none}
    .section-head, which every other section relies on being left-aligned.
    .eyebrow-row is flex, so the pill needs justify-content, not text-align. */
 .quote-section .section-head{justify-content:center;align-items:center;text-align:center}
+/* on phones the line wraps; balanced, it never ends in a lone "us" */
+.quote-section .section-head h2{text-wrap:balance}
 .quote-section .eyebrow-row{justify-content:center}
 .section-head>p{font-size:0.9444rem;line-height:1.6;color:var(--ink-muted);max-width:34ch}
 
@@ -2417,7 +2419,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2d.section{padding:64px 0;background:#F4F5F6}
   .d2d .container{width:calc(100% - 40px)}
   .d2d-head .fin-h2{margin:16px 0 20px;font:600 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
-  .d2d-head .d2d-accent{font-weight:300;color:var(--ink-deep)}
+  /* The light sentence is its own block so it balances on its own: as one
+     block with the <br>, Chrome balanced both sentences to the width of the
+     600 one and left "Is." alone on a last line. */
+  .d2d-head .d2d-accent{display:block;font-weight:300;color:var(--ink-deep);text-wrap:balance}
+  .d2d-head .fin-h2 br{display:none}
   .d2d-body{margin:0 0 28px;font-size:15px;line-height:1.55;color:var(--ink)}
   .d2d-head .d2d-run,.d2d-phone{display:none}
   .d2d-mobile{display:block}
