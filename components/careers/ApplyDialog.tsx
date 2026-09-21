@@ -18,6 +18,8 @@ type Errors = Record<string, string>;
 type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
 const val = (f: HTMLFormElement, k: string) => String(new FormData(f).get(k) ?? "").trim();
+const cvError = (cv: File | undefined) =>
+  !cv ? form.errors.cv : !/\.(pdf|docx?)$/i.test(cv.name) ? form.errors.cvType : cv.size > MAX_FILE ? form.errors.cvSize : "";
 
 /** Client-side mirror of the server's rules, one step at a time. The server
     (app/api/careers/route.ts) checks everything again regardless. */
@@ -31,10 +33,8 @@ function validate(f: HTMLFormElement, step: number): Errors {
     if (!val(f, "track")) e.track = form.errors.track;
     const url = val(f, "url");
     if (url && !/^https?:\/\/\S+\.\S+/i.test(url)) e.url = form.errors.url;
-    const cv = (f.elements.namedItem("cv") as HTMLInputElement).files?.[0];
-    if (!cv) e.cv = form.errors.cv;
-    else if (!/\.(pdf|docx?)$/i.test(cv.name)) e.cv = form.errors.cvType;
-    else if (cv.size > MAX_FILE) e.cv = form.errors.cvSize;
+    const cv = cvError((f.elements.namedItem("cv") as HTMLInputElement).files?.[0]);
+    if (cv) e.cv = cv;
   }
   if (step === 2 && !val(f, "consent")) e.consent = form.errors.consent;
   return e;
@@ -65,6 +65,20 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
   const [fileName, setFileName] = useState("");
   const [dragging, setDragging] = useState(false);
   const [mailHref, setMailHref] = useState("");
+  /* Whether the applicant chose the track in the select themselves. */
+  const [picked, setPicked] = useState(false);
+  const [seen, setSeen] = useState(request);
+
+  /* Adjusted during render, not in the effect, so the dialog never shows the
+     previous track. A track's own Apply sets it; the hero and the bar keep only
+     a track the applicant picked by hand. */
+  if (request !== seen) {
+    setSeen(request);
+    if (request?.track) {
+      setTrackId(request.track);
+      setPicked(false);
+    } else if (request && !picked) setTrackId("");
+  }
 
   const done = status === "sent" || status === "mailto";
 
@@ -72,7 +86,6 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
     const d = dialog.current;
     const f = formRef.current;
     if (!request || !d || !f || d.open) return;
-    if (request.track) setTrackId(request.track);
     if (request.loc && request.loc !== "all") {
       const radio = f.querySelector<HTMLInputElement>(`input[name="location"][value="${request.loc}"]`);
       if (radio) radio.checked = true;
@@ -84,15 +97,17 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
   }, [request]);
 
   /* Fires for Esc, the Close button and "Back to careers" alike. */
+  const reset = () => {
+    formRef.current?.reset();
+    setStep(0);
+    setTrackId("");
+    setPicked(false);
+    setFileName("");
+    setStatus("idle");
+  };
   const handleClose = () => {
     document.body.style.overflow = "";
-    if (done) {
-      formRef.current?.reset();
-      setStep(0);
-      setTrackId("");
-      setFileName("");
-      setStatus("idle");
-    }
+    if (done) reset();
     setErrors({});
     onClose();
   };
@@ -119,13 +134,16 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
   const clear = (name: string) => setErrors((prev) => (prev[name] ? Object.fromEntries(Object.entries(prev).filter(([k]) => k !== name)) : prev));
 
   const cvInput = () => formRef.current!.elements.namedItem("cv") as HTMLInputElement;
+  /* A wrong or oversize file is named at once; its chip stays so it can be removed. */
   const syncFile = () => {
-    setFileName(cvInput().files?.[0]?.name ?? "");
-    clear("cv");
+    const file = cvInput().files?.[0];
+    setFileName(file?.name ?? "");
+    setErrors(({ cv: _, ...rest }) => (file && cvError(file) ? { ...rest, cv: cvError(file) } : rest));
   };
   const removeFile = () => {
     cvInput().value = "";
     setFileName("");
+    clear("cv");
     focusField("cv");
   };
 
@@ -133,7 +151,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
     e.preventDefault();
     if (status === "sending") return;
     const f = e.currentTarget;
-    if (step < 2) return next(); // Enter in an earlier step
+    if (step < 2) return next(); // Continue, or Enter in a field
     const found = validate(f, 2);
     setErrors(found);
     if (found.consent) return focusField("consent");
@@ -147,8 +165,12 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
       json = await res.json();
     } catch {}
 
-    if (res?.ok && json.ok) {
-      trackEvent("careers_apply", { form_name: "careers", method: "form", track: fd.get("track") });
+    const sent = Boolean(res?.ok && json.ok);
+    if (sent) trackEvent("careers_apply", { form_name: "careers", method: "form", track: fd.get("track") });
+    /* Dismissal is refused while sending, but a browser lets a second Esc
+       through: a closed dialog never opens a mail app or keeps a stale screen. */
+    if (!dialog.current?.open) return sent ? reset() : setStatus("idle");
+    if (sent) {
       setStatus("sent");
       return requestAnimationFrame(() => heading.current?.focus());
     }
@@ -215,13 +237,14 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
       aria-modal="true"
       aria-labelledby="ap-title"
       onClose={handleClose}
+      onCancel={(e) => { if (status === "sending") e.preventDefault(); }}
     >
       <div className="ap-bar">
         <span className="ap-brand">
           <svg className="ga-logo-mark" aria-hidden="true" focusable="false"><use href="#ga-mark" /></svg>
           <span>Careers</span>
         </span>
-        <CTA tier="secondary" type="button" onClick={() => dialog.current?.close()}>
+        <CTA tier="secondary" type="button" disabled={status === "sending"} onClick={() => dialog.current?.close()}>
           <span aria-hidden="true">✕</span> Close
         </CTA>
       </div>
@@ -264,8 +287,10 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
           <form ref={formRef} onSubmit={submit} noValidate hidden={done} className="ap-form" key="form">
             {/* Honeypot. Off-screen, out of the tab order, hidden from assistive tech. */}
             <div className="ap-hp" aria-hidden="true">
-              <label htmlFor="ap-website">Website</label>
-              <input id="ap-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              {/* Named so that no autofill maps profile data onto it: a filled
+                  honeypot drops a real application silently. */}
+              <label htmlFor="ap-hp">Leave this field empty</label>
+              <input id="ap-hp" name="hp_confirm" type="text" tabIndex={-1} autoComplete="off" />
             </div>
 
             <div className="ap-caps ap-caps--blue">{stepLabel}</div>
@@ -293,7 +318,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
               <div className="ap-field">
                 <label htmlFor="ap-track">{form.labels.track}{req}</label>
                 <div className="cr-select">
-                  <select id="ap-track" name="track" required value={trackId} {...aria("track")} onChange={(e) => { setTrackId(e.target.value); clear("track"); }}>
+                  <select id="ap-track" name="track" required value={trackId} {...aria("track")} onChange={(e) => { setTrackId(e.target.value); setPicked(true); clear("track"); }}>
                     <option value="" disabled>Choose a track</option>
                     {trackOptions.map((t) => (
                       <option key={t.id} value={t.id}>{t.label}</option>
@@ -397,13 +422,18 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                   <span aria-hidden="true">←</span> Back
                 </CTA>
               ) : <span />}
-              {step < 2 ? (
-                <CTA type="button" icon="arrow" onClick={next}>Continue</CTA>
-              ) : (
-                <CTA type="submit" icon="diagonal" data-cta="careers-apply-send" disabled={status === "sending"} aria-busy={status === "sending"}>
-                  {status === "sending" ? "Sending…" : form.submit}
-                </CTA>
-              )}
+              {/* One submit button for all three steps; submit() routes it. Swapping
+                  a type="button" for a type="submit" in the same slot let React
+                  change the type mid-click, and Continue also sent the form. */}
+              <CTA
+                type="submit"
+                icon={step < 2 ? "arrow" : "diagonal"}
+                data-cta={step < 2 ? undefined : "careers-apply-send"}
+                disabled={status === "sending"}
+                aria-busy={status === "sending"}
+              >
+                {step < 2 ? "Continue" : status === "sending" ? "Sending…" : form.submit}
+              </CTA>
             </div>
             {step === 2 ? <p className="ap-helper">{form.helper}</p> : null}
             <p className="ap-err ap-err--form" role="alert">
