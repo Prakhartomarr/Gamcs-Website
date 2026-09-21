@@ -330,6 +330,7 @@ export const footer = {
     { label: "How we help", href: "/#how-we-help" },
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
+    { label: "Careers", href: "/careers" },
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],

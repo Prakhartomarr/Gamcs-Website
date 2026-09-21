@@ -125,6 +125,7 @@ h1,h2,h3,p{margin-top:0}
 .nav>a{white-space:nowrap}
 .nav>a{position:relative;transition:color var(--dur-hover) var(--ease-out)}
 .nav>a:hover{color:var(--ink)}
+.nav>a[aria-current="page"],.drawer-list a[aria-current="page"]{color:var(--blue)}
 .nav>a:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
 .nav>a:hover:after{transform:scaleX(1)}
 

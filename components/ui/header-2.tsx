@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import GaLogo from '@/components/ui/GaLogo';
 import { Button } from '@/components/ui/button';
 import CTA from '@/components/CTA';
@@ -39,6 +40,7 @@ const items: Item[] = [
 	{ label: 'Solutions', panel: 'solutions', href: '/solutions' },
 	{ label: 'Case Study', panel: 'case' },
 	{ label: 'Team', href: '/team' },
+	{ label: 'Careers', href: '/careers' },
 ];
 
 const whoLinks = [
@@ -71,6 +73,7 @@ const Chevron = () => (
 );
 
 export function Header() {
+	const pathname = usePathname();
 	const [open, setOpen] = React.useState(false);
 	const [sub, setSub] = React.useState<Panel | null>(null);
 	const [panel, setPanel] = React.useState<Panel | null>(null);
@@ -270,7 +273,7 @@ export function Header() {
 						   testing `href` first would send it down this plain-link branch and
 						   silently drop its menu. */
 						!('panel' in item) ? (
-							<Link key={item.label} href={item.href} onClick={closeAll}>
+							<Link key={item.label} href={item.href} onClick={closeAll} aria-current={pathname === item.href ? 'page' : undefined}>
 								{item.label}
 							</Link>
 						) : (
@@ -371,7 +374,7 @@ export function Header() {
 								{items.map((item) => (
 									<li key={item.label}>
 										{!('panel' in item) ? (
-											<Link href={item.href} onClick={closeAll}>{item.label}</Link>
+											<Link href={item.href} onClick={closeAll} aria-current={pathname === item.href ? 'page' : undefined}>{item.label}</Link>
 										) : (
 											<button type="button" onClick={() => setSub(item.panel)}>
 												{item.label}
