@@ -2087,9 +2087,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    52-character line sets 34.5px of width per px of font size in Inter and
    32.7px in SF Pro. The box is 1184px at 1280, 1280px from 1376 (Tailwind caps
    .container there) and 1440px from 1536, so 2.64vw capped at 36.5px, then
-   41px, keeps Inter at 98% of the box and SF Pro at 93%. From 1280 up the line
-   is then justified, which spreads the remainder across its six word
-   gaps so it starts on the first mark's left edge and ends on the last mark's
+   41px, keeps Inter at 98% of the box and SF Pro at 93%. That is the floor:
+   ClientsHeading.tsx then scales it per face to 97.5% of the box (SF Pro lands
+   near 38.3px at 1440). From 1280 up the line is then justified, which
+   spreads the remainder across its six word gaps so it starts on the first mark's left edge and ends on the last mark's
    right edge. Narrower than that it wraps, so it stays centred. */
 .clients-head h2{margin:0;font:500 clamp(22px,2.64vw,36.5px)/1.25 var(--font-sans);
   letter-spacing:.02em;text-transform:uppercase;color:var(--ink-deep)}

@@ -343,15 +343,19 @@ export default function MaturityCurve() {
             ways: 66px at 360, 153px at 900–1023 (the container is 768px
             there), 184px at 1024–1279 and 236px at 1280.
 
-              ≥1024  circle beside the full name (13.5px Sora). The widest
-                     word, "Management", measures 91.2px. At 1024 a tab
+              ≥1024  circle beside the full name (13.5px). At 1024 a tab
                      leaves 98.6px for the name (184 − 1 hairline − 40
-                     padding − 32 circle − 12 gap). At 900–1023 it leaves
-                     68px, or 84px even with 12px padding, and the word broke
+                     padding − 32 circle − 12 gap), enough for the widest
+                     word, "Management". At 900–1023 it leaves 68px, or
+                     84px even with 12px padding, and the word broke
                      mid-letter there.
-              ≥1280  the question line joins the name. The longest,
-                     "What should we do now?", is 149.7px in 151.4px, and
-                     at worst it would wrap to a second line.
+              ≥1280  the question line joins the name, and every label is
+                     one line. The widest, "Management Information" when
+                     active (600), is 164.5px in SF Pro and in Inter, more
+                     than the 151.4px a 236px tab leaves at 20px padding. So
+                     1280–1375 runs 12px padding and an 8px gap, which
+                     leaves 171px; from 1376 the container is 1280px, the
+                     tab 255px, and the 20/12 spacing fits again.
               <1024  compact: the circle over the short name, 10px, or
                      11.5px from 768, in the body font as the old phone
                      stepper used. "Continuous", the widest short label, is
@@ -392,6 +396,7 @@ export default function MaturityCurve() {
                   className={[
                     "flex min-w-0 flex-col items-center gap-[7px] border-t-[3px] pb-3 pt-[9px] text-center focus-visible:-outline-offset-4",
                     "min-[1024px]:flex-row min-[1024px]:gap-[12px] min-[1024px]:px-[20px] min-[1024px]:pb-[17px] min-[1024px]:pt-[16px] min-[1024px]:text-left",
+                    "min-[1280px]:gap-[8px] min-[1280px]:px-[12px] min-[1376px]:gap-[12px] min-[1376px]:px-[20px]",
                     i < stages.length - 1 ? "border-r border-r-[color:var(--hair)]" : "",
                     isActive
                       ? "relative border-t-blue bg-white after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-white"

@@ -5,6 +5,7 @@ import {
   type LogoCloudClient,
 } from "@/components/ui/cinematic-logo-cloud";
 import ClientMarquee from "@/components/sections/ClientMarquee";
+import ClientsHeading from "@/components/sections/ClientsHeading";
 import { clients } from "@/lib/content/gamcs";
 
 const LOGO_DIR = path.join(process.cwd(), "public", "logos", "clients");
@@ -70,7 +71,7 @@ export default function ClientLogos() {
     <section className="clients" id="clients" aria-labelledby="clients-heading">
       <div className="container">
         <div className="clients-head reveal">
-          <h2 id="clients-heading">{clients.heading}</h2>
+          <ClientsHeading id="clients-heading">{clients.heading}</ClientsHeading>
         </div>
 
         {/* The component's own band and label are dropped: this section already
