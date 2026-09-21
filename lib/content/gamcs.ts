@@ -1093,3 +1093,140 @@ export const preloader = {
   /** Sits under the mark on the loading screen, tracked out. */
   wordmark: "Management Consultants",
 } as const;
+
+/**
+ * A named opening. None exist yet, so `careers.roles` is empty; add an entry
+ * and it renders in the same list, above the open-application tracks.
+ */
+export type CareerRole = {
+  id: string;
+  title: string;
+  /** A `careers.tracks` id. */
+  track: string;
+  /** `careers.locations` ids. */
+  locations: string[];
+  summary: string;
+};
+
+/** /careers. Applications are mailed to `email` by app/api/careers/route.ts,
+    which validates track and location against the ids declared here. */
+export const careers = {
+  email: "careers@gamcs.in",
+  kicker: "CAREERS",
+  h1: "Help finance teams decide faster.",
+  h1Accent: "Build your career doing it.",
+  intro:
+    "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. We hire people who want to own outcomes, not just deliverables.",
+  applyLabel: "Apply now",
+  processLabel: "See how we hire",
+  meta: "Gurugram · Remote across India",
+  locations: [
+    { id: "ggn", label: "Gurugram" },
+    { id: "remote", label: "Remote, India" },
+  ],
+  /** Extra answers the application form accepts beyond the ids above. */
+  trackUnsure: { id: "unsure", label: "Not sure yet" },
+  locationEither: { id: "either", label: "Either" },
+  open: {
+    eyebrow: "Open applications",
+    heading: "Pick the track you want to grow in.",
+    sub: "We don't have named openings right now. We do read every application, and we hire ahead of demand in all five practice areas.",
+    areaLabel: "Practice area",
+    locationLabel: "Location",
+    all: "All",
+    chip: "Open application",
+    workOn: "You'd work on:",
+    other: "Don't see your track?",
+    otherLead: "Write to",
+  },
+  roles: [] as CareerRole[],
+  /* Every track is open in both locations today, so the location filter
+     relabels the cards and never empties the list. */
+  tracks: [
+    { id: "fpa", title: "FP&A & CFO Advisory", workOn: "Budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to RevOps data." },
+    { id: "fte", title: "Finance Team Extension", workOn: "Accounting, bookkeeping and reporting capacity for single companies, PE/VC portfolios and advisory firms." },
+    { id: "dt", title: "Digital Transformation", workOn: "ERP, CRM and FP&A platforms, data warehousing and real-time dashboards." },
+    { id: "deal", title: "Deal Advisory", workOn: "M&A advisory, IPO readiness, due diligence, debt refinancing and investor decks." },
+    { id: "train", title: "Training & Enablement", workOn: "FP&A, financial modelling, Tableau, ESG and data analytics training." },
+  ],
+  why: {
+    eyebrow: "Why GAMCS",
+    heading: "Work that reaches the decision.",
+    items: [
+      { title: "Global clients, many industries", body: "SaaS, Hospitality, D2C / Consumer, VFX, Logistics, Professional Services, Non-Profits and Pharmaceuticals. You will not spend years on one ledger." },
+      { title: "Mentorship from the founders", body: "You work directly with Gaurav Malik and Abhinav Aggarwal, not three layers below them." },
+      { title: "Learning and certification support", body: "We back the courses and certifications that make you better at the work." },
+      { title: "Hybrid and flexible working", body: "Based in Gurugram, with remote roles across India." },
+    ],
+  },
+  /* The principles and the closing line are not copied here: the page reads
+     the first four `whyUs.points` leads and `story.mission`. */
+  work: {
+    eyebrow: "How we work",
+    headingLead: "Built differently.",
+    headingAccent: "That includes the team.",
+  },
+  hire: {
+    eyebrow: "How we hire",
+    heading: "Five steps, no surprises.",
+    photoAlt: "Gaurav Malik and Abhinav Aggarwal, the founders of GAMCS",
+    photoCaption: "Gaurav Malik, Founder · Abhinav Aggarwal, Co-Founder",
+    steps: [
+      { title: "Application", body: "Send your CV and tell us which track you want." },
+      { title: "Intro call", body: "A first conversation about your experience and what you want to work on." },
+      { title: "Case exercise", body: "A practical exercise close to real client work." },
+      { title: "Founder conversation", body: "Meet Gaurav or Abhinav." },
+      { title: "Offer", body: "A clear answer either way." },
+    ],
+  },
+  life: {
+    eyebrow: "Life at GAMCS",
+    heading: "The people you'd work with.",
+    link: { label: "Meet the team", href: "/team" },
+  },
+  closing: {
+    heading: "Not ready to apply?",
+    links: [
+      { label: "Meet the team", href: "/team" },
+      { label: "See our work", href: "/case-study" },
+    ],
+  },
+  form: {
+    title: "Apply to GAMCS",
+    steps: [
+      { title: "About you", fields: "Full name, email, phone" },
+      { title: "Track and CV", fields: "Track, location preference, link, CV" },
+      { title: "Note and send", fields: "A short note, consent" },
+    ],
+    labels: {
+      name: "Full name",
+      email: "Email",
+      phone: "Phone",
+      track: "Track",
+      location: "Location preference",
+      url: "LinkedIn or portfolio URL",
+      cv: "CV",
+      note: "A short note",
+    },
+    notePlaceholder: "What do you want to work on?",
+    cvHint: "PDF or Word, up to 4 MB",
+    consent: "I agree to GAMCS storing my details to assess this application.",
+    submit: "Send application",
+    helper: "Applications go to careers@gamcs.in.",
+    errors: {
+      name: "Enter your full name",
+      email: "Enter a valid email address",
+      track: "Choose a track",
+      url: "Enter a full link, starting with https://",
+      cv: "Attach your CV to continue",
+      cvType: "Your CV needs to be a PDF or Word file",
+      cvSize: "Your CV needs to be 4 MB or smaller",
+      consent: "Tick the box so we can review your application",
+    },
+    success: {
+      heading: "Application received.",
+      body: "Thanks — we read every application and reply to everyone we can take further.",
+      back: "Back to careers",
+    },
+  },
+};

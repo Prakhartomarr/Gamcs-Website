@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { primaryCta, site } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
 
-/** Routes where a persistent CTA would be redundant or in the way. */
-const HIDDEN_ON = ["/contact", "/thank-you"];
+/** Routes where a persistent CTA would be redundant or in the way.
+    /careers pins its own "Apply now" bar instead (CareersSplit). */
+const HIDDEN_ON = ["/contact", "/thank-you", "/careers"];
 
 /**
  * Mobile-only call to action pinned to the bottom of the viewport.

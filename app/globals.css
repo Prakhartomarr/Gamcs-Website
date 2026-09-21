@@ -2874,3 +2874,245 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .page-head--art .faq-head-cta{color:rgba(255,255,255,.82)}
 .page-head--art .faq-head-cta a{color:#9CCBEA}
 .page-head--art .tbc{color:rgba(255,255,255,.88)}
+
+
+/* =====================================================================
+   CAREERS (/careers) — "the split"
+   The dark page head turned on its side: a 440px panel that stays put
+   (H1, filters, Apply) beside a column that scrolls through the tracks,
+   Why GAMCS and How we work. The split then ends, and How we hire, Life at
+   GAMCS and the closing band run full width. Sizes are px, from the boards.
+   ===================================================================== */
+.cr-split{display:grid;grid-template-columns:440px minmax(0,1fr);column-gap:64px;align-items:stretch;padding-top:14px}
+.cr-lane{margin-bottom:112px}
+.cr-col{min-width:0;padding-bottom:112px}
+.cr-sentinel{height:1px;margin-bottom:-1px}
+
+/* `page-head--art` on the same element supplies the white crumbs and kicker. */
+.cr-panel{position:relative;overflow:hidden;border-radius:24px;color:#fff;isolation:isolate}
+.cr-panel .page-head-art{z-index:-1}
+.cr-panel .page-head-art::after{background:rgba(13,24,40,.84)}
+.cr-panel-in{padding:30px 32px 26px}
+.cr-panel .crumbs{margin-bottom:16px}
+.cr-panel h1{margin:12px 0 0;font-size:40px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.cr-panel h1 span{display:block;color:#9CC8EA}
+.cr-intro{margin:18px 0 0;font-size:15px;line-height:1.55;color:#E3E9EF}
+.cr-meta{display:flex;align-items:center;gap:8px;margin:14px 0 0;font-size:14px;font-weight:500}
+.cr-rule{height:1px;margin:22px 0 18px;background:rgba(255,255,255,.18)}
+.cr-filters{display:flex;flex-direction:column;gap:12px}
+.cr-filters label{display:block;margin-bottom:8px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#D5DDE6}
+.cr-select{position:relative}
+.cr-select select{width:100%;height:48px;padding:0 44px 0 16px;border-radius:12px;border:1px solid #7D8894;background:#fff;color:var(--ink);font:500 15px var(--font-sans);appearance:none;-webkit-appearance:none;cursor:pointer}
+.cr-select svg{position:absolute;right:16px;top:16px;pointer-events:none;color:var(--ink)}
+.cr-panel .ctas{margin-top:22px;gap:10px}
+.cr-panel .btn-shimmer{border-color:var(--blue-light)}
+.cr-mail{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:8px;font-size:14px;font-weight:600;color:#fff;text-decoration:underline;text-underline-offset:4px}
+.cr-panel a:focus-visible,.cr-panel button:focus-visible,.cr-dark a:focus-visible{outline-color:#fff}
+.cr-panel select:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cr-filters--page{display:none}
+/* Rows that leave once the panel is pinned. 0fr/1fr rows animate the
+   collapse without measuring anything. */
+.cr-fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s var(--ease-out),opacity .25s var(--ease-out)}
+.cr-fold>div{min-height:0;overflow:hidden}
+
+@media (min-width:1024px) and (min-height:640px){
+  .cr-panel{position:sticky;top:calc(var(--header-h) + 12px)}
+  .cr-panel[data-pinned] .cr-fold{grid-template-rows:0fr;opacity:0;visibility:hidden}
+  .cr-panel[data-pinned] h1{font-size:30px}
+}
+/* Short laptops (1280x720, 1366x768): the whole hero state has to clear the
+   fold too, not only the pinned one. */
+@media (min-width:1024px) and (max-height:820px){
+  .cr-panel-in{padding:22px 28px 16px}
+  .cr-panel .crumbs{margin-bottom:8px}
+  .cr-panel h1{margin-top:8px;font-size:32px}
+  .cr-intro{margin-top:12px;font-size:14px;line-height:1.5}
+  .cr-meta{margin-top:10px}
+  .cr-rule{margin:14px 0 12px}
+  .cr-filters{gap:8px}
+  .cr-filters label{margin-bottom:5px}
+  .cr-select select{height:44px}
+  .cr-select svg{top:14px}
+  .cr-panel .ctas{margin-top:14px}
+  .cr-mail{margin-top:2px}
+}
+
+/* ---- right column ---- */
+.cr-col h2,.cr-wide h2{margin:0;font-size:40px;line-height:1.08;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.cr-col .eyebrow-row,.cr-wide .eyebrow-row{margin-bottom:20px}
+.cr-caps{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.cr-caps+h2{margin-top:16px}
+.cr-sub{margin:18px 0 0;max-width:640px;font-size:17px;line-height:1.55;color:var(--ink-muted)}
+.cr-count{margin:28px 0 14px;font-size:14px;font-weight:500;color:var(--ink-muted)}
+.cr-tracks{display:flex;flex-direction:column;gap:14px;list-style:none;margin:0;padding:0}
+.cr-track{display:grid;grid-template-columns:84px minmax(0,1fr) auto;column-gap:20px;align-items:start;padding:32px 32px 30px 36px;background:#fff;border:1px solid var(--line);border-radius:24px;transition:border-color .25s var(--ease-out),box-shadow .25s var(--ease-out)}
+.cr-track[hidden]{display:none}
+.cr-track:not([hidden]){animation:crIn .2s var(--ease-out)}
+@keyframes crIn{from{opacity:0;transform:translateY(8px)}}
+@media (hover:hover) and (pointer:fine){.cr-track:hover{border-color:var(--blue);box-shadow:0 18px 40px -28px rgba(13,24,40,.35)}}
+.cr-num{font-size:56px;line-height:1;font-weight:100;letter-spacing:-.03em;color:var(--ink)}
+.cr-track h3{margin:4px 0 0;font-size:30px;line-height:1.15;letter-spacing:-.02em}
+.cr-track .cr-caps{margin-top:18px;color:var(--ink-muted)}
+.cr-track p{margin:8px 0 0;max-width:520px;font-size:17px;line-height:1.55;color:var(--ink)}
+.cr-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.cr-chip{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);color:var(--ink-muted);font-size:13px;font-weight:500}
+.cr-chip--open{border-color:transparent;background:#EAF2F8;color:var(--blue-dark);font-weight:600}
+.cr-chip--open::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.cr-other{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 32px 22px 36px;border:1px dashed #B9C2C9;border-radius:24px;background:#F4F5F6;color:var(--blue)}
+.cr-other p{margin:0;font-size:19px;line-height:1.4;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.cr-other p span{color:var(--ink-muted);font-weight:400}
+.cr-other a{display:inline-block;line-height:44px;color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+.cr-block{margin-top:128px}
+.cr-why{margin-top:44px;border-top:1px solid var(--ink)}
+.cr-why-row{display:grid;grid-template-columns:84px 300px minmax(0,1fr);column-gap:20px;align-items:start;padding:30px 0;border-bottom:1px solid var(--line)}
+.cr-why-row .cr-num{font-size:40px;color:var(--blue);letter-spacing:0}
+.cr-why-row h3{margin:4px 0 0;font-size:22px;line-height:1.25;letter-spacing:-.01em}
+.cr-why-row p{margin:4px 0 0;font-size:17px;line-height:1.55;color:var(--ink-muted)}
+
+.cr-work{padding:56px 56px 52px;border-radius:24px;background:var(--ink-deep);color:#fff}
+/* The page's one use of the yellow. */
+.cr-work .cr-caps{color:var(--yellow)}
+.cr-work h2{max-width:620px;color:#fff}
+.cr-work h2 span{display:block;color:#9CC8EA}
+.cr-work ul{list-style:none;margin:44px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.22)}
+.cr-work li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);column-gap:24px;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.22);font-size:24px;line-height:1.25;font-weight:500;letter-spacing:-.015em}
+.cr-work li span+span{color:#C9D6E2;font-weight:400}
+.cr-work>p{margin:36px 0 0;max-width:560px;font-size:19px;line-height:1.5}
+
+/* ---- full width, below the split ---- */
+.cr-hire{background:#F4F5F6;padding:104px 0;scroll-margin-top:var(--header-h)}
+.cr-hire-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(48px,8vw,120px);align-items:start}
+.cr-hire figure{margin:48px 0 0}
+.cr-hire figure img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:50% 22%;border-radius:24px;background:#DDE2E6}
+.cr-hire figcaption{margin-top:14px;font-size:14px;color:var(--ink-muted)}
+.cr-steps{position:relative;list-style:none;margin:0;padding:0}
+.cr-steps::before{content:"";position:absolute;left:21.5px;top:22px;bottom:44px;width:1px;background:#B9C2CA}
+.cr-steps li{position:relative;display:flex;gap:24px;padding-bottom:40px}
+.cr-steps li:last-child{padding-bottom:0}
+.cr-step-n{flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--blue);color:var(--blue);font-size:18px;font-weight:300;font-variant-numeric:tabular-nums}
+.cr-steps h3{margin:8px 0 0;font-size:20px;line-height:1.3;font-weight:500;letter-spacing:-.01em;color:var(--ink-deep)}
+.cr-steps p{margin:6px 0 0;font-size:15px;line-height:1.55;color:var(--ink-muted)}
+
+.cr-life{padding:112px 0 0}
+.cr-life-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.cr-life-nav{display:flex;gap:8px;flex:none}
+.cr-life-nav button{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:1px solid #DCDEE2;background:#fff;color:var(--ink);cursor:pointer;transition:border-color var(--dur-hover) var(--ease-out)}
+.cr-life-nav button:hover{border-color:var(--ink)}
+/* Bleeds past the container to the page's right edge, so a cut-off tile
+   signals the scroll; .shell clips the overflow. */
+.cr-strip{display:flex;gap:16px;list-style:none;margin:40px calc(50% - 50vw) 0 0;padding:4px calc(50vw - 50%) 16px 0;overflow-x:auto;scrollbar-width:thin;scroll-snap-type:x proximity}
+.cr-strip>li{flex:none;width:176px;scroll-snap-align:start}
+.cr-strip img{display:block;width:176px;height:240px;object-fit:cover;border-radius:16px;background:#E6E9EC}
+.cr-strip .cr-name{margin-top:14px;font-size:17px;font-weight:500;line-height:1.3}
+.cr-strip .cr-role{margin-top:2px;font-size:14px;line-height:1.4;color:var(--ink-muted)}
+.cr-strip-link{display:flex;flex-direction:column;justify-content:flex-end;gap:6px;width:176px;height:240px;padding:20px;border-radius:16px;background:var(--blue);color:#fff;font-size:20px;font-weight:500;line-height:1.2;letter-spacing:-.01em;transition:background var(--dur-hover) var(--ease-out)}
+.cr-strip-link:hover{background:var(--blue-dark)}
+.cr-strip-link:focus-visible{outline-offset:-5px;outline-color:#fff}
+
+.cr-close{padding:112px 0 96px}
+.cr-close .case-cta{margin-top:0;padding:56px 64px}
+.cr-close .case-cta h2{color:#fff;font-size:40px;letter-spacing:-.02em;max-width:none}
+.cr-close .ctas{margin-top:0}
+
+/* ---- phone Apply bar (replaces the site's sticky CTA on this route) ---- */
+.cr-bar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:none;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid var(--line);box-shadow:0 -12px 30px -24px rgba(13,24,40,.4);opacity:0;transform:translateY(100%);pointer-events:none;transition:opacity .26s var(--ease-out),transform .32s var(--ease-out)}
+.cr-bar[data-show]{opacity:1;transform:none;pointer-events:auto}
+.cr-bar strong{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.cr-bar span.cr-bar-meta{display:block;font-size:13px;line-height:1.3;color:var(--ink-muted)}
+.cr-bar .btn{min-height:48px;padding:0 24px;flex:none}
+
+/* ---- 1024–1279: a narrower panel, Apply under the track copy ---- */
+@media (max-width:1279px){
+  .cr-split{grid-template-columns:380px minmax(0,1fr);column-gap:40px}
+  .cr-panel-in{padding-inline:26px}
+  .cr-panel h1{font-size:34px}
+  .cr-track{grid-template-columns:64px minmax(0,1fr);padding:28px}
+  .cr-track .btn{grid-column:2;justify-self:start;margin-top:20px}
+  .cr-num{font-size:44px}
+  .cr-why-row{grid-template-columns:64px minmax(0,1fr)}
+  .cr-why-row p{grid-column:2;margin-top:8px}
+  .cr-work{padding:44px 40px}
+  .cr-work li{font-size:21px}
+}
+/* ---- 768–1023: one column; the panel is an ordinary block ---- */
+@media (max-width:1023px){
+  .cr-split{grid-template-columns:minmax(0,1fr);row-gap:56px}
+  .cr-lane{margin-bottom:0}
+  .cr-panel-in{padding:36px 40px 32px}
+  .cr-panel h1{font-size:40px}
+  .cr-intro{max-width:620px}
+  .cr-filters{flex-direction:row}
+  .cr-filters>div{flex:1}
+  .cr-hire{padding:80px 0}
+  .cr-hire-grid{column-gap:40px}
+}
+/* ---- phones: the panel is the hero, full bleed; filters join the list ---- */
+@media (max-width:767px){
+  .cr-split{width:100%;row-gap:0;padding-top:0}
+  .cr-panel{border-radius:0}
+  .cr-panel-in{padding:24px 20px 32px}
+  .cr-panel h1{font-size:31px}
+  .cr-intro{font-size:16px}
+  .cr-meta{margin-top:16px}
+  .cr-panel .cr-rule,.cr-panel .cr-filters{display:none}
+  .cr-panel .ctas{margin-top:24px}
+  .cr-panel .ctas .btn,.cr-close .btn{min-height:48px}
+  .cr-col{padding:56px 16px 80px}
+  .cr-col h2,.cr-wide h2{font-size:34px}
+  .cr-col .eyebrow-row,.cr-wide .eyebrow-row{margin-bottom:18px}
+  .cr-caps+h2{margin-top:14px}
+  .cr-sub{margin-top:14px;font-size:16px}
+  .cr-filters--page{display:flex;flex-direction:column;margin-top:24px;padding:18px 16px 20px;border-radius:20px;background:#F4F5F6}
+  .cr-filters--page label{color:var(--ink-muted)}
+  .cr-select select{font-size:16px}
+  .cr-count{margin:18px 0 12px}
+  .cr-tracks{gap:12px}
+  .cr-track{display:block;position:relative;padding:24px 22px 22px;border-radius:20px}
+  .cr-track .cr-num{font-size:44px}
+  .cr-track h3{margin-top:20px;font-size:25px}
+  .cr-track .cr-caps{margin-top:16px}
+  .cr-track p{font-size:16px}
+  .cr-chips{margin-top:14px}
+  .cr-chip--open{position:absolute;top:31px;right:22px}
+  .cr-chip:not(.cr-chip--open){height:auto;padding:0;border:0;font-size:14px}
+  .cr-track .btn{width:100%;min-height:48px;margin-top:18px}
+  .cr-other{padding:20px 22px;border-radius:20px}
+  .cr-other p{font-size:18px}
+  .cr-other p span{display:block}
+  .cr-other svg{display:none}
+  .cr-block{margin-top:80px}
+  .cr-why{margin-top:28px}
+  .cr-why-row{grid-template-columns:44px minmax(0,1fr);column-gap:8px;padding:24px 0}
+  .cr-why-row .cr-num{font-size:34px}
+  .cr-why-row h3{font-size:20px}
+  .cr-why-row p{font-size:16px}
+  .cr-work{margin-inline:-4px;padding:36px 24px 34px}
+  .cr-work h2{font-size:31px;line-height:1.1}
+  .cr-work ul{margin-top:28px}
+  .cr-work li{display:block;padding:18px 0;font-size:20px;line-height:1.3}
+  .cr-work li span{display:block}
+  .cr-work>p{margin-top:26px;font-size:17px}
+  .cr-wide>.container{width:calc(100% - 32px)}
+  .cr-hire{padding:56px 0}
+  .cr-hire-grid{grid-template-columns:minmax(0,1fr);row-gap:36px}
+  .cr-hire figure{margin-top:24px}
+  .cr-hire figure img{aspect-ratio:4/3;object-position:50% 12%}
+  .cr-steps li{gap:16px;padding-bottom:24px}
+  .cr-steps::before{bottom:60px}
+  .cr-life{padding-top:80px}
+  .cr-life-nav{display:none}
+  .cr-strip{gap:12px;margin-top:28px}
+  .cr-strip>li,.cr-strip img,.cr-strip-link{width:190px}
+  .cr-strip img,.cr-strip-link{height:250px}
+  .cr-strip .cr-name{margin-top:12px;font-size:16px}
+  .cr-close{padding:80px 0 64px}
+  .cr-close>.container{width:calc(100% - 24px)}
+  .cr-close .case-cta{display:block;padding:36px 24px}
+  .cr-close .case-cta h2{font-size:31px}
+  .cr-close .ctas{flex-direction:column;gap:10px;margin-top:24px}
+  .cr-bar{display:flex}
+}
+@media (prefers-reduced-motion:reduce){
+  .cr-track:not([hidden]){animation:none}
+}
