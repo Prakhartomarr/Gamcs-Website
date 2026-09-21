@@ -30,26 +30,41 @@ const LOCATIONS = new Map<string, string>([
   [careers.locationEither.id, careers.locationEither.label],
 ]);
 
-/* Leading bytes each allowed extension must carry. */
-const MAGIC: Record<string, number[]> = {
-  pdf: [0x25, 0x50, 0x44, 0x46], // %PDF
-  docx: [0x50, 0x4b, 0x03, 0x04], // PK.. (zip)
-  doc: [0xd0, 0xcf, 0x11, 0xe0], // OLE2
-};
+/* Leading bytes each allowed extension must carry. A Map, not an object: the
+   extension is the applicant's, and "constructor" is a key of every object. */
+const MAGIC = new Map<string, number[]>([
+  ["pdf", [0x25, 0x50, 0x44, 0x46]], // %PDF
+  ["docx", [0x50, 0x4b, 0x03, 0x04]], // PK.. (zip)
+  ["doc", [0xd0, 0xcf, 0x11, 0xe0]], // OLE2
+]);
 
 const fail = (status: number, code: string, message: string, field?: string) =>
   NextResponse.json({ ok: false, code, message, ...(field ? { field } : {}) }, { status });
 
 /* ponytail: in-memory, per-instance limiter. Serverless instances do not share
-   memory, so the real ceiling is RATE_MAX x live instances, and it resets on a
-   cold start. Move to a shared store (Upstash/Redis, or the host's WAF rate
-   rule) if abuse ever shows up. */
+   memory, so the real ceiling is RATE_MAX (and ALL_MAX) x live instances, and
+   it resets on a cold start. The per-IP key is the LAST X-Forwarded-For hop:
+   the one the site's own proxy wrote (Vercel overwrites the header, nginx
+   appends to it); everything before it is the client's to invent. Behind a
+   second proxy that hop is the CDN and visitors share a bucket, and with no
+   proxy at all the header is wholly the client's, which is what ALL_MAX is
+   for: a flat cap on applications per instance per hour, which also bounds the
+   map. Move to a shared store (Upstash/Redis, or the host's WAF rate rule) if
+   abuse ever shows up. */
 const RATE_MAX = 5;
 const RATE_WINDOW = 10 * 60 * 1000;
+const ALL_MAX = 60;
+const ALL_WINDOW = 60 * 60 * 1000;
 const hits = new Map<string, { n: number; reset: number }>();
+const all = { n: 0, reset: 0 };
 function limited(ip: string) {
   const now = Date.now();
-  if (hits.size > 1000) for (const [k, v] of hits) if (v.reset < now) hits.delete(k);
+  if (all.reset < now) {
+    all.n = 0;
+    all.reset = now + ALL_WINDOW;
+    for (const [k, v] of hits) if (v.reset < now) hits.delete(k);
+  }
+  if (++all.n > ALL_MAX) return true;
   const h = hits.get(ip);
   if (!h || h.reset < now) {
     hits.set(ip, { n: 1, reset: now + RATE_WINDOW });
@@ -106,7 +121,7 @@ export async function POST(req: Request) {
 
   /* Honeypot: a field no person sees. Bots get the ordinary success answer and
      nothing is sent. */
-  if (line(fd.get("website"))) return NextResponse.json({ ok: true });
+  if (line(fd.get("hp_confirm"))) return NextResponse.json({ ok: true });
 
   const name = line(fd.get("name"));
   const email = line(fd.get("email"));
@@ -142,7 +157,7 @@ export async function POST(req: Request) {
   if (!cv || typeof cv === "string" || cv.size === 0) return fail(400, "invalid", errors.cv, "cv");
   if (cv.size > MAX_FILE) return fail(413, "too_large", errors.cvSize, "cv");
   const ext = (cv.name.split(".").pop() ?? "").toLowerCase();
-  const magic = MAGIC[ext];
+  const magic = MAGIC.get(ext);
   if (!magic) return fail(415, "unsupported_file", errors.cvType, "cv");
   const bytes = Buffer.from(await cv.arrayBuffer());
   if (!magic.every((b, i) => bytes[i] === b)) return fail(415, "unsupported_file", errors.cvType, "cv");
@@ -150,7 +165,7 @@ export async function POST(req: Request) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return fail(503, "not_configured", "Applications by form are not switched on yet.");
 
-  const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
+  const ip = (req.headers.get("x-forwarded-for") ?? "").split(",").pop()!.trim() || "unknown";
   if (limited(ip)) return fail(429, "rate_limited", "Too many applications from this connection. Please try again later.");
 
   const rows: [string, string][] = [

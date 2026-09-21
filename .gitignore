@@ -17,8 +17,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env*.local
+# env files: the mail key lives in .env.local or the host's settings, never in git
+.env
+.env.*
+!.env.example
 
 # typescript
 *.tsbuildinfo

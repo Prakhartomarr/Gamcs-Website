@@ -31,6 +31,7 @@ const post = async (body, origin = base) => {
 const cases = [
   ["missing CV -> 400 on cv", () => post(form({ cv: null })), (r) => r.status === 400 && r.json?.field === "cv" && r.json.ok === false],
   ["wrong type (.exe) -> 415/400", () => post(form({ cv: file(new Uint8Array([0x4d, 0x5a, 0x90, 0x00]), "cv.exe") })), (r) => [400, 415].includes(r.status) && r.json?.ok === false],
+  ["extension that is an Object.prototype key -> 415", () => post(form({ cv: file(PDF, "cv.constructor") })), (r) => r.status === 415 && r.json?.code === "unsupported_file"],
   ["fake .pdf without %PDF -> 415/400", () => post(form({ cv: file(new TextEncoder().encode("MZ not a pdf"), "cv.pdf") })), (r) => [400, 415].includes(r.status) && r.json?.ok === false],
   ["oversize file (4 MB + 1 KB) -> 413", () => post(form({ cv: file(padded(4 * 1024 * 1024 + 1024), "cv.pdf") })), (r) => r.status === 413],
   ["oversize body (6 MB) -> 413", () => post(form({ cv: file(padded(6 * 1024 * 1024), "cv.pdf") })), (r) => r.status === 413],
@@ -39,7 +40,7 @@ const cases = [
   ["not multipart -> 415", async () => { const res = await fetch(url, { method: "POST", headers: { Origin: base, "Content-Type": "application/json" }, body: "{}" }); return { status: res.status, json: await res.json().catch(() => null) }; }, (r) => r.status === 415],
   ["unknown track -> 400 on track", () => post(form({ track: "ceo" })), (r) => r.status === 400 && r.json?.field === "track"],
   ["javascript: URL -> 400 on url", () => post(form({ url: "javascript:alert(1)" })), (r) => r.status === 400 && r.json?.field === "url"],
-  ["honeypot filled -> 200 ok, nothing sent", () => post(form({ website: "https://spam.example" })), (r) => r.status === 200 && r.json?.ok === true],
+  ["honeypot filled -> 200 ok, nothing sent", () => post(form({ hp_confirm: "https://spam.example", cv: null })), (r) => r.status === 200 && r.json?.ok === true],
   ["valid, no RESEND_API_KEY -> 503 not_configured", () => post(form()), (r) => r.status === 503 && r.json?.code === "not_configured"],
 ];
 
