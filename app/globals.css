@@ -2141,14 +2141,16 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .d2d .fin-h2{text-wrap:balance}
 .d2d-accent{color:var(--blue)}
 
-/* head: pill and heading left, the run button top-right */
+/* head: the heading left, the run button at the right, centred on the
+   heading's first line (its line box is 1.12 x the clamp; the button is 44px).
+   No pill above 768 since 2026-09-22; the phone tier still shows the numbered
+   "01 — The gap" label, which keeps the 01–07 sequence intact. */
 .d2d-head{position:relative}
-/* the pill sits centred in the button's 44px row, as the artboard draws it */
-.d2d-head .eyebrow-pill{margin-top:8px}
-.d2d-head .fin-h2{margin-top:28px}
+.d2d-head .fin-h2{margin-top:0}
+@media (min-width:769px){.d2d-head .eyebrow-pill{display:none}}
 .d2d-body{margin:14px 0 0;max-width:1184px;column-count:2;column-gap:64px;font-size:17px;
   line-height:1.55;color:var(--ink-muted)}
-.d2d-run{position:absolute;right:0;top:0}
+.d2d-run{position:absolute;right:0;top:calc((1.12 * clamp(30px,3.7vw,50px) - 44px) / 2)}
 .d2d-run svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;
   stroke-linejoin:round}
 
@@ -2315,6 +2317,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
    wrapped and covered "Days / weeks". Captions open to three lines, and the
    closing lines drop to 40px so the 100px open "Insight" card clears them. */
 @media (max-width:1279px){
+  .d2d-run{top:calc((1.12 * clamp(30px,3.7vw,50px) - 48px) / 2)}  /* .btn is 48px here */
   .d2d-st{width:max(13.58%,160px);padding:10px 12px}
   .d2d-stop--g.d2d-st{width:12.35%}
   .d2d-st-t{font-size:12.5px}
@@ -2327,8 +2330,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
   .d2d-desk{display:none}
   .d2d-phone{display:flex}
   .d2d-body{column-count:1}
-  .d2d-head .eyebrow-pill{margin-top:0}
-  .d2d-head .fin-h2{margin-top:12px}
   /* relative, not static: .btn-shimmer::before is a blurred absolute glow, and
      a static button hands it the whole head as its containing block */
   .d2d-run{position:relative;right:auto;top:auto;width:100%;margin-top:16px}
