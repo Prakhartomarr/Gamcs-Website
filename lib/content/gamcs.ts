@@ -940,31 +940,6 @@ export const maturityCurve = {
 } as const;
 
 /**
- * Doc page 1, section 6 — homepage. The Our Partners block under the client
- * logo wall: a heading and the partner firms' marks, with no body copy or call
- * to action, so it reads as the lower part of the client section rather than a
- * section of its own.
- */
-export const partners = {
-  heading: "Trusted by Advisory Firms, Not Just Their Clients",
-  names: [] as string[],
-  /**
-   * The advisory firms GAMCS delivers behind, shown as marks rather than the
-   * `names` row above — which is why that row is still empty. These three moved
-   * here out of the client wall: they are partners, not customers, and the
-   * section heading only holds if the logos under it are actually advisory
-   * firms. Assets live in /public/logos/partners, processed the same way as the
-   * client marks. All three read cleanly on the white band without any tile
-   * behind them.
-   */
-  logos: [
-    { name: "Akshar Business Consulting", file: "akshar.png" },
-    { name: "Threesixty Finance", file: "threesixty.png" },
-    { name: "CFO Bridge", file: "cfo-bridge.png" },
-  ] as { name: string; file: string }[],
-} as const;
-
-/**
  * Client logo wall, in the band directly under the hero.
  *
  * These are real clients, unlike the platform trust bar this replaced — so the
@@ -1012,9 +987,12 @@ export const clients = {
     { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png" },
 
     { name: "The Park Hotels", file: "the-park-hotels.png" },
-    { name: "Aditya", file: "aditya.png" },
-    { name: "Gaurs", file: "gaurs.png" },
     { name: "BetterCloud", file: "bettercloud.png" },
+
+    /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
+    { name: "Akshar Business Consulting", file: "akshar.png" },
+    { name: "Threesixty Finance", file: "threesixty.png" },
+    { name: "CFO Bridge", file: "cfo-bridge.png" },
   ] as { name: string; file: string; tile?: boolean }[],
 } as const;
 

@@ -1631,62 +1631,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .maturity-stage.is-goal h3{color:#fff}
 .maturity-stage.is-goal p{color:#D3E3EF}
 
-/* ---- partners ---- */
-.partners{background:var(--band-white)}
-/* Off the shared section-heading scale above on purpose: this is a sub-heading
-   of the client wall, not a peer of it. It runs on ONE line wherever its
-   column can hold it, which is the four wall columns it spans from 1280 up:
-   716px there, and the line sets 690px at 25px. Below 1280 the copy has two
-   of five columns (346px at 1024) or the full width on phones, so it wraps —
-   with balance and a 24ch measure, which breaks it after "Firms,". */
-.partners-heading{margin:0;max-width:24ch;font:500 clamp(22px,2.2vw,30px)/1.2 var(--font-sans);
-  letter-spacing:-.02em;color:var(--ink-deep);text-wrap:balance}
-@media (min-width:1280px){
-  /* The line shares its row with the marks: 1184px at 1280 less the 96px gap
-     and the 440px cluster leaves 648px, and the heading sets 22.4px of width
-     per px of font size, so 26px lands at 587 and 30px at 672 inside the
-     764px it gets from 1400 up. */
-  .partners-heading{max-width:none;font-size:clamp(25px,2.05vw,30px);white-space:nowrap}
-}
-.partners-row{list-style:none;margin:34px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px}
-.partners-row li{background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:16px 24px;font:700 0.8889rem var(--font-sans);color:var(--ink-deep)}
-
-@media (max-width:1279px){}
-
-/* =====================================================================
-   PRELOADER
-   Dark ground on purpose: it masks the hero shader's mount (a
-   dynamic(ssr:false) import that fades in over 1.1s) and gives the wipe
-   real contrast against the light page underneath.
-   ===================================================================== */
-.preloader{position:fixed;inset:0;z-index:200;background:var(--ink-deep);
-  color:var(--paper);display:grid;place-items:center;
-  clip-path:inset(0 0 0 0);will-change:clip-path}
-
-/* One full-viewport canvas. The dots are painted, not laid out: at ~1,300 of
-   them, DOM nodes would cost more in style recalc than the whole animation
-   costs in paint. Their positions come from the mark's own geometry, sampled
-   in Preloader.tsx. */
-.pl-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
-
-/* Server-rendered, and only ever lifted by script: with scripting off it would
-   cover the page for good, so then it is not shown at all. */
-@media (scripting:none){.preloader{display:none}}
-
-@media (prefers-reduced-motion:reduce){
-  .preloader{will-change:auto}
-}
-
-/* Scroll lock for the preloader.
-   An inline overflow:hidden is not enough on this site: body carries
-   overflow-x, so body's overflow propagates to the viewport, and a wheel
-   event still scrolls. Pinning both boxes to the viewport height leaves
-   nothing to scroll, and overscroll-behavior stops rubber-banding. */
-html.is-locked,
-html.is-locked body{overflow:hidden!important;height:100%!important;
-  overscroll-behavior:none;touch-action:none}
-
 /* ---- logo hover: an ink wipe across the GA mark ----
    The overlay masks a small alpha-only copy of the real logo, so the shape is
    the actual brand mark rather than a redrawn approximation, and the colour
@@ -2076,14 +2020,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- client logo wall (band under the hero) ---- */
-/* The wall's line is set to the same size as the partner heading below it
-   (.partners-heading), centred over the marks — the two halves of the section
-   then carry one heading weight instead of the 46px headline this had, which
-   pushed the marks down the band.
+/* One heading over the marks, centred; the wall now also carries the three
+   advisory-firm marks at its end (2026-09-22), so it closes the band by itself.
    The gaps either side of the marks are 48px (36 at 620 and below): these
-   values are 30/18 because the wall carries 18px of its own padding (py-4),
-   and the partners block under it has no top padding. */
-.clients{padding:96px 0 30px;background:var(--band-white)}
+   values are 30/18 because the wall carries 18px of its own padding (py-4). */
+.clients{padding:96px 0;background:var(--band-white)}
 .clients-head{text-align:center;margin:0 auto 30px}
 /* Set in caps, so the tracking goes positive (tight caps close up). The size
    is as large as one line can be on the wider of the two faces: at 500 the
@@ -2103,7 +2044,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (min-width:1536px){
   .clients-head h2{font-size:41px}
 }
-@media (max-width:900px){.clients{padding:80px 0 30px}}
+@media (max-width:900px){.clients{padding:80px 0}}
 @media (max-width:767px){.fmc{padding:64px 0}}
 /* .btn sets white-space:nowrap, which at phone widths let a long label run
    wider than its button, cut silently by the body's overflow-x:hidden. Let
@@ -2137,25 +2078,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .cl-grid > div:nth-child(7n+1){justify-self:start}
   .cl-grid > div:nth-child(7n){justify-self:end}
 }
-@media (max-width:620px){.clients{padding:60px 0 18px}
+@media (max-width:620px){.clients{padding:60px 0}
   .clients-head{margin-bottom:18px}
   /* Three columns of 94px at 390 cannot hold the 121px the 56px cap gives
      CoreStack, so the marks come back to a 40px cap here. width/height are
      inline on the image, hence the override to auto. */
   .clients-wall img{width:auto!important;height:auto!important;max-height:40px;max-width:88px}}
 
-/* ---- client wall + partners, phones (<=768) ----
+/* ---- client wall, phones (<=768) ----
    The heading in sentence case, left, 24px; the grid swapped for two
    edge-to-edge rows of grey tiles (components/sections/ClientMarquee.tsx)
    drifting in opposite directions under a 24px fade at each end, every mark
-   once, grayscale; then the partners heading with the three marks in one
-   evenly spaced row. 80px above the clients heading, 64px from the wall to
-   the partners heading, 80px under the partner marks. ---- */
+   once, grayscale. 80px above the heading and 80px under the rows. ---- */
 .clm-wall{display:none}
 @keyframes clm-drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:768px){
-  .clients{padding:80px 0 0}
-  .clients .container,.partners .container{width:calc(100% - 40px)}
+  .clients{padding:80px 0}
+  .clients .container{width:calc(100% - 40px)}
   .clients-head{text-align:left;margin:0 0 28px}
   .clients-head h2{max-width:320px;font:500 24px/1.2 var(--font-sans);letter-spacing:-.02em;text-transform:none}
   .clients-wall{display:none}
@@ -2172,7 +2111,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .clm-list li{display:flex;align-items:center;justify-content:center;flex:none;
     width:86px;height:80px;border-radius:12px;background:var(--soft)}
   .clm-list img{width:62px;height:40px;object-fit:contain;filter:grayscale(1);opacity:.85}
-  /* the partners half of this block sits after the .partners rules below */
 }
 @media (max-width:768px) and (prefers-reduced-motion:reduce){
   .clm-track{animation:none;width:auto;overflow-x:auto;padding:0 20px}
@@ -2479,71 +2417,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2dm-body,.d2dm-v{transition:none}
 }
 
-/* ---- partners: the lower part of the client wall. Pill and heading left,
-   the three partner marks in one row right. ----
-   No top padding (see .clients). The bottom padding, 96/80/60px, mirrors the
-   client wall's top padding at the same breakpoints, so the joined block is
-   spaced like one section and the section after keeps its spacing.
-
-   The row sits on the CLIENT WALL'S OWN COLUMNS, so the partner marks line up
-   with the marks above them instead of floating at their own rhythm: the same
-   column count and the same 36px column gap as .clients-wall's grid, with the
-   copy spanning the left columns and the three marks taking the last three.
-   - 1280 up: 7 columns (169px at 1280), copy 1-4, marks 5-7.
-   - 1024-1279: 5 columns (184px), copy 1-2, marks 3-5.
-   - 1023 down: one column — 4 wall columns leave only one for the copy — so
-     the marks move to a three-column row under the heading.
-   The marks are capped at the wall's own 56px (40px at 620 and below), which
-   is what stops them outweighing the twenty above them.
-*/
-.partners{padding:0 0 96px}
-.partners-logos{list-style:none;margin:0;padding:0}
-/* The heading and the marks share one row, centred on each other, so the marks
-   sit on the heading's own line. 96px keeps the group clear of the end of that
-   line; the marks themselves are a tight cluster, 28px apart, flush to the
-   page's right edge — the same edge the wall's last column lands on. */
-.partners-line{display:flex;align-items:center;justify-content:space-between;
-  gap:96px}
-.partners-logos{display:flex;align-items:center;gap:28px;flex:none}
-.partners-logos li{display:flex;align-items:center;justify-content:center}
-.partners-logos img{width:auto;height:auto;max-width:140px;max-height:56px;
-  object-fit:contain}
-/* Optical size. The PNGs share a 400x168 canvas but not their padding, so
-   Akshar's artwork drew at about half Threesixty's area and the end marks sat
-   16-24px in from the edges they align to. These factors bring them back to
-   one visual size; scale only paints, so nothing reflows. */
-.partners-logos img[src*="akshar"]{scale:1.35}
-.partners-logos img[src*="cfo-bridge"]{scale:1.15}
-@media (max-width:1279px){.partners-line{gap:72px}}
-/* Stacked: the heading wraps to two lines here and the row would leave the
-   marks no width, so they drop under it — still the same tight cluster, now
-   starting at the page's left edge under the line they belong to. */
-@media (max-width:1023px){
-  .partners-line{display:block}
-  .partners-logos{margin-top:28px;justify-content:flex-start;gap:28px}
-}
-@media (max-width:900px){.partners{padding-bottom:80px}}
-@media (max-width:620px){
-  .partners{padding-bottom:60px}
-  .partners-logos img{max-width:100%;max-height:40px}
-}
-@media (max-width:434px){.partners-logos{gap:16px}
-  .partners-logos img[src*="akshar"]{scale:1.2}}
-/* phones (<=768), the partners half of the client wall: no pill, the heading
-   at 24px, the three marks in one evenly spaced row. After the rules above so
-   it wins at equal specificity. */
-@media (max-width:768px){
-  .partners{padding:64px 0 80px}
-  .partners .eyebrow-row{display:none}
-  .partners-heading{max-width:none;font-size:24px;line-height:1.2}
-  .partners-logos{margin-top:28px;justify-content:space-between;gap:12px}
-  .partners-logos img{max-height:32px;max-width:30vw}
-  /* the optical scale above paints outward from the centre, which put the
-     end marks 8px and 6px past the container's edges on a space-between row */
-  .partners-logos li:first-child img{transform-origin:left center}
-  .partners-logos li:last-child img{transform-origin:right center}
-}
-
 /* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
 /* Jump rail. Sticks under the 90px header, scrolls sideways rather than
    wrapping to two rows, which the original six pillars did below ~1200px. */
@@ -2672,7 +2545,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .pillar-list summary svg{transition:none}
 }
-
 
 /* =====================================================================
    TEAM ROSTER — founders staggered, advisers three across
@@ -2811,7 +2683,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .tr-card:hover .tr-shot img{transform:none !important}
 }
 
-
 /* =====================================================================
    HEADER — a floating pill, inset from the page edges
    The <header> stays transparent and sticky so it keeps its place in the
@@ -2846,7 +2717,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .site-bar{transition:none}
 }
 
-
 /* =====================================================================
    PAGE-HEAD ARTWORK — a photograph behind the whole band, white type on it
    The scrim is not decoration: the photographs run to near-white in places
@@ -2875,7 +2745,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .page-head--art .faq-head-cta{color:rgba(255,255,255,.82)}
 .page-head--art .faq-head-cta a{color:#9CCBEA}
 .page-head--art .tbc{color:rgba(255,255,255,.88)}
-
 
 /* =====================================================================
    CAREERS (/careers) — "the split"

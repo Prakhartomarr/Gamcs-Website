@@ -41,10 +41,10 @@ function displaySize({ width, height }: { width: number; height: number }) {
 }
 
 /**
- * The client logo wall in the band under the hero: all twenty marks at once,
+ * The client logo wall in the band under the hero: all twenty-one marks at once,
  * fading up out of a blur a tenth of a second apart as the band scrolls in.
  *
- * It scrolled in a loop before this, which put most of the twenty off screen at
+ * It scrolled in a loop before this, which put most of the marks off screen at
  * any moment. The grid trades that motion for the whole roster being readable
  * at a glance, and keeps the motion where it costs nothing — the entrance.
  * Visitors who ask for reduced motion get the grid with no entrance at all.

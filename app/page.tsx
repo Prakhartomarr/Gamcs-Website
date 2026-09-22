@@ -6,7 +6,6 @@ import WhoWeAre from "@/components/sections/WhoWeAre";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
-import OurPartners from "@/components/sections/OurPartners";
 import Achievements from "@/components/sections/Achievements";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
@@ -38,9 +37,6 @@ export default function HomePage() {
         still claimed in `whyUs` and on the Digital Transformation page.
       */}
       <ClientLogos />
-      {/* The advisory firms that hand GAMCS their delivery, straight under the
-          client wall: both halves of the proof, then the problem. */}
-      <OurPartners />
       {/* The gap: straight after the proof, the problem — the distance between
           the number and the decision — before anything about how GAMCS works. */}
       <DataToDecision />
