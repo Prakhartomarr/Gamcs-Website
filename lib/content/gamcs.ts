@@ -1119,7 +1119,6 @@ export const careers = {
   intro:
     "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. We hire people who want to own outcomes, not just deliverables.",
   applyLabel: "Apply now",
-  processLabel: "See how we hire",
   meta: "Gurugram · Remote across India",
   locations: [
     { id: "ggn", label: "Gurugram" },
@@ -1166,25 +1165,6 @@ export const careers = {
     eyebrow: "How we work",
     headingLead: "Built differently.",
     headingAccent: "That includes the team.",
-  },
-  hire: {
-    eyebrow: "How we hire",
-    heading: "Five steps, no surprises.",
-    photoAlt: "Gaurav Malik and Abhinav Aggarwal, the founders of GAMCS",
-    /* U+2060 (word joiner, zero width) keeps "Co-Founder" on one line. */
-    photoCaption: "Gaurav Malik, Founder · Abhinav Aggarwal, Co-\u2060Founder",
-    steps: [
-      { title: "Application", body: "Send your CV and tell us which track you want." },
-      { title: "Intro call", body: "A first conversation about your experience and what you want to work on." },
-      { title: "Case exercise", body: "A practical exercise close to real client work." },
-      { title: "Founder conversation", body: "Meet Gaurav or Abhinav." },
-      { title: "Offer", body: "A clear answer either way." },
-    ],
-  },
-  life: {
-    eyebrow: "Life at GAMCS",
-    heading: "The people you'd work with.",
-    link: { label: "Meet the team", href: "/team" },
   },
   closing: {
     heading: "Not ready to apply?",

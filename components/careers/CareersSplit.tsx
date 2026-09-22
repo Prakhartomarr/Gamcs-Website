@@ -145,7 +145,6 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
               {filters("p", "cr-filters")}
               <div className="ctas" ref={heroCtas}>
                 <CTA {...apply()} icon="diagonal" data-cta="careers-hero">{careers.applyLabel}</CTA>
-                <CTA href="#process" tier="secondary" icon="arrow">{careers.processLabel}</CTA>
               </div>
               <a className="cr-mail" href={mailto}><Mail />{careers.email}</a>
             </div>
