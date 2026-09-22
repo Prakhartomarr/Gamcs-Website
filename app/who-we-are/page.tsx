@@ -3,14 +3,14 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import CTA from "@/components/CTA";
 import { primaryCta, story } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
+const t = pages.whoWeAre;
+
 export const metadata: Metadata = pageMetadata({
-  title: "Who We Are | Our Story",
-  /* The lead's own opening sentence — a meta description has ~160 characters
-     to work with and the full lead runs 331. */
-  description:
-    "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally.",
+  title: t.title,
+  description: t.description,
   path: "/who-we-are",
 });
 
@@ -29,8 +29,8 @@ export default function WhoWeArePage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "Who We Are", href: "/who-we-are" }]} />
-          <div className="section-kicker">WHO WE ARE</div>
+          <Breadcrumbs trail={[{ label: t.crumb, href: "/who-we-are" }]} />
+          <div className="section-kicker">{t.kicker}</div>
           <h1>{story.heading}</h1>
           <p>{story.lead}</p>
         </div>
@@ -49,7 +49,7 @@ export default function WhoWeArePage() {
               {primaryCta.label}
             </CTA>
             <CTA href="/team" tier="secondary" icon="arrow">
-              Meet our founders
+              {t.meetFounders}
             </CTA>
           </div>
         </div>

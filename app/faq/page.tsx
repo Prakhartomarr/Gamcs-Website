@@ -4,10 +4,11 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQ from "@/components/sections/FAQ";
 import Link from "next/link";
 import { faq, primaryCta } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Frequently Asked Questions",
+  title: pages.faq.title,
   description: faq.intro,
   path: "/faq",
 });
@@ -26,7 +27,7 @@ export default function FaqPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "FAQ", href: "/faq" }]} />
+          <Breadcrumbs trail={[{ label: pages.faq.crumb, href: "/faq" }]} />
           <div className="section-kicker">{faq.kicker}</div>
           <h1>{faq.heading}</h1>
           <p>{faq.intro}</p>

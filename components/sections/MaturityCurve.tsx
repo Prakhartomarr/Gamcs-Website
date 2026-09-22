@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 import { maturityCurve } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { sections } from "@/lib/content/ui";
 import CTA from "@/components/CTA";
 
 /**
@@ -234,7 +236,7 @@ function StagePanel({ stage, active }: { stage: Stage; active: boolean }) {
       }
     >
       <div>
-        <div className={`${LABEL} text-blue`}>Stage {stage.n}</div>
+        <div className={`${LABEL} text-blue`}>{fill(sections.stage, { n: stage.n })}</div>
 
         <h3 className="mt-2 text-[26px] font-medium leading-[1.2] tracking-[-0.02em] text-[color:var(--ink-deep)] sm:text-[30px]">
           {stage.question}
@@ -445,7 +447,7 @@ export default function MaturityCurve() {
                   chose, so it needs announcing without moving focus. */}
               <div className="max-w-[62ch]" aria-live="polite">
                 <div className="font-heading text-[17px] font-semibold leading-[1.35] text-[color:var(--ink-deep)]">
-                  If you’re at Stage {stage.n} — {stage.name}
+                  {fill(sections.stageNext, { n: stage.n, name: stage.name })}
                 </div>
                 <p className="mt-[7px] text-[15px] leading-relaxed text-[color:var(--ink-muted)]">
                   {stage.next}

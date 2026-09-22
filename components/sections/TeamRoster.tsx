@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { team } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { roster } from "@/lib/content/ui";
 
 /**
  * The team page roster: founders as large staggered cards, advisers as a
@@ -64,7 +66,7 @@ function Card({
       <span className="tr-shot">
         <Image
           src={person.photo}
-          alt={`Portrait of ${person.name}, ${person.title}`}
+          alt={fill(roster.portraitAlt, { name: person.name, title: person.title })}
           fill
           sizes={sizes}
         />
@@ -124,8 +126,8 @@ export default function TeamRoster() {
         <div className="container">
           <div className="tr-sec">
             <div>
-              <h2 className="tr-h">Founders</h2>
-              <span className="tr-count">Two</span>
+              <h2 className="tr-h">{roster.founders}</h2>
+              <span className="tr-count">{roster.foundersCount}</span>
             </div>
             <div className="tr-stack">
               {FOUNDERS.map((p) => (
@@ -137,8 +139,8 @@ export default function TeamRoster() {
 
           <div className="tr-block">
             <div className="tr-mid">
-              <h2 className="tr-h">Advisory Team</h2>
-              <span className="tr-count">Seven</span>
+              <h2 className="tr-h">{roster.advisory}</h2>
+              <span className="tr-count">{roster.advisoryCount}</span>
             </div>
             <div className="tr-grid">
               {ADVISERS.map((p) => (
@@ -160,7 +162,7 @@ export default function TeamRoster() {
             tabIndex={-1}
             ref={panel}
           >
-            <button type="button" className="tr-close" onClick={close} aria-label="Close">
+            <button type="button" className="tr-close" onClick={close} aria-label={roster.close}>
               <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
                 stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" />
@@ -188,7 +190,7 @@ export default function TeamRoster() {
                           <rect x="10.1" y="9.3" width="3.3" height="10.3" rx="0.5" />
                           <path d="M13.4 14.1a3.5 3.5 0 0 1 6.3 2.1v3.4h-3.4v-3.1a1.5 1.5 0 0 0-2.9-.5z" />
                         </svg>
-                        LinkedIn
+                        {roster.linkedin}
                       </a>
                     ) : null}
                     {active.email ? (
@@ -199,7 +201,7 @@ export default function TeamRoster() {
                           <rect x="3" y="5" width="18" height="14" rx="2" />
                           <path d="m3 7 9 6 9-6" />
                         </svg>
-                        Email
+                        {roster.email}
                       </a>
                     ) : null}
                   </div>

@@ -3,13 +3,15 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import TeamRoster from "@/components/sections/TeamRoster";
 import { primaryCta, story, team } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 import CTA from "@/components/CTA";
 
+const t = pages.team;
+
 export const metadata: Metadata = pageMetadata({
-  title: "Our Team | Founders & Advisors",
-  description:
-    "Meet the founders and advisory board behind GA Management Consultants — 100+ combined years of FP&A, BI, audit, and CFO advisory experience.",
+  title: t.title,
+  description: t.description,
   path: "/team",
 });
 
@@ -18,8 +20,8 @@ export default function TeamPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "Team", href: "/team" }]} />
-          <div className="section-kicker">TEAM</div>
+          <Breadcrumbs trail={[{ label: t.crumb, href: "/team" }]} />
+          <div className="section-kicker">{t.kicker}</div>
           <h1>{team.h1}</h1>
           <p>{team.body}</p>
           <p className="team-mission">{story.mission}</p>
@@ -29,7 +31,7 @@ export default function TeamPage() {
               {primaryCta.label}
             </CTA>
             <CTA href="/case-study" tier="secondary" icon="arrow">
-              Their work
+              {t.theirWork}
             </CTA>
           </div>
         </div>

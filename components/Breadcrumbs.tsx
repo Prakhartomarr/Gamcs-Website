@@ -1,6 +1,7 @@
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
+import { crumbs } from "@/lib/content/ui";
 
 export type Crumb = { label: string; href: string };
 
@@ -13,7 +14,7 @@ export type Crumb = { label: string; href: string };
  * assistive tech, which reads the ordered list instead.
  */
 export default function Breadcrumbs({ trail }: { trail: Crumb[] }) {
-  const full: Crumb[] = [{ label: "Home", href: "/" }, ...trail];
+  const full: Crumb[] = [{ label: crumbs.home, href: "/" }, ...trail];
   if (full.length < 2) return null;
 
   return (

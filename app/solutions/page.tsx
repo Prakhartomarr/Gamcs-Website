@@ -3,12 +3,15 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import PillarBlocks from "@/components/sections/PillarBlocks";
 import { primaryCta, solutions, solutionsHub } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 import CTA from "@/components/CTA";
 
+const t = pages.solutions;
+
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Solutions",
+    title: t.title,
     description: solutionsHub.metaDescription,
     path: "/solutions",
   }),
@@ -35,8 +38,8 @@ export default function SolutionsHubPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "Solutions", href: "/solutions" }]} />
-          <span className="eyebrow-pill">Solutions</span>
+          <Breadcrumbs trail={[{ label: t.crumb, href: "/solutions" }]} />
+          <span className="eyebrow-pill">{t.pill}</span>
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>
           </h1>
@@ -62,7 +65,7 @@ export default function SolutionsHubPage() {
           <PillarBlocks />
 
           <div className="case-cta reveal">
-            <h2>Not sure which pillar you need? Start with a conversation.</h2>
+            <h2>{t.closing}</h2>
             <CTA href={primaryCta.href} data-cta="solutions-hub" icon="diagonal">
               {primaryCta.label}
             </CTA>

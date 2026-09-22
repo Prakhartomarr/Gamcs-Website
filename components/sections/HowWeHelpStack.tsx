@@ -11,6 +11,7 @@ import {
 } from "react";
 import { STEP_ICONS } from "@/components/ui/stroke-icons";
 import { whyUs } from "@/lib/content/gamcs";
+import { sections } from "@/lib/content/ui";
 
 /**
  * "How we help" as an isometric exploded-layer stack.
@@ -457,7 +458,7 @@ export default function HowWeHelpStack() {
           </span>
           <span className="fin-eyebrow">
             <i aria-hidden="true" />
-            How we help
+            {sections.howWeHelp}
           </span>
           <h2 id="hwh-heading" className="fin-h2 text-balance">
             {whyUs.headingLead} <span className="accent">{whyUs.headingAccent}</span>

@@ -11,18 +11,18 @@ import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "From Reporting to Decision Intelligence",
-    description:
-      "GAMCS helps CFOs and PE/VC portfolios move from reporting to real-time decision intelligence — FP&A, team extension, digital transformation, and deal advisory.",
+    title: pages.home.title,
+    description: pages.home.description,
     path: "/",
   }),
   /* The <title> leads with the brand, so it is set absolute to keep the
      layout's "| GA Management Consultants" suffix off it. pageMetadata gets the
      bare page name, because it appends the brand to og:title itself. */
-  title: { absolute: `${site.name} | From Reporting to Decision Intelligence` },
+  title: { absolute: `${site.name} | ${pages.home.title}` },
 };
 
 export default function HomePage() {

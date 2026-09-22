@@ -3,6 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { reel } from "@/lib/content/ui";
 
 /* ----------------------------------------------------------------
  * ScrollReelTestimonials
@@ -468,7 +469,7 @@ export function ScrollReelTestimonials({
             <button
               type="button"
               onClick={() => setPlaying((p) => !p)}
-              aria-label={playing ? "Pause testimonials" : "Play testimonials"}
+              aria-label={playing ? reel.pause : reel.play}
               aria-pressed={!playing}
               className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:scale-[1.08] active:scale-[0.94] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
@@ -492,7 +493,7 @@ export function ScrollReelTestimonials({
           <button
             type="button"
             onClick={() => paginate(-1)}
-            aria-label="Previous testimonial"
+            aria-label={reel.previous}
             className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:enabled:scale-[1.08] active:enabled:scale-[0.94] disabled:cursor-default disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <svg
@@ -510,7 +511,7 @@ export function ScrollReelTestimonials({
           <button
             type="button"
             onClick={() => paginate(1)}
-            aria-label="Next testimonial"
+            aria-label={reel.next}
             className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border border-foreground/15 bg-transparent p-0 text-foreground transition-[opacity,transform] duration-200 ease-reel hover:enabled:scale-[1.08] active:enabled:scale-[0.94] disabled:cursor-default disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <svg

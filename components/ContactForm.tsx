@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { track } from "@/lib/analytics";
 import { contact, site } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
+import Rich from "@/components/Rich";
 
 type Errors = Partial<Record<string, string>>;
 
@@ -27,16 +28,11 @@ type Errors = Partial<Record<string, string>>;
  * screen readers.
  */
 const validators: Record<string, (v: string) => string | undefined> = {
-  name: (v) =>
-    v.trim().length < 2 ? "Please enter your name." : undefined,
+  name: (v) => (v.trim().length < 2 ? contact.errors.name : undefined),
   email: (v) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
-      ? undefined
-      : "Please enter a valid email address.",
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? undefined : contact.errors.email,
   phone: (v) =>
-    v.replace(/\D/g, "").length < 7
-      ? "Please enter a phone number we can reach you on."
-      : undefined,
+    v.replace(/\D/g, "").length < 7 ? contact.errors.phone : undefined,
 };
 
 export default function ContactForm() {
@@ -183,17 +179,12 @@ export default function ContactForm() {
         disabled={status === "sending"}
         aria-busy={status === "sending"}
       >
-        {status === "sending" ? "Opening your email…" : contact.submit}
+        {status === "sending" ? contact.sending : contact.submit}
       </CTA>
 
       {/* Live region: empty until something needs announcing. */}
       <p className="form-status" role="status" aria-live="polite">
-        {status === "error" ? (
-          <>
-            We couldn&rsquo;t open your email app. Please write to{" "}
-            <a href={`mailto:${site.email}`}>{site.email}</a> instead.
-          </>
-        ) : null}
+        {status === "error" ? <Rich parts={contact.failed} vars={{ email: site.email }} /> : null}
       </p>
     </form>
   );

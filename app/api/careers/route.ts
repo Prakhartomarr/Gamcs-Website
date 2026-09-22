@@ -138,9 +138,9 @@ export async function POST(req: Request) {
   if (email.length > LIMITS.email || !/^[^\s@<>,;]+@[^\s@<>,;]+\.[^\s@<>,;]{2,}$/.test(email))
     return fail(400, "invalid", errors.email, "email");
   if (phone.length > LIMITS.phone || (phone && !/^[0-9+()\-. ]+$/.test(phone)))
-    return fail(400, "invalid", "Enter a phone number using digits only", "phone");
+    return fail(400, "invalid", errors.phone, "phone");
   if (!TRACKS.has(track)) return fail(400, "invalid", errors.track, "track");
-  if (!LOCATIONS.has(location)) return fail(400, "invalid", "Choose a location preference", "location");
+  if (!LOCATIONS.has(location)) return fail(400, "invalid", errors.location, "location");
   if (url) {
     let ok = url.length <= LIMITS.url;
     try {
@@ -150,7 +150,7 @@ export async function POST(req: Request) {
     }
     if (!ok) return fail(400, "invalid", errors.url, "url");
   }
-  if (note.length > LIMITS.note) return fail(400, "invalid", "Keep the note under 2,000 characters", "note");
+  if (note.length > LIMITS.note) return fail(400, "invalid", errors.note, "note");
   if (!line(fd.get("consent"))) return fail(400, "invalid", errors.consent, "consent");
 
   /* `File` is not a global on every Node this can run on; a non-string entry is one. */
@@ -166,7 +166,7 @@ export async function POST(req: Request) {
   if (!key) return fail(503, "not_configured", "Applications by form are not switched on yet.");
 
   const ip = (req.headers.get("x-forwarded-for") ?? "").split(",").pop()!.trim() || "unknown";
-  if (limited(ip)) return fail(429, "rate_limited", "Too many applications from this connection. Please try again later.");
+  if (limited(ip)) return fail(429, "rate_limited", errors.rateLimited);
 
   const rows: [string, string][] = [
     ["Name", name],
@@ -204,7 +204,7 @@ export async function POST(req: Request) {
   } catch {
     console.error("careers: mail provider unreachable");
   }
-  if (!sent) return fail(502, "mail_failed", `We couldn't send your application. Please try again, or write to ${careers.email}.`);
+  if (!sent) return fail(502, "mail_failed", `${careers.form.sendError} ${careers.email}.`);
 
   return NextResponse.json({ ok: true });
 }

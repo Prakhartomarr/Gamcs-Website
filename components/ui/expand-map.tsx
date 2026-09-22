@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { fill } from "@/lib/content/fill";
+import { map } from "@/lib/content/ui";
 
 /* ----------------------------------------------------------------
  * LocationMap
@@ -47,7 +49,7 @@ export default function LocationMap({
   address,
   mapSrc,
   destination,
-  attribution = "© OpenStreetMap",
+  attribution = map.attribution,
   className,
 }: LocationMapProps) {
   const [open, setOpen] = useState(false);
@@ -193,7 +195,7 @@ export default function LocationMap({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Get directions <span aria-hidden="true">↗</span>
+                {map.directions} <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -214,13 +216,13 @@ export default function LocationMap({
           }}
         >
           <span className="sr-only">
-            {open ? `Hide the ${location} address` : `Show the ${location} address`}
+            {fill(open ? map.hideAddress : map.showAddress, { location })}
           </span>
         </button>
       </div>
 
       <p className="locmap-hint" aria-hidden="true">
-        Click to expand
+        {map.hint}
       </p>
     </div>
   );

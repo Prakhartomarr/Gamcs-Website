@@ -3,6 +3,8 @@ import path from "node:path";
 import { ScrollReelTestimonials } from "@/components/ui/scroll-reel-testimonials";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { testimonials } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { sections } from "@/lib/content/ui";
 import { initials } from "@/lib/utils";
 
 
@@ -19,31 +21,16 @@ import { initials } from "@/lib/utils";
  * reordering or adding a testimonial cannot silently mis-attribute a mark.
  * Anything unmatched falls back to the person's initials, as before.
  */
-const COMPANY_LOGOS: Record<string, { src: string; alt: string }> = {
-  /* Keyed off the company string in `testimonials`, so this moves with it. */
-  "Two Brothers India Farms": {
-    src: "/logos/clients/two-brothers-new.png",
-    alt: "Two Brothers India Farms",
-  },
-  "Three Sixty Finance": {
-    src: "/logos/partners/threesixty.png",
-    alt: "Threesixty Finance",
-  },
-};
-
-/** "Three Sixty Finance, UK" -> "Three Sixty Finance" */
-const companyKey = (company: string) => company.split(",")[0].trim();
-
 export default function Testimonials() {
   const items = testimonials.items.map((t) => {
-    const logo = COMPANY_LOGOS[companyKey(t.company)];
+    const logo = "logo" in t ? t.logo : undefined;
     /* Falls back to the person's initials if the artwork is not on disk, so a
        missing file degrades the way an unmatched company already does. */
     const hasArt =
       logo && existsSync(path.join(process.cwd(), "public", logo.src));
     return {
       quote: t.quote,
-      author: `${t.name} — ${t.title}, ${t.company}`,
+      author: fill(sections.byline, { name: t.name, title: t.title, company: t.company }),
       monogram: initials(t.name),
       image: hasArt ? logo.src : undefined,
       alt: hasArt ? logo.alt : undefined,
@@ -55,7 +42,7 @@ export default function Testimonials() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow label="Testimonials" index="06" />
+            <SectionEyebrow label={sections.testimonials} index="06" />
             <h2>{testimonials.heading}</h2>
           </div>
         </div>

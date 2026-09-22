@@ -3,13 +3,16 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 import CTA from "@/components/CTA";
 
+const t = pages.caseStudy;
+
 export const metadata: Metadata = pageMetadata({
-  title: "Case Studies | Finance, FP&A, BI & Deal Engagements",
-  description:
-    "Real GAMCS engagements across D2C, SaaS, healthcare, hospitality, pharma, and non-profits — FP&A, BI dashboards, digital transformation, and a $525M PE deal.",
+  title: t.title,
+  description: t.description,
   path: "/case-study",
 });
 
@@ -18,8 +21,8 @@ export default function CaseStudyPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "Case Studies", href: "/case-study" }]} />
-          <div className="section-kicker">CASE STUDY</div>
+          <Breadcrumbs trail={[{ label: t.crumb, href: "/case-study" }]} />
+          <div className="section-kicker">{t.kicker}</div>
           <h1>{caseStudies.heading}</h1>
           <p>{caseStudies.intro}</p>
           <div className="ctas page-head-ctas">
@@ -28,7 +31,7 @@ export default function CaseStudyPage() {
               {primaryCta.label}
             </CTA>
             <CTA href="/#solutions" tier="secondary" icon="arrow">
-              See our services
+              {t.seeServices}
             </CTA>
           </div>
         </div>
@@ -41,10 +44,7 @@ export default function CaseStudyPage() {
             <div>
               <h2>{caseStudies.sectionTitle}</h2>
             </div>
-            <p>
-              {caseStudies.items.length} engagements. Every one of them started
-              with a conversation.
-            </p>
+            <p>{fill(t.count, { count: caseStudies.items.length })}</p>
           </div>
 
           <div className="case-list">
@@ -54,7 +54,7 @@ export default function CaseStudyPage() {
           </div>
 
           <div className="case-cta">
-            <h2>Recognise your own numbers in any of these?</h2>
+            <h2>{t.closing}</h2>
             <CTA href={primaryCta.href}
               data-cta="case-study-footer" icon="diagonal">
               {primaryCta.label}

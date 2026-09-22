@@ -1,16 +1,18 @@
-import Link from "next/link";
 import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Directions from "@/components/Directions";
+import Rich from "@/components/Rich";
 import { contact, site, team } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
+const t = pages.contact;
+
 export const metadata: Metadata = pageMetadata({
-  title: "Contact Us",
-  description:
-    "Schedule a call with GA Management Consultants to discuss FP&A and CFO advisory, finance team extension, digital transformation, deal advisory, or training.",
+  title: t.title,
+  description: t.description,
   path: "/contact",
 });
 
@@ -25,11 +27,13 @@ export const metadata: Metadata = pageMetadata({
  */
 export default function ContactPage() {
   const details = [
-    { label: "General inquiries", value: site.email, href: `mailto:${site.email}` },
-    { label: "LinkedIn", value: "linkedin.com/company/gamcs-in", href: site.linkedin },
-    { label: "Website", value: site.url.replace(/^https?:\/\//, ""), href: site.url },
+    { label: t.generalInquiries, value: site.email, href: `mailto:${site.email}` },
+    /* The handle as displayed: the company URL without scheme or the
+       country subdomain. */
+    { label: t.linkedin, value: site.linkedin.replace(/^https?:\/\/(\w{2,3}\.)?/, ""), href: site.linkedin },
+    { label: t.website, value: site.url.replace(/^https?:\/\//, ""), href: site.url },
     ...(site.phone
-      ? [{ label: "Phone", value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` }]
+      ? [{ label: t.phone, value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` }]
       : []),
   ];
 
@@ -37,13 +41,10 @@ export default function ContactPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: "Contact", href: "/contact" }]} />
-          <div className="section-kicker">CONTACT</div>
+          <Breadcrumbs trail={[{ label: t.crumb, href: "/contact" }]} />
+          <div className="section-kicker">{t.kicker}</div>
           <h1>{contact.heading}</h1>
-          <p>
-            Tell us where your finance function is today and what you need it to
-            do. One of the founders reads every enquiry.
-          </p>
+          <p>{t.lead}</p>
         </div>
               <PageHeadArt src="/page-art/contact.webp" />
       </section>
@@ -53,7 +54,7 @@ export default function ContactPage() {
           <div className="contact-box">
             <div>
               <div className="section-kicker" style={{ color: "var(--yellow)" }}>
-                CONTACT DETAILS
+                {t.detailsKicker}
               </div>
               <ul className="contact-details">
                 {details.map((d) => (
@@ -71,7 +72,7 @@ export default function ContactPage() {
                   </li>
                 ))}
                 <li>
-                  <span className="contact-details-label">Registered name</span>
+                  <span className="contact-details-label">{t.registeredName}</span>
                   <span className="contact-details-value as-text">{site.legalName}</span>
                 </li>
                 {/* Direct founder addresses, per the copy doc. Rendered from
@@ -92,7 +93,7 @@ export default function ContactPage() {
                     site.responseTime in lib/content/gamcs.ts. */}
                 {site.responseTime ? (
                   <li>
-                    <span className="contact-details-label">Typical reply</span>
+                    <span className="contact-details-label">{t.typicalReply}</span>
                     <span className="contact-details-value as-text">
                       {site.responseTime}
                     </span>
@@ -104,9 +105,7 @@ export default function ContactPage() {
               <Directions />
 
               <p className="contact-privacy">
-                Your details go straight to us by email and are used only to
-                answer your enquiry. See our{" "}
-                <Link href="/privacy-policy">Privacy Policy</Link>.
+                <Rich parts={t.privacy} />
               </p>
             </div>
             <ContactForm />

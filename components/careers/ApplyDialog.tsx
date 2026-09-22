@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import CTA from "@/components/CTA";
+import Rich from "@/components/Rich";
 import { track as trackEvent } from "@/lib/analytics";
 import { careers } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
 
 const { form, tracks, locations } = careers;
 const trackOptions = [...tracks.map((t) => ({ id: t.id, label: t.title })), careers.trackUnsure];
@@ -203,7 +204,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
 
     if (json.field && json.field in STEP_OF) {
       setStatus("idle");
-      setErrors({ [json.field]: json.message ?? "Check this field" });
+      setErrors({ [json.field]: json.message ?? form.errors.generic });
       setStep(STEP_OF[json.field]);
       return focusField(json.field);
     }
@@ -227,7 +228,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
   );
 
   const current = done ? 3 : step;
-  const stepLabel = status === "sent" ? "Done" : status === "mailto" ? "Almost done" : `Step ${step + 1} of 3`;
+  const stepLabel = status === "sent" ? form.done : status === "mailto" ? form.almostDone : fill(form.stepOf, { n: step + 1 });
   const trackLabel = trackOptions.find((t) => t.id === trackId)?.label;
 
   return (
@@ -242,10 +243,10 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
       <div className="ap-bar">
         <span className="ap-brand">
           <svg className="ga-logo-mark" aria-hidden="true" focusable="false"><use href="#ga-mark" /></svg>
-          <span>Careers</span>
+          <span>{form.brand}</span>
         </span>
         <CTA tier="secondary" type="button" disabled={status === "sending"} onClick={() => dialog.current?.close()}>
-          <span aria-hidden="true">✕</span> Close
+          <span aria-hidden="true">✕</span> {form.close}
         </CTA>
       </div>
       <div className="ap-progress" role="progressbar" aria-label="Application progress" aria-valuemin={1} aria-valuemax={3} aria-valuenow={Math.min(current + 1, 3)}>
@@ -270,7 +271,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
           <div className="ap-panel-foot">
             {trackLabel ? (
               <>
-                <div className="ap-caps">Applying to</div>
+                <div className="ap-caps">{form.applyingTo}</div>
                 <div className="ap-applying">{trackLabel}</div>
               </>
             ) : null}
@@ -319,7 +320,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                 <label htmlFor="ap-track">{form.labels.track}{req}</label>
                 <div className="cr-select">
                   <select id="ap-track" name="track" required value={trackId} {...aria("track")} onChange={(e) => { setTrackId(e.target.value); setPicked(true); clear("track"); }}>
-                    <option value="" disabled>Choose a track</option>
+                    <option value="" disabled>{form.trackPlaceholder}</option>
                     {trackOptions.map((t) => (
                       <option key={t.id} value={t.id}>{t.label}</option>
                     ))}
@@ -344,7 +345,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
 
               <div className="ap-field">
                 <label htmlFor="ap-url">{form.labels.url}</label>
-                <input id="ap-url" name="url" type="url" inputMode="url" autoComplete="url" placeholder="https://" maxLength={300} {...aria("url")} onInput={() => clear("url")} />
+                <input id="ap-url" name="url" type="url" inputMode="url" autoComplete="url" placeholder={form.urlPlaceholder} maxLength={300} {...aria("url")} onInput={() => clear("url")} />
                 {err("url")}
               </div>
 
@@ -367,7 +368,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                     <div className="ap-chip">
                       <span className="ap-chip-name">{fileName}</span>
                       <span aria-hidden="true">·</span>
-                      <button type="button" onClick={removeFile} aria-label="Remove the attached CV">remove</button>
+                      <button type="button" onClick={removeFile} aria-label={form.removeLabel}>{form.remove}</button>
                     </div>
                     <p className="ap-hint">{form.cvHint}.</p>
                   </>
@@ -391,7 +392,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" /></svg>
                     </span>
                     <span>
-                      <span className="ap-drop-t">Drag and drop or <u>browse</u></span>
+                      <span className="ap-drop-t">{form.dropLead}<u>{form.dropBrowse}</u></span>
                       <span className="ap-drop-h">{form.cvHint}</span>
                     </span>
                   </label>
@@ -410,7 +411,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                 <input id="ap-consent" name="consent" type="checkbox" value="yes" required {...aria("consent")} onChange={() => clear("consent")} />
                 <div>
                   <label htmlFor="ap-consent">{form.consent}</label>{" "}
-                  <span>See our <Link href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</Link>.</span>
+                  <span><Rich parts={form.consentNote} /></span>
                 </div>
               </div>
               {err("consent")}
@@ -419,7 +420,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
             <div className="ap-actions">
               {step > 0 ? (
                 <CTA tier="secondary" type="button" onClick={() => go(step - 1)} disabled={status === "sending"}>
-                  <span aria-hidden="true">←</span> Back
+                  <span aria-hidden="true">←</span> {form.back}
                 </CTA>
               ) : <span />}
               {/* One submit button for all three steps; submit() routes it. Swapping
@@ -432,7 +433,7 @@ export default function ApplyDialog({ request, onClose }: { request: ApplyReques
                 disabled={status === "sending"}
                 aria-busy={status === "sending"}
               >
-                {step < 2 ? "Continue" : status === "sending" ? "Sending…" : form.submit}
+                {step < 2 ? form.continue : status === "sending" ? form.sending : form.submit}
               </CTA>
             </div>
             {step === 2 ? <p className="ap-helper">{form.helper}</p> : null}

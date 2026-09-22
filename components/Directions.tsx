@@ -1,6 +1,8 @@
 import Image from "next/image";
 
 import { site } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { map } from "@/lib/content/ui";
 
 /**
  * Office location and directions.
@@ -25,7 +27,7 @@ export default function Directions() {
   return (
     <div className="directions">
       <div className="section-kicker" style={{ color: "var(--yellow)" }}>
-        VISIT US
+        {map.visitUs}
       </div>
       <address className="directions-address">
         {a.street}
@@ -35,13 +37,13 @@ export default function Directions() {
       <div className="directions-map">
         <Image
           src={a.map}
-          alt={`Map showing the ${site.short} office at ${query}`}
+          alt={fill(map.alt, { short: site.short, address: query })}
           width={960}
           height={720}
           unoptimized
         />
         {/* ODbL requires the credit wherever the tiles are shown */}
-        <span className="directions-attrib">© OpenStreetMap</span>
+        <span className="directions-attrib">{map.attribution}</span>
       </div>
       <a
         className="contact-details-value"
@@ -49,7 +51,7 @@ export default function Directions() {
         target="_blank"
         rel="noopener"
       >
-        Get directions ↗
+        {map.directions} ↗
       </a>
     </div>
   );

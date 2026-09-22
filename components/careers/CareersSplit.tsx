@@ -7,6 +7,8 @@ import PageHeadArt from "@/components/PageHeadArt";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import ApplyDialog, { type ApplyRequest } from "@/components/careers/ApplyDialog";
 import { careers } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { pages } from "@/lib/content/pages";
 
 const { open, tracks, roles, locations } = careers;
 const mailto = `mailto:${careers.email}`;
@@ -125,7 +127,7 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
             <PageHeadArt src="/page-art/team.webp" />
             <div className="cr-panel-in">
               <div className="cr-fold"><div>
-                <Breadcrumbs trail={[{ label: "Careers", href: "/careers" }]} />
+                <Breadcrumbs trail={[{ label: pages.careers.crumb, href: "/careers" }]} />
               </div></div>
               <div className="section-kicker">{careers.kicker}</div>
               <h1>
@@ -158,7 +160,7 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
             <p className="cr-sub">{open.sub}</p>
             {filters("t", "cr-filters cr-filters--page")}
             <p className="cr-count" aria-live="polite">
-              Showing {shown.length} of {rows.length} {roles.length ? "openings" : "tracks"}
+              {fill(roles.length ? open.showingOpenings : open.showingTracks, { shown: shown.length, total: rows.length })}
             </p>
             <ul className="cr-tracks">
               {rows.map((r, i) => (
@@ -173,7 +175,7 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
                       <span className="cr-chip">{locLabel(r.locations)}</span>
                     </div>
                   </div>
-                  <CTA {...apply(tracks.some((t) => t.id === r.track) ? r.track : undefined)} icon="diagonal" data-cta={`careers-track-${r.id}`} srSuffix={`to ${r.title}`}>Apply</CTA>
+                  <CTA {...apply(tracks.some((t) => t.id === r.track) ? r.track : undefined)} icon="diagonal" data-cta={`careers-track-${r.id}`} srSuffix={`to ${r.title}`}>{open.apply}</CTA>
                 </li>
               ))}
               {/* Survives every filter, so the list can never read as empty. */}

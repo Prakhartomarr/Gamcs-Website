@@ -3,6 +3,7 @@ import AbstractPanel from "@/components/AbstractPanel";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { primaryCta, type ListItem, type Solution } from "@/lib/content/gamcs";
+import { servicePage } from "@/lib/content/ui";
 import CTA from "@/components/CTA";
 
 /**
@@ -25,11 +26,11 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
         <div className="container">
           <Breadcrumbs
             trail={[
-              { label: "Solutions", href: "/solutions" },
+              { label: servicePage.crumb, href: "/solutions" },
               { label: s.title, href: `/solutions/${s.slug}` },
             ]}
           />
-          <div className="section-kicker">SOLUTIONS</div>
+          <div className="section-kicker">{servicePage.kicker}</div>
           <h1>{s.h1}</h1>
           <p>{s.intro}</p>
         </div>
@@ -47,7 +48,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
 
           {/* At a glance — the scan layer, before any prose */}
           <div className="glance reveal">
-            <span className="glance-label">At a glance</span>
+            <span className="glance-label">{servicePage.atAGlance}</span>
             <ul className="glance-list">
               {s.atAGlance.map((item) => (
                 <li key={item}>{item}</li>
@@ -124,7 +125,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
                   <p key={para}>{para}</p>
                 ))}
                 <Link className="service-proof-link" href="/case-study">
-                  Read the case studies <span aria-hidden="true">→</span>
+                  {servicePage.readCaseStudies} <span aria-hidden="true">→</span>
                 </Link>
               </div>
               <AbstractPanel variant="ribbons" ratio="3 / 2" />

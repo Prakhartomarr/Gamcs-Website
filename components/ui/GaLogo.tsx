@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/content/gamcs";
+import { header } from "@/lib/content/ui";
 
 /**
  * The GA mark, defined once as an SVG <symbol> and reused via <use>.
@@ -87,7 +88,7 @@ export default function GaLogo({
     <Link
       href="/"
       className={`ga-logo${display ? " is-display" : ""} ${className}`}
-      aria-label={`${site.name} — home`}
+      aria-label={header.logoLabel}
     >
       <svg className="ga-logo-mark" aria-hidden="true" focusable="false">
         <use href="#ga-mark" />

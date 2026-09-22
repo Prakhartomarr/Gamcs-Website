@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CTA from "@/components/CTA";
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import { solutions } from "@/lib/content/gamcs";
+import { sections } from "@/lib/content/ui";
 
 /**
  * The five pillars as an auto-advancing accordion beside a visual panel.
@@ -141,7 +142,7 @@ export default function ServiceAccordion() {
                   data-cta={`svca-${item.slug}`}
                   srSuffix={`about ${item.title}`}
                 >
-                  Learn more
+                  {sections.learnMore}
                   {ARROW}
                 </CTA>
                 {/* Fills over one dwell. Mounted in the open item only, so each
@@ -162,7 +163,7 @@ export default function ServiceAccordion() {
         {/* The oversized pillar glyph that used to bleed off this corner is gone:
             over the fluting it read as a second pattern rather than as texture. */}
         <div className="svca-panel" key={s.slug}>
-          <span className="svca-kicker">At a glance</span>
+          <span className="svca-kicker">{sections.atAGlance}</span>
           <p className="svca-panel-title">{s.title}</p>
           <ul className="svca-chips">
             {/* FP&A's glance list opens with the pillar's own name, which reads

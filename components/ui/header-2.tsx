@@ -9,6 +9,8 @@ import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
 import { caseStudies, primaryCta, solutions } from '@/lib/content/gamcs';
+import { fill } from '@/lib/content/fill';
+import { header, type HeaderPanel as Panel } from '@/lib/content/ui';
 
 /* ------------------------------------------------------------------ *
  * Floating pill header.
@@ -22,35 +24,9 @@ import { caseStudies, primaryCta, solutions } from '@/lib/content/gamcs';
  * real action; GAMCS has no login or self-serve signup.
  * ------------------------------------------------------------------ */
 
-type Panel = 'solutions' | 'case' | 'who';
-type Item =
-	| { label: string; href: string }
-	/* `href` alongside `panel` makes the label a link AND keeps its menu:
-	   the label navigates, a separate caret button discloses the panel.
-	   One control per action, so neither is ambiguous to a screen reader. */
-	| { label: string; panel: Panel; href?: string };
-
-/* Restored to the pre-Phase-2 set at the client's request. This deliberately
-   differs from the copy doc's GLOBAL ELEMENTS nav (Home / Solutions / Case
-   Studies / Team / FAQ) — the original was asked for back. FAQ stays reachable
-   from the Who We Are panel, now pointing at the standalone /faq page. */
-const items: Item[] = [
-	{ label: 'Who We Are', panel: 'who' },
-	{ label: 'How We Help', href: '/#how-we-help' },
-	{ label: 'Solutions', panel: 'solutions', href: '/solutions' },
-	{ label: 'Case Study', panel: 'case' },
-	{ label: 'Team', href: '/team' },
-	{ label: 'Careers', href: '/careers' },
-];
-
-const whoLinks = [
-	{ title: 'Our Story', href: '/who-we-are' },
-	{ title: 'How We Help', href: '/#how-we-help' },
-	{ title: 'Our Team', href: '/team' },
-	{ title: 'What clients say', href: '/#testimonials' },
-	/* the standalone page now, not the homepage section it used to hit */
-	{ title: 'FAQ', href: '/faq' },
-];
+/* The items and the Who We Are links are lib/content/ui.ts `header`: an item
+   with a `panel` discloses a mega-menu, one with only an `href` is a link. */
+const { items, whoLinks } = header;
 
 /* Derived from `solutions[]`, so the menu can never list a pillar that has no
    page — or miss one that does. Three columns: the five pillars wrap to a row
@@ -185,7 +161,7 @@ export function Header() {
 						<div className="mega-inner mega-2">
 							<div className="mega-col">
 								<Link className="mega-head" href="/case-study" onClick={closeAll}>
-									All case studies <Arrow />
+									{header.allCaseStudies} <Arrow />
 								</Link>
 								<ul>
 									{caseStudies.items.slice(0, 5).map((c) => (
@@ -196,7 +172,7 @@ export function Header() {
 								</ul>
 							</div>
 							<div className="mega-col">
-								<span className="mega-head as-label">More</span>
+								<span className="mega-head as-label">{header.more}</span>
 								<ul>
 									{caseStudies.items.slice(5).map((c) => (
 										<li key={c.no}>
@@ -210,7 +186,7 @@ export function Header() {
 		return (
 						<div className="mega-inner mega-1">
 							<div className="mega-col">
-								<span className="mega-head as-label">Who We Are</span>
+								<span className="mega-head as-label">{header.whoTitle}</span>
 								<ul>
 									{whoLinks.map((l) => (
 										<li key={l.title}>
@@ -294,7 +270,7 @@ export function Header() {
 											className="nav-caret"
 											aria-expanded={panel === item.panel}
 											aria-controls={`${baseId}-${item.panel}`}
-											aria-label={`${item.label} menu`}
+											aria-label={fill(header.menuLabel, { label: item.label })}
 											onFocus={() => hoverOpen(item.panel)}
 											onClick={(e) => setPanel(e.detail === 0 && panel === item.panel ? null : item.panel)}
 										>
@@ -344,7 +320,7 @@ export function Header() {
 					}}
 					/* size-8 gave a 36px target; the touch tier is built to 44px */
 					className="size-11 xl:hidden"
-					aria-label={open ? 'Close navigation' : 'Open navigation'}
+					aria-label={open ? header.closeNav : header.openNav}
 					aria-controls={sheetId}
 					aria-expanded={open}
 				>
@@ -393,12 +369,12 @@ export function Header() {
 					{sub && (
 						<div className="drawer-sub">
 							<button type="button" className="drawer-back" onClick={() => setSub(null)}>
-								<span aria-hidden="true">‹</span> Go back
+								<span aria-hidden="true">‹</span> {header.goBack}
 							</button>
 
 							{sub === 'solutions' && (
 								<Link className="mega-head" href="/solutions" onClick={closeAll}>
-									All solutions <Arrow />
+									{header.allSolutions} <Arrow />
 								</Link>
 							)}
 							{sub === 'solutions' &&
@@ -415,7 +391,7 @@ export function Header() {
 
 							{sub === 'case' && (
 								<div className="drawer-group">
-									<Link className="drawer-group-head" href="/case-study" onClick={closeAll}>All case studies</Link>
+									<Link className="drawer-group-head" href="/case-study" onClick={closeAll}>{header.allCaseStudies}</Link>
 									<ul>
 										{caseStudies.items.map((c) => (
 											<li key={c.no}><Link href="/case-study" onClick={closeAll}>{c.title}</Link></li>
@@ -445,7 +421,7 @@ export function Header() {
 						onClick={closeAll}
 						className="sr-only focus-visible:not-sr-only focus-visible:self-start focus-visible:rounded-full focus-visible:border focus-visible:px-4 focus-visible:py-2"
 					>
-						Close navigation
+						{header.closeNav}
 					</button>
 				</div>
 			</div>

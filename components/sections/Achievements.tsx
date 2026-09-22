@@ -34,15 +34,14 @@ import { achievements } from "@/lib/content/gamcs";
  *   360-1920: the lightest pixel still gives 6.2:1 for the number and 5.8:1
  *   for the label, so the design's scrims are used unchanged.
  */
-const CARD = "$525Mn";
-const FIGURES = ["10,000+", "90%", "100+"] as const;
-
-type Item = (typeof achievements.items)[number];
-const byValue = (v: string) => achievements.items.find((i) => i.value === v);
+/* Positions in achievements.items: the $525Mn deal card, then 10,000+ hours,
+   90% TAT and 100+ models. By index, so the figures can be re-worded. */
+const CARD = 6;
+const FIGURES = [3, 0, 7] as const;
 
 export default function Achievements() {
-  const card = byValue(CARD);
-  const figures = FIGURES.map(byValue).filter((i): i is Item => Boolean(i));
+  const card = achievements.items[CARD];
+  const figures = FIGURES.map((i) => achievements.items[i]);
 
   return (
     <section className="metrics" id="impact">

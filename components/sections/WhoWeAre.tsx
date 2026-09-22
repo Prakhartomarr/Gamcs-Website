@@ -1,6 +1,8 @@
 import Image from "next/image";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { site, story, team } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { sections } from "@/lib/content/ui";
 import CTA from "@/components/CTA";
 
 /**
@@ -22,13 +24,13 @@ export default function WhoWeAre() {
       <div className="container">
         <div className="who-row">
           <div className="who-copy reveal">
-            <SectionEyebrow label="Who we are" index="07" />
+            <SectionEyebrow label={sections.whoWeAre} index="07" />
             <h2 className="who-heading">{story.heading}</h2>
             <p className="who-lead">{story.lead}</p>
             {/* The section opens the story and hands the rest to /who-we-are.
                 It used to point at /contact, which is not what the label says. */}
             <CTA href="/who-we-are" tier="secondary" icon="diagonal">
-              About our firm
+              {sections.aboutFirm}
             </CTA>
           </div>
 
@@ -36,14 +38,14 @@ export default function WhoWeAre() {
             <div className="who-portrait">
               <Image
                 src={team.foundersPhoto}
-                alt={`${founders[0].name} and ${founders[1].name}, founders of ${site.name}`}
+                alt={fill(sections.foundersAlt, { first: founders[0].name, second: founders[1].name, siteName: site.name })}
                 width={880}
                 height={880}
                 sizes="(max-width: 1023px) 92vw, 440px"
               />
             </div>
             <CTA href="/team" tier="secondary" icon="arrow" data-cta="who-founders">
-              Meet our founders
+              {sections.meetFounders}
             </CTA>
           </div>
         </div>

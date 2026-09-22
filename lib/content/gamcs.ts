@@ -7,6 +7,8 @@
  * must not hardcode copy.
  */
 
+import type { Part } from "./fill";
+
 export const site = {
   name: "GA Management Consultants",
   legalName: "GA Management Consultants LLP",
@@ -108,15 +110,6 @@ export const story = {
   mission:
     "Our mission is simple: make finance a source of insight, not just information.",
 } as const;
-
-export const nav = [
-  { label: "Who We Are", href: "/#who-we-are" },
-  { label: "How We Help", href: "/#how-we-help" },
-  { label: "Solutions", href: "/#solutions" },
-  { label: "Case Study", href: "/case-study" },
-  { label: "Team", href: "/team" },
-  { label: "Contact Us", href: "/contact" },
-] as const;
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
 
@@ -244,6 +237,8 @@ export const team = {
   },
 };
 
+/** `logo` is optional artwork beside the quote; a missing file or field falls
+    back to the person's initials. */
 export const testimonials = {
   heading: "What our clients say about us",
   items: [
@@ -251,6 +246,7 @@ export const testimonials = {
       name: "Amol Khedkar",
       title: "Deputy Manager",
       company: "Two Brothers India Farms",
+      logo: { src: "/logos/clients/two-brothers-new.png", alt: "Two Brothers India Farms" },
       quote:
         "We had the pleasure of working with GA Managements and their expertise was instrumental in delivering actionable insights for us. Their meticulous approach to their work has consistently exceeded our expectations. The strategic approach and attention to detail made a significant impact in our day to day working. We highly recommend their services for anyone seeking top-tier FP&A consultancy.",
     },
@@ -258,6 +254,7 @@ export const testimonials = {
       name: "Arta Ramiraj",
       title: "Co-Founder",
       company: "Three Sixty Finance, UK",
+      logo: { src: "/logos/partners/threesixty.png", alt: "Threesixty Finance" },
       quote:
         "I have had the pleasure of working with GA Management Consultants on several projects, and they have been fantastic every time. They are so quick and have great attention to detail. I know I can rely on them, no matter how complex or time-sensitive the task is. They have been a huge support to me, and I wouldn't hesitate to recommend them to anyone else!",
     },
@@ -321,9 +318,27 @@ export const contact = {
     { name: "goal", label: "Your Goal", required: false },
   ],
   submit: "Submit",
+  /** Inline validation; there is no server, so these run before the mail app opens. */
+  errors: {
+    name: "Please enter your name.",
+    email: "Please enter a valid email address.",
+    phone: "Please enter a phone number we can reach you on.",
+  },
+  sending: "Opening your email…",
+  /** When the browser refuses the mailto: handover. */
+  failed: [
+    "We couldn’t open your email app. Please write to ",
+    { text: "{email}", href: "mailto:{email}" },
+    " instead.",
+  ] as Part[],
 } as const;
 
 export const footer = {
+  logoLabel: "GA Management Consultants home",
+  logoAlt: "GA Management Consultants — the GA monogram in blue",
+  headings: { explore: "Explore", solutions: "Solutions", legal: "Legal" },
+  linkedinLabel: "LinkedIn",
+  cookiePreferences: "Cookie Preferences",
   links: [
     { label: "Who we are", href: "/#who-we-are" },
     { label: "Solutions", href: "/solutions" },
@@ -1116,6 +1131,10 @@ export const careers = {
     workOn: "You'd work on:",
     other: "Don't see your track?",
     otherLead: "Write to",
+    /** `{shown}` of `{total}` after the filters. */
+    showingTracks: "Showing {shown} of {total} tracks",
+    showingOpenings: "Showing {shown} of {total} openings",
+    apply: "Apply",
   },
   roles: [] as CareerRole[],
   /* Every track is open in both locations today, so the location filter
@@ -1152,6 +1171,13 @@ export const careers = {
     ],
   },
   form: {
+    brand: "Careers",
+    close: "Close",
+    /** The overlay's step counter. */
+    stepOf: "Step {n} of 3",
+    done: "Done",
+    almostDone: "Almost done",
+    applyingTo: "Applying to",
     title: "Apply to GAMCS",
     steps: [
       { title: "About you", fields: "Full name, email, phone" },
@@ -1168,9 +1194,19 @@ export const careers = {
       cv: "CV",
       note: "A short note",
     },
+    trackPlaceholder: "Choose a track",
+    urlPlaceholder: "https://",
     notePlaceholder: "What do you want to work on?",
     cvHint: "PDF or Word, up to 4 MB",
+    dropLead: "Drag and drop or ",
+    dropBrowse: "browse",
+    remove: "remove",
+    removeLabel: "Remove the attached CV",
     consent: "I agree to GAMCS storing my details to assess this application.",
+    consentNote: ["See our ", { text: "Privacy Policy", href: "/privacy-policy", external: true }, "."] as Part[],
+    back: "Back",
+    continue: "Continue",
+    sending: "Sending…",
     submit: "Send application",
     helper: "Applications go to careers@gamcs.in.",
     errors: {
@@ -1182,6 +1218,12 @@ export const careers = {
       cvType: "Your CV needs to be a PDF or Word file",
       cvSize: "Your CV needs to be 4 MB or smaller",
       consent: "Tick the box so we can review your application",
+      /* Checked on the server only (app/api/careers/route.ts). */
+      phone: "Enter a phone number using digits only",
+      location: "Choose a location preference",
+      note: "Keep the note under 2,000 characters",
+      rateLimited: "Too many applications from this connection. Please try again later.",
+      generic: "Check this field",
     },
     /* Shown when the mail route is not configured yet and the form hands the
        application to the applicant's own mail app instead. */

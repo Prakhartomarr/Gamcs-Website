@@ -202,16 +202,17 @@ function FlickeringText({
  * carried AICPA SOC 2 / HIPAA / GDPR badges; those are certification
  * claims GAMCS has not stated, so that row is intentionally absent.
  * ------------------------------------------------------------------ */
+const legalGroup = {
+	label: footer.headings.legal,
+	links: [
+		...footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
+		{ title: footer.linkedinLabel, href: site.linkedin, external: true },
+	],
+};
 const groups = [
-	{ label: 'Explore', links: footer.links.map((l) => ({ title: l.label, href: l.href })) },
-	{ label: 'Solutions', links: footer.solutions.map((l) => ({ title: l.label, href: l.href })) },
-	{
-		label: 'Legal',
-		links: [
-			...footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
-			{ title: 'LinkedIn', href: site.linkedin, external: true },
-		],
-	},
+	{ label: footer.headings.explore, links: footer.links.map((l) => ({ title: l.label, href: l.href })) },
+	{ label: footer.headings.solutions, links: footer.solutions.map((l) => ({ title: l.label, href: l.href })) },
+	legalGroup,
 ];
 
 export function FlickeringFooter() {
@@ -220,10 +221,10 @@ export function FlickeringFooter() {
 			<div className="mx-auto w-full max-w-6xl px-6 pt-14 pb-10 lg:pt-16">
 				<div className="grid gap-10 lg:grid-cols-[1.1fr_1.4fr] lg:gap-16">
 					<div>
-						<Link href="/" className="flex min-h-[44px] w-fit items-center gap-2.5" aria-label={`${site.name} home`}>
+						<Link href="/" className="flex min-h-[44px] w-fit items-center gap-2.5" aria-label={footer.logoLabel}>
 							<Image
 								src={site.logo}
-								alt={`${site.name} — the GA monogram in blue`}
+								alt={footer.logoAlt}
 								width={534}
 								height={339}
 								sizes="44px"
@@ -264,7 +265,7 @@ export function FlickeringFooter() {
 									})}
 									{/* Revocable consent lives with the other legal links. A button, not
 									    a link: it changes state rather than navigating. */}
-									{g.label === 'Legal' && (
+									{g === legalGroup && (
 										<li>
 											<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground" />
 										</li>

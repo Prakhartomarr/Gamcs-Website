@@ -14,6 +14,7 @@ import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { OG_IMAGE, SITE_URL, absolute } from "@/lib/seo";
 import { intro, site } from "@/lib/content/gamcs";
+import { header } from "@/lib/content/ui";
 
 /* The fallback face only. Apple devices resolve -apple-system (SF Pro) first in
    --font-sans, so preload stays off: they must download no font bytes. The
@@ -82,7 +83,7 @@ export default function RootLayout({
         <GaLogoSprite />
         <Preloader />
         <a className="skip-link" href="#main">
-          Skip to content
+          {header.skipLink}
         </a>
         <div className="shell">
           <Header />

@@ -1,19 +1,22 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { primaryCta, services, site } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { pages } from "@/lib/content/pages";
 import CTA from "@/components/CTA";
 
+const t = pages.notFound;
+
 export const metadata: Metadata = {
-  title: "Page not found",
-  description:
-    "That page does not exist. Head back to the homepage or get in touch with GA Management Consultants.",
+  title: t.title,
+  description: t.description,
   robots: { index: false, follow: true },
   /* Without these the 404 inherits the root canonical and og:url, so a
      mistyped link shared in chat unfurled as the homepage. Replacing the
      openGraph and twitter objects drops the inherited url with them. */
   alternates: { canonical: null },
-  openGraph: { title: "Page not found" },
-  twitter: { title: "Page not found" },
+  openGraph: { title: t.title },
+  twitter: { title: t.title },
 };
 
 /**
@@ -24,31 +27,21 @@ export const metadata: Metadata = {
  * dump, so every one of them resolves.
  */
 export default function NotFound() {
-  const elsewhere = [
-    { label: "Case studies", href: "/case-study" },
-    { label: "Founders & advisors", href: "/team" },
-    { label: "How we help", href: "/#how-we-help" },
-    { label: "Our services", href: "/#solutions" },
-  ];
-
   return (
     <section className="section notfound">
       <div className="container">
         <p className="notfound-code" aria-hidden="true">
           404
         </p>
-        <div className="section-kicker">PAGE NOT FOUND</div>
+        <div className="section-kicker">{t.kicker}</div>
         <h1 className="notfound-title">
-          This page has moved on. <em>We haven&rsquo;t.</em>
+          {t.h1} <em>{t.h1Accent}</em>
         </h1>
-        <p className="notfound-body">
-          The link you followed doesn&rsquo;t lead anywhere on {site.short}. It may
-          have been renamed, or the address may have a typo in it.
-        </p>
+        <p className="notfound-body">{fill(t.body, { short: site.short })}</p>
 
         <div className="ctas notfound-ctas">
           <CTA href="/" data-cta="404-home" icon="arrow">
-            Back to home
+            {t.backHome}
           </CTA>
           <CTA href={primaryCta.href}
             data-cta="404-contact" tier="secondary" icon="diagonal">
@@ -57,17 +50,18 @@ export default function NotFound() {
         </div>
 
         <div className="notfound-links">
-          <h2>Or pick up from here</h2>
+          <h2>{t.elsewhereHeading}</h2>
           <ul>
-            {elsewhere.map((l) => (
+            {t.elsewhere.map((l) => (
               <li key={l.href}>
                 <Link href={l.href}>{l.label}</Link>
               </li>
             ))}
           </ul>
           <p className="notfound-hint">
-            {services.business.length + services.technology.length + services.training.length}{" "}
-            services across finance, technology and training.
+            {fill(t.hint, {
+              count: services.business.length + services.technology.length + services.training.length,
+            })}
           </p>
         </div>
       </div>

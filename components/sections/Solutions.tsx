@@ -1,4 +1,5 @@
 import ServiceAccordion from "@/components/sections/ServiceAccordion";
+import { sections } from "@/lib/content/ui";
 
 /**
  * Homepage services section: the five pillars as an accordion beside a panel
@@ -26,16 +27,13 @@ export default function Solutions() {
           </span>
           <span className="fin-eyebrow">
             <i aria-hidden="true" />
-            Services
+            {sections.services}
           </span>
           <h2 className="fin-h2">
-            Everything You Need to Build a{" "}
-            <span className="accent uline">Decision-Ready Finance Function</span>
+            {sections.servicesHeadingLead}{" "}
+            <span className="accent uline">{sections.servicesHeadingAccent}</span>
           </h2>
-          <p className="fin-lead">
-            From forward-looking planning to deal-ready diligence — engaged
-            individually, or as one embedded team.
-          </p>
+          <p className="fin-lead">{sections.servicesLead}</p>
         </div>
 
         <ServiceAccordion />

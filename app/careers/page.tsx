@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import CTA from "@/components/CTA";
 import CareersSplit from "@/components/careers/CareersSplit";
 import { careers, story, whyUs } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Careers",
+  title: pages.careers.title,
   description: careers.intro,
   path: "/careers",
 });

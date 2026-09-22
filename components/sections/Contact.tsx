@@ -1,6 +1,6 @@
 import CTA from "@/components/CTA";
 import LocationMap from "@/components/ui/expand-map";
-import { contact, intro, site } from "@/lib/content/gamcs";
+import { contact, intro, primaryCta, site } from "@/lib/content/gamcs";
 
 /**
  * Homepage contact section.
@@ -26,8 +26,8 @@ export default function Contact() {
             </p>
             {/* secondary -> .btn.btn-light. The primary .btn-shimmer pill is
                 --blue, which is this panel's own background. */}
-            <CTA tier="secondary" icon="arrow" href="/contact" data-cta="contact-panel">
-              Schedule a Call
+            <CTA tier="secondary" icon="arrow" href={primaryCta.href} data-cta="contact-panel">
+              {primaryCta.label}
             </CTA>
           </div>
 

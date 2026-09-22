@@ -9,6 +9,7 @@ import {
   readConsent,
   writeConsent,
 } from "@/lib/consent";
+import { cookie } from "@/lib/content/ui";
 
 /**
  * Cookie consent banner plus the preferences panel behind it.
@@ -92,23 +93,19 @@ export default function CookieConsent() {
         >
           <div className="cookie-banner-inner">
             <div className="cookie-banner-copy">
-              <h2 id="cookie-banner-title">We use cookies</h2>
-              <p id="cookie-banner-body">
-                We use essential cookies to run this site, and — only if you
-                agree — analytics cookies to understand how visitors use it. You
-                can change your mind anytime from the link in our footer.
-              </p>
+              <h2 id="cookie-banner-title">{cookie.banner.title}</h2>
+              <p id="cookie-banner-body">{cookie.banner.body}</p>
             </div>
 
             <div className="cookie-banner-actions">
               <CTA type="button" onClick={() => decide(true)}>
-                Accept all
+                {cookie.banner.accept}
               </CTA>
               <CTA tier="secondary" type="button" onClick={() => decide(false)}>
-                Reject non-essential
+                {cookie.banner.reject}
               </CTA>
               <button type="button" className="cookie-link" onClick={openPanel}>
-                Manage preferences
+                {cookie.banner.manage}
               </button>
             </div>
           </div>
@@ -121,21 +118,21 @@ export default function CookieConsent() {
         aria-labelledby="cookie-panel-title"
       >
         <div className="cookie-panel-inner">
-          <h2 id="cookie-panel-title">Manage preferences</h2>
+          <h2 id="cookie-panel-title">{cookie.panel.title}</h2>
 
           <ul className="cookie-cats">
             <li>
               <div className="cookie-cat-head">
-                <span className="cookie-cat-name">Essential</span>
-                <span className="cookie-cat-locked">Always on</span>
+                <span className="cookie-cat-name">{cookie.panel.essential}</span>
+                <span className="cookie-cat-locked">{cookie.panel.alwaysOn}</span>
               </div>
-              <p>Required for the site to function. Cannot be turned off.</p>
+              <p>{cookie.panel.essentialBody}</p>
             </li>
 
             <li>
               <div className="cookie-cat-head">
                 <label className="cookie-cat-name" htmlFor="cookie-analytics">
-                  Analytics (GA4)
+                  {cookie.panel.analytics}
                 </label>
                 {/* A real checkbox with role="switch": keyboard operable and
                     announced as on/off, with no custom key handling. */}
@@ -148,16 +145,13 @@ export default function CookieConsent() {
                   onChange={(e) => setAnalytics(e.currentTarget.checked)}
                 />
               </div>
-              <p>
-                Helps us understand which pages are useful, using Google
-                Analytics. No data is sold or used for advertising.
-              </p>
+              <p>{cookie.panel.analyticsBody}</p>
             </li>
           </ul>
 
           <div className="cookie-panel-actions">
             <CTA type="button" onClick={() => decide(analytics)}>
-              Save preferences
+              {cookie.panel.save}
             </CTA>
             {/* Cancel leaves the banner up if no choice has been made yet —
                 closing the panel is not itself a decision. */}
@@ -166,17 +160,17 @@ export default function CookieConsent() {
               className="cookie-link"
               onClick={() => dialogRef.current?.close()}
             >
-              Cancel
+              {cookie.panel.cancel}
             </button>
           </div>
 
           <p className="cookie-panel-note">
-            Full detail in our{" "}
+            {cookie.panel.noteLead}{" "}
             <Link
               href="/privacy-policy"
               onClick={() => dialogRef.current?.close()}
             >
-              Privacy Policy
+              {cookie.panel.noteLink}
             </Link>
             .
           </p>

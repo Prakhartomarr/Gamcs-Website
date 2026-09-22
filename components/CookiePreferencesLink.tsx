@@ -1,6 +1,7 @@
 "use client";
 
 import { openCookiePreferences } from "@/lib/consent";
+import { footer } from "@/lib/content/gamcs";
 
 /**
  * Reopens the consent panel. A button rather than a link, because it changes
@@ -9,7 +10,7 @@ import { openCookiePreferences } from "@/lib/consent";
  */
 export default function CookiePreferencesLink({
   className,
-  label = "Cookie Preferences",
+  label = footer.cookiePreferences,
 }: {
   className?: string;
   label?: string;

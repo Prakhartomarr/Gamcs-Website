@@ -1,4 +1,6 @@
 import type { CaseStudy } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
+import { caseCard } from "@/lib/content/ui";
 
 /**
  * One case study.
@@ -11,14 +13,14 @@ import type { CaseStudy } from "@/lib/content/gamcs";
  */
 export default function CaseStudyCard({ item }: { item: CaseStudy }) {
   const steps = [
-    { label: "Problem", value: item.problem },
-    { label: "Solution", value: item.solution },
-    { label: "Outcome", value: item.outcome },
+    { label: caseCard.problem, value: item.problem },
+    { label: caseCard.solution, value: item.solution },
+    { label: caseCard.outcome, value: item.outcome },
   ].filter((s) => s.value);
 
   return (
     <article className="case-item reveal" data-lift>
-      <div className="case-no">Case Study {item.no}</div>
+      <div className="case-no">{fill(caseCard.number, { no: item.no })}</div>
       <h3>{item.title}</h3>
       <p>{item.blurb}</p>
 
