@@ -38,5 +38,9 @@ GAMCS_Website_Copy*.docx
 content.md
 content-v*.md
 
+# the generated site-copy document (content-doc/README.md stays tracked)
+content-doc/*
+!content-doc/README.md
+
 # plugin cache
 .impeccable/
