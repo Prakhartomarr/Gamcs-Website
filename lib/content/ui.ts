@@ -132,13 +132,11 @@ export const caseCard = {
 
 export const roster = {
   founders: "Founders",
-  foundersCount: "Two",
   /* The note between the two founder cards on /team. Placeholder wording until
      the client sends their own: it says only what the roster already states. */
   foundersNote:
     "Gaurav and Abhinav founded GAMCS after a decade each inside finance teams \u2014 FP&A, due diligence, business intelligence and transformation. They lead the work, not only the firm.",
   advisory: "Advisory Team",
-  advisoryCount: "Eight",
   portraitAlt: "Portrait of {name}, {title}",
   close: "Close",
   linkedin: "LinkedIn",

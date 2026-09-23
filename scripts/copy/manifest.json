@@ -6582,18 +6582,6 @@
   }
  },
  {
-  "code": "TEAM-FOUNDERS-02",
-  "page": "Team (/team)",
-  "section": "Founders",
-  "label": "Count word",
-  "kind": "text",
-  "text": "Two",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "roster.foundersCount"
-  }
- },
- {
   "code": "TEAM-FOUNDERS-03",
   "page": "Team (/team)",
   "section": "Founders",
@@ -6711,18 +6699,6 @@
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "roster.advisory"
-  }
- },
- {
-  "code": "TEAM-ADVISORS-02",
-  "page": "Team (/team)",
-  "section": "Advisory team",
-  "label": "Count word",
-  "kind": "text",
-  "text": "Eight",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "roster.advisoryCount"
   }
  },
  {

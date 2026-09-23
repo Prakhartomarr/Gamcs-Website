@@ -138,7 +138,6 @@ export default function TeamRoster() {
           <div className="tr-duo">
             <div className="tr-duo-mid">
               <h2 className="tr-h">{roster.founders}</h2>
-              <span className="tr-count">{roster.foundersCount}</span>
               <p className="tr-duo-note">{roster.foundersNote}</p>
             </div>
             {FOUNDERS.map((p) => (
@@ -150,7 +149,6 @@ export default function TeamRoster() {
           <div className="tr-block">
             <div className="tr-mid">
               <h2 className="tr-h">{roster.advisory}</h2>
-              <span className="tr-count">{roster.advisoryCount}</span>
             </div>
             <div className="tr-grid">
               {ADVISERS.map((p) => (
