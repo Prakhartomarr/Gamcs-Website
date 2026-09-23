@@ -10867,6 +10867,30 @@
   }
  },
  {
+  "code": "FTR-BRAND-04",
+  "page": "Global elements",
+  "section": "Footer brand block",
+  "label": "Contact link",
+  "kind": "text",
+  "text": "Contact Us",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.contactLabel"
+  }
+ },
+ {
+  "code": "FTR-COLS-20",
+  "page": "Footer",
+  "section": "Footer brand block",
+  "label": "LinkedIn tile, screen-reader name",
+  "kind": "text",
+  "text": "LinkedIn",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.linkedinLabel"
+  }
+ },
+ {
   "code": "FTR-BRAND-03",
   "page": "Footer",
   "section": "Brand",
@@ -11104,18 +11128,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.legal[2].label"
-  }
- },
- {
-  "code": "FTR-COLS-20",
-  "page": "Footer",
-  "section": "Link columns",
-  "label": "Column 3, LinkedIn link",
-  "kind": "text",
-  "text": "LinkedIn",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "footer.linkedinLabel"
   }
  },
  {

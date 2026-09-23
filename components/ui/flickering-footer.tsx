@@ -204,10 +204,7 @@ function FlickeringText({
  * ------------------------------------------------------------------ */
 const legalGroup = {
 	label: footer.headings.legal,
-	links: [
-		...footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
-		{ title: footer.linkedinLabel, href: site.linkedin, external: true },
-	],
+	links: footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
 };
 const groups = [
 	{ label: footer.headings.explore, links: footer.links.map((l) => ({ title: l.label, href: l.href })) },
@@ -215,65 +212,106 @@ const groups = [
 	legalGroup,
 ];
 
+/* The address is optional in the content module, so the block renders only
+   when there is one. */
+const postal = site.address
+	? [site.address.locality, site.address.region, site.address.postalCode].filter(Boolean).join(', ')
+	: '';
+
+const LinkedInMark = () => (
+	<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">
+		<circle cx="6.1" cy="5.8" r="1.9" />
+		<rect x="4.4" y="9.3" width="3.4" height="10.3" rx="0.5" />
+		<rect x="10.1" y="9.3" width="3.3" height="10.3" rx="0.5" />
+		<path d="M13.4 14.1a3.5 3.5 0 0 1 6.3 2.1v3.4h-3.4v-3.1a1.5 1.5 0 0 0-2.9-.5z" />
+	</svg>
+);
+
 export function FlickeringFooter() {
 	return (
 		<footer className="relative w-full overflow-hidden border-t border-line bg-white">
-			<div className="mx-auto w-full max-w-6xl px-6 pt-14 pb-10 lg:pt-16">
-				<div className="grid gap-10 lg:grid-cols-[1.1fr_1.4fr] lg:gap-16">
+			{/* One grid for the whole footer: the brand block holds column 1 and the
+			    link columns run to the right edge, which is what puts the bottom
+			    bar's copyright under the logo and its credit under the last column. */}
+			<div className="container pt-14 pb-12 lg:pt-16">
+				<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
 					<div>
-						<Link href="/" className="flex min-h-[44px] w-fit items-center gap-2.5" aria-label={footer.logoLabel}>
+						<Link href="/" className="flex w-fit items-center gap-2.5" aria-label={footer.logoLabel}>
 							<Image
 								src={site.logo}
 								alt={footer.logoAlt}
 								width={534}
 								height={339}
 								sizes="44px"
-								className="h-7 w-auto object-contain"
+								className="h-8 w-auto object-contain"
 							/>
 							<span className="text-[15px] font-bold tracking-tight text-charcoal">{site.short}</span>
 						</Link>
-						<p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{intro}</p>
+						<p className="mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
+						{site.address && (
+							<address className="mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
+								{site.address.street}
+								<br />
+								{postal}
+							</address>
+						)}
+						<div className="mt-6 flex flex-col items-start gap-2">
+							<Link
+								href="/contact"
+								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+							>
+								{footer.contactLabel}
+							</Link>
+							<a
+								href={`mailto:${site.email}`}
+								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+							>
+								{site.email}
+							</a>
+						</div>
 						<a
-							href={`mailto:${site.email}`}
-							className="mt-6 inline-flex min-h-[44px] items-center text-sm font-semibold text-charcoal transition-colors hover:text-blue"
+							href={site.linkedin}
+							target="_blank"
+							rel="noopener"
+							aria-label={footer.linkedinLabel}
+							className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-blue text-white transition-colors hover:bg-blue-dark"
 						>
-							{site.email}
+							<LinkedInMark />
 						</a>
 					</div>
 
-					<div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-						{groups.map((g) => (
-							<div key={g.label}>
-								<h2 className="text-sm font-semibold text-charcoal">{g.label}</h2>
-								<ul className="mt-4 space-y-2.5">
-									{g.links.map((l) => {
-										const cls =
-											'inline-flex min-h-[44px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground';
-										return (
-											<li key={l.title}>
-												{'external' in l && l.external ? (
-													<a href={l.href} target="_blank" rel="noopener" className={cls}>
-														{l.title}
-													</a>
-												) : (
-													<Link href={l.href} className={cls}>
-														{l.title}
-													</Link>
-												)}
-											</li>
-										);
-									})}
-									{/* Revocable consent lives with the other legal links. A button, not
-									    a link: it changes state rather than navigating. */}
-									{g === legalGroup && (
-										<li>
-											<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-sm text-muted-foreground transition-colors hover:text-foreground" />
+					{groups.map((g) => (
+						<div key={g.label}>
+							{/* Heading recedes, links carry the weight — the reference's order. */}
+							<h2 className="text-[15px] text-muted-foreground">{g.label}</h2>
+							<ul className="mt-7 space-y-3">
+								{g.links.map((l) => {
+									const cls =
+										'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5';
+									return (
+										<li key={l.title}>
+											{'external' in l && l.external ? (
+												<a href={l.href} target="_blank" rel="noopener" className={cls}>
+													{l.title}
+												</a>
+											) : (
+												<Link href={l.href} className={cls}>
+													{l.title}
+												</Link>
+											)}
 										</li>
-									)}
-								</ul>
-							</div>
-						))}
-					</div>
+									);
+								})}
+								{/* Revocable consent lives with the other legal links. A button, not
+								    a link: it changes state rather than navigating. */}
+								{g === legalGroup && (
+									<li>
+										<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5" />
+									</li>
+								)}
+							</ul>
+						</div>
+					))}
 				</div>
 			</div>
 
@@ -282,9 +320,11 @@ export function FlickeringFooter() {
 				<FlickeringText text={site.short} />
 			</div>
 
-			<div className="mx-auto flex w-full max-w-6xl flex-col gap-1 px-6 pb-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-				<span>{site.copyright}</span>
-				<span>{site.legalName}</span>
+			<div className="container">
+				<div className="grid gap-2 border-t border-line py-6 text-xs text-muted-foreground sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+					<span>{site.copyright}</span>
+					<span className="sm:text-right lg:col-span-3">{site.legalName}</span>
+				</div>
 			</div>
 		</footer>
 	);

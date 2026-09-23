@@ -342,6 +342,9 @@ export const footer = {
   logoLabel: "GA Management Consultants home",
   logoAlt: "GA Management Consultants — the GA monogram in blue",
   headings: { explore: "Explore", solutions: "Solutions", legal: "Legal" },
+  /** The accent link under the address, beside the email. */
+  contactLabel: "Contact Us",
+  /** Now the accessible name of the LinkedIn tile rather than a text link. */
   linkedinLabel: "LinkedIn",
   cookiePreferences: "Cookie Preferences",
   links: [
