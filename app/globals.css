@@ -2581,35 +2581,35 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* =====================================================================
-   TEAM ROSTER — founders staggered, advisers three across
-   Founders keep the reference's own 400x520; advisers run 329 wide with
-   146 between them, the ~0.45 gap-to-card ratio measured off the layout
-   this follows. Both use one card: the caption sits on the photograph
-   over a gradient, with the plus hanging off the bottom-right corner.
+   TEAM ROSTER — the two founders side by side under their heading,
+   advisers three across. Founders keep the reference's 10:13 card; advisers run
+   329 wide with 146 between them, the ~0.45 gap-to-card ratio measured
+   off the layout this follows. Both use one card: the caption sits on
+   the photograph over a gradient, with the plus hanging off the
+   bottom-right corner.
    ===================================================================== */
 .tr{padding:96px 0 120px}
 .tr-h{max-width:9ch}
 .tr-count{display:block;margin:16px 0 0;font:600 0.6667rem var(--font-sans);
   letter-spacing:.16em;text-transform:uppercase;color:#8A9198}
 
-/* founders: heading in the left column, the staggered cards beside it */
-.tr-sec{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:start}
 .tr-block{margin-top:130px}
 .tr-mid{text-align:center;max-width:640px;margin:0 auto 60px}
 .tr-mid .tr-h{max-width:none}
 .tr-mid .tr-count{margin-top:16px}
 
-/* Cards alternate sides inside a fixed band and overlap vertically, so the two
-   columns interlock. Document order is untouched, which keeps tab order and
-   screen readers in the order people read — the obvious two-column markup
-   would have reordered them. */
-.tr-stack{width:900px}
-.tr-stack .tr-card{width:400px}
-.tr-stack .tr-card:nth-child(odd){margin-left:auto}
-.tr-stack .tr-card:nth-child(even){margin-right:auto}
-.tr-stack .tr-card + .tr-card{margin-top:-190px}
-.tr-stack .tr-shot{height:520px}
-.tr-stack .tr-plus{right:-38px;bottom:-38px;width:76px;height:76px}
+/* Founders: the heading and its note centred above, the two cards side by
+   side under them. The band is 856 wide — two 400px cards and the 56 between
+   them — and centred in the container, which leaves room either side for the
+   plus tiles to hang off the outer corners. */
+.tr-duo{display:grid;width:min(100%,856px);margin:0 auto;
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 56px;align-items:start}
+.tr-duo-mid{grid-column:1 / -1;text-align:center}
+.tr-duo-mid .tr-h{max-width:none;margin:0}
+.tr-duo-note{margin:24px auto 0;max-width:56ch;font-size:0.8333rem;
+  line-height:1.7;color:var(--ink-muted)}
+.tr-duo .tr-shot{aspect-ratio:10/13}
+.tr-duo .tr-plus{right:-30px;bottom:-30px;width:68px;height:68px}
 
 .tr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:84px 146px}
 .tr-grid .tr-shot{aspect-ratio:3/4}
@@ -2683,25 +2683,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-close:hover{background:rgba(13,24,40,.07)}
 
 @media (max-width:1279px){
-  .tr-sec{grid-template-columns:1fr;gap:36px}
-  .tr-stack{width:100%;max-width:820px}
   .tr-grid{gap:64px 72px}
 }
 @media (max-width:1023px){
+  .tr-duo{gap:52px 40px}
   .tr-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:56px}
 }
 @media (max-width:767px){
   .tr{padding:64px 0 80px}
   .tr-block{margin-top:72px}
   .tr-mid{margin-bottom:36px}
-  /* no room to interlock at this width: one column, no overlap */
-  .tr-stack{max-width:none}
-  .tr-stack .tr-card{width:100%;margin-left:0;margin-right:0}
-  .tr-stack .tr-card + .tr-card{margin-top:26px}
-  .tr-stack .tr-shot{height:auto;aspect-ratio:3/4}
+  /* one column: heading, note, then a founder under the other */
+  .tr-duo{grid-template-columns:1fr;gap:26px}
+  .tr-duo-note{margin-top:18px;max-width:none}
+  .tr-duo .tr-shot{aspect-ratio:3/4}
   /* an 18px gutter here (14px under 380): hung further than 10px past the
      card, the tile ran off the screen and was clipped flat */
-  .tr-stack .tr-plus{right:-10px;bottom:-22px;width:56px;height:56px}
+  .tr-duo .tr-plus{right:-10px;bottom:-22px;width:56px;height:56px}
   .tr-grid .tr-plus{right:-10px}
   .tr-grid{grid-template-columns:1fr;gap:36px}
   .tr-ovwrap{padding:16px}

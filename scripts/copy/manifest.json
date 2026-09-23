@@ -6690,6 +6690,18 @@
   }
  },
  {
+  "code": "TEAM-FOUNDERS-11",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Note between the founders",
+  "kind": "text",
+  "text": "Gaurav and Abhinav founded GAMCS after a decade each inside finance teams — FP&A, due diligence, business intelligence and transformation. They lead the work, not only the firm.",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "roster.foundersNote"
+  }
+ },
+ {
   "code": "TEAM-ADVISORS-01",
   "page": "Team (/team)",
   "section": "Advisory team",

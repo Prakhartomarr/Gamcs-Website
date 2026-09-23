@@ -7,12 +7,13 @@ import { fill } from "@/lib/content/fill";
 import { roster } from "@/lib/content/ui";
 
 /**
- * The team page roster: founders as large staggered cards, advisers as a
- * three-across grid, and one panel that opens for whoever is clicked.
+ * The team page roster: the two founders side by side under their heading,
+ * advisers as a three-across grid, and one panel that opens for whoever is
+ * clicked.
  *
  * Two card sizes, one card anatomy. The caption sits on the photograph over a
  * gradient in both sections; the advisers' type is stepped down because their
- * cards are 329px wide against the founders' 400.
+ * cards are 329px wide against the founders' 380.
  *
  * The photographs are greyscaled in CSS rather than on disk. The nine were shot
  * in nine different places — several against white, one against a purple
@@ -124,17 +125,16 @@ export default function TeamRoster() {
     <>
       <section className="section tr" id="people">
         <div className="container">
-          <div className="tr-sec">
-            <div>
+          <div className="tr-duo">
+            <div className="tr-duo-mid">
               <h2 className="tr-h">{roster.founders}</h2>
               <span className="tr-count">{roster.foundersCount}</span>
+              <p className="tr-duo-note">{roster.foundersNote}</p>
             </div>
-            <div className="tr-stack">
-              {FOUNDERS.map((p) => (
-                <Card key={p.name} person={p} onOpen={show}
-                  sizes="(max-width: 767px) 92vw, 400px" />
-              ))}
-            </div>
+            {FOUNDERS.map((p) => (
+              <Card key={p.name} person={p} onOpen={show}
+                sizes="(max-width: 767px) 92vw, (max-width: 1023px) 45vw, 380px" />
+            ))}
           </div>
 
           <div className="tr-block">
