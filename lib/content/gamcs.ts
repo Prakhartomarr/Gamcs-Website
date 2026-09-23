@@ -223,14 +223,19 @@ export const team = {
     { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
     { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
+  /* Order is the client's: it is what the page prints, four to a row.
+     Ramesh and Geetika have no headshot or title yet, so their cards carry
+     an initials tile and the generic "Advisor" — both are placeholders,
+     waiting on the client. A card with no `photo` renders the tile. */
   advisory: [
-    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years", photo: "/team/sanjay-rikhy.jpg" },
     { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years", photo: "/team/sumit-chatterjee.jpg" },
-    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
-    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years", photo: "/team/saurabh-aggarwal.jpg" },
-    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
+    { name: "Ramesh Yadav", title: "Advisor" },
     { name: "Amit Garg", title: "Audit & IPO Advisor", photo: "/team/amit-garg.jpg" },
-    { name: "Prashant Sharma", title: "Risk & Regulatory Advisor", photo: "/team/prashant-sharma.jpg" },
+    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
+    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
+    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years", photo: "/team/sanjay-rikhy.jpg" },
+    { name: "Geetika Kamikar", title: "Advisor" },
+    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years", photo: "/team/saurabh-aggarwal.jpg" },
   ],
   get members() {
     return [...this.leadership, ...this.advisory];

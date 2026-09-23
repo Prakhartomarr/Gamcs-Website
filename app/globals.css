@@ -2632,6 +2632,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-shot{position:relative;display:block;overflow:hidden;background:var(--band-soft)}
 /* Greyscale in CSS, not on disk: nine photographs shot in nine places read as
    one set this way, and the colour originals stay untouched. */
+/* Stands in for a headshot the client has not sent: the person's initials on
+   the same soft grey the shot sits on while it loads. */
+.tr-init{position:absolute;inset:0;display:grid;place-items:center;
+  background:var(--band-soft);color:#A9B0B7;font-weight:300;
+  font-size:2.4444rem;letter-spacing:.02em}
 .tr-shot img{object-fit:cover;filter:grayscale(1) contrast(1.04);
   transition:transform .6s var(--ease-out)}
 .tr-card:hover .tr-shot img,.tr-card:focus-visible .tr-shot img{transform:scale(1.04)}
@@ -2680,9 +2685,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   font:600 0.7222rem var(--font-sans);transition:background .2s var(--ease-out)}
 .tr-ovlinks a:hover{background:#f6f7f8;color:var(--ink-deep)}
 .tr-ovshot{position:absolute;top:-38px;right:76px;width:216px}
-.tr-ovshot span{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;
+/* The direct child only: an inner span (the initials tile) must not inherit
+   the frame's own aspect ratio and white ground. */
+.tr-ovshot>span{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;
   overflow:hidden;background:#fff}
 .tr-ovshot img{object-fit:cover;filter:grayscale(1)}
+/* The panel's own ground is that same soft grey, so the tile takes the frame's
+   white here or it disappears into the panel. */
+.tr-ovshot .tr-init{background:#fff}
 .tr-ovshot i{display:block;height:1px;margin-top:20px;background:var(--line)}
 .tr-close{position:absolute;top:24px;right:24px;width:46px;height:46px;border:0;
   border-radius:999px;display:grid;place-items:center;cursor:pointer;

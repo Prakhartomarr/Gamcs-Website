@@ -31,7 +31,8 @@ type Member = {
   title: string;
   experience?: string;
   location?: string;
-  photo: string;
+  /** Missing until the client sends a headshot; the card falls back to initials. */
+  photo?: string;
   email?: string;
   linkedinUrl?: string;
   bio?: string;
@@ -40,6 +41,10 @@ type Member = {
 const FOUNDERS = team.leadership as readonly Member[];
 const ADVISERS = team.advisory as readonly Member[];
 const EVERYONE: readonly Member[] = [...FOUNDERS, ...ADVISERS];
+
+/** "Ramesh Yadav" -> "RY", for the tile that stands in for a missing headshot. */
+const initials = (name: string) =>
+  name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
 const Plus = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}
@@ -65,12 +70,17 @@ function Card({
       aria-haspopup="dialog"
     >
       <span className="tr-shot">
-        <Image
-          src={person.photo}
-          alt={fill(roster.portraitAlt, { name: person.name, title: person.title })}
-          fill
-          sizes={sizes}
-        />
+        {person.photo ? (
+          <Image
+            src={person.photo}
+            alt={fill(roster.portraitAlt, { name: person.name, title: person.title })}
+            fill
+            sizes={sizes}
+          />
+        ) : (
+          /* The name is printed in the caption below, so the tile is decorative. */
+          <span className="tr-init" aria-hidden="true">{initials(person.name)}</span>
+        )}
         <span className="tr-cap">
           <span className="tr-rule" />
           <span className="tr-name">{person.name}</span>
@@ -171,7 +181,11 @@ export default function TeamRoster() {
             <div className="tr-ovin">
               <div className="tr-ovshot">
                 <span>
-                  <Image src={active.photo} alt="" fill sizes="216px" />
+                  {active.photo ? (
+                    <Image src={active.photo} alt="" fill sizes="216px" />
+                  ) : (
+                    <span className="tr-init" aria-hidden="true">{initials(active.name)}</span>
+                  )}
                 </span>
                 <i />
               </div>

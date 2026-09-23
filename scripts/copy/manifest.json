@@ -6719,7 +6719,7 @@
   "section": "Advisory team",
   "label": "Count word",
   "kind": "text",
-  "text": "Seven",
+  "text": "Eight",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "roster.advisoryCount"
@@ -6731,7 +6731,7 @@
   "section": "Advisory team",
   "label": "Advisor 1 name",
   "kind": "text",
-  "text": "Sanjay Rikhy",
+  "text": "Sumit Chatterjee",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[0].name"
@@ -6743,7 +6743,7 @@
   "section": "Advisory team",
   "label": "Advisor 1 title",
   "kind": "text",
-  "text": "Strategic Advisor | Former CFO | ESG & Performance Transformation",
+  "text": "Shared Services Operations",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[0].title"
@@ -6755,7 +6755,7 @@
   "section": "Advisory team",
   "label": "Advisor 1 experience",
   "kind": "text",
-  "text": "25+ years",
+  "text": "30+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[0].experience"
@@ -6767,7 +6767,7 @@
   "section": "Advisory team",
   "label": "Advisor 2 name",
   "kind": "text",
-  "text": "Sumit Chatterjee",
+  "text": "Ramesh Yadav",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[1].name"
@@ -6779,22 +6779,10 @@
   "section": "Advisory team",
   "label": "Advisor 2 title",
   "kind": "text",
-  "text": "Shared Services Operations",
+  "text": "Advisor",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[1].title"
-  }
- },
- {
-  "code": "TEAM-ADVISORS-08",
-  "page": "Team (/team)",
-  "section": "Advisory team",
-  "label": "Advisor 2 experience",
-  "kind": "text",
-  "text": "30+ years",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "team.advisory[1].experience"
   }
  },
  {
@@ -6803,7 +6791,7 @@
   "section": "Advisory team",
   "label": "Advisor 3 name",
   "kind": "text",
-  "text": "Dhawal Parvatikar",
+  "text": "Amit Garg",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[2].name"
@@ -6815,34 +6803,10 @@
   "section": "Advisory team",
   "label": "Advisor 3 title",
   "kind": "text",
-  "text": "Strategic Finance & CFO Advisory",
+  "text": "Audit & IPO Advisor",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[2].title"
-  }
- },
- {
-  "code": "TEAM-ADVISORS-11",
-  "page": "Team (/team)",
-  "section": "Advisory team",
-  "label": "Advisor 3 experience",
-  "kind": "text",
-  "text": "15+ years",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "team.advisory[2].experience"
-  }
- },
- {
-  "code": "TEAM-ADVISORS-12",
-  "page": "Team (/team)",
-  "section": "Advisory team",
-  "label": "Advisor 3 location",
-  "kind": "text",
-  "text": "Dubai, UAE",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "team.advisory[2].location"
   }
  },
  {
@@ -6851,7 +6815,7 @@
   "section": "Advisory team",
   "label": "Advisor 4 name",
   "kind": "text",
-  "text": "Saurabh Aggarwal",
+  "text": "Dhawal Parvatikar",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[3].name"
@@ -6863,7 +6827,7 @@
   "section": "Advisory team",
   "label": "Advisor 4 title",
   "kind": "text",
-  "text": "Reporting, Due Diligence, Audit & Compliance Specialist",
+  "text": "Strategic Finance & CFO Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[3].title"
@@ -6875,10 +6839,22 @@
   "section": "Advisory team",
   "label": "Advisor 4 experience",
   "kind": "text",
-  "text": "20+ years",
+  "text": "15+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[3].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-24",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 4 location",
+  "kind": "text",
+  "text": "Dubai, UAE",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[3].location"
   }
  },
  {
@@ -6935,7 +6911,7 @@
   "section": "Advisory team",
   "label": "Advisor 6 name",
   "kind": "text",
-  "text": "Amit Garg",
+  "text": "Sanjay Rikhy",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].name"
@@ -6947,10 +6923,22 @@
   "section": "Advisory team",
   "label": "Advisor 6 title",
   "kind": "text",
-  "text": "Audit & IPO Advisor",
+  "text": "Strategic Advisor | Former CFO | ESG & Performance Transformation",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-25",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 experience",
+  "kind": "text",
+  "text": "25+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].experience"
   }
  },
  {
@@ -6959,7 +6947,7 @@
   "section": "Advisory team",
   "label": "Advisor 7 name",
   "kind": "text",
-  "text": "Prashant Sharma",
+  "text": "Geetika Kamikar",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[6].name"
@@ -6971,10 +6959,46 @@
   "section": "Advisory team",
   "label": "Advisor 7 title",
   "kind": "text",
-  "text": "Risk & Regulatory Advisor",
+  "text": "Advisor",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[6].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-26",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 name",
+  "kind": "text",
+  "text": "Saurabh Aggarwal",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].name"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-27",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 title",
+  "kind": "text",
+  "text": "Reporting, Due Diligence, Audit & Compliance Specialist",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-28",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 experience",
+  "kind": "text",
+  "text": "20+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].experience"
   }
  },
  {

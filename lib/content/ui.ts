@@ -138,7 +138,7 @@ export const roster = {
   foundersNote:
     "Gaurav and Abhinav founded GAMCS after a decade each inside finance teams \u2014 FP&A, due diligence, business intelligence and transformation. They lead the work, not only the firm.",
   advisory: "Advisory Team",
-  advisoryCount: "Seven",
+  advisoryCount: "Eight",
   portraitAlt: "Portrait of {name}, {title}",
   close: "Close",
   linkedin: "LinkedIn",
