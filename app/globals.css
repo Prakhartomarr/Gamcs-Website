@@ -2582,9 +2582,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* =====================================================================
    TEAM ROSTER — the two founders side by side under their heading,
-   advisers three across. Founders keep the reference's 10:13 card; advisers run
-   329 wide with 146 between them, the ~0.45 gap-to-card ratio measured
-   off the layout this follows. Both use one card: the caption sits on
+   advisers four across at roughly three quarters their size. Founders keep
+   the reference's 10:13 card. Both use one card: the caption sits on
    the photograph over a gradient, with the plus hanging off the
    bottom-right corner.
    ===================================================================== */
@@ -2611,13 +2610,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-duo .tr-shot{aspect-ratio:10/13}
 .tr-duo .tr-plus{right:-30px;bottom:-30px;width:68px;height:68px}
 
-.tr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:84px 146px}
+/* Four advisers to a row, which puts their card at ~306 against the founders'
+   400 — the advisory team reads as the smaller tier. Seven people leave the
+   last row three wide, and it starts at the left like any other row. */
+.tr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:72px}
 .tr-grid .tr-shot{aspect-ratio:3/4}
-.tr-grid .tr-cap{padding:0 22px 38px}
-.tr-grid .tr-name{font-size:1.1667rem}
-.tr-grid .tr-role{font-size:0.7222rem}
-.tr-grid .tr-rule{width:22px;margin-bottom:12px}
-.tr-grid .tr-plus{right:-26px;bottom:-26px;width:56px;height:56px}
+.tr-grid .tr-cap{padding:0 18px 30px;
+  /* A smaller card puts the name nearer the top of the scrim, where the
+     shared gradient has almost faded out — unreadable over the pale
+     portraits. These cards carry it higher. */
+  background:linear-gradient(to top,rgba(13,24,40,.94),rgba(13,24,40,.78) 52%,
+    rgba(13,24,40,.14) 86%,rgba(13,24,40,0))}
+.tr-grid .tr-name{font-size:1.0556rem}
+.tr-grid .tr-role{font-size:0.7222rem;margin-top:4px}
+.tr-grid .tr-rule{width:20px;margin-bottom:10px}
+.tr-grid .tr-plus{right:-22px;bottom:-22px;width:48px;height:48px}
 
 .tr-card{display:block;position:relative;width:100%;padding:0;border:0;background:none;
   font:inherit;color:inherit;text-align:left;cursor:pointer}
@@ -2641,7 +2648,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   box-shadow:0 18px 34px -18px rgba(13,24,40,.45);
   transition:color .2s var(--ease-out),box-shadow .3s var(--ease-out)}
 .tr-plus svg{width:22px;height:22px}
-.tr-grid .tr-plus svg{width:17px;height:17px}
+.tr-grid .tr-plus svg{width:16px;height:16px}
 .tr-card:hover .tr-plus{color:var(--blue-dark);box-shadow:0 22px 40px -18px rgba(13,24,40,.55)}
 
 /* ---- the bio panel ----
@@ -2683,7 +2690,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-close:hover{background:rgba(13,24,40,.07)}
 
 @media (max-width:1279px){
-  .tr-grid{gap:64px 72px}
+  .tr-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:64px}
 }
 @media (max-width:1023px){
   .tr-duo{gap:52px 40px}

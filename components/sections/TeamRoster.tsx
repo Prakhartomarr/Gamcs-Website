@@ -12,8 +12,8 @@ import { roster } from "@/lib/content/ui";
  * clicked.
  *
  * Two card sizes, one card anatomy. The caption sits on the photograph over a
- * gradient in both sections; the advisers' type is stepped down because their
- * cards are 329px wide against the founders' 380.
+ * gradient in both sections; the advisers' type is stepped down because four
+ * of their cards fit a row at ~306px against the founders' 400.
  *
  * The photographs are greyscaled in CSS rather than on disk. The nine were shot
  * in nine different places — several against white, one against a purple
@@ -145,7 +145,7 @@ export default function TeamRoster() {
             <div className="tr-grid">
               {ADVISERS.map((p) => (
                 <Card key={p.name} person={p} onOpen={show}
-                  sizes="(max-width: 767px) 92vw, (max-width: 1023px) 45vw, 329px" />
+                  sizes="(max-width: 767px) 92vw, (max-width: 1023px) 45vw, 320px" />
               ))}
             </div>
           </div>
