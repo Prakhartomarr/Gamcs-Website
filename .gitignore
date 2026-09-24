@@ -51,4 +51,4 @@ scripts/portraits/segment
 scripts/portraits/out/
 scripts/portraits/.mask.png
 __pycache__/
-scripts/portraits/plate.png
+scripts/portraits/backdrop.png

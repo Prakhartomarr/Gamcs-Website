@@ -1,41 +1,47 @@
 # Portraits
 
-Every headshot on /team goes through this, so nine photographs from five
-different shoots read as one set: greyscale, one crop rule, one tonal range,
-and one studio backdrop.
+Every headshot on /team goes through this, so nine photographs from six shoots
+read as one set: greyscale, one exposure, one framing, and one backdrop.
 
 ```
-swiftc -O faces.swift -o faces          # Vision: face boxes, for the crop
-swiftc -O segment.swift -o segment      # Vision: person mask, for the backdrop
-PORTRAIT_SRC=<originals> python3 build.py     # crop + greyscale + levels -> out/
-python3 harmony.py out/*.jpg                  # one exposure, then onto the backdrop
+swiftc -O faces.swift -o faces                 # Vision: face boxes
+swiftc -O segment.swift -o segment             # Vision: person masks
+PORTRAIT_SRC=<folder of originals> python3 build.py [name…]
+cp out/*.jpg ../../public/team/
 ```
 
-`build.py` holds the person → source-file list and the two numbers that set the
-framing: `FACE_FRAC` (the face box as a share of the frame) and `FACE_Y` (where
-it sits down the frame). A source tighter than `FACE_FRAC` is left at its own
-framing — the crop can only ever go in, never out.
+Work from the **originals**, never from `public/team/` — this pass over its own
+output applies the exposure, the cut and the backdrop twice. The pre-2026
+originals (Asif, the two founders) are in git history, before the commit "Put
+every portrait on one backdrop".
 
-`plate.py` holds the backdrop every portrait is composited onto. It is written
-out, not fitted: the shoot's own falloff is steep, and at the head sizes these
-cards crop to its hotspot sits right behind the head and reads as a halo. Run
-`python3 plate.py` to print both and draw the one in use.
+**Framing.** `FACE_FRAC` is the face box's share of the frame and `FACE_Y` is
+where it sits down it. Two rules pull against each other — same head size on
+every card, same face height on every card — and a photograph shot tight has no
+body left to fill the frame once its head is small enough. A torso cannot be
+invented, so head size is what gives: it opens up to `FACE_FRAC` wherever the
+photograph allows and grows toward `FACE_FRAC_MAX` only as far as filling the
+frame demands. Amit's and Sanjay's frames are the tight ones; wider originals
+from the photographer would let them match the rest.
 
-`ground.py` does the compositing. Vision's person segmentation gives the
-silhouette — a threshold matte ate Asif's hair and glasses, since his wall and
-his suit sit in the same values — and the edge is then refined against the
-photograph's own background, fitted as a quadratic: a pixel near the edge that
-still matches that background is background, however the mask called it. Without
-that step the mask carries a few pixels of the original backdrop and leaves a
-halo hugging the silhouette.
+**Exposure.** A gamma that moves each face's median toward `FACE_TONE`, clamped
+by `GAMMA_FLOOR`/`GAMMA_CEIL`, so a dark frame moves most of the way and never
+all of it. A face pushed all the way to a target is not an exposure correction —
+it changes how the person looks.
 
-`harmony.py` is the exposure pass: a gamma that moves each face's median toward
-the set's, clamped, so a dark frame moves most of the way and never all of it.
+**The cut.** Vision's person segmentation gives the silhouette; a threshold
+matte ate Asif's hair and glasses, since his wall and his suit sit in the same
+values. The edge is then refined against the photograph's own background,
+fitted as a quadratic: a pixel near the edge that still matches that background
+is background, however the mask called it. Without that step the mask carries a
+few pixels of the original backdrop and leaves a halo hugging the silhouette.
 
-The `.tr-init` placeholder tile in globals.css is a CSS approximation of the
-same plate, so a card with no photograph sits in the row quietly.
+**The backdrop** is `backdrop.py`: a glass office facade thrown out of focus,
+flattened and falling away at the foot so it never competes with a face. See
+CREDITS.md. `public/team/backdrop.jpg` is the same thing with nobody on it — the
+`.tr-init` placeholder tile in globals.css uses it, so a card with no photograph
+still belongs in the row.
 
 New photograph: put the original beside the others, add it to the list in
-`build.py`, run the two steps, copy the result into `public/team/`. Always work
-from originals — running this over its own output compounds every pass. Check
-the result at 720×960 before shipping it: segmentation is good, not perfect.
+`build.py`, run it, copy the result over. Check the result at 720×960 before
+shipping it — segmentation is good, not perfect.
