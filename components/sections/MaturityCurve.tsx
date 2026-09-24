@@ -423,6 +423,14 @@ export default function MaturityCurve() {
             })}
           </div>
 
+          {/* The five stages are one company at five different ages, which the
+              tab row alone does not say. */}
+          <p
+            className={`border-b ${HAIR} bg-white px-6 py-2.5 text-center text-[13px] text-[color:var(--ink-muted)]`}
+          >
+            {maturityCurve.narrative}
+          </p>
+
           {/* The min-heights are the tallest stage at each width, measured, so
               the card does not resize under the pointer on a switch. */}
           <div

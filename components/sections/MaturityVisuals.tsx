@@ -50,7 +50,7 @@ function Caption({ children }: { children: React.ReactNode }) {
 export function FileStack({ data }: { data: typeof maturityCurve.stages[0]["files"] }) {
   return (
     <div>
-      <div className="relative mx-auto max-w-[380px] pb-[22px] pl-[26px]">
+      <div className="relative mx-auto max-w-[380px] pb-[22px] pl-[26px] pr-[8px]">
         {data.cards.map((c, i) => (
           <div
             key={c.name}
@@ -78,7 +78,7 @@ export function FileStack({ data }: { data: typeof maturityCurve.stages[0]["file
           </div>
         ))}
       </div>
-      <Caption>{data.caption}</Caption>
+      <p className="mt-4 text-[13px] font-semibold text-[color:var(--ink-deep)]">{data.caption}</p>
     </div>
   );
 }
@@ -115,9 +115,11 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
                 </th>
                 <td className="px-2 py-2 text-right tabular-nums text-[color:var(--ink-muted)]">{r.actual}</td>
                 <td className="px-2 py-2 text-right tabular-nums text-[color:var(--ink-muted)]">{r.budget}</td>
+                {/* Favourable, not positive: spending 20.8% over budget wears
+                    a plus sign and is still the bad row. */}
                 <td
                   className={`px-3.5 py-2 text-right font-semibold tabular-nums ${
-                    r.variance.startsWith("−") ? "text-destructive" : "text-[color:var(--ink-deep)]"
+                    r.good ? "text-[color:var(--ink-deep)]" : "text-destructive"
                   }`}
                 >
                   {r.variance}
@@ -146,11 +148,16 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
           ))}
           </div>
         </div>
-        <div className="mt-2.5 flex justify-between gap-2 text-[11.5px] leading-[1.35] text-[color:var(--ink-muted)]">
+        {/* Each label under its own dot: day 6 of 9 is two thirds along, not
+            half. The ends align inward so they cannot overhang the track. */}
+        <div className="relative mt-2.5 h-[34px] px-[5px] text-[11.5px] leading-[1.35] text-[color:var(--ink-muted)]">
           {data.timeline.map((t, i) => (
             <span
               key={t.label}
-              className={`max-w-[33%] ${i === 0 ? "text-left" : i === data.timeline.length - 1 ? "text-right" : "text-center"}`}
+              style={{ left: `calc(5px + ${(days[i] / span) * 100}% - ${(days[i] / span) * 10}px)` }}
+              className={`absolute top-0 max-w-[36%] ${
+                i === 0 ? "text-left" : i === data.timeline.length - 1 ? "-translate-x-full text-right" : "-translate-x-1/2 text-center"
+              }`}
             >
               {t.label}
               <span className="block tabular-nums text-[color:var(--ink-deep)]">{t.at}</span>
@@ -248,19 +255,40 @@ export function DrillDown({
       <div className={`mt-3 rounded-[12px] border ${HAIR} bg-white p-3.5`}>
         <div className={`${MICRO} text-[color:var(--ink-muted)]`}>{data.path[step].crumb}</div>
         <div className="mt-2.5 space-y-2">
-          {data.path[step].bars.map((b) => (
-            <div key={b.label} className="flex items-center gap-3">
-              <span className="w-[86px] flex-none truncate text-[12px] text-[color:var(--ink-muted)]">
-                {b.label}
-              </span>
-              <span className="h-[7px] flex-1 rounded-full bg-soft">
-                <span
-                  style={{ width: `${b.value}%` }}
-                  className="block h-full rounded-full bg-blue/45 transition-[width] duration-500 ease-out motion-reduce:transition-none"
-                />
-              </span>
-            </div>
-          ))}
+          {data.path[step].bars.map((b, i, all) => {
+            const lastBar = i === all.length - 1;
+            return (
+              <div key={b.label} className="flex items-center gap-3">
+                <span className="w-[72px] flex-none truncate text-[12px] text-[color:var(--ink-muted)]">
+                  {b.label}
+                </span>
+                <span className="h-[7px] flex-1 rounded-full bg-soft">
+                  <span
+                    style={{ width: `${b.value}%` }}
+                    className={`block h-full rounded-full transition-[width] duration-500 ease-out motion-reduce:transition-none ${
+                      lastBar ? "bg-blue-dark" : i === all.length - 2 ? "bg-blue/55" : "bg-blue/30"
+                    }`}
+                  />
+                </span>
+                {"text" in b && b.text ? (
+                  <span
+                    className={`w-[42px] flex-none text-right text-[12px] tabular-nums ${
+                      lastBar
+                        ? "font-semibold text-[color:var(--ink-deep)]"
+                        : "text-[color:var(--ink-muted)]"
+                    }`}
+                  >
+                    {b.text}
+                  </span>
+                ) : null}
+                {"note" in b && b.note ? (
+                  <span className="flex-none rounded-full bg-blue/10 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-blue-dark">
+                    {b.note}
+                  </span>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -310,7 +338,10 @@ function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]
   ].join(" ");
 
   return (
-    <div>
+    /* --plot-pad is the inset every layer of the chart shares: the SVG box, the
+       point labels and the axis all offset by it, so a label centred on a point
+       really is centred on it. */
+    <div className="[--plot-pad:13px] sm:[--plot-pad:26px]">
       {/* legend, inline above the chart */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-[color:var(--ink-muted)]">
         <span className="font-medium text-[color:var(--ink-deep)]">{data.label}</span>
@@ -324,14 +355,14 @@ function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]
         </span>
       </div>
 
-      {/* inset by half a point, so the last dot and the final label stay inside
-          the column rather than hanging off its right edge */}
-      <div className="relative mt-2 h-[132px] w-full px-[5px]">
+      {/* The plot is inset by half an axis label, so the first and last points
+          sit over labels that are centred on them and still inside the column. */}
+      <div className="relative mt-2 h-[100px] w-full px-[13px] sm:px-[26px]">
         <svg
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
           aria-hidden="true"
-          className="absolute inset-x-[5px] inset-y-0 h-full w-[calc(100%-10px)]"
+          className="absolute inset-x-[13px] inset-y-0 h-full w-[calc(100%-26px)] sm:inset-x-[26px] sm:w-[calc(100%-52px)]"
         >
           <rect x={px(cut)} y="0" width={100 - px(cut)} height="100" fill="var(--blue)" opacity="0.045" />
           <line
@@ -372,7 +403,7 @@ function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]
         ].map((m) => (
           <span
             key={m.text}
-            style={{ left: `calc(5px + ${px(m.i)}% - ${px(m.i) / 10}px)`, top: `${py(m.v)}%` }}
+            style={{ left: `calc(var(--plot-pad) + ${px(m.i)}% - ${px(m.i)} * var(--plot-pad) / 50)`, top: `${py(m.v)}%` }}
             className={`absolute -translate-y-[calc(100%+9px)] whitespace-nowrap font-heading text-[11.5px] font-semibold tabular-nums text-[color:var(--ink-deep)] ${
               m.end ? "-translate-x-full" : "-translate-x-1/2"
             }`}
@@ -384,7 +415,7 @@ function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]
           <span
             key={i}
             aria-hidden="true"
-            style={{ left: `calc(5px + ${px(i)}% - ${px(i) / 10}px)`, top: `${py(series[i])}%` }}
+            style={{ left: `calc(var(--plot-pad) + ${px(i)}% - ${px(i)} * var(--plot-pad) / 50)`, top: `${py(series[i])}%` }}
             className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-blue"
           />
         ))}
@@ -398,16 +429,20 @@ function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]
       </div>
 
       {/* the x axis */}
-      <div className="relative mt-1.5 h-[14px] px-[5px]">
+      {/* One label per point, centred under it. The fiscal year only prints on
+          the first quarter of each year below 640, where eight "Q1 FY25"s
+          would collide. */}
+      <div className="relative mt-1.5 h-[15px] px-[13px] sm:px-[26px]">
         {data.quarters.map((q, i) => (
           <span
             key={`${q}-${i}`}
-            style={{ left: `calc(5px + ${px(i)}% - ${px(i) / 10}px)` }}
-            className={`absolute text-[10.5px] tabular-nums ${
-              i === 0 ? "" : i === n ? "-translate-x-full" : "-translate-x-1/2"
-            } ${i > cut ? "text-blue/70" : "text-[color:var(--ink-muted)]"}`}
+            style={{ left: `calc(var(--plot-pad) + ${px(i)}% - ${px(i)} * var(--plot-pad) / 50)` }}
+            className={`absolute -translate-x-1/2 whitespace-nowrap text-[12px] tabular-nums ${
+              i > cut ? "text-blue/70" : "text-[color:var(--ink-muted)]"
+            }`}
           >
-            {q}
+            <span className="sm:hidden">{i % 4 === 0 ? q : q.split(" ")[0]}</span>
+            <span className="hidden sm:inline">{q}</span>
           </span>
         ))}
       </div>

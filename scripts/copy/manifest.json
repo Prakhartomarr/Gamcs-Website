@@ -1332,6 +1332,18 @@
   }
  },
  {
+  "code": "HOME-CURVE-24",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Line under the stage navigation",
+  "kind": "text",
+  "text": "One company, five levels of maturity.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.narrative"
+  }
+ },
+ {
   "code": "HOME-CURVE-12",
   "page": "Home (/)",
   "section": "Maturity curve",
@@ -1445,7 +1457,7 @@
   "section": "Maturity curve",
   "label": "Signal card label: action",
   "kind": "text",
-  "text": "Action",
+  "text": "Recommended",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.labels.action"
@@ -1709,7 +1721,7 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "Figure — file 3 EBITDA (illustrative)",
   "kind": "text",
-  "text": "",
+  "text": "EBITDA ₹4.3 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[0].files.cards[2].figure"
@@ -1973,7 +1985,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 2",
   "kind": "text",
-  "text": "EBITDA",
+  "text": "Gross profit",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[1].label"
@@ -1985,7 +1997,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 2 actual (illustrative)",
   "kind": "text",
-  "text": "₹4.2 Cr",
+  "text": "₹7.1 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[1].actual"
@@ -1997,7 +2009,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 2 budget (illustrative)",
   "kind": "text",
-  "text": "₹4.6 Cr",
+  "text": "₹7.0 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[1].budget"
@@ -2009,7 +2021,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 2 variance (illustrative)",
   "kind": "text",
-  "text": "−8.7%",
+  "text": "+1.4%",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[1].variance"
@@ -2021,7 +2033,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 3",
   "kind": "text",
-  "text": "Budget vs actual",
+  "text": "Operating expenses",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[2].label"
@@ -2033,7 +2045,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 3 actual (illustrative)",
   "kind": "text",
-  "text": "₹22.6 Cr",
+  "text": "₹2.9 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[2].actual"
@@ -2045,7 +2057,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 3 budget (illustrative)",
   "kind": "text",
-  "text": "₹22.5 Cr",
+  "text": "₹2.4 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[2].budget"
@@ -2057,7 +2069,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 3 variance (illustrative)",
   "kind": "text",
-  "text": "+0.4%",
+  "text": "+20.8%",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[2].variance"
@@ -2069,7 +2081,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 4",
   "kind": "text",
-  "text": "Dept. variance",
+  "text": "EBITDA",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[3].label"
@@ -2081,7 +2093,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 4 actual (illustrative)",
   "kind": "text",
-  "text": "₹3.1 Cr",
+  "text": "₹4.2 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[3].actual"
@@ -2093,7 +2105,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 4 budget (illustrative)",
   "kind": "text",
-  "text": "₹2.8 Cr",
+  "text": "₹4.6 Cr",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[3].budget"
@@ -2105,7 +2117,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Figure — pack row 4 variance (illustrative)",
   "kind": "text",
-  "text": "+10.7%",
+  "text": "−8.7%",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].pack.rows[3].variance"
@@ -2592,6 +2604,18 @@
   }
  },
  {
+  "code": "HOME-ST03-43",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Figure — driver bar 1 value (illustrative)",
+  "kind": "text",
+  "text": "6.1%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].drill.path[3].bars[0].text"
+  }
+ },
+ {
   "code": "HOME-ST03-40",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 03 Business Intelligence",
@@ -2601,6 +2625,18 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].drill.path[3].bars[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST03-44",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Figure — driver bar 2 value (illustrative)",
+  "kind": "text",
+  "text": "6.6%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].drill.path[3].bars[1].text"
   }
  },
  {
@@ -2616,6 +2652,30 @@
   }
  },
  {
+  "code": "HOME-ST03-45",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Figure — driver bar 3 value (illustrative)",
+  "kind": "text",
+  "text": "7.2%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].drill.path[3].bars[2].text"
+  }
+ },
+ {
+  "code": "HOME-ST03-46",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Figure — driver bar 3 change (illustrative)",
+  "kind": "text",
+  "text": "+18%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].drill.path[3].bars[2].note"
+  }
+ },
+ {
   "code": "HOME-ST03-42",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 03 Business Intelligence",
@@ -2625,6 +2685,18 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].drill.finding"
+  }
+ },
+ {
+  "code": "HOME-ST03-47",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Figure — the driver chart's one note",
+  "kind": "text",
+  "text": "+18% vs Q3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].drill.annotation"
   }
  },
  {
@@ -3005,7 +3077,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 1",
   "kind": "text",
-  "text": "Q1",
+  "text": "Q1 FY25",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[0]"
@@ -3017,7 +3089,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 2",
   "kind": "text",
-  "text": "Q2",
+  "text": "Q2 FY25",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[1]"
@@ -3029,7 +3101,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 3",
   "kind": "text",
-  "text": "Q3",
+  "text": "Q3 FY25",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[2]"
@@ -3041,7 +3113,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 4",
   "kind": "text",
-  "text": "Q4",
+  "text": "Q4 FY25",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[3]"
@@ -3053,7 +3125,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 5",
   "kind": "text",
-  "text": "Q1",
+  "text": "Q1 FY26",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[4]"
@@ -3065,7 +3137,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 6",
   "kind": "text",
-  "text": "Q2",
+  "text": "Q2 FY26",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[5]"
@@ -3077,7 +3149,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 7",
   "kind": "text",
-  "text": "Q3",
+  "text": "Q3 FY26",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[6]"
@@ -3089,7 +3161,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Figure — chart x label 8",
   "kind": "text",
-  "text": "Q4",
+  "text": "Q4 FY26",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.quarters[7]"
@@ -3117,6 +3189,42 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].explain.chart.lastForecast"
+  }
+ },
+ {
+  "code": "HOME-ST04-53",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart label on the solid line",
+  "kind": "text",
+  "text": "Actual",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.tagActual"
+  }
+ },
+ {
+  "code": "HOME-ST04-54",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart label on the dashed line",
+  "kind": "text",
+  "text": "Forecast",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.tagForecast"
+  }
+ },
+ {
+  "code": "HOME-ST04-55",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — the chart's one note",
+  "kind": "text",
+  "text": "−120 bps expected",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.annotation"
   }
  },
  {

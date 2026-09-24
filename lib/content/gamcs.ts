@@ -852,6 +852,8 @@ export const maturityCurve = {
     "Illustrative framework. Maturity can vary across functions, business units and organizations.",
   /** The two ends of the rising rail above the tabs. */
   axis: { start: "Reporting", end: "Decisioning" },
+  /** Under the stage navigation: the five are one company, not five. */
+  narrative: "One company, five levels of maturity.",
   /** The section's one call to action, below the panel. */
   close: {
     heading: "Ready to move up the curve?",
@@ -870,7 +872,7 @@ export const maturityCurve = {
     variance: "Var.",
     impact: "Impact",
     why: "Why",
-    action: "Action",
+    action: "Recommended",
     owner: "Owner",
     drillHint: "Click to drill down",
   },
@@ -899,7 +901,7 @@ export const maturityCurve = {
         cards: [
           { name: "P&L_v3_final.xlsx", figure: "EBITDA ₹4.2 Cr" },
           { name: "P&L_v4_FINAL_revised.xlsx", figure: "EBITDA ₹4.5 Cr" },
-          { name: "P&L_v5_use_this.xlsx", figure: "" },
+          { name: "P&L_v5_use_this.xlsx", figure: "EBITDA ₹4.3 Cr" },
         ],
         caption: "Multiple versions of the truth.",
       },
@@ -921,11 +923,15 @@ export const maturityCurve = {
       visual: "pack",
       pack: {
         title: "Monthly Management Pack",
+        /* Gross profit less operating expenses is EBITDA in both columns —
+           7.1 − 2.9 = 4.2 actual, 7.0 − 2.4 = 4.6 budget. `good` is whether the
+           variance is favourable, which is not the same as its sign: spending
+           20.8% over budget is a plus sign and bad news. */
         rows: [
-          { label: "Revenue", actual: "₹18.4 Cr", budget: "₹17.9 Cr", variance: "+2.8%" },
-          { label: "EBITDA", actual: "₹4.2 Cr", budget: "₹4.6 Cr", variance: "−8.7%" },
-          { label: "Budget vs actual", actual: "₹22.6 Cr", budget: "₹22.5 Cr", variance: "+0.4%" },
-          { label: "Dept. variance", actual: "₹3.1 Cr", budget: "₹2.8 Cr", variance: "+10.7%" },
+          { label: "Revenue", actual: "₹18.4 Cr", budget: "₹17.9 Cr", variance: "+2.8%", good: true },
+          { label: "Gross profit", actual: "₹7.1 Cr", budget: "₹7.0 Cr", variance: "+1.4%", good: true },
+          { label: "Operating expenses", actual: "₹2.9 Cr", budget: "₹2.4 Cr", variance: "+20.8%", good: false },
+          { label: "EBITDA", actual: "₹4.2 Cr", budget: "₹4.6 Cr", variance: "−8.7%", good: false },
         ],
         /** `at` is the day the step lands on; the bar between 0 and the last is the lag. */
         timeline: [
@@ -983,15 +989,18 @@ export const maturityCurve = {
           },
           {
             crumb: "Driver: Freight cost",
+            /** Freight as a share of revenue, quarter by quarter. */
             bars: [
-              { label: "Q3", value: 61 },
-              { label: "Q4", value: 72 },
-              { label: "Q1", value: 93 },
+              { label: "Q3", value: 61, text: "6.1%" },
+              { label: "Q4", value: 72, text: "6.6%" },
+              { label: "Q1", value: 93, text: "7.2%", note: "+18%" },
             ],
           },
         ],
         finding:
           "Segment B margin fell because freight costs rose 18% — found after 4 manual drill-downs.",
+        /** The one thing the driver chart is saying. */
+        annotation: "+18% vs Q3",
       },
       next: "The move to Stage 04 is interpretation — the system explains the variance instead of you digging for it.",
     },
@@ -1040,12 +1049,28 @@ export const maturityCurve = {
           legendActual: "Actual",
           legendForecast: "Forecast",
           forecastTag: "Forecast",
-          quarters: ["Q1", "Q2", "Q3", "Q4", "Q1", "Q2", "Q3", "Q4"],
+          /* One per point. The fiscal year is printed on the first quarter of
+             each year and dropped on the rest where the column is narrow. */
+          quarters: [
+            "Q1 FY25",
+            "Q2 FY25",
+            "Q3 FY25",
+            "Q4 FY25",
+            "Q1 FY26",
+            "Q2 FY26",
+            "Q3 FY26",
+            "Q4 FY26",
+          ],
           actual: [41.6, 40.9, 40.4, 39.5, 39.1, 38.4],
           forecast: [37.8, 37.2],
           band: 0.9,
           lastActual: "38.4%",
           lastForecast: "37.2%",
+          /** Direct labels, in place of a legend. */
+          tagActual: "Actual",
+          tagForecast: "Forecast",
+          /** The one thing the chart is saying. */
+          annotation: "−120 bps expected",
         },
       },
       next: "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",

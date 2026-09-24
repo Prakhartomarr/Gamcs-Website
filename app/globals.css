@@ -2735,7 +2735,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    so the hero's shader reads through it, and it firms up once scrolled
    because over the white sections below there is nothing behind it.
    ===================================================================== */
-.site-head{padding:14px 0;background:transparent}
+/* Transparent at the top of the page, where the hero's shader reads through
+   it. Once scrolled, the strip either side of the pill would otherwise show
+   the page sliding past above the bar; from then on it carries the same
+   translucent ground as the pill, from the top of the viewport to the bar's
+   bottom edge. */
+.site-head{padding:14px 0;background:transparent;
+  transition:background .3s var(--ease-out)}
+.site-head.is-stuck{background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:saturate(150%) blur(10px);
+  backdrop-filter:saturate(150%) blur(10px)}
+@media (prefers-reduced-motion:reduce){.site-head{transition:none}}
 .site-bar{position:relative;width:min(1440px,calc(100% - 40px));margin:auto;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
   padding:11px 12px 11px 22px;border-radius:18px;
