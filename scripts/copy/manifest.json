@@ -413,10 +413,22 @@
   "section": "Hero",
   "label": "Subhead",
   "kind": "text",
-  "text": "We connect finance, data and technology to transform reporting into decisions — and insights into impact by combining FP&A, BI, automation and finance expertise into one operating layer.",
+  "text": "We connect finance, data and technology to transform reporting into decisions — and insights into impact.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "hero.subhead"
+  }
+ },
+ {
+  "code": "HOME-HERO-5B",
+  "page": "Home (/)",
+  "section": "Hero",
+  "label": "Capability line",
+  "kind": "text",
+  "text": "Advise | Build | Transform | Transact | Enable",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "hero.pillars"
   }
  },
  {
@@ -437,10 +449,22 @@
   "section": "Client logo wall",
   "label": "Heading",
   "kind": "text",
-  "text": "Trusted by growth-focused businesses across the world",
+  "text": "Trusted by growth-focused businesses across the world.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.heading"
+  }
+ },
+ {
+  "code": "HOME-CLIENTS-1B",
+  "page": "Home (/)",
+  "section": "Client logo wall",
+  "label": "Heading sub-line",
+  "kind": "text",
+  "text": "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "clients.sub"
   }
  },
  {

@@ -169,7 +169,9 @@ h1,h2,h3,p{margin-top:0}
 .hero-top{max-width:100%}
 .hero-title{max-width:10.7em}
 /* paragraph left, both buttons right, sharing one baseline */
-.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+/* centre, not flex-end: the button reads as the right-hand half of one row
+   with the copy, rather than as something resting on the last line's edge */
+.hero-bottom{display:flex;justify-content:space-between;align-items:center;gap:40px}
 .hero-bottom .sub{margin-top:0;max-width:min(40%,600px)}
 .hero-bottom .ctas{margin-top:0;flex:none}
 
@@ -1355,7 +1357,18 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media(min-width:1101px){.hero h1 .line-inner{white-space:nowrap}}
 .hero .sub{margin-top:26px;max-width:52ch;font-size:0.9444rem;line-height:1.6;
   color:var(--ink-muted);font-weight:500}
-.hero .ctas{margin-top:34px}
+/* The five verbs. One string with its own pipes, so the separators set at the
+   same size as the words — which is why this is tracked out and a step down
+   from the subhead: at the body size the bars read as heavy as the type. */
+/* The subhead's twin: same size, same weight, same colour, same spacing. It is
+   the third line of one block, not a tier of its own. */
+.hero .hero-pillars{margin:6px 0 0;font-size:var(--lede-size);font-weight:500;
+  letter-spacing:normal;line-height:1.6;color:var(--ink-deep)}
+/* No top margin in the row: align-items:center centres the MARGIN box, so 34px
+   on top pushed the button half that far below the copy's centre. The margin is
+   what separates it from the copy once the row stacks, so it comes back there. */
+.hero .ctas{margin-top:0}
+@media (max-width:1023px){.hero .ctas{margin-top:34px}}
 
 /* ---- hero lead-in ----
    The measure moves up to the wrapper. Left on the paragraph it would let the
@@ -1365,20 +1378,40 @@ html[data-cookie-banner] .sticky-cta{display:none}
    so 52ch on an unstyled wrapper inherits body 18px and measures 685px, not
    the paragraph's 647px. Matching .sub's size keeps the paragraph's line
    breaks exactly where they were. */
-.hero-lede{max-width:52ch;font-size:0.9444rem}
-.hero-lede .sub{margin-top:20px;max-width:none}
+/* No cap on the column, and none on the paragraph either: the hook and the
+   subhead each set as one line, and the wider of the two — the subhead — is
+   what sizes this flex item. The button still sits at the row's right, since a
+   flex item sized by max-content takes no more than it needs. Below about
+   1360 there is not room for the subhead's line and it wraps, as it did. */
+/* One size for all three lines. The block used to run 30/17/17 — one big step
+   then none at all; what tells the lines apart now is colour, not scale. The
+   size lives here so the three rules below cannot drift from each other, and
+   so the narrow-width overrides move all three at once. */
+/* No cap: each of the three sentences takes its own line, and the longest of
+   them sizes this flex item. The button still sits at the row's right, since a
+   max-content flex item takes no more than it needs. */
+.hero-lede{--lede-size:clamp(0.9444rem,1.4vw,1.1111rem);max-width:none;
+  font-size:var(--lede-size)}
+/* One gap, not two: three lines of one size on one leading want one rhythm. */
+.hero-lede .sub{margin-top:6px;max-width:none;font-size:var(--lede-size);
+  line-height:1.6;color:var(--ink-deep);font-weight:500}
 /* Two-tone on the sentence boundary — the same accent device the H1 already
-   uses on its third line. The spans are display:block so the break is the
-   colour change itself, never a wrap the measure happens to produce.
-   #8A9198 is the site's existing receded-text grey (quote captions, hints). */
+   uses on its third line. The two sentences set as one line, the colour
+   carrying the break rather than a line break; where the measure runs out they
+   wrap like any sentence. #8A9198 is the site's existing receded-text grey
+   (quote captions, hints). */
 .hero-hook{margin:0;font-family:var(--font-sans);
-  font-size:clamp(1.1667rem,3.4vw,1.6667rem);line-height:1.22;font-weight:500;
-  letter-spacing:-.026em}
-/* Each sentence is its own block, so `balance` evens that sentence's own rag.
-   Without it the narrow widths orphan the last word ("Stop Reporting What /
-   Happened."), which reads as a mistake rather than a line break. */
-.hero-hook span{display:block;text-wrap:balance}
-.hero-hook .was{color:#8A9198}
+  font-size:var(--lede-size);line-height:1.6;font-weight:500;
+  letter-spacing:normal}
+/* `balance` on the paragraph, not the spans: it evens the rag of whatever the
+   whole sentence wraps to. Inline spans would each balance their own fragment,
+   which is not where the breaks are any more. */
+.hero-hook{text-wrap:balance}
+.hero-hook span{display:inline}
+/* Near-black, not the receded grey it used to carry: on this pale shader the
+   grey measured too light to read comfortably. Two colours in the block now —
+   this near-black and the blue on the sentence that turns. */
+.hero-hook .was{color:var(--ink-deep)}
 .hero-hook .now{color:var(--blue)}
 
 .section-head h2 em{font-style:normal;color:var(--blue)}
@@ -1819,7 +1852,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .hero-top{max-width:none}
   .hero-bottom{flex-direction:column;align-items:stretch;gap:0;margin-top:28px}
   .hero-bottom .hero-lede{max-width:none}
-  .hero-lede .sub{margin-top:16px}
+  .hero-lede .sub{margin-top:6px}
   .hero-bottom .ctas{margin-top:24px}
 }
 @media (min-width:768px) and (max-width:1023px){
@@ -1847,9 +1880,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      the line sets 9.3em in Inter and 8.5em in SF Pro, so it is one line from
      360 up with room to spare; the 38px cap lands at 452. */
   .hero h1{font-size:clamp(30px,8.4vw,38px);line-height:1.05;font-weight:500;letter-spacing:-.03em;color:var(--ink-deep)}
-  .hero-hook{font-size:clamp(19px,5.45vw,21.5px);line-height:1.25;font-weight:500;letter-spacing:-.02em}
-  .hero-hook .was{color:var(--ink-muted)}
-  .hero-lede .sub{margin-top:20px;font-size:17px;line-height:1.5;color:var(--ink);font-weight:400}
+  /* the whole block steps down together, so the three stay one size — and one
+     leading, which means naming all three and not just the two that had it */
+  .hero-lede{--lede-size:clamp(16px,4.4vw,17px)}
+  .hero-hook,.hero-lede .sub,.hero .hero-pillars{line-height:1.5}
+  .hero-hook .was{color:var(--ink-deep)}
+  .hero-lede .sub{margin-top:6px}
   .hero-bottom .ctas{margin-top:32px}
   /* 16px only from 430 up: the label sets 300px of ink at 16px and shares the
      row with the arrow, so at 360–390 (276–306px inside the pill) it wrapped
@@ -1863,8 +1899,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    paragraph sets four lines instead of five and the lead one line each. */
 @media (max-width:480px){
   .hero h1{font-size:clamp(27px,7.6vw,30px)}
-  .hero-hook{font-size:clamp(16.5px,4.6vw,18px)}
-  .hero-lede .sub{font-size:15px;line-height:1.5;margin-top:18px}
+  .hero-lede{--lede-size:15px}
+  .hero-lede .sub{margin-top:6px}
   .hero-bottom .ctas{margin-top:28px}
   .hero .ctas .btn{min-height:52px;font-size:clamp(13.5px,3.75vw,15px)}
 }
@@ -2123,6 +2159,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    (97% of the box on SF Pro). `text-wrap:balance` is there for the face or the
    width where it does not: two even lines rather than a long one and a word. */
 .clients-head h2{margin:0;text-wrap:balance}
+.clients-sub{margin:14px auto 0;max-width:62ch;font-size:0.8889rem;line-height:1.6;
+  color:var(--ink-muted);font-weight:500;text-wrap:balance}
 @media (max-width:900px){.clients{padding:26px 0 40px}}
 @media (max-width:767px){.fmc{padding:64px 0}}
 /* .btn sets white-space:nowrap, which at phone widths let a long label run
@@ -2173,6 +2211,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .clients .container{width:calc(100% - 40px)}
   .clients-head{text-align:left;margin:0 0 28px}
   .clients-head h2{max-width:320px;font:500 24px/1.2 var(--font-sans);letter-spacing:-.02em}
+  /* the head is left-aligned here, so the sub-line stops centring too */
+  .clients-sub{margin-left:0;max-width:44ch;font-size:0.8333rem}
   .clients-wall{display:none}
   .clm-wall{display:flex;flex-direction:column;gap:8px}
   /* edge to edge: out of the .container by however much it is inset */

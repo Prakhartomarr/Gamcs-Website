@@ -91,6 +91,7 @@ export default function ClientLogos() {
       <div className="container">
         <div className="clients-head reveal">
           <h2 id="clients-heading">{clients.heading}</h2>
+          <p className="clients-sub">{clients.sub}</p>
         </div>
 
         {/* The component's own band, heading and mobile layout are dropped:

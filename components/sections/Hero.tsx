@@ -88,10 +88,11 @@ export default function Hero() {
               stays two children — a third would strand the button mid-row. */}
           <div className="hero-lede">
             <p className="hero-hook">
-              <span className="was">{hero.leadWas}</span>
+              <span className="was">{hero.leadWas}</span>{" "}
               <span className="now">{hero.leadNow}</span>
             </p>
             <p className="sub">{hero.subhead}</p>
+            <p className="hero-pillars">{hero.pillars}</p>
           </div>
           <div className="ctas">
             <CTA href={hero.cta.href} icon="arrow" data-cta="hero">

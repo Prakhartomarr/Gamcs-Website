@@ -73,7 +73,10 @@ export const hero = {
   leadWas: "Stop Reporting What Happened.",
   leadNow: "Start Knowing What To Do Next.",
   subhead:
-    "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact by combining FP&A, BI, automation and finance expertise into one operating layer.",
+    "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
+  /* The five verbs, under the subhead: what GAMCS does, before what it is.
+     One string with its own separators, as the copy doc writes it. */
+  pillars: "Advise | Build | Transform | Transact | Enable",
   /* The hero's one button. The copy doc sends it to the "Case Study Section";
      that is the /case-study page — the homepage has no case study band. */
   cta: { label: "See Decision Intelligence in Action", href: "/case-study" },
@@ -1178,7 +1181,8 @@ export const maturityCurve = {
  * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
  */
 export const clients = {
-  heading: "Trusted by growth-focused businesses across the world",
+  heading: "Trusted by growth-focused businesses across the world.",
+  sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
     { name: "WWF", file: "wwf.png" },
     { name: "Basilic Fly Studio", file: "basilic-fly.png" },
