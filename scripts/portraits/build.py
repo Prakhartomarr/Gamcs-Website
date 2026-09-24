@@ -22,8 +22,8 @@ D = os.path.dirname(os.path.abspath(__file__))
 SRC = os.environ.get('PORTRAIT_SRC', '.')
 OUT = f'{D}/out'
 
-# person -> original photograph. The pre-2026 originals (Asif, the two founders)
-# are in git history, before "Put every portrait on one backdrop".
+# person -> original photograph. Asif's is the pre-2026 original, in git history
+# before "Put every portrait on one backdrop"; everyone else was reshot.
 PEOPLE = [
     ('sumit-chatterjee',  'sumit-chatterjee.jpg'),
     ('ramesh-yadav',      'ramesh-yadav.webp'),
@@ -31,11 +31,12 @@ PEOPLE = [
     ('dhawal-parvatikar', 'dhawal-parvatikar.webp'),
     ('asif-masani',       'asif-masani.jpg'),
     ('sanjay-rikhy',      'sanjay-rikhy.webp'),
+    ('geeta-karnik',      'geeta-karnik.webp'),
     ('saurabh-aggarwal',  'saurabh-aggarwal.webp'),
 ]
 FOUNDERS = [
     ('gaurav-malik-bw',     'gaurav-malik-bw.jpg'),
-    ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.jpg'),
+    ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.webp'),
 ]
 
 FACE_FRAC = 0.28        # the face box's share of the frame, where the photograph allows

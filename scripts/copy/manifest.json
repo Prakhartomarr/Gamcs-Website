@@ -8219,7 +8219,7 @@
   "section": "Advisory team",
   "label": "Advisor 7 name",
   "kind": "text",
-  "text": "Geetika Kamikar",
+  "text": "Geeta Karnik",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[6].name"
