@@ -1272,27 +1272,15 @@
   }
  },
  {
-  "code": "HOME-CURVE-07",
+  "code": "HOME-CURVE-25",
   "page": "Home (/)",
   "section": "Maturity curve",
-  "label": "Stage label in each panel — {n} is the stage number",
+  "label": "Heading over the bridge to the next stage",
   "kind": "text",
-  "text": "Stage {n}",
+  "text": "The next move",
   "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "sections.stage"
-  }
- },
- {
-  "code": "HOME-CURVE-08",
-  "page": "Home (/)",
-  "section": "Maturity curve",
-  "label": "“What next” heading in each panel — {n} is the number, {name} the stage name",
-  "kind": "text",
-  "text": "If you’re at Stage {n} — {name}",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "sections.stageNext"
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.nextHeading"
   }
  },
  {

@@ -108,9 +108,6 @@ export const sections = {
   meetFounders: "Meet our founders",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",
-  /** The maturity curve's stage panels. */
-  stage: "Stage {n}",
-  stageNext: "If you’re at Stage {n} — {name}",
   /** Testimonial byline. */
   byline: "{name} — {title}, {company}",
 } as const;

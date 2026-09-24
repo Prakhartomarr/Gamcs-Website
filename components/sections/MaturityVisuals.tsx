@@ -11,74 +11,91 @@ import { maturityCurve } from "@/lib/content/gamcs";
  * images, nothing to load, and they reflow with the column they sit in.
  *
  * Like the section they belong to, they are utility-styled rather than adding
- * global CSS, and every colour, radius and shadow resolves to a token already
- * declared in globals.css. The one exception is POSITIVE below: this palette
- * has no green, and a rising revenue line painted in brand blue reads as
- * "brand", not as "up". It is scoped to this file.
+ * global CSS. One border colour, one radius and one type scale run through all
+ * five, and a rule is drawn only where it separates data — table rows, signal
+ * cards, file cards. Everything else sits on the panel's own white.
  */
 
-/** The soft hairline (--hair) as a border colour. */
-const HAIR = "border-[color:var(--hair)]";
-/** A muted green for a positive delta. See the note above. */
+/** The one border colour in this section. */
+export const BORDER = "border-[color:var(--hair)]";
+/** …and the one radius. */
+export const RADIUS = "rounded-[12px]";
+
+/**
+ * The one type scale. Five roles and no others, except the figures, which are
+ * a sixth: a number carrying a stage's profile cannot sit at body weight.
+ */
+export const T = {
+  headline: "text-[26px] leading-[1.2] tracking-[-0.02em] sm:text-[30px]",
+  value: "text-[17px] font-semibold leading-[1.3] tabular-nums",
+  quote: "text-[15px] italic leading-relaxed",
+  body: "text-[14px] leading-relaxed",
+  label: "text-[13px] leading-[1.35]",
+  caption: "text-[12px] leading-[1.4]",
+} as const;
+
+/**
+ * Maturity, as colour. Stage 01 is slate — flat, manual, nobody's favourite
+ * spreadsheet — and the scale walks to the brand blue at 04 and a deep navy at
+ * 05. Every one of them clears 4.5:1 on white, so they can carry text as well
+ * as ink. They are design, not copy, which is why they live here and not in
+ * the content module.
+ */
+export const ACCENT = ["#667079", "#5A7387", "#2F7099", "#0F5E97", "#0A4169"] as const;
+
+/** A muted green for a positive delta: this palette has no green of its own. */
 const POSITIVE = "#2F7A57";
 
-const toneText: Record<string, string> = {
-  good: `text-[${POSITIVE}]`,
-  risk: "text-destructive",
-  watch: "text-[color:var(--ink-deep)]",
-};
-const toneDot: Record<string, string> = {
-  good: `bg-[${POSITIVE}]`,
-  risk: "bg-destructive",
-  watch: "bg-yellow",
-};
-
-/** Small caps micro-label, as used across this design system. */
-const MICRO = "font-heading text-[10px] font-bold uppercase tracking-[0.14em]";
+/** Sentence-case micro label: the section's uppercase is reserved. */
+const MICRO = `${T.label} font-semibold text-[color:var(--ink-muted)]`;
 
 function Caption({ children }: { children: React.ReactNode }) {
-  return <p className="mt-4 text-[13px] text-[color:var(--ink-muted)]">{children}</p>;
+  return <p className={`mt-4 ${T.label} text-[color:var(--ink-muted)]`}>{children}</p>;
 }
 
 /* ------------------------------------------------- 01 · versions of the truth */
 
 /**
- * Three saves of the same month, offset like a pile on a desk. The two that
- * disagree carry their EBITDA in the destructive tone; the grid rows behind
- * them are decoration and stay aria-hidden.
+ * Three saves of the same month, offset like a pile on a desk, and all three
+ * disagree. The grid rows behind them are decoration and stay aria-hidden.
  */
 export function FileStack({ data }: { data: typeof maturityCurve.stages[0]["files"] }) {
   return (
     <div>
-      <div className="relative mx-auto max-w-[380px] pb-[22px] pl-[26px] pr-[8px]">
+      <div className="relative mx-auto max-w-[440px] pb-[28px] pl-[32px] pr-[10px]">
         {data.cards.map((c, i) => (
           <div
             key={c.name}
-            style={{ marginLeft: `${(data.cards.length - 1 - i) * 13}px`, marginTop: i ? -28 : 0 }}
-            className={`relative rounded-[12px] border ${HAIR} bg-white p-3 [box-shadow:0_10px_24px_-18px_rgba(13,24,40,.55)]`}
+            style={{ marginLeft: `${(data.cards.length - 1 - i) * 15}px`, marginTop: i ? -28 : 0 }}
+            className={`relative ${RADIUS} border ${BORDER} bg-white p-3.5 [box-shadow:0_10px_24px_-18px_rgba(13,24,40,.55)]`}
           >
             {/* The figure rides on the name line: the card below overlaps the
                 bottom of this one, and would cover it anywhere else. */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span aria-hidden="true" className="h-[14px] w-[11px] flex-none rounded-[2px] border border-[color:var(--hair)] bg-soft" />
-              <span className="min-w-0 flex-1 truncate font-heading text-[12px] font-semibold text-[color:var(--ink-deep)]">
+              <span
+                aria-hidden="true"
+                className={`h-[15px] w-[12px] flex-none rounded-[2px] border ${BORDER} bg-soft`}
+              />
+              <span
+                className={`min-w-0 flex-1 truncate font-heading ${T.label} font-semibold text-[color:var(--ink-deep)]`}
+              >
                 {c.name}
               </span>
               {c.figure ? (
-                <span className="ml-auto flex-none text-[11.5px] font-semibold tabular-nums text-destructive">
+                <span className={`flex-none ${T.caption} font-semibold tabular-nums text-destructive`}>
                   {c.figure}
                 </span>
               ) : null}
             </div>
-            <div aria-hidden="true" className="mt-2.5 space-y-[5px]">
+            <div aria-hidden="true" className="mt-3 space-y-[7px]">
               {[100, 76, 88, 62].map((w, r) => (
-                <div key={r} style={{ width: `${w}%` }} className="h-[5px] rounded-[2px] bg-soft" />
+                <div key={r} style={{ width: `${w}%` }} className="h-[7px] rounded-[2px] bg-soft" />
               ))}
             </div>
           </div>
         ))}
       </div>
-      <p className="mt-4 text-[13px] font-semibold text-[color:var(--ink-deep)]">{data.caption}</p>
+      <p className={`mt-4 ${T.label} font-semibold text-[color:var(--ink-deep)]`}>{data.caption}</p>
     </div>
   );
 }
@@ -92,43 +109,49 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
   const span = Math.max(...days) || 1;
   return (
     <div>
-      <div className={`overflow-hidden rounded-[14px] border ${HAIR} bg-white`}>
-        <div className={`flex items-center justify-between gap-3 border-b ${HAIR} bg-soft px-3.5 py-2.5`}>
-          <span className="font-heading text-[12px] font-semibold text-[color:var(--ink-deep)]">
-            {data.title}
-          </span>
-        </div>
-        <table className="w-full border-collapse text-[12.5px]">
-          <thead>
-            <tr className={`border-b ${HAIR} text-left text-[color:var(--ink-muted)]`}>
-              <th scope="col" className="px-3.5 py-2 font-medium">&nbsp;</th>
-              <th scope="col" className="px-2 py-2 text-right font-medium tabular-nums">{labels.actual}</th>
-              <th scope="col" className="px-2 py-2 text-right font-medium tabular-nums">{labels.budget}</th>
-              <th scope="col" className="px-3.5 py-2 text-right font-medium tabular-nums">{labels.variance}</th>
+      <div className={`${MICRO} mb-2`}>{data.title}</div>
+      <table className={`w-full border-collapse ${T.body}`}>
+        <thead>
+          <tr className={`border-b ${BORDER} text-left ${T.caption} text-[color:var(--ink-muted)]`}>
+            <th scope="col" className="py-2 font-medium">
+              &nbsp;
+            </th>
+            <th scope="col" className="py-2 pl-2 text-right font-medium tabular-nums">
+              {labels.actual}
+            </th>
+            <th scope="col" className="py-2 pl-2 text-right font-medium tabular-nums">
+              {labels.budget}
+            </th>
+            <th scope="col" className="py-2 pl-2 text-right font-medium tabular-nums">
+              {labels.variance}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((r) => (
+            <tr key={r.label} className={`border-b ${BORDER}`}>
+              <th scope="row" className="py-2 pr-2 text-left font-medium text-[color:var(--ink-deep)]">
+                {r.label}
+              </th>
+              <td className="py-2 pl-2 text-right tabular-nums text-[color:var(--ink-muted)]">
+                {r.actual}
+              </td>
+              <td className="py-2 pl-2 text-right tabular-nums text-[color:var(--ink-muted)]">
+                {r.budget}
+              </td>
+              {/* Favourable, not positive: spending 20.8% over budget wears a
+                  plus sign and is still the bad row. */}
+              <td
+                className={`py-2 pl-2 text-right font-semibold tabular-nums ${
+                  r.good ? "text-[color:var(--ink-deep)]" : "text-destructive"
+                }`}
+              >
+                {r.variance}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {data.rows.map((r, i) => (
-              <tr key={r.label} className={i ? `border-t ${HAIR}` : ""}>
-                <th scope="row" className="px-3.5 py-2 text-left font-medium text-[color:var(--ink-deep)]">
-                  {r.label}
-                </th>
-                <td className="px-2 py-2 text-right tabular-nums text-[color:var(--ink-muted)]">{r.actual}</td>
-                <td className="px-2 py-2 text-right tabular-nums text-[color:var(--ink-muted)]">{r.budget}</td>
-                {/* Favourable, not positive: spending 20.8% over budget wears
-                    a plus sign and is still the bad row. */}
-                <td
-                  className={`px-3.5 py-2 text-right font-semibold tabular-nums ${
-                    r.good ? "text-[color:var(--ink-deep)]" : "text-destructive"
-                  }`}
-                >
-                  {r.variance}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
 
       {/* the lag: the bar runs from the close to the meeting */}
       <div className="mt-5">
@@ -136,27 +159,33 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
           <div className="absolute inset-y-0 left-0 right-0 rounded-full bg-blue/25" />
           {/* inset by half a dot, so the last one sits inside the track */}
           <div className="absolute inset-x-[5px] inset-y-0">
-          {data.timeline.map((t, i) => (
-            <span
-              key={t.label}
-              style={{ left: `${(days[i] / span) * 100}%` }}
-              aria-hidden="true"
-              className={`absolute top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white ${
-                i === data.timeline.length - 1 ? "bg-blue" : "bg-[color:var(--ink-muted)]"
-              }`}
-            />
-          ))}
+            {data.timeline.map((t, i) => (
+              <span
+                key={t.label}
+                style={{ left: `${(days[i] / span) * 100}%` }}
+                aria-hidden="true"
+                className={`absolute top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white ${
+                  i === data.timeline.length - 1 ? "bg-blue" : "bg-[color:var(--ink-muted)]"
+                }`}
+              />
+            ))}
           </div>
         </div>
         {/* Each label under its own dot: day 6 of 9 is two thirds along, not
             half. The ends align inward so they cannot overhang the track. */}
-        <div className="relative mt-2.5 h-[34px] px-[5px] text-[11.5px] leading-[1.35] text-[color:var(--ink-muted)]">
+        <div
+          className={`relative mt-2.5 h-[34px] px-[5px] ${T.caption} text-[color:var(--ink-muted)]`}
+        >
           {data.timeline.map((t, i) => (
             <span
               key={t.label}
               style={{ left: `calc(5px + ${(days[i] / span) * 100}% - ${(days[i] / span) * 10}px)` }}
               className={`absolute top-0 max-w-[36%] ${
-                i === 0 ? "text-left" : i === data.timeline.length - 1 ? "-translate-x-full text-right" : "-translate-x-1/2 text-center"
+                i === 0
+                  ? "text-left"
+                  : i === data.timeline.length - 1
+                    ? "-translate-x-full text-right"
+                    : "-translate-x-1/2 text-center"
               }`}
             >
               {t.label}
@@ -166,6 +195,40 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
         </div>
       </div>
       <Caption>{data.caption}</Caption>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------- the stat row */
+
+/** Unboxed figures, divided by a hairline. Used by stages 03 and 04. */
+function Stats({
+  items,
+  accent,
+}: {
+  items: readonly { label: string; value: string; tone: string }[];
+  accent: string;
+}) {
+  return (
+    <div className="flex">
+      {items.map((k, i) => (
+        <div
+          key={k.label}
+          className={`min-w-0 flex-1 ${i ? `border-l ${BORDER} pl-3 sm:pl-4` : ""} ${
+            i < items.length - 1 ? "pr-3 sm:pr-4" : ""
+          }`}
+        >
+          <div className={`truncate ${T.caption} text-[color:var(--ink-muted)]`}>{k.label}</div>
+          <div
+            style={{ color: k.tone === "good" ? POSITIVE : k.tone === "risk" ? undefined : accent }}
+            className={`mt-0.5 font-heading ${T.value} max-[419px]:text-[15px] ${
+              k.tone === "risk" ? "text-destructive" : ""
+            }`}
+          >
+            {k.value}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -184,9 +247,11 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
 export function DrillDown({
   data,
   active,
+  accent,
 }: {
   data: typeof maturityCurve.stages[2]["drill"];
   active: boolean;
+  accent: string;
 }) {
   const last = data.path.length - 1;
   const [step, setStep] = useState(0);
@@ -208,25 +273,12 @@ export function DrillDown({
     return () => timers.forEach((t) => t && clearTimeout(t));
   }, [active, data.path, last]);
 
+  const level = data.path[step];
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3">
-        {data.tiles.map((t) => (
-          <div key={t.label} className={`rounded-[12px] border ${HAIR} bg-white px-3.5 py-3`}>
-            <div className="text-[12px] text-[color:var(--ink-muted)]">{t.label}</div>
-            <div
-              style={t.tone === "good" ? { color: POSITIVE } : undefined}
-              className={`mt-0.5 font-heading text-[18px] font-semibold tabular-nums leading-[1.3] ${
-                t.tone === "risk" ? "text-destructive" : ""
-              }`}
-            >
-              {t.value}
-            </div>
-          </div>
-        ))}
-      </div>
+      <Stats items={data.tiles.map((t) => ({ ...t }))} accent={accent} />
 
-      <ol className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[12px]">
+      <ol className={`mt-5 flex flex-wrap items-center gap-x-1.5 gap-y-1 ${T.caption}`}>
         {data.path.map((p, i) => (
           <li key={p.crumb} className="flex items-center gap-1.5">
             {i > 0 && (
@@ -238,9 +290,10 @@ export function DrillDown({
               type="button"
               onClick={() => setStep(i)}
               disabled={i > step + 1}
+              style={i === step ? { color: accent } : undefined}
               className={`rounded-full px-2 py-1 transition-colors disabled:cursor-default ${
                 i === step
-                  ? "bg-blue/10 font-semibold text-blue"
+                  ? "bg-blue/10 font-semibold"
                   : i <= step
                     ? "text-[color:var(--ink-deep)] hover:bg-soft"
                     : "text-[color:var(--ink-muted)]/55"
@@ -252,37 +305,42 @@ export function DrillDown({
         ))}
       </ol>
 
-      <div className={`mt-3 rounded-[12px] border ${HAIR} bg-white p-3.5`}>
-        <div className={`${MICRO} text-[color:var(--ink-muted)]`}>{data.path[step].crumb}</div>
+      <div className="mt-3">
+        <div className={MICRO}>{level.crumb}</div>
         <div className="mt-2.5 space-y-2">
-          {data.path[step].bars.map((b, i, all) => {
+          {level.bars.map((b, i, all) => {
             const lastBar = i === all.length - 1;
             return (
               <div key={b.label} className="flex items-center gap-3">
-                <span className="w-[72px] flex-none truncate text-[12px] text-[color:var(--ink-muted)]">
+                <span className={`w-[62px] flex-none truncate ${T.caption} text-[color:var(--ink-muted)]`}>
                   {b.label}
                 </span>
-                <span className="h-[7px] flex-1 rounded-full bg-soft">
+                <span className="h-[8px] flex-1 rounded-full bg-soft">
                   <span
-                    style={{ width: `${b.value}%` }}
+                    style={{
+                      width: `${b.value}%`,
+                      backgroundColor: lastBar ? accent : undefined,
+                      opacity: lastBar ? 1 : i === all.length - 2 ? 0.55 : 0.3,
+                    }}
                     className={`block h-full rounded-full transition-[width] duration-500 ease-out motion-reduce:transition-none ${
-                      lastBar ? "bg-blue-dark" : i === all.length - 2 ? "bg-blue/55" : "bg-blue/30"
+                      lastBar ? "" : "bg-blue"
                     }`}
                   />
                 </span>
                 {"text" in b && b.text ? (
                   <span
-                    className={`w-[42px] flex-none text-right text-[12px] tabular-nums ${
-                      lastBar
-                        ? "font-semibold text-[color:var(--ink-deep)]"
-                        : "text-[color:var(--ink-muted)]"
+                    style={lastBar ? { color: accent } : undefined}
+                    className={`w-[38px] flex-none text-right ${T.caption} tabular-nums ${
+                      lastBar ? "font-semibold" : "text-[color:var(--ink-muted)]"
                     }`}
                   >
                     {b.text}
                   </span>
                 ) : null}
                 {"note" in b && b.note ? (
-                  <span className="flex-none rounded-full bg-blue/10 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-blue-dark">
+                  <span
+                    className={`flex-none rounded-full bg-blue/10 px-1.5 py-0.5 ${T.caption} font-semibold tabular-nums text-blue-dark`}
+                  >
                     {b.note}
                   </span>
                 ) : null}
@@ -290,14 +348,22 @@ export function DrillDown({
             );
           })}
         </div>
+        {step === last ? (
+          <p className={`mt-2 ${T.caption} font-semibold text-[color:var(--ink-muted)]`}>
+            {data.annotation}
+          </p>
+        ) : null}
       </div>
 
       {step === last ? (
-        <p className="mt-3 rounded-[12px] border border-blue/25 bg-blue/[0.07] px-3.5 py-3 text-[13px] leading-relaxed text-[color:var(--ink-deep)]">
+        <p
+          style={{ borderColor: accent }}
+          className={`mt-3 ${RADIUS} border-l-2 bg-blue/[0.06] px-3.5 py-3 ${T.body} text-[color:var(--ink-deep)]`}
+        >
           {data.finding}
         </p>
       ) : (
-        <p className="mt-3 text-[12px] text-[color:var(--ink-muted)]">
+        <p className={`mt-3 ${T.caption} text-[color:var(--ink-muted)]`}>
           {maturityCurve.labels.drillHint}
         </p>
       )}
@@ -313,174 +379,193 @@ export function DrillDown({
  * label is HTML on top at the same percentages, so type stays the size it was
  * set at rather than scaling with the chart.
  *
- * The forecast half carries a tint, a band that opens with distance and a
- * dashed line: three ways of saying the same thing, because a forecast drawn
- * like an actual is a claim nobody made.
+ * Direct labels rather than a legend, three hairline gridlines rather than a
+ * frame, and one number in the stage's accent: the forecast's far end, which
+ * is the only figure the chart exists to show.
  */
-function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]["chart"] }) {
+function MarginChart({
+  data,
+  accent,
+}: {
+  data: typeof maturityCurve.stages[3]["explain"]["chart"];
+  accent: string;
+}) {
   const series = [...data.actual, ...data.forecast];
   const n = series.length - 1;
-  const lo = Math.min(...series) - data.band - 0.6;
-  const hi = Math.max(...series) + 0.6;
+  const lo = Math.min(...series) - data.band - 0.8;
+  const hi = Math.max(...series) + 1.4;
   const px = (i: number) => (i / n) * 100;
   const py = (v: number) => ((hi - v) / (hi - lo)) * 100;
   const at = (vals: readonly number[], from: number) =>
     vals.map((v, i) => `${i ? "L" : "M"}${px(from + i).toFixed(2)},${py(v).toFixed(2)}`).join(" ");
 
-  const cut = data.actual.length - 1;                    // the last actual: where forecast starts
-  const fwd = [data.actual[cut], ...data.forecast];      // the dashed line joins it
+  const cut = data.actual.length - 1; // the last actual: where the forecast starts
+  const fwd = [data.actual[cut], ...data.forecast];
   const band = [
-    ...fwd.map((v, i) => `${i ? "L" : "M"}${px(cut + i).toFixed(2)},${py(v + (data.band * i) / (fwd.length - 1)).toFixed(2)}`),
+    ...fwd.map(
+      (v, i) =>
+        `${i ? "L" : "M"}${px(cut + i).toFixed(2)},${py(v + (data.band * i) / (fwd.length - 1)).toFixed(2)}`,
+    ),
     ...fwd
       .map((v, i) => `L${px(cut + i).toFixed(2)},${py(v - (data.band * i) / (fwd.length - 1)).toFixed(2)}`)
       .reverse(),
     "Z",
   ].join(" ");
+  const grid = [40, 38, 36];
+  const left = (i: number) => `calc(var(--plot-pad) + ${px(i)}% - ${px(i)} * var(--plot-pad) / 50)`;
 
   return (
-    /* --plot-pad is the inset every layer of the chart shares: the SVG box, the
-       point labels and the axis all offset by it, so a label centred on a point
-       really is centred on it. */
-    <div className="[--plot-pad:13px] sm:[--plot-pad:26px]">
-      {/* legend, inline above the chart */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-[color:var(--ink-muted)]">
-        <span className="font-medium text-[color:var(--ink-deep)]">{data.label}</span>
-        <span className="flex items-center gap-1.5">
-          <span aria-hidden="true" className="h-[2px] w-4 flex-none rounded bg-blue" />
-          {data.legendActual}
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span aria-hidden="true" className="h-0 w-4 flex-none border-t-2 border-dashed border-blue" />
-          {data.legendForecast}
-        </span>
-      </div>
-
-      {/* The plot is inset by half an axis label, so the first and last points
-          sit over labels that are centred on them and still inside the column. */}
-      <div className="relative mt-2 h-[100px] w-full px-[13px] sm:px-[26px]">
-        <svg
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          className="absolute inset-x-[13px] inset-y-0 h-full w-[calc(100%-26px)] sm:inset-x-[26px] sm:w-[calc(100%-52px)]"
-        >
-          <rect x={px(cut)} y="0" width={100 - px(cut)} height="100" fill="var(--blue)" opacity="0.045" />
-          <line
-            x1={px(cut)}
-            y1="0"
-            x2={px(cut)}
-            y2="100"
-            stroke="var(--line)"
-            strokeWidth="1"
-            strokeDasharray="3 3"
-            vectorEffect="non-scaling-stroke"
-          />
-          <path d={band} fill="var(--blue)" opacity="0.13" />
-          <path
-            d={at(data.actual, 0)}
-            fill="none"
-            stroke="var(--blue)"
-            strokeWidth="2"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-          />
-          <path
-            d={at(fwd, cut)}
-            fill="none"
-            stroke="var(--blue)"
-            strokeWidth="2"
-            strokeDasharray="5 4"
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-
-        {/* the two points worth naming */}
-        {[
-          { i: cut, v: data.actual[cut], text: data.lastActual, end: false },
-          { i: n, v: data.forecast[data.forecast.length - 1], text: data.lastForecast, end: true },
-        ].map((m) => (
+    <div className="flex">
+      {/* the y axis, as three values and nothing else. Its box is the plot's
+          own height, so a gridline's percentage lands on the same pixel. */}
+      <div className="relative h-[84px] w-[30px] flex-none">
+        {grid.map((g) => (
           <span
-            key={m.text}
-            style={{ left: `calc(var(--plot-pad) + ${px(m.i)}% - ${px(m.i)} * var(--plot-pad) / 50)`, top: `${py(m.v)}%` }}
-            className={`absolute -translate-y-[calc(100%+9px)] whitespace-nowrap font-heading text-[11.5px] font-semibold tabular-nums text-[color:var(--ink-deep)] ${
-              m.end ? "-translate-x-full" : "-translate-x-1/2"
-            }`}
+            key={g}
+            style={{ top: `${py(g)}%` }}
+            className={`absolute right-1.5 -translate-y-1/2 ${T.caption} tabular-nums text-[color:var(--ink-muted)]`}
           >
-            {m.text}
+            {g}%
           </span>
         ))}
-        {[cut, n].map((i) => (
-          <span
-            key={i}
+      </div>
+
+      {/* --plot-pad is the inset every layer shares: the SVG box, the point
+          labels and the axis all offset by it, so a label centred on a point
+          really is centred on it. */}
+      <div className="min-w-0 flex-1 [--plot-pad:13px] sm:[--plot-pad:26px]">
+        <div className="relative h-[84px] w-full px-[13px] sm:px-[26px]">
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
             aria-hidden="true"
-            style={{ left: `calc(var(--plot-pad) + ${px(i)}% - ${px(i)} * var(--plot-pad) / 50)`, top: `${py(series[i])}%` }}
-            className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-blue"
-          />
-        ))}
-
-        <span
-          className={`${MICRO} absolute right-1 top-1 text-blue/70`}
-          style={{ letterSpacing: "0.1em" }}
-        >
-          {data.forecastTag}
-        </span>
-      </div>
-
-      {/* the x axis */}
-      {/* One label per point, centred under it. The fiscal year only prints on
-          the first quarter of each year below 640, where eight "Q1 FY25"s
-          would collide. */}
-      <div className="relative mt-1.5 h-[15px] px-[13px] sm:px-[26px]">
-        {data.quarters.map((q, i) => (
-          <span
-            key={`${q}-${i}`}
-            style={{ left: `calc(var(--plot-pad) + ${px(i)}% - ${px(i)} * var(--plot-pad) / 50)` }}
-            className={`absolute -translate-x-1/2 whitespace-nowrap text-[12px] tabular-nums ${
-              i > cut ? "text-blue/70" : "text-[color:var(--ink-muted)]"
-            }`}
+            className="absolute inset-x-[13px] inset-y-0 h-full w-[calc(100%-26px)] sm:inset-x-[26px] sm:w-[calc(100%-52px)]"
           >
-            <span className="sm:hidden">{i % 4 === 0 ? q : q.split(" ")[0]}</span>
-            <span className="hidden sm:inline">{q}</span>
+            {grid.map((g) => (
+              <line
+                key={g}
+                x1="0"
+                y1={py(g)}
+                x2="100"
+                y2={py(g)}
+                stroke="var(--hair)"
+                strokeWidth="1"
+                vectorEffect="non-scaling-stroke"
+              />
+            ))}
+            <rect x={px(cut)} y="0" width={100 - px(cut)} height="100" fill={accent} opacity="0.04" />
+            <path d={band} fill={accent} opacity="0.14" />
+            <path
+              d={at(data.actual, 0)}
+              fill="none"
+              stroke={accent}
+              strokeWidth="2.25"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d={at(fwd, cut)}
+              fill="none"
+              stroke={accent}
+              strokeWidth="2.25"
+              strokeDasharray="5 4"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          {/* direct labels, in place of a legend */}
+          <span
+            style={{ left: left(cut - 2), top: `${py(data.actual[cut - 2])}%` }}
+            className={`absolute -translate-y-[calc(100%+7px)] ${T.caption} font-semibold text-[color:var(--ink-muted)]`}
+          >
+            {data.tagActual}
           </span>
-        ))}
+          <span
+            style={{ left: left(n), top: `${py(data.forecast[data.forecast.length - 1])}%` }}
+            className={`absolute -translate-x-full translate-y-[9px] ${T.caption} font-semibold text-[color:var(--ink-muted)]`}
+          >
+            {data.tagForecast}
+          </span>
+
+          {/* the last actual, muted; the forecast's end, in the stage's accent */}
+          <span
+            style={{ left: left(cut), top: `${py(data.actual[cut])}%` }}
+            className={`absolute -translate-x-1/2 -translate-y-[calc(100%+9px)] whitespace-nowrap ${T.caption} tabular-nums text-[color:var(--ink-muted)]`}
+          >
+            {data.lastActual}
+          </span>
+          <span
+            style={{
+              left: left(n),
+              top: `${py(data.forecast[data.forecast.length - 1])}%`,
+              color: accent,
+            }}
+            className={`absolute -translate-x-full -translate-y-[calc(100%+9px)] whitespace-nowrap font-heading ${T.caption} font-semibold tabular-nums`}
+          >
+            {data.lastForecast}
+          </span>
+          {[cut, n].map((i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              style={{ left: left(i), top: `${py(series[i])}%`, backgroundColor: accent }}
+              className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
+            />
+          ))}
+        </div>
+
+        {/* One label per point, centred under it. The fiscal year only prints on
+            the first quarter of each year below 640, where eight "Q1 FY25"s
+            would collide. */}
+        <div className="relative mt-1.5 h-[15px] px-[13px] sm:px-[26px]">
+          {data.quarters.map((q, i) => (
+            <span
+              key={`${q}-${i}`}
+              style={{ left: left(i) }}
+              className={`absolute -translate-x-1/2 whitespace-nowrap ${T.caption} tabular-nums text-[color:var(--ink-muted)]`}
+            >
+              <span className="sm:hidden">{i % 4 === 0 ? q : q.split(" ")[0]}</span>
+              <span className="hidden sm:inline">{q}</span>
+            </span>
+          ))}
+        </div>
+
+        <p className={`mt-2 ${T.caption} font-semibold text-[color:var(--ink-muted)]`}>
+          {data.annotation}
+        </p>
       </div>
     </div>
   );
 }
 
-/** KPIs, then what happened / why / what's next — the last row is the payoff. */
-export function Explain({ data }: { data: typeof maturityCurve.stages[3]["explain"] }) {
+/** The figures, then what happened / why / what's next — the last row is the payoff. */
+export function Explain({
+  data,
+  accent,
+}: {
+  data: typeof maturityCurve.stages[3]["explain"];
+  accent: string;
+}) {
   return (
     <div>
-      <div className="grid grid-cols-3 gap-2.5">
-        {data.kpis.map((k) => (
-          <div key={k.label} className={`rounded-[12px] border ${HAIR} bg-white px-2.5 py-2.5 sm:px-3`}>
-            <div className="truncate text-[11.5px] text-[color:var(--ink-muted)]">{k.label}</div>
-            <div
-              style={k.tone === "good" ? { color: POSITIVE } : undefined}
-              className={`mt-0.5 font-heading text-[15px] font-semibold tabular-nums leading-[1.3] sm:text-[16px] ${
-                k.tone === "risk" ? "text-destructive" : ""
-              }`}
-            >
-              {k.value}
-            </div>
-          </div>
-        ))}
-      </div>
+      <Stats items={data.kpis.map((k) => ({ ...k }))} accent={accent} />
 
-      <div className={`mt-3.5 overflow-hidden rounded-[14px] border ${HAIR}`}>
+      <div className={`mt-4 overflow-hidden ${RADIUS} border ${BORDER}`}>
         {data.rows.map((r, i) => {
           const last = i === data.rows.length - 1;
           return (
             <div
               key={r.q}
-              className={`grid grid-cols-[minmax(96px,120px)_1fr] gap-3 px-3.5 py-2.5 text-[12.5px] leading-relaxed ${
+              className={`grid grid-cols-[minmax(96px,120px)_1fr] gap-3 px-3.5 py-2 ${T.body} ${
                 last ? "bg-blue/[0.07]" : "bg-white"
-              } ${i > 0 ? `border-t ${HAIR}` : ""}`}
+              } ${i > 0 ? `border-t ${BORDER}` : ""}`}
             >
-              <div className={`font-medium ${last ? "text-blue" : "text-[color:var(--ink-muted)]"}`}>
+              <div
+                style={last ? { color: accent } : undefined}
+                className={`font-medium ${last ? "" : "text-[color:var(--ink-muted)]"}`}
+              >
                 {r.q}
               </div>
               <div className="text-[color:var(--ink-deep)]">{r.a}</div>
@@ -490,7 +575,8 @@ export function Explain({ data }: { data: typeof maturityCurve.stages[3]["explai
       </div>
 
       <div className="mt-4">
-        <MarginChart data={data.chart} />
+        <div className={`${MICRO} mb-1`}>{data.chart.label}</div>
+        <MarginChart data={data.chart} accent={accent} />
       </div>
     </div>
   );
@@ -499,13 +585,17 @@ export function Explain({ data }: { data: typeof maturityCurve.stages[3]["explai
 /* --------------------------------------------------------- 05 · the loop, live */
 
 /** Signal to owner to action, three live examples. No product implied: a loop. */
-export function SignalBoard({ data }: { data: typeof maturityCurve.stages[4]["board"] }) {
+export function SignalBoard({
+  data,
+  accent,
+}: {
+  data: typeof maturityCurve.stages[4]["board"];
+  accent: string;
+}) {
   const { labels } = maturityCurve;
   return (
     <div>
-      <div
-        className={`flex flex-wrap items-center gap-x-2 gap-y-1 rounded-[10px] border ${HAIR} bg-soft px-3 py-2 ${MICRO} text-[color:var(--ink-muted)]`}
-      >
+      <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 ${MICRO}`}>
         {data.flow.map((f, i) => (
           <span key={f} className="flex items-center gap-2">
             {i > 0 && <span aria-hidden="true">→</span>}
@@ -514,31 +604,54 @@ export function SignalBoard({ data }: { data: typeof maturityCurve.stages[4]["bo
         ))}
       </div>
 
-      <div className="mt-3 space-y-2">
+      <div className="mt-3 space-y-1.5">
         {data.cards.map((c) => (
-          <div key={c.title} className={`rounded-[12px] border ${HAIR} bg-white px-3.5 py-2.5`}>
+          <div key={c.title} className={`${RADIUS} border ${BORDER} px-3 py-2`}>
             <div className="flex items-center gap-2">
-              <span
-                aria-hidden="true"
-                style={c.tone === "good" ? { backgroundColor: POSITIVE } : undefined}
-                className={`h-2 w-2 flex-none rounded-full ${
-                  c.tone === "risk" ? "bg-destructive" : c.tone === "watch" ? "bg-yellow" : ""
-                }`}
-              />
-              <span className="font-heading text-[13px] font-semibold text-[color:var(--ink-deep)]">
+              {/* live, not decorative: the loop is always running */}
+              <span className="relative flex h-2 w-2 flex-none">
+                <span
+                  aria-hidden="true"
+                  style={
+                    c.tone === "good"
+                      ? { backgroundColor: POSITIVE }
+                      : c.tone === "watch"
+                        ? undefined
+                        : undefined
+                  }
+                  className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-40 [animation-duration:1.8s] motion-reduce:hidden ${
+                    c.tone === "risk" ? "bg-destructive" : c.tone === "watch" ? "bg-yellow" : ""
+                  }`}
+                />
+                <span
+                  aria-hidden="true"
+                  style={c.tone === "good" ? { backgroundColor: POSITIVE } : undefined}
+                  className={`relative inline-flex h-2 w-2 rounded-full ${
+                    c.tone === "risk" ? "bg-destructive" : c.tone === "watch" ? "bg-yellow" : ""
+                  }`}
+                />
+              </span>
+              <span className={`font-heading ${T.label} font-semibold text-[color:var(--ink-deep)]`}>
                 {c.title}
               </span>
-              <span className="ml-auto text-[11.5px] text-[color:var(--ink-muted)]">{labels.impact}</span>
-              <span className="font-heading text-[13px] font-semibold tabular-nums text-[color:var(--ink-deep)]">
+              <span className={`ml-auto ${T.caption} text-[color:var(--ink-muted)]`}>
+                {labels.impact}
+              </span>
+              <span
+                style={{ color: accent }}
+                className={`font-heading ${T.label} font-semibold tabular-nums`}
+              >
                 {c.impact}
               </span>
               <span
-                className={`rounded-full border ${HAIR} bg-soft px-2 py-0.5 text-[10.5px] font-medium text-[color:var(--ink-muted)]`}
+                className={`rounded-full border ${BORDER} bg-soft px-2 py-0.5 ${T.caption} font-medium text-[color:var(--ink-muted)]`}
               >
                 {c.status}
               </span>
             </div>
-            <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-[12px] leading-[1.45] sm:grid-cols-[auto_1fr_auto_1fr] sm:gap-x-3">
+            <dl
+              className={`mt-1.5 grid grid-cols-[auto_1fr] gap-x-2 gap-y-0 ${T.caption} sm:grid-cols-[auto_1fr_auto_1fr] sm:gap-x-3`}
+            >
               <dt className="text-[color:var(--ink-muted)]">{labels.why}</dt>
               <dd className="text-[color:var(--ink-deep)]">{c.why}</dd>
               <dt className="text-[color:var(--ink-muted)]">{labels.action}</dt>
