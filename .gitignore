@@ -50,3 +50,4 @@ scripts/portraits/faces
 scripts/portraits/segment
 scripts/portraits/out/
 scripts/portraits/.mask.png
+__pycache__/

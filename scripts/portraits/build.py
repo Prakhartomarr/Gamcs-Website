@@ -16,7 +16,7 @@ os.makedirs(OUT, exist_ok=True)
 # output, so re-running against them would process an already-processed image —
 # take the originals out of git history (before the "one set" commit) instead.
 PEOPLE = [
-    ('sumit-chatterjee',  f'{REPO}/public/team/sumit-chatterjee.jpg'),
+    ('sumit-chatterjee',  f'{SRC}/18.jpg'),
     ('ramesh-yadav',      f'{SRC}/15.webp'),
     ('amit-garg',         f'{SRC}/14.webp'),
     ('dhawal-parvatikar', f'{SRC}/16.webp'),
