@@ -2471,11 +2471,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
 .pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
 
-.pillars{display:grid;gap:clamp(64px,7vw,104px)}
+.pillars{display:grid;gap:clamp(72px,7.5vw,120px)}
 /* scroll-margin clears the sticky rail so an anchor jump does not tuck the
    block's first line underneath it */
-.pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(28px,3.4vw,56px);align-items:start;
+/* The card carries the argument, so it takes the larger share and sets the
+   block's height; the list sits beside it and runs to its own length. */
+.pillar{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr);
+  gap:clamp(28px,3.8vw,64px);align-items:stretch;
   scroll-margin-top:calc(var(--header-h) + 64px)}
 /* odd blocks swap sides. Source order is unchanged, so the card is still read
    before its list. */
@@ -2486,8 +2488,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* Not sticky: measured across the original six pillars the card was 57-131px
    TALLER than its list, so a sticky card would have negative travel and never move.
    (.shell is overflow:clip anyway, which would have capped it regardless.) */
+/* A panel rather than a box: about two thirds of a screen on a laptop, with
+   the headline at display size and the link on the floor, so the pillar's
+   argument is the thing on screen rather than one element among several. */
 .pillar-card{position:relative;overflow:hidden;isolation:isolate;
-  border-radius:var(--radius-lg);padding:clamp(26px,2.6vw,38px);
+  display:flex;flex-direction:column;
+  min-height:clamp(420px,66vh,680px);
+  border-radius:var(--radius-lg);padding:clamp(28px,3.2vw,52px);
   /* the floor the mesh drifts over — also what shows under prefers-reduced-motion */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#fff}
 
@@ -2535,19 +2542,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
   pointer-events:none}
 .pillar-card > *{position:relative;z-index:1}
-.pillar-label{display:inline-flex;align-items:center;min-height:26px;padding:4px 12px;line-height:1.3;
+/* align-self: the card is a flex column, which would otherwise stretch a pill
+   and a button to its full width. */
+.pillar-label{display:inline-flex;align-self:flex-start;align-items:center;min-height:26px;padding:4px 12px;line-height:1.3;
   border-radius:999px;border:1px solid rgba(255,255,255,.30);
   font:600 0.6667rem var(--font-sans);letter-spacing:.08em;text-transform:uppercase;
   color:rgba(255,255,255,.88)}
-.pillar-card h2{margin:18px 0 0;color:#fff;
-  font:500 clamp(25px,2.5vw,36px)/1.14 var(--font-sans);letter-spacing:-.03em;
-  max-width:18ch}
-.pillar-card p{margin:14px 0 0;max-width:46ch;color:#D8E4EC;
-  font-size:0.8889rem;line-height:1.62}
-.pillar-cta{margin-top:24px}
+.pillar-card h2{margin:auto 0 0;padding-top:26px;color:#fff;
+  font:500 clamp(28px,3.4vw,50px)/1.08 var(--font-sans);letter-spacing:-.032em;
+  max-width:15ch}
+.pillar-card p{margin:18px 0 0;max-width:44ch;color:#D8E4EC;
+  font-size:1rem;line-height:1.58}
+/* the link sits on the card's floor, so the panel's height is deliberate */
+.pillar-cta{align-self:flex-start;margin-top:clamp(24px,2.6vw,40px)}
 /* the pillar's own icon, blurred to a soft field so it reads as texture and
    never competes with the headline */
-.pillar-glyph{position:absolute;right:-28px;bottom:-40px;width:210px;height:210px;
+.pillar-glyph{position:absolute;right:-34px;bottom:-48px;width:270px;height:270px;
   z-index:0;pointer-events:none}
 .pillar-glyph svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2.2;
   filter:blur(11px);opacity:.30}
@@ -2556,25 +2566,26 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .pillar-list li{border-top:1px solid rgba(16,45,68,.12)}
 .pillar-list li:last-child{border-bottom:1px solid rgba(16,45,68,.12)}
 .pillar-list summary{display:flex;align-items:center;justify-content:space-between;
-  gap:16px;cursor:pointer;list-style:none;padding:17px 2px;min-height:44px;
-  font:600 0.9444rem/1.35 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep);
+  gap:16px;cursor:pointer;list-style:none;padding:clamp(18px,1.6vw,23px) 2px;min-height:44px;
+  font:600 clamp(15px,1.3vw,19px)/1.35 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep);
   transition:color .2s var(--ease-out)}
 .pillar-list summary::-webkit-details-marker{display:none}
 .pillar-list summary:hover{color:var(--blue)}
 .pillar-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
-.pillar-list summary svg{width:16px;height:16px;flex:none;color:var(--ink-muted);
+.pillar-list summary svg{width:18px;height:18px;flex:none;color:var(--ink-muted);
   transition:transform .25s var(--ease-out),color .2s var(--ease-out)}
 .pillar-list details[open] summary{color:var(--blue)}
 .pillar-list details[open] summary svg{transform:rotate(180deg);color:var(--blue)}
-.pillar-list details p{margin:0 0 19px;padding-right:34px;max-width:60ch;
-  color:var(--ink-muted);font-size:0.8611rem;line-height:1.62}
+.pillar-list details p{margin:0 0 22px;padding-right:34px;max-width:60ch;
+  color:var(--ink-muted);font-size:0.9444rem;line-height:1.62}
 
 /* Below 1023 the two columns stop fitting side by side: the card's headline
    drops to three or four lines and the rows lose their tap width. */
 @media (max-width:1023px){
-  .pillar{grid-template-columns:1fr;gap:24px}
+  .pillar{grid-template-columns:1fr;gap:28px}
   .pillar[data-flip] .pillar-card{order:0}
-  .pillar-glyph{width:160px;height:160px;right:-24px;bottom:-32px}
+  .pillar-card{min-height:0}
+  .pillar-glyph{width:200px;height:200px;right:-26px;bottom:-36px}
 }
 @media (prefers-reduced-motion:reduce){
   .pillar-list summary svg{transition:none}
