@@ -14,11 +14,16 @@ Always run from the ORIGINALS. Running this over its own output compounds every
 pass.
 
 `PEOPLE` and `FOUNDERS` in build.py hold the roster; the third column is
-whether that photograph needs a ground under it. It is `False` for the 2026
-sitting, whose frames keep exactly the wall they were shot against, and `True`
-only for Asif (a near-black wall) and Sumit (an office window) — those two are
-cut out with Vision's person segmentation and set on a grey fitted from three
-frames of the sitting, so they sit with the rest.
+whether that photograph needs a ground under it. It is `False` for everyone
+today: each frame keeps exactly the wall it was shot against.
+
+Sumit and Asif are not in the roster. The client sent them finished — on that
+same wall, exposed to match — and asked for them as they are, so their files in
+`public/team` are that delivery, split from one frame and cropped to the card.
+Nothing in `build.py` touches them, and re-running it will not overwrite them.
+The ground machinery (`studio_grey`, `alpha`, `infill`) is what carried them
+before; it has no user today and is kept for the next photograph that arrives
+from another room.
 
 `FACE_FRAC` and `FACE_Y` set the framing. A photograph that cannot fill the
 card at that framing is scaled up until it does rather than being padded, so a

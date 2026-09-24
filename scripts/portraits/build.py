@@ -29,43 +29,43 @@ OUT = f'{D}/out'
 # exactly the backdrop they came with. Asif's near-black wall and Sumit's office
 # window are from other years and other rooms; those two, and only those two,
 # are cut out and set on a grey fitted from the sitting itself.
-PEOPLE = [   # the third column: no ground, or which way the wall behind them faces
-    ('sumit-chatterjee',  'sumit-chatterjee.jpg', 'wall'),
-    ('ramesh-yadav',      'ramesh-yadav.webp',    False),
-    ('amit-garg',         'amit-garg.webp',       False),
+# person -> original photograph, and whether we have to put a ground under
+# them. The 2026 sitting was shot against one studio wall, so those frames keep
+# exactly the backdrop they came with.
+#
+# Sumit and Asif are not here: the client sent them finished, already on that
+# same wall and already exposed to match, and asked for them as they are. Their
+# files in public/team are that delivery, split from one frame and cropped to
+# the card — nothing in this file touches them. The ground machinery below
+# (studio_grey, alpha, infill) is what carried them before and has no user
+# today; it is kept for the next photograph that arrives from another room.
+PEOPLE = [
+    ('ramesh-yadav',      'ramesh-yadav.webp',      False),
+    ('amit-garg',         'amit-garg.webp',         False),
     ('dhawal-parvatikar', 'dhawal-parvatikar.webp', False),
-    ('asif-masani',       'asif-masani.png',      'flip'),
-    ('sanjay-rikhy',      'sanjay-rikhy.webp',    False),
-    ('geeta-karnik',      'geeta-karnik.webp',    False),
-    ('saurabh-aggarwal',  'saurabh-aggarwal.webp', False),
+    ('sanjay-rikhy',      'sanjay-rikhy.webp',      False),
+    ('geeta-karnik',      'geeta-karnik.webp',      False),
+    ('saurabh-aggarwal',  'saurabh-aggarwal.webp',  False),
 ]
 FOUNDERS = [
-    ('gaurav-malik-bw',     'gaurav-malik-bw.jpg',     False),
+    ('gaurav-malik-bw',     'gaurav-malik-bw.jpg',      False),
     ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.webp', False),
 ]
 
-# Which frame's wall goes behind the two who need one. One frame each, not an
-# average of several: averaging cancelled the very falloff that makes these
-# walls look photographed, and left a flat card.
+# Which frame's wall goes behind anyone who needs one, and the levels it is
+# mapped onto — the six's own medians at two points, corner and mid-side.
 GROUND_FROM = {'wall': 'saurabh-aggarwal.webp', 'flip': 'geeta-karnik.webp'}
+WALL_CORNER, WALL_SIDE = 95, 123
+TONE = {}
+# A frame being matched to the set, rather than merely corrected, is allowed
+# more gamma than one that keeps its own look.
+GAMMA_CEIL_GROUND = 1.70
 
 FACE_FRAC = 0.28        # the face box's share of the frame, where the photograph allows
 FACE_FRAC_GROUND = 0.33 # …and for the two on a plate, the middle of what the rest came out at
 FACE_FRAC_MAX = 0.38    # …and the most it may grow to fill a tightly shot frame
 FACE_Y = 0.48           # where the face sits down the frame
 FACE_TONE = 182         # the face median every portrait is exposed toward
-# The two on a plate are measured against the six as they end up on the page,
-# not against the target: Sumit's office lighting put his face 20 levels above
-# the brightest of them, so his target is pulled down until he lands inside
-# their range. Set from measurement, not taste — see the note in the README.
-TONE = {'sumit-chatterjee': 150}
-# …and their wall is mapped onto the six's own levels: corner to 95, mid-side
-# to 123, both medians of the six. Two points, so the falloff between them is
-# kept rather than the whole wall being shifted.
-WALL_CORNER, WALL_SIDE = 95, 123
-# A frame being matched to the set, rather than merely corrected, is allowed
-# more gamma than one that keeps its own look.
-GAMMA_CEIL_GROUND = 1.70
 GAMMA_FLOOR = 0.80      # …and how far any one frame may be moved to get there
 GAMMA_CEIL = 1.20
 CARD = (720, 960)       # 3:4, the adviser card
