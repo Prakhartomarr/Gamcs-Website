@@ -2,7 +2,24 @@ import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import type { SolutionBlock } from "@/lib/content/gamcs";
 import { previewBySlug, solutions } from "@/lib/content/gamcs";
 import CTA from "@/components/CTA";
-import PillarMesh from "@/components/PillarMesh";
+import Velaris from "@/components/ui/velaris";
+
+/**
+ * Each card's shader: a ground and four colours for the noise to blend, all
+ * within the brand's blue and its one teal neighbour, rotated a little from
+ * pillar to pillar so five cards on one page are a family rather than five
+ * copies. Design values, which is why they live here and not in the content
+ * module. The card's CSS gradient stays underneath as the floor: it is what
+ * shows if WebGL is unavailable, and what a printer gets.
+ */
+const SHADER: Record<string, { bg: string; colors: string[] }> = {
+  "fpa-cfo-advisory": { bg: "#0B4A76", colors: ["#2A86BE", "#0F5E97", "#12707A", "#08304F"] },
+  "finance-team-extension": { bg: "#0A4169", colors: ["#1F7FB8", "#14688F", "#0E6B72", "#072B45"] },
+  "digital-transformation": { bg: "#0C5387", colors: ["#3A8FC4", "#0F5E97", "#1A7C86", "#08334F"] },
+  "deal-advisory": { bg: "#093C62", colors: ["#2478AE", "#0C5387", "#0E6B72", "#062A43"] },
+  "training-enablement": { bg: "#0B4E7E", colors: ["#2E8BC0", "#116693", "#157A84", "#073048"] },
+};
+const SHADER_FALLBACK = SHADER["fpa-cfo-advisory"];
 
 /**
  * The five pillars as full-width blocks: a gradient card stating the pillar's
@@ -49,7 +66,18 @@ export default function PillarBlocks() {
             aria-labelledby={`${s.slug}-h`}
           >
             <div className="pillar-card reveal">
-              <PillarMesh />
+              {/* The gradient itself. aria-hidden and pointer-events-none: it
+                  is the card's surface, not content. */}
+              <span className="pillar-shader" aria-hidden="true">
+                <Velaris
+                  height="100%"
+                  dpr={1.5}
+                  speed={1.1}
+                  grain={0.22}
+                  bg={(SHADER[s.slug] ?? SHADER_FALLBACK).bg}
+                  colors={(SHADER[s.slug] ?? SHADER_FALLBACK).colors}
+                />
+              </span>
               <span className="pillar-label">{s.navLabel}</span>
               <h2 id={`${s.slug}-h`}>{s.h1}</h2>
               <p>{preview?.blurb ?? s.intro}</p>

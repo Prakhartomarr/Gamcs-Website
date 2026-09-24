@@ -2499,45 +2499,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* the floor the mesh drifts over — also what shows under prefers-reduced-motion */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#fff}
 
-/* ---- the drifting mesh ----
-   Two layers on mismatched loops (14s and 19s) so the pattern never visibly
-   repeats; the reference uses a 10s video loop, which does. The travel was set
-   by measurement, not taste: at +/-4% the mesh changed 0.2 of 255 per second
-   against the reference's ~5, i.e. barely moving. Both animate `transform` only: the compositor moves them without
-   repainting, which matters because each carries a blur and there are five
-   cards. Paused until the card is on screen — see PillarMesh.
-   Teal #0E6B72 is the one colour here that is not already in the palette; it
-   sits at roughly the blue's own lightness and chroma, a rotation of hue
-   rather than a new accent, so the mesh has somewhere to travel. */
-.pillar-card > .pillar-mesh{position:absolute;inset:-30%;z-index:0;
-  pointer-events:none;opacity:1;
-  background:
-    radial-gradient(38% 44% at 26% 30%, #226F7A 0%, rgba(34,111,122,0) 68%),
-    radial-gradient(42% 38% at 74% 22%, #35789F 0%, rgba(53,120,159,0) 66%),
-    radial-gradient(46% 50% at 58% 82%, #0E6B72 0%, rgba(14,107,114,0) 70%);
-  filter:blur(44px);
-  animation:pillar-drift-a 14s ease-in-out infinite alternate;
-  animation-play-state:paused;
-  will-change:transform}
-.pillar-card > .pillar-mesh::after{content:"";position:absolute;inset:-14%;
-  background:
-    radial-gradient(40% 46% at 78% 64%, #0A4169 0%, rgba(10,65,105,0) 68%),
-    radial-gradient(36% 40% at 18% 74%, #166B8D 0%, rgba(22,107,141,0) 66%);
-  filter:blur(36px);
-  animation:pillar-drift-b 19s ease-in-out infinite alternate;
-  animation-play-state:paused}
-.pillar-mesh[data-run],
-.pillar-mesh[data-run]::after{animation-play-state:running}
-@keyframes pillar-drift-a{
-  from{transform:translate3d(-15%,-11%,0) scale(1.02) rotate(-4deg)}
-  to{transform:translate3d(14%,13%,0) scale(1.38) rotate(5deg)}}
-@keyframes pillar-drift-b{
-  from{transform:translate3d(16%,12%,0) scale(1.32) rotate(6deg)}
-  to{transform:translate3d(-14%,-12%,0) scale(1.00) rotate(-5deg)}}
-@media (prefers-reduced-motion:reduce){
-  .pillar-card > .pillar-mesh,
-  .pillar-card > .pillar-mesh::after{animation:none;transform:none}
-}
+/* ---- the surface ----
+   A WebGL gradient (components/ui/velaris.tsx) drifting over the card's own
+   linear gradient, which stays as the floor: it is what shows if WebGL is
+   unavailable, under print, and for the moment before the first frame. The
+   shader animates only while its card is on screen and holds one frame under
+   prefers-reduced-motion — five of them on one page is four too many to run at
+   once. It replaced two blurred CSS layers whose whole job was to imitate
+   this. */
+.pillar-card > .pillar-shader{position:absolute;inset:0;z-index:0;
+  display:block;pointer-events:none}
+/* The gradient drifts, so its brightest pass could otherwise carry the body
+   copy down to about 2.8:1. This holds the side the text sits on and leaves
+   the far side to the shader: measured, the worst frame is 9.4:1 for the
+   headline and 7.2:1 for the paragraph. */
+.pillar-card > .pillar-shader::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(5,34,56,.62) 0%,rgba(5,34,56,.34) 46%,
+    rgba(5,34,56,0) 78%)}
+
 .pillar-card::after{content:"";position:absolute;right:-80px;top:-100px;
   width:300px;height:300px;border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
