@@ -73,22 +73,46 @@ def expose(a, box):
     g = min(max(np.log(FACE_TONE / 255) / np.log(max(med, 1) / 255), GAMMA_FLOOR), GAMMA_CEIL)
     return 255 * np.power(np.clip(a, 0, 255) / 255, g), med, g
 
+def infill(a, known):
+    """The photograph's own backdrop, everywhere — including behind the person.
+
+    A quadratic could not hold Sumit's office window or the 2026 set's
+    spotlight, and a backdrop read wrong at the silhouette is exactly where the
+    halo came from. This diffuses the known background inward over an image
+    pyramid: coarse levels carry it across the body, fine levels keep the
+    detail that matters, which is the few pixels either side of the edge.
+    """
+    F = lambda arr: Image.fromarray(arr.astype('float32'), 'F')
+    pyr = [(F(a * known), F(known.astype(float)))]
+    while min(pyr[-1][0].size) > 4:
+        half = tuple(max(v // 2, 1) for v in pyr[-1][0].size)
+        pyr.append(tuple(im.resize(half, Image.BILINEAR) for im in pyr[-1]))
+    est = None
+    for v, w in reversed(pyr):
+        V, W = np.asarray(v, dtype=float), np.asarray(w, dtype=float)
+        cur = V / np.maximum(W, 1e-6)
+        if est is not None:
+            up = np.asarray(F(est).resize(v.size, Image.BILINEAR), dtype=float)
+            conf = np.clip(W, 0, 1)
+            cur = cur * conf + up * (1 - conf)
+        est = cur
+    return est
+
 def alpha(a, m):
     """The mask runs a few pixels wide of the person, and those pixels are the
     photograph's own backdrop — carried along they ring the cut-out. So near the
-    edge, judge each pixel against that backdrop, fitted."""
+    edge, judge each pixel against that backdrop. Returns the coverage and the
+    backdrop, which the composite needs to subtract back out."""
     inner = ndimage.binary_erosion(m > 0.5, iterations=BAND)
     outer = ndimage.binary_dilation(m > 0.5, iterations=BAND)
-    h, w = a.shape
-    ys, xs = np.mgrid[0:h, 0:w]
-    x, y = xs / w, ys / h
-    bg = surface(fit(x[~outer], y[~outer], a[~outer]), w, h)
+    bg = infill(a, ~outer)
     edge = np.clip((np.abs(a - bg) - TOL) / TOL, 0, 1)
     al = np.where(inner, 1.0, np.where(outer, edge, 0.0))
-    return np.asarray(Image.fromarray((al * 255).astype('uint8')).filter(
+    al = np.asarray(Image.fromarray((al * 255).astype('uint8')).filter(
         ImageFilter.GaussianBlur(1.0)), dtype=float) / 255
+    return al, bg
 
-def place(a, al, box, size):
+def place(layers, box, size):
     """Scale and position the subject.
 
     Two rules pull against each other: the head should be the same size on every
@@ -100,28 +124,36 @@ def place(a, al, box, size):
     """
     W, H = size
     fx, fy, fw, fh = box
-    below = a.shape[0] - (fy + fh / 2)                    # body below the face centre
+    below = layers[0].shape[0] - (fy + fh / 2)            # body below the face centre
     k_fill = (1 - FACE_Y) * H / below                     # …just enough to reach the foot
     k = max((FACE_FRAC * H) / fh, min(k_fill, (FACE_FRAC_MAX * H) / fh))
-    sw, sh = round(a.shape[1] * k), round(a.shape[0] * k)
-    res = lambda arr: np.asarray(Image.fromarray(arr.astype('uint8')).resize((sw, sh), Image.LANCZOS), dtype=float)
-    sub, sal = res(a), res(al * 255) / 255
-    lay, lam = np.zeros((H, W)), np.zeros((H, W))
+    src_h, src_w = layers[0].shape
+    sw, sh = round(src_w * k), round(src_h * k)
+    res = lambda arr: np.asarray(Image.fromarray(arr.astype('float32'), 'F').resize((sw, sh), Image.BILINEAR), dtype=float)
     ox = round(W / 2 - (fx + fw / 2) * k)
     oy = round(max(FACE_Y * H - (fy + fh / 2) * k, H - sh))   # never leave a gap at the foot
     x0, y0, sx0, sy0 = max(ox, 0), max(oy, 0), max(-ox, 0), max(-oy, 0)
     w, h = min(sw - sx0, W - x0), min(sh - sy0, H - y0)
-    lay[y0:y0+h, x0:x0+w] = sub[sy0:sy0+h, sx0:sx0+w]
-    lam[y0:y0+h, x0:x0+w] = sal[sy0:sy0+h, sx0:sx0+w]
-    return lay, lam, (oy + (fy + fh / 2) * k) / H, fh * k / H
+    out = []
+    for arr in layers:
+        dst, src = np.zeros((H, W)), res(arr)
+        dst[y0:y0+h, x0:x0+w] = src[sy0:sy0+h, sx0:sx0+w]
+        out.append(dst)
+    return out, (oy + (fy + fh / 2) * k) / H, fh * k / H
 
 def make(name, src, size):
     path = f'{SRC}/{src}'
     box = face(path)
     m = person(path)
     a, med, g = expose(levels(np.asarray(Image.open(path).convert('L'), dtype=float)), box)
-    lay, lam, depth, frac = place(a, alpha(a, m), box, size)
-    out = np.clip(lay * lam + backdrop(*size) * (1 - lam), 0, 255)
+    al, bg = alpha(a, m)
+    (lay, lam, bgp), depth, frac = place([a, al, bg], box, size)
+    # Un-mix rather than blend. An edge pixel is a mix of the person and the
+    # backdrop they were shot against, so take that backdrop back out in the
+    # same proportion and put this one in: I + (1-a)(new - old). Where the
+    # mask is opaque nothing moves; where it is clear the old wall is replaced
+    # outright; in the band between, the ring simply is not there to see.
+    out = np.clip(lay + (1 - lam) * (backdrop(*size) - bgp), 0, 255)
     os.makedirs(OUT, exist_ok=True)
     Image.fromarray(out.astype('uint8')).save(f'{OUT}/{name}.jpg', quality=90, optimize=True, progressive=True)
     print(f'{name:20} face {med:3.0f} (gamma {g:.2f})  head {frac*100:.0f}% of frame, {depth*100:.0f}% down')
