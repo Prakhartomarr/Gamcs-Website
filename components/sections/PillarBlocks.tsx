@@ -20,23 +20,26 @@ import Velaris from "@/components/ui/velaris";
  * The open and close is a grid row going 0fr → 1fr, which animates in every
  * browser; `height: auto` does not.
  *
- * Each card's shader: one brand blue held, and the rest vivid — the reference's
- * energy without leaving the palette. Design values, which is why they live
- * here and not in the content module. The card's own linear gradient stays
- * underneath as the floor: it is what shows if WebGL is missing, under print,
- * and before the first frame.
+ * Each card's shader: one brand blue held, and the rest a deeper register of
+ * the same hue. The pale tints these palettes started with (mint, sky, lilac)
+ * had to be paid for in scrim — white cannot sit on them — and the bill was
+ * the gradient itself, flattened to a slab. Capped at a luminance white can
+ * sit on, the colours survive the scrim and the gradient reads. Design values,
+ * which is why they live here and not in the content module. The card's own
+ * linear gradient stays underneath as the floor: it is what shows if WebGL is
+ * missing, under print, and before the first frame.
  */
 const SHADER: Record<string, { bg: string; colors: string[] }> = {
   /* blue → emerald */
-  "fpa-cfo-advisory": { bg: "#0D6A8E", colors: ["#1B7FB8", "#10B981", "#5EEAD4", "#0F5E97"] },
+  "fpa-cfo-advisory": { bg: "#083D5E", colors: ["#0E5C86", "#0E8F6F", "#14B8A6", "#0A4169"] },
   /* blue → violet */
-  "finance-team-extension": { bg: "#3A35A8", colors: ["#0F5E97", "#7C3AED", "#A78BFA", "#2563EB"] },
+  "finance-team-extension": { bg: "#241F73", colors: ["#0F5E97", "#5B3FC4", "#7C5CE0", "#2145B8"] },
   /* blue → cyan */
-  "digital-transformation": { bg: "#0E7490", colors: ["#0F5E97", "#22D3EE", "#7DD3FC", "#1B7FB8"] },
+  "digital-transformation": { bg: "#0A5A75", colors: ["#0F5E97", "#1197B5", "#1FB3CE", "#1B7FB8"] },
   /* blue → teal */
-  "deal-advisory": { bg: "#0D7A72", colors: ["#0F5E97", "#14B8A6", "#6EE7B7", "#127D8E"] },
+  "deal-advisory": { bg: "#0A5F5C", colors: ["#0F5E97", "#0F9E90", "#14B8A6", "#127D8E"] },
   /* blue → indigo */
-  "training-enablement": { bg: "#3730A3", colors: ["#116693", "#6366F1", "#A5B4FC", "#1D4ED8"] },
+  "training-enablement": { bg: "#2A2585", colors: ["#116693", "#4F46E5", "#6366F1", "#1D4ED8"] },
 };
 const SHADER_FALLBACK = SHADER["fpa-cfo-advisory"];
 

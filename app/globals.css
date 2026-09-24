@@ -2472,32 +2472,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   interpolate-size:allow-keywords;
   background:#F9F9F8;color:var(--sol-ink)}
 
-/* ---- hero: headline and tile above, intro and chips below ---- */
-.sol-hero{padding:clamp(28px,4vw,56px) var(--sol-edge) clamp(32px,4vw,64px)}
-.sol-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(24px,2.6vw,36px) 20px;align-content:space-between;
-  min-height:clamp(560px,calc(100vh - var(--header-h) - 96px),780px)}
-.sol-h1{margin:0;max-width:772px;
-  font:400 clamp(48px,6.05vw,87px)/0.96 var(--font-sans);letter-spacing:-.02em;
-  color:var(--sol-ink)}
-.sol-tile{display:block;align-self:start;justify-self:end;width:100%;max-width:420px;
-  aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#0A4169}
-.sol-intro{margin:0;max-width:46ch;align-self:end;
-  font-size:1rem;line-height:1.5;color:var(--sol-ink)}
-.sol-chips{display:flex;flex-wrap:wrap;gap:8px;align-self:end;justify-content:flex-start}
-.sol-chips a{display:inline-flex;align-items:center;height:28px;padding:8px 8px 6px;
-  border-radius:6px;background:rgba(134,131,127,.10);
-  font:400 12px/12px var(--font-sans);letter-spacing:.04em;text-transform:uppercase;
-  color:var(--sol-ink);text-decoration:none;
-  transition:background .2s var(--ease-out)}
-.sol-chips a:hover{background:rgba(134,131,127,.20)}
-.sol-chips a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* ---- the jump rail, under the head band ---- */
+/* Sticks under the 90px header, scrolls sideways rather than wrapping to two
+   rows, which the labels do below ~1200px. It scrolls, so it has to look like
+   it: without the mask the last pillars are cut off with nothing to say they
+   existed. */
+.pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
+  border-bottom:1px solid rgba(16,45,68,.10)}
+.pillar-rail ul{list-style:none;margin:0;padding:0 40px 0 0;display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);
+  mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
+.pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
+  padding:0 13px;white-space:nowrap;text-decoration:none;
+  font:600 0.7222rem var(--font-sans);letter-spacing:.02em;color:var(--ink-muted);
+  border-bottom:2px solid transparent;transition:color .2s var(--ease-out),
+  border-color .2s var(--ease-out)}
+.pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+.pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
 
 /* ---- the five blocks ---- */
-.sol-pillars{display:grid}
+.sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px)}
 .sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:20px;padding:21px var(--sol-edge);
-  scroll-margin-top:calc(var(--header-h) + 12px)}
+  /* clears the header and the rail that sticks under it */
+  scroll-margin-top:calc(var(--header-h) + 56px)}
 /* even blocks swap sides. Source order is unchanged, so the card is still
    read before its list. */
 .sol-pillar[data-flip] .sol-card{order:2}
@@ -2508,14 +2507,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      and before the first frame */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#F9F9F8}
 .sol-card-paint{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
-/* The gradient drifts, and these palettes are vivid: white on the brightest
-   the emerald can paint is 1.75:1 bare. The scrim is solved rather than
-   judged — at 0.58 over the lightest colour in every palette, the card's text
-   reads between 5.5:1 and 8:1 — and it holds only the side the text sits on,
-   so the last quarter of the card is the shader at full strength. */
+/* The scrim buys the text its contrast, and it used to cost the gradient its
+   life: 0.6 of near-black over the whole card left five gradients looking like
+   one flat slab. It is now solved the other way round — the palettes carry no
+   colour whose luminance white cannot sit on, so 0.44 is enough where the text
+   is, and it releases the lower quarter of the card entirely. The button is
+   solid, so it needs none. Measured on the rendered page, the worst case is
+   the paragraph over emerald. */
 .sol-card-paint::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(103deg,rgba(6,22,38,.62) 0%,rgba(6,22,38,.60) 62%,
-    rgba(6,22,38,.56) 78%,rgba(6,22,38,.20) 92%,rgba(6,22,38,0) 100%)}
+  background:linear-gradient(180deg,rgba(4,16,30,.46) 0%,rgba(4,16,30,.44) 50%,
+    rgba(4,16,30,.24) 72%,rgba(4,16,30,.06) 88%,rgba(4,16,30,0) 100%)}
 .sol-card-body{position:relative;z-index:1;display:flex;flex-direction:column;
   height:100%;padding:clamp(22px,3.6vw,52px)}
 .sol-eyebrow{display:block;font:500 13px/1.2 var(--font-sans);letter-spacing:.02em;
@@ -2559,9 +2560,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* One column below 1024, which is where the reference stacks. */
 @media (max-width:1023px){
-  .sol-hero-grid{grid-template-columns:1fr;min-height:0;gap:22px}
-  .sol-tile{justify-self:stretch;max-width:none;aspect-ratio:16/9}
   .sol-pillar{grid-template-columns:1fr;gap:22px;padding:18px var(--sol-edge)}
+  /* the card is shorter here and the headline wraps further, so the text runs
+     most of its height: the scrim holds until near the bottom */
+  .sol-card-paint::after{background:linear-gradient(180deg,rgba(4,16,30,.50) 0%,
+    rgba(4,16,30,.48) 74%,rgba(4,16,30,.24) 92%,rgba(4,16,30,.10) 100%)}
   .sol-pillar[data-flip] .sol-card{order:0}
   .sol-card{min-height:clamp(420px,62vh,560px)}
 }
