@@ -28,6 +28,13 @@ tightly shot frame keeps a larger head — nothing is invented at the edges.
 moves most of the way and never all of it: a face pushed all the way to a
 target is not an exposure correction, it changes how the person looks.
 
+The two on a plate are matched to the other six by measurement rather than by
+eye. Sample each card's corners, mid-sides, face and overall mean; the six set
+the range, and these two have to land inside it. `TONE` holds a per-person
+exposure target for that (Sumit's office lighting put his face twenty levels
+above the brightest of them), and `WALL_CORNER`/`WALL_SIDE` map their wall onto
+the six's own levels at two points, so its falloff survives the correction.
+
 The `.tr-init` placeholder tile in globals.css approximates the same grey, for
 a card with no photograph. None has one today.
 

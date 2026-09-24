@@ -34,7 +34,7 @@ PEOPLE = [   # the third column: no ground, or which way the wall behind them fa
     ('ramesh-yadav',      'ramesh-yadav.webp',    False),
     ('amit-garg',         'amit-garg.webp',       False),
     ('dhawal-parvatikar', 'dhawal-parvatikar.webp', False),
-    ('asif-masani',       'asif-masani.jpg',      'flip'),
+    ('asif-masani',       'asif-masani.png',      'flip'),
     ('sanjay-rikhy',      'sanjay-rikhy.webp',    False),
     ('geeta-karnik',      'geeta-karnik.webp',    False),
     ('saurabh-aggarwal',  'saurabh-aggarwal.webp', False),
@@ -54,6 +54,18 @@ FACE_FRAC_GROUND = 0.33 # …and for the two on a plate, the middle of what the 
 FACE_FRAC_MAX = 0.38    # …and the most it may grow to fill a tightly shot frame
 FACE_Y = 0.48           # where the face sits down the frame
 FACE_TONE = 182         # the face median every portrait is exposed toward
+# The two on a plate are measured against the six as they end up on the page,
+# not against the target: Sumit's office lighting put his face 20 levels above
+# the brightest of them, so his target is pulled down until he lands inside
+# their range. Set from measurement, not taste — see the note in the README.
+TONE = {'sumit-chatterjee': 150}
+# …and their wall is mapped onto the six's own levels: corner to 95, mid-side
+# to 123, both medians of the six. Two points, so the falloff between them is
+# kept rather than the whole wall being shifted.
+WALL_CORNER, WALL_SIDE = 95, 123
+# A frame being matched to the set, rather than merely corrected, is allowed
+# more gamma than one that keeps its own look.
+GAMMA_CEIL_GROUND = 1.70
 GAMMA_FLOOR = 0.80      # …and how far any one frame may be moved to get there
 GAMMA_CEIL = 1.20
 CARD = (720, 960)       # 3:4, the adviser card
@@ -97,7 +109,19 @@ def studio_grey(size, which):
     W, H = size
     plate = np.asarray(
         Image.fromarray(base.astype('float32'), 'F').resize((W, H), Image.BILINEAR), dtype=float)
-    return plate[:, ::-1] if which == 'flip' else plate
+    if which == 'flip':
+        plate = plate[:, ::-1]
+    # Map it onto the six's own levels. A wall a few levels off theirs is the
+    # thing the eye picks out on a row of cards, and a flat offset would have
+    # brightened the middle as much as the corners; two points keep the falloff.
+    corner = np.median(np.concatenate([
+        plate[int(.02 * H):int(.09 * H), int(.02 * W):int(.10 * W)].ravel(),
+        plate[int(.02 * H):int(.09 * H), int(.90 * W):int(.98 * W)].ravel()]))
+    side = np.median(np.concatenate([
+        plate[int(.32 * H):int(.42 * H), int(.01 * W):int(.06 * W)].ravel(),
+        plate[int(.32 * H):int(.42 * H), int(.94 * W):int(.99 * W)].ravel()]))
+    scale = (WALL_SIDE - WALL_CORNER) / max(side - corner, 1e-6)
+    return (plate - corner) * scale + WALL_CORNER
 
 def face(path):
     line = subprocess.run([f'{D}/faces', path], capture_output=True, text=True).stdout.strip()
@@ -116,12 +140,13 @@ def levels(a, lo_t=6, hi_t=244):
     lo, hi = np.percentile(a, 0.5), np.percentile(a, 99.5)
     return np.clip((a - lo) * (hi_t - lo_t) / max(hi - lo, 1) + lo_t, 0, 255)
 
-def expose(a, box):
+def expose(a, box, tone=None):
     """A gamma toward the set's face tone, clamped. A face pushed all the way to
     a target is not an exposure correction — it changes how the person looks."""
     x, y, w, h = box
     med = float(np.median(a[y + int(h * .35):y + int(h * .75), x + int(w * .2):x + int(w * .8)]))
-    g = min(max(np.log(FACE_TONE / 255) / np.log(max(med, 1) / 255), GAMMA_FLOOR), GAMMA_CEIL)
+    ceil = GAMMA_CEIL_GROUND if tone else GAMMA_CEIL
+    g = min(max(np.log((tone or FACE_TONE) / 255) / np.log(max(med, 1) / 255), GAMMA_FLOOR), ceil)
     return 255 * np.power(np.clip(a, 0, 255) / 255, g), med, g
 
 def infill(a, known):
@@ -205,7 +230,7 @@ def place(layers, box, size, cover=False, frac=None):
 def make(name, src, size, ground):
     path = f'{SRC}/{src}'
     box = face(path)
-    a, med, g = expose(levels(np.asarray(Image.open(path).convert('L'), dtype=float)), box)
+    a, med, g = expose(levels(np.asarray(Image.open(path).convert('L'), dtype=float)), box, TONE.get(name))
 
     if not ground:
         # The photograph as it was taken: its own wall, cropped to the card.
