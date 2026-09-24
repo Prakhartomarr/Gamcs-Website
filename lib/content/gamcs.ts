@@ -863,6 +863,8 @@ export const maturityCurve = {
   },
   /** Column heads and row labels the visuals need, once for all five stages. */
   labels: {
+    /** Over the right column, which carries only the worked example. */
+    example: "What the CFO sees",
     actual: "Actual",
     budget: "Budget",
     variance: "Var.",
@@ -1028,13 +1030,22 @@ export const maturityCurve = {
             a: "At current trends, gross margin falls a further 120 bps next quarter.",
           },
         ],
-        /** Gross margin, indexed. `actual` runs to today; `forecast` continues it. */
-        spark: {
-          label: "Gross margin trend",
-          actual: [62, 59, 61, 55, 52, 48],
-          forecast: [48, 44, 41],
+        /**
+         * Gross margin, six quarters of actuals and two forecast. The numbers
+         * are the ones the rows above quote: 38.4% falling 120 bps to 37.2%.
+         * `band` is the forecast's confidence, in points, at its far end.
+         */
+        chart: {
+          label: "Gross margin",
           legendActual: "Actual",
           legendForecast: "Forecast",
+          forecastTag: "Forecast",
+          quarters: ["Q1", "Q2", "Q3", "Q4", "Q1", "Q2", "Q3", "Q4"],
+          actual: [41.6, 40.9, 40.4, 39.5, 39.1, 38.4],
+          forecast: [37.8, 37.2],
+          band: 0.9,
+          lastActual: "38.4%",
+          lastForecast: "37.2%",
         },
       },
       next: "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",

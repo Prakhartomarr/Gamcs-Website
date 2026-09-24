@@ -59,9 +59,9 @@ export function FileStack({ data }: { data: typeof maturityCurve.stages[0]["file
           >
             {/* The figure rides on the name line: the card below overlaps the
                 bottom of this one, and would cover it anywhere else. */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span aria-hidden="true" className="h-[14px] w-[11px] flex-none rounded-[2px] border border-[color:var(--hair)] bg-soft" />
-              <span className="truncate font-heading text-[12px] font-semibold text-[color:var(--ink-deep)]">
+              <span className="min-w-0 flex-1 truncate font-heading text-[12px] font-semibold text-[color:var(--ink-deep)]">
                 {c.name}
               </span>
               {c.figure ? (
@@ -279,55 +279,137 @@ export function DrillDown({
 
 /* ------------------------------------------------------- 04 · the explanation */
 
-/** Actuals solid, forecast dashed, a light band around it. Decoration: hidden. */
-function Spark({ data }: { data: typeof maturityCurve.stages[3]["explain"]["spark"] }) {
-  const W = 220;
-  const H = 54;
-  const all = [...data.actual, ...data.forecast.slice(1)];
-  const n = all.length - 1;
-  const lo = Math.min(...all) - 6;
-  const hi = Math.max(...all) + 6;
-  const px = (i: number) => (i / n) * W;
-  const py = (v: number) => H - ((v - lo) / (hi - lo)) * H;
-  const line = (vals: readonly number[], from: number) =>
-    vals.map((v, i) => `${i ? "L" : "M"}${px(from + i).toFixed(1)},${py(v).toFixed(1)}`).join(" ");
-  const fOff = data.actual.length - 1;
+/**
+ * Gross margin, six quarters behind and two ahead. The line is SVG in a 0–100
+ * box stretched to the box (non-scaling strokes keep the weights true); every
+ * label is HTML on top at the same percentages, so type stays the size it was
+ * set at rather than scaling with the chart.
+ *
+ * The forecast half carries a tint, a band that opens with distance and a
+ * dashed line: three ways of saying the same thing, because a forecast drawn
+ * like an actual is a claim nobody made.
+ */
+function MarginChart({ data }: { data: typeof maturityCurve.stages[3]["explain"]["chart"] }) {
+  const series = [...data.actual, ...data.forecast];
+  const n = series.length - 1;
+  const lo = Math.min(...series) - data.band - 0.6;
+  const hi = Math.max(...series) + 0.6;
+  const px = (i: number) => (i / n) * 100;
+  const py = (v: number) => ((hi - v) / (hi - lo)) * 100;
+  const at = (vals: readonly number[], from: number) =>
+    vals.map((v, i) => `${i ? "L" : "M"}${px(from + i).toFixed(2)},${py(v).toFixed(2)}`).join(" ");
+
+  const cut = data.actual.length - 1;                    // the last actual: where forecast starts
+  const fwd = [data.actual[cut], ...data.forecast];      // the dashed line joins it
   const band = [
-    ...data.forecast.map((v, i) => `${i ? "L" : "M"}${px(fOff + i).toFixed(1)},${py(v + i * 3.5).toFixed(1)}`),
-    ...data.forecast
-      .map((v, i) => `L${px(fOff + i).toFixed(1)},${py(v - i * 3.5).toFixed(1)}`)
+    ...fwd.map((v, i) => `${i ? "L" : "M"}${px(cut + i).toFixed(2)},${py(v + (data.band * i) / (fwd.length - 1)).toFixed(2)}`),
+    ...fwd
+      .map((v, i) => `L${px(cut + i).toFixed(2)},${py(v - (data.band * i) / (fwd.length - 1)).toFixed(2)}`)
       .reverse(),
     "Z",
   ].join(" ");
+
   return (
-    /* Side by side where there is room; the legend drops under the line on a
-       phone, where 220px of chart and 90px of legend do not fit 298px. */
-    <div className="flex flex-col items-start gap-2 min-[420px]:flex-row min-[420px]:items-center min-[420px]:gap-4">
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-[54px] w-full max-w-[220px]" aria-hidden="true">
-        <path d={band} fill="var(--blue)" opacity="0.12" />
-        <path d={line(data.actual, 0)} fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" />
-        <path
-          d={line(data.forecast, fOff)}
-          fill="none"
-          stroke="var(--blue)"
-          strokeWidth="2"
-          strokeDasharray="4 4"
-          strokeLinecap="round"
-        />
-      </svg>
-      <div className="text-[11.5px] leading-[1.6] text-[color:var(--ink-muted)]">
-        <span className="block font-medium text-[color:var(--ink-deep)]">{data.label}</span>
+    <div>
+      {/* legend, inline above the chart */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-[color:var(--ink-muted)]">
+        <span className="font-medium text-[color:var(--ink-deep)]">{data.label}</span>
         <span className="flex items-center gap-1.5">
           <span aria-hidden="true" className="h-[2px] w-4 flex-none rounded bg-blue" />
           {data.legendActual}
         </span>
         <span className="flex items-center gap-1.5">
-          <span
-            aria-hidden="true"
-            className="h-0 w-4 flex-none border-t-2 border-dashed border-blue"
-          />
+          <span aria-hidden="true" className="h-0 w-4 flex-none border-t-2 border-dashed border-blue" />
           {data.legendForecast}
         </span>
+      </div>
+
+      {/* inset by half a point, so the last dot and the final label stay inside
+          the column rather than hanging off its right edge */}
+      <div className="relative mt-2 h-[132px] w-full px-[5px]">
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          className="absolute inset-x-[5px] inset-y-0 h-full w-[calc(100%-10px)]"
+        >
+          <rect x={px(cut)} y="0" width={100 - px(cut)} height="100" fill="var(--blue)" opacity="0.045" />
+          <line
+            x1={px(cut)}
+            y1="0"
+            x2={px(cut)}
+            y2="100"
+            stroke="var(--line)"
+            strokeWidth="1"
+            strokeDasharray="3 3"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path d={band} fill="var(--blue)" opacity="0.13" />
+          <path
+            d={at(data.actual, 0)}
+            fill="none"
+            stroke="var(--blue)"
+            strokeWidth="2"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            d={at(fwd, cut)}
+            fill="none"
+            stroke="var(--blue)"
+            strokeWidth="2"
+            strokeDasharray="5 4"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        {/* the two points worth naming */}
+        {[
+          { i: cut, v: data.actual[cut], text: data.lastActual, end: false },
+          { i: n, v: data.forecast[data.forecast.length - 1], text: data.lastForecast, end: true },
+        ].map((m) => (
+          <span
+            key={m.text}
+            style={{ left: `calc(5px + ${px(m.i)}% - ${px(m.i) / 10}px)`, top: `${py(m.v)}%` }}
+            className={`absolute -translate-y-[calc(100%+9px)] whitespace-nowrap font-heading text-[11.5px] font-semibold tabular-nums text-[color:var(--ink-deep)] ${
+              m.end ? "-translate-x-full" : "-translate-x-1/2"
+            }`}
+          >
+            {m.text}
+          </span>
+        ))}
+        {[cut, n].map((i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            style={{ left: `calc(5px + ${px(i)}% - ${px(i) / 10}px)`, top: `${py(series[i])}%` }}
+            className="absolute h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-blue"
+          />
+        ))}
+
+        <span
+          className={`${MICRO} absolute right-1 top-1 text-blue/70`}
+          style={{ letterSpacing: "0.1em" }}
+        >
+          {data.forecastTag}
+        </span>
+      </div>
+
+      {/* the x axis */}
+      <div className="relative mt-1.5 h-[14px] px-[5px]">
+        {data.quarters.map((q, i) => (
+          <span
+            key={`${q}-${i}`}
+            style={{ left: `calc(5px + ${px(i)}% - ${px(i) / 10}px)` }}
+            className={`absolute text-[10.5px] tabular-nums ${
+              i === 0 ? "" : i === n ? "-translate-x-full" : "-translate-x-1/2"
+            } ${i > cut ? "text-blue/70" : "text-[color:var(--ink-muted)]"}`}
+          >
+            {q}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -372,8 +454,8 @@ export function Explain({ data }: { data: typeof maturityCurve.stages[3]["explai
         })}
       </div>
 
-      <div className="mt-3.5">
-        <Spark data={data.spark} />
+      <div className="mt-4">
+        <MarginChart data={data.chart} />
       </div>
     </div>
   );

@@ -1368,6 +1368,18 @@
   }
  },
  {
+  "code": "HOME-CURVE-23",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Label over the right column",
+  "kind": "text",
+  "text": "What the CFO sees",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.labels.example"
+  }
+ },
+ {
   "code": "HOME-CURVE-15",
   "page": "Home (/)",
   "section": "Maturity curve",
@@ -2940,39 +2952,171 @@
   }
  },
  {
-  "code": "HOME-ST04-36",
+  "code": "HOME-ST04-39",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 04 Decision Intelligence",
-  "label": "Figure — trend label",
+  "label": "Figure — chart title",
   "kind": "text",
-  "text": "Gross margin trend",
+  "text": "Gross margin",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[3].explain.spark.label"
+   "locator": "maturityCurve.stages[3].explain.chart.label"
   }
  },
  {
-  "code": "HOME-ST04-37",
+  "code": "HOME-ST04-40",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 04 Decision Intelligence",
-  "label": "Figure — trend legend: actual",
+  "label": "Figure — chart legend: actual",
   "kind": "text",
   "text": "Actual",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[3].explain.spark.legendActual"
+   "locator": "maturityCurve.stages[3].explain.chart.legendActual"
   }
  },
  {
-  "code": "HOME-ST04-38",
+  "code": "HOME-ST04-41",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 04 Decision Intelligence",
-  "label": "Figure — trend legend: forecast",
+  "label": "Figure — chart legend: forecast",
   "kind": "text",
   "text": "Forecast",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[3].explain.spark.legendForecast"
+   "locator": "maturityCurve.stages[3].explain.chart.legendForecast"
+  }
+ },
+ {
+  "code": "HOME-ST04-42",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart forecast band tag",
+  "kind": "text",
+  "text": "Forecast",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.forecastTag"
+  }
+ },
+ {
+  "code": "HOME-ST04-43",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 1",
+  "kind": "text",
+  "text": "Q1",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[0]"
+  }
+ },
+ {
+  "code": "HOME-ST04-44",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 2",
+  "kind": "text",
+  "text": "Q2",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[1]"
+  }
+ },
+ {
+  "code": "HOME-ST04-45",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 3",
+  "kind": "text",
+  "text": "Q3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[2]"
+  }
+ },
+ {
+  "code": "HOME-ST04-46",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 4",
+  "kind": "text",
+  "text": "Q4",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[3]"
+  }
+ },
+ {
+  "code": "HOME-ST04-47",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 5",
+  "kind": "text",
+  "text": "Q1",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[4]"
+  }
+ },
+ {
+  "code": "HOME-ST04-48",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 6",
+  "kind": "text",
+  "text": "Q2",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[5]"
+  }
+ },
+ {
+  "code": "HOME-ST04-49",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 7",
+  "kind": "text",
+  "text": "Q3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[6]"
+  }
+ },
+ {
+  "code": "HOME-ST04-50",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — chart x label 8",
+  "kind": "text",
+  "text": "Q4",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.quarters[7]"
+  }
+ },
+ {
+  "code": "HOME-ST04-51",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — last actual value (illustrative)",
+  "kind": "text",
+  "text": "38.4%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.lastActual"
+  }
+ },
+ {
+  "code": "HOME-ST04-52",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Figure — final forecast value (illustrative)",
+  "kind": "text",
+  "text": "37.2%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].explain.chart.lastForecast"
   }
  },
  {
