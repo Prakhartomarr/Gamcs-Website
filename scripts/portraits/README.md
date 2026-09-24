@@ -34,3 +34,14 @@ a card with no photograph. None has one today.
 New photograph: add it to the list in `build.py`, run the two steps, copy the
 result into `public/team/`. Check the result at 720x960 before shipping it —
 segmentation is good, not perfect.
+
+Then clear the dev server's image cache, or it will keep serving the old one:
+Next keys `.next/cache/images` on the source path, which has not changed, and
+does not revalidate on the file. Stop the server first or the delete does not
+take.
+
+```
+rm -rf .next/cache/images*      # with `next dev` stopped
+```
+
+A deployed build is unaffected: it renders from the files as they are.

@@ -29,12 +29,12 @@ OUT = f'{D}/out'
 # exactly the backdrop they came with. Asif's near-black wall and Sumit's office
 # window are from other years and other rooms; those two, and only those two,
 # are cut out and set on a grey fitted from the sitting itself.
-PEOPLE = [
-    ('sumit-chatterjee',  'sumit-chatterjee.jpg', True),
+PEOPLE = [   # the third column: no ground, or which way the wall behind them faces
+    ('sumit-chatterjee',  'sumit-chatterjee.jpg', 'wall'),
     ('ramesh-yadav',      'ramesh-yadav.webp',    False),
     ('amit-garg',         'amit-garg.webp',       False),
     ('dhawal-parvatikar', 'dhawal-parvatikar.webp', False),
-    ('asif-masani',       'asif-masani.jpg',      True),
+    ('asif-masani',       'asif-masani.jpg',      'flip'),
     ('sanjay-rikhy',      'sanjay-rikhy.webp',    False),
     ('geeta-karnik',      'geeta-karnik.webp',    False),
     ('saurabh-aggarwal',  'saurabh-aggarwal.webp', False),
@@ -44,11 +44,13 @@ FOUNDERS = [
     ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.webp', False),
 ]
 
-# The frames the studio grey is fitted from: three of the sitting, so one
-# photograph's lighting cannot skew it.
-GROUND_FROM = ['saurabh-aggarwal.webp', 'amit-garg.webp', 'geeta-karnik.webp']
+# Which frame's wall goes behind the two who need one. One frame each, not an
+# average of several: averaging cancelled the very falloff that makes these
+# walls look photographed, and left a flat card.
+GROUND_FROM = {'wall': 'saurabh-aggarwal.webp', 'flip': 'geeta-karnik.webp'}
 
 FACE_FRAC = 0.28        # the face box's share of the frame, where the photograph allows
+FACE_FRAC_GROUND = 0.33 # …and for the two on a plate, the middle of what the rest came out at
 FACE_FRAC_MAX = 0.38    # …and the most it may grow to fill a tightly shot frame
 FACE_Y = 0.48           # where the face sits down the frame
 FACE_TONE = 182         # the face median every portrait is exposed toward
@@ -58,24 +60,44 @@ CARD = (720, 960)       # 3:4, the adviser card
 BIG = (800, 1040)       # 10:13, the founder card
 BAND, TOL = 12, 16      # edge refinement: px either side of the mask, grey levels
 
-def studio_grey(size):
-    """The sitting's own wall, fitted as a smooth surface.
+def studio_grey(size, which):
+    """One frame's wall, lifted off the sitting — gradient and grain, no ghost.
 
-    Sampled from the margins and top band of three frames — never near a face —
-    and averaged, so the ground under Asif and Sumit is the same grey the other
-    eight were actually photographed against rather than a colour we invented.
+    Diffusing the masked subject closed left the donor's silhouette glowing
+    behind whoever stood on it, and a quadratic alone came out flat. So both:
+    the gradient is the quadratic fitted to that frame's known background, and
+    the texture is the real residual from its top band — rows that are wall all
+    the way across — mirrored down the frame. Nothing person-shaped survives.
+
+    The second of the two is mirrored, so the two cards do not carry the same
+    wall pixel for pixel.
     """
-    X, Y, V = [], [], []
-    for src in GROUND_FROM:
-        a = levels(np.asarray(Image.open(f'{SRC}/{src}').convert('L'), dtype=float))
-        h, w = a.shape
-        ys, xs = np.mgrid[0:h, 0:w]
-        x, y = xs / w, ys / h
-        keep = ((x < 0.10) | (x > 0.90) | (y < 0.20)) & ~((((x - .5) / .36) ** 2 + ((y - .45) / .44) ** 2) < 1)
-        X.append(x[keep]); Y.append(y[keep]); V.append(a[keep])
-    x, y, v = np.concatenate(X), np.concatenate(Y), np.concatenate(V)
-    c = fit(x, y, v)
-    return surface(c, *size)
+    path = f'{SRC}/{GROUND_FROM[which]}'
+    a = levels(np.asarray(Image.open(path).convert('L'), dtype=float))
+    known = ~ndimage.binary_dilation(person(path) > 0.5, iterations=BAND * 2)
+    h, w = a.shape
+    ys, xs = np.mgrid[0:h, 0:w]
+    x, y = xs / w, ys / h
+    base = surface(fit(x[known], y[known], a[known]), w, h)
+
+    # the deepest band of rows that is wall all the way across
+    full = known.all(axis=1)
+    band = 0
+    while band + 1 < h and full[band + 1]:
+        band += 1
+    if band > 8:
+        # Mirroring the band down the frame repeats it, and a repeat reads as
+        # banding; blurring along the repeat and halving it leaves the mottle
+        # without the stripes.
+        resid = (a - base)[:band]
+        idx = np.arange(h) % (2 * band)
+        idx = np.where(idx < band, idx, 2 * band - idx - 1)
+        base = base + ndimage.gaussian_filter(resid[idx], sigma=(band / 6, 1.0)) * 0.55
+
+    W, H = size
+    plate = np.asarray(
+        Image.fromarray(base.astype('float32'), 'F').resize((W, H), Image.BILINEAR), dtype=float)
+    return plate[:, ::-1] if which == 'flip' else plate
 
 def face(path):
     line = subprocess.run([f'{D}/faces', path], capture_output=True, text=True).stdout.strip()
@@ -141,7 +163,7 @@ def alpha(a, m):
         ImageFilter.GaussianBlur(1.0)), dtype=float) / 255
     return al, bg
 
-def place(layers, box, size, cover=False):
+def place(layers, box, size, cover=False, frac=None):
     """Scale and position the subject.
 
     Two rules pull against each other: the head should be the same size on every
@@ -155,7 +177,8 @@ def place(layers, box, size, cover=False):
     fx, fy, fw, fh = box
     below = layers[0].shape[0] - (fy + fh / 2)            # body below the face centre
     k_fill = (1 - FACE_Y) * H / below                     # …just enough to reach the foot
-    k = max((FACE_FRAC * H) / fh, min(k_fill, (FACE_FRAC_MAX * H) / fh))
+    want = frac or FACE_FRAC
+    k = max((want * H) / fh, min(k_fill, (FACE_FRAC_MAX * H) / fh))
     src_h, src_w = layers[0].shape
     if cover:
         # Nothing is composited behind this one, so the photograph itself has to
@@ -190,13 +213,13 @@ def make(name, src, size, ground):
         out = np.clip(lay, 0, 255)
     else:
         al, bg = alpha(a, person(path))
-        (lay, lam, bgp), depth, frac = place([a, al, bg], box, size)
+        (lay, lam, bgp), depth, frac = place([a, al, bg], box, size, frac=FACE_FRAC_GROUND)
         # Un-mix rather than blend. An edge pixel is a mix of the person and the
         # backdrop they were shot against, so take that backdrop back out in the
         # same proportion and put this one in: I + (1-a)(new - old). Where the
         # mask is opaque nothing moves; where it is clear the old wall is
         # replaced outright; in the band between, the ring is not there to see.
-        out = np.clip(lay + (1 - lam) * (studio_grey(size) - bgp), 0, 255)
+        out = np.clip(lay + (1 - lam) * (studio_grey(size, ground) - bgp), 0, 255)
 
     os.makedirs(OUT, exist_ok=True)
     Image.fromarray(out.astype('uint8')).save(f'{OUT}/{name}.jpg', quality=90, optimize=True, progressive=True)
