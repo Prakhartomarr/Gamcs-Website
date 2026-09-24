@@ -11,18 +11,17 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 OUT = os.path.dirname(os.path.abspath(__file__)) + '/out'
 os.makedirs(OUT, exist_ok=True)
 
-# person -> source file, as of the last run. The two REPO paths were the
-# pre-2026 originals; those files have since been replaced by this script's own
-# output, so re-running against them would process an already-processed image —
-# take the originals out of git history (before the "one set" commit) instead.
+# person -> the ORIGINAL photograph, never this script's own output. The
+# pre-2026 originals (Asif and the two founders) are in git history, before the
+# "Put every portrait on one backdrop" commit.
 PEOPLE = [
-    ('sumit-chatterjee',  f'{SRC}/18.jpg'),
-    ('ramesh-yadav',      f'{SRC}/15.webp'),
-    ('amit-garg',         f'{SRC}/14.webp'),
-    ('dhawal-parvatikar', f'{SRC}/16.webp'),
-    ('asif-masani',       f'{REPO}/public/team/asif-masani.jpg'),
-    ('sanjay-rikhy',      f'{SRC}/17.webp'),
-    ('saurabh-aggarwal',  f'{SRC}/13.webp'),
+    ('sumit-chatterjee',  f'{SRC}/sumit-chatterjee.jpg'),
+    ('ramesh-yadav',      f'{SRC}/ramesh-yadav.webp'),
+    ('amit-garg',         f'{SRC}/amit-garg.webp'),
+    ('dhawal-parvatikar', f'{SRC}/dhawal-parvatikar.webp'),
+    ('asif-masani',       f'{SRC}/asif-masani.jpg'),
+    ('sanjay-rikhy',      f'{SRC}/sanjay-rikhy.webp'),
+    ('saurabh-aggarwal',  f'{SRC}/saurabh-aggarwal.webp'),
 ]
 FACE_FRAC = 0.34   # face-box height as a share of the frame
 FACE_Y    = 0.40   # where the face-box centre sits down the frame

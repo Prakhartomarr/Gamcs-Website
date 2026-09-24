@@ -2633,8 +2633,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    the studio backdrop the portraits were shot against, so the empty card sits
    in the row instead of glaring out of it. */
 .tr-init{position:absolute;inset:0;display:grid;place-items:center;
-  background:radial-gradient(115% 80% at 50% 33%,
-    #7f7f7f 0%,#646464 45%,#4c4c4c 72%,#101010 100%);
+  background:linear-gradient(to bottom,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%),
+    radial-gradient(112% 92% at 50% 34%,#7c7c7c 0%,#727272 40%,#676767 72%,#636363 100%);
   color:#C2C7CC;font-weight:300;font-size:2.4444rem;letter-spacing:.02em}
 .tr-shot img{object-fit:cover;filter:grayscale(1) contrast(1.04);
   transition:transform .6s var(--ease-out)}
