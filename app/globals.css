@@ -1367,8 +1367,12 @@ html[data-cookie-banner] .sticky-cta{display:none}
 /* No top margin in the row: align-items:center centres the MARGIN box, so 34px
    on top pushed the button half that far below the copy's centre. The margin is
    what separates it from the copy once the row stacks, so it comes back there. */
-.hero .ctas{margin-top:0}
-@media (max-width:1023px){.hero .ctas{margin-top:34px}}
+/* -12px right: the button sat flush on the hero's 32px gutter, level with the
+   copy's left edge. This pushes it 12px past that, so it sits nearer the
+   viewport edge than the text does. The hero clips its own overflow and 12 is
+   well inside the gutter, so nothing leaves the screen. */
+.hero .ctas{margin-top:0;margin-right:-12px}
+@media (max-width:1023px){.hero .ctas{margin-top:34px;margin-right:0}}
 
 /* ---- hero lead-in ----
    The measure moves up to the wrapper. Left on the paragraph it would let the
