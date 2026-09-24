@@ -872,6 +872,12 @@ export const maturityCurve = {
     actual: "Actual",
     budget: "Budget",
     variance: "Var.",
+    /* Favourable and unfavourable, the management-pack convention. Colour says
+       it too, but colour must not be the only thing that says it. */
+    favourableShort: "F",
+    unfavourableShort: "U",
+    favourable: "favourable",
+    unfavourable: "unfavourable",
     impact: "Impact",
     why: "Why",
     action: "Recommended",

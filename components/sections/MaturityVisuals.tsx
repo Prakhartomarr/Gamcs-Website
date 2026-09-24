@@ -146,7 +146,13 @@ export function PackAndLag({ data }: { data: typeof maturityCurve.stages[1]["pac
                   r.good ? "text-[color:var(--ink-deep)]" : "text-destructive"
                 }`}
               >
-                {r.variance}
+                {r.variance}{" "}
+                <span aria-hidden="true" className="font-medium opacity-70">
+                  {r.good ? labels.favourableShort : labels.unfavourableShort}
+                </span>
+                <span className="sr-only">
+                  {r.good ? labels.favourable : labels.unfavourable}
+                </span>
               </td>
             </tr>
           ))}

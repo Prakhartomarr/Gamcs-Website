@@ -1416,6 +1416,54 @@
   }
  },
  {
+  "code": "HOME-CURVE-26",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Pack: favourable marker",
+  "kind": "text",
+  "text": "F",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.labels.favourableShort"
+  }
+ },
+ {
+  "code": "HOME-CURVE-27",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Pack: unfavourable marker",
+  "kind": "text",
+  "text": "U",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.labels.unfavourableShort"
+  }
+ },
+ {
+  "code": "HOME-CURVE-28",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Pack: favourable, read aloud",
+  "kind": "text",
+  "text": "favourable",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.labels.favourable"
+  }
+ },
+ {
+  "code": "HOME-CURVE-29",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Pack: unfavourable, read aloud",
+  "kind": "text",
+  "text": "unfavourable",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.labels.unfavourable"
+  }
+ },
+ {
   "code": "HOME-CURVE-18",
   "page": "Home (/)",
   "section": "Maturity curve",
