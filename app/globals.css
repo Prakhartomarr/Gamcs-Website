@@ -259,8 +259,7 @@ h1,h2,h3,p{margin-top:0}
   .hero[data-anim] .hero-rule,.hero[data-anim] .orbit-ring,.hero[data-anim] .ga-core,
   .hero[data-anim] .card,.hero[data-anim] .chipwrap,.hero[data-anim] .hero-clients{opacity:1 !important;transform:none !important;animation:none !important}
   .spinner,.btn-shimmer::after,.btn-shimmer::before,.ichip{animation:none !important}
-  .who-portrait{transition:none !important}
-  .who-portrait:hover{transform:none !important}
+  .who-founders-btn,.who-founders-btn .btn-label > span{transition:none !important}
   .bars i{transform:scaleY(1) !important}
   .site-nav .brand,.site-nav .nav a,.site-nav .nav-actions,.site-nav .mobile{animation:none !important;opacity:1 !important;transform:none !important}
   .reveal{opacity:1 !important;transform:none !important}
@@ -1457,14 +1456,18 @@ html[data-cookie-banner] .sticky-cta{display:none}
 @media (min-width:640px){.abstract-panel{border-radius:18px}}
 
 /* ---- who-we-are: copy left, founder portrait right, mission line beneath ---- */
-.who-row{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:80px;align-items:center}
+/* 530 for the card, and the gutter down from 80 to 64 so the copy column keeps
+   the 686px it had at 440/80 — otherwise the heading picks up a fifth line. */
+.who-row{display:grid;grid-template-columns:minmax(0,1fr) 530px;gap:64px;align-items:flex-start}
 .who-copy{display:flex;flex-direction:column;align-items:flex-start}
 .who-lead{margin:24px 0 0;max-width:52ch;font-size:0.9444rem;line-height:1.65;
   font-weight:500;color:var(--ink-deep)}
 .who-copy .btn{margin-top:30px}
-/* Portrait plus its link, so the button tracks the image column rather than
-   the copy column. */
-.who-figure{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+/* The figure is the card now — the link went inside it, so there is no column
+   to stack and no gap under it to leave behind. Both columns start at the top
+   of the row, and this is the whole of the card's lift: 16px above the eyebrow
+   pill, nothing else pulling on it. */
+.who-figure{margin-top:-16px}
 .who-figure .who-portrait{width:100%}
 /* The box matches the photograph's own aspect (880x852). The two founders are
    spread across the frame, so a taller box on `cover` would trim ~11% off each
@@ -1477,20 +1480,50 @@ html[data-cookie-banner] .sticky-cta{display:none}
    still reads — the card fades out unevenly rather than cleanly. The hairline
    is what the site already puts round a white surface on a white band
    (.locmap-card, .mega). */
-.who-portrait{border-radius:24px;overflow:hidden;aspect-ratio:1/1;
-  background:var(--band-soft);border:1px solid var(--line);
-  box-shadow:0 40px 90px -60px rgba(16,45,68,.45);
-  transition:transform .6s var(--ease-out)}
-.who-portrait img{display:block;width:100%;height:100%;object-fit:cover}
-@media (hover:hover) and (pointer:fine){.who-portrait:hover{transform:scale(1.015)}}
+/* No border and no padding: the hairline this used to carry drew a light strip
+   down the right edge and round the bottom-right corner, where the
+   photograph's own backdrop is lightest. The photograph now runs to the card's
+   corners and the radius clips it. */
+.who-portrait{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:530/620;
+  background:var(--band-soft);
+  box-shadow:0 40px 90px -60px rgba(16,45,68,.45)}
+/* Nothing scales it: no hover zoom, no transform, no width past the box. What
+   crops the sides is the box itself — 530/620 on a square photograph. */
+.who-portrait img{display:block;width:100%;height:100%;object-fit:cover;
+  object-position:center top}
+
+/* The link, on frosted glass in the card's bottom-left corner. It is CTA's
+   .btn.btn-light underneath; everything below is the override, scoped to the
+   card so it cannot reach another button. */
+.who-portrait .who-founders-btn{position:absolute;left:20px;bottom:20px;z-index:2;
+  min-height:44px;height:44px;padding:0 22px;border-radius:9999px;
+  font-size:15px;font-weight:600;letter-spacing:-.01em;color:#0f172a;
+  background:rgba(255,255,255,.8);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 6px 20px rgba(15,23,42,.12);
+  transition:background .15s var(--ease-out),transform var(--dur-press) var(--ease-out)}
+/* .btn-light sets 10px; the arrow wants 14 and no circle behind it. The
+   whitespace CTA puts between label and glyph is a whitespace-only anonymous
+   flex item, which is not rendered, so the gap is the whole distance. */
+.who-portrait .who-founders-btn .btn-label{gap:14px}
+.who-portrait .who-founders-btn .btn-label > span{font-size:16px;line-height:1;
+  transition:transform .15s var(--ease-out)}
+.who-portrait .who-founders-btn:hover{background:rgba(255,255,255,.92)}
+.who-portrait .who-founders-btn:hover .btn-label > span{transform:translateX(2px)}
+.who-portrait .who-founders-btn:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 /* Stacks at 1279, not 1023: from 768-1279 .container is pinned to 920px, so a
    fixed 440px portrait track would leave the copy 400px - narrower than the
    image beside it, and the heading would wrap to three lines. */
 @media (max-width:1279px){
   .who-row{grid-template-columns:1fr;gap:36px}
-  /* Capped rather than full-bleed: a portrait that spans a tablet column is
-     taller than the copy beside it ever was. */
-  .who-portrait{max-width:420px}
+  /* The lift is a two-column alignment; stacked, it would just crowd the copy. */
+  .who-figure{margin-top:0}
+  /* Full width up to 530, which is the card's own width — the aspect ratio
+     carries the height, so nothing is fixed and nothing overflows. Uncapped, a
+     920px tablet column would make this photograph 1076px tall. */
+  .who-portrait{max-width:530px}
 }
 @media (max-width:767px){
   .who-row{gap:28px}
@@ -1505,16 +1538,20 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .section-head h2,
 .page-head h1,
 .tr-h,
+.clients-head h2,
 .fin-h2{font-size:clamp(30px,3.7vw,50px);line-height:1.12;font-weight:500;
   font-family:var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
 .who-heading{margin:0;max-width:22ch}
-.who .who-mission{margin:69px 0 0;max-width:60ch;padding-left:18px;
+/* It closes the copy column, under "About our firm" and beside the portrait,
+   rather than running the container's full width beneath the row. `stretch`
+   because .who-copy aligns its children to flex-start, which would otherwise
+   shrink this to the sentence's own width and lose the measure. */
+.who .who-mission{align-self:stretch;margin:69px 0 0;max-width:60ch;padding-left:18px;
   border-left:2px solid var(--blue);font-size:0.9444rem;line-height:1.55;
   color:var(--ink);font-weight:600}
-/* The section's last block: no bottom margin, so the gap to the next section
-   is the section's own padding. 69px from 1280 up is the distance it already
-   sat from the row above; stacked, 56px under "Meet our founders", and 36px on
-   phones (below). */
+/* The column's last block: no bottom margin, so the gap to the next section is
+   the section's own padding. 69px from 1280 up is the distance it already sat
+   from the row above; stacked, 56px, and 36px on phones (below). */
 @media (max-width:1279px){.who .who-mission{margin-top:56px}}
 
 /* ---- /who-we-are: the rest of the firm story ----
@@ -1906,12 +1943,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 .fin-h2{margin:22px 0 0}
 .fin-h2 .accent{color:var(--blue);position:relative;white-space:nowrap}
-/* underline is drawn once the heading scrolls in */
-.fin-h2 .accent.uline::after{content:"";position:absolute;left:0;right:0;bottom:-.02em;
-  height:.11em;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light));
-  transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease-fin)}
-.reveal.visible .fin-h2 .accent.uline::after,
-.fin-h2.visible .accent.uline::after{transform:scaleX(1)}
 .fin-lead{margin:20px 0 0;color:var(--ink-muted);font-size:clamp(1rem,1.15vw,1.14rem);
   line-height:1.62;max-width:52ch}
 .fin-center{text-align:center}
@@ -1938,17 +1969,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      centred at 390px reads as ragged on both edges. As originally shipped. */
   .fin-center{text-align:left}
   .fin-center .fin-lead{margin-left:0}
-  /* An underlined accent is nowrap so its drawn ::after stays in one piece,
-     but "Decision-Ready Finance Function" is ~500px on one line at 30px, wider
-     than a phone. Here it wraps, and each line takes a plain text underline,
-     since the ::after cannot follow a wrapped span. */
-  .fin-h2 .accent.uline{white-space:normal;text-decoration-line:underline;
-    text-decoration-color:var(--blue);text-decoration-thickness:.11em;
-    text-underline-offset:.12em;text-decoration-skip-ink:none}
-  .fin-h2 .accent.uline::after{display:none}
+  /* "Decision-Ready Finance Function" is ~500px on one line at 30px, wider
+     than a phone, so this one accent wraps. The others (.fin-h2 .accent is
+     nowrap) are short enough not to need it. */
+  .services .fin-h2 .accent{white-space:normal}
 }
 @media (prefers-reduced-motion:reduce){
-  .fsvc-link svg,.pillar-cta svg,.fin-h2 .accent.uline::after{transition:none}
+  .fsvc-link svg,.pillar-cta svg{transition:none}
 }
 
 /* ---- MATURITY CURVE (reference treatment) ---- */
@@ -2057,27 +2084,46 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    advisory-firm marks at its end (2026-09-22), so it closes the band by itself.
    The gaps either side of the marks are 48px (36 at 620 and below): these
    values are 30/18 because the wall carries 18px of its own padding (py-4). */
-.clients{padding:96px 0;background:var(--band-white)}
-.clients-head{text-align:center;margin:0 auto 30px}
-/* Set in caps, so the tracking goes positive (tight caps close up). The size
-   is as large as one line can be on the wider of the two faces: at 500 the
-   52-character line sets 34.5px of width per px of font size in Inter and
-   32.7px in SF Pro. The box is 1184px at 1280, 1280px from 1376 (Tailwind caps
-   .container there) and 1440px from 1536, so 2.64vw capped at 36.5px, then
-   41px, keeps Inter at 98% of the box and SF Pro at 93%. That is the floor:
-   ClientsHeading.tsx then scales it per face to 97.5% of the box (SF Pro lands
-   near 38.3px at 1440). From 1280 up the line is then justified, which
-   spreads the remainder across its six word gaps so it starts on the first mark's left edge and ends on the last mark's
-   right edge. Narrower than that it wraps, so it stays centred. */
-.clients-head h2{margin:0;font:500 clamp(22px,2.64vw,36.5px)/1.25 var(--font-sans);
-  letter-spacing:.02em;text-transform:uppercase;color:var(--ink-deep)}
-@media (min-width:1280px){
-  .clients-head h2{text-align:justify;text-align-last:justify}
+/* The band's own air. It was 96px a side, which with the wall's 18px and the
+   next section's 108px put 222px of white between the last logo and the next
+   heading — the band's content is 350px tall, so it was carrying 258px of
+   padding. Halved, and then the top taken down again to 32 — the hero above
+   ends in its own band, so the wall needs less air to separate from it than it
+   needs under the logos, where the next section starts cold. The rule under
+   .clients matches the halving on the section that follows. The band and the
+   page are both #fff, so none of this padding is drawing an edge; it is only
+   distance.
+
+   That leaves the heading with 32px over it and 40px under it. It does not
+   float, because the hero's band ends on a hard edge right above: the heading
+   reads as the first thing inside the white band, not as something adrift
+   between two sections. */
+.clients{padding:32px 0 48px;background:var(--band-white)}
+.clients-head{text-align:center;margin:0 auto 22px}
+/* The other half of the gap under the logos belongs to whatever section
+   follows, which on the homepage is .d2d — 108px of its own top padding. This
+   trims it for that one neighbour; every other section on the site keeps its
+   108px. Held above 768 on purpose: below that .d2d is a grey band with its
+   own internal rhythm, and the white gap there is the clients band's alone. */
+@media (min-width:769px){
+  .clients + .section{padding-top:44px}
 }
-@media (min-width:1536px){
-  .clients-head h2{font-size:41px}
-}
-@media (max-width:900px){.clients{padding:80px 0}}
+/* Sentence case, as the copy is written, at the size every other heading on
+   the site carries (the shared rule above).
+
+   It used to be set in caps at a bespoke size, fitted per face by JS to 97.5%
+   of its box and then justified, so the line's two ends landed on the first
+   and last mark of the wall. Lowercase is narrower than caps, so that fit blew
+   the line up to 60px at 1600 — and the wall it was justifying against is no
+   longer edge to edge, its marks being centred in their columns now. Both
+   reasons went, so the fit went with them (components/sections/ClientsHeading
+   .tsx is deleted) and the heading is simply centred, like the wall.
+
+   It sets on one line from 800 up on both faces, with the least room at 1024
+   (97% of the box on SF Pro). `text-wrap:balance` is there for the face or the
+   width where it does not: two even lines rather than a long one and a word. */
+.clients-head h2{margin:0;text-wrap:balance}
+@media (max-width:900px){.clients{padding:26px 0 40px}}
 @media (max-width:767px){.fmc{padding:64px 0}}
 /* .btn sets white-space:nowrap, which at phone widths let a long label run
    wider than its button, cut silently by the body's overflow-x:hidden. Let
@@ -2086,37 +2132,34 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
   .btn-label{white-space:normal;text-align:center}
 }
-/* Edge alignment. Every mark is centred in its column, which leaves the wall
-   floating inside the page's measure — the first mark starts short of the
-   container's left edge and the last stops short of its right. The first and
-   last mark of each row are pulled to their column's edges instead, so the
-   wall's outer edges sit on the same line as the heading, the partner copy and
-   everything else on the page. The component's own 9px item padding goes with
-   them. Column counts here mirror the grid classes in ClientLogos.tsx. */
+/* Every mark centred in its own column, so the wall reads as a set of even
+   columns rather than a block justified to the page's measure. The first and
+   last mark of each row used to be pulled to their column's edges, which put
+   the wall's outer edges on the same line as the heading — at the cost of the
+   two end columns having a different rhythm from the five between them.
+
+   Rows are a fixed track rather than one sized to the tallest mark in them,
+   so the vertical rhythm is the same whichever marks land in a row. The track
+   is the cap `displaySize` works to in ClientLogos.tsx.
+
+   The row gap answers the column gap. Centred in a 152px column at 1280, marks
+   of 39-121px sit 70-139px apart (median 98), which left three rows 40px apart
+   looking like three tight bands in a wide field. At 63px the cell reads about
+   1.6:1 — still landscape, so a row still groups as a row. It closes with the
+   viewport, since the columns do.
+
+   The component's own 9px item padding goes, as it did before. */
+.cl-grid{row-gap:clamp(40px,4.4vw,63px);grid-auto-rows:56px}
 .cl-grid > div{padding-left:0;padding-right:0}
-.cl-grid > div:nth-child(3n+1){justify-self:start}
-.cl-grid > div:nth-child(3n){justify-self:end}
-@media (min-width:640px){
-  .cl-grid > div:nth-child(3n+1),.cl-grid > div:nth-child(3n){justify-self:center}
-  .cl-grid > div:nth-child(4n+1){justify-self:start}
-  .cl-grid > div:nth-child(4n){justify-self:end}
-}
-@media (min-width:1024px){
-  .cl-grid > div:nth-child(4n+1),.cl-grid > div:nth-child(4n){justify-self:center}
-  .cl-grid > div:nth-child(5n+1){justify-self:start}
-  .cl-grid > div:nth-child(5n){justify-self:end}
-}
-@media (min-width:1280px){
-  .cl-grid > div:nth-child(5n+1),.cl-grid > div:nth-child(5n){justify-self:center}
-  .cl-grid > div:nth-child(7n+1){justify-self:start}
-  .cl-grid > div:nth-child(7n){justify-self:end}
-}
-@media (max-width:620px){.clients{padding:60px 0}
+/* .clients padding is not set here: the max-width:768px block below matches
+   too and comes later, so its value is the one that lands. */
+@media (max-width:620px){
   .clients-head{margin-bottom:18px}
   /* Three columns of 94px at 390 cannot hold the 121px the 56px cap gives
      CoreStack, so the marks come back to a 40px cap here. width/height are
      inline on the image, hence the override to auto. */
-  .clients-wall img{width:auto!important;height:auto!important;max-height:40px;max-width:88px}}
+  .clients-wall img{width:auto!important;height:auto!important;max-height:40px;max-width:88px}
+  .cl-grid{grid-auto-rows:40px}}
 
 /* ---- client wall, phones (<=768) ----
    The heading in sentence case, left, 24px; the grid swapped for two
@@ -2126,10 +2169,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .clm-wall{display:none}
 @keyframes clm-drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (max-width:768px){
-  .clients{padding:80px 0}
+  .clients{padding:26px 0 40px}
   .clients .container{width:calc(100% - 40px)}
   .clients-head{text-align:left;margin:0 0 28px}
-  .clients-head h2{max-width:320px;font:500 24px/1.2 var(--font-sans);letter-spacing:-.02em;text-transform:none}
+  .clients-head h2{max-width:320px;font:500 24px/1.2 var(--font-sans);letter-spacing:-.02em}
   .clients-wall{display:none}
   .clm-wall{display:flex;flex-direction:column;gap:8px}
   /* edge to edge: out of the .container by however much it is inset */

@@ -1,12 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import {
-  CinematicLogoCloud,
-  type LogoCloudClient,
-} from "@/components/ui/cinematic-logo-cloud";
+import Image from "next/image";
+import { type LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
+import LogoCloudSwap, { type LogoEntry } from "@/components/ui/logo-clouds";
 import ClientMarquee from "@/components/sections/ClientMarquee";
-import ClientsHeading from "@/components/sections/ClientsHeading";
 import { clients } from "@/lib/content/gamcs";
+import { cn } from "@/lib/utils";
 
 const LOGO_DIR = path.join(process.cwd(), "public", "logos", "clients");
 
@@ -42,12 +41,14 @@ function displaySize({ width, height }: { width: number; height: number }) {
 
 /**
  * The client logo wall in the band under the hero: all twenty-one marks at once,
- * fading up out of a blur a tenth of a second apart as the band scrolls in.
+ * fading up out of a blur a tenth of a second apart as the band scrolls in, and
+ * then, every few seconds, a wave that wipes across the wall left to right.
  *
  * It scrolled in a loop before this, which put most of the marks off screen at
  * any moment. The grid trades that motion for the whole roster being readable
- * at a glance, and keeps the motion where it costs nothing — the entrance.
- * Visitors who ask for reduced motion get the grid with no entrance at all.
+ * at a glance, and keeps its motion to two things that never move a mark out of
+ * reading position: the entrance, and the wave. Visitors who ask for reduced
+ * motion get the grid with neither.
  *
  * Each logo keeps its company name as alt text: a screen-reader user should get
  * the client list, which is the point of the section.
@@ -67,37 +68,57 @@ export default function ClientLogos() {
       className: l.tile ? "rounded-[6px]" : undefined,
     }));
 
+  /* The wall's own marks. `displaySize` has already given each one the size
+     that holds its optical weight, so the image is sized outright rather than
+     left to a class. */
+  const marks: LogoEntry[] = logos.map((l) => ({
+    id: l.name,
+    name: l.name,
+    icon: (
+      <Image
+        src={l.src!}
+        alt={l.name}
+        width={l.width}
+        height={l.height}
+        style={{ width: l.width, height: l.height }}
+        className={cn("max-w-none select-none object-contain", l.className)}
+      />
+    ),
+  }));
+
   return (
     <section className="clients" id="clients" aria-labelledby="clients-heading">
       <div className="container">
         <div className="clients-head reveal">
-          <ClientsHeading id="clients-heading">{clients.heading}</ClientsHeading>
+          <h2 id="clients-heading">{clients.heading}</h2>
         </div>
 
-        {/* The component's own band and label are dropped: this section already
-            has its heading above, and its white ground comes from .clients. Its
-            padding needs BOTH py-0 and md:py-0 to go — the component sets
-            py-12 md:py-16, and a bare utility does not beat a `md:` one. What
-            replaces it is 18px, the padding the scrolling strip used to carry,
-            which is what makes the gaps above and below the logos 72px (54 on
-            phones) — the same on both sides, as the partners block expects. */}
-        <CinematicLogoCloud
-          clients={logos}
-          variant="grid"
-          eyebrow={null}
-          description={null}
-          className="clients-wall reveal bg-transparent py-4 md:py-4 dark:bg-transparent"
+        {/* The component's own band, heading and mobile layout are dropped:
+            this section has its heading above, its white ground comes from
+            .clients, and below 768 the grid gives way to the marquee. Its
+            padding is overridden on both the base and the `sm:` variant, since
+            a bare utility does not beat a variant one. What replaces it is
+            18px, the padding the scrolling strip used to carry, which makes the
+            gaps above and below the logos 72px (54 on phones) — the same on
+            both sides, as the partners block expects. */}
+        <LogoCloudSwap
+          logos={marks}
+          title={null}
+          subtitle={null}
+          showNames={false}
+          entrance
+          /* The wave takes twenty-one marks x 0.11s + 0.92s = 3.2s to cross, so
+             a 3.2s rest makes it roughly half the time. */
+          interval={3200}
+          className="clients-wall reveal bg-transparent px-0 py-4 sm:py-4"
           /* Real columns rather than the component's centred wrap, which left
              the short last row floating in the middle of the band. Named
              breakpoints, not arbitrary min-[..] ones: two arbitrary variants
              setting the same property have no guaranteed order in this build.
-             7 columns at 1280 (169px each), 5 at 1024 (184), 4 at 768 (192),
-             3 on phones (118 at 390). */
-          gridClassName="cl-grid grid grid-cols-3 place-items-center gap-x-8 gap-y-9 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
-          /* The section's .container already sets the measure and the gutters.
-             The component's own max-w-7xl and px-4/6/8 inset the grid inside
-             them, which put its columns 32px off the partner row below. */
-          innerClassName="w-full"
+             7 columns at 1280 (152px each), 5 at 1024, 4 at 768, 3 on phones.
+             The row gap and the row height are in .cl-grid, where they can be
+             one fluid value rather than a step per breakpoint. */
+          gridClassName="cl-grid grid grid-cols-3 place-items-center gap-x-8 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
         />
 
         {/* Phones (<=768): the same roster as two drifting rows of grey tiles.

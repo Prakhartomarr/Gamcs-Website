@@ -31,7 +31,7 @@ export default function Solutions() {
           </span>
           <h2 className="fin-h2">
             {sections.servicesHeadingLead}{" "}
-            <span className="accent uline">{sections.servicesHeadingAccent}</span>
+            <span className="accent">{sections.servicesHeadingAccent}</span>
           </h2>
           <p className="fin-lead">{sections.servicesLead}</p>
         </div>
