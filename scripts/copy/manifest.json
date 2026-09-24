@@ -1284,6 +1284,18 @@
   }
  },
  {
+  "code": "HOME-CURVE-30",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "Label over the panel headline — {n} is the stage number",
+  "kind": "text",
+  "text": "Stage {n}",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stageLabel"
+  }
+ },
+ {
   "code": "HOME-CURVE-09",
   "page": "Home (/)",
   "section": "Maturity curve",

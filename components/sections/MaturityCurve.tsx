@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { maturityCurve } from "@/lib/content/gamcs";
+import { fill } from "@/lib/content/fill";
 import { DrillDown, Explain, FileStack, PackAndLag, SignalBoard } from "./MaturityVisuals";
 import { ACCENT, BORDER, RADIUS, T } from "./MaturityVisuals";
 
@@ -33,8 +34,22 @@ import { ACCENT, BORDER, RADIUS, T } from "./MaturityVisuals";
  *          and question print, once, beneath the row.
  */
 
-/** How high each stage sits in the curve band, 0 at the top. Accelerating. */
-const RISE = [88, 80, 66, 40, 8];
+/**
+ * The curve band, in pixels, and where each stage sits inside it.
+ *
+ * The two clearances the band is built around are the sky above the highest
+ * dot and the air between the lowest dot and the tab strip — both measured to
+ * the dot's edge, which is why the centres sit further in than the clearance
+ * itself. The 70px of rise between them is spent gently from 01 to 03 and
+ * steeply from 03 to 05. The
+ * percentages are derived, so moving BAND or the clearances moves the curve
+ * with them.
+ */
+const BAND = 160;
+const TOP = 58;
+const FOOT = 32;
+const SHAPE = [0, 0.1, 0.29, 0.63, 1];
+const RISE = SHAPE.map((f) => ((BAND - FOOT - f * (BAND - FOOT - TOP)) / BAND) * 100);
 
 /** Catmull-Rom through the points, as one cubic path. */
 function curveThrough(pts: readonly { x: number; y: number }[]) {
@@ -107,70 +122,147 @@ function StageNav({
   tabRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
   stages: typeof maturityCurve.stages;
 }) {
+  /* The strip is five equal columns across the card, so stage i's centre is
+     (i + ½)/5 of it — which is where its dot goes. Read off the layout rather
+     than measured, so it holds at every width and a sixth stage would need no
+     new arithmetic. */
   const pts = stages.map((_, i) => ({ x: ((i + 0.5) / stages.length) * 100, y: RISE[i] }));
   const path = curveThrough(pts);
   const accent = ACCENT[active];
 
+  /* Below 768 the strip scrolls sideways; keep the chosen tab in view. */
+  const strip = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const box = strip.current;
+    const tab = tabRefs.current[active];
+    if (!box || !tab || box.scrollWidth <= box.clientWidth) return;
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    box.scrollTo({
+      left: tab.offsetLeft - (box.clientWidth - tab.offsetWidth) / 2,
+      behavior: reduced ? "auto" : "smooth",
+    });
+  }, [active, tabRefs]);
+
   return (
-    <div
-      role="tablist"
-      aria-label="Finance maturity stages"
-      onKeyDown={onKeyDown}
-      className="relative [--curve-h:96px] min-[1024px]:[--curve-h:104px]"
-    >
-      {/* the spine: grey the whole way, blue as far as the chosen stage */}
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 hidden h-[var(--curve-h)] w-full min-[768px]:block"
-      >
-        <path
-          d={path}
-          fill="none"
-          stroke="var(--line)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+    <div>
+      {/* ------------------------------------------------------- the curve */}
+      <div className="relative hidden h-[160px] min-[768px]:block">
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+        >
+          <path
+            d={path}
+            fill="none"
+            stroke="var(--line)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
 
-      {/* …and the same path again, in the stage's accent, clipped to end under
-          the chosen dot. A dash would have been simpler, but a dash pattern is
-          measured in screen pixels once the stroke stops scaling, so it
-          repeated along the path instead of stopping once. */}
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        style={{ clipPath: `inset(0 ${(100 - pts[active].x).toFixed(2)}% 0 0)` }}
-        className="pointer-events-none absolute inset-x-0 top-0 hidden h-[var(--curve-h)] w-full [transition:clip-path_300ms_var(--ease-out)] motion-reduce:transition-none min-[768px]:block"
-      >
-        <path
-          d={path}
-          fill="none"
-          stroke={accent}
-          strokeWidth="3"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+        {/* The same path again, in the stage's accent, clipped to end under the
+            chosen dot. A dash would have been simpler, but a dash pattern is
+            measured in screen pixels once the stroke stops scaling, so it
+            repeated along the path instead of stopping once. */}
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          style={{ clipPath: `inset(0 ${(100 - pts[active].x).toFixed(2)}% 0 0)` }}
+          className="pointer-events-none absolute inset-0 h-full w-full [transition:clip-path_300ms_var(--ease-out)] motion-reduce:transition-none"
+        >
+          <path
+            d={path}
+            fill="none"
+            stroke={accent}
+            strokeWidth="3"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
 
-      {/* …and on a phone, one line through five steps */}
-      <div
-        aria-hidden="true"
-        className="absolute left-[10%] right-[10%] top-[21px] h-[2px] rounded bg-[color:var(--line)] min-[768px]:hidden"
-      >
-        <span
-          style={{ width: `${(active / (stages.length - 1)) * 100}%`, backgroundColor: accent }}
-          className="absolute inset-y-0 left-0 block rounded [transition:width_300ms_var(--ease-out)] motion-reduce:transition-none"
-        />
-      </div>
-
-      <div className="grid grid-cols-5">
         {stages.map((s, i) => {
           const isActive = i === active;
-          const a = ACCENT[i];
+          const done = i < active;
+          return (
+            <div key={s.n}>
+              {/* the tick that ties the dot to its tab */}
+              <span
+                aria-hidden="true"
+                style={{ left: `${pts[i].x}%`, top: `${pts[i].y}%` }}
+                className={`absolute bottom-0 w-px border-l border-dotted ${
+                  isActive ? "border-blue/40" : "border-[color:var(--line)]"
+                }`}
+              />
+              <button
+                type="button"
+                tabIndex={-1}
+                aria-hidden="true"
+                onClick={() => onPick(i)}
+                style={{ left: `${pts[i].x}%`, top: `${pts[i].y}%` }}
+                className="absolute grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 place-items-center"
+              >
+                <span
+                  style={
+                    isActive
+                      ? { borderColor: accent, backgroundColor: accent }
+                      : done
+                        ? { borderColor: accent }
+                        : undefined
+                  }
+                  className={[
+                    "block rounded-full border-2 bg-white transition-all duration-200 motion-reduce:transition-none",
+                    isActive
+                      ? "h-[15px] w-[15px] ring-[6px] ring-blue/15"
+                      : "h-[11px] w-[11px]",
+                    isActive || done ? "" : "border-[color:var(--line)]",
+                  ].join(" ")}
+                />
+              </button>
+            </div>
+          );
+        })}
+
+        {/* the two ends, over the dots they belong to: beside them would be
+            clipped by the card's edge under 1280 */}
+        <span
+          aria-hidden="true"
+          style={{ left: `${pts[0].x}%`, top: `${pts[0].y}%` }}
+          className={`absolute -translate-x-1/2 -translate-y-[calc(100%+12px)] whitespace-nowrap ${T.caption} text-[color:var(--ink-muted)]`}
+        >
+          {maturityCurve.axis.start}
+        </span>
+        <span
+          aria-hidden="true"
+          style={{ left: `${pts[pts.length - 1].x}%`, top: `${pts[pts.length - 1].y}%` }}
+          className={`absolute -translate-x-1/2 -translate-y-[calc(100%+12px)] whitespace-nowrap ${T.caption} text-[color:var(--ink-muted)]`}
+        >
+          {maturityCurve.axis.end}
+        </span>
+      </div>
+
+      {/* --------------------------------------------------- the tab strip */}
+      {/*
+        Five equal columns on --soft from 768, a hairline under the row and
+        between tabs. The active tab turns white with a 3px accent bar on its
+        top edge, and a 1px white strip covers the row's hairline under it, so
+        it joins the panel below rather than sitting in a box of its own.
+        Below 768 the row scrolls sideways instead of squeezing: five tabs wide
+        enough to carry a name and a question need more than a phone has.
+      */}
+      <div
+        ref={strip}
+        role="tablist"
+        aria-label="Finance maturity stages"
+        onKeyDown={onKeyDown}
+        className={`flex overflow-x-auto border-y ${BORDER} bg-soft [scrollbar-width:none] [&::-webkit-scrollbar]:hidden min-[768px]:grid min-[768px]:grid-cols-5 min-[768px]:overflow-visible`}
+      >
+        {stages.map((s, i) => {
+          const isActive = i === active;
+          const done = i < active;
           return (
             <button
               key={s.n}
@@ -184,75 +276,59 @@ function StageNav({
               aria-controls={`stage-panel-${s.n}`}
               tabIndex={isActive ? 0 : -1}
               onClick={() => onPick(i)}
-              style={{ ["--rise" as string]: RISE[i] }}
-              className="group relative flex flex-col items-center px-1.5 pb-1 pt-[44px] text-center focus-visible:outline-offset-2 min-[768px]:px-3 min-[768px]:pb-4 min-[768px]:pt-[calc(var(--curve-h)+10px)]"
+              className={[
+                "group flex w-[186px] flex-none items-center gap-3 border-t-[3px] px-4 py-3 text-left transition-colors duration-150 focus-visible:-outline-offset-4",
+                "min-[768px]:w-auto min-[768px]:min-w-0 min-[768px]:gap-2.5 min-[768px]:px-3 min-[1280px]:gap-3 min-[1280px]:px-4",
+                i < stages.length - 1 ? "border-r border-r-[color:var(--hair)]" : "",
+                isActive
+                  ? "relative bg-white after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-white"
+                  : "border-t-transparent hover:bg-white/60",
+              ].join(" ")}
+              style={isActive ? { borderTopColor: accent } : undefined}
             >
-              {/* the step, on a phone */}
               <span
-                aria-hidden="true"
-                style={isActive ? { borderColor: a, backgroundColor: a } : undefined}
-                className={`absolute top-[10px] grid h-[24px] w-[24px] place-items-center rounded-full border-2 font-heading text-[11px] font-semibold leading-none min-[768px]:hidden ${
+                style={
+                  isActive
+                    ? { borderColor: accent, backgroundColor: accent }
+                    : done
+                      ? { borderColor: ACCENT[i], color: ACCENT[i] }
+                      : undefined
+                }
+                className={[
+                  "grid h-[32px] w-[32px] flex-none place-items-center rounded-full border font-heading text-[12px] font-semibold leading-none transition-colors duration-150",
                   isActive
                     ? "text-white"
-                    : `border-[color:var(--line)] bg-white text-[color:var(--ink-muted)]`
-                }`}
+                    : done
+                      ? "bg-white"
+                      : "border-[color:var(--hair)] bg-white text-[color:var(--ink-muted)]",
+                ].join(" ")}
               >
                 {s.n}
               </span>
 
-              {/* …and the point on the curve, above it */}
-              <span
-                aria-hidden="true"
-                style={isActive ? { borderColor: a, backgroundColor: a } : undefined}
-                className={`absolute hidden -translate-y-1/2 rounded-full border-2 transition-all duration-200 motion-reduce:transition-none min-[768px]:block min-[768px]:top-[calc(var(--curve-h)*var(--rise)/100)] ${
-                  isActive ? "h-[14px] w-[14px]" : "h-[11px] w-[11px] border-[color:var(--line)] bg-white group-hover:border-[color:var(--ink-muted)]"
-                }`}
-              />
-
-              <span className="sr-only min-[768px]:hidden">
-                {s.name} — {s.question}
-              </span>
-
-              <span className="hidden min-w-0 flex-col items-center gap-[3px] min-[768px]:flex">
+              <span className="flex min-w-0 flex-col gap-[2px]">
+                {/* 768–1023 leaves a tab about 100px of text beside its
+                    circle, which broke "Management" mid-word; the short name
+                    is what that width can hold. */}
                 <span
-                  style={isActive ? { color: a } : undefined}
-                  className={`font-heading ${T.caption} font-semibold tabular-nums ${
-                    isActive ? "" : "text-[color:var(--ink-muted)]"
-                  }`}
-                >
-                  {s.n}
-                </span>
-                <span
-                  className={`font-heading ${T.label} leading-[1.3] [overflow-wrap:anywhere] ${
+                  className={`font-heading ${T.label} leading-[1.3] transition-colors duration-150 ${
                     isActive
-                      ? "font-semibold text-[color:var(--ink-deep)]"
-                      : "font-medium text-[color:var(--ink-muted)]"
+                      ? "font-bold text-[color:var(--ink-deep)]"
+                      : "font-semibold text-[color:var(--ink-muted)] group-hover:text-[color:var(--ink-deep)]"
                   }`}
                 >
-                  {s.name}
+                  <span className="min-[768px]:hidden min-[1024px]:inline">{s.name}</span>
+                  <span className="hidden min-[768px]:inline min-[1024px]:hidden">{s.short}</span>
                 </span>
-                <span className={`${T.caption} italic text-[color:var(--ink-muted)]`}>
+                <span
+                  className={`${T.caption} italic text-[color:var(--ink-muted)] min-[768px]:hidden min-[1024px]:block`}
+                >
                   “{s.question}”
                 </span>
-                <span
-                  aria-hidden="true"
-                  style={isActive ? { backgroundColor: a } : undefined}
-                  className={`mt-1 block h-[2px] w-7 rounded ${isActive ? "" : "bg-transparent"}`}
-                />
               </span>
             </button>
           );
         })}
-      </div>
-
-      {/* the chosen stage, said once, under the row of steps */}
-      <div className="px-4 pb-1 text-center min-[768px]:hidden">
-        <div className={`font-heading ${T.label} font-semibold text-[color:var(--ink-deep)]`}>
-          {stages[active].name}
-        </div>
-        <div className={`${T.caption} italic text-[color:var(--ink-muted)]`}>
-          “{stages[active].question}”
-        </div>
       </div>
     </div>
   );
@@ -284,8 +360,15 @@ function StagePanel({ stage, active, index }: { stage: Stage; active: boolean; i
       }
     >
       <div>
+        <div
+          style={{ color: accent }}
+          className="font-heading text-[11px] font-bold uppercase tracking-[0.18em]"
+        >
+          {fill(maturityCurve.stageLabel, { n: stage.n })}
+        </div>
+
         <h3
-          className={`font-medium text-[color:var(--ink-deep)] ${T.headline}`}
+          className={`mt-2 font-medium text-[color:var(--ink-deep)] ${T.headline}`}
         >
           {stage.question}
         </h3>
@@ -438,7 +521,7 @@ export default function MaturityCurve() {
           {/* The five stages are one company at five different ages, which the
               navigation alone does not say. */}
           <p
-            className={`border-y ${BORDER} bg-white px-6 py-2.5 text-center ${T.label} text-[color:var(--ink-muted)]`}
+            className={`border-b ${BORDER} bg-white px-6 py-2.5 text-center ${T.label} text-[color:var(--ink-muted)]`}
           >
             {maturityCurve.narrative}
           </p>

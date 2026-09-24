@@ -856,6 +856,8 @@ export const maturityCurve = {
   narrative: "One company, five levels of maturity.",
   /** Over the bridge to the next stage, which used to repeat the stage name. */
   nextHeading: "The next move",
+  /** Over the panel headline. {n} is the stage number. */
+  stageLabel: "Stage {n}",
   /** The section's one call to action, below the panel. */
   close: {
     heading: "Ready to move up the curve?",
