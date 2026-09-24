@@ -2630,10 +2630,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* Greyscale in CSS, not on disk: nine photographs shot in nine places read as
    one set this way, and the colour originals stay untouched. */
 /* Stands in for a headshot the client has not sent: the person's initials on
-   the same soft grey the shot sits on while it loads. */
+   the studio backdrop the portraits were shot against, so the empty card sits
+   in the row instead of glaring out of it. */
 .tr-init{position:absolute;inset:0;display:grid;place-items:center;
-  background:var(--band-soft);color:#A9B0B7;font-weight:300;
-  font-size:2.4444rem;letter-spacing:.02em}
+  background:radial-gradient(115% 80% at 50% 33%,
+    #7f7f7f 0%,#646464 45%,#4c4c4c 72%,#101010 100%);
+  color:#C2C7CC;font-weight:300;font-size:2.4444rem;letter-spacing:.02em}
 .tr-shot img{object-fit:cover;filter:grayscale(1) contrast(1.04);
   transition:transform .6s var(--ease-out)}
 .tr-card:hover .tr-shot img,.tr-card:focus-visible .tr-shot img{transform:scale(1.04)}
@@ -2687,9 +2689,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-ovshot>span{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;
   overflow:hidden;background:#fff}
 .tr-ovshot img{object-fit:cover;filter:grayscale(1)}
-/* The panel's own ground is that same soft grey, so the tile takes the frame's
-   white here or it disappears into the panel. */
-.tr-ovshot .tr-init{background:#fff}
 .tr-ovshot i{display:block;height:1px;margin-top:20px;background:var(--line)}
 .tr-close{position:absolute;top:24px;right:24px;width:46px;height:46px;border:0;
   border-radius:999px;display:grid;place-items:center;cursor:pointer;

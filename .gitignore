@@ -44,3 +44,9 @@ content-doc/*
 
 # plugin cache
 .impeccable/
+
+# portrait pipeline: compiled Vision helpers and its working output
+scripts/portraits/faces
+scripts/portraits/segment
+scripts/portraits/out/
+scripts/portraits/.mask.png

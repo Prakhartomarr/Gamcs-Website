@@ -224,12 +224,12 @@ export const team = {
     { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
   /* Order is the client's: it is what the page prints, four to a row.
-     Ramesh and Geetika have no headshot or title yet, so their cards carry
-     an initials tile and the generic "Advisor" — both are placeholders,
-     waiting on the client. A card with no `photo` renders the tile. */
+     Ramesh has his headshot but no title yet, and Geetika has neither, so
+     "Advisor" stands in for both and her card carries an initials tile.
+     A card with no `photo` renders the tile. */
   advisory: [
     { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years", photo: "/team/sumit-chatterjee.jpg" },
-    { name: "Ramesh Yadav", title: "Advisor" },
+    { name: "Ramesh Yadav", title: "Advisor", photo: "/team/ramesh-yadav.jpg" },
     { name: "Amit Garg", title: "Audit & IPO Advisor", photo: "/team/amit-garg.jpg" },
     { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
     { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
