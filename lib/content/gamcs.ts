@@ -839,16 +839,44 @@ export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[numb
  * dashboard without TypeScript noticing.
  */
 export const maturityCurve = {
-  eyebrow: "The maturity curve",
+  eyebrow: "The Finance Intelligence Maturity Curve",
   heading: "Where is your finance",
   headingAccent: "function today?",
   lead:
-    "Five stages. One direction: from reporting to continuous decisioning. Every finance function sits somewhere on this curve — the question isn't whether you need more data, it's how fast you can turn what you already have into a decision.",
-  hint: "Click a stage — this is also your self-assessment",
+    "Every finance function sits somewhere on this curve. The question isn't how much more data you need — it's how quickly you can turn the data you already have into decisions.",
+  hint: "Click the stage that sounds most like you",
   /** Repeated under every panel that shows a number. */
   illustrative: "Illustrative example — not a real client figure.",
-  /** The engine node in the stage-05 diagram. */
-  engineName: `${site.short} Intelligence Engine`,
+  /** Under the panel: the curve is a model, not a diagnosis. */
+  caveat:
+    "Illustrative framework. Maturity can vary across functions, business units and organizations.",
+  /** The two ends of the rising rail above the tabs. */
+  axis: { start: "Reporting", end: "Decisioning" },
+  /** The section's one call to action, below the panel. */
+  close: {
+    heading: "Ready to move up the curve?",
+    body:
+      "We help finance functions move from reporting and consolidation to connected data, forward-looking insight and continuous decision support.",
+    link: "See how GAMCS helps",
+    /** The next section on the homepage. */
+    href: "#how-we-help",
+  },
+  /** Column heads and row labels the visuals need, once for all five stages. */
+  labels: {
+    actual: "Actual",
+    budget: "Budget",
+    variance: "Var.",
+    impact: "Impact",
+    why: "Why",
+    action: "Action",
+    owner: "Owner",
+    drillHint: "Click to drill down",
+  },
+  /**
+   * Every stage carries the same three stats, in the same order, so the row
+   * reads across the five as one scale. Stage figures are illustrative and the
+   * panel says so wherever a number appears.
+   */
   stages: [
     {
       n: "01",
@@ -859,11 +887,20 @@ export const maturityCurve = {
         "I can tell you what happened last month — it just takes seven to ten days to produce.",
       tags: ["Excel", "ERP reports", "Month-end close", "Statutory reporting"],
       metrics: [
-        { value: "7–10 days", label: "Turnaround" },
+        { value: "7–10 days", label: "Typical turnaround" },
         { value: "Fragmented", label: "Data" },
         { value: "Low", label: "Decision support" },
       ],
-      visual: "metrics",
+      visual: "files",
+      /** Three saves of the same month. `figure` marks the ones that disagree. */
+      files: {
+        cards: [
+          { name: "P&L_v3_final.xlsx", figure: "EBITDA ₹4.2 Cr" },
+          { name: "P&L_v4_FINAL_revised.xlsx", figure: "EBITDA ₹4.5 Cr" },
+          { name: "P&L_v5_use_this.xlsx", figure: "" },
+        ],
+        caption: "Multiple versions of the truth.",
+      },
       next: "The move to Stage 02 is consolidation — one version of the numbers, produced once instead of rebuilt every month.",
     },
     {
@@ -875,11 +912,27 @@ export const maturityCurve = {
         "I finally have a monthly pack — but by the time it lands, the month is already over.",
       tags: ["MIS", "Monthly packs", "KPI reporting", "Variance analysis"],
       metrics: [
-        { value: "5–7 days", label: "Turnaround" },
+        { value: "5–7 days", label: "Typical turnaround" },
         { value: "Consolidated", label: "Data" },
         { value: "Limited", label: "Decision support" },
       ],
-      visual: "metrics",
+      visual: "pack",
+      pack: {
+        title: "Monthly Management Pack",
+        rows: [
+          { label: "Revenue", actual: "₹18.4 Cr", budget: "₹17.9 Cr", variance: "+2.8%" },
+          { label: "EBITDA", actual: "₹4.2 Cr", budget: "₹4.6 Cr", variance: "−8.7%" },
+          { label: "Budget vs actual", actual: "₹22.6 Cr", budget: "₹22.5 Cr", variance: "+0.4%" },
+          { label: "Dept. variance", actual: "₹3.1 Cr", budget: "₹2.8 Cr", variance: "+10.7%" },
+        ],
+        /** `at` is the day the step lands on; the bar between 0 and the last is the lag. */
+        timeline: [
+          { label: "Month closes", at: "Day 0" },
+          { label: "Pack prepared", at: "Day 6" },
+          { label: "Management meeting", at: "Day 9" },
+        ],
+        caption: "The information arrives after the period it describes.",
+      },
       next: "The move to Stage 03 is automation — the pack stops being assembled and starts being queried.",
     },
     {
@@ -887,21 +940,58 @@ export const maturityCurve = {
       name: "Business Intelligence",
       short: "BI",
       question: "Why did it happen?",
-      quote: "I can see almost everything now. I still have to go figure out why.",
+      quote: "I can see almost everything now. I still have to dig to find out why.",
       tags: ["Power BI", "Live dashboards", "Profitability analysis", "Drill-down analytics"],
       metrics: [
-        { value: "1–2 days", label: "Turnaround" },
+        { value: "1–2 days", label: "Typical turnaround" },
         { value: "Connected", label: "Data" },
         { value: "Moderate", label: "Decision support" },
       ],
-      visual: "dashboard",
-      /** `bars` is the sparkline, oldest to newest; the last bar reads as current. */
-      tiles: [
-        { label: "Gross margin", value: "38.4%", bars: [52, 61, 47, 66, 58, 71, 63] },
-        { label: "Working capital", value: "62 days", bars: [70, 64, 68, 55, 59, 48, 44] },
-        { label: "Segment B", value: "−11.2%", bars: [64, 58, 60, 45, 39, 34, 28] },
-      ],
-      next: "The move to Stage 04 is interpretation — the system explains the variance instead of only exposing it.",
+      visual: "drill",
+      drill: {
+        tiles: [
+          { label: "Revenue", value: "+8.2%", tone: "good" },
+          { label: "Gross margin", value: "−280 bps", tone: "risk" },
+        ],
+        /** One click per level. `bars` is that level's breakdown, worst first. */
+        path: [
+          {
+            crumb: "Gross margin",
+            bars: [
+              { label: "North", value: 86 },
+              { label: "West", value: 47 },
+              { label: "South", value: 32 },
+            ],
+          },
+          {
+            crumb: "Region: North",
+            bars: [
+              { label: "Segment B", value: 91 },
+              { label: "Segment A", value: 38 },
+              { label: "Segment C", value: 24 },
+            ],
+          },
+          {
+            crumb: "Product: Segment B",
+            bars: [
+              { label: "Freight", value: 88 },
+              { label: "Input cost", value: 54 },
+              { label: "Discounting", value: 29 },
+            ],
+          },
+          {
+            crumb: "Driver: Freight cost",
+            bars: [
+              { label: "Q3", value: 61 },
+              { label: "Q4", value: 72 },
+              { label: "Q1", value: 93 },
+            ],
+          },
+        ],
+        finding:
+          "Segment B margin fell because freight costs rose 18% — found after 4 manual drill-downs.",
+      },
+      next: "The move to Stage 04 is interpretation — the system explains the variance instead of you digging for it.",
     },
     {
       n: "04",
@@ -915,18 +1005,38 @@ export const maturityCurve = {
         "The system tells me what changed, why it changed, and what it’s likely to mean.",
       tags: ["Driver-based planning", "Forecasting", "Scenario analysis", "Anomaly detection"],
       metrics: [
-        { value: "+8.2%", label: "Revenue" },
-        { value: "−3.8%", label: "EBITDA" },
-        { value: "−280 bps", label: "Gross margin" },
+        { value: "Hours", label: "Typical turnaround" },
+        { value: "Integrated", label: "Data" },
+        { value: "High", label: "Decision support" },
       ],
-      visual: "ladder",
-      /** Last row is the payoff and takes the highlighted treatment. */
-      ladder: [
-        { q: "What happened?", a: "Revenue grew." },
-        { q: "Why?", a: "Volume declined, but pricing more than offset it." },
-        { q: "What’s next?", a: "Forecast points to further margin pressure." },
-        { q: "What should we do?", a: "Pricing and mix intervention in Segment B." },
-      ],
+      visual: "explain",
+      explain: {
+        kpis: [
+          { label: "Revenue", value: "+8.2%", tone: "good" },
+          { label: "EBITDA", value: "−3.8%", tone: "risk" },
+          { label: "Gross margin", value: "−280 bps", tone: "risk" },
+        ],
+        /** Three rows, ending on the forward-looking one, which is highlighted. */
+        rows: [
+          { q: "What happened?", a: "Revenue grew 8.2%, but EBITDA fell 3.8%." },
+          {
+            q: "Why?",
+            a: "Pricing lifted revenue, but freight and input costs rose faster, and mix shifted toward lower-margin Segment B.",
+          },
+          {
+            q: "What’s next?",
+            a: "At current trends, gross margin falls a further 120 bps next quarter.",
+          },
+        ],
+        /** Gross margin, indexed. `actual` runs to today; `forecast` continues it. */
+        spark: {
+          label: "Gross margin trend",
+          actual: [62, 59, 61, 55, 52, 48],
+          forecast: [48, 44, 41],
+          legendActual: "Actual",
+          legendForecast: "Forecast",
+        },
+      },
       next: "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",
     },
     {
@@ -938,28 +1048,49 @@ export const maturityCurve = {
         "Finance stops reporting the business and starts sensing it — signals become recommendations, recommendations become actions.",
       tags: ["Real-time signals", "Automated commentary", "Alerts", "Accountability loops"],
       metrics: [
-        { value: "Continuous", label: "Turnaround" },
+        { value: "Continuous", label: "Typical turnaround" },
         { value: "Real-time", label: "Data" },
         { value: "Prescriptive", label: "Decision support" },
       ],
       visual: "signals",
-      signals: [
-        { label: "Revenue", dir: "up" },
-        { label: "Margin", dir: "down" },
-        { label: "Cash", dir: "down" },
-        { label: "Forecast", dir: "up" },
-      ],
-      /* `tone` maps onto the brand palette in the component — there is no
-         red/amber/green semantic scale in this design system. */
-      outputs: [
-        { label: "Margin risk", tone: "risk" },
-        { label: "Cash pressure", tone: "watch" },
-        { label: "Revenue opportunity", tone: "good" },
-      ],
+      board: {
+        /** The loop, as a strip above the cards. */
+        flow: ["Signal", "Interpretation", "Recommendation", "Owner", "Action"],
+        /* `tone` maps onto the brand palette in the component — there is no
+           red/amber/green semantic scale in this design system. */
+        cards: [
+          {
+            tone: "risk",
+            title: "Margin risk",
+            impact: "₹1.2 Cr",
+            why: "Freight + product mix",
+            action: "Pricing review",
+            owner: "Commercial",
+            status: "Assigned",
+          },
+          {
+            tone: "watch",
+            title: "Cash pressure",
+            impact: "₹75 L",
+            why: "Receivables ageing",
+            action: "Collections intervention",
+            owner: "Finance",
+            status: "In progress",
+          },
+          {
+            tone: "good",
+            title: "Revenue opportunity",
+            impact: "₹1.5 Cr",
+            why: "Under-penetrated customer segment",
+            action: "Cross-sell campaign",
+            owner: "Sales",
+            status: "Assigned",
+          },
+        ],
+      },
       next: "This is the end of the curve — the work here is holding the loop: keeping signals trusted and recommendations owned.",
     },
   ],
-  cta: primaryCta,
 } as const;
 
 /**
