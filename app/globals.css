@@ -2451,125 +2451,122 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .d2dm-body,.d2dm-v{transition:none}
 }
 
-/* ---- solutions hub: pillar rail + alternating pillar blocks ---- */
-/* Jump rail. Sticks under the 90px header, scrolls sideways rather than
-   wrapping to two rows, which the original six pillars did below ~1200px. */
-.pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
-  border-bottom:1px solid rgba(16,45,68,.10)}
-/* It scrolls sideways once the labels outgrow the row, so it has to look
-   like it: a hidden scrollbar and no fade cut the last pillars off with nothing
-   to say they existed. */
-.pillar-rail ul{list-style:none;margin:0;padding:0 40px 0 0;display:flex;gap:6px;
-  overflow-x:auto;scrollbar-width:thin;
-  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);
-  mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
-.pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
-  padding:0 13px;white-space:nowrap;text-decoration:none;
-  font:600 0.7222rem var(--font-sans);letter-spacing:.02em;color:var(--ink-muted);
-  border-bottom:2px solid transparent;transition:color .2s var(--ease-out),
-  border-color .2s var(--ease-out)}
-.pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
-.pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
+/* =====================================================================
+   SOLUTIONS HUB
+   Built to docs/unity-spec.md, which holds the measurements this is
+   matched against. Everything is scoped under .sol: this page carries a
+   different ground and a different type scale from the rest of the site.
 
-.pillars{display:grid;gap:clamp(72px,7.5vw,120px)}
-/* scroll-margin clears the sticky rail so an anchor jump does not tuck the
-   block's first line underneath it */
-/* The card carries the argument, so it takes the larger share and sets the
-   block's height; the list sits beside it and runs to its own length. */
-.pillar{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr);
-  gap:clamp(28px,3.8vw,64px);align-items:stretch;
-  scroll-margin-top:calc(var(--header-h) + 64px)}
-/* odd blocks swap sides. Source order is unchanged, so the card is still read
-   before its list. */
-.pillar[data-flip] .pillar-card{order:2}
+   Reference, at 1440: page #F9F9F8 on #1A1A1A, 21px side margins, two
+   689px columns with a 20px gutter, a 689x794 card at radius 12 with
+   52px of padding, its h2 at 53.18/53.18, its paragraph at 18.99/22.79,
+   and accordion rows 60px tall at 18/27. The columns stop sitting side
+   by side between 1024 and 900; everything else scales fluidly rather
+   than stepping.
+   ===================================================================== */
+.sol{--sol-ink:#1A1A1A;--sol-rule:rgba(26,26,26,.13);
+  /* the page margin: 21px at 1440, closing to 12 on a phone */
+  --sol-edge:clamp(12px,1.46vw,21px);
+  /* lets the accordion animate to its content height where the browser
+     supports it; ignored elsewhere, where open and close are instant */
+  interpolate-size:allow-keywords;
+  background:#F9F9F8;color:var(--sol-ink)}
 
-/* The card reuses the .solution-card.blue treatment already used for these
-   pillars elsewhere, rather than introducing a second gradient. */
-/* Not sticky: measured across the original six pillars the card was 57-131px
-   TALLER than its list, so a sticky card would have negative travel and never move.
-   (.shell is overflow:clip anyway, which would have capped it regardless.) */
-/* A panel rather than a box, sized off the reference: theirs runs about
-   688x795 on a 1440 screen — near enough the full height of the window — with
-   the headline at display size and the link on the floor. The pillar's
-   argument is then the thing on screen, not one element among several. */
-.pillar-card{position:relative;overflow:hidden;isolation:isolate;
-  display:flex;flex-direction:column;
-  min-height:clamp(440px,84vh,820px);
-  border-radius:var(--radius-lg);padding:clamp(28px,3.2vw,52px);
-  /* the floor the mesh drifts over — also what shows under prefers-reduced-motion */
-  background:linear-gradient(180deg,var(--blue),#0C5387);color:#fff}
+/* ---- hero: headline and tile above, intro and chips below ---- */
+.sol-hero{padding:clamp(28px,4vw,56px) var(--sol-edge) clamp(32px,4vw,64px)}
+.sol-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(24px,2.6vw,36px) 20px;align-content:space-between;
+  min-height:clamp(560px,calc(100vh - var(--header-h) - 96px),780px)}
+.sol-h1{margin:0;max-width:772px;
+  font:400 clamp(48px,6.05vw,87px)/0.96 var(--font-sans);letter-spacing:-.02em;
+  color:var(--sol-ink)}
+.sol-tile{display:block;align-self:start;justify-self:end;width:100%;max-width:420px;
+  aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#0A4169}
+.sol-intro{margin:0;max-width:46ch;align-self:end;
+  font-size:1rem;line-height:1.5;color:var(--sol-ink)}
+.sol-chips{display:flex;flex-wrap:wrap;gap:8px;align-self:end;justify-content:flex-start}
+.sol-chips a{display:inline-flex;align-items:center;height:28px;padding:8px 8px 6px;
+  border-radius:6px;background:rgba(134,131,127,.10);
+  font:400 12px/12px var(--font-sans);letter-spacing:.04em;text-transform:uppercase;
+  color:var(--sol-ink);text-decoration:none;
+  transition:background .2s var(--ease-out)}
+.sol-chips a:hover{background:rgba(134,131,127,.20)}
+.sol-chips a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 
-/* ---- the surface ----
-   A WebGL gradient (components/ui/velaris.tsx) drifting over the card's own
-   linear gradient, which stays as the floor: it is what shows if WebGL is
-   unavailable, under print, and for the moment before the first frame. The
-   shader animates only while its card is on screen and holds one frame under
-   prefers-reduced-motion — five of them on one page is four too many to run at
-   once. It replaced two blurred CSS layers whose whole job was to imitate
-   this. */
-.pillar-card > .pillar-shader{position:absolute;inset:0;z-index:0;
-  display:block;pointer-events:none}
-/* The gradient drifts, so its brightest pass could otherwise carry the body
-   copy down to about 2.8:1. This holds the side the text sits on and leaves
-   the far side to the shader: measured, the worst frame is 9.4:1 for the
-   headline and 7.2:1 for the paragraph. */
-.pillar-card > .pillar-shader::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(105deg,rgba(5,34,56,.62) 0%,rgba(5,34,56,.34) 46%,
-    rgba(5,34,56,0) 78%)}
+/* ---- the five blocks ---- */
+.sol-pillars{display:grid}
+.sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px;padding:21px var(--sol-edge);
+  scroll-margin-top:calc(var(--header-h) + 12px)}
+/* even blocks swap sides. Source order is unchanged, so the card is still
+   read before its list. */
+.sol-pillar[data-flip] .sol-card{order:2}
 
-.pillar-card::after{content:"";position:absolute;right:-80px;top:-100px;
-  width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 70%);
-  pointer-events:none}
-.pillar-card > *{position:relative;z-index:1}
-/* align-self: the card is a flex column, which would otherwise stretch a pill
-   and a button to its full width. */
-.pillar-label{display:inline-flex;align-self:flex-start;align-items:center;min-height:26px;padding:4px 12px;line-height:1.3;
-  border-radius:999px;border:1px solid rgba(255,255,255,.30);
-  font:600 0.6667rem var(--font-sans);letter-spacing:.08em;text-transform:uppercase;
-  color:rgba(255,255,255,.88)}
-.pillar-card h2{margin:22px 0 0;color:#fff;
-  font:500 clamp(28px,3.7vw,54px)/1.06 var(--font-sans);letter-spacing:-.032em;
-  max-width:15ch}
-.pillar-card p{margin:18px 0 0;max-width:44ch;color:#D8E4EC;
-  font-size:1rem;line-height:1.58}
-/* The label, headline and paragraph read as one group at the top; the link
-   takes the floor, so the panel's height is deliberate rather than ragged. */
-.pillar-cta{align-self:flex-start;margin-top:auto;padding-top:clamp(24px,2.6vw,40px)}
-/* the pillar's own icon, blurred to a soft field so it reads as texture and
-   never competes with the headline */
-.pillar-glyph{position:absolute;right:-34px;bottom:-48px;width:270px;height:270px;
-  z-index:0;pointer-events:none}
-.pillar-glyph svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2.2;
-  filter:blur(11px);opacity:.30}
+.sol-card{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;
+  min-height:clamp(480px,88.2vh,794px);
+  /* the floor the shader drifts over: what shows without WebGL, in print,
+     and before the first frame */
+  background:linear-gradient(180deg,var(--blue),#0C5387);color:#F9F9F8}
+.sol-card-paint{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
+/* The gradient drifts, and these palettes are vivid: white on the brightest
+   the emerald can paint is 1.75:1 bare. The scrim is solved rather than
+   judged — at 0.58 over the lightest colour in every palette, the card's text
+   reads between 5.5:1 and 8:1 — and it holds only the side the text sits on,
+   so the last quarter of the card is the shader at full strength. */
+.sol-card-paint::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(103deg,rgba(6,22,38,.62) 0%,rgba(6,22,38,.60) 62%,
+    rgba(6,22,38,.56) 78%,rgba(6,22,38,.20) 92%,rgba(6,22,38,0) 100%)}
+.sol-card-body{position:relative;z-index:1;display:flex;flex-direction:column;
+  height:100%;padding:clamp(22px,3.6vw,52px)}
+.sol-eyebrow{display:block;font:500 13px/1.2 var(--font-sans);letter-spacing:.02em;
+  color:rgba(249,249,248,.86)}
+.sol-card h2{margin:clamp(14px,1.5vw,22px) 0 0;max-width:533px;color:#F9F9F8;
+  font:400 clamp(38px,3.7vw,53px)/1.0 var(--font-sans);letter-spacing:-.01em}
+.sol-card p{margin:clamp(14px,1.3vw,19px) 0 0;max-width:533px;color:#F9F9F8;
+  font:500 clamp(16px,1.32vw,19px)/1.2 var(--font-sans)}
+/* a button, not a pill: 55px tall at the reference, on a small radius */
+.sol-talk{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
+  margin-top:auto;min-height:55px;padding:0 22px;border-radius:8px;
+  background:#F9F9F8;color:#0D1828;text-decoration:none;
+  font:500 clamp(14px,1.1vw,15.5px)/1 var(--font-sans);letter-spacing:-.01em;
+  transition:background .2s var(--ease-out),transform .2s var(--ease-out)}
+.sol-talk svg{width:18px;height:18px;flex:none;transition:transform .2s var(--ease-out)}
+.sol-talk:hover{background:#fff}
+.sol-talk:hover svg{transform:translateX(3px)}
+.sol-talk:focus-visible{outline:2px solid #F9F9F8;outline-offset:3px}
 
-.pillar-list{list-style:none;margin:0;padding:0}
-.pillar-list li{border-top:1px solid rgba(16,45,68,.12)}
-.pillar-list li:last-child{border-bottom:1px solid rgba(16,45,68,.12)}
-.pillar-list summary{display:flex;align-items:center;justify-content:space-between;
-  gap:16px;cursor:pointer;list-style:none;padding:clamp(18px,1.6vw,23px) 2px;min-height:44px;
-  font:600 clamp(15px,1.3vw,19px)/1.35 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep);
-  transition:color .2s var(--ease-out)}
-.pillar-list summary::-webkit-details-marker{display:none}
-.pillar-list summary:hover{color:var(--blue)}
-.pillar-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
-.pillar-list summary svg{width:18px;height:18px;flex:none;color:var(--ink-muted);
-  transition:transform .25s var(--ease-out),color .2s var(--ease-out)}
-.pillar-list details[open] summary{color:var(--blue)}
-.pillar-list details[open] summary svg{transform:rotate(180deg);color:var(--blue)}
-.pillar-list details p{margin:0 0 22px;padding-right:34px;max-width:60ch;
-  color:var(--ink-muted);font-size:0.9444rem;line-height:1.62}
+/* ---- the services, one row each ---- */
+.sol-list{list-style:none;margin:0;padding:0;align-self:start}
+.sol-list li{border-bottom:1px solid var(--sol-rule)}
+.sol-list li:first-child{border-top:1px solid var(--sol-rule)}
+.sol-list summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
+  font:400 clamp(15px,1.25vw,18px)/1.5 var(--font-sans);letter-spacing:normal;
+  color:var(--sol-ink);transition:color .2s var(--ease-out)}
+.sol-list summary::-webkit-details-marker{display:none}
+.sol-list summary:hover{color:var(--blue)}
+.sol-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
+.sol-list summary svg{width:13px;height:24px;flex:none;color:var(--sol-ink);
+  transition:transform .35s var(--ease-out)}
+.sol-list details[open] summary svg{transform:rotate(180deg)}
+.sol-list-body p{margin:0 0 20px;padding-right:34px;max-width:60ch;
+  font-size:0.8889rem;line-height:1.6;color:rgba(26,26,26,.68)}
+/* Where the browser has it, the panel animates to its own height both ways;
+   where it does not, it opens and closes at once. */
+.sol-list details::details-content{block-size:0;overflow:hidden;
+  transition:block-size .36s var(--ease-out),content-visibility .36s allow-discrete}
+.sol-list details[open]::details-content{block-size:auto}
 
-/* Below 1023 the two columns stop fitting side by side: the card's headline
-   drops to three or four lines and the rows lose their tap width. */
+/* One column below 1024, which is where the reference stacks. */
 @media (max-width:1023px){
-  .pillar{grid-template-columns:1fr;gap:28px}
-  .pillar[data-flip] .pillar-card{order:0}
-  .pillar-card{min-height:0}
-  .pillar-glyph{width:200px;height:200px;right:-26px;bottom:-36px}
+  .sol-hero-grid{grid-template-columns:1fr;min-height:0;gap:22px}
+  .sol-tile{justify-self:stretch;max-width:none;aspect-ratio:16/9}
+  .sol-pillar{grid-template-columns:1fr;gap:22px;padding:18px var(--sol-edge)}
+  .sol-pillar[data-flip] .sol-card{order:0}
+  .sol-card{min-height:clamp(420px,62vh,560px)}
 }
 @media (prefers-reduced-motion:reduce){
-  .pillar-list summary svg{transition:none}
+  .sol-list summary svg,.sol-list details::details-content,.sol-talk,.sol-talk svg{transition:none}
 }
 
 /* =====================================================================

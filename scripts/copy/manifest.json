@@ -5442,6 +5442,78 @@
   }
  },
  {
+  "code": "SOL-HEAD-06",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Hero headline (hub page)",
+  "kind": "text",
+  "text": "Solutions Built for Every Stage of Finance.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.h1"
+  }
+ },
+ {
+  "code": "SOL-FPA-04",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Card button — FP&A & CFO Advisory",
+  "kind": "text",
+  "text": "Talk to an FP&A specialist",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.previews[0].talkLabel"
+  }
+ },
+ {
+  "code": "SOL-FTE-04",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Card button — Finance Team Extension",
+  "kind": "text",
+  "text": "Talk to us about your team",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.previews[1].talkLabel"
+  }
+ },
+ {
+  "code": "SOL-DT-04",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Card button — Digital Transformation",
+  "kind": "text",
+  "text": "Talk to a transformation specialist",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.previews[2].talkLabel"
+  }
+ },
+ {
+  "code": "SOL-DEAL-04",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Card button — Deal Advisory",
+  "kind": "text",
+  "text": "Talk to a deal specialist",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.previews[3].talkLabel"
+  }
+ },
+ {
+  "code": "SOL-TRAIN-04",
+  "page": "Solutions (/solutions)",
+  "section": "Solutions hub",
+  "label": "Card button — Training & Enablement",
+  "kind": "text",
+  "text": "Talk to a training specialist",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutionsHub.previews[4].talkLabel"
+  }
+ },
+ {
   "code": "SOL-FPA-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — FP&A & CFO Advisory",

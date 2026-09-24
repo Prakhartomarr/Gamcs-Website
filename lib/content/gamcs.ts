@@ -793,19 +793,34 @@ export const solutionsHub = {
   titleTag: "Solutions | FP&A, Team Extension, Digital Transformation & Deal Advisory | GAMCS",
   metaDescription:
     "Explore GAMCS's five solution pillars: FP&A & CFO Advisory, Finance Team Extension, Digital Transformation, Deal Advisory, and Training & Enablement.",
-  h1: "Solutions Built for Every Stage of the Finance Maturity Curve",
+  h1: "Solutions Built for Every Stage of Finance.",
+  /* `previews[].talkLabel` is each card's button on the hub: the card sends a
+     visitor to a conversation, and the pillar's own page stays one click away
+     in the header's Solutions menu and in the footer. */
   /* Same sentence, split so the trailing phrase can carry the accent tint.
-     Kept alongside `h1` because the metadata title still wants it whole. */
+     Kept alongside `h1` because the metadata title still wants it whole.
+     The hub page sets `h1` whole, at display size over three lines; the
+     split is what the older head band used. */
   h1Lead: "Solutions Built for Every Stage of the",
   h1Accent: "Finance Maturity Curve",
+  /* Each pillar's button on the hub. The hub's cards send a visitor to a
+     conversation rather than to the pillar's own page, which the header's
+     Solutions menu and the footer both still link. */
+  talk: {
+    "fpa-cfo-advisory": "Talk to an FP&A specialist",
+    "finance-team-extension": "Talk to us about your team",
+    "digital-transformation": "Talk to a transformation specialist",
+    "deal-advisory": "Talk to a deal specialist",
+    "training-enablement": "Talk to a training specialist",
+  } as Record<string, string>,
   subhead:
     "From your first forecast to a fully embedded offshore team to getting deal-ready for a raise, refinancing, or exit — start where you are, and scale as you grow.",
   previews: [
-    { slug: "fpa-cfo-advisory", blurb: "CFO-level advisory, budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to your RevOps data — a forward-looking view instead of a rear-view mirror.", linkLabel: "Explore FP&A & CFO Advisory" },
-    { slug: "finance-team-extension", blurb: "Staff augmentation, Employer of Record, offshored functions, or a full CoE or GCC — accounting, bookkeeping, and reporting capacity for single companies, PE/VC portfolios, and advisory firms.", linkLabel: "Explore Finance Team Extension" },
-    { slug: "digital-transformation", blurb: "ERP, CRM, and FP&A platforms implemented agnostically or built in-house with Finsensor AI — plus the data warehousing and real-time dashboards that flag problems before they hit the P&L.", linkLabel: "Explore Digital Transformation" },
-    { slug: "deal-advisory", blurb: "M&A advisory, IPO readiness, due diligence, debt refinancing, and investor/pitch deck preparation — so your numbers hold up under real scrutiny.", linkLabel: "Explore Deal Advisory" },
-    { slug: "training-enablement", blurb: "FP&A, financial modelling, Tableau, ESG, and data analytics training that builds lasting capability inside your own finance team — plus public MasterClasses through Thinking Bridge.", linkLabel: "Explore Training & Enablement" },
+    { slug: "fpa-cfo-advisory", blurb: "CFO-level advisory, budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to your RevOps data — a forward-looking view instead of a rear-view mirror.", linkLabel: "Explore FP&A & CFO Advisory", talkLabel: "Talk to an FP&A specialist" },
+    { slug: "finance-team-extension", blurb: "Staff augmentation, Employer of Record, offshored functions, or a full CoE or GCC — accounting, bookkeeping, and reporting capacity for single companies, PE/VC portfolios, and advisory firms.", linkLabel: "Explore Finance Team Extension", talkLabel: "Talk to us about your team" },
+    { slug: "digital-transformation", blurb: "ERP, CRM, and FP&A platforms implemented agnostically or built in-house with Finsensor AI — plus the data warehousing and real-time dashboards that flag problems before they hit the P&L.", linkLabel: "Explore Digital Transformation", talkLabel: "Talk to a transformation specialist" },
+    { slug: "deal-advisory", blurb: "M&A advisory, IPO readiness, due diligence, debt refinancing, and investor/pitch deck preparation — so your numbers hold up under real scrutiny.", linkLabel: "Explore Deal Advisory", talkLabel: "Talk to a deal specialist" },
+    { slug: "training-enablement", blurb: "FP&A, financial modelling, Tableau, ESG, and data analytics training that builds lasting capability inside your own finance team — plus public MasterClasses through Thinking Bridge.", linkLabel: "Explore Training & Enablement", talkLabel: "Talk to a training specialist" },
   ],
 } as const;
 
