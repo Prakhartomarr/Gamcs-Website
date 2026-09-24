@@ -16,7 +16,7 @@ import os, subprocess, sys
 import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage
-from backdrop import backdrop, fit, surface
+from backdrop import fit, surface
 
 D = os.path.dirname(os.path.abspath(__file__))
 SRC = os.environ.get('PORTRAIT_SRC', '.')
@@ -24,20 +24,29 @@ OUT = f'{D}/out'
 
 # person -> original photograph. Asif's is the pre-2026 original, in git history
 # before "Put every portrait on one backdrop"; everyone else was reshot.
+# person -> original photograph, and whether we have to put a ground under
+# them. The 2026 sitting was shot against one studio wall, so those frames keep
+# exactly the backdrop they came with. Asif's near-black wall and Sumit's office
+# window are from other years and other rooms; those two, and only those two,
+# are cut out and set on a grey fitted from the sitting itself.
 PEOPLE = [
-    ('sumit-chatterjee',  'sumit-chatterjee.jpg'),
-    ('ramesh-yadav',      'ramesh-yadav.webp'),
-    ('amit-garg',         'amit-garg.webp'),
-    ('dhawal-parvatikar', 'dhawal-parvatikar.webp'),
-    ('asif-masani',       'asif-masani.jpg'),
-    ('sanjay-rikhy',      'sanjay-rikhy.webp'),
-    ('geeta-karnik',      'geeta-karnik.webp'),
-    ('saurabh-aggarwal',  'saurabh-aggarwal.webp'),
+    ('sumit-chatterjee',  'sumit-chatterjee.jpg', True),
+    ('ramesh-yadav',      'ramesh-yadav.webp',    False),
+    ('amit-garg',         'amit-garg.webp',       False),
+    ('dhawal-parvatikar', 'dhawal-parvatikar.webp', False),
+    ('asif-masani',       'asif-masani.jpg',      True),
+    ('sanjay-rikhy',      'sanjay-rikhy.webp',    False),
+    ('geeta-karnik',      'geeta-karnik.webp',    False),
+    ('saurabh-aggarwal',  'saurabh-aggarwal.webp', False),
 ]
 FOUNDERS = [
-    ('gaurav-malik-bw',     'gaurav-malik-bw.jpg'),
-    ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.webp'),
+    ('gaurav-malik-bw',     'gaurav-malik-bw.jpg',     False),
+    ('abhinav-aggarwal-bw', 'abhinav-aggarwal-bw.webp', False),
 ]
+
+# The frames the studio grey is fitted from: three of the sitting, so one
+# photograph's lighting cannot skew it.
+GROUND_FROM = ['saurabh-aggarwal.webp', 'amit-garg.webp', 'geeta-karnik.webp']
 
 FACE_FRAC = 0.28        # the face box's share of the frame, where the photograph allows
 FACE_FRAC_MAX = 0.38    # …and the most it may grow to fill a tightly shot frame
@@ -48,6 +57,25 @@ GAMMA_CEIL = 1.20
 CARD = (720, 960)       # 3:4, the adviser card
 BIG = (800, 1040)       # 10:13, the founder card
 BAND, TOL = 12, 16      # edge refinement: px either side of the mask, grey levels
+
+def studio_grey(size):
+    """The sitting's own wall, fitted as a smooth surface.
+
+    Sampled from the margins and top band of three frames — never near a face —
+    and averaged, so the ground under Asif and Sumit is the same grey the other
+    eight were actually photographed against rather than a colour we invented.
+    """
+    X, Y, V = [], [], []
+    for src in GROUND_FROM:
+        a = levels(np.asarray(Image.open(f'{SRC}/{src}').convert('L'), dtype=float))
+        h, w = a.shape
+        ys, xs = np.mgrid[0:h, 0:w]
+        x, y = xs / w, ys / h
+        keep = ((x < 0.10) | (x > 0.90) | (y < 0.20)) & ~((((x - .5) / .36) ** 2 + ((y - .45) / .44) ** 2) < 1)
+        X.append(x[keep]); Y.append(y[keep]); V.append(a[keep])
+    x, y, v = np.concatenate(X), np.concatenate(Y), np.concatenate(V)
+    c = fit(x, y, v)
+    return surface(c, *size)
 
 def face(path):
     line = subprocess.run([f'{D}/faces', path], capture_output=True, text=True).stdout.strip()
@@ -113,7 +141,7 @@ def alpha(a, m):
         ImageFilter.GaussianBlur(1.0)), dtype=float) / 255
     return al, bg
 
-def place(layers, box, size):
+def place(layers, box, size, cover=False):
     """Scale and position the subject.
 
     Two rules pull against each other: the head should be the same size on every
@@ -129,10 +157,19 @@ def place(layers, box, size):
     k_fill = (1 - FACE_Y) * H / below                     # …just enough to reach the foot
     k = max((FACE_FRAC * H) / fh, min(k_fill, (FACE_FRAC_MAX * H) / fh))
     src_h, src_w = layers[0].shape
+    if cover:
+        # Nothing is composited behind this one, so the photograph itself has to
+        # reach every edge: never scale it smaller than the frame.
+        k = max(k, W / src_w, H / src_h)
     sw, sh = round(src_w * k), round(src_h * k)
     res = lambda arr: np.asarray(Image.fromarray(arr.astype('float32'), 'F').resize((sw, sh), Image.BILINEAR), dtype=float)
     ox = round(W / 2 - (fx + fw / 2) * k)
     oy = round(max(FACE_Y * H - (fy + fh / 2) * k, H - sh))   # never leave a gap at the foot
+    if cover:
+        # Centring on the face can still push the photograph off an edge; with
+        # nothing behind it, that edge would be empty. Hold it over the frame.
+        ox = min(0, max(ox, W - sw))
+        oy = min(0, max(oy, H - sh))
     x0, y0, sx0, sy0 = max(ox, 0), max(oy, 0), max(-ox, 0), max(-oy, 0)
     w, h = min(sw - sx0, W - x0), min(sh - sy0, H - y0)
     out = []
@@ -142,26 +179,33 @@ def place(layers, box, size):
         out.append(dst)
     return out, (oy + (fy + fh / 2) * k) / H, fh * k / H
 
-def make(name, src, size):
+def make(name, src, size, ground):
     path = f'{SRC}/{src}'
     box = face(path)
-    m = person(path)
     a, med, g = expose(levels(np.asarray(Image.open(path).convert('L'), dtype=float)), box)
-    al, bg = alpha(a, m)
-    (lay, lam, bgp), depth, frac = place([a, al, bg], box, size)
-    # Un-mix rather than blend. An edge pixel is a mix of the person and the
-    # backdrop they were shot against, so take that backdrop back out in the
-    # same proportion and put this one in: I + (1-a)(new - old). Where the
-    # mask is opaque nothing moves; where it is clear the old wall is replaced
-    # outright; in the band between, the ring simply is not there to see.
-    out = np.clip(lay + (1 - lam) * (backdrop(*size) - bgp), 0, 255)
+
+    if not ground:
+        # The photograph as it was taken: its own wall, cropped to the card.
+        (lay,), depth, frac = place([a], box, size, cover=True)
+        out = np.clip(lay, 0, 255)
+    else:
+        al, bg = alpha(a, person(path))
+        (lay, lam, bgp), depth, frac = place([a, al, bg], box, size)
+        # Un-mix rather than blend. An edge pixel is a mix of the person and the
+        # backdrop they were shot against, so take that backdrop back out in the
+        # same proportion and put this one in: I + (1-a)(new - old). Where the
+        # mask is opaque nothing moves; where it is clear the old wall is
+        # replaced outright; in the band between, the ring is not there to see.
+        out = np.clip(lay + (1 - lam) * (studio_grey(size) - bgp), 0, 255)
+
     os.makedirs(OUT, exist_ok=True)
     Image.fromarray(out.astype('uint8')).save(f'{OUT}/{name}.jpg', quality=90, optimize=True, progressive=True)
-    print(f'{name:20} face {med:3.0f} (gamma {g:.2f})  head {frac*100:.0f}% of frame, {depth*100:.0f}% down')
+    where = 'on the sitting\u2019s grey' if ground else 'as shot'
+    print(f'{name:20} face {med:3.0f} (gamma {g:.2f})  head {frac*100:.0f}% of frame, {depth*100:.0f}% down  {where}')
 
 if __name__ == '__main__':
     want = set(sys.argv[1:])
-    for name, src in PEOPLE:
-        if not want or name in want: make(name, src, CARD)
-    for name, src in FOUNDERS:
-        if not want or name in want: make(name, src, BIG)
+    for name, src, ground in PEOPLE:
+        if not want or name in want: make(name, src, CARD, ground)
+    for name, src, ground in FOUNDERS:
+        if not want or name in want: make(name, src, BIG, ground)
