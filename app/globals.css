@@ -246,15 +246,6 @@ h1,h2,h3,p{margin-top:0}
 .hero[data-anim="pending"] .hero-rule,.hero[data-anim="pending"] .orbit-ring,.hero[data-anim="pending"] .ga-core,
 .hero[data-anim="pending"] .card,.hero[data-anim="pending"] .chipwrap,.hero[data-anim="pending"] .hero-clients{opacity:0;animation:animGateFallback .5s ease 2.9s forwards}
 @keyframes animGateFallback{to{opacity:1}}
-/* navigation entrance */
-@keyframes navIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-.site-nav .brand{animation:navIn .5s ease .05s both}
-.site-nav .nav a{animation:navIn .45s ease both}
-.site-nav .nav a:nth-child(1){animation-delay:.15s}
-.site-nav .nav a:nth-child(2){animation-delay:.2s}
-.site-nav .nav a:nth-child(3){animation-delay:.25s}
-.site-nav .nav a:nth-child(4){animation-delay:.3s}
-.site-nav .nav a:nth-child(5){animation-delay:.35s}
 
 @media (prefers-reduced-motion: reduce){
   .hero[data-anim] .line-inner,.hero[data-anim] .hero-lede,.hero[data-anim] .ctas,
@@ -263,7 +254,6 @@ h1,h2,h3,p{margin-top:0}
   .spinner,.btn-shimmer::after,.btn-shimmer::before,.ichip{animation:none !important}
   .who-founders-btn,.who-founders-btn .btn-label > span{transition:none !important}
   .bars i{transform:scaleY(1) !important}
-  .site-nav .brand,.site-nav .nav a,.site-nav .nav-actions,.site-nav .mobile{animation:none !important;opacity:1 !important;transform:none !important}
   .reveal{opacity:1 !important;transform:none !important}
 }
 /* TRUST STRIP */
@@ -601,7 +591,6 @@ h1,h2,h3,p{margin-top:0}
      the hero directly below and at the foot of the drawer */
   
   .nav.open{padding-bottom:8px}
-  .nav.open .drawer-cta{margin:6px 6px 2px;min-height:52px;width:auto;justify-content:center}
   .shell{width:100%;margin:0}
   /* the hero is one viewport at every width now; it grows past that
      only if its own content needs the room */
@@ -1053,20 +1042,6 @@ html{font-size:112.5%}
   .ach-figure-label{margin-top:8px;font-size:14px;line-height:1.4;color:var(--ink-muted)}
 }
 
-/* ---------- services panels ---------- */
-.solution-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.solution-count{font:800 0.6667rem var(--font-sans);letter-spacing:.08em;line-height:1;padding:5px 10px;border-radius:999px;border:1px solid rgba(16,45,68,.15);color:#6B7480;flex:none}
-.solution-card.blue .solution-count,.solution-card.dark .solution-count{border-color:rgba(255,255,255,.26);color:rgba(255,255,255,.82)}
-/* soft corner light on the coloured solution cards */
-.solution-card.blue::after,.solution-card.dark::after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.13) 0%,rgba(255,255,255,0) 70%);pointer-events:none}
-.solution-card > *{position:relative}
-@media(hover:hover) and (pointer:fine){
-  .solution-card:hover{box-shadow:0 30px 60px -28px rgba(16,45,68,.32)}
-  .solution-card:not(.blue):not(.dark):hover{border-color:#C3CCD1}
-}
-@media(max-width:767px){
-  .solution-count{font-size:0.6111rem;padding:4px 8px}
-}
 
 /* ---------- who-we-are story column ---------- */
 
@@ -1696,14 +1671,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
   .service-arm{padding:20px}
 }
 
-/* ---- maturity curve ---- */
-
-.maturity-stage.is-goal{background:var(--blue);border-color:var(--blue)}
-.maturity-stage.is-goal .maturity-rail{background:rgba(255,255,255,.28)}
-.maturity-stage.is-goal .maturity-rail>span{background:var(--yellow)}
-.maturity-stage.is-goal .maturity-n{color:var(--yellow)}
-.maturity-stage.is-goal h3{color:#fff}
-.maturity-stage.is-goal p{color:#D3E3EF}
 
 /* =====================================================================
    PRELOADER
@@ -2018,106 +1985,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .fsvc-link svg,.pillar-cta svg{transition:none}
 }
 
-/* ---- MATURITY CURVE (reference treatment) ---- */
-.fmc{background:#fff;padding:88px 0}
-/* No min-height: the stagger on .fmc-stages already sets how tall this needs
-   to be, and the fixed 560px left 95px of empty stage under the lowest card.
-   The connector's viewBox is measured from this element by a ResizeObserver,
-   so it follows the new height on its own. */
-.fmc-stage{position:relative;margin-top:clamp(52px,6vw,90px)}
-.fmc-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1;pointer-events:none}
-.fmc-line-bg{fill:none;stroke:var(--hair-2);stroke-width:2}
-.fmc-line{fill:none;stroke:url(#fmcGrad);stroke-width:1.8;stroke-linecap:round}
-.fmc-dot{fill:#fff;stroke:#9CBFD6;stroke-width:1.6}
-.fmc-dot.is-goal{fill:var(--blue);stroke:var(--blue)}
-
-/* the four cards climb toward stage 4 */
-.fmc-stages{list-style:none;margin:0;padding:0;position:relative;z-index:2;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,1.5vw,24px);align-items:start}
-/* an even 48px per stage, so the connector climbs in equal steps */
-.fmc-stages>li:nth-child(1){margin-top:144px}
-.fmc-stages>li:nth-child(2){margin-top:96px}
-.fmc-stages>li:nth-child(3){margin-top:48px}
-.fmc-stages>li:nth-child(4){margin-top:0}
-
-/* Light card with the blue wash pushed into its lower corner. `--lit` is set
-   per stage from the component and scales both the wash and the striations, so
-   the light climbs toward Decision Intelligence and the argument is carried by
-   the treatment rather than by a colour swap on the last card. */
-.fmc-card{position:relative;overflow:hidden;isolation:isolate;
-  display:flex;flex-direction:column;text-align:left;width:100%;
-  font:inherit;color:inherit;cursor:pointer;background:#fff;border:1px solid #E4E9EE;
-  border-radius:26px;padding:26px 24px 24px;box-shadow:0 22px 50px -32px rgba(16,45,68,.45);
-  transition:transform .55s var(--ease-fin),box-shadow .55s var(--ease-fin),
-             border-color .5s var(--ease-fin)}
-.fmc-card::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  opacity:var(--lit,.4);
-  background:radial-gradient(96% 72% at 96% 100%,rgba(159,211,247,.85) 0%,
-    rgba(74,147,201,.52) 22%,rgba(15,94,151,.22) 46%,rgba(255,255,255,0) 74%)}
-.fmc-card::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:var(--lit,.4);mix-blend-mode:multiply;
-  background:repeating-linear-gradient(90deg,rgba(15,94,151,.14) 0 1px,rgba(255,255,255,0) 1px 21px)}
-.fmc-card>*{position:relative;z-index:2}
-
-.fmc-label{font:700 11px var(--font-sans);letter-spacing:.18em;text-transform:uppercase;
-  color:var(--blue)}
-.fmc-body{color:var(--ink-muted);font-size:.84rem;line-height:1.55;margin-top:12px}
-.fmc-num{font:300 54px/1 var(--font-sans);letter-spacing:-.04em;color:var(--ink-deep);
-  margin-top:22px}
-.fmc-name{font:600 .98rem/1.2 var(--font-sans);letter-spacing:-.01em;color:var(--ink-deep);
-  margin-top:8px}
-.fmc-cap{display:block;width:100%;height:4px;border-radius:4px;background:#E7ECF1;
-  margin-top:18px;position:relative;overflow:hidden}
-.fmc-cap b{position:absolute;inset:0 auto 0 0;display:block;border-radius:4px;
-  background:linear-gradient(90deg,var(--blue),var(--blue-light))}
-
-/* the last stage is the destination — a brighter rim rather than a dark fill,
-   so all four cards stay in the same light family */
-.fmc-stages>li:last-child .fmc-card{border-color:#C7DDEE}
-.fmc-stages>li:last-child .fmc-num{color:var(--blue)}
-
-.fmc-card.is-sel{border-color:var(--blue);box-shadow:0 26px 56px -30px rgba(15,94,151,.5)}
-.fmc-card:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
-@media (hover:hover) and (pointer:fine){
-  .fmc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-fin)}
-}
-
-.fmc-flag{position:absolute;z-index:3;top:0;left:0;transform:translate(-50%,-140%);
-  display:flex;flex-direction:column;align-items:center;opacity:0;pointer-events:none;
-  transition:opacity .45s var(--ease-fin)}
-.fmc-flag.is-show{opacity:1}
-.fmc-flag .tag{font:700 11px var(--font-sans);letter-spacing:.12em;text-transform:uppercase;
-  color:#fff;background:var(--grad-blue);padding:5px 11px;border-radius:999px;white-space:nowrap;
-  box-shadow:0 8px 18px -8px var(--ring-fin)}
-.fmc-flag .stem{width:2px;height:16px;background:var(--blue)}
-.fmc-flag .bead{width:11px;height:11px;border-radius:50%;background:var(--blue);
-  box-shadow:0 0 0 4px rgba(15,94,151,.24)}
-
-.fmc-foot{margin-top:clamp(64px,7vw,90px);display:flex;flex-wrap:wrap;gap:26px 40px;
-  align-items:center;justify-content:space-between;border-top:1px solid var(--hair);padding-top:34px}
-.fmc-note{margin:0;max-width:52ch;color:var(--ink-deep);
-  font:500 clamp(1.02rem,1.4vw,1.3rem)/1.42 var(--font-sans);letter-spacing:-.01em}
-
-@media (max-width:900px){
-  /* single column: nothing for a curve to trace, so a rail replaces it */
-  .fmc-svg,.fmc-flag{display:none}
-  .fmc-stage{min-height:0;padding-left:26px}
-  .fmc-stage::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;
-    background:linear-gradient(180deg,var(--hair-2),var(--blue) 45%,var(--blue-light))}
-  .fmc-stages{grid-template-columns:1fr;gap:16px}
-  .fmc-stages>li{margin-top:0!important;position:relative}
-  /* bead on the <li>, not the card: the card's ::after is the striation
-     overlay now, and the card clips its overflow so a bead sitting outside it
-     would simply vanish */
-  .fmc-stages>li::before{content:"";position:absolute;left:-26px;top:34px;
-    width:11px;height:11px;border-radius:50%;background:#fff;
-    border:2.6px solid var(--blue);z-index:3}
-  .fmc-stages>li:last-child::before{background:var(--blue)}
-  .fmc-foot{margin-top:44px}
-}
-@media (prefers-reduced-motion:reduce){
-  .fmc-card,.fmc-cap b,.fmc-flag{transition:none}
-}
 
 /* ---- client logo wall (band under the hero) ---- */
 /* One heading over the marks, centred; the wall now also carries the three
@@ -2166,7 +2033,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .clients-sub{margin:14px auto 0;max-width:62ch;font-size:0.8889rem;line-height:1.6;
   color:var(--ink-muted);font-weight:500;text-wrap:balance}
 @media (max-width:900px){.clients{padding:26px 0 40px}}
-@media (max-width:767px){.fmc{padding:64px 0}}
 /* .btn sets white-space:nowrap, which at phone widths let a long label run
    wider than its button, cut silently by the body's overflow-x:hidden. Let
    labels wrap instead. */
