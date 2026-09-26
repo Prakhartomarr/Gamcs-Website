@@ -1322,9 +1322,14 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .hero .hero-pillars{display:flex;justify-content:space-between;align-items:baseline;
   width:100%;
   /* the lead-in's size and weight: the block opens and closes on a display
-     line, with the subhead quiet between them */
-  margin:6px 0 0;font-size:calc(var(--lede-size) * 1.36);font-weight:700;
+     line, with the subhead quiet between them. The size waits for 1024 —
+     below it the five words at 1.36x are wider than the column, and flex
+     shrinks them until the bars touch the words (measured: 0px of gap). */
+  margin:6px 0 0;font-size:var(--lede-size);font-weight:700;
   letter-spacing:-.01em;line-height:1.35;color:var(--ink-deep)}
+@media (min-width:1024px){
+  .hero .hero-pillars{font-size:calc(var(--lede-size) * 1.36)}
+}
 .hero .hero-pillars-sep{font-weight:400;color:rgba(13,24,40,.30)}
 /* The 89% cap that used to sit here trimmed the gaps when the words were
    20px. At 27px the words themselves take the room — the cap left only 30px

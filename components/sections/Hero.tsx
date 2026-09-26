@@ -91,7 +91,6 @@ export default function Hero() {
               <span className="was">{hero.leadWas}</span>{" "}
               <span className="now">{hero.leadNow}</span>
             </p>
-            <p className="sub">{hero.subhead}</p>
             {/* Spread edge to edge, the bars centred in the gaps. The copy is
                 one cell in the doc — "Advise | Build | ..." — so it is split
                 here rather than in the content module; space-between over the
@@ -108,6 +107,7 @@ export default function Hero() {
                 </Fragment>
               ))}
             </p>
+            <p className="sub">{hero.subhead}</p>
           </div>
           <div className="ctas">
             <CTA href={hero.cta.href} icon="arrow" data-cta="hero">
