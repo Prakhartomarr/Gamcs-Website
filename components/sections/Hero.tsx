@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
@@ -90,22 +90,6 @@ export default function Hero() {
             <p className="hero-hook">
               <span className="was">{hero.leadWas}</span>{" "}
               <span className="now">{hero.leadNow}</span>
-            </p>
-            {/* Spread edge to edge, the bars centred in the gaps. The copy is
-                one cell in the doc — "Advise | Build | ..." — so it is split
-                here rather than in the content module; space-between over the
-                alternating words and bars is what evens the gaps. */}
-            <p className="hero-pillars">
-              {hero.pillars.split(" | ").map((word, i) => (
-                <Fragment key={word}>
-                  {i > 0 && (
-                    <span className="hero-pillars-sep" aria-hidden="true">
-                      |
-                    </span>
-                  )}
-                  <span>{word}</span>
-                </Fragment>
-              ))}
             </p>
             <p className="sub">{hero.subhead}</p>
           </div>

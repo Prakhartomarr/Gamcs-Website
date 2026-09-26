@@ -74,9 +74,6 @@ export const hero = {
   leadNow: "Start Knowing What To Do Next.",
   subhead:
     "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
-  /* The five verbs, under the subhead: what GAMCS does, before what it is.
-     One string with its own separators, as the copy doc writes it. */
-  pillars: "Advise | Build | Transform | Transact | Enable",
   /* The hero's one button. The copy doc sends it to the "Case Study Section";
      that is the /case-study page — the homepage has no case study band. */
   cta: { label: "See Decision Intelligence in Action", href: "/case-study" },

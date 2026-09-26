@@ -1315,22 +1315,6 @@ html[data-cookie-banner] .sticky-cta{display:none}
 /* The five verbs. One string with its own pipes, so the separators set at the
    same size as the words — which is why this is tracked out and a step down
    from the subhead: at the body size the bars read as heavy as the type. */
-/* The hook's twin in weight and size, spread across the block's own width:
-   space-between over the alternating words and bars puts equal air either side
-   of every bar, so each one sits centred between the two words it divides. The
-   block is sized by its widest line, so the verbs stretch to meet it. */
-.hero .hero-pillars{display:flex;justify-content:space-between;align-items:baseline;
-  width:100%;
-  /* the lead-in's size and weight: the block opens and closes on a display
-     line, with the subhead quiet between them. The size waits for 1024 —
-     below it the five words at 1.36x are wider than the column, and flex
-     shrinks them until the bars touch the words (measured: 0px of gap). */
-  margin:6px 0 0;font-size:var(--lede-size);font-weight:700;
-  letter-spacing:-.01em;line-height:1.35;color:var(--ink-deep)}
-@media (min-width:1024px){
-  .hero .hero-pillars{font-size:calc(var(--lede-size) * 1.36)}
-}
-.hero .hero-pillars-sep{font-weight:400;color:rgba(13,24,40,.30)}
 /* The 89% cap that used to sit here trimmed the gaps when the words were
    20px. At 27px the words themselves take the room — the cap left only 30px
    between them — so the row takes the whole block again and lands near 42. */
@@ -1862,7 +1846,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* the whole block steps down together, so the three stay one size — and one
      leading, which means naming all three and not just the two that had it */
   .hero-lede{--lede-size:clamp(16px,4.4vw,17px)}
-  .hero-hook,.hero-lede .sub,.hero .hero-pillars{line-height:1.5}
+  .hero-hook,.hero-lede .sub{line-height:1.5}
   .hero-hook .was{color:var(--lede-ink-soft)}
   .hero-lede .sub{margin-top:6px}
   .hero-bottom .ctas{margin-top:32px}

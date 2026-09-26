@@ -420,18 +420,6 @@
   }
  },
  {
-  "code": "HOME-HERO-5B",
-  "page": "Home (/)",
-  "section": "Hero",
-  "label": "Capability line",
-  "kind": "text",
-  "text": "Advise | Build | Transform | Transact | Enable",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "hero.pillars"
-  }
- },
- {
   "code": "HOME-HERO-06",
   "page": "Home (/)",
   "section": "Hero",
