@@ -1320,9 +1320,15 @@ html[data-cookie-banner] .sticky-cta{display:none}
    of every bar, so each one sits centred between the two words it divides. The
    block is sized by its widest line, so the verbs stretch to meet it. */
 .hero .hero-pillars{display:flex;justify-content:space-between;align-items:baseline;
+  width:100%;
   margin:6px 0 0;font-size:var(--lede-size);font-weight:700;
   letter-spacing:normal;line-height:1.6;color:var(--ink-deep)}
 .hero .hero-pillars-sep{font-weight:400;color:rgba(13,24,40,.35)}
+/* Only where there is room to give back. At full width space-between opened
+   56px between the words; 89% of the block brings that to 45. Below 1024 the
+   row has almost no free space to start with — taking 11% of it there closed
+   the gaps to 3px — so it keeps the whole width and space-between decides. */
+@media (min-width:1024px){.hero .hero-pillars{width:89%}}
 /* No top margin in the row: align-items:center centres the MARGIN box, so 34px
    on top pushed the button half that far below the copy's centre. The margin is
    what separates it from the copy once the row stacks, so it comes back there. */
