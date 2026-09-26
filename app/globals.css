@@ -1997,8 +1997,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    (97% of the box on SF Pro). `text-wrap:balance` is there for the face or the
    width where it does not: two even lines rather than a long one and a word. */
 .clients-head h2{margin:0;text-wrap:balance}
-.clients-sub{margin:14px auto 0;max-width:62ch;font-size:0.8889rem;line-height:1.6;
-  color:var(--ink-muted);font-weight:500;text-wrap:balance}
+/* No measure on it: the sentence sets on one line wherever the container can
+   hold it, and wraps on its own where it cannot. 62ch broke it at 643px and
+   `balance` then split it evenly into two, which is the wrong answer when
+   there is room for one. Size unchanged. */
+.clients-sub{margin:14px auto 0;max-width:none;font-size:0.8889rem;line-height:1.6;
+  color:var(--ink-muted);font-weight:500}
 @media (max-width:900px){.clients{padding:26px 0 40px}}
 /* .btn sets white-space:nowrap, which at phone widths let a long label run
    wider than its button, cut silently by the body's overflow-x:hidden. Let
