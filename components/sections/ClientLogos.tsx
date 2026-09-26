@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import Image from "next/image";
-import { type LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
+import type { ClientLogo } from "@/lib/logo-wall";
 import LogoCloudSwap, { type LogoEntry } from "@/components/ui/logo-clouds";
 import ClientMarquee from "@/components/sections/ClientMarquee";
 import { clients } from "@/lib/content/gamcs";
@@ -58,7 +58,7 @@ export default function ClientLogos() {
      as a broken image. This is a server component, so the check is a build-time
      disk read, not a runtime cost — and it means an entry can be added to the
      content before its artwork lands. */
-  const logos: LogoCloudClient[] = clients.logos
+  const logos: ClientLogo[] = clients.logos
     .filter((l) => existsSync(path.join(LOGO_DIR, l.file)))
     .map((l) => ({
       name: l.name,
@@ -76,7 +76,7 @@ export default function ClientLogos() {
     name: l.name,
     icon: (
       <Image
-        src={l.src!}
+        src={l.src}
         alt={l.name}
         width={l.width}
         height={l.height}
