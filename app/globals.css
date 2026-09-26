@@ -1370,8 +1370,11 @@ html[data-cookie-banner] .sticky-cta{display:none}
    wrap like any sentence. #8A9198 is the site's existing receded-text grey
    (quote captions, hints). */
 .hero-hook{margin:0;font-family:var(--font-sans);
-  font-size:var(--lede-size);line-height:1.6;font-weight:700;
-  letter-spacing:normal}
+  /* 1.36x the block's size. In the reference all three lines span the same
+     width — the hook fills the block rather than stopping short of it — and at
+     1x its ink reached only 74% of the width the other two set. */
+  font-size:calc(var(--lede-size) * 1.36);line-height:1.35;font-weight:700;
+  letter-spacing:-.01em}
 /* `balance` on the paragraph, not the spans: it evens the rag of whatever the
    whole sentence wraps to. Inline spans would each balance their own fragment,
    which is not where the breaks are any more. */
