@@ -1322,7 +1322,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .hero .hero-pillars{display:flex;justify-content:space-between;align-items:baseline;
   width:100%;
   margin:6px 0 0;font-size:var(--lede-size);font-weight:700;
-  letter-spacing:normal;line-height:1.6;color:var(--ink-muted)}
+  letter-spacing:normal;line-height:1.6;color:var(--lede-ink)}
 .hero .hero-pillars-sep{font-weight:400;color:rgba(85,96,111,.45)}
 /* Only where there is room to give back. At full width space-between opened
    56px between the words; 89% of the block brings that to 45. Below 1024 the
@@ -1359,8 +1359,13 @@ html[data-cookie-banner] .sticky-cta{display:none}
 /* No cap: each of the three sentences takes its own line, and the longest of
    them sizes this flex item. The button still sits at the row's right, since a
    max-content flex item takes no more than it needs. */
-.hero-lede{--lede-size:clamp(0.9444rem,1.4vw,1.1111rem);max-width:none;
-  font-size:var(--lede-size)}
+.hero-lede{--lede-size:clamp(0.9444rem,1.4vw,1.1111rem);
+  /* The block's greys, local to the hero so changing them cannot reach the
+     body copy the rest of the site sets in --ink-muted. Two of them, as the
+     reference has: the lead-in recedes, the two lines under it do not. */
+  --lede-ink:#55606F;
+  --lede-ink-soft:#8A9198;
+  max-width:none;font-size:var(--lede-size)}
 /* The middle line is the quiet one: a size down from the two around it and at
    the lighter weight, so the block reads statement / explanation / capability
    rather than three equal lines. Still near-black — the weight and the size
@@ -1369,7 +1374,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
   /* a step under the two lines around it, wherever --lede-size lands; a flat
      17px made it the BIGGEST line at 390, where the others drop to 15 */
   font-size:max(14px,calc(var(--lede-size) * .85));
-  line-height:1.6;color:var(--ink-muted);font-weight:500}
+  line-height:1.6;color:var(--lede-ink);font-weight:500}
 /* Two-tone on the sentence boundary — the same accent device the H1 already
    uses on its third line. The two sentences set as one line, the colour
    carrying the break rather than a line break; where the measure runs out they
@@ -1388,7 +1393,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .hero-hook span{display:inline}
 /* The block's grey. Sampled from the reference: #57606E, which is this site's
    own --ink-muted. The blue on the sentence that turns is untouched. */
-.hero-hook .was{color:var(--ink-muted)}
+.hero-hook .was{color:var(--lede-ink-soft)}
 .hero-hook .now{color:var(--blue)}
 
 .section-head h2 em{font-style:normal;color:var(--blue)}
@@ -1853,7 +1858,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      leading, which means naming all three and not just the two that had it */
   .hero-lede{--lede-size:clamp(16px,4.4vw,17px)}
   .hero-hook,.hero-lede .sub,.hero .hero-pillars{line-height:1.5}
-  .hero-hook .was{color:var(--ink-muted)}
+  .hero-hook .was{color:var(--lede-ink-soft)}
   .hero-lede .sub{margin-top:6px}
   .hero-bottom .ctas{margin-top:32px}
   /* 16px only from 430 up: the label sets 300px of ink at 16px and shares the
