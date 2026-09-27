@@ -27,7 +27,9 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    /* `home-tight` halves the vertical rhythm between these sections. It is a
+       wrapper rather than an edit to .section, which nine other pages use. */
+    <div className="home-tight">
       <Hero />
       {/*
         Client logo wall. This band used to hold the platform trust bar (Power
@@ -49,6 +51,6 @@ export default function HomePage() {
       <Testimonials />
       <WhoWeAre />
       <Contact />
-    </>
+    </div>
   );
 }

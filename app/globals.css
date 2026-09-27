@@ -3083,3 +3083,26 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .ap-actions>span:empty{display:none}
   .ap-helper{text-align:left}
 }
+
+/* =====================================================================
+   HOMEPAGE RHYTHM
+   Every gap between the homepage's sections, halved. Scoped to the page's
+   own wrapper because .section is nine other pages' too; scoped by id
+   because several of these sections set their padding with Tailwind
+   utilities on the element, which a class selector alone would lose to.
+
+   Measured before: 1,638px of vertical padding across nine sections on a
+   10,243px page.
+   ===================================================================== */
+.home-tight #clients{padding:16px 0 24px}
+.home-tight #data-to-decision{padding:22px 0 54px}
+.home-tight #maturity-curve.section{padding:36px 0}
+.home-tight #how-we-help{padding:63px 0 36px}
+.home-tight #solutions.section{padding:44px 0}
+.home-tight #impact{padding:56px 0}
+.home-tight #testimonials{padding:56px 0}
+.home-tight #who-we-are{padding:56px 0}
+.home-tight #contact{padding:54px 0}
+@media (max-width:768px){
+  .home-tight #data-to-decision.d2d.section{padding:32px 0}
+}
