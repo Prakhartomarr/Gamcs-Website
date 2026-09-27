@@ -1,7 +1,6 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { ScrollReelTestimonials } from "@/components/ui/scroll-reel-testimonials";
-import SectionEyebrow from "@/components/SectionEyebrow";
 import { testimonials } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { sections } from "@/lib/content/ui";
@@ -42,7 +41,6 @@ export default function Testimonials() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow label={sections.testimonials} index="06" />
             <h2>{testimonials.heading}</h2>
           </div>
         </div>

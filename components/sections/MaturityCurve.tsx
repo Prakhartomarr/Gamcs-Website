@@ -489,13 +489,6 @@ export default function MaturityCurve() {
     >
       <div className="container">
         <div className="fin-center reveal">
-          <span className="eyebrow-num" aria-hidden="true">
-            02
-          </span>
-          <span className="fin-eyebrow">
-            <i aria-hidden="true" />
-            {maturityCurve.eyebrow}
-          </span>
           <h2 className="fin-h2">
             {maturityCurve.heading}
             <br className="hidden sm:block" />{" "}

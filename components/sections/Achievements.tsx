@@ -1,6 +1,5 @@
 import Image from "next/image";
 import CountUp from "@/components/motion/CountUp";
-import SectionEyebrow from "@/components/SectionEyebrow";
 import { achievements } from "@/lib/content/gamcs";
 
 /**
@@ -48,7 +47,6 @@ export default function Achievements() {
       <div className="container">
         <div className="section-head reveal">
           <div>
-            <SectionEyebrow label={achievements.heading} index="05" />
             <h2>{achievements.lead}</h2>
           </div>
         </div>
