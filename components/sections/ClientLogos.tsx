@@ -23,7 +23,7 @@ function pngSize(file: string) {
  * The per-mark ceilings come from lib/content/gamcs.ts, where each logo
  * carries its own `h` and `mw`. They were solved rather than chosen: every
  * mark was rendered, its ink area measured, and its height set so that all
- * twenty-one carry the same weight of ink. Area scales with the square of the
+ * twenty-two carry the same weight of ink. Area scales with the square of the
  * height, so the correction for each is its current height times the square
  * root of the ratio between the target area and its own.
  *
@@ -35,7 +35,7 @@ function pngSize(file: string) {
  */
 
 /**
- * The client logo wall in the band under the hero: all twenty-one marks at once,
+ * The client logo wall in the band under the hero: all twenty-two marks at once,
  * fading up out of a blur a tenth of a second apart as the band scrolls in, and
  * then, every few seconds, a wave that wipes across the wall left to right.
  *
@@ -113,7 +113,7 @@ export default function ClientLogos() {
           subtitle={null}
           showNames={false}
           entrance
-          /* The wave takes twenty-one marks x 0.11s + 0.92s = 3.2s to cross, so
+          /* The wave takes twenty-two marks x 0.11s + 0.92s = 3.3s to cross, so
              a 3.2s rest makes it roughly half the time. */
           interval={3200}
           className="clients-wall reveal bg-transparent px-0 py-2 sm:py-2"

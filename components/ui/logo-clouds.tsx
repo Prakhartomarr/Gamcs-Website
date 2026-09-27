@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils";
  *   - The wave is a chain of timeouts, not `setInterval` + `onAnimationComplete`.
  *     The original fires on a fixed interval and only clears its flag when the
  *     last logo reports in, so a wave that runs longer than the interval
- *     (twenty-one marks at 0.11 stagger take 3.2s, which is the default
+ *     (twenty-two marks at 0.11 stagger take 3.2s, which is the default
  *     interval) requests the next wave while the flag is still set — and the
  *     request is dropped. Here the wave's length is arithmetic, `interval` is
  *     the rest between waves, and waves cannot overlap.
@@ -145,7 +145,7 @@ function LogoItem({
         }
         /* 1.04 on a 200ms tween, not the published 1.07 spring: the wall it
            now draws asks for a subtle lift, and a spring's overshoot reads as
-           a bounce on twenty-one marks at once. */
+           a bounce on twenty-two marks at once. */
         whileHover={{
           scale: 1.04,
           opacity: 1,

@@ -1167,9 +1167,12 @@ export const maturityCurve = {
  * same bounding box — a wide wordmark and a square emblem look equally sized
  * only if you normalise on ink area, not on width.
  *
- * Order is three rows of seven, each mixing three wide wordmarks, two square
- * marks and two in between, so no row reads heavier than another. The three
- * advisory firms keep the last three slots, as they have since 2026-09-22.
+ * Order is two rows of eleven, paired by width: the two marks in a column are
+ * near enough the same width that the columns read as columns, which is the
+ * only way two rows of a ragged roster line up. Wide and narrow columns then
+ * alternate across the wall so no stretch of it reads heavy, and the two rows
+ * come out within 4px of each other on total ink width. The three advisory
+ * firms keep the last three slots, as they have since 2026-09-22.
  *
  * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
  * still does: its monogram is white and exists only against that orange.
@@ -1182,9 +1185,11 @@ export const maturityCurve = {
  * what needs more room to be read. Equal bounding-box area has the opposite
  * fault, blowing up sparse marks.
  *
- * Each height is the geometric mean of the two, then scaled to its row's cell
- * width. The second row's cells are wider (it holds ten marks to the first
- * row's eleven), so its marks are sized to that.
+ * Each height is the geometric mean of the two, capped at 56px. The result is
+ * even to within 0.88-1.11x of the median mark's ink, and these numbers are
+ * fixed: the wall was re-laid from three rows to two without touching a single
+ * one of them, because the columns size themselves to the marks rather than
+ * the marks to the columns.
  *
  * Basilic Fly, Two Brothers and Cumin Co. used to be panels too. Their artwork
  * was lifted off the tile by solving the blend for each pixel's coverage, then
@@ -1192,32 +1197,43 @@ export const maturityCurve = {
  * own colour — Two Brothers' cream type became its green, Basilic Fly's white
  * type became its navy. Artwork that already read on white kept its real
  * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
+ *
+ * One of Us is the same problem in reverse. The only clean file the studio
+ * publishes is white-on-transparent, for their own black site; on this white
+ * band it is invisible. Their header PNG, the obvious alternative, is cropped
+ * into the letterforms — its leading "o" loses a fifth of its bowl — so the
+ * white artwork is the one that was taken, and its alpha repainted #1A1A1A.
+ * Nothing was redrawn: both bowls measure 97 and 96px square in the source.
+ * It was then padded to the family's convention — every other file here sits
+ * its mark on 91% of the box's width and 83% of its height — because a raw
+ * tight crop reads as 2.2x the density of its neighbours and the solve answers
+ * that by shrinking it. Padded, the same rule puts it at 1.01x the median.
  */
 export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
     /* row 1 */
-    { name: "WWF", file: "wwf.png", h: 38, mw: 29 },
-    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 23, mw: 71 },
-    { name: "HungerRush", file: "hungerrush.png", h: 39, mw: 91 },
-    { name: "CoreStack", file: "corestack.png", h: 22, mw: 105 },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 56, mw: 64 },
+    { name: "Edulog", file: "edulog.png", h: 27, mw: 114 },
     { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 31, mw: 62 },
     { name: "NewRocket", file: "newrocket.png", h: 24, mw: 104 },
-    /* row 2 */
-    { name: "GX Group", file: "gx-group.png", tile: true, h: 28, mw: 30 },
-    { name: "Edulog", file: "edulog.png", h: 27, mw: 114 },
-    { name: "ProcDNA", file: "procdna.png", h: 42, mw: 70 },
-    { name: "Passionfruit", file: "passionfruit.png", h: 27, mw: 100 },
     { name: "Jupiter Group", file: "jupiter-group.png", h: 47, mw: 54 },
-    { name: "Cumin Co.", file: "cumin-co.png", h: 43, mw: 82 },
+    { name: "HungerRush", file: "hungerrush.png", h: 39, mw: 91 },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 34, mw: 36 },
+    { name: "ProcDNA", file: "procdna.png", h: 42, mw: 70 },
+    { name: "WWF", file: "wwf.png", h: 38, mw: 29 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 23, mw: 71 },
     { name: "BetterCloud", file: "bettercloud.png", h: 29, mw: 85 },
-    /* row 3 */
+    { name: "Cumin Co.", file: "cumin-co.png", h: 43, mw: 82 },
+    /* row 2 */
+    { name: "CoreStack", file: "corestack.png", h: 22, mw: 105 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 56, mw: 64 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 27, mw: 100 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 35, mw: 61 },
+    { name: "One of Us", file: "one-of-us.png", h: 16, mw: 88 },
     { name: "The Park Hotels", file: "the-park-hotels.png", h: 32, mw: 42 },
     { name: "CBC Group", file: "cbc-group.png", h: 34, mw: 70 },
-    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 34, mw: 36 },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 35, mw: 61 },
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 28, mw: 30 },
     { name: "Akshar Business Consulting", file: "akshar.png", h: 24, mw: 78 },
     { name: "Threesixty Finance", file: "threesixty.png", h: 26, mw: 88 },
     { name: "CFO Bridge", file: "cfo-bridge.png", h: 26, mw: 77 },

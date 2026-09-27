@@ -290,6 +290,13 @@ h1,h2,h3,p{margin-top:0}
 /* Without scripting nothing ever adds .visible, so every section would stay
    invisible and the page would read as blank. Content beats animation. */
 @media (scripting:none){.reveal{opacity:1;transform:none}}
+/* Same rule, one level down. The logo wall's marks are motion children whose
+   `hidden` variant is serialised into the SSR html as inline
+   opacity:0;filter:blur(12px);transform:translateY(20px) — so un-hiding the
+   .reveal section above only reveals an empty 178px band. Inline styles yield
+   to an author !important, and nothing else sets these three. */
+@media (scripting:none){
+  .cl-grid > div{opacity:1!important;filter:none!important;transform:none!important}}
 
 /* Mobile nav open state — the original toggled these via inline JS styles. */
 
@@ -2025,48 +2032,46 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
   .btn-label{white-space:normal;text-align:center}
 }
-/* The wall, on the reference's grid: every cell the same size, every mark
-   optically centred in it.
-
-   Column counts divide the roster so no row is ever half empty: 21 marks into
-   7 at 1200 up, and 4 between 768 and 1199 — that one leaves a row of one, but
-   below 1200 there is no count that both divides 21 and fits the width, and 4
-   is the reference's own tablet count.
-
-   Gaps: 32 across, 56 down. The reference runs 30 and 30, but its marks are
-   all wordmarks of one height; ours range from a 0.70:1 panda to a 4.69:1
-   wordmark, and the extra vertical air is what stops three mixed rows reading
-   as one field.
+/* The wall: two rows of eleven, every mark optically centred on its row's
+   line. (It has been three rows of seven, and before that eleven-and-ten on
+   half-columns; both are gone. Git remembers them.)
 
    The row is a fixed 64px track and the cell fills it, so every mark in a row
    shares a centre line whatever its own height. The mark's two ceilings come
-   from its size class (ClientLogos.tsx) as --logo-h and --logo-mw. */
-/* Two rows, as the reference has. 21 does not halve, so it is 11 then 10, and
-   the grid is laid on 22 half-columns with every mark spanning two of them:
-   that lets the short row start half a column in and sit centred under the
-   long one, instead of ending ragged on the right. The gap is 24 rather than
-   32 because eleven columns of a 1200px measure have little to spare. */
-/* No cap and no padding of its own: the section's .container already sets the
-   measure, and a 1200 cap inside a 1280 container plus 24px each side was
-   spending 128px of width on nothing. Eleven columns now get 100px each
-   instead of 84 — the reference's own are 94. */
-/* Three rows of seven — 21 divides exactly, so every row is full and every
-   column lines up. Still on the heading's measure: 1172px centred lands on
-   134..1306 at 1440, the same edges as the words above.
+   from lib/content/gamcs.ts as --logo-h and --logo-mw.
 
-   Aleph's density, taken as a proportion rather than its pixels: it runs a
-   30px gap on a 94px column, about a third. Here the column pitch is
-   1172/7 = 167, so the gap is 53 and each mark gets 114. The gap is cell
-   padding, so the marks can never touch even at the narrowest column. */
+   It sits on the heading's measure: 1172px centred lands on 134..1306 at
+   1440, the same edges as the words above.
+
+   The columns are max-content, not 1fr, and that is the whole trick. Eleven
+   equal columns wide enough for the widest mark need 11x114 plus ten gaps —
+   1784px, six hundred more than there are — which is why this was three rows
+   of seven before. Sized to their contents the same marks come to 800px, and
+   space-between hands the remaining 372 out as ten 37px gaps. Nothing had to
+   shrink: every h and mw in gamcs.ts is the number it was at three rows.
+
+   max-content rather than auto because an auto track absorbs free space when
+   justify-content is normal, and here the free space must go to the gaps.
+
+   The marks are paired into columns by width, so a column is as wide as both
+   of its marks and the two rows line up down the wall. */
 .cl-grid{width:100%;max-width:1172px;margin-inline:auto;
-  grid-template-columns:repeat(7,1fr);
-  column-gap:0;row-gap:44px;grid-auto-rows:64px}
-.cl-grid > div{padding-inline:26.5px}
-/* Below 1200 seven across is unreadable; 3 divides 21 into seven full rows. */
-@media (max-width:1199px){
-  .cl-grid{grid-template-columns:repeat(3,1fr);column-gap:32px;row-gap:56px;
-    grid-auto-rows:64px}
-  .cl-grid > div{padding-inline:0}
+  grid-template-columns:repeat(11,max-content);justify-content:space-between;
+  row-gap:32px;grid-auto-rows:64px}
+/* the gap is the grid's now, not the cell's */
+.cl-grid > div{padding-inline:0}
+/* 1280, not 1200: the container steps from 920 to 1172 there, and eleven
+   columns of 800px of mark in 920 leaves 12px gaps — marks nearly touching.
+
+   Below it, four across. 22 has no divisor between 2 and 11, so some row will
+   be short whatever the count; four leaves a pair rather than the single
+   orphan three leaves, in six rows rather than eight. Flex, not grid, only so
+   that short last row centres itself — a grid would strand it on the left. The
+   selector carries the extra class to outrank Tailwind's own .grid. */
+@media (max-width:1279px){
+  .clients-wall .cl-grid{display:flex;flex-wrap:wrap;justify-content:center;
+    align-items:center;max-width:none;column-gap:32px;row-gap:40px}
+  .clients-wall .cl-grid > div{flex:0 0 auto;width:calc((100% - 96px) / 4);height:64px}
 }
 @media (max-width:767px){.cl-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:52px}}
 @media (max-width:419px){.cl-grid{grid-template-columns:repeat(2,1fr)}}
