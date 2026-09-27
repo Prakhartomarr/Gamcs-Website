@@ -1360,12 +1360,10 @@ html[data-cookie-banner] .sticky-cta{display:none}
    rather than three equal lines. Still near-black — the weight and the size
    carry the hierarchy, not a grey that would cost contrast on this shader. */
 .hero-lede .sub{margin-top:6px;max-width:none;
-  /* the lead-in's size — both lines of the block are display type now. The
-     leading and tracking come with it: 1.6 was set for text at .85x and reads
-     loose once the line is 27px. Weight and colour stay, so what separates the
-     two lines is 700-over-500 and the grey, not scale. */
-  font-size:calc(var(--lede-size) * 1.36);
-  line-height:1.35;letter-spacing:-.01em;color:var(--lede-ink);font-weight:500}
+  /* a step under the two lines around it, wherever --lede-size lands; a flat
+     17px made it the BIGGEST line at 390, where the others drop to 15 */
+  font-size:max(14px,calc(var(--lede-size) * .85));
+  line-height:1.6;color:var(--lede-ink);font-weight:500}
 /* Two-tone on the sentence boundary — the same accent device the H1 already
    uses on its third line. The two sentences set as one line, the colour
    carrying the break rather than a line break; where the measure runs out they
