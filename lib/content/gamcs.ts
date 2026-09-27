@@ -1167,6 +1167,10 @@ export const maturityCurve = {
  * same bounding box — a wide wordmark and a square emblem look equally sized
  * only if you normalise on ink area, not on width.
  *
+ * Order is three rows of seven, each mixing three wide wordmarks, two square
+ * marks and two in between, so no row reads heavier than another. The three
+ * advisory firms keep the last three slots, as they have since 2026-09-22.
+ *
  * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
  * still does: its monogram is white and exists only against that orange.
  *
@@ -1193,34 +1197,30 @@ export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
-    { name: "WWF", file: "wwf.png", h: 31, mw: 24 },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 45, mw: 52 },
-    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 19, mw: 59 },
-
-    { name: "HungerRush", file: "hungerrush.png", h: 32, mw: 74 },
-    { name: "CoreStack", file: "corestack.png", h: 18, mw: 87 },
-    { name: "NewRocket", file: "newrocket.png", h: 20, mw: 86 },
-    { name: "GX Group", file: "gx-group.png", tile: true, h: 23, mw: 25 },
-    { name: "ProcDNA", file: "procdna.png", h: 34, mw: 58 },
-
-    { name: "Edulog", file: "edulog.png", h: 22, mw: 93 },
-    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 25, mw: 51 },
-    { name: "Jupiter Group", file: "jupiter-group.png", h: 38, mw: 45 },
-
-    { name: "Cumin Co.", file: "cumin-co.png", h: 35, mw: 68 },
-    { name: "Passionfruit", file: "passionfruit.png", h: 22, mw: 81 },
-    { name: "CBC Group", file: "cbc-group.png", h: 28, mw: 57 },
-
-    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 28, mw: 30 },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 29, mw: 50 },
-
-    { name: "The Park Hotels", file: "the-park-hotels.png", h: 26, mw: 34 },
-    { name: "BetterCloud", file: "bettercloud.png", h: 24, mw: 69 },
-
-    /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
-    { name: "Akshar Business Consulting", file: "akshar.png", h: 20, mw: 65 },
-    { name: "Threesixty Finance", file: "threesixty.png", h: 21, mw: 72 },
-    { name: "CFO Bridge", file: "cfo-bridge.png", h: 21, mw: 63 },
+    /* row 1 */
+    { name: "WWF", file: "wwf.png", h: 38, mw: 29 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 23, mw: 71 },
+    { name: "HungerRush", file: "hungerrush.png", h: 39, mw: 91 },
+    { name: "CoreStack", file: "corestack.png", h: 22, mw: 105 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 56, mw: 64 },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 31, mw: 62 },
+    { name: "NewRocket", file: "newrocket.png", h: 24, mw: 104 },
+    /* row 2 */
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 28, mw: 30 },
+    { name: "Edulog", file: "edulog.png", h: 27, mw: 114 },
+    { name: "ProcDNA", file: "procdna.png", h: 42, mw: 70 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 27, mw: 100 },
+    { name: "Jupiter Group", file: "jupiter-group.png", h: 47, mw: 54 },
+    { name: "Cumin Co.", file: "cumin-co.png", h: 43, mw: 82 },
+    { name: "BetterCloud", file: "bettercloud.png", h: 29, mw: 85 },
+    /* row 3 */
+    { name: "The Park Hotels", file: "the-park-hotels.png", h: 32, mw: 42 },
+    { name: "CBC Group", file: "cbc-group.png", h: 34, mw: 70 },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 34, mw: 36 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 35, mw: 61 },
+    { name: "Akshar Business Consulting", file: "akshar.png", h: 24, mw: 78 },
+    { name: "Threesixty Finance", file: "threesixty.png", h: 26, mw: 88 },
+    { name: "CFO Bridge", file: "cfo-bridge.png", h: 26, mw: 77 },
   ] as { name: string; file: string; tile?: boolean; h: number; mw: number }[],
 } as const;
 

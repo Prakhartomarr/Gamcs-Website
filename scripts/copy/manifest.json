@@ -473,7 +473,7 @@
   "section": "Client logo wall",
   "label": "Logo 2, image alt text",
   "kind": "alt",
-  "text": "Basilic Fly Studio",
+  "text": "SkyNet Worldwide Express",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[1].name"
@@ -485,7 +485,7 @@
   "section": "Client logo wall",
   "label": "Logo 3, image alt text",
   "kind": "alt",
-  "text": "SkyNet Worldwide Express",
+  "text": "HungerRush",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[2].name"
@@ -497,7 +497,7 @@
   "section": "Client logo wall",
   "label": "Logo 4, image alt text",
   "kind": "alt",
-  "text": "HungerRush",
+  "text": "CoreStack",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[3].name"
@@ -509,7 +509,7 @@
   "section": "Client logo wall",
   "label": "Logo 5, image alt text",
   "kind": "alt",
-  "text": "CoreStack",
+  "text": "Basilic Fly Studio",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[4].name"
@@ -521,7 +521,7 @@
   "section": "Client logo wall",
   "label": "Logo 6, image alt text",
   "kind": "alt",
-  "text": "NewRocket",
+  "text": "Two Brothers India Farms",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[5].name"
@@ -533,7 +533,7 @@
   "section": "Client logo wall",
   "label": "Logo 7, image alt text",
   "kind": "alt",
-  "text": "GX Group",
+  "text": "NewRocket",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[6].name"
@@ -545,7 +545,7 @@
   "section": "Client logo wall",
   "label": "Logo 8, image alt text",
   "kind": "alt",
-  "text": "ProcDNA",
+  "text": "GX Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[7].name"
@@ -569,7 +569,7 @@
   "section": "Client logo wall",
   "label": "Logo 10, image alt text",
   "kind": "alt",
-  "text": "Two Brothers India Farms",
+  "text": "ProcDNA",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[9].name"
@@ -581,7 +581,7 @@
   "section": "Client logo wall",
   "label": "Logo 11, image alt text",
   "kind": "alt",
-  "text": "Jupiter Group",
+  "text": "Passionfruit",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[10].name"
@@ -593,7 +593,7 @@
   "section": "Client logo wall",
   "label": "Logo 12, image alt text",
   "kind": "alt",
-  "text": "Cumin Co.",
+  "text": "Jupiter Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[11].name"
@@ -605,7 +605,7 @@
   "section": "Client logo wall",
   "label": "Logo 13, image alt text",
   "kind": "alt",
-  "text": "Passionfruit",
+  "text": "Cumin Co.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[12].name"
@@ -617,7 +617,7 @@
   "section": "Client logo wall",
   "label": "Logo 14, image alt text",
   "kind": "alt",
-  "text": "CBC Group",
+  "text": "BetterCloud",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[13].name"
@@ -629,7 +629,7 @@
   "section": "Client logo wall",
   "label": "Logo 15, image alt text",
   "kind": "alt",
-  "text": "Caribbean CAGE",
+  "text": "The Park Hotels",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[14].name"
@@ -641,7 +641,7 @@
   "section": "Client logo wall",
   "label": "Logo 16, image alt text",
   "kind": "alt",
-  "text": "Rakhi Motion Pictures",
+  "text": "CBC Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[15].name"
@@ -653,7 +653,7 @@
   "section": "Client logo wall",
   "label": "Logo 17, image alt text",
   "kind": "alt",
-  "text": "The Park Hotels",
+  "text": "Caribbean CAGE",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[16].name"
@@ -665,7 +665,7 @@
   "section": "Client logo wall",
   "label": "Logo 18, image alt text",
   "kind": "alt",
-  "text": "BetterCloud",
+  "text": "Rakhi Motion Pictures",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[17].name"
