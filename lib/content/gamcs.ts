@@ -1186,34 +1186,34 @@ export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
-    { name: "WWF", file: "wwf.png", h: 44, mw: 33 },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 58, mw: 66 },
-    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 27, mw: 82 },
+    { name: "WWF", file: "wwf.png", h: 27, mw: 21 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 39, mw: 45 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 16, mw: 51 },
 
-    { name: "HungerRush", file: "hungerrush.png", h: 45, mw: 105 },
-    { name: "CoreStack", file: "corestack.png", h: 26, mw: 122 },
-    { name: "NewRocket", file: "newrocket.png", h: 28, mw: 121 },
-    { name: "GX Group", file: "gx-group.png", tile: true, h: 32, mw: 34 },
-    { name: "ProcDNA", file: "procdna.png", h: 49, mw: 82 },
+    { name: "HungerRush", file: "hungerrush.png", h: 27, mw: 63 },
+    { name: "CoreStack", file: "corestack.png", h: 15, mw: 71 },
+    { name: "NewRocket", file: "newrocket.png", h: 17, mw: 72 },
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 20, mw: 22 },
+    { name: "ProcDNA", file: "procdna.png", h: 30, mw: 51 },
 
-    { name: "Edulog", file: "edulog.png", h: 30, mw: 131 },
-    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 35, mw: 72 },
-    { name: "Jupiter Group", file: "jupiter-group.png", h: 52, mw: 60 },
+    { name: "Edulog", file: "edulog.png", h: 18, mw: 81 },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 22, mw: 45 },
+    { name: "Jupiter Group", file: "jupiter-group.png", h: 34, mw: 39 },
 
-    { name: "Cumin Co.", file: "cumin-co.png", h: 50, mw: 95 },
-    { name: "Passionfruit", file: "passionfruit.png", h: 30, mw: 114 },
-    { name: "CBC Group", file: "cbc-group.png", h: 39, mw: 81 },
+    { name: "Cumin Co.", file: "cumin-co.png", h: 30, mw: 58 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 19, mw: 71 },
+    { name: "CBC Group", file: "cbc-group.png", h: 24, mw: 50 },
 
-    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 40, mw: 42 },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 41, mw: 70 },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 24, mw: 26 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 25, mw: 44 },
 
-    { name: "The Park Hotels", file: "the-park-hotels.png", h: 37, mw: 48 },
-    { name: "BetterCloud", file: "bettercloud.png", h: 33, mw: 96 },
+    { name: "The Park Hotels", file: "the-park-hotels.png", h: 23, mw: 31 },
+    { name: "BetterCloud", file: "bettercloud.png", h: 21, mw: 60 },
 
     /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
-    { name: "Akshar Business Consulting", file: "akshar.png", h: 28, mw: 91 },
-    { name: "Threesixty Finance", file: "threesixty.png", h: 30, mw: 101 },
-    { name: "CFO Bridge", file: "cfo-bridge.png", h: 30, mw: 89 },
+    { name: "Akshar Business Consulting", file: "akshar.png", h: 17, mw: 56 },
+    { name: "Threesixty Finance", file: "threesixty.png", h: 19, mw: 63 },
+    { name: "CFO Bridge", file: "cfo-bridge.png", h: 18, mw: 55 },
   ] as { name: string; file: string; tile?: boolean; h: number; mw: number }[],
 } as const;
 
