@@ -236,16 +236,22 @@ export function FlickeringFooter() {
 			<div className="container pt-14 pb-12 lg:pt-16">
 				<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
 					<div>
-						<Link href="/" className="flex w-fit items-center gap-2.5" aria-label={footer.logoLabel}>
+						{/* One word, not a mark plus a label: the artwork IS the "GA",
+						    so the text beside it is "MCS" and carries the mark's own
+						    #145D90. The glyph fills its PNG edge to edge, so the type is
+						    sized by cap height to the 32px mark rather than by font-size,
+						    and the gap is closed to nothing. `logoWord` is the visible
+						    half; the link's accessible name is still the full brand. */}
+						<Link href="/" className="ga-lockup" aria-label={footer.logoLabel}>
 							<Image
 								src={site.logo}
-								alt={footer.logoAlt}
+								alt=""
 								width={534}
 								height={339}
-								sizes="44px"
-								className="h-8 w-auto object-contain"
+								sizes="52px"
+								className="ga-lockup-mark"
 							/>
-							<span className="text-[15px] font-bold tracking-tight text-charcoal">{site.short}</span>
+							<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
 						</Link>
 						<p className="mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
 						{site.address && (

@@ -13,6 +13,8 @@ export const site = {
   name: "GA Management Consultants",
   legalName: "GA Management Consultants LLP",
   short: "GAMCS",
+  /** The half of the wordmark the footer sets in type: the logo draws "GA". */
+  logoWord: "MCS",
   tagline: "Driving Change, Delivering Results",
   subheading: "We turn insights into impact.",
   url: "https://www.gamcs.in",
@@ -370,17 +372,16 @@ export const footer = {
     { label: "Training & Enablement", href: "/solutions/training-enablement" },
   ],
   /**
-   * Privacy Policy is an internal page describing what this build actually
-   * does with data (see app/privacy-policy/page.tsx).
+   * Both are internal pages describing what this build actually does with
+   * data (app/privacy-policy, app/cookie-policy).
    *
-   * TODO(business/legal): Terms of Use still points at the live gamcs.in page
-   * because its text could not be transcribed verbatim, and paraphrased legal
-   * copy must not be presented as the company's terms. Supply the exact text
-   * and this becomes an internal route like the privacy policy.
+   * Terms of Use was here too, as the one external link in the footer — it
+   * pointed at gamcs.in because its wording could not be transcribed and
+   * paraphrased legal copy must not be presented as the company's terms. It
+   * has been taken out rather than left pointing off-site.
    */
   legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms of Use", href: "https://www.gamcs.in/terms-of-use", external: true },
     { label: "Cookie Policy", href: "/cookie-policy" },
   ],
 } as const;

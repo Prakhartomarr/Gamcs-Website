@@ -12271,18 +12271,6 @@
   }
  },
  {
-  "code": "FTR-COLS-18",
-  "page": "Footer",
-  "section": "Link columns",
-  "label": "Column 3, link 2",
-  "kind": "text",
-  "text": "Terms of Use",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "footer.legal[1].label"
-  }
- },
- {
   "code": "FTR-COLS-19",
   "page": "Footer",
   "section": "Link columns",
@@ -12291,7 +12279,7 @@
   "text": "Cookie Policy",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "footer.legal[2].label"
+   "locator": "footer.legal[1].label"
   }
  },
  {
