@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import dynamic from "next/dynamic";
 
@@ -19,7 +18,11 @@ export default function Hero() {
   const rootRef = useRef<HTMLElement>(null);
   const reduce = usePrefersReducedMotion();
 
-  /* Entrance timeline + scroll parallax. GSAP is the only ticker in the hero. */
+  /* The entrance, and nothing else. The hero's copy used to drift up 12% and
+     fade to 55% on a scrubbed ScrollTrigger as the section scrolled away; it
+     now holds its position and its opacity until it leaves the viewport. The
+     plugin went with it — DataToDecision and MotionLayer still register their
+     own, so the dependency stays. */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -27,7 +30,6 @@ export default function Hero() {
       root.dataset.anim = "ready";
       return;
     }
-    gsap.registerPlugin(ScrollTrigger);
     let failsafe = 0;
     const ctx = gsap.context(() => {
       gsap.set(".line-inner", { yPercent: 115 });
@@ -50,8 +52,6 @@ export default function Hero() {
         if (tl.progress() === 0) tl.progress(1);
       }, 2800);
 
-      const st = { trigger: root, start: "top top", end: "bottom top", scrub: true as const };
-      gsap.to(".hero-inner", { yPercent: -12, autoAlpha: 0.55, ease: "none", scrollTrigger: { ...st, end: "70% top" } });
     }, rootRef);
 
     return () => {
