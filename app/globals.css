@@ -2036,9 +2036,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    that lets the short row start half a column in and sit centred under the
    long one, instead of ending ragged on the right. The gap is 24 rather than
    32 because eleven columns of a 1200px measure have little to spare. */
-.cl-grid{max-width:1200px;margin-inline:auto;padding-inline:24px;
+/* No cap and no padding of its own: the section's .container already sets the
+   measure, and a 1200 cap inside a 1280 container plus 24px each side was
+   spending 128px of width on nothing. Eleven columns now get 100px each
+   instead of 84 — the reference's own are 94. */
+.cl-grid{margin-inline:auto;
   grid-template-columns:repeat(22,1fr);
-  column-gap:24px;row-gap:48px;grid-auto-rows:48px}
+  column-gap:18px;row-gap:40px;grid-auto-rows:52px}
 .cl-grid > div{grid-column:span 2}
 .cl-grid > div:nth-child(12){grid-column-start:2}
 /* Below 1200 eleven across is unreadable; 3 divides 21 into seven full rows. */
@@ -2055,8 +2059,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   object-fit:contain}
 /* The hover lift is the component's (components/ui/logo-clouds.tsx): one
    scale, not two compounding into 1.11. */
-/* 56px from the sub-line to the first row, per the reference's rhythm. */
-.clients-head{margin-bottom:56px}
+/* 36, not 56: with the wall's own 18px of padding on top that was putting
+   74px between the sub-line and the first mark. */
+.clients-head{margin-bottom:36px}
 /* .clients padding is not set here: the max-width:768px block below matches
    too and comes later, so its value is the one that lands. */
 @media (max-width:620px){

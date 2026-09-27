@@ -116,7 +116,7 @@ export default function ClientLogos() {
           /* The wave takes twenty-one marks x 0.11s + 0.92s = 3.2s to cross, so
              a 3.2s rest makes it roughly half the time. */
           interval={3200}
-          className="clients-wall reveal bg-transparent px-0 py-4 sm:py-4"
+          className="clients-wall reveal bg-transparent px-0 py-2 sm:py-2"
           /* Columns, gaps and cell size all live in .cl-grid: the counts
              change at 1200 and 768, which are not Tailwind breakpoints, and
              gap-x-8 is 36px at this root size rather than the 32 wanted. */
