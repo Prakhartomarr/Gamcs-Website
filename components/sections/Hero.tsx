@@ -21,7 +21,7 @@ export default function Hero() {
   /* The entrance, and nothing else. The hero's copy used to drift up 12% and
      fade to 55% on a scrubbed ScrollTrigger as the section scrolled away; it
      now holds its position and its opacity until it leaves the viewport. The
-     plugin went with it — DataToDecision and MotionLayer still register their
+     plugin went with it — DecisionGap and MotionLayer still register their
      own, so the dependency stays. */
   useEffect(() => {
     const root = rootRef.current;

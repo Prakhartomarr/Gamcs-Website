@@ -1241,70 +1241,69 @@ export const clients = {
 } as const;
 
 /**
- * "The gap" — the race to the decision. Two lanes run side by side: the
- * typical path from data to a decision (six source systems into one manual
- * path through four stations) and the same distance with GAMCS (three feeds
- * through one hub, four stations on a straight line). Copy, chips, stations
- * and rail labels as written on the gap design artboards; it is not on
- * gamcs.in. `decisionLine`, `run` and `replay` are the three labels the race
- * needs that the panels did not: the finish line and the button's two states.
+ * The decision gap — a static problem statement, centred, text only.
+ *
+ * It names the problem and does not answer it: the closing bridge hands the
+ * distance to the Maturity Curve section below, which is what "a function of
+ * finance maturity" means. There is no diagram and no motion here by design;
+ * the weight is meant to come from the typography and the sourced figures.
+ *
+ * `eyebrow` is stored in sentence case and set uppercase by CSS, so the copy
+ * doc carries words rather than styling. Every `stats` figure is attributed:
+ * `href` is optional, and the one without it is cited in plain text.
  */
-export const dataToDecision = {
+export const decisionGap = {
   eyebrow: "The gap",
-  headingLead: "Your Numbers Aren't the Problem.",
-  headingAccent: "The Distance to the Decision Is.",
-  body:
-    "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks “why?” Finance goes back and investigates manually — pulling the same data apart a second time, days after the decision actually needed to be made.",
-  /** The dashed finish line both lanes run to. */
-  decisionLine: "The decision",
-  /** The button before the first run, and after it. */
-  run: "Run the comparison",
-  replay: "Replay",
-  today: {
-    title: "The typical reality",
-    subtitle: "Disconnected data. Longer paths. Delayed decisions.",
-    /** The systems the data is scattered across — six feeders into one path. */
-    chips: [
-      { label: "ERP" },
-      { label: "CRM" },
-      { label: "Excel" },
-      { label: "HRIS" },
-      { label: "Operations" },
-      { label: "Other tools" },
-    ],
-    /** The stations along the path. The last one carries the lane's accent. */
-    steps: [
-      { label: "Reporting", caption: "What happened?" },
-      { label: "Questions", caption: "Why did it happen?" },
-      {
-        label: "Manual investigation",
-        caption: "Spreadsheets, multiple systems, email threads",
-      },
-      { label: "Decision delayed", caption: "Opportunities lost" },
-    ],
-    /** How long that path takes, on the lane's progress rail. */
-    rail: "Days / weeks",
+  headingLead: "Your data exists. Your reports exist.",
+  headingAccent: "The problem is the distance to the decision.",
+  subheadLead:
+    "Every \u201Cwhy?\u201D sends finance back to the same systems to rebuild the answer by hand.",
+  /** Set in the ink colour, mid-sentence, so the consequence lands. */
+  resultLabel: "The result:",
+  resultBody:
+    "more effort, slower answers, and decisions made on yesterday's view of the business.",
+  /** Four cells, read across then down. */
+  pains: [
+    {
+      title: "Answers arrive late",
+      body: "By the time the analysis is rebuilt, the moment to act has often passed.",
+    },
+    {
+      title: "Skilled people, manual work",
+      body: "Your best finance people spend their days pulling, reconciling and rebuilding, not advising.",
+    },
+    {
+      title: "Nobody trusts the number",
+      body: "Different systems, versions and definitions mean meetings start by debating the data.",
+    },
+    {
+      title: "The business pays for it",
+      body: "Margin, cash and revenue decisions get made late, or made on instinct.",
+    },
+  ],
+  stats: [
+    {
+      value: "46%",
+      label: "of FP&A time still goes to collecting and validating data",
+      source: "FP&A Trends Survey 2025",
+      href: "https://fpa-trends.com/article/2025-fpa-benchmarks-and-trends",
+    },
+    {
+      value: "37%",
+      label: "of CFOs don't completely trust their own financial data",
+      source: "BlackLine, 2024",
+      href: "https://www.blackline.com/about/press-releases/2024/nearly-40-percent-of-cfos-do-not-completely-trust-their-organizations-financial-data-according-to-blackline-survey/",
+    },
+    {
+      value: "6.4 days",
+      label: "median time just to close the monthly books, before any analysis starts",
+      source: "APQC benchmark",
+    },
+  ],
+  bridge: {
+    lead: "The data is there. The answer is too far away.",
+    sub: "That distance is a function of finance maturity.",
   },
-  gamcs: {
-    title: "A better way with GAMCS",
-    subtitle: "Connected data. Clear insight. Faster decisions.",
-    chips: [
-      { label: "Data integration" },
-      { label: "Automation" },
-      { label: "AI & analytics" },
-    ],
-    /** The one place the three feeds meet, between the chips and the path. */
-    hub: { name: "GAMCS", caption: "Finance · Data · Technology" },
-    steps: [
-      { label: "Data", caption: "Integrated and reliable" },
-      { label: "Insight", caption: "What's happening and why" },
-      { label: "Decision", caption: "What should we do?" },
-      { label: "Action", caption: "Measurable impact" },
-    ],
-    rail: "Hours / days",
-  },
-  closeLead: "More reporting doesn't close that gap.",
-  closeAccent: "A shorter distance between the number and the decision does.",
 } as const;
 
 /** Preloader. Copy lives here rather than in the component, like everything else. */

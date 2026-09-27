@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ClientLogos from "@/components/sections/ClientLogos";
-import DataToDecision from "@/components/sections/DataToDecision";
+import DecisionGap from "@/components/sections/DecisionGap";
 import WhoWeAre from "@/components/sections/WhoWeAre";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
@@ -41,7 +41,7 @@ export default function HomePage() {
       <ClientLogos />
       {/* The gap: straight after the proof, the problem — the distance between
           the number and the decision — before anything about how GAMCS works. */}
-      <DataToDecision />
+      <DecisionGap />
       <MaturityCurve />
       {/* After the curve, not before it: once a visitor has placed themselves
           on it, how GAMCS builds each layer, then the pillars that do it. */}
