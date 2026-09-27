@@ -22,13 +22,6 @@ export default function Solutions() {
     <section className="section services fin-sec" id="solutions">
       <div className="container">
         <div className="fin-center reveal">
-          <span className="eyebrow-num" aria-hidden="true">
-            04
-          </span>
-          <span className="fin-eyebrow">
-            <i aria-hidden="true" />
-            {sections.services}
-          </span>
           <h2 className="fin-h2">
             {sections.servicesHeadingLead}{" "}
             <span className="accent">{sections.servicesHeadingAccent}</span>

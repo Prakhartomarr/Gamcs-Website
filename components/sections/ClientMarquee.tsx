@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import type { LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
+import type { ClientLogo } from "@/lib/logo-wall";
 
 /**
  * The phone client wall (768px and under): two edge-to-edge rows of grey
@@ -25,15 +25,15 @@ import type { LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
  * display:none; the grid (CinematicLogoCloud) is what renders there. Styles:
  * the .clm-* block in app/globals.css.
  */
-export default function ClientMarquee({ logos }: { logos: LogoCloudClient[] }) {
+export default function ClientMarquee({ logos }: { logos: ClientLogo[] }) {
   const [paused, setPaused] = useState(false);
   const rows = [logos.filter((_, i) => i % 2 === 0), logos.filter((_, i) => i % 2 === 1)];
 
-  const tiles = (row: LogoCloudClient[], hidden = false) => (
+  const tiles = (row: ClientLogo[], hidden = false) => (
     <ul className="clm-list" aria-hidden={hidden || undefined}>
       {row.map((l) => (
         <li key={l.name}>
-          <Image src={l.src!} alt={hidden ? "" : l.name} width={l.width} height={l.height} loading="eager" />
+          <Image src={l.src} alt={hidden ? "" : l.name} width={l.width} height={l.height} loading="eager" />
         </li>
       ))}
     </ul>

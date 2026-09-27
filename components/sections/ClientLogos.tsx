@@ -1,7 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import type { CSSProperties } from "react";
 import Image from "next/image";
-import { type LogoCloudClient } from "@/components/ui/cinematic-logo-cloud";
+import type { ClientLogo } from "@/lib/logo-wall";
 import LogoCloudSwap, { type LogoEntry } from "@/components/ui/logo-clouds";
 import ClientMarquee from "@/components/sections/ClientMarquee";
 import { clients } from "@/lib/content/gamcs";
@@ -19,28 +20,22 @@ function pngSize(file: string) {
 }
 
 /**
- * Display size: every mark gets the same visual weight, not the same height.
+ * The per-mark ceilings come from lib/content/gamcs.ts, where each logo
+ * carries its own `h` and `mw`. They were solved rather than chosen: every
+ * mark was rendered, its ink area measured, and its height set so that all
+ * twenty-two carry the same weight of ink. Area scales with the square of the
+ * height, so the correction for each is its current height times the square
+ * root of the ratio between the target area and its own.
  *
- * A logo's AREA is held constant, so a flat wordmark (CoreStack, 4.7:1) comes
- * out shorter and wider than a compact mark (GX, 1:1), and nothing grows past
- * the cap. Equal heights would have made the long wordmarks four times the
- * width of everything else.
- *
- * The cap is 56px. At that size the widest mark is CoreStack at 121x26, which
- * still clears the narrowest desktop column (151px at 640-767, 169px at 1280).
- * Phones are the exception: three columns of 94px at 390 cannot hold 121px, so
- * .clients-wall caps the marks at 40px there instead (app/globals.css).
+ * The reference site gives every logo one height, which works there because
+ * its marks are all wordmarks of similar proportion. This set runs from a
+ * 0.70:1 panda to a 4.69:1 wordmark, and from a solid filled tile to thin line
+ * art; one height would have drawn GX at twice the ink of its neighbours and
+ * Basilic Fly at half.
  */
-const MAX_H = 56;
-const AREA = MAX_H * MAX_H;
-function displaySize({ width, height }: { width: number; height: number }) {
-  const ratio = width / height;
-  const h = Math.min(MAX_H, Math.sqrt(AREA / ratio));
-  return { width: Math.round(h * ratio), height: Math.round(h) };
-}
 
 /**
- * The client logo wall in the band under the hero: all twenty-one marks at once,
+ * The client logo wall in the band under the hero: all twenty-two marks at once,
  * fading up out of a blur a tenth of a second apart as the band scrolls in, and
  * then, every few seconds, a wave that wipes across the wall left to right.
  *
@@ -58,12 +53,16 @@ export default function ClientLogos() {
      as a broken image. This is a server component, so the check is a build-time
      disk read, not a runtime cost — and it means an entry can be added to the
      content before its artwork lands. */
-  const logos: LogoCloudClient[] = clients.logos
+  const byFile = new Map(clients.logos.map((l) => [l.file, { h: l.h, mw: l.mw }]));
+
+  const logos: ClientLogo[] = clients.logos
     .filter((l) => existsSync(path.join(LOGO_DIR, l.file)))
     .map((l) => ({
       name: l.name,
       src: `/logos/clients/${l.file}`,
-      ...displaySize(pngSize(l.file)),
+      /* the file's own pixels: next/image wants them, and they are what the
+         browser scales from once the CSS caps bind */
+      ...pngSize(l.file),
       /* GX is a filled square; round it the way the old grid's tile did */
       className: l.tile ? "rounded-[6px]" : undefined,
     }));
@@ -71,20 +70,26 @@ export default function ClientLogos() {
   /* The wall's own marks. `displaySize` has already given each one the size
      that holds its optical weight, so the image is sized outright rather than
      left to a class. */
-  const marks: LogoEntry[] = logos.map((l) => ({
-    id: l.name,
-    name: l.name,
-    icon: (
-      <Image
-        src={l.src!}
-        alt={l.name}
-        width={l.width}
-        height={l.height}
-        style={{ width: l.width, height: l.height }}
-        className={cn("max-w-none select-none object-contain", l.className)}
-      />
-    ),
-  }));
+  const marks: LogoEntry[] = logos.map((l) => {
+    const { h, mw } = byFile.get(l.src.split("/").pop()!)!;
+    return {
+      id: l.name,
+      name: l.name,
+      icon: (
+        <Image
+          src={l.src}
+          alt={l.name}
+          width={l.width}
+          height={l.height}
+          /* Two ceilings, no fixed size: the browser honours whichever binds
+             first, so nothing overflows its column. Per-mark, so any single
+             logo can be nudged by changing only its own two numbers. */
+          style={{ "--logo-h": `${h}px`, "--logo-mw": `${mw}px` } as CSSProperties}
+          className={cn("cl-mark select-none", l.className)}
+        />
+      ),
+    };
+  });
 
   return (
     <section className="clients" id="clients" aria-labelledby="clients-heading">
@@ -108,18 +113,14 @@ export default function ClientLogos() {
           subtitle={null}
           showNames={false}
           entrance
-          /* The wave takes twenty-one marks x 0.11s + 0.92s = 3.2s to cross, so
+          /* The wave takes twenty-two marks x 0.11s + 0.92s = 3.3s to cross, so
              a 3.2s rest makes it roughly half the time. */
           interval={3200}
-          className="clients-wall reveal bg-transparent px-0 py-4 sm:py-4"
-          /* Real columns rather than the component's centred wrap, which left
-             the short last row floating in the middle of the band. Named
-             breakpoints, not arbitrary min-[..] ones: two arbitrary variants
-             setting the same property have no guaranteed order in this build.
-             7 columns at 1280 (152px each), 5 at 1024, 4 at 768, 3 on phones.
-             The row gap and the row height are in .cl-grid, where they can be
-             one fluid value rather than a step per breakpoint. */
-          gridClassName="cl-grid grid grid-cols-3 place-items-center gap-x-8 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
+          className="clients-wall reveal bg-transparent px-0 py-2 sm:py-2"
+          /* Columns, gaps and cell size all live in .cl-grid: the counts
+             change at 1200 and 768, which are not Tailwind breakpoints, and
+             gap-x-8 is 36px at this root size rather than the 32 wanted. */
+          gridClassName="cl-grid grid"
         />
 
         {/* Phones (<=768): the same roster as two drifting rows of grey tiles.

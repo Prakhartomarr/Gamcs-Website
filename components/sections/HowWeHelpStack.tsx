@@ -11,7 +11,6 @@ import {
 } from "react";
 import { STEP_ICONS } from "@/components/ui/stroke-icons";
 import { whyUs } from "@/lib/content/gamcs";
-import { sections } from "@/lib/content/ui";
 
 /**
  * "How we help" as an isometric exploded-layer stack.
@@ -450,16 +449,9 @@ export default function HowWeHelpStack() {
       />
 
       <div className="container relative">
-        {/* The site's own eyebrow and section-heading type, so this band reads
-            like every other one on the page. */}
+        {/* The site's own section-heading type, so this band reads like every
+            other one on the page. */}
         <div className="fin-center reveal mx-auto max-w-3xl">
-          <span className="eyebrow-num" aria-hidden="true">
-            03
-          </span>
-          <span className="fin-eyebrow">
-            <i aria-hidden="true" />
-            {sections.howWeHelp}
-          </span>
           <h2 id="hwh-heading" className="fin-h2 text-balance">
             {whyUs.headingLead} <span className="accent">{whyUs.headingAccent}</span>
           </h2>

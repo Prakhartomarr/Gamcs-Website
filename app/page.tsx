@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ClientLogos from "@/components/sections/ClientLogos";
-import DataToDecision from "@/components/sections/DataToDecision";
+import DecisionGap from "@/components/sections/DecisionGap";
 import WhoWeAre from "@/components/sections/WhoWeAre";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
@@ -27,7 +27,9 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    /* `home-tight` halves the vertical rhythm between these sections. It is a
+       wrapper rather than an edit to .section, which nine other pages use. */
+    <div className="home-tight">
       <Hero />
       {/*
         Client logo wall. This band used to hold the platform trust bar (Power
@@ -39,7 +41,7 @@ export default function HomePage() {
       <ClientLogos />
       {/* The gap: straight after the proof, the problem — the distance between
           the number and the decision — before anything about how GAMCS works. */}
-      <DataToDecision />
+      <DecisionGap />
       <MaturityCurve />
       {/* After the curve, not before it: once a visitor has placed themselves
           on it, how GAMCS builds each layer, then the pillars that do it. */}
@@ -49,6 +51,6 @@ export default function HomePage() {
       <Testimonials />
       <WhoWeAre />
       <Contact />
-    </>
+    </div>
   );
 }

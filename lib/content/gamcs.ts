@@ -74,9 +74,6 @@ export const hero = {
   leadNow: "Start Knowing What To Do Next.",
   subhead:
     "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
-  /* The five verbs, under the subhead: what GAMCS does, before what it is.
-     One string with its own separators, as the copy doc writes it. */
-  pillars: "Advise | Build | Transform | Transact | Enable",
   /* The hero's one button. The copy doc sends it to the "Case Study Section";
      that is the /case-study page — the homepage has no case study band. */
   cta: { label: "See Decision Intelligence in Action", href: "/case-study" },
@@ -1170,8 +1167,29 @@ export const maturityCurve = {
  * same bounding box — a wide wordmark and a square emblem look equally sized
  * only if you normalise on ink area, not on width.
  *
+ * Order is two rows of eleven, paired by width: the two marks in a column are
+ * near enough the same width that the columns read as columns, which is the
+ * only way two rows of a ragged roster line up. Wide and narrow columns then
+ * alternate across the wall so no stretch of it reads heavy, and the two rows
+ * come out within 4px of each other on total ink width. The three advisory
+ * firms keep the last three slots, as they have since 2026-09-22.
+ *
  * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
  * still does: its monogram is white and exists only against that orange.
+ *
+ * `h` and `mw` are the mark's two ceilings in px, solved rather than guessed.
+ *
+ * Equal ink area alone was the wrong rule. It balances weight, but it works
+ * against legibility: a mark carrying three lines of type, like Akshar, has
+ * high ink density, so equalising ink made it SMALL — when density is exactly
+ * what needs more room to be read. Equal bounding-box area has the opposite
+ * fault, blowing up sparse marks.
+ *
+ * Each height is the geometric mean of the two, capped at 56px. The result is
+ * even to within 0.88-1.11x of the median mark's ink, and these numbers are
+ * fixed: the wall was re-laid from three rows to two without touching a single
+ * one of them, because the columns size themselves to the marks rather than
+ * the marks to the columns.
  *
  * Basilic Fly, Two Brothers and Cumin Co. used to be panels too. Their artwork
  * was lifted off the tile by solving the blend for each pixel's coverage, then
@@ -1179,107 +1197,113 @@ export const maturityCurve = {
  * own colour — Two Brothers' cream type became its green, Basilic Fly's white
  * type became its navy. Artwork that already read on white kept its real
  * colour: Cumin Co.'s terracotta, and Basilic Fly's blue dragonfly.
+ *
+ * One of Us is the same problem in reverse. The only clean file the studio
+ * publishes is white-on-transparent, for their own black site; on this white
+ * band it is invisible. Their header PNG, the obvious alternative, is cropped
+ * into the letterforms — its leading "o" loses a fifth of its bowl — so the
+ * white artwork is the one that was taken, and its alpha repainted #1A1A1A.
+ * Nothing was redrawn: both bowls measure 97 and 96px square in the source.
+ * It was then padded to the family's convention — every other file here sits
+ * its mark on 91% of the box's width and 83% of its height — because a raw
+ * tight crop reads as 2.2x the density of its neighbours and the solve answers
+ * that by shrinking it. Padded, the same rule puts it at 1.01x the median.
  */
 export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
-    { name: "WWF", file: "wwf.png" },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png" },
-    { name: "SkyNet Worldwide Express", file: "skynet.png" },
-
-    { name: "HungerRush", file: "hungerrush.png" },
-    { name: "CoreStack", file: "corestack.png" },
-    { name: "NewRocket", file: "newrocket.png" },
-    { name: "GX Group", file: "gx-group.png", tile: true },
-    { name: "ProcDNA", file: "procdna.png" },
-
-    { name: "Edulog", file: "edulog.png" },
-    { name: "Two Brothers India Farms", file: "two-brothers-new.png" },
-    { name: "Jupiter Group", file: "jupiter-group.png" },
-
-    { name: "Cumin Co.", file: "cumin-co.png" },
-    { name: "Passionfruit", file: "passionfruit.png" },
-    { name: "CBC Group", file: "cbc-group.png" },
-
-    { name: "Caribbean CAGE", file: "caribbean-cage.png" },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png" },
-
-    { name: "The Park Hotels", file: "the-park-hotels.png" },
-    { name: "BetterCloud", file: "bettercloud.png" },
-
-    /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
-    { name: "Akshar Business Consulting", file: "akshar.png" },
-    { name: "Threesixty Finance", file: "threesixty.png" },
-    { name: "CFO Bridge", file: "cfo-bridge.png" },
-  ] as { name: string; file: string; tile?: boolean }[],
+    /* row 1 */
+    { name: "Edulog", file: "edulog.png", h: 27, mw: 114 },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 31, mw: 62 },
+    { name: "NewRocket", file: "newrocket.png", h: 24, mw: 104 },
+    { name: "Jupiter Group", file: "jupiter-group.png", h: 47, mw: 54 },
+    { name: "HungerRush", file: "hungerrush.png", h: 39, mw: 91 },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 34, mw: 36 },
+    { name: "ProcDNA", file: "procdna.png", h: 42, mw: 70 },
+    { name: "WWF", file: "wwf.png", h: 38, mw: 29 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 23, mw: 71 },
+    { name: "BetterCloud", file: "bettercloud.png", h: 29, mw: 85 },
+    { name: "Cumin Co.", file: "cumin-co.png", h: 43, mw: 82 },
+    /* row 2 */
+    { name: "CoreStack", file: "corestack.png", h: 22, mw: 105 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 56, mw: 64 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 27, mw: 100 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 35, mw: 61 },
+    { name: "One of Us", file: "one-of-us.png", h: 16, mw: 88 },
+    { name: "The Park Hotels", file: "the-park-hotels.png", h: 32, mw: 42 },
+    { name: "CBC Group", file: "cbc-group.png", h: 34, mw: 70 },
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 28, mw: 30 },
+    { name: "Akshar Business Consulting", file: "akshar.png", h: 24, mw: 78 },
+    { name: "Threesixty Finance", file: "threesixty.png", h: 26, mw: 88 },
+    { name: "CFO Bridge", file: "cfo-bridge.png", h: 26, mw: 77 },
+  ] as { name: string; file: string; tile?: boolean; h: number; mw: number }[],
 } as const;
 
 /**
- * "The gap" — the race to the decision. Two lanes run side by side: the
- * typical path from data to a decision (six source systems into one manual
- * path through four stations) and the same distance with GAMCS (three feeds
- * through one hub, four stations on a straight line). Copy, chips, stations
- * and rail labels as written on the gap design artboards; it is not on
- * gamcs.in. `decisionLine`, `run` and `replay` are the three labels the race
- * needs that the panels did not: the finish line and the button's two states.
+ * The decision gap — a static problem statement, centred, text only.
+ *
+ * It names the problem and does not answer it: the closing bridge hands the
+ * distance to the Maturity Curve section below, which is what "a function of
+ * finance maturity" means. There is no diagram and no motion here by design;
+ * the weight is meant to come from the typography and the sourced figures.
+ *
+ * `eyebrow` is stored in sentence case and set uppercase by CSS, so the copy
+ * doc carries words rather than styling. Every `stats` figure is attributed:
+ * `href` is optional, and the one without it is cited in plain text.
  */
-export const dataToDecision = {
+export const decisionGap = {
   eyebrow: "The gap",
-  headingLead: "Your Numbers Aren't the Problem.",
-  headingAccent: "The Distance to the Decision Is.",
-  body:
-    "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks “why?” Finance goes back and investigates manually — pulling the same data apart a second time, days after the decision actually needed to be made.",
-  /** The dashed finish line both lanes run to. */
-  decisionLine: "The decision",
-  /** The button before the first run, and after it. */
-  run: "Run the comparison",
-  replay: "Replay",
-  today: {
-    title: "The typical reality",
-    subtitle: "Disconnected data. Longer paths. Delayed decisions.",
-    /** The systems the data is scattered across — six feeders into one path. */
-    chips: [
-      { label: "ERP" },
-      { label: "CRM" },
-      { label: "Excel" },
-      { label: "HRIS" },
-      { label: "Operations" },
-      { label: "Other tools" },
-    ],
-    /** The stations along the path. The last one carries the lane's accent. */
-    steps: [
-      { label: "Reporting", caption: "What happened?" },
-      { label: "Questions", caption: "Why did it happen?" },
-      {
-        label: "Manual investigation",
-        caption: "Spreadsheets, multiple systems, email threads",
-      },
-      { label: "Decision delayed", caption: "Opportunities lost" },
-    ],
-    /** How long that path takes, on the lane's progress rail. */
-    rail: "Days / weeks",
+  headingLead: "Your data exists. Your reports exist.",
+  headingAccent: "The problem is the distance to the decision.",
+  subheadLead:
+    "Every \u201Cwhy?\u201D sends finance back to the same systems to rebuild the answer by hand.",
+  /** Set in the ink colour, mid-sentence, so the consequence lands. */
+  resultLabel: "The result:",
+  resultBody:
+    "more effort, slower answers, and decisions made on yesterday's view of the business.",
+  /** Four cells, read across then down. */
+  pains: [
+    {
+      title: "Answers arrive late",
+      body: "By the time the analysis is rebuilt, the moment to act has often passed.",
+    },
+    {
+      title: "Skilled people, manual work",
+      body: "Your best finance people spend their days pulling, reconciling and rebuilding, not advising.",
+    },
+    {
+      title: "Nobody trusts the number",
+      body: "Different systems, versions and definitions mean meetings start by debating the data.",
+    },
+    {
+      title: "The business pays for it",
+      body: "Margin, cash and revenue decisions get made late, or made on instinct.",
+    },
+  ],
+  stats: [
+    {
+      value: "46%",
+      label: "of FP&A time still goes to collecting and validating data",
+      source: "FP&A Trends Survey 2025",
+      href: "https://fpa-trends.com/article/2025-fpa-benchmarks-and-trends",
+    },
+    {
+      value: "37%",
+      label: "of CFOs don't completely trust their own financial data",
+      source: "BlackLine, 2024",
+      href: "https://www.blackline.com/about/press-releases/2024/nearly-40-percent-of-cfos-do-not-completely-trust-their-organizations-financial-data-according-to-blackline-survey/",
+    },
+    {
+      value: "6.4 days",
+      label: "median time just to close the monthly books, before any analysis starts",
+      source: "APQC benchmark",
+    },
+  ],
+  bridge: {
+    lead: "The data is there. The answer is too far away.",
+    sub: "That distance is a function of finance maturity.",
   },
-  gamcs: {
-    title: "A better way with GAMCS",
-    subtitle: "Connected data. Clear insight. Faster decisions.",
-    chips: [
-      { label: "Data integration" },
-      { label: "Automation" },
-      { label: "AI & analytics" },
-    ],
-    /** The one place the three feeds meet, between the chips and the path. */
-    hub: { name: "GAMCS", caption: "Finance · Data · Technology" },
-    steps: [
-      { label: "Data", caption: "Integrated and reliable" },
-      { label: "Insight", caption: "What's happening and why" },
-      { label: "Decision", caption: "What should we do?" },
-      { label: "Action", caption: "Measurable impact" },
-    ],
-    rail: "Hours / days",
-  },
-  closeLead: "More reporting doesn't close that gap.",
-  closeAccent: "A shorter distance between the number and the decision does.",
 } as const;
 
 /** Preloader. Copy lives here rather than in the component, like everything else. */

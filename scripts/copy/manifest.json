@@ -161,7 +161,7 @@
   "section": "Who We Are dropdown",
   "label": "Link 2",
   "kind": "text",
-  "text": "How We Help",
+  "text": "What clients say",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.whoLinks[1].title"
@@ -173,34 +173,10 @@
   "section": "Who We Are dropdown",
   "label": "Link 3",
   "kind": "text",
-  "text": "Our Team",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[2].title"
-  }
- },
- {
-  "code": "HDR-WHO-05",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 4",
-  "kind": "text",
-  "text": "What clients say",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[3].title"
-  }
- },
- {
-  "code": "HDR-WHO-06",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 5",
-  "kind": "text",
   "text": "FAQ",
   "source": {
    "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[4].title"
+   "locator": "header.whoLinks[2].title"
   }
  },
  {
@@ -420,18 +396,6 @@
   }
  },
  {
-  "code": "HOME-HERO-5B",
-  "page": "Home (/)",
-  "section": "Hero",
-  "label": "Capability line",
-  "kind": "text",
-  "text": "Advise | Build | Transform | Transact | Enable",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "hero.pillars"
-  }
- },
- {
   "code": "HOME-HERO-06",
   "page": "Home (/)",
   "section": "Hero",
@@ -473,7 +437,7 @@
   "section": "Client logo wall",
   "label": "Logo 1, image alt text",
   "kind": "alt",
-  "text": "WWF",
+  "text": "Edulog",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[0].name"
@@ -485,7 +449,7 @@
   "section": "Client logo wall",
   "label": "Logo 2, image alt text",
   "kind": "alt",
-  "text": "Basilic Fly Studio",
+  "text": "Two Brothers India Farms",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[1].name"
@@ -497,7 +461,7 @@
   "section": "Client logo wall",
   "label": "Logo 3, image alt text",
   "kind": "alt",
-  "text": "SkyNet Worldwide Express",
+  "text": "NewRocket",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[2].name"
@@ -509,7 +473,7 @@
   "section": "Client logo wall",
   "label": "Logo 4, image alt text",
   "kind": "alt",
-  "text": "HungerRush",
+  "text": "Jupiter Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[3].name"
@@ -521,7 +485,7 @@
   "section": "Client logo wall",
   "label": "Logo 5, image alt text",
   "kind": "alt",
-  "text": "CoreStack",
+  "text": "HungerRush",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[4].name"
@@ -533,7 +497,7 @@
   "section": "Client logo wall",
   "label": "Logo 6, image alt text",
   "kind": "alt",
-  "text": "NewRocket",
+  "text": "Caribbean CAGE",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[5].name"
@@ -545,7 +509,7 @@
   "section": "Client logo wall",
   "label": "Logo 7, image alt text",
   "kind": "alt",
-  "text": "GX Group",
+  "text": "ProcDNA",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[6].name"
@@ -557,7 +521,7 @@
   "section": "Client logo wall",
   "label": "Logo 8, image alt text",
   "kind": "alt",
-  "text": "ProcDNA",
+  "text": "WWF",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[7].name"
@@ -569,7 +533,7 @@
   "section": "Client logo wall",
   "label": "Logo 9, image alt text",
   "kind": "alt",
-  "text": "Edulog",
+  "text": "SkyNet Worldwide Express",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[8].name"
@@ -581,7 +545,7 @@
   "section": "Client logo wall",
   "label": "Logo 10, image alt text",
   "kind": "alt",
-  "text": "Two Brothers India Farms",
+  "text": "BetterCloud",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[9].name"
@@ -593,7 +557,7 @@
   "section": "Client logo wall",
   "label": "Logo 11, image alt text",
   "kind": "alt",
-  "text": "Jupiter Group",
+  "text": "Cumin Co.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[10].name"
@@ -605,7 +569,7 @@
   "section": "Client logo wall",
   "label": "Logo 12, image alt text",
   "kind": "alt",
-  "text": "Cumin Co.",
+  "text": "CoreStack",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[11].name"
@@ -617,7 +581,7 @@
   "section": "Client logo wall",
   "label": "Logo 13, image alt text",
   "kind": "alt",
-  "text": "Passionfruit",
+  "text": "Basilic Fly Studio",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[12].name"
@@ -629,7 +593,7 @@
   "section": "Client logo wall",
   "label": "Logo 14, image alt text",
   "kind": "alt",
-  "text": "CBC Group",
+  "text": "Passionfruit",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[13].name"
@@ -641,7 +605,7 @@
   "section": "Client logo wall",
   "label": "Logo 15, image alt text",
   "kind": "alt",
-  "text": "Caribbean CAGE",
+  "text": "Rakhi Motion Pictures",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[14].name"
@@ -653,7 +617,7 @@
   "section": "Client logo wall",
   "label": "Logo 16, image alt text",
   "kind": "alt",
-  "text": "Rakhi Motion Pictures",
+  "text": "One of Us",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[15].name"
@@ -677,7 +641,7 @@
   "section": "Client logo wall",
   "label": "Logo 18, image alt text",
   "kind": "alt",
-  "text": "BetterCloud",
+  "text": "CBC Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[17].name"
@@ -689,7 +653,7 @@
   "section": "Client logo wall",
   "label": "Logo 19, image alt text",
   "kind": "alt",
-  "text": "Akshar Business Consulting",
+  "text": "GX Group",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[18].name"
@@ -701,7 +665,7 @@
   "section": "Client logo wall",
   "label": "Logo 20, image alt text",
   "kind": "alt",
-  "text": "Threesixty Finance",
+  "text": "Akshar Business Consulting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[19].name"
@@ -713,22 +677,34 @@
   "section": "Client logo wall",
   "label": "Logo 21, image alt text",
   "kind": "alt",
-  "text": "CFO Bridge",
+  "text": "Threesixty Finance",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "clients.logos[20].name"
   }
  },
  {
+  "code": "HOME-CLIENTS-23",
+  "page": "Home (/)",
+  "section": "Client logo wall",
+  "label": "Logo 22, image alt text",
+  "kind": "alt",
+  "text": "CFO Bridge",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "clients.logos[21].name"
+  }
+ },
+ {
   "code": "HOME-GAP-01",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Eyebrow",
+  "label": "Eyebrow pill",
   "kind": "text",
   "text": "The gap",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.eyebrow"
+   "locator": "decisionGap.eyebrow"
   }
  },
  {
@@ -737,10 +713,10 @@
   "section": "The gap",
   "label": "Heading, line 1",
   "kind": "text",
-  "text": "Your Numbers Aren't the Problem.",
+  "text": "Your data exists. Your reports exist.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.headingLead"
+   "locator": "decisionGap.headingLead"
   }
  },
  {
@@ -749,478 +725,274 @@
   "section": "The gap",
   "label": "Heading, line 2 (blue)",
   "kind": "text",
-  "text": "The Distance to the Decision Is.",
+  "text": "The problem is the distance to the decision.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.headingAccent"
+   "locator": "decisionGap.headingAccent"
   }
  },
  {
   "code": "HOME-GAP-04",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Paragraph",
+  "label": "Subhead",
   "kind": "text",
-  "text": "Data lives in your ERP, your CRM, Excel, HRIS, and a handful of operational systems that don't talk to each other. It gets consolidated into a report. Management reads the report and asks “why?” Finance goes back and investigates manually — pulling the same data apart a second time, days after the decision actually needed to be made.",
+  "text": "Every “why?” sends finance back to the same systems to rebuild the answer by hand.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.body"
+   "locator": "decisionGap.subheadLead"
   }
  },
  {
   "code": "HOME-GAP-05",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Finish line label",
+  "label": "Subhead, lead-in",
   "kind": "text",
-  "text": "The decision",
+  "text": "The result:",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.decisionLine"
+   "locator": "decisionGap.resultLabel"
   }
  },
  {
   "code": "HOME-GAP-06",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Button before the first run",
-  "kind": "button",
-  "text": "Run the comparison",
+  "label": "Subhead, consequence",
+  "kind": "text",
+  "text": "more effort, slower answers, and decisions made on yesterday's view of the business.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.run"
+   "locator": "decisionGap.resultBody"
   }
  },
  {
   "code": "HOME-GAP-07",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Button after a run",
-  "kind": "button",
-  "text": "Replay",
+  "label": "Pain 1, title",
+  "kind": "text",
+  "text": "Answers arrive late",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.replay"
+   "locator": "decisionGap.pains[0].title"
   }
  },
  {
   "code": "HOME-GAP-08",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane title",
+  "label": "Pain 1, body",
   "kind": "text",
-  "text": "The typical reality",
+  "text": "By the time the analysis is rebuilt, the moment to act has often passed.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.title"
+   "locator": "decisionGap.pains[0].body"
   }
  },
  {
   "code": "HOME-GAP-09",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane subtitle",
+  "label": "Pain 2, title",
   "kind": "text",
-  "text": "Disconnected data. Longer paths. Delayed decisions.",
+  "text": "Skilled people, manual work",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.subtitle"
+   "locator": "decisionGap.pains[1].title"
   }
  },
  {
   "code": "HOME-GAP-10",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 1",
+  "label": "Pain 2, body",
   "kind": "text",
-  "text": "ERP",
+  "text": "Your best finance people spend their days pulling, reconciling and rebuilding, not advising.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[0].label"
+   "locator": "decisionGap.pains[1].body"
   }
  },
  {
   "code": "HOME-GAP-11",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 2",
+  "label": "Pain 3, title",
   "kind": "text",
-  "text": "CRM",
+  "text": "Nobody trusts the number",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[1].label"
+   "locator": "decisionGap.pains[2].title"
   }
  },
  {
   "code": "HOME-GAP-12",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 3",
+  "label": "Pain 3, body",
   "kind": "text",
-  "text": "Excel",
+  "text": "Different systems, versions and definitions mean meetings start by debating the data.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[2].label"
+   "locator": "decisionGap.pains[2].body"
   }
  },
  {
   "code": "HOME-GAP-13",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 4",
+  "label": "Pain 4, title",
   "kind": "text",
-  "text": "HRIS",
+  "text": "The business pays for it",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[3].label"
+   "locator": "decisionGap.pains[3].title"
   }
  },
  {
   "code": "HOME-GAP-14",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 5",
+  "label": "Pain 4, body",
   "kind": "text",
-  "text": "Operations",
+  "text": "Margin, cash and revenue decisions get made late, or made on instinct.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[4].label"
+   "locator": "decisionGap.pains[3].body"
   }
  },
  {
   "code": "HOME-GAP-15",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, source chip 6",
+  "label": "Figure 1, value",
   "kind": "text",
-  "text": "Other tools",
+  "text": "46%",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.chips[5].label"
+   "locator": "decisionGap.stats[0].value"
   }
  },
  {
   "code": "HOME-GAP-16",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 1",
+  "label": "Figure 1, label",
   "kind": "text",
-  "text": "Reporting",
+  "text": "of FP&A time still goes to collecting and validating data",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[0].label"
+   "locator": "decisionGap.stats[0].label"
   }
  },
  {
   "code": "HOME-GAP-17",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 1 caption",
+  "label": "Figure 1, source",
   "kind": "text",
-  "text": "What happened?",
+  "text": "FP&A Trends Survey 2025",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[0].caption"
+   "locator": "decisionGap.stats[0].source"
   }
  },
  {
   "code": "HOME-GAP-18",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 2",
+  "label": "Figure 2, value",
   "kind": "text",
-  "text": "Questions",
+  "text": "37%",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[1].label"
+   "locator": "decisionGap.stats[1].value"
   }
  },
  {
   "code": "HOME-GAP-19",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 2 caption",
+  "label": "Figure 2, label",
   "kind": "text",
-  "text": "Why did it happen?",
+  "text": "of CFOs don't completely trust their own financial data",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[1].caption"
+   "locator": "decisionGap.stats[1].label"
   }
  },
  {
   "code": "HOME-GAP-20",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 3",
+  "label": "Figure 2, source",
   "kind": "text",
-  "text": "Manual investigation",
+  "text": "BlackLine, 2024",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[2].label"
+   "locator": "decisionGap.stats[1].source"
   }
  },
  {
   "code": "HOME-GAP-21",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 3 caption",
+  "label": "Figure 3, value",
   "kind": "text",
-  "text": "Spreadsheets, multiple systems, email threads",
+  "text": "6.4 days",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[2].caption"
+   "locator": "decisionGap.stats[2].value"
   }
  },
  {
   "code": "HOME-GAP-22",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 4",
+  "label": "Figure 3, label",
   "kind": "text",
-  "text": "Decision delayed",
+  "text": "median time just to close the monthly books, before any analysis starts",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[3].label"
+   "locator": "decisionGap.stats[2].label"
   }
  },
  {
   "code": "HOME-GAP-23",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, station 4 caption",
+  "label": "Figure 3, source",
   "kind": "text",
-  "text": "Opportunities lost",
+  "text": "APQC benchmark",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.steps[3].caption"
+   "locator": "decisionGap.stats[2].source"
   }
  },
  {
   "code": "HOME-GAP-24",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Left lane, time label",
+  "label": "Bridge, lead",
   "kind": "text",
-  "text": "Days / weeks",
+  "text": "The data is there. The answer is too far away.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.today.rail"
+   "locator": "decisionGap.bridge.lead"
   }
  },
  {
   "code": "HOME-GAP-25",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Right lane title",
+  "label": "Bridge, sub-line",
   "kind": "text",
-  "text": "A better way with GAMCS",
+  "text": "That distance is a function of finance maturity.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.title"
-  }
- },
- {
-  "code": "HOME-GAP-26",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane subtitle",
-  "kind": "text",
-  "text": "Connected data. Clear insight. Faster decisions.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.subtitle"
-  }
- },
- {
-  "code": "HOME-GAP-27",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, feed chip 1",
-  "kind": "text",
-  "text": "Data integration",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.chips[0].label"
-  }
- },
- {
-  "code": "HOME-GAP-28",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, feed chip 2",
-  "kind": "text",
-  "text": "Automation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.chips[1].label"
-  }
- },
- {
-  "code": "HOME-GAP-29",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, feed chip 3",
-  "kind": "text",
-  "text": "AI & analytics",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.chips[2].label"
-  }
- },
- {
-  "code": "HOME-GAP-30",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, hub name",
-  "kind": "text",
-  "text": "GAMCS",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.hub.name"
-  }
- },
- {
-  "code": "HOME-GAP-31",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, hub caption",
-  "kind": "text",
-  "text": "Finance · Data · Technology",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.hub.caption"
-  }
- },
- {
-  "code": "HOME-GAP-32",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 1",
-  "kind": "text",
-  "text": "Data",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[0].label"
-  }
- },
- {
-  "code": "HOME-GAP-33",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 1 caption",
-  "kind": "text",
-  "text": "Integrated and reliable",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[0].caption"
-  }
- },
- {
-  "code": "HOME-GAP-34",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 2",
-  "kind": "text",
-  "text": "Insight",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[1].label"
-  }
- },
- {
-  "code": "HOME-GAP-35",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 2 caption",
-  "kind": "text",
-  "text": "What's happening and why",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[1].caption"
-  }
- },
- {
-  "code": "HOME-GAP-36",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 3",
-  "kind": "text",
-  "text": "Decision",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[2].label"
-  }
- },
- {
-  "code": "HOME-GAP-37",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 3 caption",
-  "kind": "text",
-  "text": "What should we do?",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[2].caption"
-  }
- },
- {
-  "code": "HOME-GAP-38",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 4",
-  "kind": "text",
-  "text": "Action",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[3].label"
-  }
- },
- {
-  "code": "HOME-GAP-39",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, station 4 caption",
-  "kind": "text",
-  "text": "Measurable impact",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.steps[3].caption"
-  }
- },
- {
-  "code": "HOME-GAP-40",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Right lane, time label",
-  "kind": "text",
-  "text": "Hours / days",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.gamcs.rail"
-  }
- },
- {
-  "code": "HOME-GAP-41",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Closing line, part 1",
-  "kind": "text",
-  "text": "More reporting doesn't close that gap.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.closeLead"
-  }
- },
- {
-  "code": "HOME-GAP-42",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Closing line, part 2 (blue)",
-  "kind": "text",
-  "text": "A shorter distance between the number and the decision does.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "dataToDecision.closeAccent"
+   "locator": "decisionGap.bridge.sub"
   }
  },
  {
