@@ -26,17 +26,19 @@ export const header = {
     { label: "Who We Are", panel: "who" },
     { label: "How We Help", href: "/#how-we-help" },
     { label: "Solutions", panel: "solutions", href: "/solutions" },
-    { label: "Case Study", panel: "case" },
+    /* href as well as panel, like Solutions: the words go to the hub, the
+       caret beside them opens the menu. */
+    { label: "Case Study", panel: "case", href: "/case-study" },
     { label: "Team", href: "/team" },
     { label: "Careers", href: "/careers" },
   ] as HeaderItem[],
   /** The caret button beside a nav item that is also a link. */
   menuLabel: "{label} menu",
   whoTitle: "Who We Are",
+  /* How We Help and Our Team are gone from here: both are already top-level
+     nav items, so the panel was repeating the bar above it. */
   whoLinks: [
     { title: "Our Story", href: "/who-we-are" },
-    { title: "How We Help", href: "/#how-we-help" },
-    { title: "Our Team", href: "/team" },
     { title: "What clients say", href: "/#testimonials" },
     /* the standalone page now, not the homepage section it used to hit */
     { title: "FAQ", href: "/faq" },

@@ -161,7 +161,7 @@
   "section": "Who We Are dropdown",
   "label": "Link 2",
   "kind": "text",
-  "text": "How We Help",
+  "text": "What clients say",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.whoLinks[1].title"
@@ -173,34 +173,10 @@
   "section": "Who We Are dropdown",
   "label": "Link 3",
   "kind": "text",
-  "text": "Our Team",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[2].title"
-  }
- },
- {
-  "code": "HDR-WHO-05",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 4",
-  "kind": "text",
-  "text": "What clients say",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[3].title"
-  }
- },
- {
-  "code": "HDR-WHO-06",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 5",
-  "kind": "text",
   "text": "FAQ",
   "source": {
    "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[4].title"
+   "locator": "header.whoLinks[2].title"
   }
  },
  {
