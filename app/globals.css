@@ -2125,11 +2125,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    name, so "MCS" is never read out on its own. */
 .ga-lockup{display:inline-flex;align-items:center;gap:0;width:fit-content}
 .ga-lockup-mark{height:32px;width:auto;object-fit:contain}
-.ga-lockup-word{margin-left:-1px;font:700 44px/1 var(--font-sans);
-  letter-spacing:-.045em;color:#145D90}
-/* cap-height alignment: the type's box is taller than its caps, so it is
-   nudged down by half the difference to sit on the mark's baseline */
-.ga-lockup-word{position:relative;top:1px}
+/* Inter explicitly, not --font-sans. The stack resolves to SF Pro on Apple
+   and Inter everywhere else, and the two do not share cap metrics: measured
+   against the same 32px mark, SF Pro's caps came out 32px sitting 2.5px low
+   and Inter's 33px sitting 0.5px low. A wordmark that changes shape by
+   platform is not a wordmark, and Inter is self-hosted (next/font) so it is
+   always there. Pinning it makes one correction correct everywhere. */
+.ga-lockup-word{position:relative;top:.5px;
+  font-family:var(--font-inter),sans-serif;font-weight:700;font-size:42.67px;
+  line-height:1;letter-spacing:-.045em;color:#145D90;margin-left:-1px}
+/* 42.67px because Inter's caps are .75 of its em, and .75 x 42.67 is the
+   mark's 32px: the two are sized to the same cap height, not to a font-size
+   that looked close. top:.5px is the last of the difference between centring
+   a 42.67px line box and centring a 32px cap box — measured off the rendered
+   pixels, not derived, because the line box also carries Inter's descender. */
 
 /* ---- the decision gap ------------------------------------------------
    One centred column, static. No transitions, no transforms, no reveal: the
