@@ -1170,10 +1170,17 @@ export const maturityCurve = {
  * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
  * still does: its monogram is white and exists only against that orange.
  *
- * `h` and `mw` are the mark's two ceilings in px. They are not guesses: each
- * one was solved from the mark's own rendered ink area so that every logo on
- * the wall carries the same weight of ink. A filled tile like GX needs less
- * height than a thin line drawing like Basilic Fly to look equally present.
+ * `h` and `mw` are the mark's two ceilings in px, solved rather than guessed.
+ *
+ * Equal ink area alone was the wrong rule. It balances weight, but it works
+ * against legibility: a mark carrying three lines of type, like Akshar, has
+ * high ink density, so equalising ink made it SMALL — when density is exactly
+ * what needs more room to be read. Equal bounding-box area has the opposite
+ * fault, blowing up sparse marks.
+ *
+ * Each height is the geometric mean of the two, then scaled to its row's cell
+ * width. The second row's cells are wider (it holds ten marks to the first
+ * row's eleven), so its marks are sized to that.
  *
  * Basilic Fly, Two Brothers and Cumin Co. used to be panels too. Their artwork
  * was lifted off the tile by solving the blend for each pixel's coverage, then
@@ -1186,34 +1193,34 @@ export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
-    { name: "WWF", file: "wwf.png", h: 35, mw: 27 },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 50, mw: 58 },
-    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 21, mw: 65 },
+    { name: "WWF", file: "wwf.png", h: 49, mw: 37 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 52, mw: 59 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 27, mw: 82 },
 
-    { name: "HungerRush", file: "hungerrush.png", h: 36, mw: 83 },
-    { name: "CoreStack", file: "corestack.png", h: 20, mw: 96 },
-    { name: "NewRocket", file: "newrocket.png", h: 22, mw: 95 },
-    { name: "GX Group", file: "gx-group.png", tile: true, h: 26, mw: 28 },
-    { name: "ProcDNA", file: "procdna.png", h: 39, mw: 64 },
+    { name: "HungerRush", file: "hungerrush.png", h: 37, mw: 86 },
+    { name: "CoreStack", file: "corestack.png", h: 23, mw: 107 },
+    { name: "NewRocket", file: "newrocket.png", h: 25, mw: 107 },
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 38, mw: 40 },
+    { name: "ProcDNA", file: "procdna.png", h: 42, mw: 70 },
 
-    { name: "Edulog", file: "edulog.png", h: 24, mw: 105 },
-    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 28, mw: 57 },
-    { name: "Jupiter Group", file: "jupiter-group.png", h: 43, mw: 49 },
+    { name: "Edulog", file: "edulog.png", h: 25, mw: 107 },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 34, mw: 69 },
+    { name: "Jupiter Group", file: "jupiter-group.png", h: 49, mw: 56 },
 
-    { name: "Cumin Co.", file: "cumin-co.png", h: 39, mw: 75 },
-    { name: "Passionfruit", file: "passionfruit.png", h: 24, mw: 90 },
-    { name: "CBC Group", file: "cbc-group.png", h: 31, mw: 64 },
+    { name: "Cumin Co.", file: "cumin-co.png", h: 46, mw: 87 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 30, mw: 113 },
+    { name: "CBC Group", file: "cbc-group.png", h: 40, mw: 82 },
 
-    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 31, mw: 33 },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 32, mw: 56 },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 48, mw: 50 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 42, mw: 73 },
 
-    { name: "The Park Hotels", file: "the-park-hotels.png", h: 29, mw: 38 },
-    { name: "BetterCloud", file: "bettercloud.png", h: 27, mw: 77 },
+    { name: "The Park Hotels", file: "the-park-hotels.png", h: 44, mw: 56 },
+    { name: "BetterCloud", file: "bettercloud.png", h: 34, mw: 97 },
 
     /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
-    { name: "Akshar Business Consulting", file: "akshar.png", h: 23, mw: 72 },
-    { name: "Threesixty Finance", file: "threesixty.png", h: 24, mw: 81 },
-    { name: "CFO Bridge", file: "cfo-bridge.png", h: 24, mw: 70 },
+    { name: "Akshar Business Consulting", file: "akshar.png", h: 30, mw: 97 },
+    { name: "Threesixty Finance", file: "threesixty.png", h: 31, mw: 103 },
+    { name: "CFO Bridge", file: "cfo-bridge.png", h: 31, mw: 94 },
   ] as { name: string; file: string; tile?: boolean; h: number; mw: number }[],
 } as const;
 

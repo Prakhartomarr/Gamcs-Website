@@ -2044,13 +2044,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    14: eleven columns then get 112px each rather than 100. That is every pixel
    two rows of twenty-one can be given at this viewport. */
 .cl-grid{width:calc(100vw - 64px);max-width:1376px;margin-inline:calc(50% - 50vw + 32px);
-  grid-template-columns:repeat(22,1fr);
-  column-gap:14px;row-gap:40px;grid-auto-rows:56px}
-/* No offset on the second row: the reference's two rows are 9 and 9, so its
-   columns line up, and lining ours up is what was asked for. 21 is 11 and 10,
-   so the eleventh cell of the second row is simply empty — a ragged right
-   corner is the price of columns that align. */
-.cl-grid > div{grid-column:span 2}
+  grid-template-columns:repeat(110,1fr);
+  column-gap:0;row-gap:40px;grid-auto-rows:56px}
+/* 110 columns, which is 11 x 10: the first row's eleven marks span ten each
+   and the second row's ten span eleven, so BOTH rows fill the measure exactly
+   and there is no empty cell after the last mark. The gap is padding inside
+   each cell rather than a column gap, because 109 gaps between 110 columns
+   would eat the width. */
+.cl-grid > div{padding-inline:7px}
+.cl-grid > div:nth-child(-n+11){grid-column:span 10}
+.cl-grid > div:nth-child(n+12){grid-column:span 11}
 /* Below 1200 eleven across is unreadable; 3 divides 21 into seven full rows. */
 @media (max-width:1199px){
   .cl-grid{grid-template-columns:repeat(3,1fr);column-gap:32px;row-gap:56px;
