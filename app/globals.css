@@ -1359,10 +1359,9 @@ html[data-cookie-banner] .sticky-cta{display:none}
    the lighter weight, so the block reads statement / explanation / capability
    rather than three equal lines. Still near-black — the weight and the size
    carry the hierarchy, not a grey that would cost contrast on this shader. */
-/* 15px, not 6: measured against the reference by a ratio that survives its
-   unknown scale — its ink gap is 1.045x its headline's ink band, ours was
-   0.68x. 15 puts us on 1.04. */
-.hero-lede .sub{margin-top:15px;max-width:none;
+/* 11px. It was 6, then 15 to match the reference's ink gap of 1.04x the
+   headline's band; this closes it again by a fifth, to 0.88x. */
+.hero-lede .sub{margin-top:11px;max-width:none;
   /* a step under the two lines around it, wherever --lede-size lands; a flat
      17px made it the BIGGEST line at 390, where the others drop to 15 */
   font-size:max(14px,calc(var(--lede-size) * .85));
