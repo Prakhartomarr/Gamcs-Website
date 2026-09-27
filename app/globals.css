@@ -2015,25 +2015,38 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .btn{white-space:normal;padding-top:11px;padding-bottom:11px}
   .btn-label{white-space:normal;text-align:center}
 }
-/* Every mark centred in its own column, so the wall reads as a set of even
-   columns rather than a block justified to the page's measure. The first and
-   last mark of each row used to be pulled to their column's edges, which put
-   the wall's outer edges on the same line as the heading — at the cost of the
-   two end columns having a different rhythm from the five between them.
+/* The wall, on the reference's grid: every cell the same size, every mark
+   optically centred in it.
 
-   Rows are a fixed track rather than one sized to the tallest mark in them,
-   so the vertical rhythm is the same whichever marks land in a row. The track
-   is the cap `displaySize` works to in ClientLogos.tsx.
+   Column counts divide the roster so no row is ever half empty: 21 marks into
+   7 at 1200 up, and 4 between 768 and 1199 — that one leaves a row of one, but
+   below 1200 there is no count that both divides 21 and fits the width, and 4
+   is the reference's own tablet count.
 
-   The row gap answers the column gap. Centred in a 152px column at 1280, marks
-   of 39-121px sit 70-139px apart (median 98), which left three rows 40px apart
-   looking like three tight bands in a wide field. At 63px the cell reads about
-   1.6:1 — still landscape, so a row still groups as a row. It closes with the
-   viewport, since the columns do.
+   Gaps: 32 across, 56 down. The reference runs 30 and 30, but its marks are
+   all wordmarks of one height; ours range from a 0.70:1 panda to a 4.69:1
+   wordmark, and the extra vertical air is what stops three mixed rows reading
+   as one field.
 
-   The component's own 9px item padding goes, as it did before. */
-.cl-grid{row-gap:clamp(40px,4.4vw,63px);grid-auto-rows:56px}
-.cl-grid > div{padding-left:0;padding-right:0}
+   The row is a fixed 64px track and the cell fills it, so every mark in a row
+   shares a centre line whatever its own height. The mark's two ceilings come
+   from its size class (ClientLogos.tsx) as --logo-h and --logo-mw. */
+.cl-grid{max-width:1200px;margin-inline:auto;padding-inline:24px;
+  grid-template-columns:repeat(7,1fr);
+  column-gap:32px;row-gap:56px;grid-auto-rows:64px}
+/* 3, not the 4 the brief names: 21 marks into 4 leaves a last row of one,
+   which is the very thing its own "pick a count that divides evenly" rule is
+   for. 3 divides 21 into seven full rows. */
+@media (max-width:1199px){.cl-grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:767px){.cl-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:52px}}
+@media (max-width:419px){.cl-grid{grid-template-columns:repeat(2,1fr)}}
+.cl-grid > div{padding:0;height:100%;display:flex;align-items:center;justify-content:center}
+.cl-mark{width:auto;height:auto;max-height:var(--logo-h);max-width:var(--logo-mw);
+  object-fit:contain}
+/* The hover lift is the component's (components/ui/logo-clouds.tsx): one
+   scale, not two compounding into 1.11. */
+/* 56px from the sub-line to the first row, per the reference's rhythm. */
+.clients-head{margin-bottom:56px}
 /* .clients padding is not set here: the max-width:768px block below matches
    too and comes later, so its value is the one that lands. */
 @media (max-width:620px){

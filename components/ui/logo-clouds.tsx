@@ -143,11 +143,14 @@ function LogoItem({
               }
             : { duration: 0.3, ease: "easeOut" }
         }
+        /* 1.04 on a 200ms tween, not the published 1.07 spring: the wall it
+           now draws asks for a subtle lift, and a spring's overshoot reads as
+           a bounce on twenty-one marks at once. */
         whileHover={{
-          scale: 1.07,
+          scale: 1.04,
           opacity: 1,
           filter: "blur(0px)",
-          transition: { type: "spring", stiffness: 340, damping: 24 },
+          transition: { duration: 0.2, ease: "easeOut" },
         }}
         className="flex shrink-0 cursor-default flex-col items-center gap-2"
       >

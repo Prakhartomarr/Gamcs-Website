@@ -1170,6 +1170,11 @@ export const maturityCurve = {
  * `tile` marks a logo that keeps a solid brand panel behind it. Only GX Group
  * still does: its monogram is white and exists only against that orange.
  *
+ * `h` and `mw` are the mark's two ceilings in px. They are not guesses: each
+ * one was solved from the mark's own rendered ink area so that every logo on
+ * the wall carries the same weight of ink. A filled tile like GX needs less
+ * height than a thin line drawing like Basilic Fly to look equally present.
+ *
  * Basilic Fly, Two Brothers and Cumin Co. used to be panels too. Their artwork
  * was lifted off the tile by solving the blend for each pixel's coverage, then
  * anything that would have been invisible on white was repainted in the tile's
@@ -1181,35 +1186,35 @@ export const clients = {
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
-    { name: "WWF", file: "wwf.png" },
-    { name: "Basilic Fly Studio", file: "basilic-fly.png" },
-    { name: "SkyNet Worldwide Express", file: "skynet.png" },
+    { name: "WWF", file: "wwf.png", h: 44, mw: 33 },
+    { name: "Basilic Fly Studio", file: "basilic-fly.png", h: 58, mw: 66 },
+    { name: "SkyNet Worldwide Express", file: "skynet.png", h: 27, mw: 82 },
 
-    { name: "HungerRush", file: "hungerrush.png" },
-    { name: "CoreStack", file: "corestack.png" },
-    { name: "NewRocket", file: "newrocket.png" },
-    { name: "GX Group", file: "gx-group.png", tile: true },
-    { name: "ProcDNA", file: "procdna.png" },
+    { name: "HungerRush", file: "hungerrush.png", h: 45, mw: 105 },
+    { name: "CoreStack", file: "corestack.png", h: 26, mw: 122 },
+    { name: "NewRocket", file: "newrocket.png", h: 28, mw: 121 },
+    { name: "GX Group", file: "gx-group.png", tile: true, h: 32, mw: 34 },
+    { name: "ProcDNA", file: "procdna.png", h: 49, mw: 82 },
 
-    { name: "Edulog", file: "edulog.png" },
-    { name: "Two Brothers India Farms", file: "two-brothers-new.png" },
-    { name: "Jupiter Group", file: "jupiter-group.png" },
+    { name: "Edulog", file: "edulog.png", h: 30, mw: 131 },
+    { name: "Two Brothers India Farms", file: "two-brothers-new.png", h: 35, mw: 72 },
+    { name: "Jupiter Group", file: "jupiter-group.png", h: 52, mw: 60 },
 
-    { name: "Cumin Co.", file: "cumin-co.png" },
-    { name: "Passionfruit", file: "passionfruit.png" },
-    { name: "CBC Group", file: "cbc-group.png" },
+    { name: "Cumin Co.", file: "cumin-co.png", h: 50, mw: 95 },
+    { name: "Passionfruit", file: "passionfruit.png", h: 30, mw: 114 },
+    { name: "CBC Group", file: "cbc-group.png", h: 39, mw: 81 },
 
-    { name: "Caribbean CAGE", file: "caribbean-cage.png" },
-    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png" },
+    { name: "Caribbean CAGE", file: "caribbean-cage.png", h: 40, mw: 42 },
+    { name: "Rakhi Motion Pictures", file: "rakhi-motion-pictures.png", h: 41, mw: 70 },
 
-    { name: "The Park Hotels", file: "the-park-hotels.png" },
-    { name: "BetterCloud", file: "bettercloud.png" },
+    { name: "The Park Hotels", file: "the-park-hotels.png", h: 37, mw: 48 },
+    { name: "BetterCloud", file: "bettercloud.png", h: 33, mw: 96 },
 
     /* The advisory firms GAMCS delivers behind, last in the wall since 2026-09-22. */
-    { name: "Akshar Business Consulting", file: "akshar.png" },
-    { name: "Threesixty Finance", file: "threesixty.png" },
-    { name: "CFO Bridge", file: "cfo-bridge.png" },
-  ] as { name: string; file: string; tile?: boolean }[],
+    { name: "Akshar Business Consulting", file: "akshar.png", h: 28, mw: 91 },
+    { name: "Threesixty Finance", file: "threesixty.png", h: 30, mw: 101 },
+    { name: "CFO Bridge", file: "cfo-bridge.png", h: 30, mw: 89 },
+  ] as { name: string; file: string; tile?: boolean; h: number; mw: number }[],
 } as const;
 
 /**
