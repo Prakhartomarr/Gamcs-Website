@@ -12055,18 +12055,6 @@
   }
  },
  {
-  "code": "FTR-COLS-22",
-  "page": "Footer",
-  "section": "Footer brand block",
-  "label": "Footer nav, accessible name",
-  "kind": "text",
-  "text": "Footer",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "footer.navLabel"
-  }
- },
- {
   "code": "FTR-BRAND-03",
   "page": "Footer",
   "section": "Brand",
@@ -12196,18 +12184,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.headings.solutions"
-  }
- },
- {
-  "page": "Footer",
-  "section": "Link columns",
-  "kind": "text",
-  "code": "FTR-COLS-18",
-  "label": "Column 3 heading",
-  "text": "Contact",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "footer.headings.contact"
   }
  },
  {

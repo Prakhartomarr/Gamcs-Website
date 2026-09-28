@@ -345,16 +345,11 @@ export const contact = {
 export const footer = {
   logoLabel: "GA Management Consultants home",
   logoAlt: "GA Management Consultants — the GA monogram in blue",
-  /* "Contact" is new: the contact link and the email used to sit loose under
-     the address in the brand block, and they are a named group now like the
-     other three. */
-  headings: { explore: "Explore", solutions: "Solutions", contact: "Contact", legal: "Legal" },
+  headings: { explore: "Explore", solutions: "Solutions", legal: "Legal" },
   /** The accent link under the address, beside the email. */
   contactLabel: "Contact Us",
   /** Now the accessible name of the LinkedIn tile rather than a text link. */
   linkedinLabel: "LinkedIn",
-  /** Names the <nav> that holds the four link groups. */
-  navLabel: "Footer",
   cookiePreferences: "Cookie Preferences",
   links: [
     { label: "Who we are", href: "/#who-we-are" },
