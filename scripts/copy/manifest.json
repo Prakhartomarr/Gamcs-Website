@@ -4583,7 +4583,7 @@
   "section": "Achievements",
   "label": "Figure 7 value",
   "kind": "text",
-  "text": "$525Mn",
+  "text": "$525 Million",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[6].value"

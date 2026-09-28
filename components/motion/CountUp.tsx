@@ -9,7 +9,8 @@ import { gsap } from "gsap";
  * The real value is rendered on the server, so it is correct with JS off,
  * for crawlers, and under prefers-reduced-motion — the animation only ever
  * replaces text that is already there. Prefix and suffix are preserved, so
- * "$525Mn" counts the 525 and keeps "$" and "Mn", and "10,000+" regains its
+ * "$525 Million" counts the 525 and keeps "$" and " Million", and "10,000+"
+ * regains its
  * thousands separator on every frame.
  */
 export default function CountUp({ value }: { value: string }) {

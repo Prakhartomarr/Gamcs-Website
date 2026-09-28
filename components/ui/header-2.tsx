@@ -88,7 +88,22 @@ export function Header() {
 	   'Solutions' dropped focus to <body>. */
 	React.useEffect(() => {
 		if (!open) return;
-		sheetRef.current?.querySelector<HTMLElement>('a[href],button')?.focus();
+		/* Two frames late, deliberately. The sheet only becomes `visible` in the
+		   commit that sets `open`, and .focus() on an element the browser still
+		   computes as visibility:hidden silently does nothing — measured: one rAF
+		   fired no focusin at all and focus stayed on the toggle, while the same
+		   .focus() called by hand a moment later worked. The second frame is the
+		   one that runs after the style recalc. */
+		let inner = 0;
+		const outer = requestAnimationFrame(() => {
+			inner = requestAnimationFrame(() => {
+				sheetRef.current?.querySelector<HTMLElement>('a[href],button:not([disabled])')?.focus();
+			});
+		});
+		return () => {
+			cancelAnimationFrame(outer);
+			cancelAnimationFrame(inner);
+		};
 	}, [open, sub]);
 
 	React.useEffect(() => {
@@ -221,6 +236,7 @@ export function Header() {
 	};
 
 	return (
+		<>
 		<header
 			ref={barRef}
 			onMouseLeave={hoverClose}
@@ -327,17 +343,38 @@ export function Header() {
 					<MenuToggleIcon open={open} className="size-5" duration={300} />
 				</Button>
 			</nav>
+		</header>
 
-			{/* ---------- mobile sheet with drill-down ---------- */}
+			{/* ---------- mobile sheet with drill-down ----------
+			    OUTSIDE <header>, and that is the whole reason it works. The bar
+			    carries `is-stuck` whenever `scrolled || open`, and .site-head.is-stuck
+			    sets backdrop-filter (globals.css). A backdrop-filter makes its element
+			    a containing block for position:fixed descendants — so the moment this
+			    sheet opened, its own `top:var(--header-h); bottom:0` started resolving
+			    against a 76px-tall header instead of the viewport and it computed to
+			    zero height. The icon still animated, so the button looked alive while
+			    nothing appeared. Rendered as a sibling it is fixed to the viewport.
+
+			    z-[68], not 50: out here it has to clear the cookie banner (65) and the
+			    sticky CTA (55), while staying under the bar itself (70) so the close
+			    button stays visible and tappable above it. */}
 			<div
 				ref={sheetRef}
 				id={sheetId}
 				role="dialog"
 				aria-modal="true"
 				aria-label="Navigation"
+				onClick={(e) => {
+					/* the sheet is its own backdrop: a tap on the panel itself, rather
+					   than on a link inside it, closes */
+					if (e.target === e.currentTarget) closeAll();
+				}}
 				className={cn(
-					'fixed inset-x-0 bottom-0 top-[var(--header-h)] z-50 flex flex-col overflow-y-auto border-y bg-white xl:hidden',
-					open ? 'block' : 'hidden',
+					'fixed inset-x-0 bottom-0 top-[var(--header-h)] z-[68] flex flex-col overflow-y-auto border-y bg-white xl:hidden',
+					/* visibility is transitioned with opacity so it holds the sheet on
+					   screen for the fade OUT too, then takes it out of the a11y tree */
+					'transition-[opacity,visibility] duration-200 ease-out',
+					open ? 'visible opacity-100' : 'invisible opacity-0 pointer-events-none',
 				)}
 			>
 				<div
@@ -425,6 +462,6 @@ export function Header() {
 					</button>
 				</div>
 			</div>
-		</header>
+		</>
 	);
 }

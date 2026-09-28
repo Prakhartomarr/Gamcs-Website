@@ -145,14 +145,6 @@ export default function ServiceAccordion() {
                   {sections.learnMore}
                   {ARROW}
                 </CTA>
-                {/* Fills over one dwell. Mounted in the open item only, so each
-                    pillar starts a fresh bar: rendered in every body, they all
-                    ran together and every later pillar opened on a bar already full. */}
-                {running && open ? (
-                  <span className="svca-prog" aria-hidden="true">
-                    <i style={{ animationDuration: `${ADVANCE_MS}ms` }} />
-                  </span>
-                ) : null}
               </div>
             </div>
           );

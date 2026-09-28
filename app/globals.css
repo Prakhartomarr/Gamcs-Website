@@ -835,11 +835,11 @@ html{font-size:112.5%}
   transition:max-height .42s var(--ease-out),opacity .3s var(--ease-out),margin .42s var(--ease-out)}
 .svca-body p{margin:0 0 12px;padding-left:47px;font-size:0.8333rem;line-height:1.6;color:var(--ink-muted)}
 .svca-body .fsvc-link{margin-left:47px}
-.svca-prog{display:block;height:2px;margin:14px 0 2px 47px;border-radius:2px;
-  background:rgba(15,94,151,.14);overflow:hidden}
-.svca-prog i{display:block;height:100%;background:var(--blue);transform-origin:left center;
-  animation:svca-fill linear forwards}
-@keyframes svca-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* The blue dwell bar that sat under "Learn more" is gone. It was mounted only
+   while `running && open`, and hovering an item sets `held`, which clears
+   `running` — so it appeared, filled part way and vanished the instant you
+   reached for the card. The auto-advance timer it visualised stays; only the
+   bar, its fill keyframe and the reduced-motion override for it are removed. */
 
 /* Your fluted gradient, cropped to the deep lower band where the fluting is
    strongest and the bright sweep has faded — the top of the picture runs to
@@ -879,13 +879,12 @@ html{font-size:112.5%}
   /* only the paragraph carries the 47px indent as padding; the link and the
      bar carry it as margin, and the link's own padding is its pill */
   .svca-body p{padding-left:0}
-  .svca-body .fsvc-link,.svca-prog{margin-left:0}
+  .svca-body .fsvc-link{margin-left:0}
   .svca-card{padding:20px;border-radius:20px}
 }
 @media(prefers-reduced-motion:reduce){
   .svca-item,.svca-body{transition:none !important}
   .svca-panel{animation:none !important}
-  .svca-prog i{animation:none !important;transform:scaleX(1)}
 }
 
 /* ---------- location map card (components/ui/expand-map.tsx) ---------- */

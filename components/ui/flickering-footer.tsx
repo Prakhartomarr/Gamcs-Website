@@ -234,8 +234,14 @@ export function FlickeringFooter() {
 			    link columns run to the right edge, which is what puts the bottom
 			    bar's copyright under the logo and its credit under the last column. */}
 			<div className="container pt-14 pb-12 lg:pt-16">
-				<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
-					<div>
+				{/* Two columns on a phone, not one. Measured at 375: the container is
+					    347px, and the longest link — "Finance Team Extension" — sets at
+					    164.9px, so a 3-column split (105px a column) wraps every Solutions
+					    link onto two or three lines, while two columns give 165.5px and it
+					    lands on one. Explore and Solutions take a column each and Legal,
+					    the shortest group, spans both underneath. */}
+					<div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+					<div className="col-span-2 sm:col-span-3 lg:col-span-1">
 						{/* One word, not a mark plus a label: the artwork IS the "GA",
 						    so the text beside it is "MCS" and carries the mark's own
 						    #145D90. The glyph fills its PNG edge to edge, so the type is
@@ -286,8 +292,9 @@ export function FlickeringFooter() {
 						</a>
 					</div>
 
-					{groups.map((g) => (
-						<div key={g.label}>
+					{groups.map((g, i) => (
+						/* the third group sits under the other two on a phone */
+						<div key={g.label} className={i === 2 ? 'col-span-2 sm:col-span-1' : undefined}>
 							{/* Heading recedes, links carry the weight — the reference's order. */}
 							<h2 className="text-[15px] text-muted-foreground">{g.label}</h2>
 							<ul className="mt-7 space-y-3">

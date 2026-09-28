@@ -188,7 +188,9 @@ export const achievements = {
     { value: "10,000+", label: "hours saved annually through automation" },
     { value: "30%", label: "reduction in operational costs" },
     { value: "50+", label: "high impact dashboards built" },
-    { value: "$525Mn", label: "PE Acquisition Deal facilitation" },
+    /* "Million", not "Mn". CountUp splits the string on its digits and keeps
+       the prefix and suffix on every frame, so the space rides the count. */
+    { value: "$525 Million", label: "PE Acquisition Deal facilitation" },
     { value: "100+", label: "bespoke financial models built" },
   ],
 } as const;
