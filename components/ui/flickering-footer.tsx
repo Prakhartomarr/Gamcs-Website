@@ -202,6 +202,12 @@ function FlickeringText({
  * carried AICPA SOC 2 / HIPAA / GDPR badges; those are certification
  * claims GAMCS has not stated, so that row is intentionally absent.
  * ------------------------------------------------------------------ */
+/* Every group is the same shape — {label, links:[{title, href, external?}]} —
+   so one map renders all four and they cannot drift apart in styling. The
+   order is the grid's reading order: Explore | Solutions on the first row,
+   Contact | Legal on the second. Contact is new here; its two links used to
+   sit loose under the address in the brand block, which is why that block had
+   its own bespoke markup. */
 const legalGroup = {
 	label: footer.headings.legal,
 	links: footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
@@ -209,6 +215,13 @@ const legalGroup = {
 const groups = [
 	{ label: footer.headings.explore, links: footer.links.map((l) => ({ title: l.label, href: l.href })) },
 	{ label: footer.headings.solutions, links: footer.solutions.map((l) => ({ title: l.label, href: l.href })) },
+	{
+		label: footer.headings.contact,
+		links: [
+			{ title: footer.contactLabel, href: '/contact' },
+			{ title: site.email, href: `mailto:${site.email}`, external: true },
+		],
+	},
 	legalGroup,
 ];
 
@@ -230,113 +243,112 @@ const LinkedInMark = () => (
 export function FlickeringFooter() {
 	return (
 		<footer className="relative w-full overflow-hidden border-t border-line bg-white">
-			{/* One grid for the whole footer: the brand block holds column 1 and the
-			    link columns run to the right edge, which is what puts the bottom
-			    bar's copyright under the logo and its credit under the last column. */}
 			<div className="container pt-14 pb-12 lg:pt-16">
-				{/* Two columns on a phone, not one. Measured at 375: the container is
-					    347px, and the longest link — "Finance Team Extension" — sets at
-					    164.9px, so a 3-column split (105px a column) wraps every Solutions
-					    link onto two or three lines, while two columns give 165.5px and it
-					    lands on one. Explore and Solutions take a column each and Legal,
-					    the shortest group, spans both underneath. */}
-					<div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
-					<div className="col-span-2 sm:col-span-3 lg:col-span-1">
-						{/* One word, not a mark plus a label: the artwork IS the "GA",
-						    so the text beside it is "MCS" and carries the mark's own
-						    #145D90. The glyph fills its PNG edge to edge, so the type is
-						    sized by cap height to the 32px mark rather than by font-size,
-						    and the gap is closed to nothing. `logoWord` is the visible
-						    half; the link's accessible name is still the full brand. */}
-						<Link href="/" className="ga-lockup" aria-label={footer.logoLabel}>
-							<Image
-								src={site.logo}
-								alt=""
-								width={534}
-								height={339}
-								sizes="52px"
-								className="ga-lockup-mark"
-							/>
-							<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
-						</Link>
-						<p className="mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
-						{site.address && (
-							<address className="mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
-								{site.address.street}
-								<br />
-								{postal}
-							</address>
-						)}
-						<div className="mt-6 flex flex-col items-start gap-2">
-							<Link
-								href="/contact"
-								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
-							>
-								{footer.contactLabel}
-							</Link>
-							<a
-								href={`mailto:${site.email}`}
-								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
-							>
-								{site.email}
-							</a>
-						</div>
+				{/* 1 — brand, full width. Logo, the standing description and the
+				    address, and nothing else: the contact link, the email and the
+				    LinkedIn tile that used to hang off the bottom of this block are a
+				    named group and a bottom-bar icon now. */}
+				<div className="max-w-[46ch]">
+					{/* One word, not a mark plus a label: the artwork IS the "GA", so the
+					    text beside it is "MCS" in the mark's own #145D90. */}
+					<Link href="/" className="ga-lockup" aria-label={footer.logoLabel}>
+						<Image src={site.logo} alt="" width={534} height={339} sizes="52px" className="ga-lockup-mark" />
+						<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
+					</Link>
+					<p className="mt-4 text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
+					{site.address && (
+						<address className="mt-4 text-[13px] not-italic leading-[1.7] text-muted-foreground">
+							{site.address.street}
+							<br />
+							{postal}
+						</address>
+					)}
+				</div>
+
+				{/* 2 — the four groups. Two columns on a phone, four from 768.
+				    Measured at 375: the column is 160px and the longest label, "Finance
+				    Team Extension", sets at 155.4px, so every link holds one line with
+				    4.6px to spare. Three columns there would be ~100px and wrap almost
+				    every Solutions link. At 320 the column is 132.5px and the longest
+				    few do wrap — inside their column, which is what min-w-0 guarantees.
+				    `items-start` top-aligns the headings across a row whatever each
+				    column's link count. */}
+				<nav aria-label={footer.navLabel} className="mt-10">
+					<div className="grid grid-cols-2 items-start gap-x-6 gap-y-10 md:grid-cols-4 md:gap-x-8">
+						{groups.map((g) => (
+							<div key={g.label} className="min-w-0">
+								<h2 className="text-[14px] font-semibold text-foreground">{g.label}</h2>
+								<ul className="mt-4 space-y-3">
+									{g.links.map((l) => {
+										/* min-h on touch only: 44px targets stacked at 12px apart would
+										   otherwise set the rhythm instead of the 12px gap. */
+										const cls =
+											'inline-flex min-h-[44px] items-center text-left text-[14px] leading-[1.45] text-muted-foreground transition-colors hover:text-blue lg:min-h-0';
+										return (
+											<li key={l.title}>
+												{'external' in l && l.external ? (
+													<a
+														href={l.href}
+														{...(l.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener' })}
+														className={cls}
+													>
+														{l.title}
+													</a>
+												) : (
+													<Link href={l.href} className={cls}>
+														{l.title}
+													</Link>
+												)}
+											</li>
+										);
+									})}
+									{/* Revocable consent lives with the other legal links. A button,
+									    not a link: it changes state rather than navigating. */}
+									{g === legalGroup && (
+										<li>
+											<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-[14px] leading-[1.45] text-muted-foreground transition-colors hover:text-blue lg:min-h-0" />
+										</li>
+									)}
+								</ul>
+							</div>
+						))}
+					</div>
+				</nav>
+			</div>
+
+			{/* 3 — the dotted wordmark, full container width */}
+			<div className="relative h-[120px] w-full sm:h-[150px] lg:h-[190px]">
+				<FlickeringText text={site.short} />
+			</div>
+
+			{/* 4 — bottom bar, two rows. Row A carries the social icons; its right
+			    side is deliberately empty, since the reference's certification badges
+			    are claims GAMCS has not made. */}
+			<div className="container">
+				<div className="border-t border-line pt-6 pb-8">
+					<div className="flex flex-wrap items-center justify-between gap-4">
 						<a
 							href={site.linkedin}
 							target="_blank"
 							rel="noopener"
 							aria-label={footer.linkedinLabel}
-							className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-blue text-white transition-colors hover:bg-blue-dark"
+							className="inline-flex h-11 w-11 items-center justify-center -ml-3 rounded-[10px] text-muted-foreground transition-colors hover:text-blue lg:ml-0 lg:h-auto lg:w-auto"
 						>
 							<LinkedInMark />
 						</a>
 					</div>
-
-					{groups.map((g, i) => (
-						/* the third group sits under the other two on a phone */
-						<div key={g.label} className={i === 2 ? 'col-span-2 sm:col-span-1' : undefined}>
-							{/* Heading recedes, links carry the weight — the reference's order. */}
-							<h2 className="text-[15px] text-muted-foreground">{g.label}</h2>
-							<ul className="mt-7 space-y-3">
-								{g.links.map((l) => {
-									const cls =
-										'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5';
-									return (
-										<li key={l.title}>
-											{'external' in l && l.external ? (
-												<a href={l.href} target="_blank" rel="noopener" className={cls}>
-													{l.title}
-												</a>
-											) : (
-												<Link href={l.href} className={cls}>
-													{l.title}
-												</Link>
-											)}
-										</li>
-									);
-								})}
-								{/* Revocable consent lives with the other legal links. A button, not
-								    a link: it changes state rather than navigating. */}
-								{g === legalGroup && (
-									<li>
-										<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5" />
-									</li>
-								)}
-							</ul>
-						</div>
-					))}
-				</div>
-			</div>
-
-			{/* flickering wordmark band */}
-			<div className="relative h-[120px] w-full sm:h-[150px] lg:h-[190px]">
-				<FlickeringText text={site.short} />
-			</div>
-
-			<div className="container">
-				<div className="grid gap-2 border-t border-line py-6 text-xs text-muted-foreground sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
-					<span>{site.copyright}</span>
-					<span className="sm:text-right lg:col-span-3">{site.legalName}</span>
+					<div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-xs text-muted-foreground">
+						<span>
+							{site.copyright} &middot; {site.legalName}
+						</span>
+						<span className="flex flex-wrap items-center gap-x-4 gap-y-1">
+							{footer.legal.map((l) => (
+								<Link key={l.href} href={l.href} className="transition-colors hover:text-blue">
+									{l.label}
+								</Link>
+							))}
+						</span>
+					</div>
 				</div>
 			</div>
 		</footer>
