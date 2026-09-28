@@ -55,7 +55,7 @@ export default function CaseStudyPage() {
 
           <div className="case-cta">
             <h2>{t.closing}</h2>
-            <CTA href={primaryCta.href}
+            <CTA href={primaryCta.href} tier="secondary"
               data-cta="case-study-footer" icon="diagonal">
               {primaryCta.label}
             </CTA>

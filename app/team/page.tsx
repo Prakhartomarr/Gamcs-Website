@@ -48,7 +48,7 @@ export default function TeamPage() {
         <div className="container">
           <div className="case-cta">
             <h2>{team.closingCta}</h2>
-            <CTA href={primaryCta.href}
+            <CTA href={primaryCta.href} tier="secondary"
               data-cta="team-footer" icon="diagonal">
               {primaryCta.label}
             </CTA>

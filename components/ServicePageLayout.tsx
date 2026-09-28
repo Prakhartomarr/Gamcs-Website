@@ -134,7 +134,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
 
           <div className="case-cta reveal">
             <h2>{s.closingLine}</h2>
-            <CTA href={primaryCta.href}
+            <CTA href={primaryCta.href} tier="secondary"
               data-cta={`solution-${s.slug}`} icon="diagonal">
               {primaryCta.label}
             </CTA>

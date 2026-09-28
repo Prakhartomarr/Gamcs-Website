@@ -29,6 +29,14 @@
   --radius-lg:24px;
   --bg-soft:#F2F3F5;
   --gray:#5B6067;
+  /* The fluted navy ground: a scrim over the flute photograph over the brand
+     dark blue. Three panels share it — the homepage contact panel, the
+     services accordion card, and the closing CTA band on the inner pages —
+     so it is one value rather than three copies free to drift apart. */
+  --flute-ground:
+    linear-gradient(180deg,rgba(6,32,55,.42),rgba(6,32,55,.56)),
+    url("/services/card-flute.webp") center/cover no-repeat,
+    var(--blue-dark);
   /* motion tokens — one home for curves and durations */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -783,10 +791,7 @@ html{font-size:112.5%}
    the picture it would have been a bright rim, so it goes dark. */
 .contact-panel{border-radius:24px;box-sizing:border-box;
   border:1px solid rgba(6,32,55,.38);
-  background:
-    linear-gradient(180deg,rgba(6,32,55,.42),rgba(6,32,55,.56)),
-    url("/services/card-flute.webp") center/cover no-repeat,
-    var(--blue-dark);
+  background:var(--flute-ground);
   display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding:56px;min-height:480px}
 .contact-panel-copy{max-width:560px}
 .contact-panel-copy .btn{margin-top:28px}
@@ -843,10 +848,7 @@ html{font-size:112.5%}
    the copy is 2.14:1 on its own, which fails body text. */
 .svca-card{position:relative;overflow:hidden;border-radius:24px;padding:34px;min-height:452px;
   display:grid;place-items:center;
-  background:
-    linear-gradient(180deg,rgba(6,32,55,.42),rgba(6,32,55,.56)),
-    url("/services/card-flute.webp") center/cover no-repeat,
-    var(--blue-dark)}
+  background:var(--flute-ground)}
 /* No white board: the copy sits straight on the fluting. The block keeps its
    measure and its swap animation, it just stopped being a card. */
 .svca-panel{position:relative;width:100%;max-width:392px;background:none;padding:0;
@@ -1100,7 +1102,15 @@ html{font-size:112.5%}
 .case-steps>div{display:grid;gap:4px}
 .case-steps dt{font:700 0.6667rem var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
 .case-steps dd{margin:0;font-size:0.8333rem;line-height:1.55;color:#6E767D}
-.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);background:var(--dark);
+/* The closing band was near-black (--dark). It now carries the same fluted
+   navy as the homepage contact panel. The flutes run vertically, so the band's
+   ~150px slice of a photograph built for a 480px panel still reads as fluting,
+   and `cover` keeps it filling the band at every width. The buttons inside had
+   to move to the white pill with it — the brand-blue shimmer pill is this
+   background's own colour, which is why the contact panel already used the
+   white one. */
+.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);
+  background:var(--flute-ground);border:1px solid rgba(6,32,55,.38);
   color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
 .case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
 .service-body .case-cta h2{max-width:30ch;text-wrap:balance}
