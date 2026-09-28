@@ -216,30 +216,34 @@ export const team = {
    * per-person icon at the company URL, which is why the field is a URL rather
    * than a boolean.
    *
-   * Gaurav stays "Founder" rather than the doc's "Co-Founder & Partner":
-   * that correction was an explicit client instruction in Phase 1.
+   * Both founders read "Co-founder & Partner". That reverses a Phase 1
+   * instruction to call Gaurav "Founder", on the client's own later write-up
+   * (2026-09-28), which also drops the specialisms the titles used to carry.
    */
   /** Both founders, for the homepage Who-we-are block. Order matters:
       leadership[0] is on the left of the frame, [1] on the right, which is
       what the alt text describes. */
   foundersPhoto: "/team/founders-light.webp",
   leadership: [
-    { name: "Gaurav Malik", title: "Founder | FP&A & Due Diligence Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
-    { name: "Abhinav Aggarwal", title: "Co-Founder | FP&A, BI & Transformation Specialist", experience: "10+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
+    { name: "Gaurav Malik", title: "Co-founder & Partner", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
+    { name: "Abhinav Aggarwal", title: "Co-founder & Partner", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
-  /* Order is the client's: it is what the page prints, four to a row.
-     Ramesh and Geeta have their headshots; "Advisor" stands in for both until
-     the client sends their titles. A card with no `photo` would render an
-     initials tile instead; none does now. */
+  /* Order is the client's: it is what the page prints, four to a row, and it
+     is deliberately NOT the order of the 2026-09-28 write-up — that document
+     reordered the six it showed, and the running order was kept as it was.
+     Ramesh and Geeta finally have real titles from it; both used to read
+     "Advisor". Every adviser now carries years and a location, which only
+     four of them did. A card with no `photo` would render an initials tile
+     instead; none does. */
   advisory: [
-    { name: "Sumit Chatterjee", title: "Shared Services Operations", experience: "30+ years", photo: "/team/sumit-chatterjee.jpg" },
-    { name: "Ramesh Yadav", title: "Advisor", photo: "/team/ramesh-yadav.jpg" },
-    { name: "Amit Garg", title: "Audit & IPO Advisor", photo: "/team/amit-garg.jpg" },
-    { name: "Dhawal Parvatikar", title: "Strategic Finance & CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
-    { name: "Asif Masani", title: "BI & Analytics, FP&A Automation Specialist", experience: "15+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
-    { name: "Sanjay Rikhy", title: "Strategic Advisor | Former CFO | ESG & Performance Transformation", experience: "25+ years", photo: "/team/sanjay-rikhy.jpg" },
-    { name: "Geeta Karnik", title: "Advisor", photo: "/team/geeta-karnik.jpg" },
-    { name: "Saurabh Aggarwal", title: "Reporting, Due Diligence, Audit & Compliance Specialist", experience: "20+ years", photo: "/team/saurabh-aggarwal.jpg" },
+    { name: "Sumit Chatterjee", title: "Strategic Finance & Board Advisory", experience: "30+ years", location: "Delhi, India", photo: "/team/sumit-chatterjee.jpg" },
+    { name: "Ramesh Yadav", title: "Financial Reporting", experience: "13+ years", location: "Bangalore, India", photo: "/team/ramesh-yadav.jpg" },
+    { name: "Amit Garg", title: "IPO Advisory & Due Diligence", experience: "20+ years", location: "Delhi, India", photo: "/team/amit-garg.jpg" },
+    { name: "Dhawal Parvatikar", title: "CFO Advisory", experience: "15+ years", location: "Dubai, UAE", photo: "/team/dhawal-parvatikar.jpg" },
+    { name: "Asif Masani", title: "BI & Analytics", experience: "10+ years", location: "Mumbai, India", photo: "/team/asif-masani.jpg" },
+    { name: "Sanjay Rikhy", title: "ESG & Risk Advisory", experience: "25+ years", location: "Delhi, India", photo: "/team/sanjay-rikhy.jpg" },
+    { name: "Geeta Karnik", title: "Strategic Finance & CFO Advisory", experience: "30+ years", location: "Mumbai, India", photo: "/team/geeta-karnik.jpg" },
+    { name: "Saurabh Aggarwal", title: "Accounting & Audit", experience: "15+ years", location: "Delhi, India", photo: "/team/saurabh-aggarwal.jpg" },
   ],
   get members() {
     return [...this.leadership, ...this.advisory];

@@ -7763,7 +7763,7 @@
   "section": "Founders",
   "label": "Founder 1 title",
   "kind": "text",
-  "text": "Founder | FP&A & Due Diligence Specialist",
+  "text": "Co-founder & Partner",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[0].title"
@@ -7775,7 +7775,7 @@
   "section": "Founders",
   "label": "Founder 1 experience",
   "kind": "text",
-  "text": "10+ years",
+  "text": "13+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[0].experience"
@@ -7811,7 +7811,7 @@
   "section": "Founders",
   "label": "Founder 2 title",
   "kind": "text",
-  "text": "Co-Founder | FP&A, BI & Transformation Specialist",
+  "text": "Co-founder & Partner",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[1].title"
@@ -7823,7 +7823,7 @@
   "section": "Founders",
   "label": "Founder 2 experience",
   "kind": "text",
-  "text": "10+ years",
+  "text": "13+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[1].experience"
@@ -7883,7 +7883,7 @@
   "section": "Advisory team",
   "label": "Advisor 1 title",
   "kind": "text",
-  "text": "Shared Services Operations",
+  "text": "Strategic Finance & Board Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[0].title"
@@ -7899,6 +7899,18 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[0].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-29",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 1 location",
+  "kind": "text",
+  "text": "Delhi, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[0].location"
   }
  },
  {
@@ -7919,10 +7931,34 @@
   "section": "Advisory team",
   "label": "Advisor 2 title",
   "kind": "text",
-  "text": "Advisor",
+  "text": "Financial Reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[1].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-30",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 experience",
+  "kind": "text",
+  "text": "13+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-31",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 location",
+  "kind": "text",
+  "text": "Bangalore, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].location"
   }
  },
  {
@@ -7943,10 +7979,34 @@
   "section": "Advisory team",
   "label": "Advisor 3 title",
   "kind": "text",
-  "text": "Audit & IPO Advisor",
+  "text": "IPO Advisory & Due Diligence",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[2].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-32",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 experience",
+  "kind": "text",
+  "text": "20+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-33",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 location",
+  "kind": "text",
+  "text": "Delhi, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].location"
   }
  },
  {
@@ -7967,7 +8027,7 @@
   "section": "Advisory team",
   "label": "Advisor 4 title",
   "kind": "text",
-  "text": "Strategic Finance & CFO Advisory",
+  "text": "CFO Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[3].title"
@@ -8015,7 +8075,7 @@
   "section": "Advisory team",
   "label": "Advisor 5 title",
   "kind": "text",
-  "text": "BI & Analytics, FP&A Automation Specialist",
+  "text": "BI & Analytics",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[4].title"
@@ -8027,7 +8087,7 @@
   "section": "Advisory team",
   "label": "Advisor 5 experience",
   "kind": "text",
-  "text": "15+ years",
+  "text": "10+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[4].experience"
@@ -8063,7 +8123,7 @@
   "section": "Advisory team",
   "label": "Advisor 6 title",
   "kind": "text",
-  "text": "Strategic Advisor | Former CFO | ESG & Performance Transformation",
+  "text": "ESG & Risk Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].title"
@@ -8079,6 +8139,18 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-34",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 location",
+  "kind": "text",
+  "text": "Delhi, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].location"
   }
  },
  {
@@ -8099,10 +8171,34 @@
   "section": "Advisory team",
   "label": "Advisor 7 title",
   "kind": "text",
-  "text": "Advisor",
+  "text": "Strategic Finance & CFO Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[6].title"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-35",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 experience",
+  "kind": "text",
+  "text": "30+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-36",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 location",
+  "kind": "text",
+  "text": "Mumbai, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].location"
   }
  },
  {
@@ -8123,7 +8219,7 @@
   "section": "Advisory team",
   "label": "Advisor 8 title",
   "kind": "text",
-  "text": "Reporting, Due Diligence, Audit & Compliance Specialist",
+  "text": "Accounting & Audit",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[7].title"
@@ -8135,10 +8231,22 @@
   "section": "Advisory team",
   "label": "Advisor 8 experience",
   "kind": "text",
-  "text": "20+ years",
+  "text": "15+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[7].experience"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-37",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 location",
+  "kind": "text",
+  "text": "Delhi, India",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].location"
   }
  },
  {
