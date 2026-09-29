@@ -37,6 +37,8 @@ type Member = {
   linkedinUrl?: string;
   /** One entry per paragraph; the panel prints a <p> for each. */
   bio?: readonly string[];
+  /** Middot-separated, as the client writes it — one cell in the copy doc. */
+  expertise?: string;
 };
 
 const FOUNDERS = team.leadership as readonly Member[];
@@ -197,6 +199,12 @@ export default function TeamRoster() {
                     {para}
                   </p>
                 ))}
+                {active.expertise ? (
+                  <div className="tr-exp">
+                    <h4>{roster.expertiseLabel}</h4>
+                    <p>{active.expertise}</p>
+                  </div>
+                ) : null}
                 {active.linkedinUrl || active.email ? (
                   <div className="tr-ovlinks">
                     {active.linkedinUrl ? (

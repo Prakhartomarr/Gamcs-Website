@@ -7962,6 +7962,54 @@
   }
  },
  {
+  "code": "TEAM-ADVISORS-38",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 1 bio, paragraph 1",
+  "kind": "text",
+  "text": "With 30+ years of experience, Sumit Chatterjee has worked across FMCG, financial services, IT services, real estate and professional services, with a career spanning F100 multinational corporations, institutional organisations, family-owned businesses and high-growth companies.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[0].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-39",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 1 bio, paragraph 2",
+  "kind": "text",
+  "text": "Sumit works with Founders, Boards and Management Teams at critical stages of growth and transformation, including capital raises, M&A and financial restructuring. His experience also extends into building the financial systems, governance frameworks and leadership capabilities needed to make growth sustainable.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[0].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-40",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 1 bio, paragraph 3",
+  "kind": "text",
+  "text": "A qualified ACA and CMA, Sumit has also completed Executive Education at Harvard Business School. He brings together deep corporate-finance expertise, board-level perspective and hands-on execution to help leadership teams connect strategy with financial performance.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[0].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-41",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 1 core expertise",
+  "kind": "text",
+  "text": "Corporate Finance · Fundraising & IPO Management · M&A · Financial Restructuring · P&L Management · Board Advisory",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[0].expertise"
+  }
+ },
+ {
   "code": "TEAM-ADVISORS-06",
   "page": "Team (/team)",
   "section": "Advisory team",
@@ -8007,6 +8055,54 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[1].location"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-46",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 bio, paragraph 1",
+  "kind": "text",
+  "text": "Ramesh Yadav is a Bangalore-based management consultant with experience spanning financial reporting, assurance, transaction advisory and management consulting. He began his career with Ernst & Young in the Audit & Assurance practice, where he worked with clients across industries, analysing financial data, identifying unusual items and evaluating matters impacting financial statements.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-47",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 bio, paragraph 2",
+  "kind": "text",
+  "text": "He subsequently worked with Transaction Advisory and Management Consulting teams, advising businesses on growth, expansion, go-to-market and digital strategies aimed at improving performance, profitability and competitiveness across both digital and traditional operating environments.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-48",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 bio, paragraph 3",
+  "kind": "text",
+  "text": "At GAMCS, Ramesh brings together his financial reporting foundation and broader consulting experience to help businesses strengthen their finance functions, interpret financial information more effectively and support better business decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-49",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 2 core expertise",
+  "kind": "text",
+  "text": "Financial Reporting · Audit & Assurance · Financial Analysis · Transaction Advisory · Management Consulting · Growth Strategy · Go-to-Market Strategy · Digital Strategy",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[1].expertise"
   }
  },
  {
@@ -8058,6 +8154,54 @@
   }
  },
  {
+  "code": "TEAM-ADVISORS-50",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 bio, paragraph 1",
+  "kind": "text",
+  "text": "Amit Garg is a Fellow Chartered Accountant with 18+ years of experience across assurance, consulting, financial reporting and transaction advisory. He spent more than 12 years with S.R. Batliboi & Co. LLP, an EY member firm, in audit and assurance.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-51",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 bio, paragraph 2",
+  "kind": "text",
+  "text": "His experience spans Ind AS and IFRS implementation, statutory and internal audit, process reviews, financial due diligence, internal controls, capital-market transactions and financial reporting. He has also led large, multidisciplinary engagements involving complex reporting and tight execution timelines.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-52",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 bio, paragraph 3",
+  "kind": "text",
+  "text": "Amit combines deep technical accounting expertise with practical business understanding and transaction experience. He is also a faculty member for IFRS and Ind AS programmes and has delivered training through ICAI, Delhi University and professional organisations. Current professional materials also document his experience in financial reporting technology and Ind AS reporting automation.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-53",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 3 core expertise",
+  "kind": "text",
+  "text": "Ind AS / IFRS · Audit & Assurance · Financial Reporting · Due Diligence · Capital Markets · Internal Controls · Process Reviews · IPO Advisory",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[2].expertise"
+  }
+ },
+ {
   "code": "TEAM-ADVISORS-13",
   "page": "Team (/team)",
   "section": "Advisory team",
@@ -8103,6 +8247,54 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[3].location"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-54",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 4 bio, paragraph 1",
+  "kind": "text",
+  "text": "Dhawal Parvatikar is a Chartered Accountant and experienced finance leader with 15+ years of leadership experience across Indian and multinational organisations, including Bharat Petroleum, Trafigura, Publicis, Omnicom and WPP. His career spans both India and the Middle East and includes CFO and senior finance-leadership responsibilities.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[3].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-55",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 4 bio, paragraph 2",
+  "kind": "text",
+  "text": "Dhawal works at the intersection of finance and business, advising leadership teams on commercial decision-making, financial performance, planning, finance business partnering and transformation. His experience spans manufacturing and services environments and includes working with cross-functional teams across geographies.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[3].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-56",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 4 bio, paragraph 3",
+  "kind": "text",
+  "text": "He is also deeply involved in finance education and professional development. As Co-Founder of FP&A Professionals Institute, he has helped train and mentor thousands of finance professionals across FP&A, finance leadership and business partnering.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[3].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-57",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 4 core expertise",
+  "kind": "text",
+  "text": "CFO Advisory · Strategic Finance · FP&A · Business Partnering · Financial Leadership · Finance Transformation · Commercial Finance · Working Capital",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[3].expertise"
   }
  },
  {
@@ -8154,6 +8346,54 @@
   }
  },
  {
+  "code": "TEAM-ADVISORS-58",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 5 bio, paragraph 1",
+  "kind": "text",
+  "text": "Asif Masani is a Chartered Accountant and FP&A professional with 15+ years of experience across financial planning, budgeting, forecasting, audit and tax. His career includes experience with organisations such as Citi, Pfizer and Coursera, where he has partnered with finance and business leaders across different operating environments.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[4].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-59",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 5 bio, paragraph 2",
+  "kind": "text",
+  "text": "At GAMCS, Asif focuses on the intersection of FP&A, data analytics, automation and modern finance technology. His work helps finance teams move beyond reporting toward more connected planning, analytical insight and decision support.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[4].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-60",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 5 bio, paragraph 3",
+  "kind": "text",
+  "text": "He is also a co-founder and programme leader at FP&A Professionals Institute and has authored finance books including All About FP&A and From Accounting to FP&A. His current professional work also explores how AI can automate the mechanical elements of FP&A while leaving finance professionals focused on judgement, interpretation and decision-making.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[4].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-61",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 5 core expertise",
+  "kind": "text",
+  "text": "FP&A Automation · BI & Analytics · AI for Finance · Budgeting & Forecasting · Data Analytics · Reporting Automation · Finance Transformation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[4].expertise"
+  }
+ },
+ {
   "code": "TEAM-ADVISORS-20",
   "page": "Team (/team)",
   "section": "Advisory team",
@@ -8199,6 +8439,54 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].location"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-62",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 bio, paragraph 1",
+  "kind": "text",
+  "text": "Sanjay Rikhy is a senior finance leader and strategic advisor with more than three decades of corporate experience across manufacturing and services. His leadership career includes organisations such as Hero Group, Philips India, the RPG/Goenka Group and Aditya Birla Group, and includes experience as CFO of Rajshree Cement Works, part of UltraTech Cement.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-63",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 bio, paragraph 2",
+  "kind": "text",
+  "text": "He advises business leaders on financial planning, business performance, working capital, governance, risk management and internal controls. His experience combines CFO-level financial leadership with a practical understanding of how finance, operations and risk need to work together to support sustainable business performance.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-64",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 bio, paragraph 3",
+  "kind": "text",
+  "text": "Sanjay also brings a strong perspective on ESG and sustainable business transformation and serves as a Mentor of Change under NITI Aayog's Atal Innovation Mission.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-65",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 6 core expertise",
+  "kind": "text",
+  "text": "CFO Advisory · Financial Planning · Performance Transformation · Working Capital · Governance & Risk · Internal Controls · ESG · Business Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[5].expertise"
   }
  },
  {
@@ -8250,6 +8538,54 @@
   }
  },
  {
+  "code": "TEAM-ADVISORS-42",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 bio, paragraph 1",
+  "kind": "text",
+  "text": "Geeta Karnik is a senior finance leader and strategic advisor with extensive experience in corporate finance, cash management, performance management and finance transformation.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-43",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 bio, paragraph 2",
+  "kind": "text",
+  "text": "She has served as Chief Financial Officer of Servier India, where her responsibilities and leadership perspective have included finance and broader business performance. Publicly documented experience also reflects her focus on cash management, financial excellence and the evolving role of finance in digitally enabled organisations.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-44",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 bio, paragraph 3",
+  "kind": "text",
+  "text": "At GAMCS, Geeta brings a senior CFO perspective to questions around financial performance, governance, cash, transformation and long-term value creation. Her experience helps leadership teams connect financial discipline with strategic and operational priorities.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-45",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 7 core expertise",
+  "kind": "text",
+  "text": "CFO Advisory · Strategic Finance · Cash Management · Performance Management · Finance Transformation · Governance · Financial Leadership",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[6].expertise"
+  }
+ },
+ {
   "code": "TEAM-ADVISORS-26",
   "page": "Team (/team)",
   "section": "Advisory team",
@@ -8295,6 +8631,54 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[7].location"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-66",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 bio, paragraph 1",
+  "kind": "text",
+  "text": "Saurabh Aggarwal is a finance and assurance professional with 10+ years of experience across assurance and advisory services. He has worked with S.R. Batliboi & Co. LLP, an EY member firm, and BSR & Co. LLP, a KPMG member firm, serving public companies and multinational organisations.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-67",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 bio, paragraph 2",
+  "kind": "text",
+  "text": "His experience spans IFRS, Ind AS, IGAAP, IFRS transition, internal controls, SOX testing, business-process re-engineering, special audits, tax audits, capital-market transactions and financial due diligence. These areas are also reflected in the professional credentials currently associated with the GAMCS/FinSensor team.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-68",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 bio, paragraph 3",
+  "kind": "text",
+  "text": "Saurabh brings strong technical accounting and assurance expertise combined with practical experience in complex reporting, controls and transaction environments. His role supports organisations in strengthening financial reporting quality, control frameworks and the processes behind them.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-69",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Advisor 8 core expertise",
+  "kind": "text",
+  "text": "Ind AS / IFRS · Assurance · Internal Controls · SOX · Financial Reporting · Process Transformation · Due Diligence · Capital Markets",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.advisory[7].expertise"
   }
  },
  {
@@ -9844,6 +10228,54 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[1].email"
+  }
+ },
+ {
+  "code": "CONTACT-DETAILS-16",
+  "page": "Contact (/contact)",
+  "section": "Contact details",
+  "label": "Founder 2 bio, paragraph 1",
+  "kind": "text",
+  "text": "Abhinav Aggarwal is the Co-Founder of GAMCS, specialising in FP&A, Finance transformation, Business Analytics and Technology-enabled Finance.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[1].bio[0]"
+  }
+ },
+ {
+  "code": "CONTACT-DETAILS-17",
+  "page": "Contact (/contact)",
+  "section": "Contact details",
+  "label": "Founder 2 bio, paragraph 2",
+  "kind": "text",
+  "text": "A Chartered Accountant with 13+ years of experience, Abhinav has worked with organisations including Infosys Limited and Sumitomo, with experience across finance transformation, ERP and FP&A tool implementations, process improvement and business analytics.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[1].bio[1]"
+  }
+ },
+ {
+  "code": "CONTACT-DETAILS-18",
+  "page": "Contact (/contact)",
+  "section": "Contact details",
+  "label": "Founder 2 bio, paragraph 3",
+  "kind": "text",
+  "text": "At GAMCS, Abhinav focuses on helping finance teams move beyond spreadsheet-driven reporting toward more connected, scalable and technology-enabled finance functions. His work spans planning and forecasting, management reporting, business intelligence, finance automation and the implementation of systems that connect financial data with operational decision-making.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[1].bio[2]"
+  }
+ },
+ {
+  "code": "CONTACT-DETAILS-19",
+  "page": "Contact (/contact)",
+  "section": "Contact details",
+  "label": "Founder 2 bio, paragraph 4",
+  "kind": "text",
+  "text": "His broader focus is on using technology not as an end in itself, but as an enabler of better finance processes, stronger analytical capability and faster decision-making. He is widely recognised for his ability to translate complex analysis into actionable insights and operate effectively with senior finance stakeholders.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[1].bio[3]"
   }
  },
  {

@@ -138,6 +138,8 @@ export const roster = {
   advisory: "Advisory Team",
   portraitAlt: "Portrait of {name}, {title}",
   close: "Close",
+  /** Heads the middot list under a bio. */
+  expertiseLabel: "Core Expertise",
   linkedin: "LinkedIn",
   email: "Email",
 } as const;

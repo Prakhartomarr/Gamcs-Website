@@ -2463,12 +2463,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    blank line inside the string that an editor could delete without seeing it. */
 .tr-bio{margin:0;font-size:0.8333rem;line-height:1.75;color:var(--ink-muted)}
 .tr-bio + .tr-bio{margin-top:16px}
+/* The middot list the client writes at the foot of most bios. Kept as one
+   string rather than split into terms: eight people x eight terms would be
+   sixty-four single-word cells in the copy document. */
+.tr-exp{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.tr-exp h4{margin:0;font:600 0.6667rem var(--font-sans);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-deep)}
+.tr-exp p{margin:10px 0 0;font-size:0.7778rem;line-height:1.7;color:var(--ink-muted)}
 .tr-ovlinks{display:flex;gap:10px;margin-top:30px}
 .tr-ovlinks a{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 17px;
   border-radius:999px;background:#fff;color:var(--ink-deep);border:1px solid #DCDEE2;
   font:600 0.7222rem var(--font-sans);transition:background .2s var(--ease-out)}
 .tr-ovlinks a:hover{background:#f6f7f8;color:var(--ink-deep)}
-.tr-ovshot{position:absolute;top:-38px;right:76px;width:216px}
+/* top:24, not -38. The portrait was meant to break the block's top edge, but
+   .tr-ovin is a scroll container and a scroll container clips a negative
+   offset rather than letting it hang — so the overhang never rendered and all
+   it did was cut 38px off the top of every head (13% of a 291px portrait).
+   Inside the block it is whole. */
+.tr-ovshot{position:absolute;top:24px;right:76px;width:216px}
 /* The direct child only: an inner span (the initials tile) must not inherit
    the frame's own aspect ratio and white ground. */
 .tr-ovshot>span{position:relative;display:block;aspect-ratio:4/5;border-radius:10px;
