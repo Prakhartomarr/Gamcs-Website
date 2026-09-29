@@ -7763,7 +7763,7 @@
   "section": "Founders",
   "label": "Founder 1 title",
   "kind": "text",
-  "text": "Co-Founder | FP&A & BI Specialist",
+  "text": "Co-Founder | Strategic Finance, FP&A & Transaction Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.leadership[0].title"

@@ -218,15 +218,16 @@ export const team = {
    *
    * Both founders read "Co-Founder", which reverses a Phase 1 instruction to
    * call Gaurav "Founder". The specialism after the bar is each one's own and
-   * they are not interchangeable: Gaurav is FP&A & BI, Abhinav is Digital
-   * Transformation. Set from the client's titles of 2026-09-28.
+   * they are not interchangeable: Gaurav is Strategic Finance, FP&A &
+   * Transaction Advisory, Abhinav is Digital Transformation. Gaurav's alone
+   * carries no "Specialist" — that is the client's wording, not an omission.
    */
   /** Both founders, for the homepage Who-we-are block. Order matters:
       leadership[0] is on the left of the frame, [1] on the right, which is
       what the alt text describes. */
   foundersPhoto: "/team/founders-light.webp",
   leadership: [
-    { name: "Gaurav Malik", title: "Co-Founder | FP&A & BI Specialist", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
+    { name: "Gaurav Malik", title: "Co-Founder | Strategic Finance, FP&A & Transaction Advisory", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
     { name: "Abhinav Aggarwal", title: "Co-Founder | Digital Transformation Specialist", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
   /* Order is the client's: it is what the page prints, four to a row, and it
