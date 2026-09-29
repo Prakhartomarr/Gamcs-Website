@@ -3396,8 +3396,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 		}
 
 		/* ---- 2. link groups as disclosures ---------------------------- */
+		/* order 2: the office block leads the phone footer, the way the
+		   brand column leads it at every wider width. */
 		.gf .gf-group {
-			order: 1;
+			order: 2;
 			border-top: 1px solid var(--line);
 		}
 		/* the office block is the FIRST DOM child, so the last group is the
@@ -3473,16 +3475,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 		   wrapper goes display:contents rather than being moved, which is
 		   what keeps the >=640 box tree identical. */
 		.gf .gf-office {
-			order: 2;
-			margin-top: 32px;
+			order: 1;
+			margin-top: 0;
+			margin-bottom: 32px;
 			display: grid;
 			grid-template-columns: minmax(0, 1fr) 48px;
 			align-items: center;
 			gap: 16px 12px;
 		}
-		/* the comp opens on the CTA; the lockup, the blurb and the second
-		   route to /contact are all repeated elsewhere on the page. */
-		.gf .ga-lockup,
+		/* The lockup opens the footer, spanning both columns above the
+		   address. Deliberately NOT resized: the 32px mark and the 42.67px
+		   word are locked to each other by Inter's cap ratio and a measured
+		   half-pixel correction (globals.css:2135-2145), so a phone-only
+		   font-size would break the wordmark rather than scale it. It
+		   measures 143px wide — a third of the 354px available here. */
+		.gf .ga-lockup {
+			grid-column: 1 / -1;
+			margin-bottom: 4px;
+			/* The lockup's own line box comes out 43px — one short of the
+			   target for a link. min-height pads the box; it does not touch
+			   the mark or the word, so the wordmark is untouched. */
+			min-height: 44px;
+		}
+		/* Still hidden: the blurb repeats what the page has already said by
+		   this point, and "Contact Us" is a second route to the same place
+		   the email beneath it already goes. */
 		.gf .gf-intro,
 		.gf .gf-contact {
 			display: none;
