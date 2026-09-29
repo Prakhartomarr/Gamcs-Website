@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import CookiePreferencesLink from '@/components/CookiePreferencesLink';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { footer, intro, site } from '@/lib/content/gamcs';
 
@@ -219,23 +219,57 @@ const postal = site.address
 	: '';
 
 const LinkedInMark = () => (
+	/* The wordmark, not the four-shape approximation this used to be. That one
+	   gave the "n" a full-height left stem, so it read as "ih" — invisible at
+	   17px on desktop, obvious in the rebuilt phone footer where the tile is
+	   48px. Same two paths the team page's bio links already use. */
 	<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">
-		<circle cx="6.1" cy="5.8" r="1.9" />
-		<rect x="4.4" y="9.3" width="3.4" height="10.3" rx="0.5" />
-		<rect x="10.1" y="9.3" width="3.3" height="10.3" rx="0.5" />
-		<path d="M13.4 14.1a3.5 3.5 0 0 1 6.3 2.1v3.4h-3.4v-3.1a1.5 1.5 0 0 0-2.9-.5z" />
+		<path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+		<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+	</svg>
+);
+
+const Chevron = () => (
+	<svg className="gf-chev" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+		<path d="M2.5 5L7 9.5 11.5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
 	</svg>
 );
 
 export function FlickeringFooter() {
+	/*
+	 * The phone footer is a different machine — a CTA block, three disclosures
+	 * and an office row — so it is mounted from JS rather than hidden with CSS.
+	 * `phone` starts false, which means:
+	 *  - the server renders today's markup, byte for byte;
+	 *  - >=640px never builds a toggle at all, so nothing there can move;
+	 *  - a phone with no JS keeps the fully expanded list rather than three
+	 *    collapsed panels it cannot open.
+	 */
+	const [phone, setPhone] = useState(false);
+	const [open, setOpen] = useState<string | null>(null);
+
+	useEffect(() => {
+		// 639, not 767: this component's layout breakpoint is Tailwind `sm:`.
+		const mq = window.matchMedia('(max-width:639px)');
+		const sync = () => setPhone(mq.matches);
+		sync();
+		mq.addEventListener('change', sync);
+		return () => mq.removeEventListener('change', sync);
+	}, []);
+
 	return (
-		<footer className="relative w-full overflow-hidden border-t border-line bg-white">
+		<footer className="gf relative w-full overflow-hidden border-t border-line bg-soft sm:bg-white">
+			{/* No closing CTA here. The phone design called for one, but every page
+			    already ends with the same ask immediately above the footer — the
+			    contact panel on the homepage, the CTA band on the inner pages — so
+			    it read as the same question twice in one scroll. */}
+
 			{/* One grid for the whole footer: the brand block holds column 1 and the
 			    link columns run to the right edge, which is what puts the bottom
 			    bar's copyright under the logo and its credit under the last column. */}
-			<div className="container pt-14 pb-12 lg:pt-16">
-				<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
-					<div>
+			<div className="gf-topwrap container pt-14 pb-12 lg:pt-16">
+				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+					<div className="gf-office">
 						{/* One word, not a mark plus a label: the artwork IS the "GA",
 						    so the text beside it is "MCS" and carries the mark's own
 						    #145D90. The glyph fills its PNG edge to edge, so the type is
@@ -253,24 +287,24 @@ export function FlickeringFooter() {
 							/>
 							<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
 						</Link>
-						<p className="mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
+						<p className="gf-intro mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
 						{site.address && (
-							<address className="mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
+							<address className="gf-addr mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
 								{site.address.street}
 								<br />
 								{postal}
 							</address>
 						)}
-						<div className="mt-6 flex flex-col items-start gap-2">
+						<div className="gf-reach mt-6 flex flex-col items-start gap-2">
 							<Link
 								href="/contact"
-								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+								className="gf-contact inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
 							>
 								{footer.contactLabel}
 							</Link>
 							<a
 								href={`mailto:${site.email}`}
-								className="inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+								className="gf-mail inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
 							>
 								{site.email}
 							</a>
@@ -280,44 +314,78 @@ export function FlickeringFooter() {
 							target="_blank"
 							rel="noopener"
 							aria-label={footer.linkedinLabel}
-							className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-blue text-white transition-colors hover:bg-blue-dark"
+							className="gf-li mt-6 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-blue text-white transition-colors hover:bg-blue-dark"
 						>
 							<LinkedInMark />
 						</a>
 					</div>
 
-					{groups.map((g) => (
-						<div key={g.label}>
-							{/* Heading recedes, links carry the weight — the reference's order. */}
-							<h2 className="text-[15px] text-muted-foreground">{g.label}</h2>
-							<ul className="mt-7 space-y-3">
-								{g.links.map((l) => {
-									const cls =
-										'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5';
-									return (
-										<li key={l.title}>
-											{'external' in l && l.external ? (
-												<a href={l.href} target="_blank" rel="noopener" className={cls}>
-													{l.title}
-												</a>
-											) : (
-												<Link href={l.href} className={cls}>
-													{l.title}
-												</Link>
-											)}
-										</li>
-									);
-								})}
+					{groups.map((g) => {
+						const panelId = `gf-panel-${g.label.replace(/\W+/g, '').toLowerCase()}`;
+						const isOpen = open === g.label;
+						const cls = phone
+							? 'gf-link'
+							: 'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5';
+						const list = (
+							<ul className={phone ? 'gf-list' : 'mt-7 space-y-3'}>
+								{g.links.map((l) => (
+									<li key={l.title}>
+										{'external' in l && l.external ? (
+											<a href={l.href} target="_blank" rel="noopener" className={cls}>
+												{l.title}
+											</a>
+										) : (
+											<Link href={l.href} className={cls}>
+												{l.title}
+											</Link>
+										)}
+									</li>
+								))}
 								{/* Revocable consent lives with the other legal links. A button, not
-								    a link: it changes state rather than navigating. */}
-								{g === legalGroup && (
+								    a link: it changes state rather than navigating. On a phone it
+								    moves to the bottom bar, so it renders there instead — one
+								    instance either way, never two. */}
+								{g === legalGroup && !phone && (
 									<li>
-										<CookiePreferencesLink className="inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5" />
+										<CookiePreferencesLink className={cls} />
 									</li>
 								)}
 							</ul>
-						</div>
-					))}
+						);
+						return (
+							<div key={g.label} className="gf-group" data-open={phone && isOpen ? 'true' : undefined}>
+								{/* Heading recedes, links carry the weight — the reference's order.
+								    On a phone the <h2> keeps its role and wraps the control rather
+								    than being replaced by it. */}
+								<h2 className="text-[15px] text-muted-foreground">
+									{phone ? (
+										<button
+											type="button"
+											className="gf-toggle"
+											aria-expanded={isOpen}
+											aria-controls={panelId}
+											onClick={() => setOpen(isOpen ? null : g.label)}
+										>
+											<span>{g.label}</span>
+											<Chevron />
+										</button>
+									) : (
+										g.label
+									)}
+								</h2>
+								{phone ? (
+									/* The inner div is the one that clips: .gf-panel animates its
+									   single row from 0fr to 1fr, which is the content's own
+									   height without measuring it. */
+									<div className="gf-panel" id={panelId}>
+										<div>{list}</div>
+									</div>
+								) : (
+									list
+								)}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 
@@ -327,8 +395,13 @@ export function FlickeringFooter() {
 			</div>
 
 			<div className="container">
-				<div className="grid gap-2 border-t border-line py-6 text-xs text-muted-foreground sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+				<div className="gf-bottom grid gap-2 border-t border-line py-6 text-xs text-muted-foreground sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
 					<span>{site.copyright}</span>
+					{/* Phone only, and mounted rather than hidden, so the grid above keeps
+					    exactly two cells at every width >=640 — the duplicated
+					    lg:grid-cols literal that aligns the copyright under the logo
+					    still describes what is actually in the row. */}
+					{phone && <CookiePreferencesLink className="gf-cookie" />}
 					<span className="sm:text-right lg:col-span-3">{site.legalName}</span>
 				</div>
 			</div>

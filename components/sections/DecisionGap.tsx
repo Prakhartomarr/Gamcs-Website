@@ -1,7 +1,11 @@
 import { decisionGap as c } from "@/lib/content/gamcs";
 
 /**
- * The decision gap: a centred, static problem statement.
+ * The decision gap: a centred, static problem statement — left-aligned, and a
+ * numbered rail rather than a grid, below 768px. The phone layout is entirely
+ * stylesheet: the pains' 01-04 index, their dots and connectors, and the
+ * bridge's chevron are all pseudo-elements, so the markup here is the desktop
+ * markup plus one hidden label.
  *
  * A server component with no client bundle at all. Nothing here fades, waits
  * for a scroll position or reacts to a pointer — the section is complete on
@@ -32,6 +36,17 @@ export default function DecisionGap() {
 
         <h2 id="dg-heading" className="fin-h2 dg-h2">
           <span className="dg-line">{c.headingLead}</span>{" "}
+          {/* Phones only: the rule between the fact lines and the accent
+              line. `hidden` is what keeps it off desktop — the mobile
+              stylesheet overrides the UA's display:none, so no rule outside
+              `@media (max-width:767px)` is needed and wider viewports render
+              exactly as before. Its hairline and chevron are pseudo-elements;
+              only the label is markup. aria-hidden because the section's
+              accessible name comes from this heading via aria-labelledby, and
+              a decorative label must not change it. */}
+          <span className="dg-distance" hidden aria-hidden="true">
+            <span className="dg-distance-label">{c.distanceLabel}</span>
+          </span>
           <span className="dg-line dg-accent">{c.headingAccent}</span>
         </h2>
 

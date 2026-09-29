@@ -108,6 +108,10 @@ export const sections = {
   whoWeAre: "Who we are",
   aboutFirm: "About our firm",
   meetFounders: "Meet our founders",
+  /* The link to /team inside the phone's founders reveal. It cannot reuse
+     `meetFounders`: that string now labels the button that opens the reveal,
+     and the panel it opens is already showing the founders. */
+  fullTeam: "Meet the full team",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",
   /** Testimonial byline. */

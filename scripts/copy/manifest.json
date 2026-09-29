@@ -720,6 +720,18 @@
   }
  },
  {
+  "code": "HOME-GAP-02A",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "Label on the rule between the two heading lines (phones only)",
+  "kind": "text",
+  "text": "The distance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.distanceLabel"
+  }
+ },
+ {
   "code": "HOME-GAP-03",
   "page": "Home (/)",
   "section": "The gap",
@@ -4911,6 +4923,78 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "story.mission"
+  }
+ },
+ {
+  "code": "HOME-WHO-08",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "First figure, phone layout only — the number",
+  "kind": "text",
+  "text": "100+",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "story.stats.yearsValue"
+  }
+ },
+ {
+  "code": "HOME-WHO-09",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "First figure, phone layout only — what it counts",
+  "kind": "text",
+  "text": "combined years of industry experience",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "story.stats.yearsLabel"
+  }
+ },
+ {
+  "code": "HOME-WHO-10",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "Second figure, phone layout only — the year",
+  "kind": "text",
+  "text": "2023",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "story.stats.foundedValue"
+  }
+ },
+ {
+  "code": "HOME-WHO-11",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "Second figure, phone layout only — what it says",
+  "kind": "text",
+  "text": "founded, in Gurugram",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "story.stats.foundedLabel"
+  }
+ },
+ {
+  "code": "HOME-WHO-12",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "Third figure, phone layout only — what it counts; the number itself is counted from the team list and is not editable here",
+  "kind": "text",
+  "text": "founders & senior advisers",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "story.stats.peopleLabel"
+  }
+ },
+ {
+  "code": "HOME-WHO-13",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "Link to the team page inside the founders panel, phone layout only",
+  "kind": "button",
+  "text": "Meet the full team",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "sections.fullTeam"
   }
  },
  {

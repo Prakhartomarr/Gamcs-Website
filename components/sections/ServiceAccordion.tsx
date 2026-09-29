@@ -22,7 +22,12 @@ import { sections } from "@/lib/content/ui";
  * Auto-advance is pausable, which WCAG 2.2.2 requires of anything that moves
  * on its own: it holds while the pointer is over the list or focus is inside
  * it, and stops for good the moment someone picks an item themselves — which
- * now includes the first hover. Under prefers-reduced-motion it never starts.
+ * now includes the first hover. It never starts at all under
+ * prefers-reduced-motion, or on a coarse pointer, which has no hover to hold
+ * it with.
+ *
+ * Below 768px the list renders as a chip strip over a single white card: same
+ * buttons, same accordion semantics, styled in app/globals.css.
  */
 const ADVANCE_MS = 5200;
 /**
@@ -41,7 +46,14 @@ export default function ServiceAccordion() {
   const [auto, setAuto] = useState(false);
 
   useEffect(() => {
-    setAuto(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    /* `held` is the pause, and it is set by onPointerEnter — which a touch
+       device does not reliably fire, and never keeps set. So on a phone
+       nothing ever paused and the card rotated every 5.2s under a visitor
+       who was reading it. A coarse pointer has no hover to pause with, so
+       autoplay simply never starts there. Same effect as the reduced-motion
+       read, so this adds no new hydration surface. */
+    const off = (q: string) => window.matchMedia(q).matches;
+    setAuto(!off("(prefers-reduced-motion: reduce)") && !off("(pointer: coarse)"));
   }, []);
 
   const running = auto && !taken && !held;
@@ -154,9 +166,17 @@ export default function ServiceAccordion() {
       <div className="svca-card">
         {/* The oversized pillar glyph that used to bleed off this corner is gone:
             over the fluting it read as a second pattern rather than as texture. */}
+        {/* Below 768px the list is a chip strip and every .svca-body is
+            hidden, so the card carries the whole pillar: its index, its
+            tagline and its link. `md:hidden` keeps all three out of the
+            desktop render — DOM order is unchanged there. */}
         <div className="svca-panel" key={s.slug}>
+          <span className="svca-index md:hidden" aria-hidden="true">
+            {String(active + 1).padStart(2, "0")}
+          </span>
           <span className="svca-kicker">{sections.atAGlance}</span>
           <p className="svca-panel-title">{s.title}</p>
+          <p className="svca-panel-tag md:hidden">{s.tagline}</p>
           <ul className="svca-chips">
             {/* FP&A's glance list opens with the pillar's own name, which reads
                 as a repeat directly under the same title */}
@@ -164,7 +184,27 @@ export default function ServiceAccordion() {
               <li key={c}>{c}</li>
             ))}
           </ul>
+          {/* data-cta is what Analytics.tsx:58 reads for GA4 attribution —
+              it stays identical to the .svca-body copy's. */}
+          <CTA
+            tier="primary"
+            icon="arrow"
+            className="svca-go md:hidden"
+            href={`/solutions/${s.slug}`}
+            data-cta={`svca-${s.slug}`}
+            srSuffix={`about ${s.title}`}
+          >
+            {sections.learnMore}
+          </CTA>
         </div>
+      </div>
+
+      {/* Position only — the chips above already carry it as selected state,
+          so this repeats nothing to a screen reader. */}
+      <div className="svca-dots md:hidden" aria-hidden="true">
+        {solutions.map((item, i) => (
+          <span key={item.slug} className={i === active ? "is-on" : undefined} />
+        ))}
       </div>
 
       {/* Announced once per change rather than the whole card being re-read,

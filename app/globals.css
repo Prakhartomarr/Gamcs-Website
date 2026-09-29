@@ -2960,3 +2960,601 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:768px){
   .home-tight #decision-gap.dg.section{padding:72px 0}
 }
+
+
+/* =====================================================================
+   MOBILE (<=767px) — the approved phone design for four sections.
+
+   Appended deliberately at the end of the sheet: these rules are the last
+   word at phone widths, which is what lets them clear the id-scoped and
+   structure-scoped rules above without inventing new !importants. Every
+   rule below is inside a max-width media query; the two display:none
+   declarations in the who block name classes that exist nowhere else.
+   ===================================================================== */
+/* =====================================================================
+   01 · THE GAP — mobile (Main.dc.html)
+
+   Everything below lives in one `@media (max-width:767px)` block. Nothing
+   here can reach >=768px: there is no rule outside the query, and the one
+   markup addition (the distance rule inside the h2) carries the `hidden`
+   attribute, so it is display:none from the UA sheet everywhere this block
+   does not apply.
+
+   Specificity, because this file is appended and source order alone is not
+   enough against the id- and structure-scoped rules already in globals.css:
+     .dg .dg-*              (0,2,0)  clears .dg-* and .fin-h2 (0,1,0),
+                                     including the six-selector heading rule
+                                     at globals.css:1557
+     .dg .dg-pains .dg-pain (0,3,0)  clears the "+" cross cells
+                                     (.dg-pain:nth-child(odd), (0,1,1)) and
+                                     the existing mobile stacking rule
+                                     .dg-pain + .dg-pain (0,2,0) at :2226
+     .dg .dg-stats .dg-stat (0,3,0)  clears .dg-stat + .dg-stat (0,2,0)
+
+   Colour: the comp's ink is #202020 (--ink) and its body grey #5B6067
+   (--gray). Desktop uses --ink-deep (#0D1828) / --ink-muted (#55606F),
+   which read a shade navy; on mobile they are set to the comp's values.
+   No yellow appears here — the section never had any, so there is nothing
+   to unset.
+
+   Motion: none. The section is a server component that is finished on first
+   paint (no .reveal, no transitions, no transforms), so there is nothing for
+   a (prefers-reduced-motion: reduce) branch to hold — no rule below animates
+   anything.
+   ===================================================================== */
+
+@media (max-width:767px){
+
+  /* ---- left-aligned throughout ---- */
+  /* flex-start as well as text-align: the column is a flex column, and
+     align-items:center would keep the pill and the heading boxes centred
+     even with left-aligned text inside them. The bridge opts back out. */
+  .dg .dg-inner{align-items:flex-start;text-align:left}
+
+  /* ---- display type: 38 / 1.06 / -.032em / 600 ----
+     38px is the measured ceiling from the spec; not exceeded. */
+  .dg .dg-h2{margin-top:32px;font-size:2.1111rem;line-height:1.06;
+    letter-spacing:-.032em;font-weight:600}
+  .dg .dg-sub{margin-top:28px}
+
+  /* ---- the distance rule, between the fact lines and the accent line ----
+     One element in the markup (the label). The hairline and the chevron are
+     this row's own pseudo-elements; `order` puts ::before after the label,
+     which document order would not. */
+  .dg .dg-distance{display:flex;align-items:center;gap:12px;margin:22px 0}
+  .dg .dg-distance-label{order:1;flex:none;font-size:0.5556rem;font-weight:600;
+    line-height:1.4;letter-spacing:.2em;text-transform:uppercase;color:#6E767C}
+  .dg .dg-distance::before{content:"";order:2;flex:1 1 auto;height:1px;
+    background:rgba(15,94,151,.45)}
+  /* 9x10 in the comp; two borders on a rotated 6px box is the same mark and
+     costs no image. */
+  .dg .dg-distance::after{content:"";order:3;flex:none;width:6px;height:6px;
+    margin-right:2px;border-top:1.6px solid var(--blue);
+    border-right:1.6px solid var(--blue);transform:rotate(45deg)}
+
+  /* ---- the four pains: a rail, not a 2x2 grid ----
+     Every border the cross was drawn with is cleared here, including the
+     border-top the existing mobile block adds between stacked cells. */
+  .dg .dg-pains{counter-reset:dg-pain;margin-top:48px}
+  .dg .dg-pains .dg-pain{position:relative;border:0;padding:0 0 28px 28px;
+    counter-increment:dg-pain}
+  .dg .dg-pains .dg-pain:last-child{padding-bottom:0}
+  /* the 12px rail: a 10px dot at left:1px, a 1px connector centred under it
+     (dot centre 6px) running to the bottom of the item, which is where the
+     next item's dot picks it up */
+  .dg .dg-pains .dg-pain::before{content:"";position:absolute;left:1px;top:7px;
+    width:10px;height:10px;border-radius:50%;background:var(--blue)}
+  .dg .dg-pains .dg-pain::after{content:"";position:absolute;left:5.5px;
+    top:25px;bottom:0;width:1px;background:var(--line)}
+  /* 04 closes the rail: deeper dot, deeper index, no connector */
+  .dg .dg-pains .dg-pain:last-child::before{background:var(--blue-dark)}
+  .dg .dg-pains .dg-pain:last-child::after{content:none}
+  .dg .dg-pains .dg-pain-title{font-size:1rem;line-height:1.25;
+    letter-spacing:-.01em}
+  /* the 01-04 index: a counter, so no markup and no four hard-coded strings.
+     Inline, so it sits on the title's baseline the way the comp draws it. */
+  .dg .dg-pains .dg-pain-title::before{
+    content:counter(dg-pain,decimal-leading-zero);margin-right:10px;
+    font-size:0.6111rem;font-weight:600;letter-spacing:.16em;color:#6E767C}
+  .dg .dg-pains .dg-pain:last-child .dg-pain-title::before{
+    color:var(--blue-dark)}
+  .dg .dg-pains .dg-pain-body{margin:8px 0 0;max-width:none;
+    font-size:0.8333rem;line-height:1.5}
+
+  /* ---- the three figures ---- */
+  /* all three take the hairline, not just the second and third: `border:0`
+     first so the base `border-left` between grid columns cannot survive. */
+  .dg .dg-stats{margin-top:48px}
+  .dg .dg-stats .dg-stat{border:0;border-top:1px solid #E1E5E8;padding:24px 0}
+  .dg .dg-stats .dg-stat-value{font-size:3.1111rem;line-height:.9;
+    letter-spacing:-.04em}
+  /* the one accent figure — 6.4 days. Blue, not yellow. */
+  .dg .dg-stats .dg-stat:last-child .dg-stat-value{color:var(--blue)}
+  .dg .dg-stats .dg-stat-label{margin:12px 0 0;max-width:none;
+    font-size:0.8333rem;line-height:1.5}
+  /* .dg-stat-source keeps 12.5px / #5F6875 exactly — the AA basis documented
+     at globals.css:2197 is unchanged. Only the hit area grows: an overlay on
+     the link, which adds no height, rather than padding, which would push the
+     figures apart. 17.5px line box + 28px = 45.5px tall, full text width + 16. */
+  .dg .dg-stat-source a{position:relative;display:inline-block}
+  .dg .dg-stat-source a::after{content:"";position:absolute;inset:-14px -8px}
+
+  /* ---- the bridge: centred inside a left-aligned column ---- */
+  .dg .dg-bridge{align-self:stretch;text-align:center}
+  /* the down chevron, drawn as a background so the markup gains nothing that
+     would have to be hidden again at >=768px */
+  .dg .dg-bridge::after{content:"";display:block;width:20px;height:26px;
+    margin:24px auto 0;
+    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='26' fill='none'><path d='M10 0v22M3 15l7 7 7-7' stroke='%23B8C1C7' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/20px 26px no-repeat}
+
+  /* ---- the comp's ink and grey ---- */
+  .dg .dg-h2,.dg .dg-sub strong,.dg .dg-pain-title,.dg .dg-stat-value,
+  .dg .dg-bridge-lead{color:var(--ink)}
+  .dg .dg-sub,.dg .dg-pain-body,.dg .dg-stat-label,
+  .dg .dg-bridge-sub{color:var(--gray)}
+}
+
+/* ===================================================================
+   SECTION 02 — Solutions (components/sections/ServiceAccordion.tsx)
+   Mobile only. Every rule below lives inside @media (max-width:767px):
+   at >=768px this file contributes nothing.
+
+   The desktop accordion-beside-panel becomes a horizontally scrolling
+   chip strip over a single white pillar card. The chips ARE the
+   accordion headers — same buttons, same aria-expanded/aria-controls —
+   they just stop looking like rows. `.svca-body` is hidden here and its
+   two pieces (tagline, CTA) are rendered inside the card instead, where
+   `.md:hidden` keeps them out of the desktop render.
+
+   Specificity: nearly every rule is scoped through `.svca`, which puts
+   it at (0,2,0)+ so it beats the (0,1,0) base rules AND the (0,1,0)
+   rules in the existing max-width:1279 / max-width:767 blocks at
+   globals.css:867-884 regardless of source order.
+   =================================================================== */
+@media (max-width:767px){
+
+  /* ---- shell ---------------------------------------------------- */
+  .svca{margin-top:28px;gap:20px}
+
+  /* ---- 1. the list becomes a chip strip -------------------------- */
+  /* min-height:494px (globals.css:878) reserved half a phone screen for
+     a list that is now 44px tall. min-width:0 is what lets a grid item
+     scroll instead of blowing the track out to its content width. */
+  .svca .svca-list{
+    display:flex;gap:8px;min-height:0;min-width:0;
+    overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;
+    scrollbar-width:none;
+    padding-bottom:2px;
+  }
+  .svca .svca-list::-webkit-scrollbar{display:none}
+
+  .svca .svca-item{flex:0 0 auto;padding:0;border-radius:999px;background:none}
+  .svca .svca-item.is-open{background:none}
+
+  .svca .svca-item .svca-head{
+    width:auto;height:44px;min-height:44px;padding:0 16px;
+    border:1px solid var(--line);border-radius:999px;background:#FEFEFE;
+    white-space:nowrap;
+  }
+  .svca .svca-item.is-open .svca-head{background:var(--blue);border-color:var(--blue)}
+
+  /* the 34px glyph tile has no room in a 44px chip */
+  .svca .svca-item .svca-ico{display:none}
+
+  .svca .svca-item .svca-title{font-size:14px;font-weight:600;letter-spacing:0;color:#464646}
+  .svca .svca-item.is-open .svca-title{color:#fff}
+
+  /* tagline + CTA are re-rendered inside the card; these are the
+     desktop copies. The button keeps aria-expanded/aria-controls. */
+  .svca .svca-body{display:none}
+
+  /* ---- 2. the card ----------------------------------------------- */
+  /* Not the blue flute ground here: --flute-ground is shared with the
+     contact panel and the inner-page CTA band, so `background` is
+     overridden on this element rather than the token being retuned. */
+  .svca .svca-card{
+    display:block;min-height:0;padding:24px;border-radius:20px;
+    background:#FEFEFE;border:1px solid #E1E5E8;
+    box-shadow:0 1px 2px rgba(16,40,60,.04),0 12px 28px rgba(16,40,60,.06);
+  }
+
+  /* Card order: index, title, tagline, "At a glance", chips, CTA.
+     DOM order is index, kicker, title, tagline, chips, CTA — desktop's
+     order, untouched — so only the kicker moves, via `order`. Reading
+     order therefore stays exactly what ships today. */
+  .svca .svca-panel{display:flex;flex-direction:column;max-width:none}
+
+  .svca .svca-index{
+    display:flex;align-items:center;gap:10px;
+    font:700 11px var(--font-sans);letter-spacing:.14em;color:var(--blue);
+  }
+  .svca .svca-index::after{content:"";flex:1 1 auto;height:1px;background:#E1E5E8}
+
+  .svca .svca-panel-title{
+    margin:14px 0 0;
+    font-size:26px;font-weight:600;line-height:1.15;letter-spacing:-.025em;color:var(--ink);
+  }
+
+  .svca .svca-panel-tag{
+    margin:10px 0 0;
+    font-size:16px;font-weight:500;line-height:1.45;color:var(--blue);
+  }
+
+  .svca .svca-kicker{order:1;margin-top:18px;color:#6E767C}
+
+  .svca .svca-chips{order:2;gap:8px;margin-top:10px}
+  .svca .svca-chips li{
+    font:400 13px/1.3 var(--font-sans);letter-spacing:0;
+    color:#464646;background:#F1F3F4;border:1px solid #E1E5E8;padding:7px 12px;
+  }
+
+  /* CTA tier="primary" gives .btn.btn-shimmer — blue fill, white label,
+     press handled by [data-press]. Only its geometry changes, plus both
+     shimmer pseudo-elements: ::after animates `left` forever and
+     ::before is a blurred conic ring on a 999px radius. */
+  .svca .svca-card .svca-go{
+    order:3;margin-top:20px;
+    min-height:52px;border-radius:14px;font-size:15px;
+  }
+  .svca .svca-card .svca-go::before,
+  .svca .svca-card .svca-go::after{content:none}
+  .svca .svca-card .svca-go .btn-label{width:100%;justify-content:space-between;gap:12px}
+
+  /* ---- 3. dots --------------------------------------------------- */
+  /* order:3 — .svca-list and .svca-card are already order 1 and 2 from
+     globals.css:872-873, so an unordered item would land above both. */
+  .svca .svca-dots{order:3;display:flex;align-items:center;gap:6px}
+  .svca .svca-dots span{flex:none;width:6px;height:6px;border-radius:999px;background:#C2CACF}
+  .svca .svca-dots span.is-on{width:22px;background:var(--blue)}
+
+  /* ---- reduced motion -------------------------------------------- */
+  /* The panel swap keyframe is the only thing that moves in here (the
+     chips, dots and CTA all tween nothing). globals.css:885-888 already
+     kills it; repeated inside the mobile block so this section stays
+     correct on its own. */
+  @media (prefers-reduced-motion:reduce){
+    .svca .svca-panel{animation:none !important}
+  }
+}
+
+/* =====================================================================
+   SECTION 03 — Who we are (mobile). Appended to app/globals.css.
+
+   Desktop is copy-beside-portrait; mobile is one column, portrait-led:
+   eyebrow, heading, lead, three numbers, portrait card, mission, CTA.
+   ===================================================================== */
+
+/* The ONLY two declarations outside the mobile block, and the only ones in
+   this file that can be read above 767px. Both name classes that do not
+   exist on `main` — `.who-stats` is the new figures row, `.who-reveal` the
+   new tap-to-reveal — and both only stop them generating a box. Above
+   767px the section therefore renders exactly as it does today: the figures
+   and the reveal are absent and the card keeps its own `.who-founders-btn`,
+   which is hidden on mobile instead (below). */
+.who-stats,
+.who-reveal{display:none}
+
+@media (max-width:767px){
+
+  /* ---- order ----------------------------------------------------------
+     The figure has to sit between the lead and the mission, but in the DOM
+     it is a sibling of `.who-copy`, not of the mission inside it — and
+     moving it in JSX would move it on desktop too. `display:contents` drops
+     `.who-copy`'s box so its children and `.who-figure` are all grid items
+     of `.who-row`, which `order` can then interleave. The row's gap goes to
+     0 and each item carries its own top margin, because the comp's rhythm
+     is 28 / 20 / 36 / 36 / 36 / 28, not one uniform gap.
+
+     Side effect, deliberate: `.who-copy` also carries `.reveal`, and a
+     `display:contents` box cannot be faded or translated, so the copy
+     column stops scroll-revealing on phones and is simply present. That
+     fails open — it can never be left stuck at opacity 0. `.who-figure`
+     and `.who-mission` carry their own `.reveal` and still animate, under
+     the existing `prefers-reduced-motion` branch at globals.css:269. */
+  .who .who-row{gap:0}
+  .who .who-copy{display:contents}
+  .who .who-copy > .eyebrow-row{order:1}
+  .who .who-heading{order:2}
+  .who .who-lead{order:3}
+  .who .who-stats{order:4}
+  .who .who-figure{order:5}
+  .who .who-mission{order:6}
+  /* The comp's pull-quote rule: 3px yellow, not the 2px blue the section
+     carries at every other width (globals.css:1048). Yellow is a fill here,
+     never type, so it carries no contrast burden — and this is the one place
+     in the phone design it survives. Scoped `.who .who-mission` so
+     /who-we-are, which renders the same class through `.firm-story`, keeps
+     its blue rule. */
+  .who .who-mission{border-left:3px solid var(--yellow)}
+  .who .who-copy > .btn{order:7}
+
+  /* ---- type -----------------------------------------------------------
+     `.who-heading` is one of the six selectors sharing the section-heading
+     clamp at globals.css:1557. That rule is shared, so it is left alone and
+     overridden here at a higher specificity (0-2-0 beats 0-1-0), scoped to
+     `.who` so only the homepage section moves — /who-we-are sets the same
+     string as `.page-head h1` and is untouched. */
+  .who .eyebrow-row{margin-bottom:28px}
+  .who .who-heading{margin:0;max-width:none;font-size:28px;line-height:1.15;
+    letter-spacing:-.025em;font-weight:600;color:var(--ink)}
+  .who .who-lead{margin:20px 0 0;max-width:none;font-size:16px;line-height:1.6;
+    font-weight:400;color:var(--gray)}
+
+  /* ---- three numbers --------------------------------------------------
+     Equal thirds between a top and a bottom hairline. The third value is
+     counted from the roster in the component, not typed. */
+  .who .who-stats{display:flex;margin-top:36px;
+    border-top:1px solid #E1E5E8;border-bottom:1px solid #E1E5E8}
+  .who .who-stat{flex:1 1 0;min-width:0;padding:18px 12px}
+  .who .who-stat:first-child{padding-left:0}
+  .who .who-stat:last-child{padding-right:0}
+  .who .who-stat + .who-stat{border-left:1px solid #E1E5E8}
+  .who .who-stat-value{font-size:26px;line-height:1;letter-spacing:-.03em;
+    font-weight:600;color:var(--ink)}
+  .who .who-stat-label{margin:8px 0 0;font-size:12px;line-height:1.35;
+    color:var(--gray);overflow-wrap:break-word}
+
+  /* ---- portrait card --------------------------------------------------
+     20px radius and the comp's crop. The in-card link that desktop shows
+     bottom-left is replaced on mobile by the reveal below, so it is hidden
+     here — 0-3-0 over the 0-2-0 rule at globals.css:1518. */
+  .who .who-figure{margin-top:36px}
+  .who .who-portrait{border-radius:20px}
+  .who .who-portrait img{object-position:center 18%}
+  .who .who-portrait .who-founders-btn{display:none}
+
+  /* ---- tap to reveal --------------------------------------------------
+     A disclosure over the photograph. Nothing here animates, so there is no
+     motion to gate: the panel is mounted and unmounted, it does not tween.
+     Every control clears 44px. */
+  .who .who-reveal{display:block;position:absolute;inset:0;z-index:2}
+
+  .who .who-reveal-bar{position:absolute;left:0;right:0;bottom:0;padding:16px;
+    background:rgba(11,31,48,.55)}
+  .who .who-reveal-open{width:100%;min-height:48px;display:flex;
+    align-items:center;justify-content:space-between;padding:0 18px;
+    border:0;border-radius:14px;background:#FFFFFF;color:var(--blue);
+    font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
+
+  .who .who-reveal-panel{position:absolute;inset:0;padding:24px;
+    display:flex;flex-direction:column;justify-content:flex-end;gap:16px;
+    background:rgba(11,31,48,.86)}
+  .who .who-reveal-person{display:flex;align-items:center;gap:14px}
+  /* The hairline between the two founders: a border rather than a drawn
+     element, so the panel holds one node per person. */
+  .who .who-reveal-person + .who-reveal-person{padding-top:16px;
+    border-top:1px solid rgba(255,255,255,.16)}
+  .who .who-reveal-photo{width:56px;height:56px;flex-shrink:0;border-radius:50%;
+    object-fit:cover;object-position:center 20%}
+  .who .who-reveal-name{font-size:16px;font-weight:600;color:#FFFFFF}
+  .who .who-reveal-title{margin:3px 0 0;font-size:12px;line-height:1.35;
+    color:#9FB3C4}
+  .who .who-reveal-actions{display:flex;gap:10px;margin-top:4px}
+  .who .who-reveal-team{flex:1 1 auto;min-height:44px;display:flex;
+    align-items:center;justify-content:center;border-radius:12px;
+    background:#FFFFFF;color:var(--blue);font-size:14px;font-weight:600;
+    text-decoration:none}
+  .who .who-reveal-close{width:44px;height:44px;flex-shrink:0;display:flex;
+    align-items:center;justify-content:center;border-radius:12px;
+    border:1px solid rgba(255,255,255,.3);background:transparent;
+    color:#FFFFFF;cursor:pointer}
+  .who .who-reveal-open:focus-visible,
+  .who .who-reveal-team:focus-visible,
+  .who .who-reveal-close:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px}
+
+  /* ---- "About our firm" ----------------------------------------------
+     52px, and the outline in the accent rather than `.btn-light`'s grey.
+     Scoped through `.who` and `.who-copy`, so no other `.btn-light` on the
+     site moves. 0-4-0 clears the 0-2-0 `.who-copy .btn` rule above. */
+  .who .who-copy > .btn{margin-top:28px;min-height:52px}
+  .who .who-copy > .btn.btn-light{border-color:var(--blue);color:var(--blue)}
+}
+
+/* =====================================================================
+   SECTION 04 — Footer (components/ui/flickering-footer.tsx)
+
+   Two nested media queries, on purpose:
+
+   - the outer `max-width:767px` is the build-wide contract that every
+     mobile rule in this pass lives inside one;
+   - the inner `max-width:639px` is where this component's cut actually
+     is. Unlike the other three sections the footer is Tailwind
+     mobile-first: its `sm:` (640px) and `lg:` prefixes carry the wider
+     layouts, so 640–767px must keep rendering exactly what main renders
+     today. Nesting holds both at once.
+
+   Every selector is scoped through `.gf` — the <footer> itself — so no
+   class shared with another section or page is restyled, and the extra
+   class lifts each rule to (0,2,0), above every single-class Tailwind
+   utility it has to beat. Where the phone needed a wholly different
+   spec the component swaps the class list instead (`gf-list`,
+   `gf-link`), so there is no specificity race at all.
+
+   .ga-lockup, FlickeringText, `cell`, the band's colours and the
+   duplicated lg:grid-cols literals are untouched.
+   ===================================================================== */
+
+@media (max-width: 767px) {
+	@media (max-width: 639px) {
+
+		/* The closing CTA that used to open this block is gone with its markup:
+		   every page already ends with the same ask directly above the footer,
+		   so the phone scroll asked twice. The disclosures now open the
+		   footer, which is why .gf-topwrap carries the top padding below. */
+
+		/* ---- shell ---------------------------------------------------- */
+		.gf .gf-topwrap {
+			padding-top: 32px;
+			padding-bottom: 36px;
+		}
+		/* flex, not the grid it is at >=640: the groups have to sit flush so
+		   their hairlines meet, and the office block has to follow them. */
+		.gf .gf-top {
+			display: flex;
+			flex-direction: column;
+			gap: 0;
+		}
+
+		/* ---- 2. link groups as disclosures ---------------------------- */
+		.gf .gf-group {
+			order: 1;
+			border-top: 1px solid var(--line);
+		}
+		/* the office block is the FIRST DOM child, so the last group is the
+		   last child — this closes the stack. */
+		.gf .gf-group:last-child {
+			border-bottom: 1px solid var(--line);
+		}
+		.gf .gf-toggle {
+			display: flex;
+			width: 100%;
+			height: 56px;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			text-align: left;
+			font: 600 15px/1 var(--font-sans);
+			letter-spacing: 0.01em;
+			color: var(--ink);
+			cursor: pointer;
+		}
+		.gf .gf-chev {
+			flex: none;
+			color: #6e767c;
+			transition: transform var(--dur-panel) var(--ease-in-out);
+		}
+		.gf .gf-group[data-open='true'] .gf-chev {
+			transform: rotate(180deg);
+		}
+
+		/* 0fr -> 1fr is the content's own height without measuring it.
+		   visibility, switched with a 0s delay, is what keeps the links out
+		   of the tab order while the panel is shut — the row collapses but
+		   its content is still laid out. */
+		.gf .gf-panel {
+			display: grid;
+			grid-template-rows: 0fr;
+			transition: grid-template-rows var(--dur-panel) var(--ease-in-out);
+		}
+		.gf .gf-panel > * {
+			overflow: hidden;
+			visibility: hidden;
+			transition: visibility 0s var(--dur-panel);
+		}
+		.gf .gf-group[data-open='true'] .gf-panel {
+			grid-template-rows: 1fr;
+		}
+		.gf .gf-group[data-open='true'] .gf-panel > * {
+			visibility: visible;
+			transition: visibility 0s 0s;
+		}
+
+		.gf .gf-list {
+			padding-bottom: 10px;
+		}
+		.gf .gf-link {
+			display: flex;
+			min-height: 44px;
+			align-items: center;
+			font-size: 15px;
+			color: var(--charcoal);
+			text-align: left;
+		}
+		.gf .gf-link:active {
+			color: var(--blue);
+		}
+
+		/* ---- 3. office block ------------------------------------------ */
+		/* Two columns so the mail field and the LinkedIn tile share a row.
+		   The email link and the tile are not siblings in the markup — the
+		   wrapper goes display:contents rather than being moved, which is
+		   what keeps the >=640 box tree identical. */
+		.gf .gf-office {
+			order: 2;
+			margin-top: 32px;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 48px;
+			align-items: center;
+			gap: 16px 12px;
+		}
+		/* the comp opens on the CTA; the lockup, the blurb and the second
+		   route to /contact are all repeated elsewhere on the page. */
+		.gf .ga-lockup,
+		.gf .gf-intro,
+		.gf .gf-contact {
+			display: none;
+		}
+		.gf .gf-addr {
+			grid-column: 1 / -1;
+			margin: 0;
+			font-size: 15px;
+			line-height: 1.5;
+			color: var(--gray);
+		}
+		.gf .gf-reach {
+			display: contents;
+		}
+		.gf .gf-mail {
+			display: flex;
+			min-height: 0;
+			height: 48px;
+			width: 100%;
+			align-items: center;
+			padding: 0 16px;
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			background: var(--paper);
+			font-size: 15px;
+			font-weight: 500;
+			color: var(--ink);
+		}
+		.gf .gf-li {
+			margin-top: 0;
+			height: 48px;
+			width: 48px;
+			border-radius: 12px;
+		}
+
+		/* ---- 5. bottom bar -------------------------------------------- */
+		/* copyright and Cookie Preferences share row 1; the legal name, the
+		   last child, takes row 2 on its own. */
+		.gf .gf-bottom {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: center;
+			gap: 14px 12px;
+			padding-top: 18px;
+			padding-bottom: 20px;
+		}
+		.gf .gf-bottom > :last-child {
+			grid-column: 1 / -1;
+		}
+		.gf .gf-cookie {
+			justify-self: end;
+			display: inline-flex;
+			min-height: 44px;
+			align-items: center;
+			padding: 0 14px;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: transparent;
+			font-size: 12px;
+			font-weight: 500;
+			color: var(--gray);
+		}
+
+		/* ---- reduced motion -------------------------------------------- */
+		/* The open state is expressed by the same declarations either way, so
+		   dropping the transitions renders the final state and tweens nothing. */
+		@media (prefers-reduced-motion: reduce) {
+			.gf .gf-chev,
+			.gf .gf-panel,
+			.gf .gf-panel > * {
+				transition: none;
+			}
+		}
+	}
+}

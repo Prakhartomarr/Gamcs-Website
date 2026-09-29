@@ -111,6 +111,22 @@ export const story = {
     "Through this combination of strategic thinking and hands-on execution, GAMCS supports organizations ranging from startups and high-growth companies to established enterprises and investment portfolios\u2014helping them build finance functions that are more connected, intelligent, scalable, and decision-ready.",
   mission:
     "Our mission is simple: make finance a source of insight, not just information.",
+  /*
+   * The three figures the phone layout sets between the lead and the
+   * portrait. There is no third value here on purpose: it is
+   * team.leadership.length + team.advisory.length, counted at render, so an
+   * adviser joining moves the number without anyone remembering to come back
+   * and edit it. The other two are facts that nothing else in the code can
+   * derive - the founding year is not stored anywhere, and the 100+ years is
+   * the same figure `intro` states in a sentence.
+   */
+  stats: {
+    yearsValue: "100+",
+    yearsLabel: "combined years of industry experience",
+    foundedValue: "2023",
+    foundedLabel: "founded, in Gurugram",
+    peopleLabel: "founders & senior advisers",
+  },
 } as const;
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
@@ -1394,6 +1410,12 @@ export const decisionGap = {
   eyebrow: "The gap",
   headingLead: "Your data exists. Your reports exist.",
   headingAccent: "The problem is the distance to the decision.",
+  /**
+   * Labels the rule drawn between the two heading lines. Phones only: the
+   * desktop heading runs straight from the fact lines into the accent line,
+   * so nothing renders this above 767px.
+   */
+  distanceLabel: "The distance",
   subheadLead:
     "Every \u201Cwhy?\u201D sends finance back to the same systems to rebuild the answer by hand.",
   /** Set in the ink colour, mid-sentence, so the consequence lands. */
