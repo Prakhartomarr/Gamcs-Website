@@ -2470,16 +2470,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-exp h4{margin:0;font:600 0.6667rem var(--font-sans);letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-deep)}
 .tr-exp p{margin:10px 0 0;font-size:0.7778rem;line-height:1.7;color:var(--ink-muted)}
-/* In the portrait column now. 216px cannot hold both pills side by side, so
-   they stack — which reads as a deliberate pair under the picture rather than
-   a cramped row. margin-top is smaller because the hairline already separates
-   them from the photograph. */
-.tr-ovlinks{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-top:18px}
-.tr-ovlinks a{justify-content:center}
-.tr-ovlinks a{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 17px;
-  border-radius:999px;background:#fff;color:var(--ink-deep);border:1px solid #DCDEE2;
-  font:600 0.7222rem var(--font-sans);transition:background .2s var(--ease-out)}
-.tr-ovlinks a:hover{background:#f6f7f8;color:var(--ink-deep)}
+/* Two glyphs side by side under the portrait's hairline — no tile, no pill,
+   no label beside them. The word each one stands for is on the anchor as its
+   aria-label, so it is still announced and still lives in the copy document.
+
+   The box is 44px though the glyph is 22: the touch target has to stay a
+   finger wide once the text that used to pad it is gone. Colour is the only
+   hover, which is all a bare glyph needs. */
+.tr-ovlinks{display:flex;flex-direction:row;align-items:center;gap:6px;margin-top:14px}
+.tr-ovlinks a{display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;padding:0;border:0;background:none;border-radius:10px;
+  color:var(--ink-deep);
+  transition:color .2s var(--ease-out),background .2s var(--ease-out)}
+.tr-ovlinks a:hover{color:var(--blue);background:rgba(15,94,151,.07)}
+.tr-ovlinks a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* top:24, not -38. The portrait was meant to break the block's top edge, but
    .tr-ovin is a scroll container and a scroll container clips a negative
    offset rather than letting it hang — so the overhang never rendered and all
@@ -2527,8 +2531,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .tr-ovshot{position:static;width:auto;margin:0 0 22px}
   .tr-ovshot>span{width:132px}
   .tr-ovshot i{display:none}
-  .tr-ovlinks{flex-direction:row;align-items:center;gap:10px;margin-top:16px}
-  .tr-ovlinks a{justify-content:flex-start}
 }
 @media (prefers-reduced-motion:reduce){
   .tr-shot img{transition:none !important}

@@ -191,29 +191,36 @@ export default function TeamRoster() {
                 <i />
                 {/* Under the portrait's hairline, not at the foot of the bio:
                     the right-hand column was empty below the picture and the
-                    buttons sat a scroll away past four paragraphs. */}
+                    buttons sat a scroll away past four paragraphs.
+
+                    Icons only, side by side. `roster.linkedin` and
+                    `roster.email` are still the labels — they move to
+                    aria-label, so the words stay in the copy document and a
+                    screen reader still announces them. An icon link with no
+                    accessible name is unusable without sight. */}
                 {active.linkedinUrl || active.email ? (
                   <div className="tr-ovlinks">
                     {active.linkedinUrl ? (
-                      <a href={active.linkedinUrl} target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">
-                          <circle cx="6.1" cy="5.8" r="1.9" />
-                          <rect x="4.4" y="9.3" width="3.4" height="10.3" rx="0.5" />
-                          <rect x="10.1" y="9.3" width="3.3" height="10.3" rx="0.5" />
-                          <path d="M13.4 14.1a3.5 3.5 0 0 1 6.3 2.1v3.4h-3.4v-3.1a1.5 1.5 0 0 0-2.9-.5z" />
+                      <a href={active.linkedinUrl} target="_blank" rel="noopener"
+                        aria-label={roster.linkedin}>
+                        {/* The wordmark, not the old four-shape approximation:
+                            that one gave the "n" a full-height left stem, so at
+                            this size it read as "ih". The same path is still in
+                            the footer's tile, where 17px hides it. */}
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                          <path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+                          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
                         </svg>
-                        {roster.linkedin}
                       </a>
                     ) : null}
                     {active.email ? (
-                      <a href={`mailto:${active.email}`}>
-                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none"
+                      <a href={`mailto:${active.email}`} aria-label={roster.email}>
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
                           stroke="currentColor" strokeWidth={1.7} strokeLinecap="round"
                           strokeLinejoin="round" aria-hidden="true">
                           <rect x="3" y="5" width="18" height="14" rx="2" />
                           <path d="m3 7 9 6 9-6" />
                         </svg>
-                        {roster.email}
                       </a>
                     ) : null}
                   </div>
