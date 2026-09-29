@@ -2470,7 +2470,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .tr-exp h4{margin:0;font:600 0.6667rem var(--font-sans);letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink-deep)}
 .tr-exp p{margin:10px 0 0;font-size:0.7778rem;line-height:1.7;color:var(--ink-muted)}
-.tr-ovlinks{display:flex;gap:10px;margin-top:30px}
+/* In the portrait column now. 216px cannot hold both pills side by side, so
+   they stack — which reads as a deliberate pair under the picture rather than
+   a cramped row. margin-top is smaller because the hairline already separates
+   them from the photograph. */
+.tr-ovlinks{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-top:18px}
+.tr-ovlinks a{justify-content:center}
 .tr-ovlinks a{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 17px;
   border-radius:999px;background:#fff;color:var(--ink-deep);border:1px solid #DCDEE2;
   font:600 0.7222rem var(--font-sans);transition:background .2s var(--ease-out)}
@@ -2517,8 +2522,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .tr-ovin{padding:96px 22px 30px;min-height:0}
   .tr-ovin h3{font-size:1.4444rem}
   .tr-ovbody{max-width:none}
-  .tr-ovshot{position:static;width:132px;margin:0 0 22px}
+  /* width:auto so the buttons are not squeezed into the portrait's 132px; the
+     picture keeps that width on its own span. Row again here: there is room. */
+  .tr-ovshot{position:static;width:auto;margin:0 0 22px}
+  .tr-ovshot>span{width:132px}
   .tr-ovshot i{display:none}
+  .tr-ovlinks{flex-direction:row;align-items:center;gap:10px;margin-top:16px}
+  .tr-ovlinks a{justify-content:flex-start}
 }
 @media (prefers-reduced-motion:reduce){
   .tr-shot img{transition:none !important}

@@ -189,22 +189,9 @@ export default function TeamRoster() {
                   )}
                 </span>
                 <i />
-              </div>
-              <h3 id="tr-ov-name">{active.name}</h3>
-              <p className="tr-ovrole">{active.title}</p>
-              {meta ? <p className="tr-ovmeta">{meta}</p> : null}
-              <div className="tr-ovbody">
-                {active.bio?.map((para) => (
-                  <p className="tr-bio" key={para.slice(0, 32)}>
-                    {para}
-                  </p>
-                ))}
-                {active.expertise ? (
-                  <div className="tr-exp">
-                    <h4>{roster.expertiseLabel}</h4>
-                    <p>{active.expertise}</p>
-                  </div>
-                ) : null}
+                {/* Under the portrait's hairline, not at the foot of the bio:
+                    the right-hand column was empty below the picture and the
+                    buttons sat a scroll away past four paragraphs. */}
                 {active.linkedinUrl || active.email ? (
                   <div className="tr-ovlinks">
                     {active.linkedinUrl ? (
@@ -229,6 +216,22 @@ export default function TeamRoster() {
                         {roster.email}
                       </a>
                     ) : null}
+                  </div>
+                ) : null}
+              </div>
+              <h3 id="tr-ov-name">{active.name}</h3>
+              <p className="tr-ovrole">{active.title}</p>
+              {meta ? <p className="tr-ovmeta">{meta}</p> : null}
+              <div className="tr-ovbody">
+                {active.bio?.map((para) => (
+                  <p className="tr-bio" key={para.slice(0, 32)}>
+                    {para}
+                  </p>
+                ))}
+                {active.expertise ? (
+                  <div className="tr-exp">
+                    <h4>{roster.expertiseLabel}</h4>
+                    <p>{active.expertise}</p>
                   </div>
                 ) : null}
               </div>
