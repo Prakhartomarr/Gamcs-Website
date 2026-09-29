@@ -8135,7 +8135,7 @@
   "section": "Advisory team",
   "label": "Advisor 3 experience",
   "kind": "text",
-  "text": "20+ years",
+  "text": "18+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[2].experience"
@@ -8327,7 +8327,7 @@
   "section": "Advisory team",
   "label": "Advisor 5 experience",
   "kind": "text",
-  "text": "10+ years",
+  "text": "15+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[4].experience"
@@ -8423,7 +8423,7 @@
   "section": "Advisory team",
   "label": "Advisor 6 experience",
   "kind": "text",
-  "text": "25+ years",
+  "text": "30+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[5].experience"
@@ -8615,7 +8615,7 @@
   "section": "Advisory team",
   "label": "Advisor 8 experience",
   "kind": "text",
-  "text": "15+ years",
+  "text": "10+ years",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "team.advisory[7].experience"

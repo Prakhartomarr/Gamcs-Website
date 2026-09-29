@@ -265,7 +265,9 @@ export const team = {
      is deliberately NOT the order of the 2026-09-28 write-up — that document
      reordered the six it showed, and the running order was kept as it was.
      Ramesh and Geeta finally have real titles from it; both used to read
-     "Advisor". Every adviser now carries years and a location, which only
+     "Advisor". Amit, Asif, Sanjay and Saurabh carry the years their own bios
+     state, not the figures that write-up gave — the bio wins where the two
+     disagree, which is why Asif reads 15+ again after a spell at 10+. Every adviser now carries years and a location, which only
      four of them did. A card with no `photo` would render an initials tile
      instead; none does. */
   advisory: [
@@ -298,7 +300,7 @@ export const team = {
     {
       name: "Amit Garg",
       title: "IPO Advisory & Due Diligence",
-      experience: "20+ years",
+      experience: "18+ years",
       location: "Delhi, India",
       photo: "/team/amit-garg.jpg",
       bio: [
@@ -324,7 +326,7 @@ export const team = {
     {
       name: "Asif Masani",
       title: "BI & Analytics",
-      experience: "10+ years",
+      experience: "15+ years",
       location: "Mumbai, India",
       photo: "/team/asif-masani.jpg",
       bio: [
@@ -337,7 +339,7 @@ export const team = {
     {
       name: "Sanjay Rikhy",
       title: "ESG & Risk Advisory",
-      experience: "25+ years",
+      experience: "30+ years",
       location: "Delhi, India",
       photo: "/team/sanjay-rikhy.jpg",
       bio: [
@@ -363,7 +365,7 @@ export const team = {
     {
       name: "Saurabh Aggarwal",
       title: "Accounting & Audit",
-      experience: "15+ years",
+      experience: "10+ years",
       location: "Delhi, India",
       photo: "/team/saurabh-aggarwal.jpg",
       bio: [
