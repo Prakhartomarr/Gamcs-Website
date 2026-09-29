@@ -35,7 +35,6 @@ export default function SolutionsHubPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <span className="eyebrow-pill">{t.pill}</span>
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>
           </h1>

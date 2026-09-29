@@ -2575,6 +2575,18 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .site-head.is-stuck .site-bar{background:rgba(255,255,255,.94);
   border-color:rgba(13,24,40,.10);
   box-shadow:0 14px 38px -14px rgba(13,24,40,.26)}
+/* The unstuck pill is 80% white, a value tuned for the homepage's pale hero.
+   A page-head photograph is dark, and over it that pill composites to about
+   #D0D8DC — measured off the rendered pixels, the nav labels came out 4.36:1
+   against it, under AA. So on pages whose head carries the picture the pill
+   starts at its stuck opacity instead of arriving there on scroll.
+   :has() rather than a class on <html>, because the header is a sibling of
+   <main> and nothing server-side knows which pages carry art. Where :has()
+   is unsupported the pill simply stays as it is today. */
+.shell:has(.page-head.page-head--art) .site-head:not(.is-stuck) .site-bar{
+  background:rgba(255,255,255,.96);
+  border-color:rgba(13,24,40,.10);
+  box-shadow:0 14px 38px -14px rgba(13,24,40,.26)}
 /* Safari and Firefox without backdrop-filter get an opaque pill rather than
    a milky one — the nav has to stay legible over the shader either way. */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
@@ -2598,8 +2610,34 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .page-head-art::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(6,20,34,.53),rgba(6,20,34,.66))}
 
-/* The class and the picture go together: this alone is white on pale grey. */
+/* The class and the picture go together: this alone is white on pale grey.
+
+   The band starts at the TOP of the viewport, behind the header, the way the
+   homepage hero does — same mechanism, same token: .site-head is sticky at
+   top:0 and transparent until it sticks, so pulling the band up by the
+   header's measured height puts the photograph behind the floating white bar
+   instead of leaving a pale strip above it. The header sets --header-h from
+   its own box, so this tracks it rather than guessing.
+
+   60vh, not 100: a full-height band would push every inner page's first
+   section below the fold, which on a site where the head is a title rather
+   than a pitch costs a scroll for nothing.
+
+   justify-content:flex-end bottom-aligns the copy against the art. The
+   picture is position:absolute, so it is out of this flex flow and still
+   fills the band.
+
+   BOTH classes, deliberately. `page-head--art` is also worn by two asides
+   that are not page heads at all — the careers split panel (.cr-panel) and
+   the apply dialog's panel (.ap-panel) — and they only want the white-on-dark
+   type, not a negative margin and a 60vh floor. `.page-head.page-head--art`
+   is the top-level band and nothing else. */
 .page-head--art{background:#0B1622}
+.page-head.page-head--art{
+  margin-top:calc(-1 * var(--header-h));
+  min-height:60vh;min-height:60dvh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:calc(var(--header-h) + 72px) 0 64px}
 .page-head--art h1{color:#fff}
 .page-head--art>.container>p{color:rgba(255,255,255,.88);max-width:620px}
 .page-head--art .section-kicker{color:#9CCBEA}
