@@ -7794,6 +7794,54 @@
   }
  },
  {
+  "code": "TEAM-FOUNDERS-12",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Founder 1 bio, paragraph 1",
+  "kind": "text",
+  "text": "Gaurav Malik is the Co-Founder of GAMCS, working at the intersection of Strategic Finance, FP&A, Financial Modelling, Business Performance and Transaction Advisory.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[0].bio[0]"
+  }
+ },
+ {
+  "code": "TEAM-FOUNDERS-13",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Founder 1 bio, paragraph 2",
+  "kind": "text",
+  "text": "A Chartered Accountant with 13+ years of experience, Gaurav has worked across organizations including EY, Vedanta Limited and Kotak Mahindra Bank, with experience spanning budgeting and forecasting, margin and profitability analysis, financial modelling, credit analysis, due diligence, management reporting and investor-facing financial communication.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[0].bio[1]"
+  }
+ },
+ {
+  "code": "TEAM-FOUNDERS-14",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Founder 1 bio, paragraph 3",
+  "kind": "text",
+  "text": "At GAMCS, Gaurav works with founders, CFOs and leadership teams to translate financial and operating data into clearer performance narratives, stronger planning models and better business decisions. His focus is not simply on producing the numbers, but on understanding the commercial drivers behind them and using finance as a tool for decision-making.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[0].bio[2]"
+  }
+ },
+ {
+  "code": "TEAM-FOUNDERS-15",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Founder 1 bio, paragraph 4",
+  "kind": "text",
+  "text": "He also brings experience in building and communicating financial insights through investor presentations, annual reports, press releases and other management and external reporting requirements.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.leadership[0].bio[3]"
+  }
+ },
+ {
   "code": "TEAM-FOUNDERS-07",
   "page": "Team (/team)",
   "section": "Founders",

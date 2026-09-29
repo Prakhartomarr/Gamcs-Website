@@ -227,7 +227,24 @@ export const team = {
       what the alt text describes. */
   foundersPhoto: "/team/founders-light.webp",
   leadership: [
-    { name: "Gaurav Malik", title: "Co-Founder | Strategic Finance, FP&A & Transaction Advisory", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/", photo: "/team/gaurav-malik-bw.jpg", email: "gaurav.malik@gamcs.in" },
+    {
+      name: "Gaurav Malik",
+      title: "Co-Founder | Strategic Finance, FP&A & Transaction Advisory",
+      experience: "13+ years",
+      location: "Delhi, India",
+      linkedinUrl: "https://www.linkedin.com/in/gauravmalik93/",
+      photo: "/team/gaurav-malik-bw.jpg",
+      email: "gaurav.malik@gamcs.in",
+      /* As written by the client, opening line included: it repeats the name,
+         the role and the years the panel prints directly above it, and that
+         was a deliberate choice \u2014 a bio should read on its own. */
+      bio: [
+        "Gaurav Malik is the Co-Founder of GAMCS, working at the intersection of Strategic Finance, FP&A, Financial Modelling, Business Performance and Transaction Advisory.",
+        "A Chartered Accountant with 13+ years of experience, Gaurav has worked across organizations including EY, Vedanta Limited and Kotak Mahindra Bank, with experience spanning budgeting and forecasting, margin and profitability analysis, financial modelling, credit analysis, due diligence, management reporting and investor-facing financial communication.",
+        "At GAMCS, Gaurav works with founders, CFOs and leadership teams to translate financial and operating data into clearer performance narratives, stronger planning models and better business decisions. His focus is not simply on producing the numbers, but on understanding the commercial drivers behind them and using finance as a tool for decision-making.",
+        "He also brings experience in building and communicating financial insights through investor presentations, annual reports, press releases and other management and external reporting requirements.",
+      ],
+    },
     { name: "Abhinav Aggarwal", title: "Co-Founder | Digital Transformation Specialist", experience: "13+ years", location: "Delhi, India", linkedinUrl: "https://www.linkedin.com/in/abhinav-aggarwal-a29078172/", photo: "/team/abhinav-aggarwal-bw.jpg", email: "abhinav.aggarwal@gamcs.in" },
   ],
   /* Order is the client's: it is what the page prints, four to a row, and it

@@ -20,10 +20,10 @@ import { roster } from "@/lib/content/ui";
  * backdrop — and the filter is what makes them read as one set. The colour
  * originals stay on disk, so this is one declaration to undo.
  *
- * Nobody has a `bio` written yet. The panel renders whatever a person does have,
- * so today it carries the title, years, location and contact links, and grows a
- * paragraph the moment a bio is filled in. That is deliberate: gating the panel
- * on a bio would leave a "+" that opens an empty dialog.
+ * Only Gaurav has a `bio` so far. The panel renders whatever a person does
+ * have, so the other nine still open on the title, years, location and contact
+ * links and grow paragraphs the moment a bio is filled in. That is deliberate:
+ * gating the "+" on a bio would hide it on nine of ten cards.
  */
 
 type Member = {
@@ -35,7 +35,8 @@ type Member = {
   photo?: string;
   email?: string;
   linkedinUrl?: string;
-  bio?: string;
+  /** One entry per paragraph; the panel prints a <p> for each. */
+  bio?: readonly string[];
 };
 
 const FOUNDERS = team.leadership as readonly Member[];
@@ -191,7 +192,11 @@ export default function TeamRoster() {
               <p className="tr-ovrole">{active.title}</p>
               {meta ? <p className="tr-ovmeta">{meta}</p> : null}
               <div className="tr-ovbody">
-                {active.bio ? <p className="tr-bio">{active.bio}</p> : null}
+                {active.bio?.map((para) => (
+                  <p className="tr-bio" key={para.slice(0, 32)}>
+                    {para}
+                  </p>
+                ))}
                 {active.linkedinUrl || active.email ? (
                   <div className="tr-ovlinks">
                     {active.linkedinUrl ? (
