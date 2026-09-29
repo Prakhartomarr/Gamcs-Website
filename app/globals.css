@@ -2638,6 +2638,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   min-height:60vh;min-height:60dvh;
   display:flex;flex-direction:column;justify-content:flex-end;
   padding:calc(var(--header-h) + 72px) 0 64px}
+/* .container is `margin:auto` — all four sides (globals.css:124). As a flex
+   item that means margin-top AND margin-bottom resolve to the free space,
+   which centres the copy and makes justify-content:flex-end a no-op. Zeroing
+   the block margins hands the alignment back to the flex container; the
+   inline margins stay auto, so it still centres horizontally. */
+.page-head.page-head--art>.container{margin-block:0}
 .page-head--art h1{color:#fff}
 .page-head--art>.container>p{color:rgba(255,255,255,.88);max-width:620px}
 .page-head--art .section-kicker{color:#9CCBEA}
