@@ -2496,7 +2496,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   overflow:hidden;background:#fff}
 .tr-ovshot img{object-fit:cover;filter:grayscale(1)}
 .tr-ovshot i{display:block;height:1px;margin-top:20px;background:var(--line)}
-.tr-close{position:absolute;top:24px;right:24px;width:46px;height:46px;border:0;
+/* z-index, or the button is painted over and unclickable below 768px.
+   .tr-ovin is position:relative with an opaque background and comes after
+   this button in the DOM, so with both at z-index:auto the later positioned
+   element wins. Above 767px .tr-ov's 64px padding keeps the button clear of
+   .tr-ovin's box and it happens to work; at the phone's 20px padding the
+   button sits inside that box and vanished completely — present, visible,
+   46x46, and covered. */
+.tr-close{position:absolute;top:24px;right:24px;z-index:1;width:46px;height:46px;border:0;
   border-radius:999px;display:grid;place-items:center;cursor:pointer;
   background:transparent;color:var(--ink-deep);transition:background .2s var(--ease-out)}
 .tr-close:hover{background:rgba(13,24,40,.07)}
