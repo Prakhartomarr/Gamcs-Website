@@ -73,16 +73,3 @@ export function faqSchema() {
     })),
   };
 }
-
-export function breadcrumbSchema(trail: { label: string; href: string }[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: trail.map((c, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: c.label,
-      item: absolute(c.href),
-    })),
-  };
-}

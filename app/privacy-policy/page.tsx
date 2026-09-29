@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import LegalBlocks from "@/components/LegalBlocks";
 import Rich from "@/components/Rich";
 import { contact, site } from "@/lib/content/gamcs";
@@ -31,8 +30,6 @@ export default function PrivacyPolicyPage() {
     <>
       <section className="page-head">
         <div className="container">
-          <Breadcrumbs trail={[{ label: pages.privacy.crumb, href: "/privacy-policy" }]} />
-          <div className="section-kicker">{legal.kicker}</div>
           <h1>{privacy.title}</h1>
           <p>
             <Rich parts={privacy.intro} vars={vars} />

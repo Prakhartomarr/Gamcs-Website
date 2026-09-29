@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import CTA from "@/components/CTA";
 import PageHeadArt from "@/components/PageHeadArt";
 import SectionEyebrow from "@/components/SectionEyebrow";
@@ -126,10 +125,6 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
           <aside className="cr-panel page-head--art" aria-label="Careers at GAMCS" data-pinned={pinned ? "" : undefined}>
             <PageHeadArt src="/page-art/team.webp" />
             <div className="cr-panel-in">
-              <div className="cr-fold"><div>
-                <Breadcrumbs trail={[{ label: pages.careers.crumb, href: "/careers" }]} />
-              </div></div>
-              <div className="section-kicker">{careers.kicker}</div>
               <h1>
                 {careers.h1} <span>{careers.h1Accent}</span>
               </h1>

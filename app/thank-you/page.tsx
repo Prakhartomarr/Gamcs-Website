@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import PageHeadArt from "@/components/PageHeadArt";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import Rich from "@/components/Rich";
 import { site } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
@@ -40,8 +39,6 @@ export default function ThankYouPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/thank-you" }]} />
-          <div className="section-kicker">{t.kicker}</div>
           <h1>{t.h1}</h1>
           <p>{fill(t.lead, vars)}</p>
         </div>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import TeamRoster from "@/components/sections/TeamRoster";
 import { primaryCta, story, team } from "@/lib/content/gamcs";
@@ -20,8 +19,6 @@ export default function TeamPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/team" }]} />
-          <div className="section-kicker">{t.kicker}</div>
           <h1>{team.h1}</h1>
           <p>{team.body}</p>
           <p className="team-mission">{story.mission}</p>

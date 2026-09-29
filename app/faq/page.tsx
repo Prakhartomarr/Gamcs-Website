@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import PageHeadArt from "@/components/PageHeadArt";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import FAQ from "@/components/sections/FAQ";
 import Link from "next/link";
 import { faq, primaryCta } from "@/lib/content/gamcs";
@@ -27,8 +26,6 @@ export default function FaqPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: pages.faq.crumb, href: "/faq" }]} />
-          <div className="section-kicker">{faq.kicker}</div>
           <h1>{faq.heading}</h1>
           <p>{faq.intro}</p>
           <p className="faq-head-cta">

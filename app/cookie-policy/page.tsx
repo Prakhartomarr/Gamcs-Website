@@ -1,6 +1,5 @@
 import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import LegalBlocks from "@/components/LegalBlocks";
 import Rich from "@/components/Rich";
 import { site } from "@/lib/content/gamcs";
@@ -31,8 +30,6 @@ export default function CookiePolicyPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: pages.cookiePolicy.crumb, href: "/cookie-policy" }]} />
-          <div className="section-kicker">{legal.kicker}</div>
           <h1>{cookiePolicy.title}</h1>
           <p>
             <Rich parts={cookiePolicy.intro} vars={vars} />

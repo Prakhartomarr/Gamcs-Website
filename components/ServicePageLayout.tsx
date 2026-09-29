@@ -1,6 +1,5 @@
 import Link from "next/link";
 import AbstractPanel from "@/components/AbstractPanel";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { primaryCta, type ListItem, type Solution } from "@/lib/content/gamcs";
 import { servicePage } from "@/lib/content/ui";
@@ -24,13 +23,6 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
     <>
       <section className="page-head">
         <div className="container">
-          <Breadcrumbs
-            trail={[
-              { label: servicePage.crumb, href: "/solutions" },
-              { label: s.title, href: `/solutions/${s.slug}` },
-            ]}
-          />
-          <div className="section-kicker">{servicePage.kicker}</div>
           <h1>{s.h1}</h1>
           <p>{s.intro}</p>
         </div>

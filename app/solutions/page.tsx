@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import PillarBlocks from "@/components/sections/PillarBlocks";
 import { solutionsHub } from "@/lib/content/gamcs";
@@ -36,7 +35,6 @@ export default function SolutionsHubPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/solutions" }]} />
           <span className="eyebrow-pill">{t.pill}</span>
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>

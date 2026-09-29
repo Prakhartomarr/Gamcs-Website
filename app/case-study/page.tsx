@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
@@ -21,8 +20,6 @@ export default function CaseStudyPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/case-study" }]} />
-          <div className="section-kicker">{t.kicker}</div>
           <h1>{caseStudies.heading}</h1>
           <p>{caseStudies.intro}</p>
           <div className="ctas page-head-ctas">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import PageHeadArt from "@/components/PageHeadArt";
 import CTA from "@/components/CTA";
 import { primaryCta, story } from "@/lib/content/gamcs";
@@ -29,8 +28,6 @@ export default function WhoWeArePage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/who-we-are" }]} />
-          <div className="section-kicker">{t.kicker}</div>
           <h1>{story.heading}</h1>
           <p>{story.lead}</p>
         </div>

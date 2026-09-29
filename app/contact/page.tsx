@@ -1,6 +1,5 @@
 import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Directions from "@/components/Directions";
 import Rich from "@/components/Rich";
@@ -41,8 +40,6 @@ export default function ContactPage() {
     <>
       <section className="page-head page-head--art">
         <div className="container">
-          <Breadcrumbs trail={[{ label: t.crumb, href: "/contact" }]} />
-          <div className="section-kicker">{t.kicker}</div>
           <h1>{contact.heading}</h1>
           <p>{t.lead}</p>
         </div>
