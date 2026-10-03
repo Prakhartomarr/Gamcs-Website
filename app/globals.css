@@ -3630,286 +3630,253 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 
 /* =====================================================================
-   WHO WE ARE (/who-we-are) — the credibility page.
-   Six sections, every selector scoped under .os, no shared class
-   restyled. Replaced the seven-chapter narrative that lived here.
+   OUR STORY (/who-we-are) — the seven-chapter narrative.
+   Every selector is scoped under .os; no shared class is restyled.
    ===================================================================== */
 /* =====================================================================
-   /who-we-are — the credibility page. Six sections, one container, one
-   left edge. Replaces the seven-chapter `.os-*` narrative block wholesale.
+   OUR STORY — /who-we-are, chapters 00–07. Appended to app/globals.css.
 
-   Everything is scoped under `.os`, the wrapper on this page and nowhere
-   else, so no shared class is restyled. Two shared TYPE classes are USED
-   rather than redefined — `.fin-h2` for the h1/h2 scale and
-   `.section-kicker` for the eyebrow — which is why there is no heading
-   scale and no uppercase treatment invented here.
+   Every selector is under `.os`, the wrapper on that page and nowhere else,
+   so no shared class is restyled: `.container`, `.section`, `.btn`,
+   `.reveal`, `.eyebrow-pill` and `.page-head` behave exactly as they do
+   today. `.os-narrow` is the one class put ON a `.container`, and the rule
+   below targets that extra class alone.
 
-   Values are the homepage Gap section's (`.dg-*`): body is 1rem/1.6 in
-   --ink-muted, secondary body 0.8889rem, titles 1.1111rem in --ink-deep,
-   hairlines --line, the soft ground --soft. The only numbers below that
-   are not already on the page are the grid and padding geometry.
+   Values come from the approved comp; the widths do not. The comp is an
+   1440px artboard with a fixed 1280px measure, this runs inside the site's
+   own `.container`, so the 12-column proportions are kept and the fixed
+   pixel widths are dropped.
 
-   Motion: the site-wide `.reveal` observer in MotionLayer, shortened to
-   200ms here. Reduced motion is handled by the global rule, which sets
-   `.reveal{opacity:1;transform:none}` with !important — nothing is
-   needed for it in this file. No count-up exists on this route.
+   Phones (<768px) get one column, no pins, no parallax and no rail — the
+   rail needs a margin the layout does not have below 1024px.
    ===================================================================== */
 
-.os{background:var(--paper);color:var(--ink)}
+.os{
+  /* The comp's four grounds. Local, not :root — nothing else on the site
+     uses this near-black, and the page is one wrapper. */
+  --os-dark:#0B1622;
+  --os-rule:#E1E5E8;      /* hairlines on paper */
+  --os-caption:#6E767C;   /* 4.6:1 on #FEFEFE */
+  --os-dim:#9FB3C4;       /* body on the dark ground, 8.4:1 */
+  --os-micro:#6E8FA8;     /* labels on the dark ground, 5.3:1 */
+  --os-grid:repeat(12,minmax(0,1fr));
+  background:var(--paper);
+}
 
-/* One fade-up, 200ms, once. The site default is 560ms/22px; this page is
-   short enough that the longer travel reads as the page assembling
-   itself while you scroll. */
-.os .reveal{transform:translateY(10px);transition-duration:200ms}
+/* ---- 00 · hero -------------------------------------------------------
+/* The page head is the site's own .page-head.page-head--art band now, so
+   everything the full-viewport hero needed is gone. What remains is the
+   h1 itself: three client lines, each on its own row, inside the band's
+   existing type rule. */
+/* ---- chapter shells --------------------------------------------------- */
+.os-ch{padding:136px 0 128px;scroll-margin-top:calc(var(--header-h) + 8px)}
+.os-ch--paper{background:var(--paper);color:var(--ink)}
+.os-ch--soft{background:var(--soft);color:var(--ink)}
 
-/* ---- section shells ---------------------------------------------------
-   112/112 desktop, 72/72 phone, symmetric — so no section can leave more
-   air below its last element than above its first. */
-.os-s{padding:112px 0}
-.os-s--soft{background:var(--soft)}
+/* ---- type -------------------------------------------------------------
+   The brand sans throughout. An earlier version set the headings in
+   Instrument Serif; it gave the page a voice no other page had, which was
+   exactly the problem. Sizes are the chapter scale, not the site's section
+   scale, so the narrative still steps down from the page head. */
+.os-h{margin:26px 0 0;font-family:var(--font-sans);font-weight:600;
+  font-size:clamp(30px,3vw,48px);line-height:1.08;letter-spacing:-.025em;color:var(--ink)}
+.os-h--close{max-width:24ch;font-size:clamp(32px,3.4vw,56px);letter-spacing:-.028em}
 
-/* Shared type. `.fin-h2` and `.section-kicker` carry the size, weight and
-   colour; these rules only place them. */
-.os-eyebrow{display:block;margin:0 0 18px}
-.os-h1{margin:0;max-width:19ch;text-wrap:balance}
-.os-h2{margin:0;max-width:34ch;text-wrap:balance}
-.os-body{margin:16px 0 0;max-width:62ch;font-size:1rem;line-height:1.6;
-  color:var(--ink-muted);text-wrap:pretty}
-/* The hero subhead holds a 60ch measure, which is where a three-line
-   sentence stops needing a second glance to find its own start. */
-.os-sub{max-width:60ch}
+.os-label{margin:0;font-size:12px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--blue)}
 
-/* Link treatment for the two in-copy forward links (sections 04 and 05).
-   44px of height on touch, nothing extra with a mouse. */
-.os-link{margin:24px 0 0;font-size:0.9444rem;line-height:1.5}
-/* Beside the hero button, where the row supplies the spacing. */
-.os-link--inline{margin:0}
-.os-link a{display:inline-flex;align-items:center;min-height:44px;
-  color:var(--blue);font-weight:600;text-decoration:none;
-  border-bottom:1px solid rgba(15,94,151,.3)}
-.os-link a:hover{border-bottom-color:var(--blue)}
-.os-link a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:2px}
-@media (min-width:1024px){.os-link a{min-height:0}}
+.os-body{margin:28px 0 0;font-size:17px;line-height:1.75;color:var(--gray);max-width:62ch}
+.os-lead{font-size:18px;line-height:1.8}
 
-/* =====================================================================
-   01 · hero — copy left, the joint portrait right
-   ===================================================================== */
-.os-hero{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
-  column-gap:clamp(40px,5vw,80px);align-items:center}
-.os-hero-copy{min-width:0}
+.os-head-h{text-wrap:balance}
+.os-head-line{display:block}
 
-/* The three proof facts. Plain text on one row, middot separated — not
-   three cells and not three counters: they are facts, and a fact that
-   animates reads as a claim being sold.
+/* ---- shared grids ---------------------------------------------------- */
+.os-split{display:grid;grid-template-columns:var(--os-grid);column-gap:32px;align-items:start}
+.os-split--mid{align-items:center}
+.os-split > .os-col{grid-column:1/span 5}
+.os-split > .os-figure,
+.os-split > .os-mark{grid-column:7/span 6}
 
-   The middots are `::before` on each item but the first, so a wrapped row
-   would open a line with a stranded separator. Below 1024px, where the copy
-   column is too narrow to hold all three, the row becomes a stack and the
-   separators go with it. */
-.os-proof{margin:24px 0 0;padding:18px 0 0;border-top:1px solid var(--line);
-  display:flex;flex-wrap:wrap;gap:6px 0;list-style:none}
-.os-proof li{font-size:0.8333rem;line-height:1.45;color:var(--ink-muted)}
-.os-proof li + li::before{content:"·";margin:0 12px;color:var(--line)}
+.os-head{display:grid;grid-template-columns:var(--os-grid);column-gap:32px;align-items:end}
+.os-head > :first-child{grid-column:1/span 6}
+.os-head > .os-body{grid-column:8/span 5;margin-top:0}
+.os-head--wide{margin-top:26px;align-items:start}
+.os-head--wide > .os-h{grid-column:1/span 7;margin-top:0}
+.os-head--wide > .os-body{grid-column:9/span 4;margin-top:10px}
 
-.os-hero-ctas{margin:28px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+/* ---- 01 · where it started ------------------------------------------- */
+.os-figure{margin:0;border-radius:4px;overflow:hidden;background:#E9EDEF}
+.os-figure img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;
+  object-position:center 20%}
 
-.os-hero-fig{margin:0 0 0 auto;width:100%;max-width:380px;border-radius:12px;
-  overflow:hidden;background:#E9EDEF}
-.os-hero-fig img{display:block;width:100%;height:auto;aspect-ratio:1/1;
-  object-fit:cover;filter:grayscale(1)}
+.os-stats{margin:44px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:28px 24px;border-top:1px solid var(--os-rule);padding-top:28px}
+.os-stat-value{font-size:clamp(34px,3vw,46px);line-height:1;letter-spacing:-.035em;
+  font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.os-stat-label{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--os-caption)}
 
-/* =====================================================================
-   02 · our story — one paragraph, then the four steps
-   ===================================================================== */
-/* The paragraph alone, not the heading: `.os-body` caps at 62ch everywhere
-   else, and this one runs 100 words. 76ch holds it to eight lines. */
-.os-story .os-body{max-width:76ch}
+.os-markers{margin:92px 0 0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--os-rule)}
+.os-markers li{padding:26px 28px 0;border-right:1px solid var(--os-rule)}
+.os-markers li:first-child{padding-left:0}
+.os-markers li:last-child{padding-right:0;border-right:0}
+.os-marker-dot{display:block;width:9px;height:9px;border-radius:50%;background:var(--blue);
+  margin-bottom:18px}
+.os-markers li:last-child .os-marker-dot{background:var(--yellow)}
+.os-marker-h{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
 
-/* A hairline with a dot per step. No cells, no boxes: the rule is one
-   border on the list, the dots are pseudo-elements on the items, so the
-   line always meets the dot it belongs to. */
-.os-tl{margin:48px 0 0;padding:0;list-style:none;
+/* ---- 02 · a shared passion ------------------------------------------- */
+.os-discs{margin:72px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line)}
+.os-disc{background:var(--paper);padding:36px 26px 42px;border-top:3px solid transparent;
+  transition:border-top-color .25s var(--ease-out)}
+.os-disc:hover{border-top-color:var(--blue-light)}
+.os-disc-n{margin:0;font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--os-caption)}
+.os-disc-h{margin:60px 0 0;font-size:20px;font-weight:600;line-height:1.25;letter-spacing:-.015em;
+  color:var(--ink)}
+
+/* ---- 03 · what they saw ---------------------------------------------- */
+.os-shift{margin:88px 0 0;display:grid;
+  grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);align-items:stretch}
+.os-shift-card{border-radius:3px;padding:44px 40px 48px}
+.os-shift-from{border:1px solid var(--line)}
+.os-shift-to{border:1px solid rgba(15,94,151,.4);background:rgba(15,94,151,.04)}
+.os-shift-arrow{display:flex;align-items:center;justify-content:center}
+.os-shift-label{margin:0;font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--os-micro)}
+.os-shift-to .os-shift-label{color:var(--blue)}
+.os-shift-line{margin:28px 0 0;font-size:clamp(24px,2vw,32px);line-height:1.15;
+  letter-spacing:-.02em;font-weight:500;color:var(--gray)}
+.os-shift-to .os-shift-line{color:var(--ink)}
+
+/* ---- 04 · the name ---------------------------------------------------
+   Decorative, and marked aria-hidden in the markup: the two names, the
+   arrow and the monogram say what the paragraph beside them already says. */
+.os-mark{display:flex;flex-direction:column;align-items:center;gap:30px;
+  padding:72px 24px;background:var(--soft);border-radius:4px}
+.os-mark-names{margin:0;display:flex;align-items:center;gap:clamp(20px,3vw,44px)}
+.os-mark-names span{font-size:26px;font-weight:500;
+  color:var(--gray)}
+.os-mark-names i{display:block;width:46px;height:1px;background:#C2CACF}
+.os-mark img{display:block;height:clamp(84px,9vw,128px);width:auto;object-fit:contain}
+.os-mark-caption{margin:0;font-size:12px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--os-caption);text-align:center}
+
+/* ---- 05 · what we believe -------------------------------------------- */
+.os .os-narrow{max-width:1100px}
+.os-quote{margin:40px 0 0;font-size:clamp(32px,4vw,66px);line-height:1.12;
+  letter-spacing:-.012em;color:var(--ink)}
+/* The emphasis was yellow italic on a brand-blue ground. On paper that is
+   1.7:1, so it is the page's blue instead — 6.8:1 — and upright, since the
+   italic only existed to belong to the serif that is no longer here. */
+.os-quote em{font-style:normal;color:var(--blue)}
+.os-pillars{margin:60px 0 0;padding:0;list-style:none;
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   border-top:1px solid var(--line)}
-.os-tl > li{position:relative;padding:26px 32px 0 0}
-.os-tl > li::before{content:"";position:absolute;left:0;top:-4px;
-  width:7px;height:7px;border-radius:50%;background:var(--blue)}
-.os-tl-year{margin:0;font-size:0.8333rem;font-weight:600;color:var(--blue)}
-.os-tl-h{margin:8px 0 0;font-size:1rem;font-weight:600;line-height:1.3;
-  letter-spacing:-.01em;color:var(--ink-deep)}
-.os-tl-p{margin:6px 0 0;font-size:0.8333rem;line-height:1.5;color:var(--ink-muted)}
+.os-pillars li{padding:26px 24px 0}
+.os-pillars li:first-child{padding-left:0}
+.os-pillars li:last-child{padding-right:0}
+.os-pillars h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.005em;color:var(--ink)}
 
-/* =====================================================================
-   03 · what we believe — the statement, then four pillars
-   ===================================================================== */
-.os-stmt-wrap{max-width:900px;margin-inline:auto;text-align:center}
-.os-stmt{margin:0;text-wrap:balance}
-.os-stmt em{font-style:normal;color:var(--blue)}
+/* ---- 06 · the founders -----------------------------------------------
+   No hover-revealed copy. The comp carried a bio line over each plate; the
+   two the client has written live on /team, and nothing shorter exists that
+   is not invented — so the plate is photograph, name, title, and the link
+   below goes to the bios in full. Hover is the photograph coming out of
+   grayscale, which hides nothing. */
+.os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.os-founder-shot{position:relative;overflow:hidden;border-radius:4px;background:#E9EDEF}
+/* No grayscale filter. The comp desaturates the plates and brings the colour
+   back on hover, but both files are already black and white on disk
+   (`*-bw.jpg`), so that filter would cost a composite layer every paint and
+   reveal nothing. The scale is the whole hover. */
+.os-founder-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
+  object-position:center 18%;transition:transform .6s var(--ease-out)}
+.os-founder:hover .os-founder-shot img{transform:scale(1.04);filter:grayscale(0)}
+.os-founder-name{margin:22px 0 0;font-size:26px;font-weight:600;letter-spacing:-.02em;
+  color:var(--ink)}
+.os-founder-title{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--gray)}
+.os-founders-link{margin:40px 0 0}
+/* inline-flex + min-height: the only tap target on this page that came out
+   under 44px (measured 147x21 at 390). The underline still hugs the words
+   because the box is inline-flex, not block. Relaxed above 1024 where a
+   pointer is doing the aiming, which is the convention the footer links
+   already follow. */
+.os-founders-link a{display:inline-flex;align-items:center;min-height:44px;
+  font-size:15px;font-weight:600;color:var(--blue);text-decoration:none;
+  border-bottom:1px solid rgba(15,94,151,.3);padding-bottom:2px;
+  transition:border-color .2s var(--ease-out)}
+@media (min-width:1024px){.os-founders-link a{min-height:0}}
+.os-founders-link a:hover{border-bottom-color:var(--blue)}
+.os-founders-link a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:2px}
 
-/* =====================================================================
-   One grid, two sections: the four pillars (03) and the three ways of
-   working (04). Column count is a custom property, the dividers are a
-   left border on every item but the first — which is also what keeps the
-   section's left edge on the container.
-   ===================================================================== */
-.os-grid{margin:56px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(var(--os-cols,3),minmax(0,1fr));
-  border-top:1px solid var(--line)}
-.os-grid > li{padding:28px 32px 0 0}
-.os-grid > li + li{border-left:1px solid var(--line);padding-left:32px}
-.os-grid-h{margin:0;font-size:1.1111rem;font-weight:600;line-height:1.3;
-  letter-spacing:-.01em;color:var(--ink-deep)}
-.os-grid-p{margin:10px 0 0;font-size:0.8889rem;line-height:1.55;
-  color:var(--ink-muted);text-wrap:pretty}
+/* ---- 07 · where we are going ----------------------------------------- */
+.os-close .os-body{max-width:64ch}
+.os-ctas{margin:64px 0 0;display:flex;flex-wrap:wrap;gap:16px}
 
-/* =====================================================================
-   04 · how we work — the comparison, inline
-   ===================================================================== */
-/* One line each side of an arrow. The two states used to be two 150px
-   cards; the contrast is in the words, so the boxes were carrying nothing
-   but height. */
-.os-compare{margin:40px 0 0;padding:22px 0 0;border-top:1px solid var(--line);
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
-  font-size:1.1111rem;font-weight:600;line-height:1.35;letter-spacing:-.015em}
-.os-compare-from{color:var(--ink-muted)}
-.os-compare-to{color:var(--ink-deep)}
-.os-compare-arrow{color:var(--blue);font-weight:400}
-
-/* =====================================================================
-   05 · leadership
-   ===================================================================== */
-.os-ld{margin:44px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:48px}
-/* Portrait beside the copy, 170px wide at 4/5 — 212px tall, a quarter of the
-   fold at 1440. The previous cards ran the portrait at half the container
-   width, so two faces filled the viewport and the bio was below the fold. */
-.os-ld-card{display:grid;grid-template-columns:170px minmax(0,1fr);
-  column-gap:24px;align-items:start}
-.os-ld-shot{margin:0;border-radius:8px;overflow:hidden;background:#E9EDEF}
-.os-ld-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;
-  object-fit:cover;filter:grayscale(1)}
-.os-ld-body{min-width:0}
-.os-ld-name{margin:0;font-size:1.3333rem;font-weight:600;line-height:1.2;
-  letter-spacing:-.02em;color:var(--ink-deep)}
-.os-ld-role{margin:6px 0 0;font-size:0.8333rem;font-weight:600;line-height:1.45;
-  color:var(--blue)}
-/* 15px, a step under the section bodies: a card bio is supporting copy, and
-   at this measure the step buys a line back on both cards. */
-.os-ld-bio{margin:16px 0 0;font-size:0.8333rem;line-height:1.6;
-  color:var(--ink-muted);text-wrap:pretty}
-/* "Previously" is a label, not an eyebrow: sentence case, because the
-   uppercase letter-spaced treatment on this page belongs to the eyebrows
-   alone. */
-.os-ld-prev{margin:16px 0 0;font-size:0.7778rem;line-height:1.5;color:var(--ink-muted)}
-.os-ld-prev b{font-weight:600;color:var(--ink-deep)}
-.os-ld-chips{margin:16px 0 0;padding:0;list-style:none;
-  display:flex;flex-wrap:wrap;gap:8px}
-.os-ld-chips li{font-size:0.7222rem;line-height:1.3;padding:6px 11px;
-  border:1px solid var(--line);border-radius:999px;color:var(--ink-muted)}
-.os-ld-li{display:inline-flex;align-items:center;justify-content:center;
-  width:44px;height:44px;margin:10px 0 -10px -11px;border-radius:50%;
-  color:var(--ink-muted)}
-.os-ld-li:hover{color:var(--blue)}
-.os-ld-li:focus-visible{outline:2px solid var(--blue);outline-offset:0}
-
-/* ---- the advisers: avatar, name, title ------------------------------- */
-.os-adv-h{margin:52px 0 0;font-size:1.1111rem;font-weight:600;line-height:1.3;
-  letter-spacing:-.01em;color:var(--ink-deep)}
-.os-adv{margin:20px 0 0;padding:24px 0 0;border-top:1px solid var(--line);
-  list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:22px 32px}
-.os-adv > li{display:flex;align-items:center;gap:14px;min-width:0}
-.os-adv img{flex:none;width:52px;height:52px;border-radius:50%;
-  object-fit:cover;filter:grayscale(1);background:#E9EDEF}
-.os-adv-n{margin:0;font-size:0.8889rem;font-weight:600;line-height:1.25;
-  letter-spacing:-.01em;color:var(--ink-deep)}
-.os-adv-t{margin:3px 0 0;font-size:0.7778rem;line-height:1.35;color:var(--ink-muted)}
-
-/* =====================================================================
-   06 · closing
-   ===================================================================== */
-.os-close{max-width:720px;margin-inline:auto;text-align:center}
-.os-close .os-h2{max-width:none;margin-inline:auto}
-.os-close .os-body{margin-inline:auto;max-width:52ch}
-.os-ctas{margin:34px 0 0;display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
-
-/* =====================================================================
-   The [[TODO]] marker. Development draws a dashed amber outline so an
-   unfilled fact cannot be missed; production renders the text and nothing
-   else, which is why the outline lives on a class the page only emits when
-   NODE_ENV is not production.
-   ===================================================================== */
-.os-todo{border-bottom:1px dashed #B45309;color:#8A4B06;cursor:help}
-
-/* The hero copy column cannot hold the three facts on one line below
-   1024px — see the note on .os-proof. */
-@media (max-width:1023px){
-  .os-proof{flex-direction:column;gap:7px 0}
-  .os-proof li + li::before{content:none}
+/* ---- reduced motion --------------------------------------------------
+   StoryMotion registers nothing under this query, so the resting state
+   above is already the finished state. These three are the CSS hovers,
+   which are the only thing left that moves. */
+@media (prefers-reduced-motion:reduce){
+  .os-founder-shot img,.os-disc,.os-founders-link a{transition:none}
+  .os-founder:hover .os-founder-shot img{transform:none}
 }
 
-/* =====================================================================
-   Tablet: 768–1023px. The four-up rows are too tight for a title plus a
-   sentence, so the pillars go 2×2 — which needs nth-child, not the
-   adjacent-sibling border, because item 3 opens a new row.
-   ===================================================================== */
-@media (min-width:768px) and (max-width:1023px){
-  .os-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-grid > li{padding:28px 32px 0 0}
-  .os-grid > li:nth-child(odd){border-left:0;padding-left:0}
-  .os-grid > li:nth-child(even){border-left:1px solid var(--line);padding-left:32px}
-  .os-grid > li:nth-child(n+3){margin-top:28px;border-top:1px solid var(--line)}
-
-  .os-tl{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-tl > li:nth-child(n+3){margin-top:28px;padding-top:26px;
-    border-top:1px solid var(--line)}
-  .os-tl > li:nth-child(n+3)::before{top:-4px}
-
-  .os-ld{grid-template-columns:1fr;gap:44px}
-  .os-adv{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-
-/* =====================================================================
-   Phones and small tablets: one column, one edge, no borders running
-   sideways. 72/72 padding.
-   ===================================================================== */
+/* ---- phones and small tablets ----------------------------------------
+   One column throughout. The comp is a desktop artboard; below 768px the
+   12-column splits collapse in DOM order (copy, then figure), the five
+   disciplines stack, the before/after stacks with the arrow rotated a
+   quarter turn to point down the page, and the markers and pillars become
+   two-up rows rather than four. Nothing pins and nothing parallaxes. */
 @media (max-width:767px){
-  .os-s{padding:72px 0}
+  .os-ch{padding:72px 0 64px}
+  .os-h{margin-top:18px}
 
-  .os-h1{max-width:none}
-  .os-h2{max-width:none}
+  .os-split,.os-head,.os-head--wide{display:block}
+  .os-split > .os-figure,.os-split > .os-mark{margin-top:36px}
+  .os-head > .os-body,.os-head--wide > .os-body{margin-top:24px}
+  .os-head--wide{margin-top:18px}
 
-  /* The portrait stacks ABOVE the copy — the page should open on the two
-     people, not on a paragraph about them. */
-  .os-hero{grid-template-columns:1fr;row-gap:32px}
-  .os-hero-fig{order:-1;max-width:none;margin:0}
-  .os-hero-fig img{aspect-ratio:4/3}
-  .os-hero-ctas{margin-top:28px}
+  .os-stats{margin-top:32px;gap:24px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .os-markers{margin-top:48px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .os-markers li{padding:22px 18px 0;border-right:0;border-bottom:1px solid var(--os-rule)}
+  .os-markers li:nth-child(odd){padding-left:0}
+  .os-markers li:nth-child(even){padding-right:0}
+  .os-markers li:nth-last-child(-n+2){border-bottom:0;padding-bottom:0}
 
-  /* Vertical timeline: the connector becomes a left border on each step
-     and the dots sit on it. */
-  .os-tl{margin-top:48px;grid-template-columns:1fr;border-top:0}
-  .os-tl > li{padding:0 0 26px 26px;border-left:1px solid var(--line)}
-  .os-tl > li:last-child{border-left-color:transparent;padding-bottom:0}
-  .os-tl > li::before{left:-4px;top:4px}
+  .os-discs{margin-top:40px;grid-template-columns:1fr}
+  .os-disc{padding:24px 20px 28px}
+  .os-disc-h{margin-top:28px;font-size:18px}
 
-  .os-grid{margin-top:48px}
-  .os-grid{grid-template-columns:1fr}
-  .os-grid > li{padding:24px 0 0}
-  .os-grid > li + li{border-left:0;padding-left:0;margin-top:24px;
-    border-top:1px solid var(--line)}
+  .os-shift{margin-top:48px;grid-template-columns:1fr;gap:20px}
+  .os-shift-card{padding:28px 24px 32px}
+  .os-shift-arrow{transform:rotate(90deg)}
+  .os-shift-line{margin-top:18px}
 
-  .os-compare{margin-top:36px;font-size:1rem}
-  .os-compare-arrow{display:none}
+  .os-mark{padding:48px 20px;gap:22px}
+  .os-mark-names span{font-size:24px}
+  .os-mark-names i{width:28px}
 
-  .os-ld{margin-top:44px;grid-template-columns:1fr;gap:48px}
-  .os-ld-card{grid-template-columns:1fr;row-gap:20px}
-  .os-ld-shot{max-width:180px}
+  .os-quote{margin-top:28px}
+    .os-pillars{margin-top:40px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .os-pillars li{padding:20px 16px 0}
+  .os-pillars li:nth-child(odd){padding-left:0}
+  .os-pillars li:nth-child(even){padding-right:0}
 
-  .os-adv-h{margin-top:56px}
-  .os-adv{grid-template-columns:1fr;gap:20px}
+  .os-founders{margin-top:40px;grid-template-columns:1fr;gap:36px}
+  .os-founder-name{font-size:22px}
+  .os-founders-link{margin-top:32px}
+  .os-ctas{margin-top:40px}
+}
 
-  .os-link{margin-top:24px}
-  .os-ctas{margin-top:28px}
+/* Tablets: the five-up discipline strip and the four-up rows are too tight
+   between 768 and 1023px, but the splits still hold. */
+@media (min-width:768px) and (max-width:1023px){
+  .os-ch{padding:96px 0 88px}
+  .os-discs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .os-markers{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}
+  .os-markers li:nth-child(even){border-right:0;padding-right:0}
+  .os-markers li:nth-child(odd){padding-left:0}
 }
