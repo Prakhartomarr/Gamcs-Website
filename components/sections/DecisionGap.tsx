@@ -32,8 +32,6 @@ export default function DecisionGap() {
   return (
     <section className="section dg" id="decision-gap" aria-labelledby="dg-heading">
       <div className="container dg-inner">
-        <p className="eyebrow-pill dg-eyebrow">{c.eyebrow}</p>
-
         <h2 id="dg-heading" className="fin-h2 dg-h2">
           <span className="dg-line">{c.headingLead}</span>{" "}
           {/* Phones only: the rule between the fact lines and the accent

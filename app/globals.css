@@ -2162,11 +2162,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    No red anywhere. The only colour is --blue, on the heading's second line. */
 .dg-inner{display:flex;flex-direction:column;align-items:center;text-align:center}
 
-/* the site's pill, set in caps for this one section */
-.dg-eyebrow{margin:0;text-transform:uppercase;letter-spacing:.14em;
-  font-size:0.6111rem;font-weight:600}
-
-.dg-h2{margin:24px 0 0;max-width:900px}
+/* The eyebrow pill is gone from this section. .dg-h2's 24px top margin went
+   with it: it existed to sit the heading under the pill, and with nothing
+   above it the heading now starts at the section's own padding edge. */
+.dg-h2{margin:0;max-width:900px}
 .dg-line{display:block;text-wrap:balance}
 .dg-accent{color:var(--blue)}
 
@@ -2998,9 +2997,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    10,243px page.
    ===================================================================== */
 .home-tight #clients{padding:16px 0 24px}
-/* The gap section sets its own rhythm — 120/72, asked for explicitly — rather
-   than the halved spacing the rest of the homepage carries. */
-.home-tight #decision-gap{padding:120px 0}
+/* 60/36, halved from the 120/72 this section used to carry. It is still its
+   own rhythm rather than the band default, just a tighter one. */
+.home-tight #decision-gap{padding:60px 0}
 .home-tight #maturity-curve.section{padding:36px 0}
 .home-tight #how-we-help{padding:63px 0 36px}
 .home-tight #solutions.section{padding:44px 0}
@@ -3009,7 +3008,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .home-tight #who-we-are{padding:56px 0}
 .home-tight #contact{padding:54px 0}
 @media (max-width:768px){
-  .home-tight #decision-gap.dg.section{padding:72px 0}
+  .home-tight #decision-gap.dg.section{padding:36px 0}
 }
 
 
@@ -3064,7 +3063,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
   /* ---- display type: 38 / 1.06 / -.032em / 600 ----
      38px is the measured ceiling from the spec; not exceeded. */
-  .dg .dg-h2{margin-top:32px;font-size:2.1111rem;line-height:1.06;
+  /* margin-top:0, not 32: the 32 cleared the eyebrow pill, and with the pill
+     gone it was 32px stacked on the section's own padding. */
+  .dg .dg-h2{margin-top:0;font-size:2.1111rem;line-height:1.06;
     letter-spacing:-.032em;font-weight:600}
   .dg .dg-sub{margin-top:28px}
 

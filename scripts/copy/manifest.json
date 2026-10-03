@@ -696,18 +696,6 @@
   }
  },
  {
-  "code": "HOME-GAP-01",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Eyebrow pill",
-  "kind": "text",
-  "text": "The gap",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.eyebrow"
-  }
- },
- {
   "code": "HOME-GAP-02",
   "page": "Home (/)",
   "section": "The gap",

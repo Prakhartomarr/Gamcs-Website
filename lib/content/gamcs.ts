@@ -1538,7 +1538,6 @@ export const clients = {
  * `href` is optional, and the one without it is cited in plain text.
  */
 export const decisionGap = {
-  eyebrow: "The gap",
   headingLead: "Your data exists. Your reports exist.",
   headingAccent: "The problem is the distance to the decision.",
   /**
