@@ -13,7 +13,7 @@ const ts = createRequire(import.meta.url)("typescript");
 
 /** Which content module declares each top-level export. */
 export const MODULES = {
-  "lib/content/gamcs.ts": ["site", "hero", "intro", "story", "primaryCta", "whyUs", "services", "achievements", "team", "testimonials", "caseStudies", "contact", "footer", "faq", "solutions", "solutionsHub", "maturityCurve", "clients", "dataToDecision", "preloader", "careers"],
+  "lib/content/gamcs.ts": ["site", "hero", "intro", "story", "ourStory", "primaryCta", "whyUs", "services", "achievements", "team", "testimonials", "caseStudies", "contact", "footer", "faq", "solutions", "solutionsHub", "maturityCurve", "clients", "dataToDecision", "preloader", "careers"],
   "lib/content/ui.ts": ["header", "crumbs", "cookie", "map", "reel", "sections", "servicePage", "caseCard", "roster"],
   "lib/content/pages.ts": ["pages"],
   "lib/content/legal.ts": ["legal", "privacy", "cookiePolicy"],

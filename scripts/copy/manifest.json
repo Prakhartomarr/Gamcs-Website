@@ -5178,39 +5178,579 @@
   }
  },
  {
-  "code": "WHO-STORY-01",
+  "code": "WHO-STORY-05",
   "page": "Who We Are (/who-we-are)",
-  "section": "Story",
-  "label": "Paragraph 1",
+  "section": "Hero",
+  "label": "Eyebrow",
   "kind": "text",
-  "text": "We partner with growth-focused businesses, founders, CFOs, and investment teams to modernize, strengthen, and scale their finance functions. Our work brings together FP&A, business intelligence, financial analytics, automation, technology, and finance operations to help organizations move beyond simply understanding what happened to knowing why it happened, what happens next, and what they should do about it.",
+  "text": "Our Story",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "story.body[0]"
+   "locator": "ourStory.eyebrow"
   }
  },
  {
-  "code": "WHO-STORY-02",
+  "code": "WHO-STORY-06",
   "page": "Who We Are (/who-we-are)",
-  "section": "Story",
-  "label": "Paragraph 2",
+  "section": "Hero",
+  "label": "Headline, line 1 of 3",
   "kind": "text",
-  "text": "GAMCS also works as a delivery and execution partner to consulting and advisory firms, extending their capabilities with hands-on expertise across FP&A, financial modelling, BI, reporting, automation, and transaction support. Our growing partner network includes firms such as Akshar Business Consulting, Three 6ixty Finance, and CFO Bridge, among others.",
+  "text": "Built on a shared vision.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "story.body[1]"
+   "locator": "ourStory.heroLines[0]"
   }
  },
  {
-  "code": "WHO-STORY-03",
+  "code": "WHO-STORY-07",
   "page": "Who We Are (/who-we-are)",
-  "section": "Story",
-  "label": "Closing paragraph",
+  "section": "Hero",
+  "label": "Headline, line 2 of 3",
   "kind": "text",
-  "text": "Through this combination of strategic thinking and hands-on execution, GAMCS supports organizations ranging from startups and high-growth companies to established enterprises and investment portfolios—helping them build finance functions that are more connected, intelligent, scalable, and decision-ready.",
+  "text": "Driven by financial insight.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "story.close"
+   "locator": "ourStory.heroLines[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-08",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Hero",
+  "label": "Headline, line 3 of 3",
+  "kind": "text",
+  "text": "Focused on the future.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.heroLines[2]"
+  }
+ },
+ {
+  "code": "WHO-STORY-09",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Hero",
+  "label": "Scroll cue",
+  "kind": "text",
+  "text": "Seven chapters",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.scrollCue"
+  }
+ },
+ {
+  "code": "WHO-STORY-10",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "Where it started",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-11",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "The same college, the same qualification.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-12",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal, whose professional journey began in the same college, continued through their Chartered Accountancy qualification, and later brought them together in the corporate world.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-13",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Step 1 of 4",
+  "kind": "text",
+  "text": "College",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.markers[0]"
+  }
+ },
+ {
+  "code": "WHO-STORY-14",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Step 2 of 4",
+  "kind": "text",
+  "text": "Chartered Accountancy",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.markers[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-15",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Step 3 of 4",
+  "kind": "text",
+  "text": "The corporate floor",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.markers[2]"
+  }
+ },
+ {
+  "code": "WHO-STORY-16",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Step 4 of 4",
+  "kind": "text",
+  "text": "GA Management Consultants",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.markers[3]"
+  }
+ },
+ {
+  "code": "WHO-STORY-17",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Figure 1, number",
+  "kind": "text",
+  "text": "2023",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.stats[0].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-18",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Figure 1, what it counts",
+  "kind": "text",
+  "text": "the year the firm was founded",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.stats[0].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-19",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Figure 2, number",
+  "kind": "text",
+  "text": "2",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.stats[1].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-20",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 01 — Where it started",
+  "label": "Figure 2, what it counts",
+  "kind": "text",
+  "text": "founders, and the initials the firm carries",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.stats[1].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-21",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "A shared passion",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.passion.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-22",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "Studied, qualified, and worked alongside each other.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.passion.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-23",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "Having studied, qualified, and worked alongside each other, they developed a shared passion for Financial Planning & Analysis (FP&A), business intelligence, financial modelling, dashboards, and data-driven decision-making.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.passion.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-24",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Discipline 1 of 5",
+  "kind": "text",
+  "text": "Financial Planning & Analysis (FP&A)",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.disciplines[0]"
+  }
+ },
+ {
+  "code": "WHO-STORY-25",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Discipline 2 of 5",
+  "kind": "text",
+  "text": "Business intelligence",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.disciplines[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-26",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Discipline 3 of 5",
+  "kind": "text",
+  "text": "Financial modelling",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.disciplines[2]"
+  }
+ },
+ {
+  "code": "WHO-STORY-27",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Discipline 4 of 5",
+  "kind": "text",
+  "text": "Dashboards",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.disciplines[3]"
+  }
+ },
+ {
+  "code": "WHO-STORY-28",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 02 — A shared passion",
+  "label": "Discipline 5 of 5",
+  "kind": "text",
+  "text": "Data-driven decision-making",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.disciplines[4]"
+  }
+ },
+ {
+  "code": "WHO-STORY-29",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "What they saw",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-30",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "Beyond conventional reporting.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-31",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "Their experience in the corporate environment gave them a deeper understanding of how financial data, when interpreted effectively, can go beyond conventional reporting to become a powerful tool for strategic planning and business growth.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-32",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Before / after panel: left label",
+  "kind": "text",
+  "text": "Conventional reporting",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.shift.fromLabel"
+  }
+ },
+ {
+  "code": "WHO-STORY-33",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Before / after panel: left line",
+  "kind": "text",
+  "text": "What happened, and when.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.shift.fromLine"
+  }
+ },
+ {
+  "code": "WHO-STORY-34",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Before / after panel: right label",
+  "kind": "text",
+  "text": "Strategic planning",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.shift.toLabel"
+  }
+ },
+ {
+  "code": "WHO-STORY-35",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 03 — What they saw",
+  "label": "Before / after panel: right line",
+  "kind": "text",
+  "text": "Why it happened, and what to do.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.shift.toLine"
+  }
+ },
+ {
+  "code": "WHO-STORY-36",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 04 — The name",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "The name",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.name.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-37",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 04 — The name",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "The initials, and the vision.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.name.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-38",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 04 — The name",
+  "label": "Paragraph 1 of 2",
+  "kind": "text",
+  "text": "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.name.body[0]"
+  }
+ },
+ {
+  "code": "WHO-STORY-39",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 04 — The name",
+  "label": "Paragraph 2 of 2",
+  "kind": "text",
+  "text": "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.name.body[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-40",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "What we believe",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.believe.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-41",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Pull quote",
+  "kind": "text",
+  "text": "Finance is not just about understanding numbers, but about uncovering the insights behind them.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.believe.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-42",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "By combining financial expertise, analytical thinking, technology, and a forward-looking perspective, we aim to empower businesses to transform complex financial information into actionable insights, informed decisions, and measurable business impact.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.believe.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-43",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Pillar 1 of 4",
+  "kind": "text",
+  "text": "Financial expertise",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.pillars[0]"
+  }
+ },
+ {
+  "code": "WHO-STORY-44",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Pillar 2 of 4",
+  "kind": "text",
+  "text": "Analytical thinking",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.pillars[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-45",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Pillar 3 of 4",
+  "kind": "text",
+  "text": "Technology",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.pillars[2]"
+  }
+ },
+ {
+  "code": "WHO-STORY-46",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 05 — What we believe",
+  "label": "Pillar 4 of 4",
+  "kind": "text",
+  "text": "A forward-looking perspective",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.pillars[3]"
+  }
+ },
+ {
+  "code": "WHO-STORY-47",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 06 — The founders",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "The founders",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-48",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 06 — The founders",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "Gaurav Malik and Abhinav Aggarwal.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-49",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 07 — Where we are going",
+  "label": "Chapter label",
+  "kind": "text",
+  "text": "Where we are going",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-50",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 07 — Where we are going",
+  "label": "Chapter heading",
+  "kind": "text",
+  "text": "See beyond the numbers.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-51",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 07 — Where we are going",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "Our journey is rooted in collaboration, driven by curiosity, and shaped by a commitment to helping businesses see beyond the numbers, make smarter decisions, and build a sustainable future.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-52",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Chapter 07 — Where we are going",
+  "label": "Second button",
+  "kind": "button",
+  "text": "See how we help",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.secondaryCta"
   }
  },
  {

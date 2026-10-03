@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/ui/header-2";
 import { FlickeringFooter } from "@/components/ui/flickering-footer";
@@ -24,6 +24,18 @@ const inter = Inter({
   display: "swap",
   preload: false,
   variable: "--font-inter",
+});
+
+/* The display face, and only /who-we-are sets anything in it. preload stays off
+   for that reason: no other route should pay for the download. One weight, both
+   styles -- the page uses the italic. */
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  preload: false,
+  variable: "--font-serif",
 });
 
 export const metadata: Metadata = {
@@ -78,7 +90,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
       <body>
         <GaLogoSprite />
         <Preloader />

@@ -86,11 +86,10 @@ export const intro =
 
 
 /**
- * Company story. `heading` and `lead` carry the homepage section; `body` and
- * `close` only ever render on /who-we-are, which is where the homepage's
- * "About our firm" hands off. Splitting it that way is the whole point: the
- * full story is ~1,400 characters, and a homepage section that ran it in one
- * column stood 1,090px tall beside a 440px portrait.
+ * Company story. `heading` and `lead` carry the homepage section; `mission` is
+ * quoted again on /team and /careers. The long `body`/`close` prose that used
+ * to run on /who-we-are is gone: that page now tells the firm's story in seven
+ * chapters, and its copy lives in `ourStory` below.
  */
 export const story = {
   /*
@@ -103,12 +102,6 @@ export const story = {
     "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
   lead:
     "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.",
-  body: [
-    "We partner with growth-focused businesses, founders, CFOs, and investment teams to modernize, strengthen, and scale their finance functions. Our work brings together FP&A, business intelligence, financial analytics, automation, technology, and finance operations to help organizations move beyond simply understanding what happened to knowing why it happened, what happens next, and what they should do about it.",
-    "GAMCS also works as a delivery and execution partner to consulting and advisory firms, extending their capabilities with hands-on expertise across FP&A, financial modelling, BI, reporting, automation, and transaction support. Our growing partner network includes firms such as Akshar Business Consulting, Three 6ixty Finance, and CFO Bridge, among others.",
-  ],
-  close:
-    "Through this combination of strategic thinking and hands-on execution, GAMCS supports organizations ranging from startups and high-growth companies to established enterprises and investment portfolios\u2014helping them build finance functions that are more connected, intelligent, scalable, and decision-ready.",
   mission:
     "Our mission is simple: make finance a source of insight, not just information.",
   /*
@@ -127,6 +120,130 @@ export const story = {
     foundedLabel: "founded, in Gurugram",
     peopleLabel: "founders & senior advisers",
   },
+} as const;
+
+/**
+ * /who-we-are -- the firm's story, in seven chapters.
+ *
+ * The client supplied this as ONE block of prose. It is split here at SENTENCE
+ * boundaries only, so each chapter can hold its own part and the page can set
+ * that part at the scale its section needs: not a word is reworded, trimmed or
+ * paraphrased on the way in, and the headings are lifted from the same
+ * sentences. Four strings are not the client's -- `scrollCue`, `secondaryCta`
+ * and the two `shift` lines -- and nothing else here is new.
+ *
+ * `markers`, `disciplines`, `stats`, `shift` and `pillars` are the lists the
+ * prose names in passing, pulled out so the layout can draw them instead of
+ * leaving them buried in a comma-separated clause.
+ */
+export const ourStory = {
+  eyebrow: "Our Story",
+  heroLines: [
+    "Built on a shared vision.",
+    "Driven by financial insight.",
+    "Focused on the future.",
+  ],
+  scrollCue: "Seven chapters",
+  chapters: {
+    start: {
+      label: "Where it started",
+      heading: "The same college, the same qualification.",
+      body:
+        "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal, whose professional journey began in the same college, continued through their Chartered Accountancy qualification, and later brought them together in the corporate world.",
+    },
+    passion: {
+      label: "A shared passion",
+      /* Not "A shared passion." — that repeated the label directly above it.
+         Lifted from the client's own sentence instead, like every other
+         chapter heading on this page. */
+      heading: "Studied, qualified, and worked alongside each other.",
+      body:
+        "Having studied, qualified, and worked alongside each other, they developed a shared passion for Financial Planning & Analysis (FP&A), business intelligence, financial modelling, dashboards, and data-driven decision-making.",
+    },
+    saw: {
+      label: "What they saw",
+      heading: "Beyond conventional reporting.",
+      body:
+        "Their experience in the corporate environment gave them a deeper understanding of how financial data, when interpreted effectively, can go beyond conventional reporting to become a powerful tool for strategic planning and business growth.",
+    },
+    name: {
+      label: "The name",
+      heading: "The initials, and the vision.",
+      /* Two sentences, so the chapter can set the vision and the naming as
+         separate paragraphs rather than one 400-character column. */
+      body: [
+        "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
+        "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
+      ],
+    },
+    believe: {
+      label: "What we believe",
+      heading:
+        "Finance is not just about understanding numbers, but about uncovering the insights behind them.",
+      body:
+        "By combining financial expertise, analytical thinking, technology, and a forward-looking perspective, we aim to empower businesses to transform complex financial information into actionable insights, informed decisions, and measurable business impact.",
+    },
+    /* No body: the chapter is the two founder cards, which `team.leadership`
+       already carries. */
+    founders: {
+      label: "The founders",
+      /* Same correction as the passion chapter: the heading repeated its own
+         label. The founders' names are the client's words, from the sentence
+         that opens the story. */
+      heading: "Gaurav Malik and Abhinav Aggarwal.",
+    },
+    future: {
+      label: "Where we are going",
+      heading: "See beyond the numbers.",
+      body:
+        "Our journey is rooted in collaboration, driven by curiosity, and shaped by a commitment to helping businesses see beyond the numbers, make smarter decisions, and build a sustainable future.",
+    },
+  },
+  /* The four places chapter one's sentence names, in the order it names them. */
+  markers: [
+    "College",
+    "Chartered Accountancy",
+    "The corporate floor",
+    "GA Management Consultants",
+  ],
+  /* The five the shared-passion sentence lists, in its order. */
+  disciplines: [
+    "Financial Planning & Analysis (FP&A)",
+    "Business intelligence",
+    "Financial modelling",
+    "Dashboards",
+    "Data-driven decision-making",
+  ],
+  /*
+   * Both figures are read out of chapter one's sentence. They are NOT
+   * story.stats: that set is the homepage's, and "2023" reads "founded, in
+   * Gurugram" there. Same year, different point.
+   */
+  stats: [
+    { value: "2023", label: "the year the firm was founded" },
+    { value: "2", label: "founders, and the initials the firm carries" },
+  ],
+  /*
+   * Chapter three turns on one contrast, so the two states get drawn side by
+   * side. The labels are the client's words; `fromLine` and `toLine` are ours
+   * -- the only writing on this page that is not theirs, besides `scrollCue`
+   * and `secondaryCta`.
+   */
+  shift: {
+    fromLabel: "Conventional reporting",
+    fromLine: "What happened, and when.",
+    toLabel: "Strategic planning",
+    toLine: "Why it happened, and what to do.",
+  },
+  /* The four things the closing belief combines, in its order. */
+  pillars: [
+    "Financial expertise",
+    "Analytical thinking",
+    "Technology",
+    "A forward-looking perspective",
+  ],
+  /* Beside primaryCta ("Schedule a Call") at the end of the last chapter. */
+  secondaryCta: "See how we help",
 } as const;
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
