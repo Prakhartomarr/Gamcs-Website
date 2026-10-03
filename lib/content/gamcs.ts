@@ -8,9 +8,6 @@
  */
 
 import type { Part } from "./fill";
-/* `whoWeAre` reads five labels that already exist in ./ui rather than writing
-   them out a second time. ./ui imports nothing, so this is acyclic. */
-import { roster, sections } from "./ui";
 
 export const site = {
   name: "GA Management Consultants",
@@ -91,8 +88,8 @@ export const intro =
 /**
  * Company story. `heading` and `lead` carry the homepage section; `mission` is
  * quoted again on /team and /careers. The long `body`/`close` prose that used
- * to run on /who-we-are is gone: that page is now a credibility page in six
- * sections, and its copy lives in `whoWeAre` below.
+ * to run on /who-we-are is gone: that page now tells the firm's story in seven
+ * chapters, and its copy lives in `ourStory` below.
  */
 export const story = {
   /*
@@ -126,258 +123,141 @@ export const story = {
 } as const;
 
 /**
- * /who-we-are — the credibility page.
+ * /who-we-are -- the firm's story, in seven chapters.
  *
- * It answers one question, the only one a CFO is actually asking: can I trust
- * these people with my finance function? That is why the seven chapters of
- * the old `ourStory` are folded into six sections, why nothing is said twice,
- * and why there is not a single figure here that needs a counter to land.
+ * The client supplied this as ONE block of prose. It is split here at SENTENCE
+ * boundaries only, so each chapter can hold its own part and the page can set
+ * that part at the scale its section needs: not a word is reworded, trimmed or
+ * paraphrased on the way in, and the headings are lifted from the same
+ * sentences. Four strings are not the client's -- `scrollCue`, `secondaryCta`
+ * and the two `shift` lines -- and nothing else here is new.
  *
- * DELIBERATELY ABSENT — do not add either one back:
- *   · The "100+ combined years" of `intro` and `story.stats`. That total only
- *     reaches 100 by counting the eight advisers, whom nothing in this file
- *     calls employees or partners. The founders state "13+ years" each, so
- *     the page says "13+ years each" — no arithmetic on an open-ended value,
- *     and no borrowed total.
- *   · Any count-up. A year that animates is a year nobody trusts.
- *
- * REUSED, NOT COPIED. Five labels this page needs already exist, so they are
- * read from ./ui rather than written out a second time: a second copy would
- * drift from the first, and in the copy document identical text collapses
- * into ONE cell, which would silently wire this page's eyebrow to the
- * homepage's. They carry no manifest row of their own; each is edited at the
- * row it already has.
- *
- * The bracketed TODO placeholders are facts the repo does not have. They are
- * deliberate,
- * they are registered in ./todo.ts, `npm run check:todos` lists them, and they
- * must be answered by the client — never replaced with a plausible guess.
+ * `markers`, `disciplines`, `stats`, `shift` and `pillars` are the lists the
+ * prose names in passing, pulled out so the layout can draw them instead of
+ * leaving them buried in a comma-separated clause.
  */
-export const whoWeAre = {
-  hero: {
-    /** `sections.whoWeAre` — the same eyebrow as the homepage block. */
-    eyebrow: sections.whoWeAre,
-    h1: "Chartered Accountants who build finance functions that decide, not just report.",
-    subhead:
-      "GAMCS helps growing businesses move from reporting what happened to deciding what to do next — through strategic finance, FP&A, transaction advisory and digital transformation.",
-    /*
-     * Three plain sentences, never counters: two of the three are not numbers
-     * at all, and the one year on the page is a fact, not an achievement.
-     * "13+ years each" is what the two bios literally say; it is not 26, and
-     * it is not the advisers' 100.
-     */
-    proof: [
-      "Chartered Accountants, 13+ years each",
-      "[[TODO: sectors served]]",
-      "Founded 2023, Gurugram",
-    ],
-    /** `sections.foundersAlt` — "{first} and {second}, founders of {siteName}". */
-    photoAlt: sections.foundersAlt,
-  },
-
-  /**
-   * One paragraph where there used to be three chapters, a logo explainer and
-   * a stats row. Rewritten from the client's own prose: the college, the
-   * qualification, the years alongside each other, what they saw in the data,
-   * and the 2023 founding with the initials folded into the same sentence.
-   */
-  story: {
-    eyebrow: "Our story",
-    h2: "Same classroom. Same qualification. One shared conviction.",
-    body:
-      "Gaurav Malik and Abhinav Aggarwal met in the same college, qualified as Chartered Accountants, and later worked alongside each other in corporate finance. Across those years they built a shared interest in FP&A, business intelligence, financial modelling, dashboards and data-driven decision-making — and saw the same thing from the inside: financial data, read well, does far more than report what already happened. It shapes planning, performance and growth. In 2023 they founded GA Management Consultants LLP to close the gap between financial information and the decisions it should inform — the GA carrying both of their initials and the conviction that brought them together.",
-    /*
-     * Four steps on a hairline, not four boxes.
-     *
-     * Three of the four years are unknown and each placeholder names its own
-     * year. A bare "year" placeholder three times over would be three cells of
-     * identical text, and the copy document collapses identical text into one
-     * cell — so answering one year would silently have answered all three.
-     *
-     * Step four is two references and one line: its title is `site.short` and
-     * its year is `story.stats.foundedValue`. Written out, "GAMCS" and "2023"
-     * would each share a cell with the footer wordmark and the homepage's
-     * founding year — one edit there, two pages changed, silently.
-     */
-    timeline: [
-      {
-        year: "[[TODO: year the founders met at college]]",
-        label: "College",
-        line: "Where both founders met.",
-      },
-      {
-        year: "[[TODO: year both founders qualified as Chartered Accountants]]",
-        label: "Chartered Accountancy",
-        line: "Both qualified as Chartered Accountants.",
-      },
-      {
-        year: "[[TODO: year the founders first worked together in corporate finance]]",
-        label: "Corporate finance",
-        line: "They worked alongside each other in the corporate world.",
-      },
-      {
-        /* `story.stats.foundedValue` — the homepage prints the same year from
-           the same field, so the two can never drift apart and the copy
-           document carries one cell for it, not two. */
-        year: story.stats.foundedValue,
-        label: site.short,
-        line: "The firm was founded, in Gurugram.",
-      },
-    ],
-  },
-
-  /**
-   * The firm's one belief, unchanged — it is the best sentence on the site.
-   *
-   * `emphasis` is a SUBSTRING of `statement` and carries no manifest row on
-   * purpose: two editable cells could drift apart, and the renderer's
-   * `accent()` sets the whole line plain if the phrase is no longer in it.
-   * Edit the statement and this phrase together, here, or not at all.
-   */
-  believe: {
-    statement:
-      "Finance is not just about understanding numbers, but about uncovering the insights behind them.",
-    emphasis: "uncovering the insights behind them",
-    pillars: [
-      {
-        title: "Financial expertise",
-        line: "Chartered Accountants first: every recommendation is grounded in how the numbers are actually built.",
-      },
-      {
-        title: "Analytical thinking",
-        line: "We look for the driver behind the variance, not just the variance.",
-      },
-      {
-        title: "Technology",
-        line: "We build the data, dashboards and models that make insight repeatable, not heroic.",
-      },
-      {
-        title: "A forward-looking perspective",
-        line: "Reporting tells you where you were. We help you decide where to go next.",
-      },
-    ],
-  },
-
-  /**
-   * Replaces the old "Beyond conventional reporting" chapter, which said what
-   * the homepage already says. This section says how the work is done instead,
-   * and hands the homepage's maturity curve the question it is built to answer.
-   */
-  howWeWork: {
-    eyebrow: "How we work",
-    h2: "From what happened to what to do.",
-    columns: [
-      {
-        title: "Finance people, not just tech people",
-        line: "We start from the P&L, not the tool.",
-      },
-      {
-        title: "End-to-end delivery",
-        line: "Advice, build and handover — strategy, models, dashboards and team enablement in one engagement.",
-      },
-      {
-        title: "Built to be owned",
-        line: "We leave your team able to run it without us.",
-      },
-    ],
-    /* One line each, an arrow between them, no panels. The old version drew
-       two tall boxes with a label apiece; the labels said nothing the lines
-       did not. */
-    shift: {
-      from: "What happened, and when.",
-      to: "Why it happened, and what to do.",
+export const ourStory = {
+  eyebrow: "Our Story",
+  heroLines: [
+    "Built on a shared vision.",
+    "Driven by financial insight.",
+    "Focused on the future.",
+  ],
+  chapters: {
+    start: {
+      label: "Where it started",
+      heading: "The same college, the same qualification.",
+      body:
+        "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal, whose professional journey began in the same college, continued through their Chartered Accountancy qualification, and later brought them together in the corporate world.",
     },
-    /** `id="maturity-curve"` on the homepage — components/sections/MaturityCurve.tsx. */
-    maturityLink: {
-      label: "See where your finance function sits on the maturity curve",
-      href: "/#maturity-curve",
+    passion: {
+      label: "A shared passion",
+      /* Not "A shared passion." — that repeated the label directly above it.
+         Lifted from the client's own sentence instead, like every other
+         chapter heading on this page. */
+      heading: "Studied, qualified, and worked alongside each other.",
+      body:
+        "Having studied, qualified, and worked alongside each other, they developed a shared passion for Financial Planning & Analysis (FP&A), business intelligence, financial modelling, dashboards, and data-driven decision-making.",
+    },
+    saw: {
+      label: "What they saw",
+      heading: "Beyond conventional reporting.",
+      body:
+        "Their experience in the corporate environment gave them a deeper understanding of how financial data, when interpreted effectively, can go beyond conventional reporting to become a powerful tool for strategic planning and business growth.",
+    },
+    name: {
+      label: "The name",
+      heading: "The initials, and the vision.",
+      /* Two sentences, so the chapter can set the vision and the naming as
+         separate paragraphs rather than one 400-character column. */
+      body: [
+        "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
+        "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
+      ],
+    },
+    believe: {
+      label: "What we believe",
+      heading:
+        "Finance is not just about understanding numbers, but about uncovering the insights behind them.",
+      body:
+        "By combining financial expertise, analytical thinking, technology, and a forward-looking perspective, we aim to empower businesses to transform complex financial information into actionable insights, informed decisions, and measurable business impact.",
+    },
+    /* No body: the chapter is the two founder cards, which `team.leadership`
+       already carries. */
+    founders: {
+      label: "The founders",
+      /* Same correction as the passion chapter: the heading repeated its own
+         label. The founders' names are the client's words, from the sentence
+         that opens the story. */
+      heading: "Gaurav Malik and Abhinav Aggarwal.",
+    },
+    future: {
+      label: "Where we are going",
+      heading: "See beyond the numbers.",
+      body:
+        "Our journey is rooted in collaboration, driven by curiosity, and shaped by a commitment to helping businesses see beyond the numbers, make smarter decisions, and build a sustainable future.",
     },
   },
-
-  /**
-   * Two short cards, not two biographies: /team holds the full ones.
-   *
-   * `founders` is positional — [0] is `team.leadership[0]`, [1] is [1] — so no
-   * name is written twice. A second "Gaurav Malik" string would share its cell
-   * with the roster's.
-   *
-   * `role` is one string per founder rather than "Co-Founder" plus a focus,
-   * because both halves read as one line and one line is one cell to edit.
-   * Abhinav's drops the word "Specialist" that `team.leadership[1].title`
-   * carries, so the two lines are in the same format; the client's own title is
-   * untouched where it is published, on /team and in the Organization schema.
-   *
-   * `bio` is condensed from the four real paragraphs in `team.leadership`.
-   * Every clause in it is in those paragraphs. Nothing is added — not a sector,
-   * not a client, not a job title, not a deal.
-   *
-   * `previously` lists only the employers the bios name. Both bios say
-   * "including", so neither list is complete, and neither is a career history:
-   * the repo records no roles, no dates and no order.
-   *
-   * `chips` come only from the functional scope each bio states.
-   */
-  leadership: {
-    eyebrow: "Leadership",
-    h2: "Gaurav Malik and Abhinav Aggarwal.",
-    founders: [
-      {
-        role: "Co-Founder · Strategic Finance, FP&A & Transaction Advisory",
-        bio: "A Chartered Accountant with 13+ years of experience, Gaurav works at the intersection of strategic finance, FP&A, financial modelling and transaction advisory. He helps founders, CFOs and leadership teams translate financial and operating data into clearer performance narratives, stronger planning models and better business decisions — not simply producing the numbers, but understanding the commercial drivers behind them.",
-        previously: "EY · Vedanta Limited · Kotak Mahindra Bank",
-        chips: [
-          "Budgeting & forecasting",
-          "Financial modelling",
-          "Due diligence",
-          "Management reporting",
-        ],
-      },
-      {
-        role: "Co-Founder · Digital Transformation",
-        bio: "A Chartered Accountant with 13+ years of experience, Abhinav specialises in FP&A, finance transformation, business analytics and technology-enabled finance. He helps finance teams move beyond spreadsheet-driven reporting toward connected, scalable functions — planning and forecasting, management reporting, business intelligence, automation and the systems that tie financial data to operational decisions.",
-        previously: "Infosys Limited · Sumitomo",
-        chips: [
-          "Finance transformation",
-          "ERP & FP&A implementations",
-          "Process improvement",
-          "Business analytics",
-        ],
-      },
-    ],
-    /** Heads the employer list. Both bios say "including", so the list under
-        it is not a complete career history and carries no dates or order. */
-    previouslyLabel: "Previously",
-    /** 4/5 portraits. `{short}` is site.short; the role is not the full title. */
-    portraitAlt: "{name}, Co-Founder, {short}",
-    /** Accessible name of the icon link; the URLs are team.leadership[n].linkedinUrl. */
-    linkedinLabel: "{name} on LinkedIn",
+  /* The four places chapter one's sentence names, in the order it names them. */
+  markers: [
+    "College",
+    "Chartered Accountancy",
+    "The corporate floor",
     /*
-     * The advisers, in one row: avatar, name, title.
+     * Not a string of its own: the firm's legal name, by reference.
      *
-     * `roster.advisory` heads it, `roster.portraitAlt` names the avatars, and
-     * the names and titles are `team.advisory`'s own. There is no one-line
-     * description for any of the eight anywhere in this file — only a title and
-     * a three-paragraph bio — so the one line IS the title. Writing eight
-     * one-liners would mean writing eight claims nobody has made.
+     * export.mjs collapses rows with identical text into ONE cell carrying
+     * every code that uses it. Written out, this marker shared that cell with
+     * site.name — the brand name behind the logo, the page titles and the
+     * Organization schema — so editing the logo in the copy document would
+     * silently have rewritten the last step of this timeline. Spelling it
+     * "…LLP" only moved the collision onto site.legalName.
+     *
+     * The marker IS the company, so it should not be a second copy of the
+     * company's name that can drift from the first. It reads site.legalName
+     * and carries no manifest row; the legal name's own row is the one place
+     * it is edited.
      */
-    advisersHeading: roster.advisory,
-    adviserAlt: roster.portraitAlt,
-    /** `sections.fullTeam` — the same link as the homepage's founders block. */
-    fullTeam: sections.fullTeam,
-  },
-
-  closing: {
-    h2: "See beyond the numbers.",
-    body: "If your numbers explain the past but not the next move, let’s talk.",
-  },
-
-  /**
-   * Beside `primaryCta` ("Schedule a Call") twice: the hero's second link and
-   * the closing band's second button. ONE string and ONE href, so the same
-   * words never lead to two different places and the copy document shows one
-   * cell instead of two that must be kept in step.
+    site.legalName,
+  ],
+  /* The five the shared-passion sentence lists, in its order. */
+  disciplines: [
+    "Financial Planning & Analysis (FP&A)",
+    "Business intelligence",
+    "Financial modelling",
+    "Dashboards",
+    "Data-driven decision-making",
+  ],
+  /*
+   * Both figures are read out of chapter one's sentence. They are NOT
+   * story.stats: that set is the homepage's, and "2023" reads "founded, in
+   * Gurugram" there. Same year, different point.
    */
-  seeHowWeHelp: { label: "See how we help", href: "/#how-we-help" },
+  stats: [
+    { value: "2023", label: "the year the firm was founded" },
+    { value: "2", label: "founders, and the initials the firm carries" },
+  ],
+  /*
+   * Chapter three turns on one contrast, so the two states get drawn side by
+   * side. The labels are the client's words; `fromLine` and `toLine` are ours
+   * -- the only writing on this page that is not theirs, besides `scrollCue`
+   * and `secondaryCta`.
+   */
+  shift: {
+    fromLabel: "Conventional reporting",
+    fromLine: "What happened, and when.",
+    toLabel: "Strategic planning",
+    toLine: "Why it happened, and what to do.",
+  },
+  /* The four things the closing belief combines, in its order. */
+  pillars: [
+    "Financial expertise",
+    "Analytical thinking",
+    "Technology",
+    "A forward-looking perspective",
+  ],
+  /* Beside primaryCta ("Schedule a Call") at the end of the last chapter. */
+  secondaryCta: "See how we help",
 } as const;
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
