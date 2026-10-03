@@ -203,7 +203,22 @@ export const ourStory = {
     "College",
     "Chartered Accountancy",
     "The corporate floor",
-    "GA Management Consultants",
+    /*
+     * Not a string of its own: the firm's legal name, by reference.
+     *
+     * export.mjs collapses rows with identical text into ONE cell carrying
+     * every code that uses it. Written out, this marker shared that cell with
+     * site.name — the brand name behind the logo, the page titles and the
+     * Organization schema — so editing the logo in the copy document would
+     * silently have rewritten the last step of this timeline. Spelling it
+     * "…LLP" only moved the collision onto site.legalName.
+     *
+     * The marker IS the company, so it should not be a second copy of the
+     * company's name that can drift from the first. It reads site.legalName
+     * and carries no manifest row; the legal name's own row is the one place
+     * it is edited.
+     */
+    site.legalName,
   ],
   /* The five the shared-passion sentence lists, in its order. */
   disciplines: [

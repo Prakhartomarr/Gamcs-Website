@@ -5298,18 +5298,6 @@
   }
  },
  {
-  "code": "WHO-STORY-16",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Step 4 of 4",
-  "kind": "text",
-  "text": "GA Management Consultants",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.markers[3]"
-  }
- },
- {
   "code": "WHO-STORY-17",
   "page": "Who We Are (/who-we-are)",
   "section": "Chapter 01 — Where it started",
