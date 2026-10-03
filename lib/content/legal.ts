@@ -19,7 +19,6 @@ export type LegalBlock =
   | { ul: Part[][] };
 
 export const legal = {
-  kicker: "LEGAL",
   /** Prefix of every "to be confirmed" marker on the privacy policy. */
   tbcPrefix: "To be confirmed: ",
 } as const;

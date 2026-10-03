@@ -1,7 +1,7 @@
 /**
  * Copy carried by the shared chrome and by components that used to hold it as
- * JSX literals: the header, breadcrumbs, cookie consent, the map card, the
- * testimonial reel, the team roster and the small labels inside sections.
+ * JSX literals: the header, cookie consent, the map card, the testimonial
+ * reel, the team roster and the small labels inside sections.
  * Page-level copy is in ./pages.ts, the legal pages in ./legal.ts.
  *
  * Strings with `{slots}` are filled at render time with lib/content/fill.ts.
@@ -51,8 +51,6 @@ export const header = {
   closeNav: "Close navigation",
   goBack: "Go back",
 } as const;
-
-export const crumbs = { home: "Home" } as const;
 
 export const cookie = {
   banner: {
@@ -119,8 +117,6 @@ export const sections = {
 } as const;
 
 export const servicePage = {
-  kicker: "SOLUTIONS",
-  crumb: "Solutions",
   atAGlance: "At a glance",
   readCaseStudies: "Read the case studies",
 } as const;

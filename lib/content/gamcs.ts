@@ -682,7 +682,6 @@ export type FaqItem = {
  */
 export const faq = {
   heading: "Frequently Asked Questions",
-  kicker: "FAQ",
   cta: "Still have questions?",
   /* The copy doc's page 11 meta description, reworded for the five pillars.
      Feeds both the <meta> tag and the /faq intro line, so the two cannot
@@ -1624,7 +1623,6 @@ export type CareerRole = {
     which validates track and location against the ids declared here. */
 export const careers = {
   email: "careers@gamcs.in",
-  kicker: "CAREERS",
   h1: "Help finance teams decide faster.",
   h1Accent: "Build your career doing it.",
   intro:

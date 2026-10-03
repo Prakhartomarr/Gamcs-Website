@@ -5142,30 +5142,6 @@
   }
  },
  {
-  "code": "WHO-HEAD-01",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Who We Are",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.whoWeAre.crumb"
-  }
- },
- {
-  "code": "WHO-HEAD-02",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "WHO WE ARE",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.whoWeAre.kicker"
-  }
- },
- {
   "code": "WHO-STORY-05",
   "page": "Who We Are (/who-we-are)",
   "section": "Hero",
@@ -5718,18 +5694,6 @@
   }
  },
  {
-  "code": "WHO-STORY-04",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Story",
-  "label": "Button",
-  "kind": "button",
-  "text": "Meet our founders",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.whoWeAre.meetFounders"
-  }
- },
- {
   "code": "META-SOL-TITLE",
   "page": "Solutions hub (/solutions)",
   "section": "Browser tab title & search description",
@@ -5763,30 +5727,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.metaDescription"
-  }
- },
- {
-  "code": "SOL-HEAD-01",
-  "page": "Solutions hub (/solutions)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Solutions",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.solutions.crumb"
-  }
- },
- {
-  "code": "SOL-HEAD-02",
-  "page": "Solutions hub (/solutions)",
-  "section": "Page head",
-  "label": "Eyebrow pill",
-  "kind": "text",
-  "text": "Solutions",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.solutions.pill"
   }
  },
  {
@@ -6087,30 +6027,6 @@
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.solutions.closing"
-  }
- },
- {
-  "code": "SOLPAGE-SHARED-01",
-  "page": "Solution pages (shared)",
-  "section": "Shared chrome on the five pillar pages",
-  "label": "Breadcrumb to the hub",
-  "kind": "text",
-  "text": "Solutions",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "servicePage.crumb"
-  }
- },
- {
-  "code": "SOLPAGE-SHARED-02",
-  "page": "Solution pages (shared)",
-  "section": "Shared chrome on the five pillar pages",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "SOLUTIONS",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "servicePage.kicker"
   }
  },
  {
@@ -7854,30 +7770,6 @@
   }
  },
  {
-  "code": "CASE-HEAD-01",
-  "page": "Case Studies (/case-study)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Case Studies",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.caseStudy.crumb"
-  }
- },
- {
-  "code": "CASE-HEAD-02",
-  "page": "Case Studies (/case-study)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "CASE STUDY",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.caseStudy.kicker"
-  }
- },
- {
   "code": "CASE-HEAD-03",
   "page": "Case Studies (/case-study)",
   "section": "Page head",
@@ -8259,30 +8151,6 @@
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.team.description"
-  }
- },
- {
-  "code": "TEAM-HEAD-01",
-  "page": "Team (/team)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Team",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.team.crumb"
-  }
- },
- {
-  "code": "TEAM-HEAD-02",
-  "page": "Team (/team)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "TEAM",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.team.kicker"
   }
  },
  {
@@ -9351,30 +9219,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "careers.intro"
-  }
- },
- {
-  "code": "CAREERS-HEAD-01",
-  "page": "Careers (/careers)",
-  "section": "Panel",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Careers",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.careers.crumb"
-  }
- },
- {
-  "code": "CAREERS-HEAD-02",
-  "page": "Careers (/careers)",
-  "section": "Panel",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "CAREERS",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "careers.kicker"
   }
  },
  {
@@ -10663,30 +10507,6 @@
   }
  },
  {
-  "code": "CONTACT-HEAD-01",
-  "page": "Contact (/contact)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Contact",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.contact.crumb"
-  }
- },
- {
-  "code": "CONTACT-HEAD-02",
-  "page": "Contact (/contact)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "CONTACT",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.contact.kicker"
-  }
- },
- {
   "code": "CONTACT-HEAD-03",
   "page": "Contact (/contact)",
   "section": "Page head",
@@ -11119,30 +10939,6 @@
   }
  },
  {
-  "code": "FAQ-HEAD-01",
-  "page": "FAQ (/faq)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "FAQ",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.faq.crumb"
-  }
- },
- {
-  "code": "FAQ-HEAD-02",
-  "page": "FAQ (/faq)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "FAQ",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "faq.kicker"
-  }
- },
- {
   "code": "FAQ-HEAD-03",
   "page": "FAQ (/faq)",
   "section": "Page head",
@@ -11452,30 +11248,6 @@
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.thankYou.description"
-  }
- },
- {
-  "code": "THANKS-HEAD-01",
-  "page": "Thank you (/thank-you)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Thank you",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.thankYou.crumb"
-  }
- },
- {
-  "code": "THANKS-HEAD-02",
-  "page": "Thank you (/thank-you)",
-  "section": "Page head",
-  "label": "Kicker",
-  "kind": "text",
-  "text": "MESSAGE READY",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.thankYou.kicker"
   }
  },
  {
@@ -11812,30 +11584,6 @@
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.privacy.description"
-  }
- },
- {
-  "code": "LEGAL-PRIV-01",
-  "page": "Privacy Policy (/privacy-policy)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Privacy Policy",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.privacy.crumb"
-  }
- },
- {
-  "code": "LEGAL-PRIV-02",
-  "page": "Privacy Policy (/privacy-policy)",
-  "section": "Page head",
-  "label": "Kicker (both legal pages)",
-  "kind": "text",
-  "text": "LEGAL",
-  "source": {
-   "file": "lib/content/legal.ts",
-   "locator": "legal.kicker"
   }
  },
  {
@@ -12811,18 +12559,6 @@
   }
  },
  {
-  "code": "LEGAL-COOKIE-01",
-  "page": "Cookie Policy (/cookie-policy)",
-  "section": "Page head",
-  "label": "Breadcrumb",
-  "kind": "text",
-  "text": "Cookie Policy",
-  "source": {
-   "file": "lib/content/pages.ts",
-   "locator": "pages.cookiePolicy.crumb"
-  }
- },
- {
   "code": "LEGAL-COOKIE-02",
   "page": "Cookie Policy (/cookie-policy)",
   "section": "Page head",
@@ -13660,18 +13396,6 @@
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "cookie.panel.noteLink"
-  }
- },
- {
-  "code": "SHARED-CRUMB-01",
-  "page": "Cookie banner & shared",
-  "section": "Breadcrumbs",
-  "label": "First crumb on every subpage",
-  "kind": "text",
-  "text": "Home",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "crumbs.home"
   }
  },
  {

@@ -2,8 +2,13 @@ import type { Part } from "./fill";
 
 /**
  * Per-route copy that is not part of a section's own content: the browser tab
- * title and search description of every route, breadcrumb labels, kickers and
- * the small CTAs and lines each page adds around the shared content.
+ * title and search description of every route, and the small CTAs and lines
+ * each page adds around the shared content.
+ *
+ * It used to carry a breadcrumb label and a page-head kicker per route too.
+ * Both were taken off the pages, so the keys went with them rather than
+ * staying on as editable strings that render nowhere. The one survivor is
+ * notFound.kicker, which the 404 still sets.
  *
  * `title` is the page's own name — the "| GA Management Consultants" suffix
  * comes from the template in the root layout, so it is never typed twice.
@@ -20,23 +25,16 @@ export const pages = {
        to work with and the full lead runs 331. */
     description:
       "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally.",
-    crumb: "Who We Are",
-    kicker: "WHO WE ARE",
-    meetFounders: "Meet our founders",
   },
   solutions: {
     /** og/twitter title; the tab title is solutionsHub.titleTag. */
     title: "Solutions",
-    crumb: "Solutions",
-    pill: "Solutions",
     closing: "Not sure which pillar you need? Start with a conversation.",
   },
   caseStudy: {
     title: "Case Studies | Finance, FP&A, BI & Deal Engagements",
     description:
       "Real GAMCS engagements across D2C, SaaS, healthcare, hospitality, pharma, and non-profits — FP&A, BI dashboards, digital transformation, and a $525M PE deal.",
-    crumb: "Case Studies",
-    kicker: "CASE STUDY",
     seeServices: "See our services",
     /** `{count}` is the number of case studies. */
     count: "{count} engagements. Every one of them started with a conversation.",
@@ -46,20 +44,15 @@ export const pages = {
     title: "Our Team | Founders & Advisors",
     description:
       "Meet the founders and advisory board behind GA Management Consultants — 100+ combined years of FP&A, BI, audit, and CFO advisory experience.",
-    crumb: "Team",
-    kicker: "TEAM",
     theirWork: "Their work",
   },
   careers: {
     title: "Careers",
-    crumb: "Careers",
   },
   contact: {
     title: "Contact Us",
     description:
       "Schedule a call with GA Management Consultants to discuss FP&A and CFO advisory, finance team extension, digital transformation, deal advisory, or training.",
-    crumb: "Contact",
-    kicker: "CONTACT",
     lead: "Tell us where your finance function is today and what you need it to do. One of the founders reads every enquiry.",
     detailsKicker: "CONTACT DETAILS",
     generalInquiries: "General inquiries",
@@ -78,14 +71,11 @@ export const pages = {
   },
   faq: {
     title: "Frequently Asked Questions",
-    crumb: "FAQ",
   },
   thankYou: {
     title: "Thanks for getting in touch",
     description:
       "Your enquiry is on its way to GA Management Consultants. Here is what happens next.",
-    crumb: "Thank you",
-    kicker: "MESSAGE READY",
     h1: "Thanks — your details are on their way.",
     lead: "Submitting the form opens your own email app with everything you entered, addressed to {email}. Press send there and it reaches us directly.",
     steps: [
@@ -141,12 +131,10 @@ export const pages = {
     title: "Privacy Policy",
     description:
       "How GA Management Consultants handles the information you share through this website — the contact form, cookies, analytics and third-party services.",
-    crumb: "Privacy Policy",
   },
   cookiePolicy: {
     title: "Cookie Policy",
     description:
       "How GA Management Consultants uses cookies and similar technologies on gamcs.in, and how you can manage your preferences.",
-    crumb: "Cookie Policy",
   },
 } as const;
