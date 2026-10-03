@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CTA from "@/components/CTA";
 import CountUp from "@/components/motion/CountUp";
-import StoryMotion from "@/components/motion/StoryMotion";
+import PageHeadArt from "@/components/PageHeadArt";
 import { ourStory, primaryCta, site, team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { roster, sections } from "@/lib/content/ui";
@@ -20,22 +20,6 @@ export const metadata: Metadata = pageMetadata({
 
 const ch = ourStory.chapters;
 const founders = team.leadership;
-
-/**
- * The rail, and the order of the grounds, in one list. The eight anchors and
- * the eight sections read from the same array, so a chapter cannot be in the
- * rail and missing from the page.
- */
-const RAIL = [
-  { id: "ch-00", label: ourStory.eyebrow },
-  { id: "ch-01", label: ch.start.label },
-  { id: "ch-02", label: ch.passion.label },
-  { id: "ch-03", label: ch.saw.label },
-  { id: "ch-04", label: ch.name.label },
-  { id: "ch-05", label: ch.believe.label },
-  { id: "ch-06", label: ch.founders.label },
-  { id: "ch-07", label: ch.future.label },
-];
 
 /**
  * Sets one phrase of a client sentence in the italic serif accent.
@@ -74,43 +58,39 @@ function ChapterLabel({ n, children }: { n: string; children: string }) {
  * sentence is client copy from `ourStory`, split at sentence boundaries only;
  * the headings are lifted out of the same paragraphs they sit above.
  *
- * Grounds alternate dark / light / grey / dark / light / blue / light / dark, so
- * no two neighbouring chapters share one and a boundary never needs a rule.
+ * Below the head everything is light — white and grey alternating, the way
+ * every other inner page runs. An earlier version put chapters 03, 05 and 07
+ * on dark and brand blue and opened on a full-viewport hero with a chapter
+ * rail; it was a better story and a worse page, because it did not look like
+ * the site it belongs to.
  *
- * Motion: reveals ride the site-wide `.reveal` observer in MotionLayer, the two
- * figures use CountUp, hovers are CSS. Only the hero parallax and the chapter
- * 03 before/after are scroll-linked, and both live in StoryMotion.
+ * Motion: reveals ride the site-wide `.reveal` observer in MotionLayer and the
+ * two figures use CountUp — the same two mechanisms every other page uses.
+ * Nothing here is scroll-linked: no parallax, no pins, no ScrollTrigger.
  */
 export default function WhoWeArePage() {
   return (
     <div className="os">
-      <nav className="os-rail" aria-label="Chapters">
-        {RAIL.map((r) => (
-          <a key={r.id} className="os-rail-dot" href={`#${r.id}`} aria-label={r.label}>
-            <span aria-hidden="true" />
-          </a>
-        ))}
-      </nav>
-
-      {/* ── 00 · the hero ───────────────────────────────────────────── */}
-      <section id="ch-00" className="os-hero">
-        <div className="os-hero-art" aria-hidden="true">
-          <Image src="/page-art/who-we-are.webp" alt="" fill sizes="100vw" priority />
-        </div>
-        <div className="container os-hero-inner">
-          <p className="os-eyebrow">{ourStory.eyebrow}</p>
-          <h1 className="os-hero-h">
+      {/* ── 00 · the page head ──────────────────────────────────────
+          The same band every other inner page opens with — .page-head
+          .page-head--art, 60vh, the photograph running behind the header,
+          copy bottom-aligned. This page used to open on a full-viewport
+          hero with a chapter rail down the side; it read as a different
+          site. The three lines survive as the h1. */}
+      <section id="ch-00" className="page-head page-head--art">
+        <div className="container">
+          <h1 className="os-head-h">
             {ourStory.heroLines.map((line, i) => (
-              <span className="os-hero-line" key={line}>
-                {i === 1 ? accent(line, "financial insight") : line}
+              <span className="os-head-line" key={line}>
+                {line}
                 {/* The lines are block spans; without this the accessible name
                     runs them together as "…vision.Driven by…". */}
                 {i < ourStory.heroLines.length - 1 ? " " : null}
               </span>
             ))}
           </h1>
-          <p className="os-hero-cue">{ourStory.scrollCue}</p>
         </div>
+        <PageHeadArt src="/page-art/who-we-are.webp" />
       </section>
 
       {/* ── 01 · where it started ───────────────────────────────────── */}
@@ -184,7 +164,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 03 · what they saw ──────────────────────────────────────── */}
-      <section id="ch-03" className="os-ch os-ch--dark">
+      <section id="ch-03" className="os-ch os-ch--soft">
         <div className="container">
           <div className="reveal">
             <ChapterLabel n="03">{ch.saw.label}</ChapterLabel>
@@ -204,7 +184,7 @@ export default function WhoWeArePage() {
               <svg width="40" height="18" viewBox="0 0 40 18" fill="none">
                 <path
                   d="M0 9h36M29 1.5L37 9l-8 7.5"
-                  stroke="var(--yellow)"
+                  stroke="var(--blue)"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -256,7 +236,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 05 · what we believe ───────────────────────────────────── */}
-      <section id="ch-05" className="os-ch os-ch--blue">
+      <section id="ch-05" className="os-ch os-ch--paper">
         <div className="container os-narrow">
           <div className="reveal">
             <ChapterLabel n="05">{ch.believe.label}</ChapterLabel>
@@ -313,7 +293,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 07 · where we are going ────────────────────────────────── */}
-      <section id="ch-07" className="os-ch os-ch--dark os-close">
+      <section id="ch-07" className="os-ch os-ch--soft os-close">
         <div className="container">
           <div className="reveal">
             <ChapterLabel n="07">{ch.future.label}</ChapterLabel>
@@ -331,7 +311,6 @@ export default function WhoWeArePage() {
         </div>
       </section>
 
-      <StoryMotion />
     </div>
   );
 }

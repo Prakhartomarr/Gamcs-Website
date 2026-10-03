@@ -5226,18 +5226,6 @@
   }
  },
  {
-  "code": "WHO-STORY-09",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Hero",
-  "label": "Scroll cue",
-  "kind": "text",
-  "text": "Seven chapters",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.scrollCue"
-  }
- },
- {
   "code": "WHO-STORY-10",
   "page": "Who We Are (/who-we-are)",
   "section": "Chapter 01 — Where it started",

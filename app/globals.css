@@ -2583,8 +2583,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    :has() rather than a class on <html>, because the header is a sibling of
    <main> and nothing server-side knows which pages carry art. Where :has()
    is unsupported the pill simply stays as it is today. */
-.shell:has(.page-head.page-head--art) .site-head:not(.is-stuck) .site-bar,
-.shell:has(.os-hero) .site-head:not(.is-stuck) .site-bar{
+.shell:has(.page-head.page-head--art) .site-head:not(.is-stuck) .site-bar{
   background:rgba(255,255,255,.96);
   border-color:rgba(13,24,40,.10);
   box-shadow:0 14px 38px -14px rgba(13,24,40,.26)}
@@ -3663,95 +3662,33 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:var(--paper);
 }
 
-/* ---- the chapter rail -------------------------------------------------
-   Real anchors to real ids. `aria-current` is written by StoryMotion's one
-   IntersectionObserver, so the current chapter is announced and not only
-   drawn. Hidden below 1024px, where there is no gutter to put it in. */
-.os-rail{display:none}
-@media (min-width:1024px){
-  .os-rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:50;
-    display:flex;flex-direction:column;gap:18px}
-  .os-rail-dot{display:flex;align-items:center;min-height:44px;text-decoration:none}
-  /* The rail is fixed and four of the eight chapters scroll under it on a
-     dark ground, so the resting rule cannot take its colour from the section
-     behind it. One mid grey reads against both. */
-  .os-rail-dot > span{display:block;width:26px;height:2px;background:rgba(120,136,152,.6);
-    transform-origin:left center;
-    transition:transform .25s var(--ease-out),background .25s var(--ease-out)}
-  .os-rail-dot:hover > span,
-  .os-rail-dot:focus-visible > span,
-  .os-rail-dot[aria-current] > span{background:var(--yellow);transform:scaleX(2.2)}
-  .os-rail-dot:focus-visible{outline:2px solid var(--yellow);outline-offset:6px;border-radius:2px}
-}
-
+/* ---- 00 · hero -------------------------------------------------------
+/* The page head is the site's own .page-head.page-head--art band now, so
+   everything the full-viewport hero needed is gone. What remains is the
+   h1 itself: three client lines, each on its own row, inside the band's
+   existing type rule. */
 /* ---- chapter shells --------------------------------------------------- */
 .os-ch{padding:136px 0 128px;scroll-margin-top:calc(var(--header-h) + 8px)}
 .os-ch--paper{background:var(--paper);color:var(--ink)}
 .os-ch--soft{background:var(--soft);color:var(--ink)}
-.os-ch--dark{background:var(--os-dark);color:var(--white)}
-.os-ch--blue{background:var(--blue);color:var(--white)}
 
 /* ---- type -------------------------------------------------------------
-   The serif carries the narrative voice and nothing else: the hero, the
-   chapter titles, the chapter-05 pull-quote. Every label, number, caption
-   and button stays on var(--font-sans), so the page still rhymes with the
-   rest of the site. */
-/* The Georgia fallback is not decoration: if --font-serif is ever unset the
-   bare var() would make the declaration invalid and these would silently
-   render in the sans, which is the one thing the type system forbids. */
-.os-h,.os-hero-h,.os-quote{font-family:var(--font-serif,Georgia,"Times New Roman",serif);
-  font-weight:400}
-.os-h{margin:26px 0 0;font-size:clamp(34px,3.6vw,60px);line-height:1.04;letter-spacing:-.012em}
-.os-h--close{max-width:24ch;font-size:clamp(38px,4.4vw,76px);letter-spacing:-.014em}
+   The brand sans throughout. An earlier version set the headings in
+   Instrument Serif; it gave the page a voice no other page had, which was
+   exactly the problem. Sizes are the chapter scale, not the site's section
+   scale, so the narrative still steps down from the page head. */
+.os-h{margin:26px 0 0;font-family:var(--font-sans);font-weight:600;
+  font-size:clamp(30px,3vw,48px);line-height:1.08;letter-spacing:-.025em;color:var(--ink)}
+.os-h--close{max-width:24ch;font-size:clamp(32px,3.4vw,56px);letter-spacing:-.028em}
 
 .os-label{margin:0;font-size:12px;font-weight:600;letter-spacing:.24em;
   text-transform:uppercase;color:var(--blue)}
-.os-ch--dark .os-label{color:var(--blue-light)}
-.os-ch--blue .os-label{color:rgba(255,255,255,.82)}
 
 .os-body{margin:28px 0 0;font-size:17px;line-height:1.75;color:var(--gray);max-width:62ch}
-.os-ch--dark .os-body{color:var(--os-dim)}
-.os-ch--blue .os-body{color:rgba(255,255,255,.86)}
 .os-lead{font-size:18px;line-height:1.8}
 
-/* ---- 00 · hero -------------------------------------------------------
-   One viewport below the header. The header is in the flow and translucent
-   white, so the hero deliberately does NOT pull up under it the way the
-   homepage hero does: over this near-black ground the unstuck nav pill
-   composites to ~#D0D8DC and its labels drop to 4.36:1. */
-/* Runs to the top of the viewport, behind the header, like the homepage hero
-   and the art bands: pulled up by --header-h, with that height given back as
-   padding so the copy still clears the bar. The nav-contrast rule below
-   names .os-hero too, so the pill is opaque from the first frame over this
-   photograph rather than compositing to ~#D0D8DC. */
-.os-hero{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
-  margin-top:calc(-1 * var(--header-h));
-  min-height:100vh;
-  min-height:100svh;
-  padding-top:var(--header-h);
-  overflow:hidden;background:var(--os-dark);scroll-margin-top:var(--header-h)}
-/* Overhangs 8% top and bottom: the headroom the ±6% parallax needs. */
-.os-hero-art{position:absolute;left:0;right:0;top:-8%;height:116%;z-index:0;will-change:transform}
-.os-hero-art img{object-fit:cover;opacity:.5}
-.os-hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(11,22,34,.72) 0%,rgba(11,22,34,.58) 45%,rgba(11,22,34,.94) 100%)}
-/* `.container` sets `margin:auto`, and on a flex child auto block margins
-   absorb the free space and beat justify-content — which centred the copy
-   instead of standing it on the floor of the hero. Only the block axis is
-   reset; the inline auto margins still centre the measure. */
-.os-hero-inner{position:relative;z-index:2;margin-block:auto 0;padding-bottom:88px}
-.os-eyebrow{margin:0;font-size:12px;font-weight:600;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--yellow)}
-/* The comp's 116px cap assumed a condensed display serif and a 1280px
-   measure. The longest line is 28 characters, so the cap is set at the size
-   that keeps all three on one line each in a fallback serif too — a hero
-   line that wraps reads as four lines, not three. */
-.os-hero-h{margin:36px 0 0;font-size:clamp(38px,6vw,92px);line-height:.98;
-  letter-spacing:-.015em;color:var(--white);text-wrap:balance}
-.os-hero-line{display:block}
-.os-hero-h em{font-style:italic;color:#7FB8E0}
-.os-hero-cue{margin:56px 0 0;padding-top:28px;border-top:1px solid rgba(255,255,255,.16);
-  font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--os-micro)}
+.os-head-h{text-wrap:balance}
+.os-head-line{display:block}
 
 /* ---- shared grids ---------------------------------------------------- */
 .os-split{display:grid;grid-template-columns:var(--os-grid);column-gap:32px;align-items:start}
@@ -3802,15 +3739,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-shift{margin:88px 0 0;display:grid;
   grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);align-items:stretch}
 .os-shift-card{border-radius:3px;padding:44px 40px 48px}
-.os-shift-from{border:1px solid rgba(255,255,255,.14)}
-.os-shift-to{border:1px solid rgba(242,194,48,.5);background:rgba(242,194,48,.05)}
+.os-shift-from{border:1px solid var(--line)}
+.os-shift-to{border:1px solid rgba(15,94,151,.4);background:rgba(15,94,151,.04)}
 .os-shift-arrow{display:flex;align-items:center;justify-content:center}
 .os-shift-label{margin:0;font-size:11px;font-weight:600;letter-spacing:.22em;
   text-transform:uppercase;color:var(--os-micro)}
-.os-shift-to .os-shift-label{color:var(--yellow)}
+.os-shift-to .os-shift-label{color:var(--blue)}
 .os-shift-line{margin:28px 0 0;font-size:clamp(24px,2vw,32px);line-height:1.15;
-  letter-spacing:-.02em;font-weight:500;color:rgba(255,255,255,.72)}
-.os-shift-to .os-shift-line{color:var(--white)}
+  letter-spacing:-.02em;font-weight:500;color:var(--gray)}
+.os-shift-to .os-shift-line{color:var(--ink)}
 
 /* ---- 04 · the name ---------------------------------------------------
    Decorative, and marked aria-hidden in the markup: the two names, the
@@ -3818,7 +3755,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-mark{display:flex;flex-direction:column;align-items:center;gap:30px;
   padding:72px 24px;background:var(--soft);border-radius:4px}
 .os-mark-names{margin:0;display:flex;align-items:center;gap:clamp(20px,3vw,44px)}
-.os-mark-names span{font-family:var(--font-serif);font-size:30px;font-style:italic;
+.os-mark-names span{font-size:26px;font-weight:500;
   color:var(--gray)}
 .os-mark-names i{display:block;width:46px;height:1px;background:#C2CACF}
 .os-mark img{display:block;height:clamp(84px,9vw,128px);width:auto;object-fit:contain}
@@ -3828,18 +3765,18 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* ---- 05 · what we believe -------------------------------------------- */
 .os .os-narrow{max-width:1100px}
 .os-quote{margin:40px 0 0;font-size:clamp(32px,4vw,66px);line-height:1.12;
-  letter-spacing:-.012em;color:var(--white)}
-/* 4.1:1 — large text only, and it is: this sets at 32px and up, where AA
-   asks 3:1. Yellow never carries body copy on the blue ground. */
-.os-quote em{font-style:italic;color:var(--yellow)}
-.os-ch--blue .os-lead{margin-top:44px;max-width:62ch}
+  letter-spacing:-.012em;color:var(--ink)}
+/* The emphasis was yellow italic on a brand-blue ground. On paper that is
+   1.7:1, so it is the page's blue instead — 6.8:1 — and upright, since the
+   italic only existed to belong to the serif that is no longer here. */
+.os-quote em{font-style:normal;color:var(--blue)}
 .os-pillars{margin:60px 0 0;padding:0;list-style:none;
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  border-top:1px solid rgba(255,255,255,.26)}
+  border-top:1px solid var(--line)}
 .os-pillars li{padding:26px 24px 0}
 .os-pillars li:first-child{padding-left:0}
 .os-pillars li:last-child{padding-right:0}
-.os-pillars h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.005em;color:var(--white)}
+.os-pillars h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.005em;color:var(--ink)}
 
 /* ---- 06 · the founders -----------------------------------------------
    No hover-revealed copy. The comp carried a bio line over each plate; the
@@ -3882,7 +3819,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    above is already the finished state. These three are the CSS hovers,
    which are the only thing left that moves. */
 @media (prefers-reduced-motion:reduce){
-  .os-founder-shot img,.os-disc,.os-rail-dot > span,.os-founders-link a{transition:none}
+  .os-founder-shot img,.os-disc,.os-founders-link a{transition:none}
   .os-founder:hover .os-founder-shot img{transform:none}
 }
 
@@ -3894,10 +3831,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    two-up rows rather than four. Nothing pins and nothing parallaxes. */
 @media (max-width:767px){
   .os-ch{padding:72px 0 64px}
-  .os-hero{min-height:auto}
-  .os-hero-inner{padding-top:96px;padding-bottom:56px}
-  .os-hero-h{margin-top:24px;max-width:none}
-  .os-hero-cue{margin-top:36px;padding-top:20px}
   .os-h{margin-top:18px}
 
   .os-split,.os-head,.os-head--wide{display:block}
@@ -3926,8 +3859,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-mark-names i{width:28px}
 
   .os-quote{margin-top:28px}
-  .os-ch--blue .os-lead{margin-top:28px}
-  .os-pillars{margin-top:40px;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .os-pillars{margin-top:40px;grid-template-columns:repeat(2,minmax(0,1fr))}
   .os-pillars li{padding:20px 16px 0}
   .os-pillars li:nth-child(odd){padding-left:0}
   .os-pillars li:nth-child(even){padding-right:0}

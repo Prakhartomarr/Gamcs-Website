@@ -143,7 +143,6 @@ export const ourStory = {
     "Driven by financial insight.",
     "Focused on the future.",
   ],
-  scrollCue: "Seven chapters",
   chapters: {
     start: {
       label: "Where it started",
