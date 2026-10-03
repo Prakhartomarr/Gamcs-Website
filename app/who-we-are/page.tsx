@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CTA from "@/components/CTA";
-import CountUp from "@/components/motion/CountUp";
-import PageHeadArt from "@/components/PageHeadArt";
-import { ourStory, primaryCta, site, team } from "@/lib/content/gamcs";
+import JsonLd from "@/components/JsonLd";
+import { primaryCta, site, team, whoWeAre } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
-import { roster, sections } from "@/lib/content/ui";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
+import { foundersSchema } from "@/lib/schema";
 
 const t = pages.whoWeAre;
 
@@ -16,13 +16,43 @@ export const metadata: Metadata = pageMetadata({
   title: t.title,
   description: t.description,
   path: "/who-we-are",
+  /* This page's own title already ends in the brand, so it opts out of the
+     layout's "%s | GA Management Consultants" template rather than shipping
+     the name twice in two different forms. */
+  brandedTitle: true,
 });
 
-const ch = ourStory.chapters;
-const founders = team.leadership;
+const c = whoWeAre;
+const [gaurav, abhinav] = team.leadership;
 
 /**
- * Sets one phrase of a client sentence in the italic serif accent.
+ * A fact the repo does not have yet, rendered so it cannot ship unnoticed.
+ *
+ * The strings live in `lib/content` as `[[TODO: what is needed]]`; this only
+ * recognises the shape. In development it draws a dashed amber underline and
+ * names the missing field in the title attribute. In production it renders the
+ * string and nothing else — no wrapper, no class — so the outline can never
+ * reach a visitor. `NODE_ENV` is inlined at build time, so the branch costs
+ * nothing at runtime.
+ *
+ * Anything that is NOT a placeholder passes straight through, which is why
+ * every value that might one day be answered can be wrapped unconditionally.
+ */
+const DEV = process.env.NODE_ENV !== "production";
+const TODO = /^\[\[TODO:\s*(.+?)\s*\]\]$/;
+
+function Todo({ children }: { children: string }) {
+  const m = TODO.exec(children);
+  if (!m || !DEV) return <>{children}</>;
+  return (
+    <span className="os-todo" title={`Unanswered: ${m[1]}`}>
+      {children}
+    </span>
+  );
+}
+
+/**
+ * Sets one phrase of a client sentence in the accent colour.
  *
  * It splits, it never rewrites: the rendered text content is character-for-
  * character the string in `lib/content`. If that string is ever edited and the
@@ -40,277 +70,289 @@ function accent(text: string, phrase: string) {
   );
 }
 
-/** `01 — WHERE IT STARTED`. The numeral is scaffolding, the label is copy. */
-function ChapterLabel({ n, children }: { n: string; children: string }) {
+/* The wordmark, the same two paths as the roster's icon — an "n" with a short
+   left stem, which is the one that does not read as "ih" at this size. */
+function LinkedInIcon() {
   return (
-    <p className="os-label">
-      <span aria-hidden="true">{n} — </span>
-      {children}
-    </p>
+    <svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" aria-hidden="true">
+      <path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+    </svg>
   );
 }
 
+/* `whoWeAre.leadership.founders` is positional — [0] is team.leadership[0] —
+   so the cards are zipped here rather than repeating either name. */
+const LEADERS = c.leadership.founders.map((copy, i) => ({
+  ...copy,
+  person: team.leadership[i],
+}));
+
 /**
- * Our Story: the firm's founding, in seven chapters after the hero.
+ * /who-we-are — the credibility page.
  *
- * This replaces the `.page-head` + `.firm-story` pair that used to be here —
- * chapter 00 is the head of the page, so there is no band above it. Every
- * sentence is client copy from `ourStory`, split at sentence boundaries only;
- * the headings are lifted out of the same paragraphs they sit above.
+ * Six sections answering one question: can a CFO trust these two people with
+ * their finance function. That is why this is not the seven-chapter founders'
+ * biography it replaces, and why the two figures that used to animate are
+ * gone — a year that counts up reads as a claim being sold. The "100+
+ * combined years" is absent on purpose; `whoWeAre`'s own comment says why.
  *
- * Below the head everything is light — white and grey alternating, the way
- * every other inner page runs. An earlier version put chapters 03, 05 and 07
- * on dark and brand blue and opened on a full-viewport hero with a chapter
- * rail; it was a better story and a worse page, because it did not look like
- * the site it belongs to.
+ * Every section sits in one `.container` with one left edge. Grounds run
+ * white, white, soft grey, white, white, soft grey. The uppercase
+ * letter-spaced treatment belongs to the eyebrows and to nothing else.
  *
- * Motion: reveals ride the site-wide `.reveal` observer in MotionLayer and the
- * two figures use CountUp — the same two mechanisms every other page uses.
- * Nothing here is scroll-linked: no parallax, no pins, no ScrollTrigger.
+ * Motion is the site-wide `.reveal` observer in MotionLayer — one
+ * IntersectionObserver for the whole site, already carrying the
+ * reduced-motion and no-JS branches — shortened to a 200ms fade-up by the
+ * stylesheet. No GSAP, no ScrollTrigger and no CountUp on this route.
  */
 export default function WhoWeArePage() {
   return (
     <div className="os">
-      {/* ── 00 · the page head ──────────────────────────────────────
-          The same band every other inner page opens with — .page-head
-          .page-head--art, 60vh, the photograph running behind the header,
-          copy bottom-aligned. This page used to open on a full-viewport
-          hero with a chapter rail down the side; it read as a different
-          site. The three lines survive as the h1. */}
-      <section id="ch-00" className="page-head page-head--art">
-        <div className="container">
-          <h1 className="os-head-h">
-            {ourStory.heroLines.map((line, i) => (
-              <span className="os-head-line" key={line}>
-                {line}
-                {/* The lines are block spans; without this the accessible name
-                    runs them together as "…vision.Driven by…". */}
-                {i < ourStory.heroLines.length - 1 ? " " : null}
+      {/* Both founders as Person nodes: name, the client's own job title, the
+          real personal LinkedIn profile and the firm, by reference to the
+          Organization the layout already emits. Nothing else is established —
+          see lib/schema.ts. */}
+      <JsonLd data={foundersSchema()} />
+
+      {/* ── 01 · hero ─────────────────────────────────────────────────
+          The stock skyscraper and the `.page-head--art` band are gone. The
+          page opens on the two people it is asking you to trust, beside the
+          claim they are making. */}
+      <section className="os-s">
+        <div className="container os-hero">
+          <div className="os-hero-copy reveal">
+            <p className="section-kicker os-eyebrow">{c.hero.eyebrow}</p>
+            <h1 className="fin-h2 os-h1">{c.hero.h1}</h1>
+            <p className="os-body os-sub">{c.hero.subhead}</p>
+
+            {/* Three facts, as text. Not counters: two of them are not numbers
+                at all, and the one year on the page is a fact, not a score. */}
+            <ul className="os-proof">
+              {c.hero.proof.map((p) => (
+                <li key={p}>
+                  <Todo>{p}</Todo>
+                </li>
+              ))}
+            </ul>
+
+            <div className="os-hero-ctas">
+              <CTA href={primaryCta.href} data-cta="who-hero" icon="diagonal">
+                {primaryCta.label}
+              </CTA>
+              {/* A text link, not CTA's `tertiary` tier — that one is
+                  `.fsvc-link`, a bordered pill, which would have put two
+                  pills side by side and given the hero two primary actions. */}
+              <span className="os-link os-link--inline">
+                <Link href={c.seeHowWeHelp.href}>{c.seeHowWeHelp.label} →</Link>
               </span>
-            ))}
-          </h1>
-        </div>
-        <PageHeadArt src="/page-art/who-we-are.webp" />
-      </section>
-
-      {/* ── 01 · where it started ───────────────────────────────────── */}
-      <section id="ch-01" className="os-ch os-ch--paper">
-        <div className="container">
-          <div className="os-split">
-            <div className="os-col reveal">
-              <ChapterLabel n="01">{ch.start.label}</ChapterLabel>
-              <h2 className="os-h">{ch.start.heading}</h2>
-              <p className="os-body">{ch.start.body}</p>
-
-              <dl className="os-stats">
-                {ourStory.stats.map((s) => (
-                  <div key={s.value}>
-                    <dt className="os-stat-value">
-                      <CountUp value={s.value} />
-                    </dt>
-                    <dd className="os-stat-label">{s.label}</dd>
-                  </div>
-                ))}
-              </dl>
             </div>
-
-            <figure className="os-figure reveal">
-              <Image
-                src={team.foundersPhoto}
-                alt={fill(sections.foundersAlt, {
-                  first: founders[0].name,
-                  second: founders[1].name,
-                  siteName: site.name,
-                })}
-                width={880}
-                height={880}
-                sizes="(max-width: 767px) 92vw, (max-width: 1279px) 50vw, 620px"
-              />
-            </figure>
           </div>
 
-          {/* the four places the paragraph above names, in order */}
-          <ol className="os-markers reveal">
-            {ourStory.markers.map((m) => (
-              <li key={m}>
-                <span className="os-marker-dot" aria-hidden="true" />
-                <h3 className="os-marker-h">{m}</h3>
+          <figure className="os-hero-fig reveal">
+            <Image
+              src={team.foundersPhoto}
+              alt={fill(c.hero.photoAlt, {
+                first: gaurav.name,
+                second: abhinav.name,
+                siteName: site.short,
+              })}
+              width={880}
+              height={880}
+              sizes="(max-width: 767px) 92vw, 420px"
+              priority
+            />
+          </figure>
+        </div>
+      </section>
+
+      {/* ── 02 · our story ────────────────────────────────────────────
+          One paragraph and four steps, where there used to be three chapters,
+          a logo explainer and a stats row. The naming point is a clause now
+          rather than a band with a large mark in it. */}
+      <section className="os-s">
+        <div className="container">
+          <div className="os-story reveal">
+            <p className="section-kicker os-eyebrow">{c.story.eyebrow}</p>
+            <h2 className="fin-h2 os-h2">{c.story.h2}</h2>
+            <p className="os-body">{c.story.body}</p>
+          </div>
+
+          {/* A hairline with a dot per step. No cells and no boxes: the rule is
+              one border on the list, the dots are pseudo-elements on the items,
+              so the line always meets the dot it belongs to. */}
+          <ol className="os-tl reveal">
+            {c.story.timeline.map((s) => (
+              <li key={s.label}>
+                <p className="os-tl-year">
+                  <Todo>{s.year}</Todo>
+                </p>
+                <h3 className="os-tl-h">{s.label}</h3>
+                <p className="os-tl-p">{s.line}</p>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      {/* ── 02 · a shared passion ───────────────────────────────────── */}
-      <section id="ch-02" className="os-ch os-ch--soft">
+      {/* ── 03 · what we believe ──────────────────────────────────────
+          The statement is the client's own sentence, unchanged. Below it the
+          four words it combines, each given one line of meaning — hairlines
+          between them, no cards: a card around a title and a sentence is a
+          box drawn for its own sake. */}
+      <section className="os-s os-s--soft">
         <div className="container">
-          <div className="os-head reveal">
-            <div>
-              <ChapterLabel n="02">{ch.passion.label}</ChapterLabel>
-              <h2 className="os-h">{ch.passion.heading}</h2>
-            </div>
-            <p className="os-body">{ch.passion.body}</p>
-          </div>
-
-          <div className="os-discs reveal">
-            {ourStory.disciplines.map((d, i) => (
-              <article className="os-disc" key={d}>
-                <p className="os-disc-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="os-disc-h">{d}</h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 03 · what they saw ──────────────────────────────────────── */}
-      <section id="ch-03" className="os-ch os-ch--soft">
-        <div className="container">
-          <div className="reveal">
-            <ChapterLabel n="03">{ch.saw.label}</ChapterLabel>
-            <div className="os-head os-head--wide">
-              <h2 className="os-h">{ch.saw.heading}</h2>
-              <p className="os-body">{ch.saw.body}</p>
-            </div>
-          </div>
-
-          {/* the shift, drawn as two states of one thing */}
-          <div className="os-shift reveal">
-            <div className="os-shift-card os-shift-from">
-              <p className="os-shift-label">{ourStory.shift.fromLabel}</p>
-              <p className="os-shift-line">{ourStory.shift.fromLine}</p>
-            </div>
-            <div className="os-shift-arrow" aria-hidden="true">
-              <svg width="40" height="18" viewBox="0 0 40 18" fill="none">
-                <path
-                  d="M0 9h36M29 1.5L37 9l-8 7.5"
-                  stroke="var(--blue)"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <div className="os-shift-card os-shift-to">
-              <p className="os-shift-label">{ourStory.shift.toLabel}</p>
-              <p className="os-shift-line">{ourStory.shift.toLine}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 04 · the name ──────────────────────────────────────────── */}
-      <section id="ch-04" className="os-ch os-ch--paper">
-        <div className="container">
-          <div className="os-split os-split--mid">
-            <div className="os-col reveal">
-              <ChapterLabel n="04">{ch.name.label}</ChapterLabel>
-              <h2 className="os-h">{ch.name.heading}</h2>
-              {ch.name.body.map((p) => (
-                <p className="os-body" key={p.slice(0, 40)}>
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            <div className="os-mark reveal" aria-hidden="true">
-              <p className="os-mark-names">
-                <span>{founders[0].name.split(" ")[0]}</span>
-                <i />
-                <span>{founders[1].name.split(" ")[0]}</span>
-              </p>
-              <svg width="18" height="30" viewBox="0 0 18 30" fill="none">
-                <path
-                  d="M9 0v24M1.5 17.5L9 25l7.5-7.5"
-                  stroke="#C2CACF"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <Image src={site.logo} alt="" width={534} height={339} sizes="200px" />
-              <p className="os-mark-caption">{site.legalName}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 05 · what we believe ───────────────────────────────────── */}
-      <section id="ch-05" className="os-ch os-ch--paper">
-        <div className="container os-narrow">
-          <div className="reveal">
-            <ChapterLabel n="05">{ch.believe.label}</ChapterLabel>
-            {/* The chapter's heading, set at pull-quote scale — not a
-                <blockquote>: it is the firm's own line, there is nothing to
-                cite, and chapter 05 would otherwise be the one section with no
-                heading in the outline. */}
-            <h2 className="os-quote">
-              {accent(ch.believe.heading, "uncovering the insights behind them")}
+          <div className="os-stmt-wrap reveal">
+            <h2 className="fin-h2 os-stmt">
+              {accent(c.believe.statement, c.believe.emphasis)}
             </h2>
-            <p className="os-body os-lead">{ch.believe.body}</p>
           </div>
 
-          <ul className="os-pillars reveal">
-            {ourStory.pillars.map((p) => (
-              <li key={p}>
-                <h3>{p}</h3>
+          <ul className="os-grid reveal" style={{ "--os-cols": 4 } as CSSProperties}>
+            {c.believe.pillars.map((p) => (
+              <li key={p.title}>
+                <h3 className="os-grid-h">{p.title}</h3>
+                <p className="os-grid-p">{p.line}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ── 06 · the founders ──────────────────────────────────────── */}
-      <section id="ch-06" className="os-ch os-ch--paper">
+      {/* ── 04 · how we work ──────────────────────────────────────────── */}
+      <section className="os-s">
         <div className="container">
           <div className="reveal">
-            <ChapterLabel n="06">{ch.founders.label}</ChapterLabel>
-            <h2 className="os-h">{ch.founders.heading}</h2>
+            <p className="section-kicker os-eyebrow">{c.howWeWork.eyebrow}</p>
+            <h2 className="fin-h2 os-h2">{c.howWeWork.h2}</h2>
           </div>
 
-          <div className="os-founders reveal">
-            {founders.map((p) => (
-              <article className="os-founder" key={p.name}>
-                <div className="os-founder-shot">
-                  <Image
-                    src={p.photo}
-                    alt={fill(roster.portraitAlt, { name: p.name, title: p.title })}
-                    width={880}
-                    height={1100}
-                    sizes="(max-width: 767px) 92vw, 48vw"
-                  />
-                </div>
-                <h3 className="os-founder-name">{p.name}</h3>
-                <p className="os-founder-title">{p.title}</p>
-              </article>
+          <ul className="os-grid reveal" style={{ "--os-cols": 3 } as CSSProperties}>
+            {c.howWeWork.columns.map((col) => (
+              <li key={col.title}>
+                <h3 className="os-grid-h">{col.title}</h3>
+                <p className="os-grid-p">{col.line}</p>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <p className="os-founders-link reveal">
-            <Link href="/team">{sections.fullTeam} →</Link>
+          {/* The shift, on one line. It used to be two 150px-tall cards with a
+              label and a sentence each; the contrast is in the words. */}
+          <p className="os-compare reveal">
+            <span className="os-compare-from">{c.howWeWork.shift.from}</span>
+            <span className="os-compare-arrow" aria-hidden="true">
+              →
+            </span>
+            <span className="os-compare-to">{c.howWeWork.shift.to}</span>
+          </p>
+
+          <p className="os-link reveal">
+            <Link href={c.howWeWork.maturityLink.href}>
+              {c.howWeWork.maturityLink.label} →
+            </Link>
           </p>
         </div>
       </section>
 
-      {/* ── 07 · where we are going ────────────────────────────────── */}
-      <section id="ch-07" className="os-ch os-ch--soft os-close">
+      {/* ── 05 · leadership ───────────────────────────────────────────
+          Two cards, and the portraits are a 200px column inside them rather
+          than half the container each. The advisers are a row of faces, names
+          and their own job titles — nothing in `lib/content` carries a
+          one-line description for any of the eight, so none is written. */}
+      <section className="os-s">
         <div className="container">
           <div className="reveal">
-            <ChapterLabel n="07">{ch.future.label}</ChapterLabel>
-            <h2 className="os-h os-h--close">{ch.future.heading}</h2>
-            <p className="os-body os-lead">{ch.future.body}</p>
+            <p className="section-kicker os-eyebrow">{c.leadership.eyebrow}</p>
+            <h2 className="fin-h2 os-h2">{c.leadership.h2}</h2>
+          </div>
+
+          <ul className="os-ld reveal">
+            {LEADERS.map(({ person, role, bio, previously, chips }) => (
+              <li className="os-ld-card" key={person.name}>
+                <figure className="os-ld-shot">
+                  <Image
+                    src={person.photo}
+                    alt={fill(c.leadership.portraitAlt, {
+                      name: person.name,
+                      short: site.short,
+                    })}
+                    width={800}
+                    height={1040}
+                    sizes="(max-width: 767px) 180px, 170px"
+                  />
+                </figure>
+
+                <div className="os-ld-body">
+                  <h3 className="os-ld-name">{person.name}</h3>
+                  <p className="os-ld-role">{role}</p>
+                  <p className="os-ld-bio">{bio}</p>
+                  <p className="os-ld-prev">
+                    <b>{c.leadership.previouslyLabel}</b> {previously}
+                  </p>
+                  <ul className="os-ld-chips">
+                    {chips.map((chip) => (
+                      <li key={chip}>{chip}</li>
+                    ))}
+                  </ul>
+                  <a
+                    className="os-ld-li"
+                    href={person.linkedinUrl}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={fill(c.leadership.linkedinLabel, { name: person.name })}
+                  >
+                    <LinkedInIcon />
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <h3 className="os-adv-h reveal">{c.leadership.advisersHeading}</h3>
+          <ul className="os-adv reveal">
+            {team.advisory.map((a) => (
+              <li key={a.name}>
+                <Image
+                  src={a.photo}
+                  alt={fill(c.leadership.adviserAlt, { name: a.name, title: a.title })}
+                  width={104}
+                  height={104}
+                  sizes="52px"
+                />
+                <div>
+                  <p className="os-adv-n">{a.name}</p>
+                  {/* Their real title. There is no one-line description field
+                      for anyone on the roster, and a sentence about an adviser
+                      that nobody wrote is a sentence invented. */}
+                  <p className="os-adv-t">{a.title}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <p className="os-link reveal">
+            <Link href="/team">{c.leadership.fullTeam} →</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* ── 06 · closing ──────────────────────────────────────────────── */}
+      <section className="os-s os-s--soft">
+        <div className="container">
+          <div className="os-close reveal">
+            <h2 className="fin-h2 os-h2">{c.closing.h2}</h2>
+            <p className="os-body">{c.closing.body}</p>
             <div className="os-ctas">
               <CTA href={primaryCta.href} data-cta="firm-story" icon="diagonal">
                 {primaryCta.label}
               </CTA>
-              <CTA href="/solutions" tier="secondary" icon="arrow">
-                {ourStory.secondaryCta}
+              <CTA href={c.seeHowWeHelp.href} tier="secondary" icon="arrow">
+                {c.seeHowWeHelp.label}
               </CTA>
             </div>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

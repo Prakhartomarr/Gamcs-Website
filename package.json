@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "//prebuild": "Lists the [[TODO]] placeholders before every build, loudly but without failing: the site genuinely ships with them today. Make it strict (drop TODO_CHECK) the day the list is empty.",
+    "prebuild": "TODO_CHECK=warn node scripts/check-todos.mjs",
+    "check:todos": "node scripts/check-todos.mjs",
     "start": "next start",
     "lint": "next lint"
   },

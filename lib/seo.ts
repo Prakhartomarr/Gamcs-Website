@@ -39,24 +39,39 @@ export const OG_IMAGE = {
  * `title` is the page's own name — the "| GA Management Consultants" suffix
  * comes from the template in the root layout, so it is never typed twice.
  */
+/**
+ * `brandedTitle` is for a page whose title already names the brand.
+ *
+ * app/layout.tsx sets `title.template = "%s | GA Management Consultants"`, so
+ * every page gets the brand appended exactly once — which is right until a
+ * page's own title contains it already. /who-we-are is one: its title ends
+ * "… | GAMCS — Strategic Finance & FP&A Consultants", so the template made it
+ * "… GAMCS … | GA Management Consultants", the brand twice in two forms.
+ *
+ * Setting it opts that page out of the template and out of the same suffix on
+ * the OG and Twitter titles, which are built here rather than by Next.
+ */
 export function pageMetadata({
   title,
   description,
   path,
   type = "website",
+  brandedTitle = false,
 }: {
   title: string;
   description: string;
   path: string;
   type?: "website" | "article";
+  brandedTitle?: boolean;
 }): Metadata {
   const url = absolute(path);
+  const social = brandedTitle ? title : `${title} | ${site.name}`;
   return {
-    title,
+    title: brandedTitle ? { absolute: title } : title,
     description,
     alternates: { canonical: url },
     openGraph: {
-      title: `${title} | ${site.name}`,
+      title: social,
       description,
       url,
       siteName: site.name,
@@ -66,7 +81,7 @@ export function pageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${site.name}`,
+      title: social,
       description,
       images: [OG_IMAGE.url],
     },

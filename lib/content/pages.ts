@@ -20,11 +20,22 @@ export const pages = {
       "GAMCS helps CFOs and PE/VC portfolios move from reporting to real-time decision intelligence — FP&A, team extension, digital transformation, and deal advisory.",
   },
   whoWeAre: {
-    title: "Who We Are | Our Story",
-    /* The lead's own opening sentence — a meta description has ~160 characters
-       to work with and the full lead runs 331. */
+    /*
+     * CAUTION: the root layout's title template appends " | GA Management
+     * Consultants" to every page title, so the tab title ships as
+     * "Who We Are | GAMCS — Strategic Finance & FP&A Consultants | GA
+     * Management Consultants" — the brand twice, in both its short and its
+     * long form. The title itself is the one specified; dropping the suffix
+     * for this route needs `title: { absolute }`, which `pageMetadata` in
+     * lib/seo.ts does not accept today. Fix it there or on the route, not by
+     * weakening this string.
+     */
+    title: "Who We Are | GAMCS — Strategic Finance & FP&A Consultants",
+    /* 154 characters. Says what the page proves — who they are and what they
+       do — and nothing the repo cannot back: "13+ years each" is what both
+       bios state, and no combined total is implied. */
     description:
-      "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally.",
+      "The Chartered Accountants behind GAMCS: 13+ years each in strategic finance, FP&A, transaction advisory and digital transformation for growing businesses.",
   },
   solutions: {
     /** og/twitter title; the tab title is solutionsHub.titleTag. */

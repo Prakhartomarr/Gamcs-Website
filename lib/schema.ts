@@ -62,6 +62,42 @@ export function websiteSchema() {
   };
 }
 
+/**
+ * Both founders, as Person nodes, for /who-we-are.
+ *
+ * Every field here is one the repo can point at: the name, the title the
+ * client wrote, the real personal LinkedIn profile, and the firm they work
+ * for (by reference, so there is one Organization node on the page, not two).
+ *
+ * Deliberately absent, because none of it is established anywhere in this
+ * codebase: `alumniOf` (no college is named), `hasCredential` (the repo says
+ * "Chartered Accountant" and nothing about the institute, the year or the
+ * grade), `award`, `knowsAbout`, and any years-of-experience figure. A lie in
+ * JSON-LD is still a lie, and it is the version Google quotes back.
+ *
+ * `jobTitle` is `team.leadership[n].title` untouched — the client's own
+ * wording, including the "Specialist" that /who-we-are drops from its own
+ * role line so the two founders read in one format.
+ *
+ * Render it with the same component as the other two:
+ *   <JsonLd data={foundersSchema()} />
+ */
+export function foundersSchema() {
+  const id = (name: string) =>
+    `${absolute("/who-we-are")}#${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": team.leadership.map((m) => ({
+      "@type": "Person",
+      "@id": id(m.name),
+      name: m.name,
+      jobTitle: m.title,
+      sameAs: [m.linkedinUrl],
+      worksFor: { "@id": ORG_ID },
+    })),
+  };
+}
+
 export function faqSchema() {
   return {
     "@context": "https://schema.org",
