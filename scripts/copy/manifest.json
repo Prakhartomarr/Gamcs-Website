@@ -4662,12 +4662,24 @@
   }
  },
  {
+  "code": "HOME-TESTI-03A",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Byline format when the author has no role on file",
+  "kind": "text",
+  "text": "{name} — {company}",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "sections.bylineNoTitle"
+  }
+ },
+ {
   "code": "HOME-TESTI-04",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 1 quote",
+  "label": "Quote 1 of 6 — Patrick Hughes, HungerRush",
   "kind": "text",
-  "text": "We had the pleasure of working with GA Managements and their expertise was instrumental in delivering actionable insights for us. Their meticulous approach to their work has consistently exceeded our expectations. The strategic approach and attention to detail made a significant impact in our day to day working. We highly recommend their services for anyone seeking top-tier FP&A consultancy.",
+  "text": "GAMCS supported HungerRush’s FP&A and accounting through a critical phase of our ownership transition. The team established our ARR/MRR reporting logic and cohort models, helped professionalise our monthly close, and supported a smooth handover to our in-house team. Gaurav and Rishi were responsive, thorough, and genuinely invested in getting things right. Their work gave us a strong foundation as we scaled our finance function",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[0].quote"
@@ -4677,9 +4689,9 @@
   "code": "HOME-TESTI-05",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 1 name",
+  "label": "Quote 1 — author name",
   "kind": "text",
-  "text": "Amol Khedkar",
+  "text": "Patrick Hughes",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[0].name"
@@ -4689,100 +4701,292 @@
   "code": "HOME-TESTI-06",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 1 job title",
+  "label": "Quote 1 — company",
   "kind": "text",
-  "text": "Deputy Manager",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[0].title"
-  }
- },
- {
-  "code": "HOME-TESTI-07",
-  "page": "Home (/)",
-  "section": "Testimonials",
-  "label": "Testimonial 1 company",
-  "kind": "text",
-  "text": "Two Brothers India Farms",
+  "text": "HungerRush",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[0].company"
   }
  },
  {
-  "code": "HOME-TESTI-08",
+  "code": "HOME-TESTI-07",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 1 logo, image alt text",
+  "label": "Quote 1 — logo, screen reader",
   "kind": "alt",
-  "text": "Two Brothers India Farms",
+  "text": "HungerRush",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[0].logo.alt"
   }
  },
  {
-  "code": "HOME-TESTI-09",
+  "code": "HOME-TESTI-08",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 2 quote",
+  "label": "Quote 2 of 6 — Tejas Parik, Akshar Business Consulting",
   "kind": "text",
-  "text": "I have had the pleasure of working with GA Management Consultants on several projects, and they have been fantastic every time. They are so quick and have great attention to detail. I know I can rely on them, no matter how complex or time-sensitive the task is. They have been a huge support to me, and I wouldn't hesitate to recommend them to anyone else!",
+  "text": "Working with GAMCS has been an absolute pleasure. The team brings a solutions-first mindset, strong financial acumen, and a clear understanding of what CFOs and senior leaders need. Its ability to build and lead technology-led FP&A teams, navigate constraints, and find practical solutions makes GAMCS a valuable partner for finance leaders focused on automation",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[1].quote"
   }
  },
  {
-  "code": "HOME-TESTI-10",
+  "code": "HOME-TESTI-09",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 2 name",
+  "label": "Quote 2 — author name",
   "kind": "text",
-  "text": "Arta Ramiraj",
+  "text": "Tejas Parik",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[1].name"
   }
  },
  {
-  "code": "HOME-TESTI-11",
+  "code": "HOME-TESTI-10",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 2 job title",
+  "label": "Quote 2 — company",
   "kind": "text",
-  "text": "Co-Founder",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[1].title"
-  }
- },
- {
-  "code": "HOME-TESTI-12",
-  "page": "Home (/)",
-  "section": "Testimonials",
-  "label": "Testimonial 2 company",
-  "kind": "text",
-  "text": "Three Sixty Finance, UK",
+  "text": "Akshar Business Consulting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[1].company"
   }
  },
  {
-  "code": "HOME-TESTI-13",
+  "code": "HOME-TESTI-11",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Testimonial 2 logo, image alt text",
+  "label": "Quote 2 — logo, screen reader",
   "kind": "alt",
-  "text": "Threesixty Finance",
+  "text": "Akshar Business Consulting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[1].logo.alt"
   }
  },
  {
+  "code": "HOME-TESTI-12",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 3 of 6 — Gaurav Mehra, Basilic Fly Studios",
+  "kind": "text",
+  "text": "GAMCS was a trusted FP&A advisor throughout our engagement. The team helped us build robust budgeting and forecasting models and streamline monthly reporting. They brought a proactive, collaborative approach and a strong understanding of our evolving business needs",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[2].quote"
+  }
+ },
+ {
+  "code": "HOME-TESTI-13",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 3 — author name",
+  "kind": "text",
+  "text": "Gaurav Mehra",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[2].name"
+  }
+ },
+ {
   "code": "HOME-TESTI-14",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 3 — company",
+  "kind": "text",
+  "text": "Basilic Fly Studios",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[2].company"
+  }
+ },
+ {
+  "code": "HOME-TESTI-15",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 3 — logo, screen reader",
+  "kind": "alt",
+  "text": "Basilic Fly Studios",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[2].logo.alt"
+  }
+ },
+ {
+  "code": "HOME-TESTI-16",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 4 of 6 — Amol Khedkar, Two Brothers India Farms",
+  "kind": "text",
+  "text": "GAMCS helped enhance our financial transparency through intuitive dashboards and KPIs. The team has a remarkable ability to distil complex financial data into clear, actionable insights, empowering our teams to make informed, strategic decisions with confidence.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[3].quote"
+  }
+ },
+ {
+  "code": "HOME-TESTI-17",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 4 — author name",
+  "kind": "text",
+  "text": "Amol Khedkar",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[3].name"
+  }
+ },
+ {
+  "code": "HOME-TESTI-18",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 4 — author role",
+  "kind": "text",
+  "text": "Deputy Manager",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[3].title"
+  }
+ },
+ {
+  "code": "HOME-TESTI-19",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 4 — company",
+  "kind": "text",
+  "text": "Two Brothers India Farms",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[3].company"
+  }
+ },
+ {
+  "code": "HOME-TESTI-20",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 4 — logo, screen reader",
+  "kind": "alt",
+  "text": "Two Brothers India Farms",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[3].logo.alt"
+  }
+ },
+ {
+  "code": "HOME-TESTI-21",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 5 of 6 — Venkat, Corestack",
+  "kind": "text",
+  "text": "I had the pleasure of working with GAMCS to develop our FP&A capabilities. The team quickly understood our forecasting models, cost structures, and reporting requirements, translating them into intuitive, scalable tools that streamlined budgeting and reduced manual effort. They anticipated challenges, proposed practical solutions, and remained responsive and open to feedback throughout.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[4].quote"
+  }
+ },
+ {
+  "code": "HOME-TESTI-22",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 5 — author name",
+  "kind": "text",
+  "text": "Venkat",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[4].name"
+  }
+ },
+ {
+  "code": "HOME-TESTI-23",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 5 — company",
+  "kind": "text",
+  "text": "Corestack",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[4].company"
+  }
+ },
+ {
+  "code": "HOME-TESTI-24",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 5 — logo, screen reader",
+  "kind": "alt",
+  "text": "Corestack",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[4].logo.alt"
+  }
+ },
+ {
+  "code": "HOME-TESTI-25",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 6 of 6 — Arta Ramaj, Three 6ixty Finance",
+  "kind": "text",
+  "text": "I’ve worked with the GAMCS team for three years and have found them highly capable and dependable. Their financial modelling and technical skills are first-class, and they explain complex work clearly to different audiences. They are collaborative, quick to grasp new challenges, and committed to high-quality delivery. I’d recommend them without hesitation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[5].quote"
+  }
+ },
+ {
+  "code": "HOME-TESTI-26",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 6 — author name",
+  "kind": "text",
+  "text": "Arta Ramaj",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[5].name"
+  }
+ },
+ {
+  "code": "HOME-TESTI-27",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 6 — author role",
+  "kind": "text",
+  "text": "Co-Founder",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[5].title"
+  }
+ },
+ {
+  "code": "HOME-TESTI-28",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 6 — company",
+  "kind": "text",
+  "text": "Three 6ixty Finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[5].company"
+  }
+ },
+ {
+  "code": "HOME-TESTI-29",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 6 — logo, screen reader",
+  "kind": "alt",
+  "text": "Three 6ixty Finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[5].logo.alt"
+  }
+ },
+ {
+  "code": "HOME-TESTI-30",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Pause button, screen-reader name",
@@ -4794,7 +4998,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-15",
+  "code": "HOME-TESTI-31",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Play button, screen-reader name",
@@ -4806,7 +5010,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-16",
+  "code": "HOME-TESTI-32",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Previous button, screen-reader name",
@@ -4818,7 +5022,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-17",
+  "code": "HOME-TESTI-33",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Next button, screen-reader name",

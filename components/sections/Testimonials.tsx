@@ -27,9 +27,16 @@ export default function Testimonials() {
        missing file degrades the way an unmatched company already does. */
     const hasArt =
       logo && existsSync(path.join(process.cwd(), "public", logo.src));
+    /* Only two of the six authors have a role on file. The template is picked
+       on that rather than the role being defaulted, because `fill` leaves an
+       unknown slot as written and an empty one as nothing — either way the
+       byline keeps the comma that belonged to the missing title. */
+    const title = "title" in t ? t.title : undefined;
     return {
       quote: t.quote,
-      author: fill(sections.byline, { name: t.name, title: t.title, company: t.company }),
+      author: title
+        ? fill(sections.byline, { name: t.name, title, company: t.company })
+        : fill(sections.bylineNoTitle, { name: t.name, company: t.company }),
       monogram: initials(t.name),
       image: hasArt ? logo.src : undefined,
       alt: hasArt ? logo.alt : undefined,

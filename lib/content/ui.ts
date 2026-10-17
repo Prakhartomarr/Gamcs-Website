@@ -112,8 +112,12 @@ export const sections = {
   fullTeam: "Meet the full team",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",
-  /** Testimonial byline. */
+  /** Testimonial byline, for a quote whose author has a role on file. */
   byline: "{name} — {title}, {company}",
+  /* And for one who does not. Four of the six testimonials were supplied with
+     a company and no role; filling the template above would have left
+     "Patrick Hughes — , HungerRush" with the comma hanging off an empty slot. */
+  bylineNoTitle: "{name} — {company}",
 } as const;
 
 export const servicePage = {
