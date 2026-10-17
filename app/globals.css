@@ -992,21 +992,38 @@ html{font-size:112.5%}
 .ach-card-value,.ach-card-label{position:relative;z-index:1}
 .ach-card-value{font:100 clamp(60px,7.2222vw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
 .ach-card-label{margin:18px 0 0;font-size:1rem;line-height:1.4;color:rgba(255,255,255,.88)}
-.ach-figures{display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}
+/* The qualifier. It is what keeps the figure above it honest, so it is not
+   optional decoration — but it is subordinate, hence the step down. */
+.ach-card-note{position:relative;z-index:1;margin:8px 0 0;max-width:46ch;
+  font-size:0.8333rem;line-height:1.45;color:rgba(255,255,255,.72)}
+/* Four figures now, not three. The gap carries the rhythm rather than
+   space-between, which stretched the last one away from the rest once the
+   notes made each block taller. */
+.ach-figures{display:flex;flex-direction:column;gap:clamp(20px,2.2vw,30px);padding:6px 0}
 .ach-figure{display:flex;flex-direction:column;justify-content:flex-end}
-.ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-muted);text-wrap:balance}
-.ach-figure-value{margin-top:10px;font:100 clamp(44px,4.1667vw,60px)/1 var(--font-sans);
+.ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-deep);
+  font-weight:500;text-wrap:balance}
+.ach-figure-note{margin:8px 0 0;font-size:0.7222rem;line-height:1.5;color:var(--ink-muted);
+  text-wrap:pretty}
+.ach-figure-value{margin-top:10px;font:100 clamp(38px,3.3vw,50px)/1 var(--font-sans);
   letter-spacing:-.035em;color:var(--ink-deep)}
 /* the container is pinned at 920 here, so the type holds still with it */
 @media(min-width:1024px) and (max-width:1279px){
   .ach-card-value{font-size:74px}
-  .ach-figure-value{font-size:44px}
+  .ach-figure-value{font-size:40px}
 }
 
 @media(max-width:1023px){
   .ach-grid{grid-template-columns:1fr;row-gap:48px}
   .ach-card{min-height:320px}
-  .ach-figures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;padding:0}
+  /* 2x2, not 3-across: four figures in three columns leaves an orphan, and
+     each block is taller now that it carries a note. */
+  .ach-figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:32px;row-gap:36px;padding:0}
+  /* Grid cells stretch to the row, and the base rule bottom-aligns them — so a
+     two-line note on one side pushed its label 19px off its neighbour's. Top
+     aligns the pair on their labels instead; the notes are free to run long. */
+  .ach-figure{justify-content:flex-start}
 }
 @media(max-width:767px){
   .metrics .section-head{margin-bottom:32px}
@@ -1035,7 +1052,13 @@ html{font-size:112.5%}
   .ach-card-value{font-size:60px;letter-spacing:-.03em}
   .ach-card-label{margin-top:10px;font-size:15px;line-height:1.4;color:#fff}
   .ach-figures{display:flex;flex-direction:column;gap:0}
-  .ach-figure{flex-direction:column-reverse;padding:28px 0;border-top:1px solid var(--line)}
+  /* order, not column-reverse. The DOM is label / value / note so CountUp and
+     the reading order stay put; reversing a three-child flex column would have
+     stood the qualifier on top of its own figure. */
+  .ach-figure{flex-direction:column;padding:28px 0;border-top:1px solid var(--line)}
+  .ach-figure-value{order:1}
+  .ach-figure-label{order:2}
+  .ach-figure-note{order:3}
   .ach-figure-value{margin:0;font-size:56px;letter-spacing:-.03em}
   .ach-figure-label{margin-top:8px;font-size:14px;line-height:1.4;color:var(--ink-muted)}
 }

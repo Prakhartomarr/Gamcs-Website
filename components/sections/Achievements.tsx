@@ -33,10 +33,11 @@ import { achievements } from "@/lib/content/gamcs";
  *   360-1920: the lightest pixel still gives 6.2:1 for the number and 5.8:1
  *   for the label, so the design's scrims are used unchanged.
  */
-/* Positions in achievements.items: the $525Mn deal card, then 10,000+ hours,
-   90% TAT and 100+ models. By index, so the figures can be re-worded. */
-const CARD = 6;
-const FIGURES = [3, 0, 7] as const;
+/* Every published figure is shown: the transaction value on the card, the
+   other four beside it. Positions rather than values, so a figure can be
+   re-worded in the content file without touching this. */
+const CARD = 0;
+const FIGURES = [1, 2, 3, 4] as const;
 
 export default function Achievements() {
   const card = achievements.items[CARD];
@@ -67,6 +68,7 @@ export default function Achievements() {
                 <CountUp value={card.value} />
               </div>
               <p className="ach-card-label">{card.label}</p>
+              <p className="ach-card-note">{card.note}</p>
             </article>
           )}
 
@@ -77,6 +79,7 @@ export default function Achievements() {
                 <div className="ach-figure-value">
                   <CountUp value={m.value} />
                 </div>
+                <p className="ach-figure-note">{m.note}</p>
               </article>
             ))}
           </div>

@@ -325,20 +325,48 @@ export const services = {
 } as const;
 
 /** "Our Achievements — Our clients have experienced" */
+/**
+ * The figures the section publishes, client-supplied and verbatim.
+ *
+ * `note` qualifies the claim and is not decoration: "$2Bn+" on its own reads
+ * as a firm-wide total, and "Across selected transaction engagements" is what
+ * makes it true. Every figure renders all three lines.
+ *
+ * All five are shown. The previous set carried eight, of which the section
+ * only ever rendered four — the other four were rows in the copy document for
+ * text that appeared nowhere.
+ */
 export const achievements = {
   heading: "Our Achievements",
   lead: "Our clients have experienced",
   items: [
-    { value: "90%", label: "reduction in TAT for deliverables" },
-    { value: "5+", label: "data warehousing solutions implemented" },
-    { value: "100%", label: "accuracy in financial records and compliance" },
-    { value: "10,000+", label: "hours saved annually through automation" },
-    { value: "30%", label: "reduction in operational costs" },
-    { value: "50+", label: "high impact dashboards built" },
-    /* "Million", not "Mn". CountUp splits the string on its digits and keeps
-       the prefix and suffix on every frame, so the space rides the count. */
-    { value: "$525 Million", label: "PE Acquisition Deal facilitation" },
-    { value: "100+", label: "bespoke financial models built" },
+    /* The card. CountUp splits the string on its digits and keeps the prefix
+       and suffix on every frame, so "$" and "Bn+" ride the count. */
+    {
+      value: "$2Bn+",
+      label: "Transaction value supported",
+      note: "Across selected transaction engagements.",
+    },
+    {
+      value: "30+",
+      label: "Businesses supported",
+      note: "Across finance advisory, managed services and transformation.",
+    },
+    {
+      value: "100+",
+      label: "Financial models, budgets & plans delivered",
+      note: "Across planning, forecasting and business modelling.",
+    },
+    {
+      value: "50+",
+      label: "Dashboards built",
+      note: "For reporting, performance monitoring and decision support.",
+    },
+    {
+      value: "10+",
+      label: "Data warehouses built",
+      note: "Connecting financial and operational data for reporting and analysis.",
+    },
   ],
 } as const;
 

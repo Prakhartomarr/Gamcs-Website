@@ -4436,10 +4436,10 @@
  {
   "code": "HOME-IMPACT-03",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 1 value",
+  "section": "Our achievements",
+  "label": "Figure 1 (card) — the number",
   "kind": "text",
-  "text": "90%",
+  "text": "$2Bn+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[0].value"
@@ -4448,10 +4448,10 @@
  {
   "code": "HOME-IMPACT-04",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 1 label",
+  "section": "Our achievements",
+  "label": "Figure 1 — what it counts",
   "kind": "text",
-  "text": "reduction in TAT for deliverables",
+  "text": "Transaction value supported",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[0].label"
@@ -4460,169 +4460,157 @@
  {
   "code": "HOME-IMPACT-05",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 2 value (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 1 — qualifier beneath it",
   "kind": "text",
-  "text": "5+",
+  "text": "Across selected transaction engagements.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[0].note"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-06",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 2 (figure 1 of 4) — the number",
+  "kind": "text",
+  "text": "30+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[1].value"
   }
  },
  {
-  "code": "HOME-IMPACT-06",
+  "code": "HOME-IMPACT-07",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 2 label (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 2 — what it counts",
   "kind": "text",
-  "text": "data warehousing solutions implemented",
+  "text": "Businesses supported",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[1].label"
   }
  },
  {
-  "code": "HOME-IMPACT-07",
+  "code": "HOME-IMPACT-08",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 3 value (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 2 — qualifier beneath it",
   "kind": "text",
-  "text": "100%",
+  "text": "Across finance advisory, managed services and transformation.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[1].note"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-09",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 3 (figure 2 of 4) — the number",
+  "kind": "text",
+  "text": "100+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[2].value"
   }
  },
  {
-  "code": "HOME-IMPACT-08",
+  "code": "HOME-IMPACT-10",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 3 label (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 3 — what it counts",
   "kind": "text",
-  "text": "accuracy in financial records and compliance",
+  "text": "Financial models, budgets & plans delivered",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[2].label"
   }
  },
  {
-  "code": "HOME-IMPACT-09",
+  "code": "HOME-IMPACT-11",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 4 value",
+  "section": "Our achievements",
+  "label": "Figure 3 — qualifier beneath it",
   "kind": "text",
-  "text": "10,000+",
+  "text": "Across planning, forecasting and business modelling.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[2].note"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-12",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 4 (figure 3 of 4) — the number",
+  "kind": "text",
+  "text": "50+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[3].value"
   }
  },
  {
-  "code": "HOME-IMPACT-10",
+  "code": "HOME-IMPACT-13",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 4 label",
+  "section": "Our achievements",
+  "label": "Figure 4 — what it counts",
   "kind": "text",
-  "text": "hours saved annually through automation",
+  "text": "Dashboards built",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[3].label"
   }
  },
  {
-  "code": "HOME-IMPACT-11",
+  "code": "HOME-IMPACT-14",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 5 value (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 4 — qualifier beneath it",
   "kind": "text",
-  "text": "30%",
+  "text": "For reporting, performance monitoring and decision support.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[3].note"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-15",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 5 (figure 4 of 4) — the number",
+  "kind": "text",
+  "text": "10+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[4].value"
   }
  },
  {
-  "code": "HOME-IMPACT-12",
+  "code": "HOME-IMPACT-16",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 5 label (not shown on the homepage)",
+  "section": "Our achievements",
+  "label": "Figure 5 — what it counts",
   "kind": "text",
-  "text": "reduction in operational costs",
+  "text": "Data warehouses built",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[4].label"
   }
  },
  {
-  "code": "HOME-IMPACT-13",
-  "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 6 value (not shown on the homepage)",
-  "kind": "text",
-  "text": "50+",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[5].value"
-  }
- },
- {
-  "code": "HOME-IMPACT-14",
-  "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 6 label (not shown on the homepage)",
-  "kind": "text",
-  "text": "high impact dashboards built",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[5].label"
-  }
- },
- {
-  "code": "HOME-IMPACT-15",
-  "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 7 value",
-  "kind": "text",
-  "text": "$525 Million",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[6].value"
-  }
- },
- {
-  "code": "HOME-IMPACT-16",
-  "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 7 label",
-  "kind": "text",
-  "text": "PE Acquisition Deal facilitation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[6].label"
-  }
- },
- {
   "code": "HOME-IMPACT-17",
   "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 8 value",
+  "section": "Our achievements",
+  "label": "Figure 5 — qualifier beneath it",
   "kind": "text",
-  "text": "100+",
+  "text": "Connecting financial and operational data for reporting and analysis.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[7].value"
-  }
- },
- {
-  "code": "HOME-IMPACT-18",
-  "page": "Home (/)",
-  "section": "Achievements",
-  "label": "Figure 8 label",
-  "kind": "text",
-  "text": "bespoke financial models built",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "achievements.items[7].label"
+   "locator": "achievements.items[4].note"
   }
  },
  {
