@@ -8,29 +8,33 @@ import { initials } from "@/lib/utils";
 
 
 /**
- * Both testimonials, quoted in full, in the scroll-reel carousel.
+ * All six testimonials, quoted in full, in the scroll-reel carousel.
  *
- * The featured tile shows the client's COMPANY logo, not a portrait. The
- * original reasoning still holds — the live site publishes no photograph of
- * either person, and a stock face on a real named person's quote would
- * misrepresent them — but a company mark carries no such risk, and it
- * identifies the client better than their initials did.
+ * The featured tile shows the author's PORTRAIT. It used to show the company
+ * logo, and the reasoning then was sound — the site published no photograph of
+ * either person and a stock face on a real person's quote would misrepresent
+ * them. The client has since supplied the real six, so the tile shows the
+ * person who said the words. The company has not gone anywhere: it is in the
+ * byline under every quote and on the logo wall above this section.
  *
- * Logos are keyed off the company string rather than array position, so
- * reordering or adding a testimonial cannot silently mis-attribute a mark.
- * Anything unmatched falls back to the person's initials, as before.
+ * `imageFit="cover"` is not a detail. The reel desaturates and sheens a tile
+ * only when it is filling it — which is right for a face and wrong for a logo
+ * — and it is what makes six headshots shot in six different places, against
+ * beige, white, grey and a red disc, read as one set.
+ *
+ * A portrait missing from disk falls back to the person's initials rather than
+ * to a hole.
  */
 export default function Testimonials() {
   const items = testimonials.items.map((t) => {
-    const logo = "logo" in t ? t.logo : undefined;
-    /* Falls back to the person's initials if the artwork is not on disk, so a
-       missing file degrades the way an unmatched company already does. */
+    const photo = "photo" in t ? t.photo : undefined;
+    /* Falls back to the person's initials if the portrait is not on disk. */
     const hasArt =
-      logo && existsSync(path.join(process.cwd(), "public", logo.src));
-    /* Only two of the six authors have a role on file. The template is picked
-       on that rather than the role being defaulted, because `fill` leaves an
-       unknown slot as written and an empty one as nothing — either way the
-       byline keeps the comma that belonged to the missing title. */
+      photo && existsSync(path.join(process.cwd(), "public", photo.src));
+    /* All six carry a role today. The template is still picked on its presence
+       rather than the role being defaulted, because `fill` leaves an unknown
+       slot as written and an empty one as nothing — either way a title-less
+       author would ship the comma that belonged to the missing title. */
     const title = "title" in t ? t.title : undefined;
     return {
       quote: t.quote,
@@ -38,8 +42,8 @@ export default function Testimonials() {
         ? fill(sections.byline, { name: t.name, title, company: t.company })
         : fill(sections.bylineNoTitle, { name: t.name, company: t.company }),
       monogram: initials(t.name),
-      image: hasArt ? logo.src : undefined,
-      alt: hasArt ? logo.alt : undefined,
+      image: hasArt ? photo.src : undefined,
+      alt: hasArt ? photo.alt : undefined,
     };
   });
 
@@ -57,7 +61,7 @@ export default function Testimonials() {
           testimonials={items}
           charStaggerMs={2}
           className="mx-auto bg-white"
-          imageFit="contain"
+          imageFit="cover"
           autoAdvanceMs={4000}
         />
       </div>

@@ -4725,12 +4725,12 @@
   "code": "HOME-TESTI-08",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 1 — logo, screen reader",
+  "label": "Quote 1 — portrait, screen reader",
   "kind": "alt",
-  "text": "HungerRush",
+  "text": "Portrait of Patrick Hughes",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[0].logo.alt"
+   "locator": "testimonials.items[0].photo.alt"
   }
  },
  {
@@ -4785,12 +4785,12 @@
   "code": "HOME-TESTI-13",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 2 — logo, screen reader",
+  "label": "Quote 2 — portrait, screen reader",
   "kind": "alt",
-  "text": "Akshar Business Consulting",
+  "text": "Portrait of Tejas Parikh",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[1].logo.alt"
+   "locator": "testimonials.items[1].photo.alt"
   }
  },
  {
@@ -4845,12 +4845,12 @@
   "code": "HOME-TESTI-18",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 3 — logo, screen reader",
+  "label": "Quote 3 — portrait, screen reader",
   "kind": "alt",
-  "text": "Basilic Fly Studios",
+  "text": "Portrait of Gaurav Mehra",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[2].logo.alt"
+   "locator": "testimonials.items[2].photo.alt"
   }
  },
  {
@@ -4905,12 +4905,12 @@
   "code": "HOME-TESTI-23",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 4 — logo, screen reader",
+  "label": "Quote 4 — portrait, screen reader",
   "kind": "alt",
-  "text": "Two Brothers India Farms",
+  "text": "Portrait of Amol Khedkar",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[3].logo.alt"
+   "locator": "testimonials.items[3].photo.alt"
   }
  },
  {
@@ -4965,12 +4965,12 @@
   "code": "HOME-TESTI-28",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 5 — logo, screen reader",
+  "label": "Quote 5 — portrait, screen reader",
   "kind": "alt",
-  "text": "Corestack",
+  "text": "Portrait of Venkata S Santhanaraman",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[4].logo.alt"
+   "locator": "testimonials.items[4].photo.alt"
   }
  },
  {
@@ -5025,12 +5025,12 @@
   "code": "HOME-TESTI-33",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 6 — logo, screen reader",
+  "label": "Quote 6 — portrait, screen reader",
   "kind": "alt",
-  "text": "Three 6ixty Finance",
+  "text": "Portrait of Arta Ramaj",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "testimonials.items[5].logo.alt"
+   "locator": "testimonials.items[5].photo.alt"
   }
  },
  {

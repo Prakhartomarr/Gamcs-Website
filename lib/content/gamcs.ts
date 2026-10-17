@@ -528,8 +528,6 @@ export const team = {
   },
 };
 
-/** `logo` is optional artwork beside the quote; a missing file or field falls
-    back to the person's initials. */
 /**
  * Client testimonials, in the order the client supplied them.
  *
@@ -537,13 +535,15 @@ export const team = {
  * repunctuated. Four of the six end without a full stop because that is how
  * they were given to us; adding one would be editing a named person's words.
  *
- * `title` is optional. Amol and Arta carry the roles the site already knew;
- * the other four were supplied with a company and no role, and inventing one
- * for a real named person is the one thing this file will not do. The byline
- * template switches on its presence (sections.byline / sections.bylineNoTitle).
+ * `photo` is the author's own portrait. Each one is mapped to its person from
+ * the client's own captions, never inferred from appearance: the section puts
+ * a real face against a real name beside the words they said, and getting that
+ * pairing wrong is the worst thing this file could do. The section renders
+ * them desaturated under a sheen, which is what makes six headshots taken in
+ * six different places read as one set. A missing file falls back to the
+ * person's initials rather than to nothing.
  *
- * `logo` is matched to the company by the section, not by array position, so
- * reordering cannot silently mis-attribute a mark.
+ * `title` is every author's own, as the client gave it.
  */
 export const testimonials = {
   heading: "What our clients say about us",
@@ -552,7 +552,7 @@ export const testimonials = {
       name: "Patrick Hughes",
       title: "CFO",
       company: "HungerRush",
-      logo: { src: "/logos/clients/hungerrush.png", alt: "HungerRush" },
+      photo: { src: "/testimonials/patrick-hughes.webp", alt: "Portrait of Patrick Hughes" },
       quote:
         "GAMCS supported HungerRush\u2019s FP&A and accounting through a critical phase of our ownership transition. The team established our ARR/MRR reporting logic and cohort models, helped professionalise our monthly close, and supported a smooth handover to our in-house team. Gaurav and Rishi were responsive, thorough, and genuinely invested in getting things right. Their work gave us a strong foundation as we scaled our finance function",
     },
@@ -560,7 +560,7 @@ export const testimonials = {
       name: "Tejas Parikh",
       title: "Founder",
       company: "Akshar Business Consulting",
-      logo: { src: "/logos/clients/akshar.png", alt: "Akshar Business Consulting" },
+      photo: { src: "/testimonials/tejas-parikh.webp", alt: "Portrait of Tejas Parikh" },
       quote:
         "Working with GAMCS has been an absolute pleasure. The team brings a solutions-first mindset, strong financial acumen, and a clear understanding of what CFOs and senior leaders need. Its ability to build and lead technology-led FP&A teams, navigate constraints, and find practical solutions makes GAMCS a valuable partner for finance leaders focused on automation",
     },
@@ -568,7 +568,7 @@ export const testimonials = {
       name: "Gaurav Mehra",
       title: "CFO",
       company: "Basilic Fly Studios",
-      logo: { src: "/logos/clients/basilic-fly.png", alt: "Basilic Fly Studios" },
+      photo: { src: "/testimonials/gaurav-mehra.webp", alt: "Portrait of Gaurav Mehra" },
       quote:
         "GAMCS was a trusted FP&A advisor throughout our engagement. The team helped us build robust budgeting and forecasting models and streamline monthly reporting. They brought a proactive, collaborative approach and a strong understanding of our evolving business needs",
     },
@@ -576,7 +576,7 @@ export const testimonials = {
       name: "Amol Khedkar",
       title: "Deputy Manager",
       company: "Two Brothers India Farms",
-      logo: { src: "/logos/clients/two-brothers-new.png", alt: "Two Brothers India Farms" },
+      photo: { src: "/testimonials/amol-khedkar.webp", alt: "Portrait of Amol Khedkar" },
       quote:
         "GAMCS helped enhance our financial transparency through intuitive dashboards and KPIs. The team has a remarkable ability to distil complex financial data into clear, actionable insights, empowering our teams to make informed, strategic decisions with confidence.",
     },
@@ -584,7 +584,7 @@ export const testimonials = {
       name: "Venkata S Santhanaraman",
       title: "CFO",
       company: "Corestack",
-      logo: { src: "/logos/clients/corestack.png", alt: "Corestack" },
+      photo: { src: "/testimonials/venkata-santhanaraman.webp", alt: "Portrait of Venkata S Santhanaraman" },
       quote:
         "I had the pleasure of working with GAMCS to develop our FP&A capabilities. The team quickly understood our forecasting models, cost structures, and reporting requirements, translating them into intuitive, scalable tools that streamlined budgeting and reduced manual effort. They anticipated challenges, proposed practical solutions, and remained responsive and open to feedback throughout.",
     },
@@ -592,7 +592,7 @@ export const testimonials = {
       name: "Arta Ramaj",
       title: "Founder",
       company: "Three 6ixty Finance",
-      logo: { src: "/logos/clients/threesixty.png", alt: "Three 6ixty Finance" },
+      photo: { src: "/testimonials/arta-ramaj.webp", alt: "Portrait of Arta Ramaj" },
       quote:
         "I\u2019ve worked with the GAMCS team for three years and have found them highly capable and dependable. Their financial modelling and technical skills are first-class, and they explain complex work clearly to different audiences. They are collaborative, quick to grasp new challenges, and committed to high-quality delivery. I\u2019d recommend them without hesitation",
     },
