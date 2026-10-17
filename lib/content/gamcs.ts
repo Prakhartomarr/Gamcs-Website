@@ -550,13 +550,15 @@ export const testimonials = {
   items: [
     {
       name: "Patrick Hughes",
+      title: "CFO",
       company: "HungerRush",
       logo: { src: "/logos/clients/hungerrush.png", alt: "HungerRush" },
       quote:
         "GAMCS supported HungerRush\u2019s FP&A and accounting through a critical phase of our ownership transition. The team established our ARR/MRR reporting logic and cohort models, helped professionalise our monthly close, and supported a smooth handover to our in-house team. Gaurav and Rishi were responsive, thorough, and genuinely invested in getting things right. Their work gave us a strong foundation as we scaled our finance function",
     },
     {
-      name: "Tejas Parik",
+      name: "Tejas Parikh",
+      title: "Founder",
       company: "Akshar Business Consulting",
       logo: { src: "/logos/clients/akshar.png", alt: "Akshar Business Consulting" },
       quote:
@@ -578,7 +580,8 @@ export const testimonials = {
         "GAMCS helped enhance our financial transparency through intuitive dashboards and KPIs. The team has a remarkable ability to distil complex financial data into clear, actionable insights, empowering our teams to make informed, strategic decisions with confidence.",
     },
     {
-      name: "Venkat",
+      name: "Venkata S Santhanaraman",
+      title: "CFO",
       company: "Corestack",
       logo: { src: "/logos/clients/corestack.png", alt: "Corestack" },
       quote:
@@ -586,7 +589,7 @@ export const testimonials = {
     },
     {
       name: "Arta Ramaj",
-      title: "Co-Founder",
+      title: "Founder",
       company: "Three 6ixty Finance",
       logo: { src: "/logos/clients/threesixty.png", alt: "Three 6ixty Finance" },
       quote:

@@ -4701,6 +4701,18 @@
   "code": "HOME-TESTI-06",
   "page": "Home (/)",
   "section": "Testimonials",
+  "label": "Quote 1 — author role",
+  "kind": "text",
+  "text": "CFO",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[0].title"
+  }
+ },
+ {
+  "code": "HOME-TESTI-07",
+  "page": "Home (/)",
+  "section": "Testimonials",
   "label": "Quote 1 — company",
   "kind": "text",
   "text": "HungerRush",
@@ -4710,7 +4722,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-07",
+  "code": "HOME-TESTI-08",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 1 — logo, screen reader",
@@ -4722,10 +4734,10 @@
   }
  },
  {
-  "code": "HOME-TESTI-08",
+  "code": "HOME-TESTI-09",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 2 of 6 — Tejas Parik, Akshar Business Consulting",
+  "label": "Quote 2 of 6 — Tejas Parikh, Akshar Business Consulting",
   "kind": "text",
   "text": "Working with GAMCS has been an absolute pleasure. The team brings a solutions-first mindset, strong financial acumen, and a clear understanding of what CFOs and senior leaders need. Its ability to build and lead technology-led FP&A teams, navigate constraints, and find practical solutions makes GAMCS a valuable partner for finance leaders focused on automation",
   "source": {
@@ -4734,19 +4746,31 @@
   }
  },
  {
-  "code": "HOME-TESTI-09",
+  "code": "HOME-TESTI-10",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 2 — author name",
   "kind": "text",
-  "text": "Tejas Parik",
+  "text": "Tejas Parikh",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[1].name"
   }
  },
  {
-  "code": "HOME-TESTI-10",
+  "code": "HOME-TESTI-11",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 2 — author role",
+  "kind": "text",
+  "text": "Founder",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[1].title"
+  }
+ },
+ {
+  "code": "HOME-TESTI-12",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 2 — company",
@@ -4758,7 +4782,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-11",
+  "code": "HOME-TESTI-13",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 2 — logo, screen reader",
@@ -4770,7 +4794,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-12",
+  "code": "HOME-TESTI-14",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 3 of 6 — Gaurav Mehra, Basilic Fly Studios",
@@ -4782,7 +4806,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-13",
+  "code": "HOME-TESTI-15",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 3 — author name",
@@ -4794,7 +4818,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-14",
+  "code": "HOME-TESTI-16",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 3 — company",
@@ -4806,7 +4830,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-15",
+  "code": "HOME-TESTI-17",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 3 — logo, screen reader",
@@ -4818,7 +4842,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-16",
+  "code": "HOME-TESTI-18",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 4 of 6 — Amol Khedkar, Two Brothers India Farms",
@@ -4830,7 +4854,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-17",
+  "code": "HOME-TESTI-19",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 4 — author name",
@@ -4842,7 +4866,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-18",
+  "code": "HOME-TESTI-20",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 4 — author role",
@@ -4854,7 +4878,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-19",
+  "code": "HOME-TESTI-21",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 4 — company",
@@ -4866,7 +4890,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-20",
+  "code": "HOME-TESTI-22",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 4 — logo, screen reader",
@@ -4878,10 +4902,10 @@
   }
  },
  {
-  "code": "HOME-TESTI-21",
+  "code": "HOME-TESTI-23",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Quote 5 of 6 — Venkat, Corestack",
+  "label": "Quote 5 of 6 — Venkata S Santhanaraman, Corestack",
   "kind": "text",
   "text": "I had the pleasure of working with GAMCS to develop our FP&A capabilities. The team quickly understood our forecasting models, cost structures, and reporting requirements, translating them into intuitive, scalable tools that streamlined budgeting and reduced manual effort. They anticipated challenges, proposed practical solutions, and remained responsive and open to feedback throughout.",
   "source": {
@@ -4890,19 +4914,31 @@
   }
  },
  {
-  "code": "HOME-TESTI-22",
+  "code": "HOME-TESTI-24",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 5 — author name",
   "kind": "text",
-  "text": "Venkat",
+  "text": "Venkata S Santhanaraman",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[4].name"
   }
  },
  {
-  "code": "HOME-TESTI-23",
+  "code": "HOME-TESTI-25",
+  "page": "Home (/)",
+  "section": "Testimonials",
+  "label": "Quote 5 — author role",
+  "kind": "text",
+  "text": "CFO",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "testimonials.items[4].title"
+  }
+ },
+ {
+  "code": "HOME-TESTI-26",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 5 — company",
@@ -4914,7 +4950,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-24",
+  "code": "HOME-TESTI-27",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 5 — logo, screen reader",
@@ -4926,7 +4962,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-25",
+  "code": "HOME-TESTI-28",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 6 of 6 — Arta Ramaj, Three 6ixty Finance",
@@ -4938,7 +4974,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-26",
+  "code": "HOME-TESTI-29",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 6 — author name",
@@ -4950,19 +4986,19 @@
   }
  },
  {
-  "code": "HOME-TESTI-27",
+  "code": "HOME-TESTI-30",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 6 — author role",
   "kind": "text",
-  "text": "Co-Founder",
+  "text": "Founder",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "testimonials.items[5].title"
   }
  },
  {
-  "code": "HOME-TESTI-28",
+  "code": "HOME-TESTI-31",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 6 — company",
@@ -4974,7 +5010,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-29",
+  "code": "HOME-TESTI-32",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Quote 6 — logo, screen reader",
@@ -4986,7 +5022,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-30",
+  "code": "HOME-TESTI-33",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Pause button, screen-reader name",
@@ -4998,7 +5034,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-31",
+  "code": "HOME-TESTI-34",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Play button, screen-reader name",
@@ -5010,7 +5046,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-32",
+  "code": "HOME-TESTI-35",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Previous button, screen-reader name",
@@ -5022,7 +5058,7 @@
   }
  },
  {
-  "code": "HOME-TESTI-33",
+  "code": "HOME-TESTI-36",
   "page": "Home (/)",
   "section": "Testimonials",
   "label": "Next button, screen-reader name",
