@@ -105,9 +105,17 @@ function Featured({
           alt={alt ?? ""}
           fill
           sizes={`${Math.ceil(CELL)}px`}
+          /* Asymmetric padding for a logo, not the even p-4 this had.
+             Measured off the artwork: these marks are 91–96% ink, so the
+             padding was the only slack — and because the tile is square and
+             object-contain fits the long side, a wide mark is capped on
+             WIDTH and its height collapses. Corestack is 7.4:1, so 16px a
+             side left it ~12px tall. Trading horizontal padding for
+             vertical buys every logo ~22% more linear size, and most of it
+             goes to the wide ones that needed it. */
           className={
             fit === "contain"
-              ? "absolute inset-0 h-full w-full object-contain p-4"
+              ? "absolute inset-0 h-full w-full object-contain px-1.5 py-3"
               : "absolute inset-0 h-full w-full object-cover object-[center_30%]"
           }
         />
@@ -306,7 +314,15 @@ export function ScrollReelTestimonials({
     return items;
   }, [testimonials, count]);
 
-  const sideCellCount = 4 + 2 * count;
+  /* The side columns must be as long as the middle one, because they travel
+     the same distance in the opposite direction (sideY = -middleY).
+     This used to be `4 + 2 * count`, a figure tuned when there were two
+     testimonials. At six it is 16 cells = 2061px against a travel of ±970px
+     either side of a ~320–420px window, which needs 2260–2360px — so the
+     columns ran out before the reel reached its first and last quote and the
+     ends of the strip showed empty. Deriving it from the middle column's own
+     length makes the two provably symmetric at any count. */
+  const sideCellCount = middleItems.length;
   const centerIdx = (count - 1) / 2;
   const middleY = (centerIdx - index) * STEP;
   const sideY = -middleY;
