@@ -566,6 +566,7 @@ export const testimonials = {
     },
     {
       name: "Gaurav Mehra",
+      title: "CFO",
       company: "Basilic Fly Studios",
       logo: { src: "/logos/clients/basilic-fly.png", alt: "Basilic Fly Studios" },
       quote:
