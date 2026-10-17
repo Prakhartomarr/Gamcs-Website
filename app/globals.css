@@ -2173,83 +2173,178 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    pixels, not derived, because the line box also carries Inter's descender. */
 
 /* ---- the decision gap ------------------------------------------------
-   One centred column, static. No transitions, no transforms, no reveal: the
-   section is finished on first paint, so there is nothing here for scripting
-   or reduced-motion to change.
+   Left-aligned, static. No transitions, no transforms, no reveal: the section
+   is finished on first paint, so there is nothing here for scripting or
+   reduced-motion to change. The cards carry no hover either — a problem
+   statement that lights up under the pointer invites play, and this one wants
+   to be read.
 
-   The "+" in the pain grid is four cell borders, not an overlay — the right
-   edge of cell 1 and the right edge of cell 3 are the same grid line, so the
-   vertical always lands under itself, and cells 1 and 2 share the horizontal.
-   gap:0 is what makes that true; the air is padding inside the cells.
+   The 01-04 indices exist only here, as a counter on .dg-pains. That is what
+   lets this block draw them as a pill above each title while the phone block
+   sets them inline, from the same four <li>s with nothing hidden.
 
-   No red anywhere. The only colour is --blue, on the heading's second line. */
-.dg-inner{display:flex;flex-direction:column;align-items:center;text-align:center}
+   Everything below applies from 768 up: the phone layout is owned by the
+   max-width:767px block, so no rule here goes looking for a narrow screen, and
+   every multi-column grid-template-columns sits inside a min-width query so a
+   single column is the fallback rather than four 90px cards.
 
-/* The eyebrow pill is gone from this section. .dg-h2's 24px top margin went
-   with it: it existed to sit the heading under the pill, and with nothing
-   above it the heading now starts at the section's own padding edge. */
-.dg-h2{margin:0;max-width:900px}
-.dg-line{display:block;text-wrap:balance}
+   Two colour decisions worth naming, both at their rules below: --dg-rule is
+   the comp's bronze and not the brand yellow, and the turn band is --ink-deep
+   rather than the comp's lighter navy. */
+
+/* The heading's rule is a bronze the comp samples at #C2A568, which is not
+   --yellow (#F2C230) — the brand yellow at 72x2px beside 50px type reads as a
+   highlighter stroke, the bronze as a printed rule. It lives here as one
+   custom property so that judgement is reversible in a single edit: set it to
+   var(--yellow) and the section is on brand with nothing else touched. */
+.dg{--dg-rule:#C2A568}
+
+/* .dg-inner needs no rule. It was a centred flex column; left-aligned,
+   full-width children are what a plain block container already does, and the
+   .container class it shares carries the width. */
+
+/* ---- the head ---- */
+/* .fin-h2 carries a 22px top margin for sections that sit it under an eyebrow
+   pill. This one has no pill, so the heading starts at the section's own
+   padding edge. The measure is deliberately short: the sentence is meant to
+   break, and the accent has to stay inline inside it rather than own a line,
+   so there is no white-space rule on .dg-accent (compare .fin-h2 .accent,
+   which is nowrap because it IS its own line). */
+.dg-h2{margin:0;max-width:15ch}
 .dg-accent{color:var(--blue)}
+/* The rule under the heading is drawn, not marked up: it is punctuation for
+   the heading, and a <span> for it would be an element with nothing to say. */
+.dg-h2::after{content:"";display:block;width:72px;height:2px;margin-top:32px;
+  background:var(--dg-rule)}
 
-.dg-sub{margin:24px 0 0;max-width:640px;font-size:1rem;line-height:1.6;
+/* Stacked by default — the lead sits under the heading's rule at 768-1023 and
+   the margin is what separates them. The 1024 grid takes the margin back. */
+.dg-sub{margin:28px 0 0;max-width:54ch;font-size:1rem;line-height:1.6;
   color:var(--ink-muted);text-wrap:pretty}
-.dg-sub strong{font-weight:600;color:var(--ink-deep)}
 
-/* ---- the four pains ---- */
-.dg-pains{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;
-  width:100%;max-width:880px;margin:64px 0 0;padding:0;list-style:none}
-.dg-pain{padding:44px}
-.dg-pain:nth-child(-n+2){border-bottom:1px solid var(--line)}
-.dg-pain:nth-child(odd){border-right:1px solid var(--line)}
-.dg-pain-title{margin:0;font-size:1.1111rem;font-weight:600;line-height:1.3;
+/* ---- the four symptoms ---- */
+/* The counter is reset on the list and incremented per card, so the indices
+   follow the DOM order and stay right if a fifth symptom is ever added or the
+   content file reorders them. padding:0 and list-style:none because this is a
+   <ul>: the semantics are wanted, the bullets are not. */
+.dg-pains{counter-reset:dg-pain;display:grid;gap:24px;margin:64px 0 0;
+  padding:0;list-style:none}
+.dg-pain{counter-increment:dg-pain;padding:28px;background:var(--white);
+  border:1px solid var(--line);border-radius:16px}
+/* The index pill. inline-block so it sizes to its two digits and still takes
+   a line of its own above the <h3> that follows it. The ground is --blue at
+   10% over the white card (#E7EFF5), which keeps the blue text at 5.9:1 — a
+   flat tint rather than a second blue token to maintain. The right padding is
+   1px short of the left because .08em of tracking leaves a trailing space
+   after the last digit that would otherwise sit the number left of centre. */
+.dg-pain::before{content:counter(dg-pain,decimal-leading-zero);
+  display:inline-block;padding:5px 8px 5px 9px;border-radius:8px;
+  background:rgba(15,94,151,.10);font-size:0.6667rem;font-weight:600;
+  line-height:1;letter-spacing:.08em;color:var(--blue)}
+.dg-pain-title{margin:26px 0 0;font-size:1rem;font-weight:600;line-height:1.3;
   letter-spacing:-.01em;color:var(--ink-deep)}
-.dg-pain-body{margin:10px auto 0;max-width:34ch;font-size:0.8889rem;
-  line-height:1.55;color:var(--ink-muted)}
-
-/* ---- the three figures ---- */
-.dg-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
-  width:100%;max-width:880px;margin:64px 0 0}
-.dg-stat{padding:0 24px}
-.dg-stat + .dg-stat{border-left:1px solid var(--line)}
-.dg-stat-value{margin:0;font-size:clamp(2.22rem,3vw,2.67rem);font-weight:600;
-  line-height:1;letter-spacing:-.03em;color:var(--ink-deep)}
-.dg-stat-label{margin:12px auto 0;max-width:30ch;font-size:0.8333rem;
-  line-height:1.45;color:var(--ink-muted);text-wrap:pretty}
-/* 12.5px, and #5F6875 measures 5.3:1 on white — AA for body text with room
-   to spare, which the smallest type on the page needs most. */
-.dg-stat-source{margin:10px 0 0;font-size:0.6944rem;line-height:1.4;
-  color:#5F6875}
-.dg-stat-source a{color:inherit;text-decoration:underline;
-  text-underline-offset:2px;text-decoration-color:var(--line)}
-.dg-stat-source a:hover{color:var(--ink-deep);text-decoration-color:currentColor}
-
-/* ---- the bridge into the maturity curve ---- */
-.dg-bridge{margin-top:72px}
-.dg-bridge::before{content:"";display:block;width:48px;height:1px;
-  margin:0 auto 24px;background:var(--line)}
-.dg-bridge-lead{margin:0;font-size:1.3333rem;font-weight:600;line-height:1.35;
-  letter-spacing:-.02em;color:var(--ink-deep);text-wrap:balance}
-.dg-bridge-sub{margin:8px 0 0;font-size:1rem;line-height:1.5;
+.dg-pain-body{margin:12px 0 0;font-size:0.8333rem;line-height:1.55;
   color:var(--ink-muted)}
 
-/* ---- narrower ---- */
-@media (max-width:900px){
-  .dg-pain{padding:36px 24px}
-  .dg-stat{padding:0 16px}
+/* ---- the turn ---- */
+/* The comp samples this band at #112F49, a lighter and bluer navy. It is
+   --ink-deep (#0D1828) anyway: --ink-deep is the site's one dark ground — the
+   achievements card and the footer are already on it — and a second navy a
+   few steps away would read as a mistake rather than as a choice on any page
+   that shows both. Change this only by changing --ink-deep.
+
+   flex, so the quote mark can be a pseudo-element sitting before the text
+   without absolute positioning: it is a flex child, the text cannot run under
+   it, and nothing has to be reserved for it in the padding. */
+.dg-turn{display:flex;align-items:flex-start;gap:16px;margin:40px 0 0;
+  padding:30px 36px;border-radius:16px;background:var(--ink-deep)}
+/* --blue-light at 55%, written as channels because the alpha of a token needs
+   color-mix() and the rest of the file does not use it. line-height is cut to
+   roughly the text's own so the glyph's tall, mostly empty box does not set
+   the band's height; its ink overflows upward into the 30px of padding. */
+.dg-turn::before{content:"\201C";flex:none;font-size:2.2222rem;line-height:.72;
+  color:rgba(74,147,201,.55)}
+.dg-turn-text{margin:0;font-size:0.9444rem;line-height:1.5}
+.dg-turn-lead{font-weight:600;color:var(--white)}
+/* --blue-light measures 5.4:1 on --ink-deep, so the question carries the
+   colour shift and still reads as body text rather than as a dimmed aside. */
+.dg-turn-q{color:var(--blue-light)}
+
+/* ---- the three figures ---- */
+/* grid on the <dl> itself, with the <div> wrappers as the items — that is what
+   makes a dl layable out at all. Every dt/dd below sets its margin with a
+   shorthand, which is load-bearing: a <dd> ships with
+   margin-inline-start:40px, and leaving it to the UA indents every label and
+   every source line inside its card. */
+.dg-stats{display:grid;gap:20px;margin:40px 0 0}
+.dg-stat{padding:24px;border-radius:12px;background:var(--soft)}
+.dg-stat-value{margin:0;font-size:2rem;font-weight:700;line-height:1;
+  letter-spacing:-.03em;color:var(--blue)}
+.dg-stat-label{margin:12px 0 0;font-size:0.8333rem;line-height:1.5;
+  color:var(--ink-deep);text-wrap:pretty}
+/* 12.5px, and #5F6875 measures 5.3:1 on white — AA for body text with room to
+   spare, which the smallest type on the page needs most. On the card's --soft
+   ground it still measures 5.07:1, so the colour stays as it was rather than
+   darkening to buy back a margin it never lost. */
+.dg-stat-source{margin:10px 0 0;font-size:0.6944rem;line-height:1.4;
+  color:#5F6875}
+/* The underline is the link's only affordance, so it has to be visible on the
+   card. --line (#D9DEE1) came to 1.2:1 against --soft — a rule you cannot see
+   is not an affordance — so it is the text's own colour at half strength,
+   ~2:1, which stays quiet and moves with the text if the colour ever does. */
+.dg-stat-source a{color:inherit;text-decoration:underline;
+  text-underline-offset:2px;text-decoration-color:rgba(95,104,117,.5)}
+.dg-stat-source a:hover{color:var(--ink-deep);
+  text-decoration-color:currentColor}
+
+/* Said once for all three figures, which is why it sits outside the cards. */
+.dg-note{margin:18px 0 0;font-size:0.6944rem;line-height:1.5;
+  color:var(--ink-muted)}
+
+/* ---- the symptoms go 2x2 until four of them can actually be read ----
+   Measured: four across at a 1024 viewport gives 212px cards — a 156px
+   measure, about 20 characters a line, and 379px tall against the 263px they
+   take at 1440. The fourth column waits for 1280, which is where .container
+   itself steps from min(920px,...) to min(1440px,...): below that step the
+   column is 920px wide whatever the viewport does, so a breakpoint anywhere
+   in 1024-1279 would divide the same 920px four ways and change nothing. */
+@media (min-width:768px) and (max-width:1279px){
+  .dg-pains{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (max-width:767px){
-  .dg-pains{grid-template-columns:1fr;margin-top:48px}
-  /* one column, so the cross becomes a rule between each pair */
-  .dg-pain{padding:28px 4px}
-  .dg-pain:nth-child(odd){border-right:0}
-  .dg-pain:nth-child(-n+2){border-bottom:0}
-  .dg-pain + .dg-pain{border-top:1px solid var(--line)}
-  .dg-stats{grid-template-columns:1fr;margin-top:48px}
-  .dg-stat{padding:24px 0}
-  .dg-stat + .dg-stat{border-left:0;border-top:1px solid var(--line)}
-  .dg-bridge{margin-top:56px}
-  .dg-sub{font-size:0.9444rem}
+
+/* ---- tablet: one head column, figures 2-up ---- */
+@media (min-width:768px) and (max-width:1023px){
+  /* Two columns, so the third figure takes the first cell of a second row at
+     half width. Spanning it would make the odd one out the loud one. */
+  .dg-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ---- laptop and up ---- */
+@media (min-width:1024px){
+  /* 52/40 with 80px between: the two columns do not add to 100 because the
+     gap is the rest. align-items:start keeps the lead at the top of the row
+     instead of centring it against three lines of display type. */
+  .dg-head{display:grid;grid-template-columns:minmax(0,52fr) minmax(0,40fr);
+    gap:80px;align-items:start}
+  /* A grid item now, with the gap doing what the margin did when stacked. */
+  .dg-sub{margin:0}
+  /* The figures carry far less text than the symptom cards, so three of them
+     fit at 1024 where four symptoms do not. */
+  .dg-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ---- wide enough for the fourth column ---- */
+@media (min-width:1280px){
+  .dg-pains{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
+/* ---- wide: the two voices that carry the section grow with it ---- */
+/* .fin-h2 is already fluid to 50px, and the cards hold their 15px body at any
+   width. Only the turn and the figures are undersized on a 1440 column. */
+@media (min-width:1280px){
+  .dg-turn{padding:34px 40px}
+  .dg-turn-text{font-size:1rem}
+  .dg-stat-value{font-size:2.2222rem}
 }
 
 /* =====================================================================
@@ -3045,128 +3140,166 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    declarations in the who block name classes that exist nowhere else.
    ===================================================================== */
 /* =====================================================================
-   01 · THE GAP — mobile (Main.dc.html)
+   01 · THE DECISION GAP — mobile (components/sections/DecisionGap.tsx)
 
    Everything below lives in one `@media (max-width:767px)` block. Nothing
-   here can reach >=768px: there is no rule outside the query, and the one
-   markup addition (the distance rule inside the h2) carries the `hidden`
-   attribute, so it is display:none from the UA sheet everywhere this block
-   does not apply.
+   here can reach >=768px: there is no rule outside the query, and the
+   section adds no markup that would need hiding at wider widths — the
+   01-04 indices are a counter, so the phone and the desktop draw them
+   from the same four <li>s.
 
    Specificity, because this file is appended and source order alone is not
    enough against the id- and structure-scoped rules already in globals.css:
      .dg .dg-*              (0,2,0)  clears .dg-* and .fin-h2 (0,1,0),
                                      including the six-selector heading rule
-                                     at globals.css:1557
+                                     (the .fin-h2 clamp)
      .dg .dg-pains .dg-pain (0,3,0)  clears the "+" cross cells
                                      (.dg-pain:nth-child(odd), (0,1,1)) and
                                      the existing mobile stacking rule
-                                     .dg-pain + .dg-pain (0,2,0) at :2226
+                                     .dg-pain + .dg-pain (0,2,0)
      .dg .dg-stats .dg-stat (0,3,0)  clears .dg-stat + .dg-stat (0,2,0)
+   One rung is added for each pseudo-element. No !important anywhere.
+
+   The desktop treatment this block undoes: .dg-pain is a white bordered
+   card with a counter PILL on ::before, and .dg-stat is a grey rounded
+   card. Both are reset to flat ground here — a card's background, radius,
+   padding, border and shadow are all named explicitly, because a reset
+   that only clears `border` leaves a rounded blue rectangle where the
+   rail's dot should be.
 
    Colour: the comp's ink is #202020 (--ink) and its body grey #5B6067
    (--gray). Desktop uses --ink-deep (#0D1828) / --ink-muted (#55606F),
    which read a shade navy; on mobile they are set to the comp's values.
-   No yellow appears here — the section never had any, so there is nothing
-   to unset.
+   The .dg-turn band is the exception — it is the one dark thing in the
+   section, and its ground and its reversed text stay with the base rules
+   so there is one definition of it, not two. This block only takes its
+   geometry and its type size down to phone scale.
 
-   Motion: none. The section is a server component that is finished on first
-   paint (no .reveal, no transitions, no transforms), so there is nothing for
-   a (prefers-reduced-motion: reduce) branch to hold — no rule below animates
-   anything.
+   Motion: none. The section is a server component that is finished on
+   first paint (no .reveal, no transitions, no transforms), so there is
+   nothing for a (prefers-reduced-motion: reduce) branch to hold — no rule
+   below animates anything.
    ===================================================================== */
 
 @media (max-width:767px){
 
   /* ---- left-aligned throughout ---- */
-  /* flex-start as well as text-align: the column is a flex column, and
-     align-items:center would keep the pill and the heading boxes centred
-     even with left-aligned text inside them. The bridge opts back out. */
+  /* text-align carries this on its own now: the desktop block drops
+     .dg-inner's rule entirely, so the column is a plain block container and
+     its children already fill the measure. align-items and the widths below
+     are kept as a guard — .dg-inner is a shared .container, and this block
+     must not depend on a display value set three thousand lines away. */
   .dg .dg-inner{align-items:flex-start;text-align:left}
+  .dg .dg-head,.dg .dg-pains,.dg .dg-turn,.dg .dg-stats,
+  .dg .dg-note{width:100%}
+
+  /* ---- the head: one stack, not the desktop's two columns ---- */
+  .dg .dg-head{display:block}
 
   /* ---- display type: 38 / 1.06 / -.032em / 600 ----
-     38px is the measured ceiling from the spec; not exceeded. */
-  /* margin-top:0, not 32: the 32 cleared the eyebrow pill, and with the pill
-     gone it was 32px stacked on the section's own padding. */
-  .dg .dg-h2{margin-top:0;font-size:2.1111rem;line-height:1.06;
+     38px is the measured ceiling from the spec; not exceeded.
+     margin-top:0 because nothing sits above the heading — the 32px that
+     used to clear an eyebrow pill was 32px stacked on the section's own
+     padding once the pill went. */
+  .dg .dg-h2{margin:0;font-size:2.1111rem;line-height:1.06;
     letter-spacing:-.032em;font-weight:600}
-  .dg .dg-sub{margin-top:28px}
+  /* The sentence runs through the colour change: the accent begins
+     mid-line, so it must stay inline and must stay breakable. A block or a
+     nowrap accent here would strand "too much gets lost." on its own line
+     or push it past the viewport. */
+  .dg .dg-accent{display:inline;white-space:normal}
+  .dg .dg-sub{margin:24px 0 0;max-width:none;font-size:0.9444rem;
+    line-height:1.6}
 
-  /* ---- the distance rule, between the fact lines and the accent line ----
-     One element in the markup (the label). The hairline and the chevron are
-     this row's own pseudo-elements; `order` puts ::before after the label,
-     which document order would not. */
-  .dg .dg-distance{display:flex;align-items:center;gap:12px;margin:22px 0}
-  .dg .dg-distance-label{order:1;flex:none;font-size:0.5556rem;font-weight:600;
-    line-height:1.4;letter-spacing:.2em;text-transform:uppercase;color:#6E767C}
-  .dg .dg-distance::before{content:"";order:2;flex:1 1 auto;height:1px;
-    background:rgba(15,94,151,.45)}
-  /* 9x10 in the comp; two borders on a rotated 6px box is the same mark and
-     costs no image. */
-  .dg .dg-distance::after{content:"";order:3;flex:none;width:6px;height:6px;
-    margin-right:2px;border-top:1.6px solid var(--blue);
-    border-right:1.6px solid var(--blue);transform:rotate(45deg)}
-
-  /* ---- the four pains: a rail, not a 2x2 grid ----
-     Every border the cross was drawn with is cleared here, including the
-     border-top the existing mobile block adds between stacked cells. */
-  .dg .dg-pains{counter-reset:dg-pain;margin-top:48px}
-  .dg .dg-pains .dg-pain{position:relative;border:0;padding:0 0 28px 28px;
+  /* ---- the four symptoms: a rail, not cards ----
+     The connector runs from under one dot to the foot of its own item and
+     the next item's dot picks it up 7px lower, which only holds if the
+     items are flush: display:block so a grid gap on .dg-pains cannot open
+     a hole in the rail. */
+  .dg .dg-pains{display:block;margin:48px 0 0;padding:0;list-style:none;
+    counter-reset:dg-pain}
+  .dg .dg-pains .dg-pain{position:relative;background:none;border:0;
+    border-radius:0;box-shadow:none;padding:0 0 28px 28px;
     counter-increment:dg-pain}
   .dg .dg-pains .dg-pain:last-child{padding-bottom:0}
   /* the 12px rail: a 10px dot at left:1px, a 1px connector centred under it
-     (dot centre 6px) running to the bottom of the item, which is where the
-     next item's dot picks it up */
-  .dg .dg-pains .dg-pain::before{content:"";position:absolute;left:1px;top:7px;
-    width:10px;height:10px;border-radius:50%;background:var(--blue)}
+     (dot centre 6px) running to the bottom of the item. content:"" is what
+     turns the desktop's counter pill back into a mark — with its padding,
+     radius, background and inline-block flow all named, or the dot renders
+     as a rounded blue rectangle. */
+  .dg .dg-pains .dg-pain::before{content:"";display:block;position:absolute;
+    left:1px;top:7px;width:10px;height:10px;margin:0;padding:0;border:0;
+    border-radius:50%;background:var(--blue)}
   .dg .dg-pains .dg-pain::after{content:"";position:absolute;left:5.5px;
     top:25px;bottom:0;width:1px;background:var(--line)}
   /* 04 closes the rail: deeper dot, deeper index, no connector */
   .dg .dg-pains .dg-pain:last-child::before{background:var(--blue-dark)}
   .dg .dg-pains .dg-pain:last-child::after{content:none}
-  .dg .dg-pains .dg-pain-title{font-size:1rem;line-height:1.25;
+  .dg .dg-pains .dg-pain-title{margin:0;font-size:1rem;line-height:1.25;
     letter-spacing:-.01em}
   /* the 01-04 index: a counter, so no markup and no four hard-coded strings.
-     Inline, so it sits on the title's baseline the way the comp draws it. */
+     Inline, so it sits on the title's baseline the way the comp draws it —
+     the same counter the desktop sets in a pill above the title. */
   .dg .dg-pains .dg-pain-title::before{
-    content:counter(dg-pain,decimal-leading-zero);margin-right:10px;
+    content:counter(dg-pain,decimal-leading-zero);display:inline;
+    margin-right:10px;padding:0;background:none;
     font-size:0.6111rem;font-weight:600;letter-spacing:.16em;color:#6E767C}
   .dg .dg-pains .dg-pain:last-child .dg-pain-title::before{
     color:var(--blue-dark)}
   .dg .dg-pains .dg-pain-body{margin:8px 0 0;max-width:none;
     font-size:0.8333rem;line-height:1.5}
 
-  /* ---- the three figures ---- */
-  /* all three take the hairline, not just the second and third: `border:0`
-     first so the base `border-left` between grid columns cannot survive. */
-  .dg .dg-stats{margin-top:48px}
-  .dg .dg-stats .dg-stat{border:0;border-top:1px solid #E1E5E8;padding:24px 0}
-  .dg .dg-stats .dg-stat-value{font-size:3.1111rem;line-height:.9;
+  /* ---- the turn: still a band, at phone scale ----
+     Inset inside the container rather than bled to the screen edges: full
+     bleed would make the one dark block in the section the widest thing on
+     the page, and a 24px radius on a band this short reads as a pill.
+     text-wrap:pretty, not balance — the question is five lines on a phone,
+     where balance only ragged-edges them. */
+  .dg .dg-turn{margin:48px 0 0;padding:26px 20px;border-radius:14px}
+  .dg .dg-turn-text{margin:0;font-size:0.9444rem;line-height:1.5;
+    letter-spacing:-.005em;text-wrap:pretty}
+
+  /* ---- the three figures: a hairline list, not three cards ----
+     Chosen over carrying the desktop's grey cards down: the band directly
+     above is already a filled block, and three more filled blocks under it
+     turn the close of the section into four stacked slabs. Card padding
+     also costs ~48px of a ~340px measure, and these labels run to 150
+     characters over a 2-3 line attribution. Hairlines keep the figures
+     themselves as the only weight.
+     border:0 first, so the base border-left between grid columns cannot
+     survive; display:block so a grid gap cannot double the hairline rhythm. */
+  .dg .dg-stats{display:block;margin:48px 0 0}
+  .dg .dg-stats .dg-stat{background:none;border:0;
+    border-top:1px solid #E1E5E8;border-radius:0;box-shadow:none;
+    padding:24px 0}
+  .dg .dg-stats .dg-stat-value{margin:0;font-size:3.1111rem;line-height:.9;
     letter-spacing:-.04em}
-  /* the one accent figure — 6.4 days. Blue, not yellow. */
-  .dg .dg-stats .dg-stat:last-child .dg-stat-value{color:var(--blue)}
+  /* margin shorthands, not margin-top: these are <dd>s, and the UA sheet's
+     40px inline start would indent the label and the attribution away from
+     the figure above them. */
   .dg .dg-stats .dg-stat-label{margin:12px 0 0;max-width:none;
     font-size:0.8333rem;line-height:1.5}
+  .dg .dg-stats .dg-stat-source{margin:10px 0 0}
   /* .dg-stat-source keeps 12.5px / #5F6875 exactly — the AA basis documented
-     at globals.css:2197 is unchanged. Only the hit area grows: an overlay on
-     the link, which adds no height, rather than padding, which would push the
-     figures apart. 17.5px line box + 28px = 45.5px tall, full text width + 16. */
+     on the .dg-stat-source rule is unchanged, and it now carries publication
+     and sample text, so it wraps to 2-3 lines and the link lands at the end
+     of the last one. Only the hit area grows: an overlay on the link, which
+     adds no height, rather than padding, which would push the figures apart.
+     17.5px line box + 28px = 45.5px tall, full text width + 16. */
   .dg .dg-stat-source a{position:relative;display:inline-block}
   .dg .dg-stat-source a::after{content:"";position:absolute;inset:-14px -8px}
 
-  /* ---- the bridge: centred inside a left-aligned column ---- */
-  .dg .dg-bridge{align-self:stretch;text-align:center}
-  /* the down chevron, drawn as a background so the markup gains nothing that
-     would have to be hidden again at >=768px */
-  .dg .dg-bridge::after{content:"";display:block;width:20px;height:26px;
-    margin:24px auto 0;
-    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='26' fill='none'><path d='M10 0v22M3 15l7 7 7-7' stroke='%23B8C1C7' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/20px 26px no-repeat}
+  /* ---- the closing note ---- */
+  /* 12.5px like the attributions it qualifies, but --gray rather than the
+     attribution grey: it is the section's own sentence, not a citation. */
+  .dg .dg-note{margin:20px 0 0;max-width:none;font-size:0.6944rem;
+    line-height:1.5}
 
-  /* ---- the comp's ink and grey ---- */
-  .dg .dg-h2,.dg .dg-sub strong,.dg .dg-pain-title,.dg .dg-stat-value,
-  .dg .dg-bridge-lead{color:var(--ink)}
+  /* ---- the comp's ink and grey ----
+     The band's own text is not in either list: it sits on dark. */
+  .dg .dg-h2,.dg .dg-pain-title,.dg .dg-stat-value{color:var(--ink)}
   .dg .dg-sub,.dg .dg-pain-body,.dg .dg-stat-label,
-  .dg .dg-bridge-sub{color:var(--gray)}
+  .dg .dg-note{color:var(--gray)}
 }
 
 /* ===================================================================

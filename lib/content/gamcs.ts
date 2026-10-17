@@ -1600,74 +1600,82 @@ export const clients = {
 } as const;
 
 /**
- * The decision gap — a static problem statement, centred, text only.
+ * The decision gap — a static problem statement. It names the problem and
+ * does not answer it: the closing question hands the distance to the Maturity
+ * Curve section below.
  *
- * It names the problem and does not answer it: the closing bridge hands the
- * distance to the Maturity Curve section below, which is what "a function of
- * finance maturity" means. There is no diagram and no motion here by design;
- * the weight is meant to come from the typography and the sourced figures.
+ * There is no diagram and no motion here by design; the weight comes from the
+ * typography, the four symptoms and the sourced figures.
  *
- * `eyebrow` is stored in sentence case and set uppercase by CSS, so the copy
- * doc carries words rather than styling. Every `stats` figure is attributed:
- * `href` is optional, and the one without it is cited in plain text.
+ * Every `stats` figure was checked against its cited page before shipping.
+ * `sample` is the respondent count the source itself states, and it is not
+ * decoration: "47%" with no sample behind it is a number, not evidence. The
+ * 57% line carries "in the last six months" because Intuit's own wording is
+ * bounded that way — without it the claim is broader than the survey.
  */
 export const decisionGap = {
-  headingLead: "Your data exists. Your reports exist.",
-  headingAccent: "The problem is the distance to the decision.",
-  /**
-   * Labels the rule drawn between the two heading lines. Phones only: the
-   * desktop heading runs straight from the fact lines into the accent line,
-   * so nothing renders this above 767px.
-   */
-  distanceLabel: "The distance",
-  subheadLead:
-    "Every \u201Cwhy?\u201D sends finance back to the same systems to rebuild the answer by hand.",
-  /** Set in the ink colour, mid-sentence, so the consequence lands. */
-  resultLabel: "The result:",
-  resultBody:
-    "more effort, slower answers, and decisions made on yesterday's view of the business.",
-  /** Four cells, read across then down. */
+  headingLead: "Between the numbers and the decision,",
+  /** Flows inline after the lead, mid-sentence, in --blue. */
+  headingAccent: "too much gets lost.",
+  lead: "Finance functions get stuck at different points. For some, the close is unpredictable. Others have their reports, but preparing them takes days. Even when the numbers are ready, the reasons behind them\u2014or the actions they call for\u2014may not be clear.",
+  /** Four symptoms, numbered 01-04 by CSS counter rather than by markup. */
   pains: [
     {
-      title: "Answers arrive late",
-      body: "By the time the analysis is rebuilt, the moment to act has often passed.",
+      title: "The close is unpredictable",
+      body: "Processes, responsibilities and timelines are unclear. Teams chase inputs, resolve discrepancies and rely on individual effort to get the books closed.",
     },
     {
-      title: "Skilled people, manual work",
-      body: "Your best finance people spend their days pulling, reconciling and rebuilding, not advising.",
+      title: "Reporting takes too long",
+      body: "The books are closed, but the management information pack still needs to be assembled, reconciled and reviewed manually before management can use it.",
     },
     {
-      title: "Nobody trusts the number",
-      body: "Different systems, versions and definitions mean meetings start by debating the data.",
+      title: "The numbers lack context",
+      body: "Reports show what changed, but not necessarily why. Without operational and commercial context, important performance drivers stay hidden.",
     },
     {
-      title: "The business pays for it",
-      body: "Margin, cash and revenue decisions get made late, or made on instinct.",
+      title: "Insight doesn't lead to action",
+      body: "Analysis may be available, but decisions, ownership and follow-through are not always clear. Lessons can be lost before the next planning cycle.",
     },
   ],
+  /** The dark band between the symptoms and the evidence. It is the bridge
+      into the Maturity Curve: the question it asks is what that curve answers. */
+  turn: {
+    lead: "Different symptoms. One underlying question:",
+    question:
+      "how far has your finance function progressed from producing numbers to improving decisions?",
+  },
+  /* Each figure: `label` is the claim, `source` the publication, `sample` what
+     it was measured on, `href` the page that states it. All three verified
+     2026-10-18; the utm parameters they arrived with are stripped. */
   stats: [
     {
-      value: "46%",
-      label: "of FP&A time still goes to collecting and validating data",
-      source: "FP&A Trends Survey 2025",
-      href: "https://fpa-trends.com/article/2025-fpa-benchmarks-and-trends",
+      value: "47%",
+      label: "of FP&A time is spent collecting and validating data.",
+      source: "2026 FP&A Trends Survey",
+      sample: "475 respondents",
+      href: "https://fpa-trends.com/article/closing-ai-readiness-gap-2026",
     },
     {
-      value: "37%",
-      label: "of CFOs don't completely trust their own financial data",
-      source: "BlackLine, 2024",
-      href: "https://www.blackline.com/about/press-releases/2024/nearly-40-percent-of-cfos-do-not-completely-trust-their-organizations-financial-data-according-to-blackline-survey/",
+      value: "45%",
+      label:
+        "of surveyed teams take a week or more to deliver a decision-ready forecast when market conditions change unexpectedly.",
+      source: "Vena, 2026 FP&A Impact Report",
+      sample: "400+ finance leaders",
+      href: "https://www.venasolutions.com/resources/fpa-impact-report",
     },
     {
-      value: "6.4 days",
-      label: "median time just to close the monthly books, before any analysis starts",
-      source: "APQC benchmark",
+      value: "57%",
+      label:
+        "of surveyed US finance leaders reported missing a time-sensitive strategic action in the last six months because financial visibility arrived too late.",
+      source: "Intuit, 2026 Future of Finance Report",
+      sample: "2,000 US finance leaders",
+      href: "https://erp.intuit.com/blog/guide/future-of-finance-2026-report/",
     },
   ],
-  bridge: {
-    lead: "The data is there. The answer is too far away.",
-    sub: "That distance is a function of finance maturity.",
-  },
+  /** Labels every source link. One string, not three. */
+  sourceLabel: "Source",
+  statsNote:
+    "Survey findings reflect their stated samples and should not be interpreted as applying to every organisation.",
 } as const;
 
 /** Preloader. Copy lives here rather than in the component, like everything else. */

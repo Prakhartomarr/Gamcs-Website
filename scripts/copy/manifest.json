@@ -696,303 +696,327 @@
   }
  },
  {
-  "code": "HOME-GAP-02",
+  "code": "HOME-GAP-01",
   "page": "Home (/)",
   "section": "The gap",
   "label": "Heading, line 1",
   "kind": "text",
-  "text": "Your data exists. Your reports exist.",
+  "text": "Between the numbers and the decision,",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.headingLead"
   }
  },
  {
-  "code": "HOME-GAP-02A",
+  "code": "HOME-GAP-02",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Label on the rule between the two heading lines (phones only)",
+  "label": "Heading, continues the same sentence in blue",
   "kind": "text",
-  "text": "The distance",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.distanceLabel"
-  }
- },
- {
-  "code": "HOME-GAP-03",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Heading, line 2 (blue)",
-  "kind": "text",
-  "text": "The problem is the distance to the decision.",
+  "text": "too much gets lost.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.headingAccent"
   }
  },
  {
+  "code": "HOME-GAP-03",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "Lead paragraph",
+  "kind": "text",
+  "text": "Finance functions get stuck at different points. For some, the close is unpredictable. Others have their reports, but preparing them takes days. Even when the numbers are ready, the reasons behind them—or the actions they call for—may not be clear.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.lead"
+  }
+ },
+ {
   "code": "HOME-GAP-04",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Subhead",
+  "label": "Symptom 01, title",
   "kind": "text",
-  "text": "Every “why?” sends finance back to the same systems to rebuild the answer by hand.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.subheadLead"
-  }
- },
- {
-  "code": "HOME-GAP-05",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Subhead, lead-in",
-  "kind": "text",
-  "text": "The result:",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.resultLabel"
-  }
- },
- {
-  "code": "HOME-GAP-06",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Subhead, consequence",
-  "kind": "text",
-  "text": "more effort, slower answers, and decisions made on yesterday's view of the business.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.resultBody"
-  }
- },
- {
-  "code": "HOME-GAP-07",
-  "page": "Home (/)",
-  "section": "The gap",
-  "label": "Pain 1, title",
-  "kind": "text",
-  "text": "Answers arrive late",
+  "text": "The close is unpredictable",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[0].title"
   }
  },
  {
-  "code": "HOME-GAP-08",
+  "code": "HOME-GAP-05",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 1, body",
+  "label": "Symptom 01, body",
   "kind": "text",
-  "text": "By the time the analysis is rebuilt, the moment to act has often passed.",
+  "text": "Processes, responsibilities and timelines are unclear. Teams chase inputs, resolve discrepancies and rely on individual effort to get the books closed.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[0].body"
   }
  },
  {
-  "code": "HOME-GAP-09",
+  "code": "HOME-GAP-06",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 2, title",
+  "label": "Symptom 02, title",
   "kind": "text",
-  "text": "Skilled people, manual work",
+  "text": "Reporting takes too long",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[1].title"
   }
  },
  {
-  "code": "HOME-GAP-10",
+  "code": "HOME-GAP-07",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 2, body",
+  "label": "Symptom 02, body",
   "kind": "text",
-  "text": "Your best finance people spend their days pulling, reconciling and rebuilding, not advising.",
+  "text": "The books are closed, but the management information pack still needs to be assembled, reconciled and reviewed manually before management can use it.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[1].body"
   }
  },
  {
-  "code": "HOME-GAP-11",
+  "code": "HOME-GAP-08",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 3, title",
+  "label": "Symptom 03, title",
   "kind": "text",
-  "text": "Nobody trusts the number",
+  "text": "The numbers lack context",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[2].title"
   }
  },
  {
-  "code": "HOME-GAP-12",
+  "code": "HOME-GAP-09",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 3, body",
+  "label": "Symptom 03, body",
   "kind": "text",
-  "text": "Different systems, versions and definitions mean meetings start by debating the data.",
+  "text": "Reports show what changed, but not necessarily why. Without operational and commercial context, important performance drivers stay hidden.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[2].body"
   }
  },
  {
-  "code": "HOME-GAP-13",
+  "code": "HOME-GAP-10",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 4, title",
+  "label": "Symptom 04, title",
   "kind": "text",
-  "text": "The business pays for it",
+  "text": "Insight doesn't lead to action",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[3].title"
   }
  },
  {
-  "code": "HOME-GAP-14",
+  "code": "HOME-GAP-11",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Pain 4, body",
+  "label": "Symptom 04, body",
   "kind": "text",
-  "text": "Margin, cash and revenue decisions get made late, or made on instinct.",
+  "text": "Analysis may be available, but decisions, ownership and follow-through are not always clear. Lessons can be lost before the next planning cycle.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.pains[3].body"
   }
  },
  {
-  "code": "HOME-GAP-15",
+  "code": "HOME-GAP-12",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "The turn, lead-in (bold)",
+  "kind": "text",
+  "text": "Different symptoms. One underlying question:",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.turn.lead"
+  }
+ },
+ {
+  "code": "HOME-GAP-13",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "The turn, the question it asks",
+  "kind": "text",
+  "text": "how far has your finance function progressed from producing numbers to improving decisions?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.turn.question"
+  }
+ },
+ {
+  "code": "HOME-GAP-14",
   "page": "Home (/)",
   "section": "The gap",
   "label": "Figure 1, value",
   "kind": "text",
-  "text": "46%",
+  "text": "47%",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.stats[0].value"
   }
  },
  {
-  "code": "HOME-GAP-16",
+  "code": "HOME-GAP-15",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 1, label",
+  "label": "Figure 1, claim",
   "kind": "text",
-  "text": "of FP&A time still goes to collecting and validating data",
+  "text": "of FP&A time is spent collecting and validating data.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.stats[0].label"
   }
  },
  {
-  "code": "HOME-GAP-17",
+  "code": "HOME-GAP-16",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 1, source",
+  "label": "Figure 1, publication",
   "kind": "text",
-  "text": "FP&A Trends Survey 2025",
+  "text": "2026 FP&A Trends Survey",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "decisionGap.stats[0].source"
   }
  },
  {
+  "code": "HOME-GAP-17",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "Figure 1, sample",
+  "kind": "text",
+  "text": "475 respondents",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.stats[0].sample"
+  }
+ },
+ {
   "code": "HOME-GAP-18",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 2, value",
+  "label": "Link text on all three figures' source lines",
   "kind": "text",
-  "text": "37%",
+  "text": "Source",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[1].value"
+   "locator": "decisionGap.sourceLabel"
   }
  },
  {
   "code": "HOME-GAP-19",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 2, label",
+  "label": "Figure 2, value",
   "kind": "text",
-  "text": "of CFOs don't completely trust their own financial data",
+  "text": "45%",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[1].label"
+   "locator": "decisionGap.stats[1].value"
   }
  },
  {
   "code": "HOME-GAP-20",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 2, source",
+  "label": "Figure 2, claim",
   "kind": "text",
-  "text": "BlackLine, 2024",
+  "text": "of surveyed teams take a week or more to deliver a decision-ready forecast when market conditions change unexpectedly.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[1].source"
+   "locator": "decisionGap.stats[1].label"
   }
  },
  {
   "code": "HOME-GAP-21",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 3, value",
+  "label": "Figure 2, publication",
   "kind": "text",
-  "text": "6.4 days",
+  "text": "Vena, 2026 FP&A Impact Report",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[2].value"
+   "locator": "decisionGap.stats[1].source"
   }
  },
  {
   "code": "HOME-GAP-22",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 3, label",
+  "label": "Figure 2, sample",
   "kind": "text",
-  "text": "median time just to close the monthly books, before any analysis starts",
+  "text": "400+ finance leaders",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[2].label"
+   "locator": "decisionGap.stats[1].sample"
   }
  },
  {
   "code": "HOME-GAP-23",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Figure 3, source",
+  "label": "Figure 3, value",
   "kind": "text",
-  "text": "APQC benchmark",
+  "text": "57%",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.stats[2].source"
+   "locator": "decisionGap.stats[2].value"
   }
  },
  {
   "code": "HOME-GAP-24",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Bridge, lead",
+  "label": "Figure 3, claim",
   "kind": "text",
-  "text": "The data is there. The answer is too far away.",
+  "text": "of surveyed US finance leaders reported missing a time-sensitive strategic action in the last six months because financial visibility arrived too late.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.bridge.lead"
+   "locator": "decisionGap.stats[2].label"
   }
  },
  {
   "code": "HOME-GAP-25",
   "page": "Home (/)",
   "section": "The gap",
-  "label": "Bridge, sub-line",
+  "label": "Figure 3, publication",
   "kind": "text",
-  "text": "That distance is a function of finance maturity.",
+  "text": "Intuit, 2026 Future of Finance Report",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "decisionGap.bridge.sub"
+   "locator": "decisionGap.stats[2].source"
+  }
+ },
+ {
+  "code": "HOME-GAP-26",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "Figure 3, sample",
+  "kind": "text",
+  "text": "2,000 US finance leaders",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.stats[2].sample"
+  }
+ },
+ {
+  "code": "HOME-GAP-27",
+  "page": "Home (/)",
+  "section": "The gap",
+  "label": "Note under the three figures",
+  "kind": "text",
+  "text": "Survey findings reflect their stated samples and should not be interpreted as applying to every organisation.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "decisionGap.statsNote"
   }
  },
  {
