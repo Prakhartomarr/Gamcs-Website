@@ -57,6 +57,12 @@ const W = 1000;
 const H = 72;
 const Y_LOW = 56; // first stage, bottom of the climb
 const Y_HIGH = 16; // last stage, top of it
+/* How far below the curve each node's connector reaches. The viewBox grows by
+   this much and the stylesheet's bottom margin goes to 0, so the svg's bottom
+   edge IS the card top — which makes the connectors land exactly on the cards
+   at every width. Expressing the drop in pixels instead would have drifted:
+   the gap is fixed px while the drawing scales with the row. */
+const DROP = 10;
 /* >1 holds the line down early and lifts it late — the shape the section
    argues for, where the payoff is at the end of the journey. 1.45 is the
    flattest exponent that still reads as a curve rather than a ramp. */
@@ -168,6 +174,9 @@ export default function MaturityRail({ count, active }: { count: number; active:
     pos.len = lens.current[activeRef.current] ?? 0;
 
     const dots = Array.from(root.querySelectorAll<SVGCircleElement>(".mc-node"));
+    /* Index-aligned with `dots`: both come from the same `pts` in the same
+       order, so a connector fades in with the node it belongs to. */
+    const drops = Array.from(root.querySelectorAll<SVGLineElement>(".mc-drop"));
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     /* Undoing the entrance is the same operation as never playing it, since
@@ -175,7 +184,7 @@ export default function MaturityRail({ count, active }: { count: number; active:
        the unmount and a mid-draw flip to Reduce Motion. */
     const settle = () => {
       gsap.set(line, { clearProps: "strokeDasharray,strokeDashoffset" });
-      gsap.set([...dots, mark], { clearProps: "opacity" });
+      gsap.set([...dots, ...drops, mark], { clearProps: "opacity" });
       const home = pt[activeRef.current];
       if (home) {
         pos.len = lens.current[activeRef.current] ?? 0;
@@ -189,7 +198,7 @@ export default function MaturityRail({ count, active }: { count: number; active:
 
     if (!mql.matches) {
       gsap.set(line, { strokeDasharray: total, strokeDashoffset: total });
-      gsap.set([...dots, mark], { opacity: 0 });
+      gsap.set([...dots, ...drops, mark], { opacity: 0 });
 
       tl = gsap.timeline({ paused: true });
       /* `ease:"none"` is not laziness about the curve — stroke-dashoffset maps
@@ -198,7 +207,8 @@ export default function MaturityRail({ count, active }: { count: number; active:
          duration instead of an inverted ease. */
       tl.to(line, { strokeDashoffset: 0, duration: DRAW, ease: "none" }, 0);
       dots.forEach((dot, i) => {
-        tl?.to(dot, { opacity: 1, duration: 0.28 }, DRAW * (lens.current[i] / total));
+        const at = DRAW * (lens.current[i] / total);
+        tl?.to([dot, drops[i]].filter(Boolean), { opacity: 1, duration: 0.28 }, at);
       });
       tl.to(mark, { opacity: 1, duration: 0.28 }, DRAW * (pos.len / total));
 
@@ -279,7 +289,18 @@ export default function MaturityRail({ count, active }: { count: number; active:
   }, [active, count]);
 
   return (
-    <svg className="mc-railsvg" ref={rootRef} viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
+    <svg className="mc-railsvg" ref={rootRef} viewBox={`0 0 ${W} ${H + DROP}`} aria-hidden="true">
+      {/* Connectors first, so a node always sits on top of its own line. */}
+      {pts.map((p) => (
+        <line
+          className="mc-drop"
+          key={`d${p.x}`}
+          x1={p.x}
+          y1={p.y}
+          x2={p.x}
+          y2={H + DROP}
+        />
+      ))}
       <path className="mc-railline" ref={lineRef} d={spline(pts)} fill="none" />
       {pts.map((p, i) => (
         <circle

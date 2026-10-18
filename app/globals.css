@@ -5240,8 +5240,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    and the drawing stops stretching to the row, gets centred instead, and the
    nodes land up to 118px away from the cards they mark — measured. Letting
    height follow width keeps every node over its own stage. */
+/* margin-bottom is 0 on purpose: MaturityRail's viewBox now extends DROP
+   units past the curve so each node's connector can reach the cards, which
+   only lands exactly if the svg's bottom edge and the card top are the same
+   line. A 12px gap here would leave every connector 12px short. */
 .mc-railsvg{display:none;position:relative;z-index:0;
-  width:100%;height:auto;margin:44px 0 12px;
+  width:100%;height:auto;margin:44px 0 0;
   overflow:visible;pointer-events:none}
 
 /* REPLACES:
@@ -5279,6 +5283,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    which is what a hairline should do anyway. */
 .mc-railline{fill:none;stroke:rgba(15,94,151,.28);stroke-width:1;
   stroke-linecap:round}
+/* The connector from a node down to its card. Dashed and quiet: it is
+   saying "this node is that card", not drawing attention itself. */
+.mc-drop{stroke:rgba(15,94,151,.26);stroke-width:1;stroke-dasharray:2 3}
 .mc-node{fill:var(--blue);fill-opacity:.45;stroke:none}
 .mc-marker,
 .mc-node--on{fill:var(--blue);fill-opacity:1;
