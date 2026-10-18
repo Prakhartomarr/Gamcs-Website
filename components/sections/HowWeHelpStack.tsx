@@ -641,7 +641,21 @@ export default function HowWeHelpStack() {
                           transition: `transform ${dur} ease, background-color ${dur} ease, border-color ${dur} ease, opacity ${dur} ease`,
                         }}
                       >
-                        <Art on={on} />
+                        {/* Only the selected slab carries artwork. The
+                            original's stack is one printed sheet on top of
+                            blank ones, and that is what makes the selection
+                            legible at a 55-degree tilt: four sheets of texture
+                            seen through each other is noise, not a stack.
+                            Kept mounted and faded rather than unmounted, so a
+                            switch cross-fades instead of popping; `dur` is
+                            0ms under prefers-reduced-motion, which makes this
+                            an instant swap there. */}
+                        <div
+                          className="absolute inset-0"
+                          style={{ opacity: on ? 1 : 0, transition: `opacity ${dur} ease` }}
+                        >
+                          <Art on={on} />
+                        </div>
                         {/* Bottom edge, and the offset is derived, not taste.
                             A translateZ of Z paints sin55 = .819·Z higher up
                             the screen; the same screen move made inside a
