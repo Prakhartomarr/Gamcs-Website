@@ -1061,7 +1061,7 @@
   "section": "Maturity curve",
   "label": "Lead paragraph",
   "kind": "text",
-  "text": "Every finance function sits somewhere on this curve. The question isn't how much more data you need — it's how quickly you can turn the data you already have into decisions.",
+  "text": "Finance maturity isn't just about closing faster or using more technology. It is about how reliably you produce the numbers, how clearly you explain performance, and how effectively insight shapes decisions.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.lead"
@@ -1073,7 +1073,7 @@
   "section": "Maturity curve",
   "label": "Hint under the stage tabs",
   "kind": "text",
-  "text": "Click the stage that sounds most like you",
+  "text": "Select a stage to explore what it looks like, the outcome to aim for, and the next practical move.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.hint"
@@ -1121,7 +1121,7 @@
   "section": "Maturity curve",
   "label": "Note under the panel",
   "kind": "text",
-  "text": "Illustrative framework. Maturity can vary across functions, business units and organizations.",
+  "text": "Finance maturity can vary across processes and business units. This curve is an indicative framework, not an audit or an industry benchmark.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.caveat"
@@ -1133,7 +1133,7 @@
   "section": "Maturity curve",
   "label": "Curve axis label, left end",
   "kind": "text",
-  "text": "Reporting",
+  "text": "Financial control",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.axis.start"
@@ -1145,7 +1145,7 @@
   "section": "Maturity curve",
   "label": "Curve axis label, right end",
   "kind": "text",
-  "text": "Decisioning",
+  "text": "Decision-led finance",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.axis.end"
@@ -1157,7 +1157,7 @@
   "section": "Maturity curve",
   "label": "Line under the stage navigation",
   "kind": "text",
-  "text": "One company, five levels of maturity.",
+  "text": "Five stages. One direction: from financial control to decision-led finance.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.narrative"
@@ -1361,7 +1361,7 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "Stage name",
   "kind": "text",
-  "text": "Financial Reporting",
+  "text": "Finance Foundation",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[0].name"
@@ -1373,7 +1373,7 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "Stage name, short (phone tab)",
   "kind": "text",
-  "text": "Reporting",
+  "text": "Foundation",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[0].short"
@@ -1385,7 +1385,7 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "The stage's question",
   "kind": "text",
-  "text": "What happened?",
+  "text": "Can we close reliably?",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[0].question"
@@ -1397,10 +1397,10 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "Quote (shown in curly quotes)",
   "kind": "text",
-  "text": "I can tell you what happened last month — it just takes seven to ten days to produce.",
+  "text": "Processes and responsibilities are undocumented or inconsistently followed. Reconciliations depend on manual follow-up, and close timelines are difficult to predict.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[0].quote"
+   "locator": "maturityCurve.stages[0].description"
   }
  },
  {
@@ -1613,7 +1613,7 @@
   "section": "Maturity curve — Stage 01 Financial Reporting",
   "label": "What the move to the next stage is",
   "kind": "text",
-  "text": "The move to Stage 02 is consolidation — one version of the numbers, produced once instead of rebuilt every month.",
+  "text": "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[0].next"
@@ -1625,7 +1625,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Stage name",
   "kind": "text",
-  "text": "Management Information",
+  "text": "Management Reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].name"
@@ -1637,7 +1637,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Stage name, short (phone tab)",
   "kind": "text",
-  "text": "MIS",
+  "text": "Reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].short"
@@ -1649,7 +1649,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "The stage's question",
   "kind": "text",
-  "text": "How are we doing?",
+  "text": "Do we know how the business performed?",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].question"
@@ -1661,10 +1661,10 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "Quote (shown in curly quotes)",
   "kind": "text",
-  "text": "I finally have a monthly pack — but by the time it lands, the month is already over.",
+  "text": "The books close on an agreed timetable, but producing the management information pack, comparing actuals with budget and explaining variances still takes time and effort.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[1].quote"
+   "locator": "maturityCurve.stages[1].description"
   }
  },
  {
@@ -2081,7 +2081,7 @@
   "section": "Maturity curve — Stage 02 Management Information",
   "label": "What the move to the next stage is",
   "kind": "text",
-  "text": "The move to Stage 03 is automation — the pack stops being assembled and starts being queried.",
+  "text": "Standardise the reporting pack, KPI definitions, data sources and management review process.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[1].next"
@@ -2093,7 +2093,7 @@
   "section": "Maturity curve — Stage 03 Business Intelligence",
   "label": "Stage name",
   "kind": "text",
-  "text": "Business Intelligence",
+  "text": "Automated Reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].name"
@@ -2105,7 +2105,7 @@
   "section": "Maturity curve — Stage 03 Business Intelligence",
   "label": "Stage name, short (phone tab)",
   "kind": "text",
-  "text": "BI",
+  "text": "Automated",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].short"
@@ -2117,7 +2117,7 @@
   "section": "Maturity curve — Stage 03 Business Intelligence",
   "label": "The stage's question",
   "kind": "text",
-  "text": "Why did it happen?",
+  "text": "Can we produce reports without rebuilding them every month?",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].question"
@@ -2129,10 +2129,10 @@
   "section": "Maturity curve — Stage 03 Business Intelligence",
   "label": "Quote (shown in curly quotes)",
   "kind": "text",
-  "text": "I can see almost everything now. I still have to dig to find out why.",
+  "text": "Recurring reports and dashboards refresh with minimal manual preparation. Finance spends less time collecting and assembling information—but automation alone does not explain why performance moved.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[2].quote"
+   "locator": "maturityCurve.stages[2].description"
   }
  },
  {
@@ -2573,7 +2573,7 @@
   "section": "Maturity curve — Stage 03 Business Intelligence",
   "label": "What the move to the next stage is",
   "kind": "text",
-  "text": "The move to Stage 04 is interpretation — the system explains the variance instead of you digging for it.",
+  "text": "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[2].next"
@@ -2585,7 +2585,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Stage name",
   "kind": "text",
-  "text": "Decision Intelligence",
+  "text": "Performance Insight",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].name"
@@ -2597,7 +2597,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Stage name, short (phone tab)",
   "kind": "text",
-  "text": "Decision",
+  "text": "Insight",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].short"
@@ -2609,7 +2609,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "The stage's question",
   "kind": "text",
-  "text": "What happens next?",
+  "text": "Do we understand why performance changed?",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].question"
@@ -2621,10 +2621,10 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "Quote (shown in curly quotes)",
   "kind": "text",
-  "text": "The system tells me what changed, why it changed, and what it’s likely to mean.",
+  "text": "Financial results are connected to relevant operational and commercial context. The team can explain the drivers behind performance, evaluate scenarios and anticipate likely outcomes.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[3].quote"
+   "locator": "maturityCurve.stages[3].description"
   }
  },
  {
@@ -3101,7 +3101,7 @@
   "section": "Maturity curve — Stage 04 Decision Intelligence",
   "label": "What the move to the next stage is",
   "kind": "text",
-  "text": "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",
+  "text": "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[3].next"
@@ -3113,7 +3113,7 @@
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
   "label": "Stage name",
   "kind": "text",
-  "text": "Continuous Decisioning",
+  "text": "Decision-Led Finance",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[4].name"
@@ -3125,7 +3125,7 @@
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
   "label": "Stage name, short (phone tab)",
   "kind": "text",
-  "text": "Continuous",
+  "text": "Decision-led",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[4].short"
@@ -3137,7 +3137,7 @@
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
   "label": "The stage's question",
   "kind": "text",
-  "text": "What should we do now?",
+  "text": "Do insights translate into action and impact?",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[4].question"
@@ -3149,10 +3149,10 @@
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
   "label": "Quote (shown in curly quotes)",
   "kind": "text",
-  "text": "Finance stops reporting the business and starts sensing it — signals become recommendations, recommendations become actions.",
+  "text": "Insights are embedded in management and board conversations. Decisions have owners and expected outcomes; progress is tracked, and lessons feed into future plans.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[4].quote"
+   "locator": "maturityCurve.stages[4].description"
   }
  },
  {
@@ -3557,7 +3557,7 @@
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
   "label": "What the move to the next stage is",
   "kind": "text",
-  "text": "This is the end of the curve — the work here is holding the loop: keeping signals trusted and recommendations owned.",
+  "text": "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[4].next"

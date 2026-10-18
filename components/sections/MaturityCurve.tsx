@@ -373,12 +373,20 @@ function StagePanel({ stage, active, index }: { stage: Stage; active: boolean; i
           {stage.question}
         </h3>
 
-        <blockquote
+        {/* A paragraph, not a blockquote. This used to carry a line a CFO
+            said, in quote marks and italics; it now carries the stage's own
+            description, which nobody said — so the quotation marks, the
+            italics and the <blockquote> element all had to go. The accent
+            rule and the measure stay, so the block occupies exactly the space
+            it did before. */}
+        <p
           style={{ borderColor: accent }}
-          className={`mt-5 max-w-[62ch] border-l-2 pl-4 ${T.quote} text-[color:var(--ink-muted)]`}
+          /* T.quote's 15px without its italic — T.body is 14px, and shrinking
+             the text was not part of this change. */
+          className="mt-5 max-w-[62ch] border-l-2 pl-4 text-[15px] leading-relaxed text-[color:var(--ink-muted)]"
         >
-          “{stage.quote}”
-        </blockquote>
+          {stage.description}
+        </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {stage.tags.map((t) => (

@@ -1217,17 +1217,17 @@ export const maturityCurve = {
   heading: "Where is your finance",
   headingAccent: "function today?",
   lead:
-    "Every finance function sits somewhere on this curve. The question isn't how much more data you need — it's how quickly you can turn the data you already have into decisions.",
-  hint: "Click the stage that sounds most like you",
+    "Finance maturity isn't just about closing faster or using more technology. It is about how reliably you produce the numbers, how clearly you explain performance, and how effectively insight shapes decisions.",
+  hint: "Select a stage to explore what it looks like, the outcome to aim for, and the next practical move.",
   /** Repeated under every panel that shows a number. */
   illustrative: "Illustrative example — not a real client figure.",
   /** Under the panel: the curve is a model, not a diagnosis. */
   caveat:
-    "Illustrative framework. Maturity can vary across functions, business units and organizations.",
+    "Finance maturity can vary across processes and business units. This curve is an indicative framework, not an audit or an industry benchmark.",
   /** The two ends of the rising rail above the tabs. */
-  axis: { start: "Reporting", end: "Decisioning" },
+  axis: { start: "Financial control", end: "Decision-led finance" },
   /** Under the stage navigation: the five are one company, not five. */
-  narrative: "One company, five levels of maturity.",
+  narrative: "Five stages. One direction: from financial control to decision-led finance.",
   /** Over the bridge to the next stage, which used to repeat the stage name. */
   nextHeading: "The next move",
   /** Over the panel headline. {n} is the stage number. */
@@ -1268,11 +1268,11 @@ export const maturityCurve = {
   stages: [
     {
       n: "01",
-      name: "Financial Reporting",
-      short: "Reporting",
-      question: "What happened?",
-      quote:
-        "I can tell you what happened last month — it just takes seven to ten days to produce.",
+      name: "Finance Foundation",
+      short: "Foundation",
+      question: "Can we close reliably?",
+      description:
+        "Processes and responsibilities are undocumented or inconsistently followed. Reconciliations depend on manual follow-up, and close timelines are difficult to predict.",
       tags: ["Excel", "ERP reports", "Month-end close", "Statutory reporting"],
       metrics: [
         { value: "7–10 days", label: "Typical turnaround" },
@@ -1289,15 +1289,15 @@ export const maturityCurve = {
         ],
         caption: "Multiple versions of the truth.",
       },
-      next: "The move to Stage 02 is consolidation — one version of the numbers, produced once instead of rebuilt every month.",
+      next: "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
     },
     {
       n: "02",
-      name: "Management Information",
-      short: "MIS",
-      question: "How are we doing?",
-      quote:
-        "I finally have a monthly pack — but by the time it lands, the month is already over.",
+      name: "Management Reporting",
+      short: "Reporting",
+      question: "Do we know how the business performed?",
+      description:
+        "The books close on an agreed timetable, but producing the management information pack, comparing actuals with budget and explaining variances still takes time and effort.",
       tags: ["MIS", "Monthly packs", "KPI reporting", "Variance analysis"],
       metrics: [
         { value: "5–7 days", label: "Typical turnaround" },
@@ -1325,14 +1325,15 @@ export const maturityCurve = {
         ],
         caption: "The information arrives after the period it describes.",
       },
-      next: "The move to Stage 03 is automation — the pack stops being assembled and starts being queried.",
+      next: "Standardise the reporting pack, KPI definitions, data sources and management review process.",
     },
     {
       n: "03",
-      name: "Business Intelligence",
-      short: "BI",
-      question: "Why did it happen?",
-      quote: "I can see almost everything now. I still have to dig to find out why.",
+      name: "Automated Reporting",
+      short: "Automated",
+      question: "Can we produce reports without rebuilding them every month?",
+      description:
+        "Recurring reports and dashboards refresh with minimal manual preparation. Finance spends less time collecting and assembling information—but automation alone does not explain why performance moved.",
       tags: ["Power BI", "Live dashboards", "Profitability analysis", "Drill-down analytics"],
       metrics: [
         { value: "1–2 days", label: "Typical turnaround" },
@@ -1386,18 +1387,18 @@ export const maturityCurve = {
         /** The one thing the driver chart is saying. */
         annotation: "+18% vs Q3",
       },
-      next: "The move to Stage 04 is interpretation — the system explains the variance instead of you digging for it.",
+      next: "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
     },
     {
       n: "04",
-      name: "Decision Intelligence",
+      name: "Performance Insight",
       /* The compact tab label below 1024px, where this tab leaves 65px for
          text at 360: "Decision intel." wrapped to two lines there, while
          "Continuous", the widest short label, is 55.8px and stays on one. */
-      short: "Decision",
-      question: "What happens next?",
-      quote:
-        "The system tells me what changed, why it changed, and what it’s likely to mean.",
+      short: "Insight",
+      question: "Do we understand why performance changed?",
+      description:
+        "Financial results are connected to relevant operational and commercial context. The team can explain the drivers behind performance, evaluate scenarios and anticipate likely outcomes.",
       tags: ["Driver-based planning", "Forecasting", "Scenario analysis", "Anomaly detection"],
       metrics: [
         { value: "Hours", label: "Typical turnaround" },
@@ -1457,15 +1458,15 @@ export const maturityCurve = {
           annotation: "−120 bps expected",
         },
       },
-      next: "The move to Stage 05 is continuity — the answer arrives when the signal does, not when the cycle closes.",
+      next: "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
     },
     {
       n: "05",
-      name: "Continuous Decisioning",
-      short: "Continuous",
-      question: "What should we do now?",
-      quote:
-        "Finance stops reporting the business and starts sensing it — signals become recommendations, recommendations become actions.",
+      name: "Decision-Led Finance",
+      short: "Decision-led",
+      question: "Do insights translate into action and impact?",
+      description:
+        "Insights are embedded in management and board conversations. Decisions have owners and expected outcomes; progress is tracked, and lessons feed into future plans.",
       tags: ["Real-time signals", "Automated commentary", "Alerts", "Accountability loops"],
       metrics: [
         { value: "Continuous", label: "Typical turnaround" },
@@ -1508,7 +1509,7 @@ export const maturityCurve = {
           },
         ],
       },
-      next: "This is the end of the curve — the work here is holding the loop: keeping signals trusted and recommendations owned.",
+      next: "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
     },
   ],
 } as const;
