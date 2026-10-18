@@ -14,10 +14,13 @@ import { howWeHelp, whyUs } from "@/lib/content/gamcs";
  * `howWeHelp.phases`; the points are qualities, so they get a grid with no
  * numbers on it.
  *
- * Layer 01 sits at the BOTTOM: the picture's whole argument is that each phase
- * rests on the one beneath it, so the foundation has to be underneath. Layers
- * at or below the selected one are lit and solid, layers above it are pale and
- * dashed — what is built versus what is still ahead.
+ * Layer 01 sits on TOP and the stack descends to 04. An earlier pass had 01 at
+ * the bottom so the foundation was literally underneath; the client reviewed
+ * both against the deployed original and reversed it, so the first phase is
+ * the slab you read first. Selecting a phase lifts and tints it where it
+ * already sits — nothing is re-ordered on click. Layers at or before the
+ * selected one are lit and solid, later ones are pale and dashed: what is
+ * built versus what is still ahead.
  *
  * The stage is aria-hidden: it is a picture of the rail, and the rail plus the
  * live detail panel carry everything a screen reader needs.
@@ -51,6 +54,17 @@ const tint = (pct: number) => mix(C.blue, pct, C.panel);
 
 const PHASES = howWeHelp.phases;
 
+/* Rail glyphs, by phase index. The phases have no icons of their own, so these
+   are borrowed from STEP_ICONS — the six principles' set — on meaning, not on
+   key: controls/sign-off, a connected graph, the spark, a rising chart. Two of
+   the six (the people glyph, the layers glyph) have no phase that wants them. */
+const PHASE_ICONS = [
+  "Boardroom Ready. Deal Room Proven.",
+  "Independent by Design. Outcomes Above Platforms.",
+  "Intelligence Built In. Not Bolted On.",
+  "Scale Capability. Not Overhead.",
+].map((k) => STEP_ICONS[k]);
+
 /* "One Team. One Integrated Finance Engine." -> the claim and its follow-on.
    The same cut app/careers/page.tsx makes on these same leads; one split rule
    for the leads, not two that can drift apart. */
@@ -66,19 +80,27 @@ const PRINCIPLES = whyUs.points.map((p) => {
 
 /* ── Geometry ───────────────────────────────────────────────────────────────
    The stage tilts 55° about X after a -45° spin about Z, so a W×H layer paints
-   a diamond 0.707·(W+H) wide — far wider than the layer itself. At 320×200
-   that is 368px before --iso-scale. The narrowest container the site serves is
-   `calc(100% - 28px)`, i.e. 332px on a 360px phone and 292px on a 320px one,
-   so the phone scale is .72: 368 × .72 = 265px, inside both. `overflow-hidden`
-   on the section is the backstop, not the plan — a clipped layer would read as
-   a bug. Vertically the same projection spans 0.405·(W+H) = 211px, and the top
-   layer's translateZ lifts it a further 0.819·(3·Z_STEP + Z_LIFT) = 129px, so
-   the stage boxes are sized for ~340px of unscaled content plus the stage's
-   own 62px drop. */
-const LAYER_W = 320;
-const LAYER_H = 200;
-const Z_STEP = 46; // resting gap between layers, along the isometric Z axis
-const Z_LIFT = 20; // extra lift for the active layer
+   a diamond 0.707·(W+H) wide and 0.405·(W+H) tall — far wider than the layer
+   itself. 350×250 is the size measured off the deployed original, whose slabs
+   project ~400px wide; here 0.707 × 600 × .95 = 403px at the desktop scale.
+
+   The scales are the constraint, not the size. The narrowest container the
+   site serves is `calc(100% - 28px)` — 332px on a 360px phone, 292px on a 320
+   one — and the phone scale has to clear the smaller of the two, so .68:
+   0.707 × 600 × .68 = 289px. `overflow-hidden` on the section is the
+   backstop, not the plan: a clipped layer would read as a bug.
+
+   Vertically the stack spans its own 0.405·(W+H) plus the top layer's
+   translateZ, 0.819·(3·Z_STEP + Z_LIFT) — 376px at .95, which is what the
+   stage boxes below are sized from. That maximum is reached only while 01 is
+   selected, since it is the slab the lift adds to the top of. STAGE_DROP is
+   half that lift, pushing the origin down so the lifted stack ends up centred
+   in its box rather than riding the top edge. */
+const LAYER_W = 350;
+const LAYER_H = 250;
+const Z_STEP = 54; // resting gap between layers, along the isometric Z axis
+const Z_LIFT = 24; // extra lift for the active layer
+const STAGE_DROP = Math.round((0.819 * (3 * Z_STEP + Z_LIFT)) / 2);
 
 const CHEVRON = "M15 5 L8 12 L15 19";
 
@@ -150,7 +172,7 @@ export default function HowWeHelpStack() {
       ref={sectionRef}
       id="how-we-help"
       aria-labelledby="hwh-heading"
-      className="relative w-full overflow-hidden pb-12 pt-20 [--iso-scale:.72] sm:[--iso-scale:.85] md:pb-16 md:pt-28 lg:[--iso-scale:.95]"
+      className="relative w-full overflow-hidden pb-12 pt-20 [--iso-scale:.68] sm:[--iso-scale:.85] md:pb-16 md:pt-28 lg:[--iso-scale:.95]"
       style={{ background: C.band }}
     >
       {/* soft wash behind the stack */}
@@ -183,129 +205,146 @@ export default function HowWeHelpStack() {
         </div>
 
         {/*
-          Phone reads stack -> rail -> detail; the tablet keeps the stack full
-          width above the two columns, because between 768 and 1279 the site's
-          .container caps at 920px and a third column would leave the stage too
-          little to draw a 368px-wide diamond in. From 1024 the three sit in a
-          row: 230 + 280 for the text columns leaves the stage ~370px, which is
-          what .95 of the diamond needs.
+          Phone reads stack -> rail -> detail; from 768 to 1279 the stack keeps
+          the full width above two text columns. The three-column row waits for
+          1280 because .container is pinned to 920px up to 1279, and the rail's
+          longest label — EXPLAIN & ANTICIPATE, set uppercase and letter-spaced
+          — needs ~300px beside a 36px chip. 300 + 340 + 64 of gaps off a
+          1374px container at 1470 leaves the stage 670px for a 403px diamond.
         */}
-        <div className="mt-14 grid gap-y-10 md:mt-20 md:grid-cols-2 md:gap-x-8 lg:grid-cols-[minmax(0,230px)_minmax(0,1fr)_minmax(0,280px)] lg:items-center lg:gap-x-5 xl:grid-cols-[minmax(0,260px)_minmax(0,1fr)_minmax(0,340px)] xl:gap-x-8">
+        <div className="mt-14 grid gap-y-10 md:mt-20 md:grid-cols-2 md:gap-x-8 xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)_minmax(0,340px)] xl:items-center xl:gap-x-8">
           {/* Rail — toggle buttons, not tabs: the detail panel is a live region
               the arrows also drive, not a tabpanel this list owns. */}
-          <div className="relative order-2 flex flex-col lg:order-1">
+          <div className="relative order-2 flex flex-col gap-[2px] xl:order-1">
             {PHASES.map((p, i) => {
               const on = i === active;
-              const done = i < active;
               return (
                 <button
                   key={p.n}
                   type="button"
                   aria-pressed={on}
                   onClick={() => pick(i)}
-                  className={`relative flex w-full items-start gap-3 rounded-lg p-[12px] text-left ${focusRing}`}
+                  className={`relative flex w-full items-center justify-end gap-[18px] rounded-[14px] py-[9px] pl-4 pr-[9px] text-right ${focusRing}`}
                   style={{
-                    background: on ? mix(C.blue, 7) : "transparent",
+                    background: on ? tint(6) : "transparent",
                     transition: `background-color ${dur} ease`,
                   }}
                 >
-                  {/* Badge-to-badge connector. It runs from this badge's lower
-                      edge to 12px past the item's own, which is exactly the
-                      next badge's upper edge — so the track stays joined
-                      however the labels wrap, and never pokes out past 04. */}
-                  {i < PHASES.length - 1 && (
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -bottom-[12px] left-[29.5px] top-[48px] w-px"
-                      style={{
-                        background: done ? C.blue : C.line,
-                        transition: `background-color ${dur} ease`,
-                      }}
-                    />
-                  )}
                   <span
-                    className="relative z-[1] flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-lg border font-heading text-[12px] font-bold tracking-[.08em]"
-                    style={{
-                      borderColor: on ? C.navy : done ? tint(30) : C.line,
-                      background: on ? C.navy : done ? tint(14) : C.panel,
-                      color: on ? C.panel : done ? C.blue : C.muted,
-                      transition: `background-color ${dur} ease, border-color ${dur} ease, color ${dur} ease`,
-                    }}
+                    className="font-heading text-[13px] font-semibold uppercase leading-none tracking-[.1em]"
+                    style={{ color: on ? C.navy : C.muted, transition: `color ${dur} ease` }}
+                  >
+                    {p.name}
+                  </span>
+                  <span
+                    className="text-[13px] font-semibold leading-none tracking-[.08em]"
+                    style={{ color: on ? C.blue : C.faint, transition: `color ${dur} ease` }}
                   >
                     {p.n}
                   </span>
-                  <span className="min-w-0 pt-0.5">
-                    <span
-                      className="block font-heading text-[15px] font-semibold leading-snug"
-                      style={{ color: on ? C.navy : C.muted, transition: `color ${dur} ease` }}
+                  <span
+                    className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[11px] border"
+                    style={{
+                      borderColor: on ? "transparent" : C.line,
+                      /* The original's filled chip is a blue-leaning navy, not
+                         --ink-deep: it has to read as the same family as the
+                         lit slab it points at. */
+                      background: on ? mix(C.blue, 85, C.navy) : mix(C.navy, 3, C.panel),
+                      color: on ? C.panel : C.faint,
+                      transition: `background-color ${dur} ease, border-color ${dur} ease, color ${dur} ease`,
+                    }}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      className="h-[18px] w-[18px]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.6}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      {p.name}
-                    </span>
-                    <span className="mt-0.5 block text-[13px] leading-snug" style={{ color: C.gray }}>
-                      {p.goal}
-                    </span>
+                      {PHASE_ICONS[i]}
+                    </svg>
                   </span>
+                  {/* Leader from the lit pill to the stack, drawn only where
+                      the two are side by side — below 1280 the stack sits
+                      above the rail and a line pointing right points at
+                      nothing. */}
+                  {on && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute left-full top-1/2 hidden -translate-y-1/2 items-center gap-1 xl:flex"
+                    >
+                      <span className="block h-px w-[49px]" style={{ background: mix(C.blue, 55) }} />
+                      <span
+                        className="block h-[8px] w-[8px] rounded-full"
+                        style={{ background: C.blue }}
+                      />
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
 
           {/* Stage — decorative; the rail is its accessible equivalent */}
-          <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-1">
+          <div className="order-1 md:col-span-2 xl:order-2 xl:col-span-1">
             <div aria-hidden="true" className="flex justify-center">
               <div
                 ref={stageRef}
-                className="relative h-[340px] w-full sm:h-[400px] lg:h-[450px]"
+                className="relative h-[300px] w-full sm:h-[360px] lg:h-[400px]"
               >
                 <div
                   className="absolute left-1/2 top-1/2 h-0 w-0"
                   style={{
-                    transform:
-                      "translate(-50%,-50%) translateY(calc(62px * var(--iso-scale))) scale(var(--iso-scale)) rotateX(55deg) rotateZ(-45deg)",
+                    transform: `translate(-50%,-50%) translateY(calc(${STAGE_DROP}px * var(--iso-scale))) scale(var(--iso-scale)) rotateX(55deg) rotateZ(-45deg)`,
                     transformStyle: "preserve-3d",
                   }}
                 >
-                  {/* 01 first, so the DOM reads bottom-of-stack upward and the
-                      paint order matches the Z order everywhere. */}
+                  {/* 01 is the TOP slab, so the translateZ counts down from the
+                      last phase: preserve-3d sorts the siblings by depth, so
+                      DOM order here is just reading order. */}
                   {PHASES.map((p, i) => {
                     const on = i === active;
-                    const above = i > active;
+                    const later = i > active;
                     return (
                       <div
                         key={p.n}
                         onClick={() => pick(i)}
-                        className="absolute cursor-pointer rounded-[18px]"
+                        className="absolute cursor-pointer rounded-[20px]"
                         style={{
                           width: LAYER_W,
                           height: LAYER_H,
                           marginLeft: -LAYER_W / 2,
                           marginTop: -LAYER_H / 2,
-                          transform: `translateZ(${i * Z_STEP + (on ? Z_LIFT : 0)}px)`,
+                          transform: `translateZ(${(PHASES.length - 1 - i) * Z_STEP + (on ? Z_LIFT : 0)}px)`,
                           borderWidth: on ? 1.5 : 1,
-                          borderStyle: above ? "dashed" : "solid",
-                          borderColor: on ? C.blue : above ? C.line : tint(32),
-                          background: on ? tint(22) : above ? mix(C.navy, 4, C.panel) : tint(9),
-                          boxShadow: on
-                            ? `0 24px 40px -22px ${mix(C.blue, 60)}`
-                            : above
-                              ? `0 6px 14px -12px ${mix(C.navy, 30)}`
-                              : `0 10px 20px -16px ${mix(C.navy, 45)}`,
-                          transition: `transform ${dur} ease, background-color ${dur} ease, border-color ${dur} ease, box-shadow ${dur} ease`,
+                          borderStyle: later ? "dashed" : "solid",
+                          borderColor: on ? C.blue : later ? C.line : tint(32),
+                          background: on ? tint(22) : later ? mix(C.navy, 4, C.panel) : tint(9),
+                          /* One shadow for every state. It used to change with
+                             the selection, which repainted four big rotated
+                             surfaces on every frame of the 400ms switch for a
+                             difference nobody reads at this tilt. */
+                          boxShadow: `0 10px 22px -16px ${mix(C.navy, 45)}`,
+                          willChange: reduced ? undefined : "transform",
+                          transition: `transform ${dur} ease, background-color ${dur} ease, border-color ${dur} ease`,
                         }}
                       >
                         {/* Bottom-left, and that is not a style choice. The
-                            layer above is the same shape shifted up the screen
-                            by Z_STEP, which in this layer's own coordinates is
-                            46.5px right and 46.5px up — so the only part of a
-                            layer it never hides is a 46px band along the left
-                            and bottom edges. Put at the top, as the first pass
-                            had it, every label but 04's was buried. The 12px
-                            offset keeps the band even when the layer above is
-                            the lifted active one and the band narrows to 26px. */}
+                            layer one step up the screen is the same shape
+                            shifted by Z_STEP, which in this layer's own
+                            coordinates is 54px right and 54px up — so the only
+                            part of a layer it never hides is a band along the
+                            left and bottom edges. Put at the top, as the first
+                            pass had it, every label but the bottom slab's was
+                            buried. The 12px offset keeps the band even when
+                            the layer above is the lifted active one. */}
                         <span
                           className="absolute bottom-[12px] left-[20px] whitespace-nowrap text-[11px] font-semibold uppercase tracking-[.16em]"
                           style={{
-                            color: above ? C.faint : C.blue,
+                            color: later ? C.faint : C.blue,
                             transition: `color ${dur} ease`,
                           }}
                         >
@@ -340,8 +379,10 @@ export default function HowWeHelpStack() {
                     <span style={{ color: C.blue }}>{fill(howWeHelp.phaseLabel, { n: p.n })}</span>{" "}
                     <span style={{ color: C.gray }}>{howWeHelp.phaseTotal}</span>
                   </p>
+                  {/* 26/1.2 over 15/1.65 is the original's pairing, measured
+                      off its two-line headline and four-line body. */}
                   <h3
-                    className="mt-2 text-[24px] font-medium leading-tight tracking-[-.015em]"
+                    className="mt-3 text-[26px] font-medium leading-[1.2] tracking-[-.015em]"
                     style={{ color: C.navy }}
                   >
                     {p.name}
