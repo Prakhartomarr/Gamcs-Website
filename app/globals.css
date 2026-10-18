@@ -2209,7 +2209,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    break, and the accent has to stay inline inside it rather than own a line,
    so there is no white-space rule on .dg-accent (compare .fin-h2 .accent,
    which is nowrap because it IS its own line). */
-.dg-h2{margin:0;max-width:15ch}
+/* No measure cap. 15ch held the heading to 467px inside a 678px column, and
+   that third line was the cap's doing, not the sentence's — the grid column
+   is the measure, and at it the line breaks after "and the decision," in two.
+   The column narrows with the viewport, so this is width-proportional rather
+   than a number that is right at one size. */
+.dg-h2{margin:0}
 /* The rule under the heading is drawn, not marked up: it is punctuation for
    the heading, and a <span> for it would be an element with nothing to say. */
 
@@ -2223,7 +2228,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    follow the DOM order and stay right if a fifth symptom is ever added or the
    content file reorders them. padding:0 and list-style:none because this is a
    <ul>: the semantics are wanted, the bullets are not. */
-.dg-pains{counter-reset:dg-pain;display:grid;gap:24px;margin:64px 0 0;
+.dg-pains{counter-reset:dg-pain;display:grid;gap:24px;margin:32px 0 0;
   padding:0;list-style:none}
 /* The index pill. inline-block so it sizes to its two digits and still takes
    a line of its own above the <h3> that follows it. The ground is --blue at
@@ -2470,7 +2475,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    signal strip can stack under the text inside the one band. The flex
    row that held the quote glyph beside the text moves down to
    .dg-turn-row, unchanged. */
-.dg-turn{display:block;margin:40px 0 0;padding:30px 36px;border-radius:16px;
+.dg-turn{display:block;margin:40px 0 0;padding:22px 36px;border-radius:16px;
   background:var(--ink-deep)}
 
 /* REPLACES:
@@ -2499,7 +2504,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    static frame and that class never arrives. The component adds `is-ready`
    to this box after its first successful draw, so the only state that hides
    the strip is the one where there is genuinely nothing in it — JS off. */
-.dg-signal{display:none;height:72px;margin:22px 0 -6px}
+/* The band measured 185px: 34 of padding each side, a 26px line of text, and
+   a 72px strip with 22 above it. Taking the strip to 48, its lead-in to 14 and
+   the padding to 24 lands it at ~130 — the 30% the client asked for, taken off
+   the air and the strip rather than off the sentence. */
+.dg-signal{display:none;height:48px;margin:14px 0 -6px}
 .dg-signal.is-ready{display:block}
 /* display:block, or the canvas sits on the text baseline and leaves a
    descender's worth of gap under the strip. */
@@ -2579,11 +2588,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .dg-stat:has(.dg-stat-link:focus-visible) .dg-stat-link{outline:none}
 
 /* REPLACES (inside the existing @media (min-width:1280px) block):
-     .dg-turn{padding:34px 40px}
+     .dg-turn{padding:22px 40px}
    Same padding; the motion variant tightens the bottom for the strip for
    the same reason as above, at the wide scale. */
 @media (min-width:1280px){
-  .dg-turn{padding:34px 40px}
+  .dg-turn{padding:22px 40px}
 }
 
 /* ---------------------------------------------------------------------
