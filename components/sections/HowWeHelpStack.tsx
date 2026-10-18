@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 import { STEP_ICONS } from "@/components/ui/stroke-icons";
 import { howWeHelp, whyUs } from "@/lib/content/gamcs";
 
@@ -38,7 +38,9 @@ const C = {
   gray: "var(--gray)", // the principles' second sentence
   faint: "var(--chart-foreground-muted)", // idle layer labels — decoration only
   line: "var(--line)", // idle borders
+  blueLine: "var(--blue-light)", // artwork strokes on a lit slab
   panel: "var(--white)",
+  wash: "var(--soft)", // artwork tile grounds on an unlit slab
   band: "var(--band-white)", // section background
 } as const;
 
@@ -77,6 +79,274 @@ const PRINCIPLES = whyUs.points.map((p) => {
   };
 });
 
+/* ── Slab artwork ───────────────────────────────────────────────────────────
+   One picture per phase, drawn flat in the slab's own plane and then tilted
+   with it. Two rules carry the whole set:
+
+   - Everything is a div. At 55° a stroked SVG hairline aliases into dashes
+     while a 1px div stays a line, and the shapes here are all rectangles.
+   - Text is 5px. At this tilt it is texture — the eye reads "a checklist", "a
+     chart" — so every label is one or two words. A sentence on a slab would
+     be unreadable and would compete with the detail panel, which is where the
+     copy actually belongs.
+
+   `on` is the only prop: a lit slab draws in blue over a blue-tinted ground,
+   an unlit one in the muted ink over --soft. */
+
+type ArtProps = { on: boolean };
+
+/* Artwork clears the bottom gutter the rotated slab label owns — see the
+   label for where that band's width comes from. */
+const ART_BOX = "absolute left-3 right-3 top-3 bottom-[34px]";
+const TAG = "text-[5px] font-semibold tracking-[.14em]";
+
+/** 01 — the close as a signed-off checklist: owners, ticks, one row still open. */
+function ArtStabilise({ on }: ArtProps) {
+  const s = on ? C.blueLine : C.line;
+  const ink = on ? C.blue : C.faint;
+  const rows: [string, string][] = [
+    ["BANK REC", "AP"],
+    ["ACCRUALS", "GL"],
+    ["PAYROLL", "HR"],
+    ["REVENUE", "AR"],
+    ["VARIANCE", "FP&A"],
+    ["SIGN-OFF", "CFO"],
+  ];
+  return (
+    <div className={`${ART_BOX} flex flex-col gap-[5px]`}>
+      <div className="flex items-center gap-1.5">
+        <span className={TAG} style={{ color: ink }}>
+          CLOSE
+        </span>
+        <span className="h-px flex-1 rounded-full" style={{ background: s }} />
+        <span className={TAG} style={{ color: ink }}>
+          DAY 5
+        </span>
+      </div>
+      {rows.map(([task, owner], i) => {
+        const open = i === rows.length - 1; // the one still waiting on a signature
+        return (
+          <div
+            key={task}
+            className="flex flex-1 items-center gap-1.5 rounded-md border px-2"
+            style={{
+              borderColor: open ? ink : s,
+              borderStyle: open ? "dashed" : "solid",
+              background: open ? "transparent" : on ? mix(C.blue, 10) : C.wash,
+            }}
+          >
+            <span
+              className="h-[7px] w-[7px] shrink-0 rounded-[2px] border"
+              style={{ borderColor: ink, background: open ? "transparent" : ink }}
+            />
+            <span className={TAG} style={{ color: ink }}>
+              {task}
+            </span>
+            <span
+              className="ml-auto h-[3px] rounded-full"
+              style={{ width: open ? 10 : 34, background: s }}
+            />
+            <span
+              className="rounded-[3px] px-[3px] py-px text-[5px] font-bold tracking-[.1em]"
+              style={{ background: mix(ink, 16), color: ink }}
+            >
+              {owner}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** 02 — four separate systems feeding one spine, one line out to one report. */
+function ArtConnect({ on }: ArtProps) {
+  const s = on ? C.blueLine : C.line;
+  const ink = on ? C.blue : C.faint;
+  const ground = on ? mix(C.blue, 10) : C.wash;
+  return (
+    <div className={`${ART_BOX} flex items-stretch`}>
+      <div className="flex w-[30%] flex-col gap-1">
+        {["ERP", "BANKING", "PAYROLL", "CRM"].map((t) => (
+          <div
+            key={t}
+            className="flex flex-1 items-center rounded-md border px-1.5"
+            style={{ borderColor: s, background: ground }}
+          >
+            <span className={TAG} style={{ color: ink }}>
+              {t}
+            </span>
+          </div>
+        ))}
+      </div>
+      {/* The convergence itself. Percentages, not a layout: they land on the
+          centres of the four flex-1 tiles beside them at any slab scale. */}
+      <div className="relative w-[18%]">
+        <span className="absolute bottom-[12%] left-1/2 top-[12%] w-px" style={{ background: s }} />
+        {["12%", "37%", "63%", "88%"].map((top) => (
+          <span key={top} className="absolute left-0 h-px w-1/2" style={{ top, background: s }} />
+        ))}
+        <span className="absolute left-1/2 top-1/2 h-px w-1/2" style={{ background: ink }} />
+        <span
+          className="absolute left-1/2 top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full border"
+          style={{ borderColor: ink, background: C.panel }}
+        />
+      </div>
+      <div
+        className="relative flex-1 rounded-md border p-2"
+        style={{ borderColor: s, background: ground }}
+      >
+        <div className="flex flex-col gap-[3px]">
+          {[100, 84, 92, 70, 88, 76].map((w, i) => (
+            <span
+              key={i}
+              className="h-[3px] rounded-full"
+              style={{ width: `${w}%`, background: s }}
+            />
+          ))}
+        </div>
+        <span className={`absolute bottom-1.5 left-2 ${TAG}`} style={{ color: ink }}>
+          ONE REPORT
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** 03 — results broken into drivers, with the bars continuing as a forecast. */
+function ArtExplain({ on }: ArtProps) {
+  const s = on ? C.blueLine : C.line;
+  const ink = on ? C.blue : C.faint;
+  const drivers: [string, string][] = [
+    ["PRICE", "+"],
+    ["VOLUME", "+"],
+    ["MIX", "−"],
+    ["COST", "−"],
+  ];
+  return (
+    <div className={`${ART_BOX} flex gap-2`}>
+      <div className="flex w-[30%] flex-col gap-1">
+        {drivers.map(([t, d]) => (
+          <div
+            key={t}
+            className="flex flex-1 items-center rounded-md border px-1.5"
+            style={{ borderColor: s, background: on ? mix(C.blue, 10) : C.wash }}
+          >
+            <span className={TAG} style={{ color: ink }}>
+              {t}
+            </span>
+            <span className="ml-auto text-[6px] font-bold leading-none" style={{ color: ink }}>
+              {d}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div
+        className="relative flex flex-1 items-end gap-1 rounded-md border px-2 pb-5 pt-2"
+        style={{ borderColor: s, background: on ? mix(C.blue, 6) : C.wash }}
+      >
+        {[38, 52, 46, 64, 58, 72, 80, 92].map((h, i) => {
+          const ahead = i >= 5; // forecast: outlined, so it reads as not-yet-actual
+          return (
+            <span
+              key={i}
+              className="flex-1 rounded-t-[2px] border"
+              style={{
+                height: `${h}%`,
+                borderColor: ahead ? ink : "transparent",
+                borderStyle: ahead ? "dashed" : "solid",
+                /* Half-weight when unlit: a solid grey bar is the heaviest
+                   mark on the stack and an idle slab would out-shout the
+                   selected one from three layers down. */
+                background: ahead ? "transparent" : on ? ink : mix(ink, 50),
+              }}
+            />
+          );
+        })}
+        <span className="absolute bottom-4 left-2 right-2 h-px" style={{ background: s }} />
+        <span className={`absolute bottom-1 left-2 ${TAG}`} style={{ color: ink }}>
+          ACTUAL
+        </span>
+        <span className={`absolute bottom-1 right-2 ${TAG}`} style={{ color: ink }}>
+          FORECAST
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** 04 — decisions with named owners beside the outcome they are tracked on. */
+function ArtDecide({ on }: ArtProps) {
+  const s = on ? C.blueLine : C.line;
+  const ink = on ? C.blue : C.faint;
+  const decisions: [string, string][] = [
+    ["PRICING", "COO"],
+    ["WORKING CAPITAL", "CFO"],
+    ["HEADCOUNT", "MD"],
+  ];
+  return (
+    <div className={`${ART_BOX} flex gap-2`}>
+      <div className="flex flex-1 flex-col gap-1">
+        {decisions.map(([t, o]) => (
+          <div
+            key={t}
+            className="flex flex-1 items-center gap-1.5 rounded-md border px-2"
+            style={{ borderColor: s, background: on ? mix(C.blue, 10) : C.wash }}
+          >
+            <span className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: ink }} />
+            <span className={TAG} style={{ color: ink }}>
+              {t}
+            </span>
+            <span
+              className="ml-auto rounded-[3px] px-[3px] py-px text-[5px] font-bold tracking-[.1em]"
+              style={{ background: mix(ink, 16), color: ink }}
+            >
+              {o}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div
+        className="relative flex w-[36%] flex-col rounded-md border p-2"
+        style={{ borderColor: s, background: on ? mix(C.blue, 6) : C.wash }}
+      >
+        <span className={TAG} style={{ color: ink }}>
+          IMPACT
+        </span>
+        <div className="relative mt-1 flex flex-1 items-end gap-1 pb-3">
+          {[30, 38, 46, 54, 68, 82].map((h, i) => (
+            <span
+              key={i}
+              className="flex-1 rounded-t-[2px]"
+              style={{ height: `${h}%`, background: ink, opacity: (on ? 1 : 0.5) * (0.5 + i * 0.1) }}
+            />
+          ))}
+          {/* the target the decisions are measured against */}
+          <span
+            className="absolute inset-x-0 bottom-[58%] border-t border-dashed"
+            style={{ borderColor: ink }}
+          />
+        </div>
+        <span className={`absolute bottom-1.5 left-2 ${TAG}`} style={{ color: ink }}>
+          TRACKED
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Artwork per phase, positionally. The mapped tuple type takes its length from
+ * `PHASES`, so a fifth phase fails the build instead of rendering a bare slab.
+ */
+type SameLength<T extends readonly unknown[], U> = { [K in keyof T]: U };
+const ART: SameLength<typeof PHASES, ComponentType<ArtProps>> = [
+  ArtStabilise,
+  ArtConnect,
+  ArtExplain,
+  ArtDecide,
+];
+
 /* ── Geometry ───────────────────────────────────────────────────────────────
    The stage tilts 55° about X after a -45° spin about Z, so a W×H layer paints
    a diamond 0.707·(W+H) wide and 0.405·(W+H) tall — far wider than the layer
@@ -103,7 +373,14 @@ const STAGE_DROP = Math.round((0.819 * (3 * Z_STEP + Z_LIFT)) / 2);
 
 
 export default function HowWeHelpStack() {
-  const [active, setActive] = useState(0);
+  /* Two selections, not one. `committed` is what the reader chose — a click,
+     or the scroll auto-advance — and it is what `aria-pressed` and the live
+     region report. `preview` is where the mouse happens to be. Separating
+     them is what lets a pointer sweep across the rail without the pressed
+     state flickering under a screen reader. */
+  const [committed, setCommitted] = useState(0);
+  const [preview, setPreview] = useState<number | null>(null);
+  const shown = preview ?? committed;
   const [reduced, setReduced] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -141,7 +418,11 @@ export default function HowWeHelpStack() {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || 800;
       const p = (vh * 0.85 - (r.top + r.height / 2)) / (vh * 0.65);
-      setActive(Math.min(PHASES.length - 1, Math.max(0, Math.floor(p * PHASES.length))));
+      /* A pointer parked over the stack would otherwise pin the picture to
+         whatever slab it is resting on while the page scrolls past it. The
+         next real pointermove re-previews; a still pointer does not. */
+      setPreview(null);
+      setCommitted(Math.min(PHASES.length - 1, Math.max(0, Math.floor(p * PHASES.length))));
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(tick);
@@ -158,8 +439,20 @@ export default function HowWeHelpStack() {
 
   const pick = useCallback((i: number) => {
     lockRef.current = Date.now() + 1500; // user intent wins over scroll for a moment
-    setActive(i);
+    /* A finger raises no pointerleave, so a tap that left a preview behind
+       would strand the stack on it. Committing always clears the preview;
+       a mouse still over the target simply re-sets it to the same index. */
+    setPreview(null);
+    setCommitted(i);
   }, []);
+
+  /* pointermove, not pointerenter: a wheel scroll slides a slab under a
+     resting cursor and fires enter without the pointer having moved, and the
+     stage sits in the centre column where a desktop cursor tends to rest.
+     Mouse only — a tap has to go through onClick and commit. */
+  const peek = (type: string, i: number) => {
+    if (type === "mouse") setPreview(i);
+  };
 
   const dur = reduced ? "0ms" : "400ms";
   const focusRing =
@@ -215,13 +508,18 @@ export default function HowWeHelpStack() {
               the arrows also drive, not a tabpanel this list owns. */}
           <div className="relative order-2 flex flex-col gap-[2px] xl:order-1">
             {PHASES.map((p, i) => {
-              const on = i === active;
+              const on = i === shown;
               return (
                 <button
                   key={p.n}
                   type="button"
-                  aria-pressed={on}
+                  /* The committed phase, never the hovered one: a mouse
+                     crossing the rail must not make a screen reader read four
+                     pressed-state changes. */
+                  aria-pressed={i === committed}
                   onClick={() => pick(i)}
+                  onPointerMove={(e) => peek(e.pointerType, i)}
+                  onPointerLeave={() => setPreview(null)}
                   className={`relative flex w-full items-center justify-end gap-[18px] rounded-[14px] py-[9px] pl-4 pr-[9px] text-right ${focusRing}`}
                   style={{
                     background: on ? tint(6) : "transparent",
@@ -304,12 +602,15 @@ export default function HowWeHelpStack() {
                       last phase: preserve-3d sorts the siblings by depth, so
                       DOM order here is just reading order. */}
                   {PHASES.map((p, i) => {
-                    const on = i === active;
-                    const later = i > active;
+                    const on = i === shown;
+                    const later = i > shown;
+                    const Art = ART[i];
                     return (
                       <div
                         key={p.n}
                         onClick={() => pick(i)}
+                        onPointerMove={(e) => peek(e.pointerType, i)}
+                        onPointerLeave={() => setPreview(null)}
                         className="absolute cursor-pointer rounded-[20px]"
                         style={{
                           width: LAYER_W,
@@ -321,26 +622,44 @@ export default function HowWeHelpStack() {
                           borderStyle: later ? "dashed" : "solid",
                           borderColor: on ? C.blue : later ? C.line : tint(32),
                           background: on ? tint(22) : later ? mix(C.navy, 4, C.panel) : tint(9),
+                          /* Slabs ahead of the selected one cover it almost
+                             entirely — the exposed band is only ~30px of a
+                             350px slab — so the active artwork would be
+                             invisible if they stayed opaque. Dropping them to
+                             .45 lets it read through while each of them keeps
+                             its own border and texture at half strength, so
+                             they still look like slabs rather than outlines.
+                             Nothing is in front of the layers below, so they
+                             stay solid. */
+                          opacity: i < shown ? 0.45 : 1,
                           /* One shadow for every state. It used to change with
                              the selection, which repainted four big rotated
                              surfaces on every frame of the 400ms switch for a
                              difference nobody reads at this tilt. */
                           boxShadow: `0 10px 22px -16px ${mix(C.navy, 45)}`,
                           willChange: reduced ? undefined : "transform",
-                          transition: `transform ${dur} ease, background-color ${dur} ease, border-color ${dur} ease`,
+                          transition: `transform ${dur} ease, background-color ${dur} ease, border-color ${dur} ease, opacity ${dur} ease`,
                         }}
                       >
-                        {/* Bottom-left, and that is not a style choice. The
-                            layer one step up the screen is the same shape
-                            shifted by Z_STEP, which in this layer's own
-                            coordinates is 54px right and 54px up — so the only
-                            part of a layer it never hides is a band along the
-                            left and bottom edges. Put at the top, as the first
-                            pass had it, every label but the bottom slab's was
-                            buried. The 12px offset keeps the band even when
-                            the layer above is the lifted active one. */}
+                        <Art on={on} />
+                        {/* Bottom edge, and the offset is derived, not taste.
+                            A translateZ of Z paints sin55 = .819·Z higher up
+                            the screen; the same screen move made inside a
+                            slab's own plane costs √2·cos55 = .811 per pixel,
+                            so the slab above sits .819/.811 = 1.01·gap right
+                            and up in this slab's coordinates and leaves only a
+                            1.01·gap band along the left and bottom edges.
+                            The gap is Z_STEP, except under the ACTIVE slab,
+                            which has climbed Z_LIFT toward its neighbour:
+                            1.01·(54−24) = 30px, the one band that survives
+                            every state. An 11px line with `leading-none` is an
+                            11px box; bottom-[10px] centres it in that 30px
+                            with ~10px clear on each side, so all four labels
+                            read whatever is selected. 12px with inherited
+                            leading was inside the band by ~3px — the margin
+                            the client saw collapse. */}
                         <span
-                          className="absolute bottom-[12px] left-[20px] whitespace-nowrap text-[11px] font-semibold uppercase tracking-[.16em]"
+                          className="absolute bottom-[10px] left-[20px] whitespace-nowrap text-[11px] font-semibold uppercase leading-none tracking-[.16em]"
                           style={{
                             color: later ? C.faint : C.blue,
                             transition: `color ${dur} ease`,
@@ -365,11 +684,27 @@ export default function HowWeHelpStack() {
             accessibility tree, so the live region announces one phase, not
             four. The arrows sit outside that grid: their labels never change,
             so there is nothing in them for the live region to re-read.
+
+            Hover previews here too, and that is the one thing that could make
+            this region chatter. It is kept out by splitting what is SEEN from
+            what is EXPOSED: the previewed block is visible but `aria-hidden`,
+            while the committed block stays in the accessibility tree behind
+            it at `opacity-0` — transparent, not `invisible`, because
+            visibility:hidden would empty the live region and the emptying is
+            itself a change to announce. So the region's content is always
+            exactly the committed phase and changes only on a click or the
+            scroll auto-advance, no matter where the mouse goes.
           */}
           <div aria-live="polite" className="order-3">
             <div className="grid">
               {PHASES.map((p, i) => (
-                <div key={p.n} className={`[grid-area:1/1] ${i === active ? "" : "invisible"}`}>
+                <div
+                  key={p.n}
+                  aria-hidden={i !== committed}
+                  className={`[grid-area:1/1] ${
+                    i === shown ? "" : i === committed ? "opacity-0" : "invisible"
+                  }`}
+                >
                   {/* 26/1.2 over 15/1.65 is the original's pairing, measured
                       off its two-line headline and four-line body. */}
                   <h3
