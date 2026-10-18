@@ -97,7 +97,10 @@ type ArtProps = { on: boolean };
 
 /* Artwork clears the bottom gutter the rotated slab label owns — see the
    label for where that band's width comes from. */
-const ART_BOX = "absolute left-3 right-3 top-3 bottom-[34px]";
+/* The full slab inset, as the original draws it. The 34px bottom gutter this
+   used to leave was reserved for the slab label; with the label gone the
+   artwork gets the sheet back. */
+const ART_BOX = "absolute inset-3";
 const TAG = "text-[5px] font-semibold tracking-[.14em]";
 
 /** 01 — the close as a signed-off checklist: owners, ticks, one row still open. */
@@ -656,31 +659,6 @@ export default function HowWeHelpStack() {
                         >
                           <Art on={on} />
                         </div>
-                        {/* Bottom edge, and the offset is derived, not taste.
-                            A translateZ of Z paints sin55 = .819·Z higher up
-                            the screen; the same screen move made inside a
-                            slab's own plane costs √2·cos55 = .811 per pixel,
-                            so the slab above sits .819/.811 = 1.01·gap right
-                            and up in this slab's coordinates and leaves only a
-                            1.01·gap band along the left and bottom edges.
-                            The gap is Z_STEP, except under the ACTIVE slab,
-                            which has climbed Z_LIFT toward its neighbour:
-                            1.01·(54−24) = 30px, the one band that survives
-                            every state. An 11px line with `leading-none` is an
-                            11px box; bottom-[10px] centres it in that 30px
-                            with ~10px clear on each side, so all four labels
-                            read whatever is selected. 12px with inherited
-                            leading was inside the band by ~3px — the margin
-                            the client saw collapse. */}
-                        <span
-                          className="absolute bottom-[10px] left-[20px] whitespace-nowrap text-[11px] font-semibold uppercase leading-none tracking-[.16em]"
-                          style={{
-                            color: later ? C.faint : C.blue,
-                            transition: `color ${dur} ease`,
-                          }}
-                        >
-                          {p.n} {p.name}
-                        </span>
                       </div>
                     );
                   })}
