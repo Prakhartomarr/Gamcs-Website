@@ -1237,9 +1237,9 @@ export const maturityCurve = {
     heading: "Ready to move up the curve?",
     body:
       "We help finance functions move from reporting and consolidation to connected data, forward-looking insight and continuous decision support.",
-    link: "See how GAMCS helps",
-    /** The next section on the homepage. */
-    href: "#how-we-help",
+    link: "Assess Your Finance Maturity",
+    /** The self-assessment's own route, not a section of this page. */
+    href: "/finance-maturity",
   },
   /** Column heads and row labels the visuals need, once for all five stages. */
   labels: {

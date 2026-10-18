@@ -72,6 +72,12 @@ export const pages = {
   faq: {
     title: "Frequently Asked Questions",
   },
+  financeMaturity: {
+    title: "Finance Maturity Self-Assessment",
+    /* No `description` key: the page passes the assessment's own lead to
+       pageMetadata, the way /faq and /careers pass theirs. One sentence,
+       written once, is the one that can go stale. */
+  },
   thankYou: {
     title: "Thanks for getting in touch",
     description:

@@ -1193,7 +1193,7 @@
   "section": "Maturity curve",
   "label": "Closing block link",
   "kind": "text",
-  "text": "See how GAMCS helps",
+  "text": "Assess Your Finance Maturity",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.close.link"
@@ -8391,6 +8391,1686 @@
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.caseStudy.closing"
+  }
+ },
+ {
+  "code": "FMA-HEAD-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Page head",
+  "label": "Eyebrow",
+  "kind": "text",
+  "text": "FINANCE MATURITY SELF-ASSESSMENT",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.eyebrow"
+  }
+ },
+ {
+  "code": "FMA-HEAD-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Page head",
+  "label": "Heading",
+  "kind": "text",
+  "text": "See where your finance function stands.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.heading"
+  }
+ },
+ {
+  "code": "FMA-HEAD-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Page head",
+  "label": "Lead paragraph — also the page's search description",
+  "kind": "text",
+  "text": "Answer eight practical questions to identify your indicative maturity stage, see where capabilities are stronger or weaker, and understand the next useful step.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.lead"
+  }
+ },
+ {
+  "code": "FMA-HEAD-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Page head",
+  "label": "Line under the lead: length and format",
+  "kind": "text",
+  "text": "Eight questions · About three minutes · Results shown immediately",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.meta"
+  }
+ },
+ {
+  "code": "FMA-HEAD-05",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Page head",
+  "label": "Note before the first question",
+  "kind": "text",
+  "text": "No industry-specific metrics or systems required. Results are indicative, based on your responses, and not benchmarked against peers.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.note"
+  }
+ },
+ {
+  "code": "FMA-CARD-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question card",
+  "label": "Progress counter — {n} is the question, {total} the number of questions",
+  "kind": "text",
+  "text": "Question {n} of {total}",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.progressLabel"
+  }
+ },
+ {
+  "code": "FMA-CARD-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question card",
+  "label": "Percent complete — {pct} is a whole number",
+  "kind": "text",
+  "text": "{pct}% complete",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.percentLabel"
+  }
+ },
+ {
+  "code": "FMA-CARD-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question card",
+  "label": "Back button",
+  "kind": "button",
+  "text": "Back",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.back"
+  }
+ },
+ {
+  "code": "FMA-CARD-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question card",
+  "label": "Next button, questions 1 to 7",
+  "kind": "button",
+  "text": "Next question",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.next"
+  }
+ },
+ {
+  "code": "FMA-CARD-05",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question card",
+  "label": "Next button on the last question",
+  "kind": "button",
+  "text": "See result",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.finish"
+  }
+ },
+ {
+  "code": "FMA-Q-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Question",
+  "kind": "text",
+  "text": "How consistently does your team close the books?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think about process, ownership, controls and predictability.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Ad hoc",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "There is no consistent process or predictable close timeline.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-05",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Developing",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-06",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Some routines exist, but responsibilities and deadlines vary.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-07",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Defined",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-08",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "A close calendar and owners exist, but manual follow-up and rework are common.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-09",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Controlled",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-10",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "The close is repeatable; exceptions are tracked and resolved.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-11",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Highly mature",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-12",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 1",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Routine steps are streamlined, with clear ownership of exceptions and controls.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[0].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-13",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Question",
+  "kind": "text",
+  "text": "How is the monthly management report produced?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-14",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think about consistency, preparation effort and usefulness for management.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-15",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Ad hoc",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-16",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "There is no consistent monthly management pack.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-17",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Mostly manual",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-18",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Reports are assembled manually and formats or definitions can vary.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-19",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Standardised",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-20",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "A standard management information pack exists but still requires significant manual preparation.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-21",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Repeatable",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-22",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Reporting follows consistent logic and is refreshed through a defined process.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-23",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Highly automated",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-24",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 2",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Reports refresh with minimal effort and feed a regular performance review.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[1].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-25",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Question",
+  "kind": "text",
+  "text": "How much recurring reporting work is automated?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-26",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Consider the whole process—from collecting data to refreshing the final report.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-27",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Mostly manual",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-28",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "People collect data and build most reports by hand.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-29",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Some templates",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-30",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Templates or macros help, but teams still combine and verify many sources.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-31",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Partly automated",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-32",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Core reports are standardised and some recurring steps are automated.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-33",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Mostly automated",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-34",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Connected data and reporting processes remove most manual preparation.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-35",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Automated and controlled",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-36",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 3",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Reliable refreshes and checks run routinely; people focus on exceptions and insight.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[2].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-37",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Question",
+  "kind": "text",
+  "text": "How confident are you in the consistency of your numbers?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-38",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think about differences between systems, reports, definitions and business units.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-39",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Low confidence",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-40",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "Different versions often disagree and issues are difficult to trace.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-41",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Reactive checks",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-42",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Teams reconcile differences after they appear; definitions may vary.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-43",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Generally reliable",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-44",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Main numbers are reconciled, but definitions or data ownership are not always clear.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-45",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Well controlled",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-46",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Definitions, ownership and checks are consistent; differences can be traced.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-47",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Trusted and monitored",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-48",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 4",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Governed sources and timely exception monitoring maintain confidence across reports.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[3].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-49",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Question",
+  "kind": "text",
+  "text": "Can finance explain why performance changed?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-50",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think beyond reporting the variance to identifying the drivers behind it.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-51",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Limited explanation",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-52",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "Reports show headline numbers but rarely explain underlying drivers.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-53",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Basic analysis",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-54",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Some variances are explained, often manually and after the event.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-55",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Repeatable commentary",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-56",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Key variances are explained, but deeper investigation still takes time.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-57",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Driver-based insight",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-58",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Financial results are connected to operational and commercial drivers.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-59",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Timely insight",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-60",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 5",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Drivers surface early enough to anticipate risks and opportunities.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[4].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-61",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Question",
+  "kind": "text",
+  "text": "How are forecasts and scenarios used?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-62",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Consider whether future views change as the business changes.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-63",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Static budget",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-64",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "Planning is mainly an annual budget with limited updates.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-65",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Periodic updates",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-66",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Forecasts are updated manually or only at set intervals.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-67",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Regular reforecasting",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-68",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Forecasts are refreshed, but assumptions and scenarios may be disconnected.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-69",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Driver-based planning",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-70",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Forecasts and scenarios reflect changing business drivers and conditions.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-71",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Decision tool",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-72",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 6",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Forecasts and scenarios routinely inform trade-offs, priorities and resource allocation.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[5].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-73",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Question",
+  "kind": "text",
+  "text": "How directly does finance contribute to business decisions?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-74",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think about the role finance plays in management discussions.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-75",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Reporting role",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-76",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "Finance mainly supplies historical reports.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-77",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Reactive support",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-78",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Finance answers questions when asked but is rarely involved early.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-79",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Some recommendations",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-80",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Finance provides commentary and recommendations for selected decisions.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-81",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Active partner",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-82",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Finance helps evaluate options, risks and likely outcomes.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-83",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Embedded in decisions",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-84",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 7",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Insights routinely shape management and board choices, including trade-offs.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[6].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-Q-85",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Question",
+  "kind": "text",
+  "text": "How well are actions and outcomes tracked after a decision?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].prompt"
+  }
+ },
+ {
+  "code": "FMA-Q-86",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Hint under the question",
+  "kind": "text",
+  "text": "Think about ownership, follow-through and learning.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].hint"
+  }
+ },
+ {
+  "code": "FMA-Q-87",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 1 label",
+  "kind": "text",
+  "text": "Rarely tracked",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[0].label"
+  }
+ },
+ {
+  "code": "FMA-Q-88",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 1 description",
+  "kind": "text",
+  "text": "Actions are not consistently recorded and ownership is unclear.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[0].body"
+  }
+ },
+ {
+  "code": "FMA-Q-89",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 2 label",
+  "kind": "text",
+  "text": "Inconsistent follow-up",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[1].label"
+  }
+ },
+ {
+  "code": "FMA-Q-90",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 2 description",
+  "kind": "text",
+  "text": "Actions may be noted, but follow-up varies.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[1].body"
+  }
+ },
+ {
+  "code": "FMA-Q-91",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 3 label",
+  "kind": "text",
+  "text": "Owners assigned",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[2].label"
+  }
+ },
+ {
+  "code": "FMA-Q-92",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 3 description",
+  "kind": "text",
+  "text": "Responsibilities and deadlines are set, but impact is not consistently measured.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[2].body"
+  }
+ },
+ {
+  "code": "FMA-Q-93",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 4 label",
+  "kind": "text",
+  "text": "Reviewed regularly",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[3].label"
+  }
+ },
+ {
+  "code": "FMA-Q-94",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 4 description",
+  "kind": "text",
+  "text": "Progress and outcomes are reviewed through management routines.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[3].body"
+  }
+ },
+ {
+  "code": "FMA-Q-95",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 5 label",
+  "kind": "text",
+  "text": "Closed loop",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[4].label"
+  }
+ },
+ {
+  "code": "FMA-Q-96",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Question 8",
+  "label": "Option 5 description",
+  "kind": "text",
+  "text": "Impact is measured and lessons feed back into forecasts and future plans.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.questions[7].options[4].body"
+  }
+ },
+ {
+  "code": "FMA-CAP-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Capability profile",
+  "label": "Bar 1 label",
+  "kind": "text",
+  "text": "Foundation & close",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.capabilities[0].label"
+  }
+ },
+ {
+  "code": "FMA-CAP-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Capability profile",
+  "label": "Bar 2 label",
+  "kind": "text",
+  "text": "Reporting & automation",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.capabilities[1].label"
+  }
+ },
+ {
+  "code": "FMA-CAP-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Capability profile",
+  "label": "Bar 3 label",
+  "kind": "text",
+  "text": "Insight & planning",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.capabilities[2].label"
+  }
+ },
+ {
+  "code": "FMA-CAP-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Capability profile",
+  "label": "Bar 4 label",
+  "kind": "text",
+  "text": "Decisions & impact",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.capabilities[3].label"
+  }
+ },
+ {
+  "code": "FMA-STAGE-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 1 — Finance Foundation",
+  "label": "Stage name, shown in the result heading",
+  "kind": "text",
+  "text": "Finance Foundation",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[0].name"
+  }
+ },
+ {
+  "code": "FMA-STAGE-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 1 — Finance Foundation",
+  "label": "The stage's own question",
+  "kind": "text",
+  "text": "Can we close reliably?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[0].question"
+  }
+ },
+ {
+  "code": "FMA-STAGE-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 1 — Finance Foundation",
+  "label": "What this stage looks like",
+  "kind": "text",
+  "text": "Processes and responsibilities are undocumented or inconsistently followed. Reconciliations depend on manual follow-up, and close timelines are difficult to predict.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[0].description"
+  }
+ },
+ {
+  "code": "FMA-STAGE-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 1 — Finance Foundation",
+  "label": "Recommended next step",
+  "kind": "text",
+  "text": "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[0].next"
+  }
+ },
+ {
+  "code": "FMA-STAGE-05",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 2 — Management Reporting",
+  "label": "Stage name, shown in the result heading",
+  "kind": "text",
+  "text": "Management Reporting",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[1].name"
+  }
+ },
+ {
+  "code": "FMA-STAGE-06",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 2 — Management Reporting",
+  "label": "The stage's own question",
+  "kind": "text",
+  "text": "Do we know how the business performed?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[1].question"
+  }
+ },
+ {
+  "code": "FMA-STAGE-07",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 2 — Management Reporting",
+  "label": "What this stage looks like",
+  "kind": "text",
+  "text": "The books close on an agreed timetable, but producing the management information pack, comparing actuals with budget and explaining variances still takes time and effort.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[1].description"
+  }
+ },
+ {
+  "code": "FMA-STAGE-08",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 2 — Management Reporting",
+  "label": "Recommended next step",
+  "kind": "text",
+  "text": "Standardise the reporting pack, KPI definitions, data sources and management review process.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[1].next"
+  }
+ },
+ {
+  "code": "FMA-STAGE-09",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 3 — Automated Reporting",
+  "label": "Stage name, shown in the result heading",
+  "kind": "text",
+  "text": "Automated Reporting",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[2].name"
+  }
+ },
+ {
+  "code": "FMA-STAGE-10",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 3 — Automated Reporting",
+  "label": "The stage's own question",
+  "kind": "text",
+  "text": "Can we produce reports without rebuilding them every month?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[2].question"
+  }
+ },
+ {
+  "code": "FMA-STAGE-11",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 3 — Automated Reporting",
+  "label": "What this stage looks like",
+  "kind": "text",
+  "text": "Recurring reports and dashboards refresh with minimal manual preparation. Finance spends less time collecting and assembling information—but automation alone does not explain why performance moved.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[2].description"
+  }
+ },
+ {
+  "code": "FMA-STAGE-12",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 3 — Automated Reporting",
+  "label": "Recommended next step",
+  "kind": "text",
+  "text": "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[2].next"
+  }
+ },
+ {
+  "code": "FMA-STAGE-13",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 4 — Performance Insight",
+  "label": "Stage name, shown in the result heading",
+  "kind": "text",
+  "text": "Performance Insight",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[3].name"
+  }
+ },
+ {
+  "code": "FMA-STAGE-14",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 4 — Performance Insight",
+  "label": "The stage's own question",
+  "kind": "text",
+  "text": "Do we understand why performance changed?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[3].question"
+  }
+ },
+ {
+  "code": "FMA-STAGE-15",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 4 — Performance Insight",
+  "label": "What this stage looks like",
+  "kind": "text",
+  "text": "Financial results are connected to relevant operational and commercial context. The team can explain the drivers behind performance, evaluate scenarios and anticipate likely outcomes.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[3].description"
+  }
+ },
+ {
+  "code": "FMA-STAGE-16",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 4 — Performance Insight",
+  "label": "Recommended next step",
+  "kind": "text",
+  "text": "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[3].next"
+  }
+ },
+ {
+  "code": "FMA-STAGE-17",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 5 — Decision-Led Finance",
+  "label": "Stage name, shown in the result heading",
+  "kind": "text",
+  "text": "Decision-Led Finance",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[4].name"
+  }
+ },
+ {
+  "code": "FMA-STAGE-18",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 5 — Decision-Led Finance",
+  "label": "The stage's own question",
+  "kind": "text",
+  "text": "Do insights translate into action and impact?",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[4].question"
+  }
+ },
+ {
+  "code": "FMA-STAGE-19",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 5 — Decision-Led Finance",
+  "label": "What this stage looks like",
+  "kind": "text",
+  "text": "Insights are embedded in management and board conversations. Decisions have owners and expected outcomes; progress is tracked, and lessons feed into future plans.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[4].description"
+  }
+ },
+ {
+  "code": "FMA-STAGE-20",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Stage 5 — Decision-Led Finance",
+  "label": "Recommended next step",
+  "kind": "text",
+  "text": "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.stages[4].next"
+  }
+ },
+ {
+  "code": "FMA-RESULT-01",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Eyebrow",
+  "kind": "text",
+  "text": "YOUR INDICATIVE RESULT",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.eyebrow"
+  }
+ },
+ {
+  "code": "FMA-RESULT-02",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Result heading — {n} is the stage number, {name} the stage name",
+  "kind": "text",
+  "text": "Stage {n} · {name}",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.stageLabel"
+  }
+ },
+ {
+  "code": "FMA-RESULT-03",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Denominator beside the stage number",
+  "kind": "text",
+  "text": "/ 5",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.outOf"
+  }
+ },
+ {
+  "code": "FMA-RESULT-04",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Heading over the capability bars",
+  "kind": "text",
+  "text": "Your capability profile",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.profileHeading"
+  }
+ },
+ {
+  "code": "FMA-RESULT-05",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Score beside each bar — {score} is that bar's average",
+  "kind": "text",
+  "text": "{score} / 5",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.scoreLabel"
+  }
+ },
+ {
+  "code": "FMA-RESULT-06",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Heading over the recommended next step",
+  "kind": "text",
+  "text": "Your recommended next step",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.nextHeading"
+  }
+ },
+ {
+  "code": "FMA-RESULT-07",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Button under the recommended next step",
+  "kind": "button",
+  "text": "Explore GAMCS solutions",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.explore"
+  }
+ },
+ {
+  "code": "FMA-RESULT-08",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Disclaimer under the result",
+  "kind": "text",
+  "text": "This self-assessment is an indicative guide based on your responses, not an audit, independently validated maturity rating or industry benchmark. Capabilities can vary across teams and processes. The stage shown summarises your response pattern; review the individual scores to identify gaps.",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.disclaimer"
+  }
+ },
+ {
+  "code": "FMA-RESULT-09",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Button",
+  "kind": "button",
+  "text": "Review answers",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.review"
+  }
+ },
+ {
+  "code": "FMA-RESULT-10",
+  "page": "Finance Maturity Self-Assessment (/finance-maturity)",
+  "section": "Result screen",
+  "label": "Button",
+  "kind": "button",
+  "text": "Start again",
+  "source": {
+   "file": "lib/content/assessment.ts",
+   "locator": "assessment.result.restart"
   }
  },
  {

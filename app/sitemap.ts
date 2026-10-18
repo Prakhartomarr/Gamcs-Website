@@ -13,6 +13,9 @@ const routes = [
     changeFrequency: "monthly" as const,
   })),
   { path: "/case-study", priority: 0.8, changeFrequency: "monthly" as const },
+  /* A fixed set of eight questions — the copy changes about as often as the
+     team page does, not monthly like the case studies. */
+  { path: "/finance-maturity", priority: 0.7, changeFrequency: "yearly" as const },
   { path: "/faq", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/who-we-are", priority: 0.8, changeFrequency: "yearly" as const },
   { path: "/team", priority: 0.7, changeFrequency: "yearly" as const },

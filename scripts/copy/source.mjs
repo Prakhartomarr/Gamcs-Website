@@ -17,6 +17,7 @@ export const MODULES = {
   "lib/content/ui.ts": ["header", "crumbs", "cookie", "map", "reel", "sections", "servicePage", "caseCard", "roster"],
   "lib/content/pages.ts": ["pages"],
   "lib/content/legal.ts": ["legal", "privacy", "cookiePolicy"],
+  "lib/content/assessment.ts": ["assessment"],
 };
 
 export const fileFor = (locator) => {
