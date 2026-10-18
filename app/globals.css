@@ -3746,6 +3746,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 
 
+
+
 /* =====================================================================
    MOBILE (<=767px) — the approved phone design for four sections.
 
@@ -4778,19 +4780,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    overflow to clip.
    ===================================================================== */
 
-/* The band. --bg-soft, not white: the section above it (.dg) is on the
-   page's paper ground, and the maturity curve is the page's one
-   interactive stretch — the ground change is what says so before any
-   card is read. The cards' own grey is --soft, half a step off this, so
-   an unselected card is drawn by its hairline and the SELECTED card's
-   white is the only filled shape in the row. That is the design, not a
-   collision of two near-identical greys.
 
-   scroll-margin-top carries over from the utility the old component set
-   on this element: #maturity-curve is a jump target and the header
-   floats over it. */
-.mc{background:var(--bg-soft);
-  scroll-margin-top:calc(var(--header-h) + 16px)}
 
 /* ---- the head ---- */
 /* Centred as a column rather than with text-align on .mc-head, because
@@ -4834,24 +4824,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   border-radius:50%;background:var(--yellow)}
 
 /* ---- the decorative curve fragment ---- */
-/* One element, two dashed borders and an elliptical bottom-right corner:
-   a flat dashed run that lifts into an arc at the right end. The corner's
-   vertical radius equals the element's height, so the right border is
-   consumed entirely by the arc and never draws as a vertical tick.
 
-   It takes its own 54px of flow and has a POSITIVE bottom margin — no
-   negative pull towards the cards. A decorative line that reaches into
-   the row can land on a stage name at some width nobody tested, and
-   aria-hidden decoration is exactly the thing that must never be the
-   reason a sentence is unreadable. It is hidden outright on phones
-   (PART B), where a single column makes a rightward sweep meaningless.
-
-   Width is capped as well as proportional so the flat lead-in survives:
-   the arc is 260px wide, and min(42%,440px) keeps the element wider than
-   that from 768 up (712px container -> 299px). */
-.mc-rail{width:min(42%,440px);height:54px;margin:44px 0 12px auto;
-  border-bottom:1px dashed var(--line);border-right:1px dashed var(--line);
-  border-radius:0 0 260px 0 / 0 0 54px 0;pointer-events:none}
 
 /* ---- the five stage cards ---- */
 .mc-stages{display:grid;gap:16px;margin:0;padding:0;list-style:none}
@@ -5148,4 +5121,416 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     text-align:center}
 
   .mc-note{margin-top:16px}
+}
+
+/* =====================================================================
+   PART A — base/desktop
+   FINANCE INTELLIGENCE MATURITY CURVE — ground inversion, rail, motion
+   (app/globals.css, the ".mc" block, ~line 4755)
+
+   Three jobs, all inside the existing .mc block:
+     1. the band goes white and the cards keep the grey, so this stops
+        being the homepage's one grey section;
+     2. svg.mc-railsvg replaces the CSS-drawn .mc-rail fragment;
+     3. the section gains the same data-anim="pending" entrance gate the
+        decision gap uses, plus hover and focus states for the cards.
+
+   Still no padding anywhere in this block: `.home-tight
+   #maturity-curve.section{padding:36px 0}` (~line 3430) is (1,2,0) and
+   owns it at every width. Still plain .mc-* selectors (0,1,0 / 0,2,0),
+   still no !important, still PART B owning the phone layout alone.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   A0 · the band — white, like every other content section
+   ------------------------------------------------------------------ */
+
+/* REPLACES:
+     .mc{background:var(--bg-soft);
+       scroll-margin-top:calc(var(--header-h) + 16px)}
+   — together with the ten-line comment above it, which argued for the
+   grey band and is now false.
+
+   The ground change that was supposed to say "this stretch is
+   interactive" said something louder instead: at 1440 every other
+   content band on the homepage is #FFF or #FEFEFE and this one was
+   #F2F3F5, so the section read as a different theme rather than as a
+   different mode. --band-white is the token the other white bands use
+   (.who, .services, .metrics, .quote-section), not a bare #fff, so this
+   moves with them if that value is ever retuned.
+
+   The grey does not disappear, it moves: the unselected stage cards
+   already carry --soft, so inverting the two gives grey cards on a white
+   band — which is what the client's mockup shows — and leaves the
+   SELECTED card's white as the one shape on the row that matches the
+   band it sits on. Selection is still stated three ways (ground, 2px
+   --blue border, filled --ink-deep badge); see the note at the selection
+   rule for the WCAG 1.4.1 reasoning, which the inversion does not
+   weaken.
+
+   scroll-margin-top is unchanged: #maturity-curve is a jump target and
+   the header floats over it. */
+.mc{background:var(--band-white);
+  scroll-margin-top:calc(var(--header-h) + 16px)}
+
+/* ---------------------------------------------------------------------
+   A1 · the narrative pill — inverted with the band
+   ------------------------------------------------------------------ */
+
+/* REPLACES:
+     .mc-pill{display:inline-flex;align-items:center;gap:10px;
+       margin:26px 0 0;padding:9px 18px;border-radius:999px;
+       border:1px solid var(--pill-line);background:var(--white);
+       font-size:0.7778rem;font-weight:500;line-height:1.35;
+       color:var(--ink-deep);text-align:left}
+   One declaration changes: the ground. A white pill on the old grey band
+   was a label laid on the section; on a white band it is a shape with
+   nothing but a 1.34:1 hairline to say it exists, which is not a shape.
+   It takes --soft for the same reason the cards keep it — on this band,
+   an object is grey — and the lozenge/yellow-dot form keeps it from
+   reading as a sixth card. --ink-deep on --soft is 16.01:1. */
+.mc-pill{display:inline-flex;align-items:center;gap:10px;
+  margin:26px 0 0;padding:9px 18px;border-radius:999px;
+  border:1px solid var(--pill-line);background:var(--soft);
+  font-size:0.7778rem;font-weight:500;line-height:1.35;
+  color:var(--ink-deep);text-align:left}
+
+/* ---------------------------------------------------------------------
+   A2 · the rail — svg.mc-railsvg replaces the CSS curve fragment
+   ------------------------------------------------------------------ */
+
+/* REPLACES:
+     .mc-rail{width:min(42%,440px);height:54px;margin:44px 0 12px auto;
+       border-bottom:1px dashed var(--line);border-right:1px dashed var(--line);
+       border-radius:0 0 260px 0 / 0 0 54px 0;pointer-events:none}
+   and the twenty-line comment above it. The dashed-border fragment and
+   the new svg are two decorative curves over one row, so the fragment
+   goes; `<div className="mc-rail" aria-hidden="true" />` must come out of
+   MaturityCurve.tsx in the same edit, or the section keeps 110px of
+   empty flow where it used to be.
+
+   IN FLOW, not absolutely positioned over the row. It takes the slot and
+   the margins .mc-rail had, which is the one placement where the drawing
+   is actually visible: the cards are opaque, so a rail laid behind them
+   would survive only in the 16px gutters. In flow it also cannot obscure
+   text at any width, by construction rather than by care.
+
+   z-index anyway. If the rail component pulls itself down over the row
+   with a negative margin, the cards must still paint over it —
+   .mc-stage is given position+z-index below so the comparison is
+   decided by this pair and not by DOM order. Both land in the same
+   stacking context whether the svg is a sibling of .mc-stages or a child
+   of it, so this holds either way.
+
+   overflow:visible because the UA sheet clips an <svg> to its viewport,
+   and the first and last nodes' rings sit on the box edge.
+
+   CONTRACT FOR MaturityRail.tsx: the svg must carry
+   preserveAspectRatio="none". The height here is fixed and the width is
+   the full row, so any viewBox whose aspect is not ~18:1 would otherwise
+   be letterboxed by the default xMidYMid-meet and the node percentages
+   would stop lining up with the columns — by up to 70px at 1440. With
+   preserveAspectRatio="none" the viewBox can be anything.
+
+   Any class the component adds beyond these three is unstyled, which is
+   inert: nothing here sizes or positions a descendant, so an extra class
+   can change paint but not layout. */
+/* height:auto is a CONTRACT, not a preference. The svg has a uniform viewBox
+   (0 0 1000 72) so `meet` scales the drawing to FIT its box: pin the height
+   and the drawing stops stretching to the row, gets centred instead, and the
+   nodes land up to 118px away from the cards they mark — measured. Letting
+   height follow width keeps every node over its own stage. */
+.mc-railsvg{display:none;position:relative;z-index:0;
+  width:100%;height:auto;margin:44px 0 12px;
+  overflow:visible;pointer-events:none}
+
+/* REPLACES:
+     .mc-stage{display:flex}
+   Same flex box — it still exists only so the button can fill the grid
+   row's height, which is what lets margin-top:auto pin the five tags to
+   a common edge. position+z-index are the other half of the rail's
+   z-order, above. */
+.mc-stage{display:flex;position:relative;z-index:1}
+
+/* The drawing itself, kept at a consulting firm's volume. The path is a
+   hairline at 28% blue (#BCD2E2, 1.56:1 on the band — a shade firmer
+   than --line's 1.36:1, which is the weight a hairline wants when it is
+   the only mark in 72px of white). Nodes are --blue at 45%; the active
+   one goes solid --blue (6.84:1) and grows by a white ring drawn as a
+   stroke rather than by a larger `r`, because `r` as a CSS property is
+   not safe to rely on and `stroke` is.
+
+   vector-effect keeps the hairline at 1px whatever transform the
+   component or a browser zoom applies to the path. */
+/* These three selectors are the component's, not names invented here:
+   MaturityRail renders .mc-railline, .mc-node, .mc-node--on and .mc-marker,
+   and its header documents them as the contract. An earlier draft of this
+   block guessed .mc-rail-path/-node/-marker, which matched nothing — the
+   path lost its stroke and became invisible and the nodes fell back to the
+   SVG default fill, which is black. */
+/* NO vector-effect:non-scaling-stroke here, and that is load-bearing. It
+   resolves the stroke AND the dash pattern in screen units, while the
+   component builds its draw animation from getTotalLength(), which returns
+   user units. At 1440 the path is 811 user units but 1038 screen px, so an
+   811px dash left the last 22% of the curve unpainted — the line stopped
+   between stage 04 and stage 05 and never reached the final node. Without
+   it the dash is in the same units the component measures in, and the
+   hairline simply scales with the viewBox (1px of 1000 ≈ 1.3px at 1440),
+   which is what a hairline should do anyway. */
+.mc-railline{fill:none;stroke:rgba(15,94,151,.28);stroke-width:1;
+  stroke-linecap:round}
+.mc-node{fill:var(--blue);fill-opacity:.45;stroke:none}
+.mc-marker,
+.mc-node--on{fill:var(--blue);fill-opacity:1;
+  stroke:var(--band-white);stroke-width:3}
+/* r is a presentation attribute on the circle; overriding it in CSS is what
+   lets the selected node grow and the previous one settle back. */
+.mc-node--on{r:7px}
+@media (prefers-reduced-motion:no-preference){
+  .mc-node{transition:r var(--dur-panel) var(--ease-out),
+    fill-opacity var(--dur-panel) var(--ease-out)}
+}
+
+/* ---------------------------------------------------------------------
+   A3 · the stage cards — hover and focus on the new ground
+   ------------------------------------------------------------------ */
+
+/* REPLACES (the whole @media (hover:hover) block):
+     @media (hover:hover){
+       .mc-stage-btn:hover{background:var(--white);
+         border-color:rgba(15,94,151,.38)}
+       .mc-stage-btn[aria-current="true"]:hover,
+       .mc-stage-btn[aria-selected="true"]:hover{border-color:var(--blue)}
+     }
+   The old hover lightened an unselected card to white. White is now both
+   the selected card's ground AND the band's, so that hover said
+   "selected" and dissolved the card's edge at the same time. Hover goes
+   the other way instead: the ground DEEPENS to #E3EAEE (--blue at 6%
+   over --soft) and the hairline firms to 55% blue — 2.39:1 against the
+   hovered ground, roughly double the resting --line edge. Selection is
+   the move outward to white; hover is the move inward. Nothing can be
+   mistaken for the other, and the badge still does not invert: the badge
+   is what says "this one is open".
+
+   Text stays legible on the deeper ground: --ink-deep 14.66:1, --gray
+   5.21:1 — both still AA.
+
+   No transform, and none can be added: MotionLayer's quickTo owns the
+   matrix of any [data-lift] element, and these cards are expected to
+   carry it. Still behind (hover:hover) so a tap cannot strand a card
+   looking half-selected.
+
+   The selected card now pins its own background. The two rules are
+   (0,2,0) and (0,3,0), so the selected one wins on specificity — but it
+   only declared border-color before, which left the generic hover's
+   background applying to it. That was invisible while both were white. */
+@media (hover:hover){
+  .mc-stage-btn:hover{background:#E3EAEE;
+    border-color:rgba(15,94,151,.55)}
+  .mc-stage-btn[aria-current="true"]:hover,
+  .mc-stage-btn[aria-selected="true"]:hover{background:var(--white);
+    border-color:var(--blue)}
+}
+
+/* NEW. The global ring (globals.css:112, `button:focus-visible{outline:2px
+   solid var(--blue);outline-offset:3px}`) is wrong here for one reason:
+   this is a tablist with automatic activation, so keyboard focus is
+   ALWAYS on the card that already carries a 2px --blue border. A blue
+   ring 3px outside a blue border is a blue double line — focus stops
+   being a state you can tell apart from selection. --ink-deep instead:
+   17.82:1 against the white band the ring is actually drawn on, and a
+   different hue as well as a different value from the border inside it.
+
+   (0,2,0) beats the global's (0,1,1), so this replaces that ring rather
+   than stacking a second one inside it. Offset and weight are the
+   global's, so the section's focus still looks like the site's.
+
+   Not clipped: the row is a grid with a 16px gap at every width where it
+   is a row, and a column on phones — there is no scroll container to cut
+   the ring off. */
+.mc-stage-btn:focus-visible{outline:2px solid var(--ink-deep);
+  outline-offset:3px}
+
+/* ---------------------------------------------------------------------
+   A4 · the panel — an edge on a ground it now matches
+   ------------------------------------------------------------------ */
+
+/* REPLACES:
+     .mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:40px;
+       border:1px solid var(--line);border-radius:22px;background:var(--white)}
+   White on white now, so the 1px --line hairline is the only thing
+   separating 52px of padded panel from the band — and --line on white is
+   1.36:1. That is the site's card hairline everywhere (.dg-pain draws
+   the same 1.36:1 against --paper), so the fix is not a darker line,
+   which would make this the loudest edge on the homepage; it is the
+   shadow the hairline needs behind it. Two layers: a 1px contact shadow
+   so the top edge exists where the ambient one has not spread yet, and a
+   wide, heavily offset ambient one for the body.
+
+   Deliberately not a --soft panel. The cards are the grey objects on
+   this band; a grey panel directly under a row of grey cards would read
+   as the row continuing. */
+.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:40px;
+  border:1px solid var(--line);border-radius:22px;background:var(--white);
+  box-shadow:0 1px 2px rgba(13,24,40,.05),
+    0 20px 50px -24px rgba(13,24,40,.18)}
+
+/* NEW. The swap transition, for the motion component to drive if it
+   wants one: add `is-swap` to .mc-panel to fade its two columns out,
+   re-fill the content, remove it. Opacity only, on the two column
+   wrappers rather than on .mc-panel, so the panel's own edge and shadow
+   never blink — the frame stays put and only what is written in it
+   changes, which is what a tab panel should look like.
+
+   Inside the no-preference query, so under reduce the class is inert and
+   the swap is instant. If the component does not need it, the only cost
+   is a transition on a property nothing else animates. */
+@media (prefers-reduced-motion:no-preference){
+  .mc-panel-main,
+  .mc-panel-blocks{transition:opacity var(--dur-panel) var(--ease-out)}
+  .mc-panel.is-swap .mc-panel-main,
+  .mc-panel.is-swap .mc-panel-blocks{opacity:0}
+}
+
+/* ---------------------------------------------------------------------
+   A5 · the entrance gate — the ONLY rules here that hide anything
+   ------------------------------------------------------------------ */
+
+/* Written to follow `.dg[data-anim="pending"]` exactly, because the two
+   sections are adjacent and must enter the same way. The reasoning there
+   holds here unchanged, so it is not repeated at length: the attribute
+   is SERVER-RENDERED, so the from-state is in the first byte of HTML and
+   the section never paints visible and then snaps away — which a class
+   added on mount cannot do. The motion component releases it by setting
+   data-anim="in", which stops all of this matching at once.
+
+   Opacity only. The travel is inline, set by GSAP in the same pass, so
+   the two never both own a property, and a transform here would outlive
+   the component's clearProps on unmount.
+
+   It heals three ways, as .dg's does: the keyframes fallback for a
+   bundle that loads and then throws, scripting:none for no JS at all,
+   and the reduced-motion branch at A6.
+
+   THE CARDS ARE GATED ON THE <li>, NOT THE BUTTON. .mc-stage-btn is
+   expected to become a [data-lift] element, which puts MotionLayer's
+   quickTo on its transform; the <li> is never a lift target, so the
+   entrance can tween plain `y` on it and the transform-ownership
+   problem .dg solved with a `--dg-rise` custom property simply does not
+   arise here. There is deliberately no --mc-rise equivalent: animate
+   .mc-stage, not .mc-stage-btn.
+
+   .mc-note is left out, as .dg-note is: the caveat is not part of the
+   entrance. */
+.mc[data-anim="pending"] .mc-eyebrow,
+.mc[data-anim="pending"] .mc-h2,
+.mc[data-anim="pending"] .mc-lead,
+.mc[data-anim="pending"] .mc-pill,
+.mc[data-anim="pending"] .mc-railsvg,
+.mc[data-anim="pending"] .mc-stage,
+.mc[data-anim="pending"] .mc-panel,
+.mc[data-anim="pending"] .mc-cta{opacity:0;animation:mcGate .4s ease 2.6s forwards}
+@keyframes mcGate{to{opacity:1}}
+
+/* No JS at all: nothing will ever release the gate, so it never applies.
+   Instant, not after the fallback's 2.6s. */
+@media (scripting:none){
+  .mc[data-anim="pending"] .mc-eyebrow,
+  .mc[data-anim="pending"] .mc-h2,
+  .mc[data-anim="pending"] .mc-lead,
+  .mc[data-anim="pending"] .mc-pill,
+  .mc[data-anim="pending"] .mc-railsvg,
+  .mc[data-anim="pending"] .mc-stage,
+  .mc[data-anim="pending"] .mc-panel,
+  .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
+}
+
+/* ---- 768-1279: three across, not five ----
+   REPLACES:
+     @media (min-width:768px) and (max-width:1279px){
+       .mc-stages{grid-template-columns:repeat(3,minmax(0,1fr))}
+     }
+   The three columns are unchanged and so is the measurement behind them
+   (five columns divide the same 920px container through this whole
+   range, giving a 19-character measure and wrapping "DECIDE & IMPROVE").
+   What is new is the margin: the rail is display:none below 1280, and
+   the rail's 44px was the whole gap between the head and the row. */
+@media (min-width:768px) and (max-width:1279px){
+  .mc-stages{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:44px}
+}
+
+/* ---- 1280+: five columns, and the rail that counts on them ----
+   REPLACES:
+     @media (min-width:1280px){
+       .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
+       .mc-panel{padding:52px}
+     }
+   Both unchanged; the rail is added. This is the only width where the
+   row is five equal columns, which is the only arrangement the rail's
+   fixed node percentages describe — at three columns they would point
+   between cards, and at one they would point at nothing. */
+@media (min-width:1280px){
+  .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .mc-panel{padding:52px}
+  .mc-railsvg{display:block}
+}
+
+/* ---------------------------------------------------------------------
+   A6 · the runtime safety net for reduced motion
+   KEEP THIS LAST IN THE .mc REGION
+   ------------------------------------------------------------------ */
+
+/* Same two hazards .dg A6 catches. The gate is released by a component
+   that reads the media query once, on mount: a reader who turns Reduce
+   Motion on afterwards would be left mid-entrance, and a reader who had
+   it on from the start never reaches the animation path at all, so the
+   gate must not hide anything for them either. Same specificity as the
+   rules above, later in source, so neither needs !important. */
+@media (prefers-reduced-motion:reduce){
+  .mc[data-anim="pending"] .mc-eyebrow,
+  .mc[data-anim="pending"] .mc-h2,
+  .mc[data-anim="pending"] .mc-lead,
+  .mc[data-anim="pending"] .mc-pill,
+  .mc[data-anim="pending"] .mc-railsvg,
+  .mc[data-anim="pending"] .mc-stage,
+  .mc[data-anim="pending"] .mc-panel,
+  .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
+}
+
+
+/* =====================================================================
+   PART B — phones (max-width:767px)
+   FINANCE INTELLIGENCE MATURITY CURVE — mobile
+
+   Goes in the appended mobile region at the end of globals.css, in the
+   existing max-width:767px block for this section. Two rules, and one
+   deletion; everything else in that block is untouched and still right.
+   ===================================================================== */
+
+@media (max-width:767px){
+
+  /* DELETE, no replacement:
+       .mc-rail{display:none}
+     The element is gone from the markup, and .mc-railsvg is display:none
+     from PART A's base rule up to 1280 — there is nothing here to hide. */
+
+  /* REPLACES:
+       .mc-stages{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:26px}
+     Identical. Restated only so the three places that now set this row's
+     top margin — here, the 768-1279 query and the rail's own margin at
+     1280 — are visible as one decision rather than found one at a time.
+     26px, not 44px: the head's pill already ends in a tight stack at this
+     width and the first card is the next thing to read. */
+  .mc-stages{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:26px}
+
+  /* REPLACES:
+       .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px}
+     Adds the phone's share of PART A's new shadow. The wide ambient layer
+     is cut back hard: 50px of blur under a panel that is 20px from each
+     edge of a 390px screen spills past the viewport and reads as a dirty
+     margin rather than as a lift. The 1px contact layer is what actually
+     does the work at this size, and it is unchanged. */
+  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px;
+    box-shadow:0 1px 2px rgba(13,24,40,.05),
+      0 10px 24px -16px rgba(13,24,40,.16)}
 }

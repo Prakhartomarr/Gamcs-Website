@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import MaturityCurveMotion from "@/components/motion/MaturityCurveMotion";
+import MaturityRail from "@/components/motion/MaturityRail";
 import { maturityCurve } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 
@@ -90,6 +93,47 @@ export default function MaturityCurve() {
     });
   }, [active]);
 
+  /* The panel's cross-fade on a pick. It lives HERE and not in
+     MaturityCurveMotion because React already knows the moment the selection
+     changes: a key-change effect is that moment exactly, with no observer
+     watching the DOM for state that is a useState two lines up, and no prop
+     plumbed into a component whose whole job is the entrance.
+
+     It animates the panel's two children rather than the panel, so it cannot
+     collide with the entrance's opacity tween on `.mc-panel` if a visitor
+     picks a stage while that is still running.
+
+     Not on first mount — that frame belongs to the entrance. */
+  const panel = useRef<HTMLDivElement>(null);
+  const picked = useRef(false);
+  useEffect(() => {
+    const el = panel.current;
+    if (!picked.current) {
+      picked.current = true;
+      return;
+    }
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const parts = Array.from(el.children);
+    /* 200ms is --dur-panel rounded down: the panel is answering a click, so
+       it has to be finished before the visitor looks for the answer. */
+    const tween = gsap.fromTo(
+      parts,
+      { opacity: 0, y: 6 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.2,
+        ease: "power2.out",
+        stagger: 0.05,
+        clearProps: "opacity,transform",
+      }
+    );
+    return () => {
+      tween.kill();
+      gsap.set(parts, { clearProps: "opacity,transform" });
+    };
+  }, [active]);
+
   /* The WAI-ARIA tabs pattern, automatic activation: an arrow key both moves
      focus and swaps the panel, and only the selected tab is in the tab order,
      so the row is one stop rather than five. */
@@ -112,7 +156,17 @@ export default function MaturityCurve() {
   const blocks: readonly { label: string; body: string }[] = stage.blocks;
 
   return (
-    <section className="section mc" id="maturity-curve" aria-labelledby="mc-heading">
+    <section
+      className="section mc"
+      id="maturity-curve"
+      aria-labelledby="mc-heading"
+      /* The entrance gate, server-rendered so the section never paints
+         visible and then hides. MaturityCurveMotion releases it; the
+         stylesheet heals it if that never happens. Same mechanism as
+         #decision-gap and .hero. */
+      data-anim="pending"
+    >
+      <MaturityCurveMotion />
       <div className="container mc-inner">
         <div className="mc-head">
           <p className="mc-eyebrow">{maturityCurve.eyebrow}</p>
@@ -128,9 +182,13 @@ export default function MaturityCurve() {
           <p className="mc-pill">{maturityCurve.narrative}</p>
         </div>
 
-        {/* The dashed curve fragment over the row. Drawn entirely in CSS — it
-            carries no information the five cards do not already carry. */}
-        <div className="mc-rail" aria-hidden="true" />
+        {/* The curve fragment over the row, now drawn rather than bordered.
+            The wrapper stays: `.mc-rail` is the flow box — its width, its
+            54px of height, its auto left margin and its display:none on
+            phones — and the svg inside only fills it. */}
+        <div className="mc-rail" aria-hidden="true">
+          <MaturityRail count={stages.length} active={active} />
+        </div>
 
         {/* A list of five, so the row still reads as five stages with no
             stylesheet; the <li>s are presentational only because a tablist may
@@ -150,6 +208,12 @@ export default function MaturityCurve() {
                   tabRefs.current[i] = el;
                 }}
                 onClick={() => setActive(i)}
+                /* MotionLayer's page-wide hover lift. Safe on a tab here
+                   only because selection is drawn with border, ground and
+                   shadow and no transform at all, so the lift has the
+                   matrix to itself — and the entrance moves the <li>, not
+                   this button, for the same reason. */
+                data-lift
               >
                 <span className="mc-stage-n">{s.n}</span>
                 <span className="mc-stage-name">{s.name}</span>
@@ -163,7 +227,13 @@ export default function MaturityCurve() {
         {/* One panel, re-filled on each pick, rather than five with four
             hidden: the stages share a shape, and only one of them is ever a
             tab's target. */}
-        <div className="mc-panel" id="mc-panel" role="tabpanel" aria-labelledby={`mc-tab-${stage.n}`}>
+        <div
+          className="mc-panel"
+          id="mc-panel"
+          role="tabpanel"
+          aria-labelledby={`mc-tab-${stage.n}`}
+          ref={panel}
+        >
           <div className="mc-panel-main">
             <div className="mc-panel-icon" aria-hidden="true">
               <svg
