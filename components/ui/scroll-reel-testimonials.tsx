@@ -19,7 +19,7 @@ import { reel } from "@/lib/content/ui";
  * no portraits of the two named clients, and pairing a stock face
  * with a real person's quote would misrepresent them — so a tile
  * with no image renders the site's monogram treatment instead, at
- * the same size and with the same sheen.
+ * the same size and with the same greyscale treatment.
  * ---------------------------------------------------------------- */
 
 export interface ScrollReelTestimonial {
@@ -82,7 +82,12 @@ function Cell() {
   );
 }
 
-/* Featured tile with desaturation + gradient sheen overlays */
+/* Featured tile. One overlay: the saturation blend that takes a photo to
+   greyscale. There used to be a second, a diagonal purple/blue gradient on
+   mix-blend-overlay, removed at the client's request — it tinted the faces
+   and it was the only violet on a site with no violet in it. The portraits
+   on disk are in colour; the blend below is the whole reason they read as
+   black and white, so removing that too is a one-line change here. */
 function Featured({
   src,
   alt,
@@ -136,15 +141,6 @@ function Featured({
           className="pointer-events-none absolute inset-0 z-[2] bg-white mix-blend-saturation"
         />
       )}
-      {/* diagonal gradient sheen */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[3] blur-[6px] mix-blend-overlay"
-        style={{
-          background:
-            "linear-gradient(220.99deg, rgba(108,92,255,0) 32%, rgb(108,92,255) 41%, rgb(173,177,255) 47%, rgba(130,189,237,0.57) 54%, rgba(130,189,237,0) 65%)",
-        }}
-      />
     </div>
   );
 }

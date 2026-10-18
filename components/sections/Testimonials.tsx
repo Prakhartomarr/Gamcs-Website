@@ -17,10 +17,11 @@ import { initials } from "@/lib/utils";
  * person who said the words. The company has not gone anywhere: it is in the
  * byline under every quote and on the logo wall above this section.
  *
- * `imageFit="cover"` is not a detail. The reel desaturates and sheens a tile
- * only when it is filling it — which is right for a face and wrong for a logo
- * — and it is what makes six headshots shot in six different places, against
- * beige, white, grey and a red disc, read as one set.
+ * `imageFit="cover"` is not a detail. The reel desaturates a tile only when
+ * it is filling it — which is right for a face and wrong for a logo — and it
+ * is what makes six headshots shot in six different places, against beige,
+ * white, grey and a red disc, read as one set. (It used to apply a violet
+ * gradient sheen as well; that is gone at the client's request.)
  *
  * A portrait missing from disk falls back to the person's initials rather than
  * to a hole.
