@@ -315,8 +315,12 @@ export const howWeHelp = {
       detail: "Embed insight in decisions, assign owners and track impact.",
     },
   ],
-  /* Under the stack: what the stacking itself is saying. */
-  stackCaption: "Each phase builds on the one beneath it.",
+  /* Under the stack: what the stacking itself is saying. "Before", not
+     "beneath" — the slabs descend 01 at the top to 04 at the bottom, so the
+     layer physically beneath 01 is 02, the phase that comes AFTER it.
+     "Beneath" read backwards against the picture the moment the stack order
+     was flipped to match the client's reference. */
+  stackCaption: "Each phase builds on the one before it.",
   /** Over the panel headline. `{n}` is the phase number. */
   phaseLabel: "Phase {n}",
   phaseTotal: "/ 04",

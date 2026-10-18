@@ -4217,7 +4217,7 @@
   "section": "How we help",
   "label": "Caption under the stack",
   "kind": "text",
-  "text": "Each phase builds on the one beneath it.",
+  "text": "Each phase builds on the one before it.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "howWeHelp.stackCaption"
