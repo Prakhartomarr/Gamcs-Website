@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { STEP_ICONS } from "@/components/ui/stroke-icons";
-import { fill } from "@/lib/content/fill";
 import { howWeHelp, whyUs } from "@/lib/content/gamcs";
 
 /**
@@ -102,7 +101,6 @@ const Z_STEP = 54; // resting gap between layers, along the isometric Z axis
 const Z_LIFT = 24; // extra lift for the active layer
 const STAGE_DROP = Math.round((0.819 * (3 * Z_STEP + Z_LIFT)) / 2);
 
-const CHEVRON = "M15 5 L8 12 L15 19";
 
 export default function HowWeHelpStack() {
   const [active, setActive] = useState(0);
@@ -356,9 +354,6 @@ export default function HowWeHelpStack() {
                 </div>
               </div>
             </div>
-            <p className="mt-2 text-center text-[13px]" style={{ color: C.gray }}>
-              {howWeHelp.stackCaption}
-            </p>
           </div>
 
           {/*
@@ -375,10 +370,6 @@ export default function HowWeHelpStack() {
             <div className="grid">
               {PHASES.map((p, i) => (
                 <div key={p.n} className={`[grid-area:1/1] ${i === active ? "" : "invisible"}`}>
-                  <p className="font-heading text-[11px] font-bold tracking-[.2em]">
-                    <span style={{ color: C.blue }}>{fill(howWeHelp.phaseLabel, { n: p.n })}</span>{" "}
-                    <span style={{ color: C.gray }}>{howWeHelp.phaseTotal}</span>
-                  </p>
                   {/* 26/1.2 over 15/1.65 is the original's pairing, measured
                       off its two-line headline and four-line body. */}
                   <h3
@@ -393,45 +384,10 @@ export default function HowWeHelpStack() {
                   <p className="mt-3 text-[15px] leading-[1.65]" style={{ color: C.muted }}>
                     {p.detail}
                   </p>
-                  <hr className="mt-5" style={{ border: 0, borderTop: `1px solid ${C.line}` }} />
-                  <p className="mt-4 text-[13px] leading-snug" style={{ color: C.gray }}>
-                    {i === 0
-                      ? howWeHelp.firstPhaseNote
-                      : fill(howWeHelp.buildsOn, { name: PHASES[i - 1].name })}
-                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 flex gap-2">
-              {[
-                { label: howWeHelp.prevLabel, to: active - 1, flip: false },
-                { label: howWeHelp.nextLabel, to: active + 1, flip: true },
-              ].map((b) => (
-                <button
-                  key={b.label}
-                  type="button"
-                  aria-label={b.label}
-                  disabled={b.to < 0 || b.to > PHASES.length - 1}
-                  onClick={() => pick(b.to)}
-                  className={`flex h-[44px] w-[44px] items-center justify-center rounded-lg border transition-colors hover:enabled:bg-blue/10 disabled:opacity-35 ${focusRing}`}
-                  style={{ borderColor: C.line, color: C.blue }}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    className={`h-5 w-5 ${b.flip ? "rotate-180" : ""}`}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.8}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d={CHEVRON} />
-                  </svg>
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 

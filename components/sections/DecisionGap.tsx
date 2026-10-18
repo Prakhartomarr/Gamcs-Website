@@ -144,7 +144,6 @@ export default function DecisionGap() {
           ))}
         </dl>
 
-        <p className="dg-note">{c.statsNote}</p>
       </div>
 
       <DecisionGapMotion />
