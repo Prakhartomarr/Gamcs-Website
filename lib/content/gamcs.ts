@@ -262,13 +262,94 @@ export const ourStory = {
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
 
+/**
+ * "How GAMCS Helps" — doc page 1, section 4 (v4), the header and the phases.
+ *
+ * v3 ran the six `whyUs.points` through the isometric stack, which asked the
+ * reader to take six parallel claims as a sequence. They never were one: the
+ * four `phases` here are the sequence, and the six points are principles that
+ * hold across all four. So the stack carries these phases, and the points
+ * move to the card grid beneath it.
+ *
+ * `eyebrow` is stored in sentence case and uppercased by the stylesheet, as
+ * every other eyebrow in this module is — this file holds words, CSS holds
+ * their casing.
+ *
+ * `n` is a string because the leading zero is part of the copy, not padding
+ * the layout adds back. `phaseTotal` is stored whole: "/ 04" never varies
+ * with the selection, so there is nothing in it to fill.
+ *
+ * `phaseLabel` and `buildsOn` take their `{n}` / `{name}` at render
+ * (lib/content/fill.ts). `firstPhaseNote` stands in for `buildsOn` on phase
+ * 01, which has nothing beneath it.
+ */
+export const howWeHelp = {
+  eyebrow: "How GAMCS helps",
+  /* One sentence, split so the second clause can take the accent tint. */
+  headingLead: "From knowing where you are",
+  headingAccent: "to building what comes next.",
+  sub: "We bring the right combination of finance expertise, processes, data and technology to address today's gaps and build the capabilities your business will need next.",
+  phases: [
+    {
+      n: "01",
+      name: "Stabilise",
+      goal: "Build the foundation",
+      detail: "Clear processes, ownership, controls and a predictable close.",
+    },
+    {
+      n: "02",
+      name: "Connect & Automate",
+      goal: "Make reporting repeatable",
+      detail: "Connect systems, standardise reporting and reduce manual preparation.",
+    },
+    {
+      n: "03",
+      name: "Explain & Anticipate",
+      goal: "Understand performance",
+      detail: "Link financial results to drivers, forecasts and scenarios.",
+    },
+    {
+      n: "04",
+      name: "Decide & Improve",
+      goal: "Turn insight into action",
+      detail: "Embed insight in decisions, assign owners and track impact.",
+    },
+  ],
+  /* Under the stack: what the stacking itself is saying. */
+  stackCaption: "Each phase builds on the one beneath it.",
+  /** Over the panel headline. `{n}` is the phase number. */
+  phaseLabel: "Phase {n}",
+  phaseTotal: "/ 04",
+  /** `{name}` is the phase below the selected one. */
+  buildsOn: "Builds on: {name}",
+  firstPhaseNote: "Where most engagements begin.",
+  /* The arrow buttons show only a chevron, so their name lives here. */
+  prevLabel: "Previous phase",
+  nextLabel: "Next phase",
+  principles: {
+    heading: "What makes our approach different",
+    sub: "Six principles that hold across every phase of the work.",
+  },
+} as const;
+
 /** "Why Us" section */
 /**
- * "How We Help" — doc page 1, section 4 (v3).
+ * The six principles under "How GAMCS Helps" — doc page 1, section 4.
  *
  * Six points, each a lead and a body. The earlier six were one-line labels
  * transcribed from the live site; the doc's version carries the explanation
- * too, which the How We Help stack shows in its detail panel.
+ * too.
+ *
+ * WHAT THE SECTION RENDERS: `points`, as the card grid below the phase stack.
+ * Each `body` is one line now. The paragraphs they replace were written for
+ * the detail panel of the v3 stack, which these points no longer drive, and
+ * at card width they ran to eight lines apiece.
+ *
+ * WHAT IS RETAINED BUT UNRENDERED: `heading`, `headingLead`, `headingAccent`
+ * and `sub`. They are the v3 section header; `howWeHelp` supplies the header
+ * now and nothing reads these four. They stay because this module mirrors the
+ * copy document, and dropping rows from it is the client's decision rather
+ * than a cleanup.
  */
 export const whyUs = {
   heading: "Built Differently. Delivered End-to-End.",
@@ -279,19 +360,19 @@ export const whyUs = {
   /* Under the heading. Not on gamcs.in — supplied with the isometric-stack
      redesign of this section. */
   sub: "Every layer of the finance function we build is designed to hold up on its own \u2014 and to connect to the one above it.",
-  /* `lead` doubles as the key into STEP_ICONS (components/ui/stroke-icons.tsx)
-     and into the layer artwork in HowWeHelpStack — rename a lead and rename
-     both. The artwork map is typed on these literals, so a missed rename there
-     fails the build; STEP_ICONS is not, and would just render an empty glyph.
-     The rail label is the lead's first sentence, and the "01" numbers come
-     from position — neither is stored here. */
+  /* `lead` doubles as the key into STEP_ICONS (components/ui/stroke-icons.tsx),
+     and app/careers/page.tsx splits it on ". " for its own principle list —
+     rename a lead and fix both. Neither is typed on these literals, so a
+     missed rename renders an empty glyph and a mangled careers line instead
+     of failing the build. The v3 layer artwork, which was typed on them and
+     would have caught it, is gone with the stack. */
   points: [
-    { lead: "One Team. One Integrated Finance Engine.", body: "We bring finance, data, revenue, and technology together under one roof\u2014so the numbers, systems, insights, and decisions actually connect." },
-    { lead: "Independent by Design. Outcomes Above Platforms.", body: "We recommend and implement the right ERP, CRM, BI, or FP&A platform for your business\u2014not the one we're incentivized to sell. Every solution is built around your business model, KPIs, systems, and goals." },
-    { lead: "Intelligence Built In. Not Bolted On.", body: "We don't stop at reporting. Our dashboards, models, and finance solutions are designed to surface anomalies, explain performance, improve forecasting, and turn data into actionable insight from day one." },
-    { lead: "Boardroom Ready. Deal Room Proven.", body: "We build finance functions that stand up to management scrutiny, investor questions, due diligence, fundraising, refinancing, and M&A\u2014not just the monthly reporting cycle." },
-    { lead: "Industry-Agnostic. Business-Specific.", body: "We don't rely on industry templates. We build around how your business makes money, what drives performance, and what decisions matter. Our experience spans SaaS, Hospitality, D2C / Consumer, VFX, Logistics, Professional Services, Non-Profits, Pharmaceuticals, and beyond." },
-    { lead: "Scale Capability. Not Overhead.", body: "From a single specialist to a full Finance or Centre of Excellence, our delivery model scales with your needs\u2014giving you senior expertise and execution capacity without requiring you to build everything in-house." },
+    { lead: "One Team. One Integrated Finance Engine.", body: "Finance, data and technology work together around connected outcomes." },
+    { lead: "Independent by Design. Outcomes Above Platforms.", body: "We recommend tools around business needs, not vendor preference." },
+    { lead: "Intelligence Built In. Not Bolted On.", body: "Reporting, models and dashboards are designed to support decisions." },
+    { lead: "Boardroom Ready. Deal Room Proven.", body: "Build finance processes and analysis that stand up to scrutiny." },
+    { lead: "Industry-Agnostic. Business-Specific.", body: "Solutions are shaped around how each business operates and creates value." },
+    { lead: "Scale Capability. Not Overhead.", body: "Extend or build the finance capability you need, at the right scale." },
   ],
 } as const;
 

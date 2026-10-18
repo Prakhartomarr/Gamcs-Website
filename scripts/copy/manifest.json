@@ -4020,10 +4020,286 @@
   }
  },
  {
-  "code": "HOME-HELP-01",
+  "code": "HOME-HELP-17",
   "page": "Home (/)",
   "section": "How we help",
   "label": "Eyebrow",
+  "kind": "text",
+  "text": "How GAMCS helps",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.eyebrow"
+  }
+ },
+ {
+  "code": "HOME-HELP-18",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Heading, part 1",
+  "kind": "text",
+  "text": "From knowing where you are",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.headingLead"
+  }
+ },
+ {
+  "code": "HOME-HELP-19",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Heading, part 2 (blue)",
+  "kind": "text",
+  "text": "to building what comes next.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.headingAccent"
+  }
+ },
+ {
+  "code": "HOME-HELP-20",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Lead paragraph",
+  "kind": "text",
+  "text": "We bring the right combination of finance expertise, processes, data and technology to address today's gaps and build the capabilities your business will need next.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.sub"
+  }
+ },
+ {
+  "code": "HOME-HELP-21",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 01 name (rail, stack layer and detail panel)",
+  "kind": "text",
+  "text": "Stabilise",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[0].name"
+  }
+ },
+ {
+  "code": "HOME-HELP-22",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 01 goal, one line under the name",
+  "kind": "text",
+  "text": "Build the foundation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[0].goal"
+  }
+ },
+ {
+  "code": "HOME-HELP-23",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 01 detail paragraph",
+  "kind": "text",
+  "text": "Clear processes, ownership, controls and a predictable close.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[0].detail"
+  }
+ },
+ {
+  "code": "HOME-HELP-24",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 02 name (rail, stack layer and detail panel)",
+  "kind": "text",
+  "text": "Connect & Automate",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[1].name"
+  }
+ },
+ {
+  "code": "HOME-HELP-25",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 02 goal, one line under the name",
+  "kind": "text",
+  "text": "Make reporting repeatable",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[1].goal"
+  }
+ },
+ {
+  "code": "HOME-HELP-26",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 02 detail paragraph",
+  "kind": "text",
+  "text": "Connect systems, standardise reporting and reduce manual preparation.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[1].detail"
+  }
+ },
+ {
+  "code": "HOME-HELP-27",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 03 name (rail, stack layer and detail panel)",
+  "kind": "text",
+  "text": "Explain & Anticipate",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[2].name"
+  }
+ },
+ {
+  "code": "HOME-HELP-28",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 03 goal, one line under the name",
+  "kind": "text",
+  "text": "Understand performance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[2].goal"
+  }
+ },
+ {
+  "code": "HOME-HELP-29",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 03 detail paragraph",
+  "kind": "text",
+  "text": "Link financial results to drivers, forecasts and scenarios.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[2].detail"
+  }
+ },
+ {
+  "code": "HOME-HELP-30",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 04 name (rail, stack layer and detail panel)",
+  "kind": "text",
+  "text": "Decide & Improve",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[3].name"
+  }
+ },
+ {
+  "code": "HOME-HELP-31",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 04 goal, one line under the name",
+  "kind": "text",
+  "text": "Turn insight into action",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[3].goal"
+  }
+ },
+ {
+  "code": "HOME-HELP-32",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Phase 04 detail paragraph",
+  "kind": "text",
+  "text": "Embed insight in decisions, assign owners and track impact.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phases[3].detail"
+  }
+ },
+ {
+  "code": "HOME-HELP-33",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Caption under the stack",
+  "kind": "text",
+  "text": "Each phase builds on the one beneath it.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.stackCaption"
+  }
+ },
+ {
+  "code": "HOME-HELP-34",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Detail panel kicker — {n} is the phase number",
+  "kind": "text",
+  "text": "Phase {n}",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phaseLabel"
+  }
+ },
+ {
+  "code": "HOME-HELP-35",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Detail panel kicker, the total beside it",
+  "kind": "text",
+  "text": "/ 04",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.phaseTotal"
+  }
+ },
+ {
+  "code": "HOME-HELP-36",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Detail panel footnote, phases 02-04 — {name} is the phase below",
+  "kind": "text",
+  "text": "Builds on: {name}",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.buildsOn"
+  }
+ },
+ {
+  "code": "HOME-HELP-37",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Detail panel footnote on phase 01, in place of “Builds on”",
+  "kind": "text",
+  "text": "Where most engagements begin.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.firstPhaseNote"
+  }
+ },
+ {
+  "code": "HOME-HELP-38",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Previous-phase arrow, screen-reader name",
+  "kind": "aria-label",
+  "text": "Previous phase",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.prevLabel"
+  }
+ },
+ {
+  "code": "HOME-HELP-39",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Next-phase arrow, screen-reader name",
+  "kind": "aria-label",
+  "text": "Next phase",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.nextLabel"
+  }
+ },
+ {
+  "code": "HOME-HELP-01",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Eyebrow — no longer rendered; the section's eyebrow is HOME-HELP-17",
   "kind": "text",
   "text": "How we help",
   "source": {
@@ -4035,7 +4311,7 @@
   "code": "HOME-HELP-02",
   "page": "Home (/)",
   "section": "How we help",
-  "label": "Heading, part 1",
+  "label": "Heading, part 1 — no longer rendered; the section's heading is HOME-HELP-18/19",
   "kind": "text",
   "text": "Built Differently.",
   "source": {
@@ -4047,7 +4323,7 @@
   "code": "HOME-HELP-03",
   "page": "Home (/)",
   "section": "How we help",
-  "label": "Heading, part 2 (blue)",
+  "label": "Heading, part 2 (blue) — no longer rendered; the section's heading is HOME-HELP-18/19",
   "kind": "text",
   "text": "Delivered End-to-End.",
   "source": {
@@ -4059,12 +4335,36 @@
   "code": "HOME-HELP-04",
   "page": "Home (/)",
   "section": "How we help",
-  "label": "Lead paragraph",
+  "label": "Lead paragraph — no longer rendered; the section's lead is HOME-HELP-20",
   "kind": "text",
   "text": "Every layer of the finance function we build is designed to hold up on its own — and to connect to the one above it.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.sub"
+  }
+ },
+ {
+  "code": "HOME-HELP-40",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Principles block heading",
+  "kind": "text",
+  "text": "What makes our approach different",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.principles.heading"
+  }
+ },
+ {
+  "code": "HOME-HELP-41",
+  "page": "Home (/)",
+  "section": "How we help",
+  "label": "Principles block standfirst",
+  "kind": "text",
+  "text": "Six principles that hold across every phase of the work.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.principles.sub"
   }
  },
  {
@@ -4086,7 +4386,7 @@
   "section": "How we help",
   "label": "Point 1 body",
   "kind": "text",
-  "text": "We bring finance, data, revenue, and technology together under one roof—so the numbers, systems, insights, and decisions actually connect.",
+  "text": "Finance, data and technology work together around connected outcomes.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[0].body"
@@ -4111,7 +4411,7 @@
   "section": "How we help",
   "label": "Point 2 body",
   "kind": "text",
-  "text": "We recommend and implement the right ERP, CRM, BI, or FP&A platform for your business—not the one we're incentivized to sell. Every solution is built around your business model, KPIs, systems, and goals.",
+  "text": "We recommend tools around business needs, not vendor preference.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[1].body"
@@ -4136,7 +4436,7 @@
   "section": "How we help",
   "label": "Point 3 body",
   "kind": "text",
-  "text": "We don't stop at reporting. Our dashboards, models, and finance solutions are designed to surface anomalies, explain performance, improve forecasting, and turn data into actionable insight from day one.",
+  "text": "Reporting, models and dashboards are designed to support decisions.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[2].body"
@@ -4161,7 +4461,7 @@
   "section": "How we help",
   "label": "Point 4 body",
   "kind": "text",
-  "text": "We build finance functions that stand up to management scrutiny, investor questions, due diligence, fundraising, refinancing, and M&A—not just the monthly reporting cycle.",
+  "text": "Build finance processes and analysis that stand up to scrutiny.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[3].body"
@@ -4186,7 +4486,7 @@
   "section": "How we help",
   "label": "Point 5 body",
   "kind": "text",
-  "text": "We don't rely on industry templates. We build around how your business makes money, what drives performance, and what decisions matter. Our experience spans SaaS, Hospitality, D2C / Consumer, VFX, Logistics, Professional Services, Non-Profits, Pharmaceuticals, and beyond.",
+  "text": "Solutions are shaped around how each business operates and creates value.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[4].body"
@@ -4211,7 +4511,7 @@
   "section": "How we help",
   "label": "Point 6 body",
   "kind": "text",
-  "text": "From a single specialist to a full Finance or Centre of Excellence, our delivery model scales with your needs—giving you senior expertise and execution capacity without requiring you to build everything in-house.",
+  "text": "Extend or build the finance capability you need, at the right scale.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "whyUs.points[5].body"
