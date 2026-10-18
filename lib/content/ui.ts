@@ -112,6 +112,14 @@ export const sections = {
   fullTeam: "Meet the full team",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",
+  /* Accessible name for a figure's source link in the decision gap. All three
+     read "Source" on the page, and three links with the same name fail WCAG
+     2.4.4 — in a screen reader's link list they are indistinguishable, and so
+     is tabbing through them. {label} is the visible word and comes first, so
+     the name still contains the label as shown (2.5.3); {publication} is what
+     tells them apart. The new-tab note is here rather than in an icon because
+     the arrow beside the word is decoration. */
+  sourceLink: "{label}: {publication} (opens in a new tab)",
   /** Testimonial byline, for a quote whose author has a role on file. */
   byline: "{name} — {title}, {company}",
   /* And for one who does not. Four of the six testimonials were supplied with
