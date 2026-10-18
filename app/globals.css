@@ -3744,6 +3744,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   font-size:0.6944rem;line-height:1.5;color:#5F6875}
 .fma-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 0}
 
+
+
 /* =====================================================================
    MOBILE (<=767px) — the approved phone design for four sections.
 
@@ -4746,4 +4748,404 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .fma-step-card{padding:20px}
 
   .fma-disclaimer{margin-top:26px;padding-top:16px}
+}
+
+/* =====================================================================
+   PART A — base/desktop
+   FINANCE INTELLIGENCE MATURITY CURVE (homepage, section.section.mc#maturity-curve)
+
+   Goes in app/globals.css as its own block. Everything here applies from
+   768 up: the phone layout is owned by PART B's max-width:767px query, so
+   no rule in PART A goes looking for a narrow screen, and every
+   multi-column grid-template-columns sits inside a min-width query so a
+   single column is the fallback rather than five 90px cards. Same
+   discipline as the .dg block, for the same reason.
+
+   Plain .mc-* selectors (0,1,0) throughout. Nothing above is id-scoped
+   or structure-scoped against these, so source order does the whole job;
+   no !important anywhere.
+
+   ONE rule above this block still owns a property here:
+   `.home-tight #maturity-curve.section{padding:36px 0}` (~line 3430) is
+   (1,2,0) and wins over any padding a .mc rule could set, at every
+   width. That is wanted — the homepage rhythm is deliberate — so .mc
+   sets no padding at all and the band's height stays where the rhythm
+   block puts it. Do not add padding here expecting it to apply.
+
+   The section carries .section for that rhythm and .mc for everything
+   else. It does NOT carry .fin-sec: the radial glow .fin-sec draws would
+   sit behind a grey band it was drawn for white, and there is no
+   overflow to clip.
+   ===================================================================== */
+
+/* The band. --bg-soft, not white: the section above it (.dg) is on the
+   page's paper ground, and the maturity curve is the page's one
+   interactive stretch — the ground change is what says so before any
+   card is read. The cards' own grey is --soft, half a step off this, so
+   an unselected card is drawn by its hairline and the SELECTED card's
+   white is the only filled shape in the row. That is the design, not a
+   collision of two near-identical greys.
+
+   scroll-margin-top carries over from the utility the old component set
+   on this element: #maturity-curve is a jump target and the header
+   floats over it. */
+.mc{background:var(--bg-soft);
+  scroll-margin-top:calc(var(--header-h) + 16px)}
+
+/* ---- the head ---- */
+/* Centred as a column rather than with text-align on .mc-head, because
+   .mc-pill is a flex box: text-align does not centre it, and an `auto`
+   margin on a block-level pill would stretch it to the container. The
+   children that are text still need text-align, so both are here. */
+.mc-head{display:flex;flex-direction:column;align-items:center;
+  text-align:center}
+.mc-eyebrow{margin:0;font-size:0.7222rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--blue)}
+/* 6.16:1 on --bg-soft. */
+
+/* The same clamp, leading, tracking and weight as the shared heading
+   group at globals.css ~1585 (.fin-h2, .section-head h2, .page-head h1,
+   .who-heading, .tr-h, .clients-head h2). Restated rather than added to
+   that group only because this file may not edit globals.css — if the
+   block lands there, adding `.mc-h2` to that selector list and deleting
+   this rule is the better end state. 16.05:1 on --bg-soft. */
+.mc-h2{margin:14px 0 0;font-size:clamp(30px,3.7vw,50px);line-height:1.12;
+  font-weight:500;letter-spacing:-.02em;color:var(--ink-deep);
+  text-wrap:balance}
+
+/* 70ch resolves against this element's own font, which is why the size
+   is declared before the measure matters. 5.75:1 on --bg-soft. */
+.mc-lead{margin:20px auto 0;max-width:70ch;
+  font-size:clamp(1rem,1.15vw,1.14rem);line-height:1.62;
+  color:var(--ink-muted);text-wrap:pretty}
+
+/* The narrative pill. White on the grey band, so it reads as a label
+   laid on the section rather than as a third paragraph. The amber dot is
+   a ::before and not a <span>: it is punctuation for the sentence, and
+   an element for it would be an element with nothing to say.
+   --ink-deep on white is 17.82:1. */
+.mc-pill{display:inline-flex;align-items:center;gap:10px;
+  margin:26px 0 0;padding:9px 18px;border-radius:999px;
+  border:1px solid var(--pill-line);background:var(--white);
+  font-size:0.7778rem;font-weight:500;line-height:1.35;
+  color:var(--ink-deep);text-align:left}
+/* flex:none, or the dot is squashed to an ellipse by a wrapping pill. */
+.mc-pill::before{content:"";flex:none;width:7px;height:7px;
+  border-radius:50%;background:var(--yellow)}
+
+/* ---- the decorative curve fragment ---- */
+/* One element, two dashed borders and an elliptical bottom-right corner:
+   a flat dashed run that lifts into an arc at the right end. The corner's
+   vertical radius equals the element's height, so the right border is
+   consumed entirely by the arc and never draws as a vertical tick.
+
+   It takes its own 54px of flow and has a POSITIVE bottom margin — no
+   negative pull towards the cards. A decorative line that reaches into
+   the row can land on a stage name at some width nobody tested, and
+   aria-hidden decoration is exactly the thing that must never be the
+   reason a sentence is unreadable. It is hidden outright on phones
+   (PART B), where a single column makes a rightward sweep meaningless.
+
+   Width is capped as well as proportional so the flat lead-in survives:
+   the arc is 260px wide, and min(42%,440px) keeps the element wider than
+   that from 768 up (712px container -> 299px). */
+.mc-rail{width:min(42%,440px);height:54px;margin:44px 0 12px auto;
+  border-bottom:1px dashed var(--line);border-right:1px dashed var(--line);
+  border-radius:0 0 260px 0 / 0 0 54px 0;pointer-events:none}
+
+/* ---- the five stage cards ---- */
+.mc-stages{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+/* The <li> is a flex box purely so the button can fill the grid row's
+   height; that is what lets margin-top:auto on the tag pin all five tags
+   to a common bottom edge whatever the question length. */
+.mc-stage{display:flex}
+
+/* Tailwind's preflight strips a button's background, border and
+   text-align, so all three are set rather than inherited. The card is
+   the whole tap target — nothing inside it is separately clickable — and
+   its padding alone clears 44px. */
+.mc-stage-btn{flex:1;display:flex;flex-direction:column;align-items:flex-start;
+  width:100%;padding:20px;text-align:left;
+  border:1px solid var(--line);border-radius:16px;background:var(--soft);
+  color:inherit}
+
+/* The index badge. tabular-nums so 01-05 sit on the same two-digit
+   width; the disc is sized from the digits plus padding rather than
+   fixed, so a type-size change moves it. --blue on white is 6.84:1. */
+.mc-stage-n{display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;background:var(--white);
+  border:1px solid var(--line);
+  font-size:0.6111rem;font-weight:700;line-height:1;letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;color:var(--blue)}
+
+.mc-stage-name{display:block;margin-top:16px;font-size:0.8333rem;
+  font-weight:600;line-height:1.3;letter-spacing:-.01em;
+  color:var(--ink-deep)}
+/* 5.69:1 on --soft, 6.34:1 on the selected card's white. */
+.mc-stage-q{display:block;margin-top:6px;font-size:0.7778rem;line-height:1.45;
+  color:var(--gray)}
+/* margin-top:auto is the whole alignment mechanism for the row — see
+   .mc-stage above. padding-top is a floor, so a one-line question still
+   leaves air between it and the tag on the tallest card's height. */
+.mc-stage-tag{display:block;margin-top:auto;padding-top:22px;
+  font-size:0.6111rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gray)}
+
+/* SELECTION, stated three ways so colour is not carrying it alone
+   (WCAG 1.4.1): the ground goes from --soft to white, the hairline
+   becomes a 2px --blue border, and the badge inverts to a filled
+   --ink-deep disc with white digits (17.82:1). A reader who cannot
+   separate #0F5E97 from #D9DEE1 still sees a filled dark disc in a row
+   of outlined pale ones, and the border's weight doubles.
+
+   The 2px border is absorbed by a 1px padding cut, so the selected card
+   does not grow by 2px and shunt the row.
+
+   Two selectors because the component may express the state either way:
+   aria-current on a plain button, or aria-selected if the row is built
+   as a tablist. Whichever ships, the other simply never matches. */
+.mc-stage-btn[aria-current="true"],
+.mc-stage-btn[aria-selected="true"]{padding:19px;
+  border:2px solid var(--blue);background:var(--white);
+  box-shadow:0 10px 30px rgba(13,24,40,.07)}
+.mc-stage-btn[aria-current="true"] .mc-stage-n,
+.mc-stage-btn[aria-selected="true"] .mc-stage-n{background:var(--ink-deep);
+  border-color:var(--ink-deep);color:var(--white)}
+
+/* Transitions in their own no-preference query. globals.css already
+   crushes every transition-duration under reduce, but a rule that only
+   exists when motion is wanted reads clearer than one neutralised two
+   thousand lines away. No transform: the lift is a shadow, so nothing
+   here competes with MotionLayer's page-wide quickTo if this row is ever
+   opted into it. */
+@media (prefers-reduced-motion:no-preference){
+  .mc-stage-btn{transition:background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    box-shadow var(--dur-hover) var(--ease-out)}
+  .mc-stage-n{transition:background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out)}
+}
+
+/* Hover behind (hover:hover) so a tap cannot leave a card stuck looking
+   half-selected until something else is tapped. Deliberately quieter
+   than selection — a border tint and the card's ground lightening to
+   white, no badge inversion: the badge is what says "this one is open",
+   and a pointer passing over a card must not be able to say that too. */
+@media (hover:hover){
+  .mc-stage-btn:hover{background:var(--white);
+    border-color:rgba(15,94,151,.38)}
+  .mc-stage-btn[aria-current="true"]:hover,
+  .mc-stage-btn[aria-selected="true"]:hover{border-color:var(--blue)}
+}
+
+/* ---- the panel ---- */
+/* One column here; the two-column rule is in the min-width:1024px block
+   at the foot of PART A. */
+.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:40px;
+  border:1px solid var(--line);border-radius:22px;background:var(--white)}
+
+/* --blue at 10% over white is #E7EFF5 — a flat tint rather than a second
+   blue token to maintain, and the same ground .dg-pain::before already
+   uses. The stroke measures 5.89:1 on it. */
+.mc-panel-icon{display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:13px;
+  background:rgba(15,94,151,.10)}
+/* Sized and stroked here, not on the SVG, so the component ships a bare
+   <svg> with a viewBox and nothing else to keep in sync. */
+.mc-panel-icon svg{width:22px;height:22px;display:block;fill:none;
+  stroke:var(--blue);stroke-width:1.7;stroke-linecap:round;
+  stroke-linejoin:round}
+
+/* Uppercased by CSS, so the content module keeps "Stage 04 · Explain" in
+   sentence case and a screen reader is not handed an acronym. 6.84:1. */
+.mc-panel-label{margin:22px 0 0;font-size:0.6667rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.mc-panel-name{margin:12px 0 0;font-size:clamp(24px,2.4vw,32px);
+  line-height:1.15;font-weight:600;letter-spacing:-.025em;
+  color:var(--ink-deep)}
+/* The question is the panel's second voice, not a subhead: semibold at
+   body size, in the heading's ink. 17.82:1. */
+.mc-panel-q{margin:16px 0 0;max-width:34ch;font-size:0.9444rem;
+  font-weight:600;line-height:1.45;color:var(--ink-deep);text-wrap:pretty}
+/* 6.34:1 on white. */
+.mc-panel-body{margin:14px 0 0;max-width:46ch;font-size:0.8889rem;
+  line-height:1.65;color:var(--gray);text-wrap:pretty}
+
+.mc-panel-blocks{display:grid;gap:26px;align-content:start}
+/* A border-left and not a ::before: the rule is the block's own edge, it
+   has to run the block's full height whatever the body wraps to, and a
+   pseudo-element would need a height nobody can state in advance. */
+.mc-block{padding-left:18px;border-left:2px solid var(--line)}
+/* 6.39:1 on white. */
+.mc-block-label{margin:0;font-size:0.6667rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+.mc-block-body{margin:10px 0 0;font-size:0.8333rem;line-height:1.6;
+  color:var(--gray);text-wrap:pretty}
+
+/* ---- the call to action ---- */
+/* --blue at 5% over the band (#E7ECF0) — the same tint .fma-step-card
+   uses for its pale-blue ground on /finance-maturity, which is where
+   this button goes. The two surfaces should look like one idea
+   continued, and reusing the value is how that stays true if the tint
+   is ever retuned. Stacked here; the row is in the min-width:768px
+   block below. */
+.mc-cta{display:flex;flex-direction:column;gap:24px;margin:28px 0 0;
+  padding:32px 36px;border-radius:18px;background:rgba(15,94,151,.05)}
+.mc-cta-copy{max-width:62ch}
+.mc-cta-h{margin:0;font-size:clamp(20px,1.6vw,24px);line-height:1.3;
+  font-weight:600;letter-spacing:-.01em;color:var(--ink-deep)}
+/* 5.37:1 on #E7ECF0. */
+.mc-cta-body{margin:12px 0 0;font-size:0.8333rem;line-height:1.6;
+  color:var(--ink-muted);text-wrap:pretty}
+
+/* Not .btn: .btn is a bordered pill built around the brand blue and
+   whatever tier class it is given, and this one is a solid dark slab
+   with no tier. It borrows .btn's height, radius and type so the two
+   still read as the same family. white on --ink-deep is 17.82:1.
+   flex:none so the button never shrinks to its text when the band
+   becomes a row. align-self:start keeps it from stretching the full
+   column width while the band is stacked. */
+.mc-cta-btn{flex:none;align-self:start;display:inline-flex;
+  align-items:center;justify-content:center;min-height:48px;
+  padding:0 26px;border-radius:999px;background:var(--ink-deep);
+  color:var(--white);font-size:0.7778rem;font-weight:700;
+  letter-spacing:-.01em;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .mc-cta-btn{transition:background-color var(--dur-hover) var(--ease-out),
+    transform var(--dur-press) var(--ease-out)}
+}
+@media (hover:hover){
+  /* --blue-dark, not a lighter --ink-deep: the hover state should move
+     towards the brand, and white on #0A4169 is still 10.64:1. */
+  .mc-cta-btn:hover{background:var(--blue-dark)}
+}
+.mc-cta-btn:active{transform:scale(.97)}
+
+/* The framework caveat, said once for the whole section. 12.5px, and
+   #5F6875 measures 5.08:1 on --bg-soft — AA for body text with room to
+   spare, which the smallest type in the section needs most. The same
+   grey .dg-stat-source and .fma-note already use. */
+.mc-note{margin:18px auto 0;max-width:80ch;font-size:0.6944rem;
+  line-height:1.5;text-align:center;color:#5F6875;text-wrap:pretty}
+
+/* ---- 768-1279: three across, not five ----
+   Measured: .container is min(920px,100% - 56px) through this whole
+   range, so five columns divide the same 920px however wide the viewport
+   is — 184px cards, a 142px measure, about 19 characters a line, and
+   "DECIDE & IMPROVE" wrapping to two lines, which breaks the one thing
+   the tag row is for. Three columns give 285px cards and leave 04 and 05
+   at the start of a second row; the progression still reads left to
+   right, top to bottom. The fourth and fifth columns wait for 1280,
+   where .container steps to min(1440px,100% - 96px) and the cards go to
+   224px. */
+@media (min-width:768px) and (max-width:1279px){
+  .mc-stages{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media (min-width:1024px){
+  /* 45/55 with 48px between: the columns do not add to 100 because the
+     gap is the rest. align-items:start, or the three blocks stretch to
+     the height of the left column and the vertical rules grow with it. */
+  .mc-panel{grid-template-columns:minmax(0,45fr) minmax(0,55fr);
+    gap:48px;padding:48px}
+  .mc-panel-blocks{align-items:start}
+}
+
+/* The CTA band is a row from 768, not from 1024: the panel stacks below
+   1024 because two 40ch columns do not fit, but a heading, a paragraph
+   and a 230px button do fit side by side at a 712px container. Only
+   phones stack it. */
+@media (min-width:768px){
+  .mc-cta{flex-direction:row;align-items:center;
+    justify-content:space-between;gap:40px}
+  .mc-cta-btn{align-self:auto}
+}
+
+@media (min-width:1280px){
+  .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .mc-panel{padding:52px}
+}
+
+
+/* =====================================================================
+   PART B — phones (max-width:767px)
+   FINANCE INTELLIGENCE MATURITY CURVE — mobile
+
+   Goes in the appended mobile region at the end of globals.css, after
+   the blocks already there. Every rule is inside the one query; nothing
+   below reaches 768px and up. Plain .mc-* selectors are enough — source
+   order in the appended region does the whole job.
+
+   THE CARD ROW BECOMES A SINGLE COLUMN, not a horizontal scroller.
+   A scroller buys back vertical space and costs two defects this site
+   already has elsewhere: the selected card has to be scrolled into view
+   by script on every change (and on first paint, and after a resize),
+   and the global 2px focus ring at outline-offset:3px is clipped by the
+   scroll container's own overflow on the first and last card. Neither is
+   fixable in CSS alone — overflow:clip with clip-margin does not apply
+   to the axis being scrolled — so a scroller here means shipping
+   JavaScript to repair a layout choice. A column needs none of it: every
+   card is already in view, the ring is drawn in normal flow, and the
+   section is a tap-and-read list in the order the stages are numbered.
+   What it costs is height, and that is bought back below by laying each
+   card out as a row instead of a stack.
+   ===================================================================== */
+
+@media (max-width:767px){
+
+  .mc-lead{font-size:0.8889rem}
+  /* The pill's sentence wraps to two or three lines at this width, so the
+     dot has to sit on the first line rather than be centred against the
+     block. */
+  .mc-pill{align-items:flex-start;margin-top:20px;padding:12px 16px}
+  .mc-pill::before{margin-top:.42em}
+
+  /* A rightward sweep over a single column points at nothing. */
+  .mc-rail{display:none}
+
+  /* The rail is gone, and the rail's 12px was the row's whole top gap
+     — so the row has to bring its own. */
+  .mc-stages{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:26px}
+
+  /* The badge moves beside the copy instead of above it: five stacked
+     cards at the desktop layout run most of a phone screen before the
+     panel — which is the part worth reading — gets a pixel. The badge
+     spans all three rows in column one, so the name, question and tag
+     auto-place down column two in source order with nothing reordered.
+
+     The tag keeps its row rather than being dropped: it is the stage's
+     one-word name and the only thing on the card that is the same five
+     words the panel label repeats. margin-top:auto does nothing in a
+     grid row, so the desktop padding-top floor is what spaces it, cut to
+     match the tighter card.
+
+     Tap target: 16px + 16px of padding around three lines of type clears
+     44px on every card, and the button is the only target in it. */
+  .mc-stage-btn{display:grid;grid-template-columns:auto minmax(0,1fr);
+    gap:2px 14px;padding:16px;border-radius:14px}
+  .mc-stage-btn[aria-current="true"],
+  .mc-stage-btn[aria-selected="true"]{padding:15px}
+  .mc-stage-n{grid-column:1;grid-row:1 / span 3;align-self:start}
+  .mc-stage-name{margin-top:0}
+  .mc-stage-tag{padding-top:10px}
+
+  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px}
+  .mc-panel-icon{width:40px;height:40px;border-radius:12px}
+  .mc-panel-icon svg{width:20px;height:20px}
+  .mc-panel-label{margin-top:18px}
+  .mc-panel-q{font-size:0.8889rem}
+  .mc-panel-body{font-size:0.8333rem}
+  .mc-panel-blocks{gap:22px}
+  .mc-block{padding-left:14px}
+
+  /* Already a column from PART A's base rule; only the padding and the
+     button's width change. Full-bleed button, because a 26px pill
+     floating at the left edge of a 390px band is a smaller target than
+     the band can afford to give it. */
+  .mc-cta{margin-top:20px;padding:24px 20px;border-radius:16px;gap:20px}
+  .mc-cta-btn{align-self:stretch;white-space:normal;padding:12px 20px;
+    text-align:center}
+
+  .mc-note{margin-top:16px}
 }

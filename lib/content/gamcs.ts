@@ -1203,6 +1203,23 @@ export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[numb
  * tags were supplied in the reference build. Treat it as
  * authored marketing copy, not a mirror of the live site.
  *
+ * WHAT THE APPROVED DESIGN RENDERS: `eyebrow`, `heading` + `headingAccent`,
+ * `lead`, `narrative` as the pill, `caveat` as the closing framework note,
+ * `cta`, and per stage `n`, `name`, `cardQuestion` and `tag` on the card,
+ * then `question`, `description` and the three `blocks` in the panel.
+ *
+ * WHAT IS RETAINED BUT UNRENDERED: the CFO-dashboard payload (`visual` and
+ * the `files` / `pack` / `drill` / `explain` / `board` object it narrows,
+ * plus `metrics`, `labels` and `illustrative`), the capability `tags`, the
+ * compact tab label `short`, and `hint`, `axis`, `nextHeading`
+ * and `close`. components/sections/MaturityVisuals.tsx, which draws them, is
+ * retained with it. None of this is rot: the redesign dropped the visuals,
+ * and the client asked that the copy and the code behind them survive it, so
+ * whoever brings them back does not have to re-source or rebuild them.
+ *
+ * `tag` is stored in sentence case and uppercased by the stylesheet, as
+ * `eyebrow` is — this module holds words, CSS holds their casing.
+ *
  * `metrics` on stages 03–05 and every figure inside `tiles` / `ladder` /
  * `signals` are ILLUSTRATIVE — the section labels them as such wherever they
  * render. They are not client figures and must not be presented as any.
@@ -1241,6 +1258,16 @@ export const maturityCurve = {
     /** The self-assessment's own route, not a section of this page. */
     href: "/finance-maturity",
   },
+  /** The CTA band the redesign renders, below the panel. It supersedes
+      `close` above, which is kept only because the client asked for retired
+      copy to be retained. Same destination, different words. */
+  cta: {
+    heading: "Get a clearer view of your finance maturity.",
+    body:
+      "Answer eight practical questions to receive an indicative maturity stage, a breakdown of your strengths and gaps, and a suggested next step. No industry-specific metrics or systems required.",
+    label: "Take the 3-minute assessment",
+    href: "/finance-maturity",
+  },
   /** Column heads and row labels the visuals need, once for all five stages. */
   labels: {
     /** Over the right column, which carries only the worked example. */
@@ -1270,7 +1297,12 @@ export const maturityCurve = {
       n: "01",
       name: "Finance Foundation",
       short: "Foundation",
+      tag: "Stabilise",
       question: "Can we close reliably?",
+      /* Stage 01 is the one stage whose card question and panel question are
+         the same sentence; the other four shorten. The repetition is the
+         mockup's, not a slip. */
+      cardQuestion: "Can we close reliably?",
       description:
         "Processes and responsibilities are undocumented or inconsistently followed. Reconciliations depend on manual follow-up, and close timelines are difficult to predict.",
       tags: ["Excel", "ERP reports", "Month-end close", "Statutory reporting"],
@@ -1289,13 +1321,31 @@ export const maturityCurve = {
         ],
         caption: "Multiple versions of the truth.",
       },
-      next: "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
+      blocks: [
+        {
+          label: "What this stage looks like",
+          body:
+            "Ownership varies, close deadlines move, and recurring tasks depend heavily on individual knowledge.",
+        },
+        {
+          label: "The outcome to aim for",
+          body:
+            "A controlled, repeatable close with clear owners, agreed deadlines, documented procedures and appropriate checks.",
+        },
+        {
+          label: "The next move",
+          body:
+            "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
+        },
+      ],
     },
     {
       n: "02",
       name: "Management Reporting",
       short: "Reporting",
+      tag: "Report",
       question: "Do we know how the business performed?",
+      cardQuestion: "How did we perform?",
       description:
         "The books close on an agreed timetable, but producing the management information pack, comparing actuals with budget and explaining variances still takes time and effort.",
       tags: ["MIS", "Monthly packs", "KPI reporting", "Variance analysis"],
@@ -1325,13 +1375,31 @@ export const maturityCurve = {
         ],
         caption: "The information arrives after the period it describes.",
       },
-      next: "Standardise the reporting pack, KPI definitions, data sources and management review process.",
+      blocks: [
+        {
+          label: "What this stage looks like",
+          body:
+            "A monthly pack exists, but data has to be collected, combined, checked and explained manually.",
+        },
+        {
+          label: "The outcome to aim for",
+          body:
+            "A consistent management pack with clear KPIs, budget-versus-actual analysis and a regular performance review.",
+        },
+        {
+          label: "The next move",
+          body:
+            "Standardise the reporting pack, KPI definitions, data sources and management review process.",
+        },
+      ],
     },
     {
       n: "03",
       name: "Automated Reporting",
       short: "Automated",
+      tag: "Automate",
       question: "Can we produce reports without rebuilding them every month?",
+      cardQuestion: "Can we stop rebuilding it?",
       description:
         "Recurring reports and dashboards refresh with minimal manual preparation. Finance spends less time collecting and assembling information—but automation alone does not explain why performance moved.",
       tags: ["Power BI", "Live dashboards", "Profitability analysis", "Drill-down analytics"],
@@ -1387,7 +1455,23 @@ export const maturityCurve = {
         /** The one thing the driver chart is saying. */
         annotation: "+18% vs Q3",
       },
-      next: "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
+      blocks: [
+        {
+          label: "What this stage looks like",
+          body:
+            "Reporting logic is repeatable, data refreshes are automated where practical, and the team spends less time copying and reconciling data.",
+        },
+        {
+          label: "The outcome to aim for",
+          body:
+            "Timely, consistent reporting produced with minimal routine effort, providing a reliable base for deeper analysis.",
+        },
+        {
+          label: "The next move",
+          body:
+            "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
+        },
+      ],
     },
     {
       n: "04",
@@ -1396,7 +1480,9 @@ export const maturityCurve = {
          text at 360: "Decision intel." wrapped to two lines there, while
          "Continuous", the widest short label, is 55.8px and stays on one. */
       short: "Insight",
+      tag: "Explain",
       question: "Do we understand why performance changed?",
+      cardQuestion: "Why did performance change?",
       description:
         "Financial results are connected to relevant operational and commercial context. The team can explain the drivers behind performance, evaluate scenarios and anticipate likely outcomes.",
       tags: ["Driver-based planning", "Forecasting", "Scenario analysis", "Anomaly detection"],
@@ -1458,13 +1544,31 @@ export const maturityCurve = {
           annotation: "−120 bps expected",
         },
       },
-      next: "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
+      blocks: [
+        {
+          label: "What this stage looks like",
+          body:
+            "Revenue, margin, cost and cash movements can be traced to business drivers—not just described as variances.",
+        },
+        {
+          label: "The outcome to aim for",
+          body:
+            "A finance function that can explain not just what changed, but why it changed and what may happen next.",
+        },
+        {
+          label: "The next move",
+          body:
+            "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
+        },
+      ],
     },
     {
       n: "05",
       name: "Decision-Led Finance",
       short: "Decision-led",
+      tag: "Decide & improve",
       question: "Do insights translate into action and impact?",
+      cardQuestion: "Did insight make a difference?",
       description:
         "Insights are embedded in management and board conversations. Decisions have owners and expected outcomes; progress is tracked, and lessons feed into future plans.",
       tags: ["Real-time signals", "Automated commentary", "Alerts", "Accountability loops"],
@@ -1509,7 +1613,23 @@ export const maturityCurve = {
           },
         ],
       },
-      next: "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
+      blocks: [
+        {
+          label: "What this stage looks like",
+          body:
+            "Conversations focus on choices, trade-offs, risks and opportunities. Action and impact are reviewed, not assumed.",
+        },
+        {
+          label: "The outcome",
+          body:
+            "Finance becomes a strategic partner, connecting trusted numbers and meaningful insight with decisions, action and measurable impact.",
+        },
+        {
+          label: "The ongoing priority",
+          body:
+            "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
+        },
+      ],
     },
   ],
 } as const;

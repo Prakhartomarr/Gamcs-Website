@@ -1356,6 +1356,42 @@
   }
  },
  {
+  "code": "HOME-CURVE-31",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "CTA band heading",
+  "kind": "text",
+  "text": "Get a clearer view of your finance maturity.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.cta.heading"
+  }
+ },
+ {
+  "code": "HOME-CURVE-32",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "CTA band paragraph",
+  "kind": "text",
+  "text": "Answer eight practical questions to receive an indicative maturity stage, a breakdown of your strengths and gaps, and a suggested next step. No industry-specific metrics or systems required.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.cta.body"
+  }
+ },
+ {
+  "code": "HOME-CURVE-33",
+  "page": "Home (/)",
+  "section": "Maturity curve",
+  "label": "CTA band button",
+  "kind": "button",
+  "text": "Take the 3-minute assessment",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.cta.label"
+  }
+ },
+ {
   "code": "HOME-ST01-01",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 01 Financial Reporting",
@@ -1608,6 +1644,90 @@
   }
  },
  {
+  "code": "HOME-ST01-23",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Card tag (shown in capitals)",
+  "kind": "text",
+  "text": "Stabilise",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].tag"
+  }
+ },
+ {
+  "code": "HOME-ST01-24",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Card question (short form)",
+  "kind": "text",
+  "text": "Can we close reliably?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].cardQuestion"
+  }
+ },
+ {
+  "code": "HOME-ST01-25",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Panel block 1 heading",
+  "kind": "text",
+  "text": "What this stage looks like",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].blocks[0].label"
+  }
+ },
+ {
+  "code": "HOME-ST01-26",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Panel block 1 paragraph",
+  "kind": "text",
+  "text": "Ownership varies, close deadlines move, and recurring tasks depend heavily on individual knowledge.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].blocks[0].body"
+  }
+ },
+ {
+  "code": "HOME-ST01-27",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Panel block 2 heading",
+  "kind": "text",
+  "text": "The outcome to aim for",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].blocks[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST01-28",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Panel block 2 paragraph",
+  "kind": "text",
+  "text": "A controlled, repeatable close with clear owners, agreed deadlines, documented procedures and appropriate checks.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].blocks[1].body"
+  }
+ },
+ {
+  "code": "HOME-ST01-29",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 01 Financial Reporting",
+  "label": "Panel block 3 heading",
+  "kind": "text",
+  "text": "The next move",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[0].blocks[2].label"
+  }
+ },
+ {
   "code": "HOME-ST01-15",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 01 Financial Reporting",
@@ -1616,7 +1736,7 @@
   "text": "Document core processes, assign owners, establish a close calendar and build a consistent reconciliation routine.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[0].next"
+   "locator": "maturityCurve.stages[0].blocks[2].body"
   }
  },
  {
@@ -2076,6 +2196,90 @@
   }
  },
  {
+  "code": "HOME-ST02-40",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Card tag (shown in capitals)",
+  "kind": "text",
+  "text": "Report",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].tag"
+  }
+ },
+ {
+  "code": "HOME-ST02-41",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Card question (short form)",
+  "kind": "text",
+  "text": "How did we perform?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].cardQuestion"
+  }
+ },
+ {
+  "code": "HOME-ST02-42",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Panel block 1 heading",
+  "kind": "text",
+  "text": "What this stage looks like",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].blocks[0].label"
+  }
+ },
+ {
+  "code": "HOME-ST02-43",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Panel block 1 paragraph",
+  "kind": "text",
+  "text": "A monthly pack exists, but data has to be collected, combined, checked and explained manually.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].blocks[0].body"
+  }
+ },
+ {
+  "code": "HOME-ST02-44",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Panel block 2 heading",
+  "kind": "text",
+  "text": "The outcome to aim for",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].blocks[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST02-45",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Panel block 2 paragraph",
+  "kind": "text",
+  "text": "A consistent management pack with clear KPIs, budget-versus-actual analysis and a regular performance review.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].blocks[1].body"
+  }
+ },
+ {
+  "code": "HOME-ST02-46",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 02 Management Information",
+  "label": "Panel block 3 heading",
+  "kind": "text",
+  "text": "The next move",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[1].blocks[2].label"
+  }
+ },
+ {
   "code": "HOME-ST02-15",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 02 Management Information",
@@ -2084,7 +2288,7 @@
   "text": "Standardise the reporting pack, KPI definitions, data sources and management review process.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[1].next"
+   "locator": "maturityCurve.stages[1].blocks[2].body"
   }
  },
  {
@@ -2568,6 +2772,90 @@
   }
  },
  {
+  "code": "HOME-ST03-48",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Card tag (shown in capitals)",
+  "kind": "text",
+  "text": "Automate",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].tag"
+  }
+ },
+ {
+  "code": "HOME-ST03-49",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Card question (short form)",
+  "kind": "text",
+  "text": "Can we stop rebuilding it?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].cardQuestion"
+  }
+ },
+ {
+  "code": "HOME-ST03-50",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Panel block 1 heading",
+  "kind": "text",
+  "text": "What this stage looks like",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].blocks[0].label"
+  }
+ },
+ {
+  "code": "HOME-ST03-51",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Panel block 1 paragraph",
+  "kind": "text",
+  "text": "Reporting logic is repeatable, data refreshes are automated where practical, and the team spends less time copying and reconciling data.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].blocks[0].body"
+  }
+ },
+ {
+  "code": "HOME-ST03-52",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Panel block 2 heading",
+  "kind": "text",
+  "text": "The outcome to aim for",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].blocks[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST03-53",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Panel block 2 paragraph",
+  "kind": "text",
+  "text": "Timely, consistent reporting produced with minimal routine effort, providing a reliable base for deeper analysis.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].blocks[1].body"
+  }
+ },
+ {
+  "code": "HOME-ST03-54",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 03 Business Intelligence",
+  "label": "Panel block 3 heading",
+  "kind": "text",
+  "text": "The next move",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[2].blocks[2].label"
+  }
+ },
+ {
   "code": "HOME-ST03-21",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 03 Business Intelligence",
@@ -2576,7 +2864,7 @@
   "text": "Connect financial results to relevant operational and commercial information so the business drivers become clearer.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[2].next"
+   "locator": "maturityCurve.stages[2].blocks[2].body"
   }
  },
  {
@@ -3096,6 +3384,90 @@
   }
  },
  {
+  "code": "HOME-ST04-56",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Card tag (shown in capitals)",
+  "kind": "text",
+  "text": "Explain",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].tag"
+  }
+ },
+ {
+  "code": "HOME-ST04-57",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Card question (short form)",
+  "kind": "text",
+  "text": "Why did performance change?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].cardQuestion"
+  }
+ },
+ {
+  "code": "HOME-ST04-58",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Panel block 1 heading",
+  "kind": "text",
+  "text": "What this stage looks like",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].blocks[0].label"
+  }
+ },
+ {
+  "code": "HOME-ST04-59",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Panel block 1 paragraph",
+  "kind": "text",
+  "text": "Revenue, margin, cost and cash movements can be traced to business drivers—not just described as variances.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].blocks[0].body"
+  }
+ },
+ {
+  "code": "HOME-ST04-60",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Panel block 2 heading",
+  "kind": "text",
+  "text": "The outcome to aim for",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].blocks[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST04-61",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Panel block 2 paragraph",
+  "kind": "text",
+  "text": "A finance function that can explain not just what changed, but why it changed and what may happen next.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].blocks[1].body"
+  }
+ },
+ {
+  "code": "HOME-ST04-62",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 04 Decision Intelligence",
+  "label": "Panel block 3 heading",
+  "kind": "text",
+  "text": "The next move",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[3].blocks[2].label"
+  }
+ },
+ {
   "code": "HOME-ST04-23",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 04 Decision Intelligence",
@@ -3104,7 +3476,7 @@
   "text": "Embed insights into management reviews, connect forecasts to business decisions, and assign clear ownership to actions.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[3].next"
+   "locator": "maturityCurve.stages[3].blocks[2].body"
   }
  },
  {
@@ -3552,6 +3924,90 @@
   }
  },
  {
+  "code": "HOME-ST05-46",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Card tag (shown in capitals)",
+  "kind": "text",
+  "text": "Decide & improve",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].tag"
+  }
+ },
+ {
+  "code": "HOME-ST05-47",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Card question (short form)",
+  "kind": "text",
+  "text": "Did insight make a difference?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].cardQuestion"
+  }
+ },
+ {
+  "code": "HOME-ST05-48",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Panel block 1 heading",
+  "kind": "text",
+  "text": "What this stage looks like",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].blocks[0].label"
+  }
+ },
+ {
+  "code": "HOME-ST05-49",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Panel block 1 paragraph",
+  "kind": "text",
+  "text": "Conversations focus on choices, trade-offs, risks and opportunities. Action and impact are reviewed, not assumed.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].blocks[0].body"
+  }
+ },
+ {
+  "code": "HOME-ST05-50",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Panel block 2 heading",
+  "kind": "text",
+  "text": "The outcome",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].blocks[1].label"
+  }
+ },
+ {
+  "code": "HOME-ST05-51",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Panel block 2 paragraph",
+  "kind": "text",
+  "text": "Finance becomes a strategic partner, connecting trusted numbers and meaningful insight with decisions, action and measurable impact.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].blocks[1].body"
+  }
+ },
+ {
+  "code": "HOME-ST05-52",
+  "page": "Home (/)",
+  "section": "Maturity curve — Stage 05 Continuous Decisioning",
+  "label": "Panel block 3 heading",
+  "kind": "text",
+  "text": "The ongoing priority",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "maturityCurve.stages[4].blocks[2].label"
+  }
+ },
+ {
   "code": "HOME-ST05-22",
   "page": "Home (/)",
   "section": "Maturity curve — Stage 05 Continuous Decisioning",
@@ -3560,7 +4016,7 @@
   "text": "Keep the loop moving: measure outcomes, learn from results and feed those lessons into the next forecast and plan.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.stages[4].next"
+   "locator": "maturityCurve.stages[4].blocks[2].body"
   }
  },
  {
