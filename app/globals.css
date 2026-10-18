@@ -4914,9 +4914,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- the panel ---- */
 /* One column here; the two-column rule is in the min-width:1024px block
-   at the foot of PART A. */
-.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:40px;
-  border:1px solid var(--line);border-radius:22px;background:var(--white)}
+   at the foot of PART A. The panel's own box lives further down, in the
+   block that turned it into a region inside .mc-board. */
 
 /* --blue at 10% over white is #E7EFF5 — a flat tint rather than a second
    blue token to maintain, and the same ground .dg-pain::before already
@@ -5377,10 +5376,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Deliberately not a --soft panel. The cards are the grey objects on
    this band; a grey panel directly under a row of grey cards would read
    as the row continuing. */
-.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:40px;
-  border:1px solid var(--line);border-radius:22px;background:var(--white);
+/* The board: one container around the curve, the stage row and the panel,
+   so the three read as one instrument instead of three stacked cards. The
+   chrome is the panel's own, moved outward — it was already carrying the
+   card the section wanted, just around the wrong third of it. The CTA band
+   and the framework note stay outside: they are what the section says ABOUT
+   the curve, not part of reading it. */
+.mc-board{padding:28px;border:1px solid var(--line);border-radius:22px;
+  background:var(--band-white);
   box-shadow:0 1px 2px rgba(13,24,40,.05),
     0 20px 50px -24px rgba(13,24,40,.18)}
+
+/* Inside the board the panel is a REGION, not a card: its own border and
+   radius would be a card inside a card. A rule across the top does the same
+   separating work with one edge instead of four. The 4px side padding keeps
+   its content off the board's inner wall without doubling the inset. */
+.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:28px 4px 4px;
+  border-top:1px solid var(--line);background:none}
 
 /* NEW. The swap transition, for the motion component to drive if it
    wants one: add `is-swap` to .mc-panel to fade its two columns out,
