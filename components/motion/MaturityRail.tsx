@@ -48,21 +48,33 @@ import { gsap } from "gsap";
  * `r` ships as an attribute so the nodes are visible before any stylesheet
  * loads; CSS may override it with the `r` property to size .mc-node--on, and
  * a transition there is what returns the previous node to resting size. The
- * vertical budget is 16..56 of a 72-unit box, so a radius over 12 clips.
+ * vertical budget is 6..22 of a 28-unit box. The resting radius (5) sits
+ * inside it; the selected node's 10 overhangs the top by ~5px, which is
+ * why .mc-railsvg keeps overflow:visible and why the 22px margin above it
+ * is a floor rather than decoration.
  */
 
 /* A wide, shallow box: the row is ~1300px and this is a band above it, not a
-   chart. 1000 wide makes node x-coordinates read as percentages. */
+   chart. 1000 wide makes node x-coordinates read as percentages.
+
+   THE BOX IS THE RAIL'S RENDERED HEIGHT. The viewBox is uniform and the
+   element is height:auto, so the rail renders at (H + DROP)/W of the row's
+   width and nothing else — this is the only place its height can be set.
+   72+10 drew it at ~103px; 28+5 draws it at ~41px, which is where the last
+   of the height this section had to find came from. The nodes do not shrink
+   with it: `r` is in user units of a box that is still 1000 wide, so the
+   dots render exactly as before. The climb is gentler — 16 units, ~20px
+   against the old ~49px — but it still rises left to right. */
 const W = 1000;
-const H = 72;
-const Y_LOW = 56; // first stage, bottom of the climb
-const Y_HIGH = 16; // last stage, top of it
+const H = 28;
+const Y_LOW = 22; // first stage, bottom of the climb
+const Y_HIGH = 6; // last stage, top of it
 /* How far below the curve each node's connector reaches. The viewBox grows by
    this much and the stylesheet's bottom margin goes to 0, so the svg's bottom
    edge IS the card top — which makes the connectors land exactly on the cards
    at every width. Expressing the drop in pixels instead would have drifted:
    the gap is fixed px while the drawing scales with the row. */
-const DROP = 10;
+const DROP = 5;
 /* >1 holds the line down early and lifts it late — the shape the section
    argues for, where the payoff is at the end of the journey. 1.45 is the
    flattest exponent that still reads as a curve rather than a ramp. */

@@ -3545,7 +3545,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* 60/36, halved from the 120/72 this section used to carry. It is still its
    own rhythm rather than the band default, just a tighter one. */
 .home-tight #decision-gap{padding:60px 0}
-.home-tight #maturity-curve.section{padding:36px 0}
+.home-tight #maturity-curve.section{padding:18px 0}
 .home-tight #how-we-help{padding:63px 0 36px}
 .home-tight #solutions.section{padding:44px 0}
 .home-tight #impact{padding:56px 0}
@@ -5255,7 +5255,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (min-width:1280px){
   .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .mc-panel{padding:52px}
+  /* 26, not 52: the band has to clear one laptop screen without the
+     reader scrolling to finish the panel. Halved with the rest of the
+     section's spacing; the type inside is untouched. */
+  .mc-panel{padding:26px}
 }
 
 
@@ -5408,7 +5411,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    only lands exactly if the svg's bottom edge and the card top are the same
    line. A 12px gap here would leave every connector 12px short. */
 .mc-railsvg{display:none;position:relative;z-index:0;
-  width:100%;height:auto;margin:44px 0 0;
+  width:100%;height:auto;margin:22px 0 0;
   overflow:visible;pointer-events:none}
 
 /* REPLACES:
@@ -5546,7 +5549,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    card the section wanted, just around the wrong third of it. The CTA band
    and the framework note stay outside: they are what the section says ABOUT
    the curve, not part of reading it. */
-.mc-board{padding:28px;border:1px solid var(--line);border-radius:22px;
+.mc-board{padding:14px;border:1px solid var(--line);border-radius:22px;
   background:var(--band-white);
   box-shadow:0 1px 2px rgba(13,24,40,.05),
     0 20px 50px -24px rgba(13,24,40,.18)}
@@ -5555,7 +5558,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    radius would be a card inside a card. A rule across the top does the same
    separating work with one edge instead of four. The 4px side padding keeps
    its content off the board's inner wall without doubling the inset. */
-.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:28px 4px 4px;
+.mc-panel{display:grid;gap:40px;margin:14px 0 0;padding:28px 4px 4px;
   border-top:1px solid var(--line);background:none}
 
 /* NEW. The swap transition, for the motion component to drive if it
