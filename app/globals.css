@@ -5021,11 +5021,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   font-weight:500;letter-spacing:-.02em;color:var(--ink-deep);
   text-wrap:balance}
 
-/* 70ch resolves against this element's own font, which is why the size
-   is declared before the measure matters. 5.75:1 on --bg-soft. */
-.mc-lead{margin:20px auto 0;max-width:70ch;
-  font-size:clamp(1rem,1.15vw,1.14rem);line-height:1.62;
-  color:var(--ink-muted);text-wrap:pretty}
+/* The measure is in ch, so it scales with the font: dropping the size
+   alone leaves the line count where it was. 96ch is what sets this
+   sentence in TWO lines rather than three, and `balance` is what keeps
+   them even — measured 722/764px at every width from 1470 down to 900,
+   where the container itself becomes the limit. Below 768 it wraps on
+   as the column demands, which is what a phone should do. */
+.mc-lead{margin:20px auto 0;max-width:96ch;
+  font-size:0.8889rem;line-height:1.62;
+  color:var(--ink-muted);text-wrap:balance}
 
 /* The narrative pill. White on the grey band, so it reads as a label
    laid on the section rather than as a third paragraph. The amber dot is
@@ -5047,8 +5051,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    text-align, so all three are set rather than inherited. The card is
    the whole tap target — nothing inside it is separately clickable — and
    its padding alone clears 44px. */
-.mc-stage-btn{flex:1;display:flex;flex-direction:column;align-items:flex-start;
-  width:100%;padding:20px;text-align:left;
+.mc-stage-btn{flex:1;display:flex;flex-direction:column;align-items:center;
+  width:100%;padding:20px;text-align:center;
   border:1px solid var(--line);border-radius:16px;background:var(--soft);
   color:inherit}
 
@@ -5070,9 +5074,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* margin-top:auto is the whole alignment mechanism for the row — see
    .mc-stage above. padding-top is a floor, so a one-line question still
    leaves air between it and the tag on the tallest card's height. */
+/* The stage's own word, in the section's blue and set bold so it reads as
+   the card's label rather than a footnote under it. */
 .mc-stage-tag{display:block;margin-top:auto;padding-top:22px;
-  font-size:0.6111rem;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gray)}
+  font-size:0.6111rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--blue)}
 
 /* SELECTION, stated three ways so colour is not carrying it alone
    (WCAG 1.4.1): the ground goes from --soft to white, the hairline
@@ -5274,7 +5280,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (max-width:767px){
 
-  .mc-lead{font-size:0.8889rem}
   /* The pill's sentence wraps to two or three lines at this width, so the
      dot has to sit on the first line rather than be centred against the
      block. */
@@ -5304,6 +5309,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     gap:2px 14px;padding:16px;border-radius:14px}
   .mc-stage-btn[aria-current="true"],
   .mc-stage-btn[aria-selected="true"]{padding:15px}
+  /* The centring above is for the stacked card; here the badge sits in its
+     own column beside the text, which has to stay ranged left against it. */
+  .mc-stage-btn{text-align:left}
   .mc-stage-n{grid-column:1;grid-row:1 / span 3;align-self:start}
   .mc-stage-name{margin-top:0}
   .mc-stage-tag{padding-top:10px}
