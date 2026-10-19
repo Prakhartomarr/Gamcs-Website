@@ -5165,9 +5165,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    has to run the block's full height whatever the body wraps to, and a
    pseudo-element would need a height nobody can state in advance. */
 .mc-block{padding-left:18px;border-left:2px solid var(--line)}
-/* 6.39:1 on white. */
+/* --blue, like every other label in this section: the stage tags on the
+   cards and the panel's own Stage/tag line. It was the one that stayed
+   grey. 6.84:1 on the panel's white. */
 .mc-block-label{margin:0;font-size:0.6667rem;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+  letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
 .mc-block-body{margin:10px 0 0;font-size:0.8333rem;line-height:1.6;
   color:var(--gray);text-wrap:pretty}
 
