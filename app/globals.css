@@ -2304,18 +2304,28 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    break, and the accent has to stay inline inside it rather than own a line,
    so there is no white-space rule on .dg-accent (compare .fin-h2 .accent,
    which is nowrap because it IS its own line). */
-/* No measure cap. 15ch held the heading to 467px inside a 678px column, and
-   that third line was the cap's doing, not the sentence's — the grid column
-   is the measure, and at it the line breaks after "and the decision," in two.
-   The column narrows with the viewport, so this is width-proportional rather
-   than a number that is right at one size. */
-.dg-h2{margin:0}
+/* 28ch, now that there is no column to be the measure. Centred and uncapped
+   the sentence ran 1223px on ONE line — wider than any other heading on the
+   site, where the curve's sits at 783px. 28ch holds it to two lines at every
+   width from 1024 up (872/826/661px box) and `balance` evens them, which is
+   the shape it had as a left column and the scale the other centred heads
+   read at. */
+/* Centred, as every other section head on this page is — the heading, its
+   rule and the lead all on one axis. It used to be a 52/40 two-column grid
+   at >=1024 with the lead beside the heading, which made this the one band
+   on the page that read off-centre. */
+.dg-head{text-align:center}
+.dg-h2{margin:0 auto;max-width:28ch;text-wrap:balance}
 /* The rule under the heading is drawn, not marked up: it is punctuation for
    the heading, and a <span> for it would be an element with nothing to say. */
 
 /* Stacked by default — the lead sits under the heading's rule at 768-1023 and
    the margin is what separates them. The 1024 grid takes the margin back. */
-.dg-sub{margin:28px 0 0;max-width:54ch;font-size:1rem;line-height:1.6;
+/* 52ch and auto margins: the same measure .fin-lead sets under the How We
+   Help heading, so the two centred leads read as one family. (.mc-lead is
+   96ch deliberately — that one is widened to hold its sentence to two
+   lines, and is not the pattern to copy.) */
+.dg-sub{margin:28px auto 0;max-width:52ch;font-size:1rem;line-height:1.6;
   color:var(--ink-muted);text-wrap:pretty}
 
 /* ---- the four symptoms ---- */
@@ -2445,9 +2455,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    number itself, so this needs no @property registration (a custom
    property is not interpolable to a CSS transition without one, and
    nothing here asks it to be). */
-.dg-h2::after{content:"";display:block;width:72px;height:2px;margin-top:32px;
+/* Centred under the heading, and growing from its own middle: the entrance
+   tweens --dg-rule-sx 0->1 on the <h2>, so the origin is what decides
+   whether it unrolls from one end or opens from the centre. Centred type
+   wants the second. */
+.dg-h2::after{content:"";display:block;width:72px;height:2px;margin:32px auto 0;
   background:var(--dg-rule);transform:scaleX(var(--dg-rule-sx,1));
-  transform-origin:left}
+  transform-origin:center}
 
 /* ---------------------------------------------------------------------
    A2 · the entrance gate — the ONLY rules here that hide anything
@@ -2735,13 +2749,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- laptop and up ---- */
 @media (min-width:1024px){
-  /* 52/40 with 80px between: the two columns do not add to 100 because the
-     gap is the rest. align-items:start keeps the lead at the top of the row
-     instead of centring it against three lines of display type. */
-  .dg-head{display:grid;grid-template-columns:minmax(0,52fr) minmax(0,40fr);
-    gap:80px;align-items:start}
-  /* A grid item now, with the gap doing what the margin did when stacked. */
-  .dg-sub{margin:0}
   /* The figures carry far less text than the symptom cards, so three of them
      fit at 1024 where four symptoms do not. */
   .dg-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
