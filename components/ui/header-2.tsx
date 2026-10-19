@@ -101,7 +101,13 @@ export function Header() {
 	}, []);
 
 	/* The sheet covers the page but the page stays focusable, so Tab used to walk
-	   behind the overlay. Cycle within the toggle + sheet while it is open. */
+	   behind the overlay. Cycle within the toggle + sheet while it is open.
+	   Bound on BOTH <header> and the sheet, because the sheet is rendered as a
+	   sibling of <header> (see the note there) in the React tree as well as the
+	   DOM — so a keydown from inside it never bubbles to a handler on <header>.
+	   With one binding only the Shift+Tab half worked, `first` being the toggle;
+	   the forward wrap tested `activeElement === last`, always a control in the
+	   sheet, so it was dead code and Tab walked out of the open menu. */
 	const trapTab = (e: React.KeyboardEvent) => {
 		if (e.key !== 'Tab' || !open) return;
 		const t = toggle();
@@ -140,8 +146,13 @@ export function Header() {
 			})}
 		>
 			<nav className="site-bar" aria-label="Primary">
-				{/* Mark always visible; the words reveal on hover/focus. */}
-				<GaLogo className="shrink-0" />
+				{/* Mark always visible; the words reveal on hover/focus.
+				    Inert while the sheet is up: the bar paints above the sheet so the
+				    toggle stays tappable, which leaves the logo exposed too — but the
+				    focus cycle is [toggle, ...sheet] and aria-modal hides it from AT,
+				    so it was pointer-only. Measured: clicking it navigated and left
+				    the sheet open, aria-expanded true, over the page it landed on. */}
+				<GaLogo className={cn('shrink-0', open && 'pointer-events-none')} />
 
 				{/* full nav only where it comfortably fits the pill */}
 				<div className="nav hidden xl:flex">
@@ -190,6 +201,7 @@ export function Header() {
 			<div
 				ref={sheetRef}
 				id={sheetId}
+				onKeyDown={trapTab}
 				role="dialog"
 				aria-modal="true"
 				aria-label="Navigation"
