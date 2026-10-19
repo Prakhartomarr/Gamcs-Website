@@ -5074,10 +5074,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* margin-top:auto is the whole alignment mechanism for the row — see
    .mc-stage above. padding-top is a floor, so a one-line question still
    leaves air between it and the tag on the tallest card's height. */
-/* The stage's own word, in the section's blue and set bold so it reads as
-   the card's label rather than a footnote under it. */
+/* The stage's own word, in the section's blue and set heavier than the rest
+   of the card so it reads as the card's label rather than a footnote under
+   it. 800 is a real weight on both font paths — Inter is loaded as a
+   variable face covering 100-900, and SF Pro carries it natively — so this
+   is not a synthesised bold. */
 .mc-stage-tag{display:block;margin-top:auto;padding-top:22px;
-  font-size:0.6111rem;font-weight:700;letter-spacing:.12em;
+  font-size:0.6111rem;font-weight:800;letter-spacing:.12em;
   text-transform:uppercase;color:var(--blue)}
 
 /* SELECTION, stated three ways so colour is not carrying it alone
