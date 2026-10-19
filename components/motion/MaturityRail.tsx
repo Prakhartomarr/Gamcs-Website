@@ -19,7 +19,7 @@ import { gsap } from "gsap";
  * the element is sized `width:100%; height:auto`. The drawing still spans
  * the row exactly, because the viewBox is 1000 units wide and the nodes sit
  * at 100/300/500/700/900, which ARE the 10/30/50/70/90% column centres. The
- * price is that rendered height follows width (~85-97px across the 1280+
+ * price is that rendered height follows width (~34-40px across the 1280+
  * range where this is shown) rather than being a number CSS picks.
  *
  * That makes `height:auto` a contract, not a preference: give this element a
@@ -48,32 +48,48 @@ import { gsap } from "gsap";
  * `r` ships as an attribute so the nodes are visible before any stylesheet
  * loads; CSS may override it with the `r` property to size .mc-node--on, and
  * a transition there is what returns the previous node to resting size. The
- * vertical budget is 16..56 of a 72-unit box, so a radius over 12 clips.
+ * box is only 24 units deep, so the active node's ring (r 7 plus a 3-unit
+ * stroke) reaches past the top edge — which is why .mc-railsvg keeps
+ * overflow:visible.
  */
 
-/* A wide, shallow box: the row is ~1300px and this is a band above it, not a
-   chart. 1000 wide makes node x-coordinates read as percentages. */
+/* A wide, shallow box: the row is ~1240px and this is a band above it, not a
+   chart. 1000 wide makes node x-coordinates read as percentages.
+ *
+ * THE BOX IS THE RAIL'S HEIGHT. Because the viewBox is uniform and the
+ * element is `height:auto`, rendered height is (H + DROP)/W of the row's
+ * width and nothing else — so this is the only place the rail's height can
+ * be changed. It was 72+10 of 1000 (~108px at a 1336px row) and is now
+ * 24+6 (~40px), which is where most of the 86px the section had to find in
+ * this band came from. The nodes do NOT shrink with it: `r` is in user
+ * units of a box that is still 1000 wide, so the dots render the same
+ * ~13px across as before and the line still reads as a rising curve
+ * connecting to the cards — the climb is 16 units, ~21px.
+ */
 const W = 1000;
-const H = 72;
-const Y_LOW = 56; // first stage, bottom of the climb
-const Y_HIGH = 16; // last stage, top of it
+const H = 24;
+const Y_LOW = 20; // first stage, bottom of the climb
+const Y_HIGH = 4; // last stage, top of it
 /* How far below the curve each node's connector reaches. The viewBox grows by
    this much and the stylesheet's bottom margin goes to 0, so the svg's bottom
    edge IS the card top — which makes the connectors land exactly on the cards
    at every width. Expressing the drop in pixels instead would have drifted:
    the gap is fixed px while the drawing scales with the row. */
-const DROP = 10;
+const DROP = 6;
 /* >1 holds the line down early and lifts it late — the shape the section
    argues for, where the payoff is at the end of the journey. 1.45 is the
    flattest exponent that still reads as a curve rather than a ramp. */
 const BEND = 1.45;
 
 /* The stage row's grid gap, and the row width the gap correction is tuned at.
-   Both are CSS facts (.mc-stages{gap:16px}, .container at >=1280); they live
-   here because the node positions are geometry, and geometry is this file's
-   job. If the grid's gap changes, change GAP. */
-const GAP = 16;
-const ROW = 1300;
+   Both are CSS facts (.mc-stages{gap:14px}, .container at >=1280 less the
+   board's 18px inset); they live here because the node positions are
+   geometry, and geometry is this file's job. If the grid's gap changes,
+   change GAP. 1240 splits the error across the range this rail is drawn at:
+   the row is 1146px at 1280 and 1336px at 1470, and a single constant tuned
+   at the midpoint is within half a pixel at both ends. */
+const GAP = 14;
+const ROW = 1240;
 
 const DRAW = 1.1; // seconds for the pen to cross the row
 const GLIDE = 0.52; // --dur-panel is 260ms; the marker covers ground, so twice it
@@ -89,9 +105,9 @@ const nodes = (count: number): Pt[] =>
        (i + 0.5)/count of the row ONLY when the gap is zero. With a gap the
        outer centres pull inward by (count-1)/2 - i gaps' worth; ignoring it
        put the end nodes ~6px off their cards. ROW is the row's typical px
-       width — the correction is 6.4px at 1280 and 5.7px at 1440, so one
-       constant is accurate to about a pixel across every width this svg is
-       shown at, and costs no layout read. */
+       width — the correction is 5.6px at 1280 and 4.8px at 1470, so one
+       constant is accurate to under half a pixel across every width this
+       svg is shown at, and costs no layout read. */
     x: round((((i + 0.5) / count) - ((count - 1) / 2 - i) * (GAP / ROW) / count) * W),
     y: round(Y_LOW - (Y_LOW - Y_HIGH) * (count > 1 ? (i / (count - 1)) ** BEND : 1)),
   }));

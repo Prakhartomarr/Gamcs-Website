@@ -3545,7 +3545,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* 60/36, halved from the 120/72 this section used to carry. It is still its
    own rhythm rather than the band default, just a tighter one. */
 .home-tight #decision-gap{padding:60px 0}
-.home-tight #maturity-curve.section{padding:36px 0}
+/* 28, not the 36 the rest of this list runs at. The maturity curve is the one
+   section asked to fit a 13-inch laptop in a single screen, and its own band
+   padding is the cheapest 16px of that. */
+.home-tight #maturity-curve.section{padding:28px 0}
 .home-tight #how-we-help{padding:63px 0 36px}
 .home-tight #solutions.section{padding:44px 0}
 .home-tight #impact{padding:56px 0}
@@ -5017,14 +5020,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    that group only because this file may not edit globals.css — if the
    block lands there, adding `.mc-h2` to that selector list and deleting
    this rule is the better end state. 16.05:1 on --bg-soft. */
-.mc-h2{margin:14px 0 0;font-size:clamp(30px,3.7vw,50px);line-height:1.12;
+/* margin-top:0, not 14: the band's own padding already separates this from
+   the section above it, and 14px of it was being paid twice. */
+.mc-h2{margin:0;font-size:clamp(30px,3.7vw,50px);line-height:1.12;
   font-weight:500;letter-spacing:-.02em;color:var(--ink-deep);
   text-wrap:balance}
 
 /* 70ch resolves against this element's own font, which is why the size
-   is declared before the measure matters. 5.75:1 on --bg-soft. */
-.mc-lead{margin:20px auto 0;max-width:70ch;
-  font-size:clamp(1rem,1.15vw,1.14rem);line-height:1.62;
+   is declared before the measure matters. 5.75:1 on --bg-soft.
+   The measure is NOT widened to buy a line back: this sentence is 232
+   characters, so two lines means 116 characters a line whatever the type
+   size, and that is unreadable. The leading comes in to 1.5 instead —
+   still open for 18px running copy — and the 20px above it to 10. */
+.mc-lead{margin:10px auto 0;max-width:70ch;
+  font-size:clamp(1rem,1.15vw,1.14rem);line-height:1.5;
   color:var(--ink-muted);text-wrap:pretty}
 
 /* The narrative pill. White on the grey band, so it reads as a label
@@ -5037,7 +5046,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 
 /* ---- the five stage cards ---- */
-.mc-stages{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+/* 14px gap, matched by GAP in components/motion/MaturityRail.tsx — the
+   rail's node x-positions carry a gap correction, so the two numbers are
+   one decision. */
+.mc-stages{display:grid;gap:14px;margin:0;padding:0;list-style:none}
 /* The <li> is a flex box purely so the button can fill the grid row's
    height; that is what lets margin-top:auto on the tag pin all five tags
    to a common bottom edge whatever the question length. */
@@ -5046,9 +5058,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* Tailwind's preflight strips a button's background, border and
    text-align, so all three are set rather than inherited. The card is
    the whole tap target — nothing inside it is separately clickable — and
-   its padding alone clears 44px. */
+   its padding alone clears 44px. 14px of padding around a 24px badge, a
+   name, a question and a tag is still 130px of card, so the target is in
+   no danger from the tighter inset. */
 .mc-stage-btn{flex:1;display:flex;flex-direction:column;align-items:flex-start;
-  width:100%;padding:20px;text-align:left;
+  width:100%;padding:14px;text-align:left;
   border:1px solid var(--line);border-radius:16px;background:var(--soft);
   color:inherit}
 
@@ -5056,21 +5070,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    width; the disc is sized from the digits plus padding rather than
    fixed, so a type-size change moves it. --blue on white is 6.84:1. */
 .mc-stage-n{display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:50%;background:var(--white);
+  width:24px;height:24px;border-radius:50%;background:var(--white);
   border:1px solid var(--line);
   font-size:0.6111rem;font-weight:700;line-height:1;letter-spacing:.02em;
   font-variant-numeric:tabular-nums;color:var(--blue)}
 
-.mc-stage-name{display:block;margin-top:16px;font-size:0.8333rem;
+.mc-stage-name{display:block;margin-top:10px;font-size:0.8333rem;
   font-weight:600;line-height:1.3;letter-spacing:-.01em;
   color:var(--ink-deep)}
 /* 5.69:1 on --soft, 6.34:1 on the selected card's white. */
-.mc-stage-q{display:block;margin-top:6px;font-size:0.7778rem;line-height:1.45;
+.mc-stage-q{display:block;margin-top:4px;font-size:0.7778rem;line-height:1.4;
   color:var(--gray)}
 /* margin-top:auto is the whole alignment mechanism for the row — see
    .mc-stage above. padding-top is a floor, so a one-line question still
-   leaves air between it and the tag on the tallest card's height. */
-.mc-stage-tag{display:block;margin-top:auto;padding-top:22px;
+   leaves air between it and the tag on the tallest card's height. 10px,
+   not 22: on the one card in five whose question wraps, that floor was
+   never reached anyway, so the other four were carrying 12px of air for
+   an alignment the tallest card never used. */
+.mc-stage-tag{display:block;margin-top:auto;padding-top:10px;
   font-size:0.6111rem;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--gray)}
 
@@ -5088,7 +5105,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    aria-current on a plain button, or aria-selected if the row is built
    as a tablist. Whichever ships, the other simply never matches. */
 .mc-stage-btn[aria-current="true"],
-.mc-stage-btn[aria-selected="true"]{padding:19px;
+.mc-stage-btn[aria-selected="true"]{padding:13px;
   border:2px solid var(--blue);background:var(--white);
   box-shadow:0 10px 30px rgba(13,24,40,.07)}
 .mc-stage-btn[aria-current="true"] .mc-stage-n,
@@ -5123,46 +5140,76 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- the panel ---- */
-/* One column here; the two-column rule is in the min-width:1024px block
-   at the foot of PART A. The panel's own box lives further down, in the
-   block that turned it into a region inside .mc-board. */
+/* TWO ROWS, not two columns: an identifying strip (.mc-panel-head) over a
+   reading row (.mc-panel-cols) that carries the description and the three
+   blocks as four columns from 1024 up.
+
+   WHY, because it is the whole reason the section fits a laptop screen.
+   The panel used to be a 45/55 pair of columns, each a STACK — icon,
+   label, name, question, description on the left; three labelled blocks
+   on the right — and a grid row is as tall as its tallest item, so every
+   stage paid for the taller of two sums. Laying each text block out as its
+   own column makes the panel as tall as the tallest SINGLE block instead,
+   which is the only arrangement that fits all five stages rather than the
+   shortest of them: the five stages' panels measured 385/385/423/398/385
+   as two stacks and come out within 14px of each other as one row.
+
+   Everything here is single-column; the row rules are in the
+   min-width:1024px block at the foot of PART A, so a narrow screen falls
+   back to the stack rather than to four 60px columns. The panel's own box
+   lives further down, in the block that turned it into a region inside
+   .mc-board. */
 
 /* --blue at 10% over white is #E7EFF5 — a flat tint rather than a second
    blue token to maintain, and the same ground .dg-pain::before already
    uses. The stroke measures 5.89:1 on it. */
+.mc-panel-head{display:grid;justify-items:start}
 .mc-panel-icon{display:flex;align-items:center;justify-content:center;
-  width:44px;height:44px;border-radius:13px;
+  width:38px;height:38px;border-radius:11px;
   background:rgba(15,94,151,.10)}
 /* Sized and stroked here, not on the SVG, so the component ships a bare
    <svg> with a viewBox and nothing else to keep in sync. */
-.mc-panel-icon svg{width:22px;height:22px;display:block;fill:none;
+.mc-panel-icon svg{width:20px;height:20px;display:block;fill:none;
   stroke:var(--blue);stroke-width:1.7;stroke-linecap:round;
   stroke-linejoin:round}
 
 /* Uppercased by CSS, so the content module keeps "Stage 04 · Explain" in
    sentence case and a screen reader is not handed an acronym. 6.84:1. */
-.mc-panel-label{margin:22px 0 0;font-size:0.6667rem;font-weight:700;
+/* line-height:1 — at 12px the normal line box is 18px, and a tracked
+   single-line micro-label has no descender traffic to need the extra 6. */
+.mc-panel-label{margin:14px 0 0;font-size:0.6667rem;line-height:1;
+  font-weight:700;
   letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
-.mc-panel-name{margin:12px 0 0;font-size:clamp(24px,2.4vw,32px);
+/* 28px rather than 32 at the top of the clamp. The h2 over the section is
+   50px and the card names are 15px, so 28 is still unmistakably the
+   panel's headline, and it takes 5px off a row that the four other things
+   in the strip do not need. */
+.mc-panel-name{margin:4px 0 0;font-size:clamp(22px,2.1vw,28px);
   line-height:1.15;font-weight:600;letter-spacing:-.025em;
   color:var(--ink-deep)}
 /* The question is the panel's second voice, not a subhead: semibold at
    body size, in the heading's ink. 17.82:1. */
-.mc-panel-q{margin:16px 0 0;max-width:34ch;font-size:0.9444rem;
-  font-weight:600;line-height:1.45;color:var(--ink-deep);text-wrap:pretty}
+.mc-panel-q{margin:10px 0 0;max-width:34ch;font-size:0.9444rem;
+  font-weight:600;line-height:1.4;color:var(--ink-deep);text-wrap:pretty}
 /* 6.34:1 on white. */
-.mc-panel-body{margin:14px 0 0;max-width:46ch;font-size:0.8889rem;
-  line-height:1.65;color:var(--gray);text-wrap:pretty}
+.mc-panel-body{margin:0;max-width:46ch;font-size:0.8889rem;
+  line-height:1.5;color:var(--gray);text-wrap:pretty}
 
-.mc-panel-blocks{display:grid;gap:26px;align-content:start}
+.mc-panel-cols{display:grid;gap:20px;align-content:start}
 /* A border-left and not a ::before: the rule is the block's own edge, it
    has to run the block's full height whatever the body wraps to, and a
    pseudo-element would need a height nobody can state in advance. */
-.mc-block{padding-left:18px;border-left:2px solid var(--line)}
+.mc-block{padding-left:16px;border-left:2px solid var(--line)}
 /* 6.39:1 on white. */
-.mc-block-label{margin:0;font-size:0.6667rem;font-weight:700;
+/* line-height:1.1, not normal: this label DOES wrap at narrow widths, so it
+   keeps a little leading, but 18px of line box per 12px label was 5px times
+   three blocks times every stage. */
+.mc-block-label{margin:0;font-size:0.6667rem;line-height:1.1;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
-.mc-block-body{margin:10px 0 0;font-size:0.8333rem;line-height:1.6;
+/* 1.5, the floor this build uses for running copy. The tallest block in the
+   five stages is five lines, so each 0.05 of leading here is 3.75px of the
+   section's height. */
+.mc-block-body{margin:6px 0 0;font-size:0.8333rem;line-height:1.5;
   color:var(--gray);text-wrap:pretty}
 
 /* ---- the call to action ---- */
@@ -5172,13 +5219,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    continued, and reusing the value is how that stays true if the tint
    is ever retuned. Stacked here; the row is in the min-width:768px
    block below. */
-.mc-cta{display:flex;flex-direction:column;gap:24px;margin:28px 0 0;
-  padding:32px 36px;border-radius:18px;background:rgba(15,94,151,.05)}
-.mc-cta-copy{max-width:62ch}
-.mc-cta-h{margin:0;font-size:clamp(20px,1.6vw,24px);line-height:1.3;
+.mc-cta{display:flex;flex-direction:column;gap:20px;margin:14px 0 0;
+  padding:16px 24px;border-radius:18px;background:rgba(15,94,151,.05)}
+/* 80ch, not 62: the band is a row from 768 up, so the copy has the width
+   the button does not use, and a wider measure is one line of 24px less
+   on this paragraph at every laptop width. It is still two lines at 1280
+   and below, which is where 62ch was doing its work. */
+.mc-cta-copy{max-width:80ch}
+.mc-cta-h{margin:0;font-size:clamp(20px,1.6vw,24px);line-height:1.25;
   font-weight:600;letter-spacing:-.01em;color:var(--ink-deep)}
 /* 5.37:1 on #E7ECF0. */
-.mc-cta-body{margin:12px 0 0;font-size:0.8333rem;line-height:1.6;
+.mc-cta-body{margin:6px 0 0;font-size:0.8333rem;line-height:1.5;
   color:var(--ink-muted);text-wrap:pretty}
 
 /* Not .btn: .btn is a bordered pill built around the brand blue and
@@ -5224,12 +5275,30 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 @media (min-width:1024px){
-  /* 45/55 with 48px between: the columns do not add to 100 because the
-     gap is the rest. align-items:start, or the three blocks stretch to
-     the height of the left column and the vertical rules grow with it. */
-  .mc-panel{grid-template-columns:minmax(0,45fr) minmax(0,55fr);
-    gap:48px;padding:48px}
-  .mc-panel-blocks{align-items:start}
+  /* THE IDENTIFYING STRIP, as one row: the icon spans both rows of a
+     label-over-name column, and the question takes whatever is left and
+     wraps inside it. Explicit grid-areas because there are four children
+     and three columns — left to auto-placement the question would drop to
+     a row of its own, which is the row this layout exists to remove. */
+  .mc-panel-head{grid-template-columns:auto auto minmax(0,1fr);
+    align-items:center;column-gap:18px}
+  .mc-panel-icon{grid-area:1 / 1 / 3 / 2}
+  .mc-panel-label{grid-area:1 / 2 / 2 / 3;margin:0}
+  .mc-panel-name{grid-area:2 / 2 / 3 / 3}
+  .mc-panel-q{grid-area:1 / 3 / 3 / 4;margin:0;max-width:none}
+
+  /* THE READING ROW. The description takes 1.4 of the three blocks' 1
+     each because it is the longest single string in the panel and the
+     one with no label above it to absorb a line. align-items:start, or
+     the three blocks stretch to the tallest column and their vertical
+     rules grow past their own text.
+
+     The ch caps come off here: inside a column of its own, the column IS
+     the measure, and a 46ch cap on a 390px column only forces an extra
+     line. They stay on for the stacked layout below 1024. */
+  .mc-panel-cols{grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));
+    gap:22px;align-items:start}
+  .mc-panel-body{max-width:none}
 }
 
 /* The CTA band is a row from 768, not from 1024: the panel stacks below
@@ -5244,7 +5313,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (min-width:1280px){
   .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .mc-panel{padding:52px}
 }
 
 
@@ -5308,13 +5376,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc-stage-name{margin-top:0}
   .mc-stage-tag{padding-top:10px}
 
-  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px}
-  .mc-panel-icon{width:40px;height:40px;border-radius:12px}
-  .mc-panel-icon svg{width:20px;height:20px}
-  .mc-panel-label{margin-top:18px}
+  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:20px}
+  /* The icon, its svg and the label used to be cut back here. PART A's base
+     rule is now 38px/20px/14px, at or under what this block asked for, so
+     three overrides that made the phone LARGER than the desktop are gone. */
   .mc-panel-q{font-size:0.8889rem}
   .mc-panel-body{font-size:0.8333rem}
-  .mc-panel-blocks{gap:22px}
+  .mc-panel-cols{gap:22px}
   .mc-block{padding-left:14px}
 
   /* Already a column from PART A's base rule; only the padding and the
@@ -5394,8 +5462,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    units past the curve so each node's connector can reach the cards, which
    only lands exactly if the svg's bottom edge and the card top are the same
    line. A 12px gap here would leave every connector 12px short. */
+/* 12px above, not 44. The height below it is not set here and cannot be:
+   see the contract above — the rail got shorter by making its viewBox
+   shallower in MaturityRail.tsx (82 units of 1000 wide down to 30), which
+   is the only way to shrink it without moving the nodes off the cards. */
 .mc-railsvg{display:none;position:relative;z-index:0;
-  width:100%;height:auto;margin:44px 0 0;
+  width:100%;height:auto;margin:12px 0 0;
   overflow:visible;pointer-events:none}
 
 /* REPLACES:
@@ -5533,34 +5605,30 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    card the section wanted, just around the wrong third of it. The CTA band
    and the framework note stay outside: they are what the section says ABOUT
    the curve, not part of reading it. */
-.mc-board{padding:28px;border:1px solid var(--line);border-radius:22px;
+.mc-board{padding:16px;border:1px solid var(--line);border-radius:22px;
   background:var(--band-white);
   box-shadow:0 1px 2px rgba(13,24,40,.05),
     0 20px 50px -24px rgba(13,24,40,.18)}
 
 /* Inside the board the panel is a REGION, not a card: its own border and
    radius would be a card inside a card. A rule across the top does the same
-   separating work with one edge instead of four. The 4px side padding keeps
-   its content off the board's inner wall without doubling the inset. */
-.mc-panel{display:grid;gap:40px;margin:28px 0 0;padding:28px 4px 4px;
+   separating work with one edge instead of four.
+
+   NO side or bottom padding, and that is a positive choice twice over: the
+   board's own 18px is the inset, so a second one was a doubled inset, and
+   at zero the panel's columns and its top rule line up exactly with the
+   outer edges of the first and last stage cards. It used to carry 52px all
+   round at 1280+, which was 104px of the panel's height and 104px off the
+   width its four columns now wrap inside. */
+.mc-panel{display:grid;gap:14px;margin:12px 0 0;padding:14px 0 0;
   border-top:1px solid var(--line);background:none}
 
-/* NEW. The swap transition, for the motion component to drive if it
-   wants one: add `is-swap` to .mc-panel to fade its two columns out,
-   re-fill the content, remove it. Opacity only, on the two column
-   wrappers rather than on .mc-panel, so the panel's own edge and shadow
-   never blink — the frame stays put and only what is written in it
-   changes, which is what a tab panel should look like.
-
-   Inside the no-preference query, so under reduce the class is inert and
-   the swap is instant. If the component does not need it, the only cost
-   is a transition on a property nothing else animates. */
-@media (prefers-reduced-motion:no-preference){
-  .mc-panel-main,
-  .mc-panel-blocks{transition:opacity var(--dur-panel) var(--ease-out)}
-  .mc-panel.is-swap .mc-panel-main,
-  .mc-panel.is-swap .mc-panel-blocks{opacity:0}
-}
+/* The `is-swap` transition that used to sit here is gone. It was offered to
+   the motion component and never taken: MaturityCurve.tsx cross-fades the
+   panel's two children with GSAP on the selection effect instead, so no
+   code ever added the class. It named .mc-panel-main/.mc-panel-blocks,
+   which the two-rows rewrite replaced, and renaming dead rules is how dead
+   rules survive. */
 
 /* ---------------------------------------------------------------------
    A5 · the entrance gate — the ONLY rules here that hide anything
@@ -5635,7 +5703,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    between cards, and at one they would point at nothing. */
 @media (min-width:1280px){
   .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .mc-panel{padding:52px}
   .mc-railsvg{display:block}
 }
 
@@ -5686,13 +5753,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc-stages{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:26px}
 
   /* REPLACES:
-       .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px}
+       .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:20px}
      Adds the phone's share of PART A's new shadow. The wide ambient layer
      is cut back hard: 50px of blur under a panel that is 20px from each
      edge of a 390px screen spills past the viewport and reads as a dirty
      margin rather than as a lift. The 1px contact layer is what actually
      does the work at this size, and it is unchanged. */
-  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px;
+  .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:20px;
     box-shadow:0 1px 2px rgba(13,24,40,.05),
       0 10px 24px -16px rgba(13,24,40,.16)}
 }

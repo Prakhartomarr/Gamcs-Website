@@ -235,7 +235,10 @@ export default function MaturityCurve() {
           aria-labelledby={`mc-tab-${stage.n}`}
           ref={panel}
         >
-          <div className="mc-panel-main">
+          {/* Who and what: the identifying strip. One band across the panel
+              rather than the top of a column, because the four things in it
+              are short and a column made each of them a row of its own. */}
+          <div className="mc-panel-head">
             <div className="mc-panel-icon" aria-hidden="true">
               <svg
                 viewBox="0 0 24 24"
@@ -256,13 +259,17 @@ export default function MaturityCurve() {
             </p>
             <h3 className="mc-panel-name">{stage.name}</h3>
             <p className="mc-panel-q">{stage.question}</p>
-            <p className="mc-panel-body">{stage.description}</p>
           </div>
 
-          {/* Each block's label comes from the stage, not from here: stage 05
-              ends the curve, so its last two blocks are labelled differently
-              from the other four stages'. */}
-          <div className="mc-panel-blocks">
+          {/* The reading row: the description and the three blocks, each its
+              own column from 1024 up. The panel's height is then the tallest
+              SINGLE text block rather than the taller of two stacks — which
+              is what lets all five stages fit one screen, not just the
+              shortest of them. Each block's label comes from the stage, not
+              from here: stage 05 ends the curve, so its last two blocks are
+              labelled differently from the other four stages'. */}
+          <div className="mc-panel-cols">
+            <p className="mc-panel-body">{stage.description}</p>
             {blocks.map((b) => (
               <div className="mc-block" key={b.label}>
                 <p className="mc-block-label">{b.label}</p>
