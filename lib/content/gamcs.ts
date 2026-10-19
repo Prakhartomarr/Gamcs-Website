@@ -1878,7 +1878,7 @@ export const maturityCurve = {
     heading: "Get a clearer view of your finance maturity.",
     body:
       "Answer eight practical questions to receive an indicative maturity stage, a breakdown of your strengths and gaps, and a suggested next step. No industry-specific metrics or systems required.",
-    label: "Take the 3-minute assessment",
+    label: "Take the 2-minute assessment",
     href: "/finance-maturity",
   },
   /** Column heads and row labels the visuals need, once for all five stages. */

@@ -5183,6 +5183,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    continued, and reusing the value is how that stays true if the tint
    is ever retuned. Stacked here; the row is in the min-width:768px
    block below. */
+/* The CTA is a shared <CTA>, so it brings its own pill; this only stops
+   the flex row stretching it to the band's full width. */
+.mc-cta-act{flex:none;align-self:start}
 .mc-cta{display:flex;flex-direction:column;gap:24px;margin:28px 0 0;
   padding:32px 36px;border-radius:18px;background:rgba(15,94,151,.05)}
 .mc-cta-copy{max-width:62ch}
@@ -5199,21 +5202,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    flex:none so the button never shrinks to its text when the band
    becomes a row. align-self:start keeps it from stretching the full
    column width while the band is stacked. */
-.mc-cta-btn{flex:none;align-self:start;display:inline-flex;
-  align-items:center;justify-content:center;min-height:48px;
-  padding:0 26px;border-radius:999px;background:var(--ink-deep);
-  color:var(--white);font-size:0.7778rem;font-weight:700;
-  letter-spacing:-.01em;white-space:nowrap}
 @media (prefers-reduced-motion:no-preference){
-  .mc-cta-btn{transition:background-color var(--dur-hover) var(--ease-out),
-    transform var(--dur-press) var(--ease-out)}
 }
 @media (hover:hover){
   /* --blue-dark, not a lighter --ink-deep: the hover state should move
      towards the brand, and white on #0A4169 is still 10.64:1. */
-  .mc-cta-btn:hover{background:var(--blue-dark)}
 }
-.mc-cta-btn:active{transform:scale(.97)}
 
 /* The framework caveat, said once for the whole section. 12.5px, and
    #5F6875 measures 5.08:1 on --bg-soft — AA for body text with room to
@@ -5249,8 +5243,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    phones stack it. */
 @media (min-width:768px){
   .mc-cta{flex-direction:row;align-items:center;
+  .mc-cta-act{align-self:auto}
     justify-content:space-between;gap:40px}
-  .mc-cta-btn{align-self:auto}
 }
 
 @media (min-width:1280px){
@@ -5284,6 +5278,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    ===================================================================== */
 
 @media (max-width:767px){
+  /* Full width and allowed to wrap, as the hand-written pill was here
+     before it became a shared <CTA>; .btn is nowrap by default. */
+  .mc-cta-act{align-self:stretch;width:100%;white-space:normal;text-align:center}
 
   /* The pill's sentence wraps to two or three lines at this width, so the
      dot has to sit on the first line rather than be centred against the
@@ -5335,8 +5332,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      floating at the left edge of a 390px band is a smaller target than
      the band can afford to give it. */
   .mc-cta{margin-top:20px;padding:24px 20px;border-radius:16px;gap:20px}
-  .mc-cta-btn{align-self:stretch;white-space:normal;padding:12px 20px;
-    text-align:center}
 
 }
 

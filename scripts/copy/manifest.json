@@ -1193,7 +1193,7 @@
   "section": "Maturity curve",
   "label": "CTA band button",
   "kind": "button",
-  "text": "Take the 3-minute assessment",
+  "text": "Take the 2-minute assessment",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.cta.label"

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import CTA from "@/components/CTA";
 import MaturityCurveMotion from "@/components/motion/MaturityCurveMotion";
 import MaturityRail from "@/components/motion/MaturityRail";
 import { maturityCurve } from "@/lib/content/gamcs";
@@ -278,9 +278,13 @@ export default function MaturityCurve() {
             <h3 className="mc-cta-h">{maturityCurve.cta.heading}</h3>
             <p className="mc-cta-body">{maturityCurve.cta.body}</p>
           </div>
-          <Link className="mc-cta-btn" href={maturityCurve.cta.href} data-cta="maturity">
+          {/* The same component, tier and icon as the hero's Schedule a Call,
+              rather than a second hand-written pill: one conversion button,
+              one treatment. .mc-cta-btn is gone with it. */}
+          <CTA href={maturityCurve.cta.href} icon="arrow" data-cta="maturity"
+            className="mc-cta-act">
             {maturityCurve.cta.label}
-          </Link>
+          </CTA>
         </div>
 
       </div>
