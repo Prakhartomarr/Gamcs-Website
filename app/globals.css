@@ -5255,10 +5255,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (min-width:1280px){
   .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
-  /* 26, not 52: the band has to clear one laptop screen without the
-     reader scrolling to finish the panel. Halved with the rest of the
-     section's spacing; the type inside is untouched. */
-  .mc-panel{padding:26px}
+  .mc-panel{padding:52px}
 }
 
 
@@ -5651,7 +5648,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    between cards, and at one they would point at nothing. */
 @media (min-width:1280px){
   .mc-stages{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .mc-panel{padding:52px}
+  /* Asymmetric, and this is the layer that WINS. The identical rule in
+     the earlier min-width:1280 block is superseded by this one, which
+     is why editing that one changed nothing on the page. 26 at the
+     foot, 52 still at the head: the 26px it gives up goes to the rail,
+     so the band's total height is unchanged and the curve gets the
+     room to read as a curve again. */
+  .mc-panel{padding:52px 52px 26px}
   .mc-railsvg{display:block}
 }
 

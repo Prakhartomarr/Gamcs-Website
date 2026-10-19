@@ -48,7 +48,7 @@ import { gsap } from "gsap";
  * `r` ships as an attribute so the nodes are visible before any stylesheet
  * loads; CSS may override it with the `r` property to size .mc-node--on, and
  * a transition there is what returns the previous node to resting size. The
- * vertical budget is 6..22 of a 28-unit box. The resting radius (5) sits
+ * vertical budget is 9..41 of a 49-unit box. The resting radius (5) sits
  * inside it; the selected node's 10 overhangs the top by ~5px, which is
  * why .mc-railsvg keeps overflow:visible and why the 22px margin above it
  * is a floor rather than decoration.
@@ -60,15 +60,17 @@ import { gsap } from "gsap";
    THE BOX IS THE RAIL'S RENDERED HEIGHT. The viewBox is uniform and the
    element is height:auto, so the rail renders at (H + DROP)/W of the row's
    width and nothing else — this is the only place its height can be set.
-   72+10 drew it at ~103px; 28+5 draws it at ~41px, which is where the last
-   of the height this section had to find came from. The nodes do not shrink
+   72+10 drew it at ~103px and 28+5 at ~41px, which was flat enough to stop
+   reading as a curve; 49+5 draws it at ~67px. The 26px that buys came off
+   the panel's bottom padding rather than being added to the section, so the
+   band still clears one screen. The nodes do not shrink
    with it: `r` is in user units of a box that is still 1000 wide, so the
    dots render exactly as before. The climb is gentler — 16 units, ~20px
    against the old ~49px — but it still rises left to right. */
 const W = 1000;
-const H = 28;
-const Y_LOW = 22; // first stage, bottom of the climb
-const Y_HIGH = 6; // last stage, top of it
+const H = 49;
+const Y_LOW = 41; // first stage, bottom of the climb
+const Y_HIGH = 9; // last stage, top of it
 /* How far below the curve each node's connector reaches. The viewBox grows by
    this much and the stylesheet's bottom margin goes to 0, so the svg's bottom
    edge IS the card top — which makes the connectors land exactly on the cards
