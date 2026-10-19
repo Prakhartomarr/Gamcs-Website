@@ -506,6 +506,8 @@ export const primaryCta = { label: "Schedule a Call", href: "/contact" } as cons
  * 01, which has nothing beneath it.
  */
 export const howWeHelp = {
+  /** UNRENDERED since 2026-10-20: the client had the eyebrow taken off
+      this band. Kept because they ask for retired copy to be retained. */
   eyebrow: "How GAMCS helps",
   /* One sentence, split so the second clause can take the accent tint. */
   headingLead: "From knowing where you are",
@@ -1835,6 +1837,10 @@ export const previewBySlug = new Map<string, (typeof solutionsHub.previews)[numb
  * dashboard without TypeScript noticing.
  */
 export const maturityCurve = {
+  /* No longer printed over the heading — the client had the eyebrow removed
+     on 2026-10-20 — but still the accessible name of the stage tablist, which
+     has no visible label of its own. Not retired copy: a screen reader reads
+     this, so it keeps its manifest row. */
   eyebrow: "The Finance Intelligence Maturity Curve",
   heading: "Where is your finance",
   headingAccent: "function today?",
@@ -1843,12 +1849,14 @@ export const maturityCurve = {
   hint: "Select a stage to explore what it looks like, the outcome to aim for, and the next practical move.",
   /** Repeated under every panel that shows a number. */
   illustrative: "Illustrative example — not a real client figure.",
-  /** Under the panel: the curve is a model, not a diagnosis. */
+  /** UNRENDERED since 2026-10-20: the client had the framework note taken
+      off the section. Kept because they ask for retired copy to be retained. */
   caveat:
     "Finance maturity can vary across processes and business units. This curve is an indicative framework, not an audit or an industry benchmark.",
   /** The two ends of the rising rail above the tabs. */
   axis: { start: "Financial control", end: "Decision-led finance" },
-  /** Under the stage navigation: the five are one company, not five. */
+  /** UNRENDERED since 2026-10-20: the client had the pill taken off the
+      section. Kept because they ask for retired copy to be retained. */
   narrative: "Five stages. One direction: from financial control to decision-led finance.",
   /** Over the bridge to the next stage, which used to repeat the stage name. */
   nextHeading: "The next move",

@@ -5008,15 +5008,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 
 /* ---- the head ---- */
-/* Centred as a column rather than with text-align on .mc-head, because
-   .mc-pill is a flex box: text-align does not centre it, and an `auto`
-   margin on a block-level pill would stretch it to the container. The
-   children that are text still need text-align, so both are here. */
 .mc-head{display:flex;flex-direction:column;align-items:center;
   text-align:center}
-.mc-eyebrow{margin:0;font-size:0.7222rem;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--blue)}
-/* 6.16:1 on --bg-soft. */
 
 /* The same clamp, leading, tracking and weight as the shared heading
    group at globals.css ~1585 (.fin-h2, .section-head h2, .page-head h1,
@@ -5039,14 +5032,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    a ::before and not a <span>: it is punctuation for the sentence, and
    an element for it would be an element with nothing to say.
    --ink-deep on white is 17.82:1. */
-.mc-pill{display:inline-flex;align-items:center;gap:10px;
-  margin:26px 0 0;padding:9px 18px;border-radius:999px;
-  border:1px solid var(--pill-line);background:var(--white);
-  font-size:0.7778rem;font-weight:500;line-height:1.35;
-  color:var(--ink-deep);text-align:left}
-/* flex:none, or the dot is squashed to an ellipse by a wrapping pill. */
-.mc-pill::before{content:"";flex:none;width:7px;height:7px;
-  border-radius:50%;background:var(--yellow)}
 
 /* ---- the decorative curve fragment ---- */
 
@@ -5223,8 +5208,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    #5F6875 measures 5.08:1 on --bg-soft — AA for body text with room to
    spare, which the smallest type in the section needs most. The same
    grey .dg-stat-source and .fma-note already use. */
-.mc-note{margin:18px auto 0;max-width:80ch;font-size:0.6944rem;
-  line-height:1.5;text-align:center;color:#5F6875;text-wrap:pretty}
 
 /* ---- 768-1279: three across, not five ----
    Measured: .container is min(920px,100% - 56px) through this whole
@@ -5295,8 +5278,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* The pill's sentence wraps to two or three lines at this width, so the
      dot has to sit on the first line rather than be centred against the
      block. */
-  .mc-pill{align-items:flex-start;margin-top:20px;padding:12px 16px}
-  .mc-pill::before{margin-top:.42em}
 
   /* A rightward sweep over a single column points at nothing. */
   .mc-rail{display:none}
@@ -5344,7 +5325,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc-cta-btn{align-self:stretch;white-space:normal;padding:12px 20px;
     text-align:center}
 
-  .mc-note{margin-top:16px}
 }
 
 /* =====================================================================
@@ -5364,60 +5344,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    owns it at every width. Still plain .mc-* selectors (0,1,0 / 0,2,0),
    still no !important, still PART B owning the phone layout alone.
    ===================================================================== */
-
-/* ---------------------------------------------------------------------
-   A0 · the band — white, like every other content section
-   ------------------------------------------------------------------ */
-
-/* REPLACES:
-     .mc{background:var(--bg-soft);
-       scroll-margin-top:calc(var(--header-h) + 16px)}
-   — together with the ten-line comment above it, which argued for the
-   grey band and is now false.
-
-   The ground change that was supposed to say "this stretch is
-   interactive" said something louder instead: at 1440 every other
-   content band on the homepage is #FFF or #FEFEFE and this one was
-   #F2F3F5, so the section read as a different theme rather than as a
-   different mode. --band-white is the token the other white bands use
-   (.who, .services, .metrics, .quote-section), not a bare #fff, so this
-   moves with them if that value is ever retuned.
-
-   The grey does not disappear, it moves: the unselected stage cards
-   already carry --soft, so inverting the two gives grey cards on a white
-   band — which is what the client's mockup shows — and leaves the
-   SELECTED card's white as the one shape on the row that matches the
-   band it sits on. Selection is still stated three ways (ground, 2px
-   --blue border, filled --ink-deep badge); see the note at the selection
-   rule for the WCAG 1.4.1 reasoning, which the inversion does not
-   weaken.
-
-   scroll-margin-top is unchanged: #maturity-curve is a jump target and
-   the header floats over it. */
-.mc{background:var(--band-white);
-  scroll-margin-top:calc(var(--header-h) + 16px)}
-
-/* ---------------------------------------------------------------------
-   A1 · the narrative pill — inverted with the band
-   ------------------------------------------------------------------ */
-
-/* REPLACES:
-     .mc-pill{display:inline-flex;align-items:center;gap:10px;
-       margin:26px 0 0;padding:9px 18px;border-radius:999px;
-       border:1px solid var(--pill-line);background:var(--white);
-       font-size:0.7778rem;font-weight:500;line-height:1.35;
-       color:var(--ink-deep);text-align:left}
-   One declaration changes: the ground. A white pill on the old grey band
-   was a label laid on the section; on a white band it is a shape with
-   nothing but a 1.34:1 hairline to say it exists, which is not a shape.
-   It takes --soft for the same reason the cards keep it — on this band,
-   an object is grey — and the lozenge/yellow-dot form keeps it from
-   reading as a sixth card. --ink-deep on --soft is 16.01:1. */
-.mc-pill{display:inline-flex;align-items:center;gap:10px;
-  margin:26px 0 0;padding:9px 18px;border-radius:999px;
-  border:1px solid var(--pill-line);background:var(--soft);
-  font-size:0.7778rem;font-weight:500;line-height:1.35;
-  color:var(--ink-deep);text-align:left}
 
 /* ---------------------------------------------------------------------
    A2 · the rail — svg.mc-railsvg replaces the CSS curve fragment
@@ -5663,13 +5589,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    problem .dg solved with a `--dg-rise` custom property simply does not
    arise here. There is deliberately no --mc-rise equivalent: animate
    .mc-stage, not .mc-stage-btn.
-
-   .mc-note is left out, as .dg-note is: the caveat is not part of the
-   entrance. */
-.mc[data-anim="pending"] .mc-eyebrow,
+ */
 .mc[data-anim="pending"] .mc-h2,
 .mc[data-anim="pending"] .mc-lead,
-.mc[data-anim="pending"] .mc-pill,
 .mc[data-anim="pending"] .mc-railsvg,
 .mc[data-anim="pending"] .mc-stage,
 .mc[data-anim="pending"] .mc-panel,
@@ -5679,10 +5601,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* No JS at all: nothing will ever release the gate, so it never applies.
    Instant, not after the fallback's 2.6s. */
 @media (scripting:none){
-  .mc[data-anim="pending"] .mc-eyebrow,
   .mc[data-anim="pending"] .mc-h2,
   .mc[data-anim="pending"] .mc-lead,
-  .mc[data-anim="pending"] .mc-pill,
   .mc[data-anim="pending"] .mc-railsvg,
   .mc[data-anim="pending"] .mc-stage,
   .mc[data-anim="pending"] .mc-panel,
@@ -5731,10 +5651,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    gate must not hide anything for them either. Same specificity as the
    rules above, later in source, so neither needs !important. */
 @media (prefers-reduced-motion:reduce){
-  .mc[data-anim="pending"] .mc-eyebrow,
   .mc[data-anim="pending"] .mc-h2,
   .mc[data-anim="pending"] .mc-lead,
-  .mc[data-anim="pending"] .mc-pill,
   .mc[data-anim="pending"] .mc-railsvg,
   .mc[data-anim="pending"] .mc-stage,
   .mc[data-anim="pending"] .mc-panel,

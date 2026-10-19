@@ -36,10 +36,8 @@ import { gsap } from "gsap";
 /* The stylesheet contract, and all of it: the gate. It belongs in the .mc
    block of globals.css, which this file does not own.
 
-     .mc[data-anim="pending"] .mc-eyebrow,
      .mc[data-anim="pending"] .mc-h2,
      .mc[data-anim="pending"] .mc-lead,
-     .mc[data-anim="pending"] .mc-pill,
      .mc[data-anim="pending"] .mc-stage,
      .mc[data-anim="pending"] .mc-panel{opacity:0;
        animation:mcGate .4s ease 2.6s forwards}
@@ -69,12 +67,7 @@ export default function MaturityCurveMotion() {
       }
 
       const all = (sel: string) => Array.from(sec.querySelectorAll<HTMLElement>(sel));
-      const head = [
-        ...all(".mc-eyebrow"),
-        ...all(".mc-h2"),
-        ...all(".mc-lead"),
-        ...all(".mc-pill"),
-      ];
+      const head = [...all(".mc-h2"), ...all(".mc-lead")];
       const cards = all(".mc-stage");
       const panel = all(".mc-panel");
       const moved = [...head, ...cards];

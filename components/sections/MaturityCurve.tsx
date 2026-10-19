@@ -169,7 +169,6 @@ export default function MaturityCurve() {
       <MaturityCurveMotion />
       <div className="container mc-inner">
         <div className="mc-head">
-          <p className="mc-eyebrow">{maturityCurve.eyebrow}</p>
           {/* One sentence, in one colour: the heading is still stored in two
               pieces because the design it was written for coloured the second
               one, and the retired copy stays as it is. */}
@@ -177,15 +176,12 @@ export default function MaturityCurve() {
             {maturityCurve.heading} {maturityCurve.headingAccent}
           </h2>
           <p className="mc-lead">{maturityCurve.lead}</p>
-          {/* The dot before this line is drawn by CSS: it is punctuation for
-              the eye, and a screen reader has no use for it. */}
-          <p className="mc-pill">{maturityCurve.narrative}</p>
         </div>
 
         {/* One board holds the curve, the five stages and the panel, so the
             three read as one instrument rather than three stacked cards. The
-            CTA band and the framework note stay outside it — they are what
-            the section says ABOUT the curve, not part of it. */}
+            CTA band stays outside it — it is what the section says ABOUT the
+            curve, not part of it. */}
         <div className="mc-board">
         {/* The curve fragment over the row, now drawn rather than bordered.
             The wrapper stays: `.mc-rail` is the flow box — its width, its
@@ -287,7 +283,6 @@ export default function MaturityCurve() {
           </Link>
         </div>
 
-        <p className="mc-note">{maturityCurve.caveat}</p>
       </div>
     </section>
   );

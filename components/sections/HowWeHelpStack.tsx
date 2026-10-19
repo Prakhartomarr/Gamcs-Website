@@ -480,10 +480,8 @@ export default function HowWeHelpStack() {
 
       <div className="container relative">
         {/* The site's own section-heading type, so this band reads like every
-            other one on the page. `.section-kicker` is the shared eyebrow and
-            carries no casing of its own — `.ap-panel` adds it the same way. */}
+            other one on the page. */}
         <div className="fin-center reveal mx-auto max-w-3xl">
-          <p className="section-kicker uppercase">{howWeHelp.eyebrow}</p>
           <h2 id="hwh-heading" className="fin-h2 text-balance">
             {howWeHelp.headingLead}{" "}
             {/* `.fin-h2 .accent` is nowrap so the drawn underline never breaks

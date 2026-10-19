@@ -855,7 +855,7 @@
   "code": "HOME-CURVE-01",
   "page": "Home (/)",
   "section": "Maturity curve",
-  "label": "Eyebrow",
+  "label": "Accessible name of the five-stage tablist (not printed on the page)",
   "kind": "text",
   "text": "The Finance Intelligence Maturity Curve",
   "source": {
@@ -948,18 +948,6 @@
   }
  },
  {
-  "code": "HOME-CURVE-09",
-  "page": "Home (/)",
-  "section": "Maturity curve",
-  "label": "Note under the panel",
-  "kind": "text",
-  "text": "Finance maturity can vary across processes and business units. This curve is an indicative framework, not an audit or an industry benchmark.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.caveat"
-  }
- },
- {
   "code": "HOME-CURVE-10",
   "page": "Home (/)",
   "section": "Maturity curve",
@@ -981,18 +969,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.axis.end"
-  }
- },
- {
-  "code": "HOME-CURVE-24",
-  "page": "Home (/)",
-  "section": "Maturity curve",
-  "label": "Line under the stage navigation",
-  "kind": "text",
-  "text": "Five stages. One direction: from financial control to decision-led finance.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "maturityCurve.narrative"
   }
  },
  {
@@ -3849,18 +3825,6 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "maturityCurve.stages[4].blocks[2].body"
-  }
- },
- {
-  "code": "HOME-HELP-17",
-  "page": "Home (/)",
-  "section": "How we help",
-  "label": "Eyebrow",
-  "kind": "text",
-  "text": "How GAMCS helps",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "howWeHelp.eyebrow"
   }
  },
  {
