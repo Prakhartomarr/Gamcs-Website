@@ -23,6 +23,14 @@ import { howWeHelp, whyUs } from "@/lib/content/gamcs";
  *
  * The stage is aria-hidden: it is a picture of the rail, and the rail plus the
  * live detail panel carry everything a screen reader needs.
+ *
+ * NO HEADING BLOCK. This band rendered its own h2 from `howWeHelp.headingLead`
+ * / `headingAccent` and `sub` while it lived on the homepage. It is its own
+ * route now (app/how-we-help/page.tsx) and the page head renders exactly those
+ * three strings as the h1 and the intro, so keeping them here would print the
+ * same sentence twice on one page. Everything that was under that h2 moved up
+ * a level with it — phase names and the principles heading are h2, the six
+ * principle claims h3 — so the page reads h1 -> h2 -> h3 with nothing skipped.
  */
 
 /* ── Colour ─────────────────────────────────────────────────────────────────
@@ -465,8 +473,16 @@ export default function HowWeHelpStack() {
     <section
       ref={sectionRef}
       id="how-we-help"
-      aria-labelledby="hwh-heading"
-      className="relative w-full overflow-hidden pb-12 pt-20 [--iso-scale:.68] sm:[--iso-scale:.85] md:pb-16 md:pt-28 lg:[--iso-scale:.95]"
+      /* pt-14 — 63px at this project's 18px root — not the pt-20/md:pt-28 this
+         band carried on the homepage. That padding never rendered there:
+         `.home-tight #how-we-help{padding:63px 0 36px}` overrode it, so the
+         63px is what the band has always shipped with, and the move to its own
+         route is the first time 90/126px ever painted. It opened 182px of
+         blank under the page head; 63px closes that to 119px (>=768) and 95px
+         (<768), which is the 120/96 /privacy-policy, the other plain-head
+         route, opens with. The bottom stays as it is: measured, this band ends
+         95px above the footer against /privacy-policy's 92px. */
+      className="relative w-full overflow-hidden pb-12 pt-14 [--iso-scale:.68] sm:[--iso-scale:.85] md:pb-16 lg:[--iso-scale:.95]"
       style={{ background: C.band }}
     >
       {/* soft wash behind the stack */}
@@ -479,23 +495,6 @@ export default function HowWeHelpStack() {
       />
 
       <div className="container relative">
-        {/* The site's own section-heading type, so this band reads like every
-            other one on the page. */}
-        <div className="fin-center reveal mx-auto max-w-3xl">
-          <h2 id="hwh-heading" className="fin-h2 text-balance">
-            {howWeHelp.headingLead}{" "}
-            {/* `.fin-h2 .accent` is nowrap so the drawn underline never breaks
-                across lines. Five words is longer than a 332px phone column,
-                so this accent has to wrap or it is clipped by the section's
-                overflow — the same exception `.services` already makes, made
-                inline here because the rule outranks any utility class. */}
-            <span className="accent" style={{ whiteSpace: "normal" }}>
-              {howWeHelp.headingAccent}
-            </span>
-          </h2>
-          <p className="fin-lead">{howWeHelp.sub}</p>
-        </div>
-
         {/*
           Phone reads stack -> rail -> detail; from 768 to 1279 the stack keeps
           the full width above two text columns. The three-column row waits for
@@ -503,8 +502,15 @@ export default function HowWeHelpStack() {
           longest label — EXPLAIN & ANTICIPATE, set uppercase and letter-spaced
           — needs ~300px beside a 36px chip. 300 + 340 + 64 of gaps off a
           1374px container at 1470 leaves the stage 670px for a 403px diamond.
+
+          No top margin on it: the 63/90px that used to be here (mt-14/md:mt-20
+          are 1.125x their names at this file's 18px root) separated this row
+          from the section's own heading block, and the page head owns that
+          now. Left in, it stacked on the section's own padding and opened
+          126px on a phone, 153px at desktop, between the intro paragraph and
+          the first slab.
         */}
-        <div className="mt-14 grid gap-y-10 md:mt-20 md:grid-cols-2 md:gap-x-8 xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)_minmax(0,340px)] xl:items-center xl:gap-x-8">
+        <div className="grid gap-y-10 md:grid-cols-2 md:gap-x-8 xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)_minmax(0,340px)] xl:items-center xl:gap-x-8">
           {/* Rail — toggle buttons, not tabs: the detail panel is a live region
               the arrows also drive, not a tabpanel this list owns. */}
           <div className="relative order-2 flex flex-col gap-[2px] xl:order-1">
@@ -697,12 +703,12 @@ export default function HowWeHelpStack() {
                 >
                   {/* 26/1.2 over 15/1.65 is the original's pairing, measured
                       off its two-line headline and four-line body. */}
-                  <h3
+                  <h2
                     className="mt-3 text-[26px] font-medium leading-[1.2] tracking-[-.015em]"
                     style={{ color: C.navy }}
                   >
                     {p.name}
-                  </h3>
+                  </h2>
                   <p className="mt-2 text-[15px] font-semibold" style={{ color: C.blue }}>
                     {p.goal}
                   </p>
@@ -719,12 +725,12 @@ export default function HowWeHelpStack() {
         {/* ── The six principles ─────────────────────────────────────────── */}
         <div className="mt-20 border-t pt-14 md:mt-28 md:pt-16" style={{ borderColor: C.line }}>
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between md:gap-10">
-            <h3
+            <h2
               className="text-[26px] font-medium leading-tight tracking-[-.015em]"
               style={{ color: C.navy }}
             >
               {howWeHelp.principles.heading}
-            </h3>
+            </h2>
             <p className="text-[15px] leading-snug md:max-w-[34ch] md:text-right" style={{ color: C.gray }}>
               {howWeHelp.principles.sub}
             </p>
@@ -754,14 +760,14 @@ export default function HowWeHelpStack() {
                     {p.icon}
                   </svg>
                 </span>
-                <h4 className="mt-4 text-[15px] leading-snug">
+                <h3 className="mt-4 text-[15px] leading-snug">
                   <span className="font-bold" style={{ color: C.navy }}>
                     {p.claim}
                   </span>{" "}
                   <span className="font-medium" style={{ color: C.gray }}>
                     {p.rest}
                   </span>
-                </h4>
+                </h3>
                 <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: C.muted }}>
                   {p.body}
                 </p>

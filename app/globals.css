@@ -3546,21 +3546,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    own rhythm rather than the band default, just a tighter one. */
 .home-tight #decision-gap{padding:60px 0}
 .home-tight #maturity-curve.section{padding:18px 0}
-.home-tight #how-we-help{padding:63px 0 36px}
 .home-tight #solutions.section{padding:44px 0}
 .home-tight #impact{padding:56px 0}
 .home-tight #testimonials{padding:56px 0}
 .home-tight #who-we-are{padding:56px 0}
 .home-tight #contact{padding:54px 0}
-/* The three of these that anything links to by fragment — the nav's and the
-   footer's /#how-we-help, the footer's /#testimonials, /case-study's and the
-   services nav's /#solutions. Without this the fragment aligns the section's
-   border box to y=0 and the header, which floats over the page, covers the
-   first thing that names the section: #how-we-help's eyebrow landed entirely
-   inside the pill, #solutions' and #testimonials' h2 under it by ~18px.
-   Same value as #maturity-curve's `.mc` (PART A0 below), which is the
-   homepage's one jump target that already had it. */
-.home-tight #how-we-help,
+/* The two of these that anything links to by fragment — the footer's
+   /#testimonials, /case-study's and the services nav's /#solutions. Without
+   this the fragment aligns the section's border box to y=0 and the header,
+   which floats over the page, covers the first thing that names the section:
+   #solutions' and #testimonials' h2 landed under it by ~18px. Same value as
+   #maturity-curve's `.mc` (PART A0 below), which is the homepage's one jump
+   target that already had it.
+   #how-we-help was the third until 2026-10-20, when the band became its own
+   route and every link to /#how-we-help was repointed at /how-we-help. */
 .home-tight #solutions,
 .home-tight #testimonials{scroll-margin-top:calc(var(--header-h) + 16px)}
 @media (max-width:768px){

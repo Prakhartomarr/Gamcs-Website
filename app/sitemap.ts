@@ -5,6 +5,7 @@ import { SITE_URL, absolute } from "@/lib/seo";
 /** Every public route. Add a page here the same commit you add the route. */
 const routes = [
   { path: "/", priority: 1, changeFrequency: "monthly" as const },
+  { path: "/how-we-help", priority: 0.8, changeFrequency: "yearly" as const },
   { path: "/solutions", priority: 0.9, changeFrequency: "monthly" as const },
   /* One entry per pillar, derived so a new solution cannot be missed. */
   ...solutions.map((s) => ({

@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero";
 import ClientLogos from "@/components/sections/ClientLogos";
 import DecisionGap from "@/components/sections/DecisionGap";
 import WhoWeAre from "@/components/sections/WhoWeAre";
-import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import MaturityCurve from "@/components/sections/MaturityCurve";
 import Solutions from "@/components/sections/Solutions";
 import Achievements from "@/components/sections/Achievements";
@@ -43,9 +42,10 @@ export default function HomePage() {
           the number and the decision — before anything about how GAMCS works. */}
       <DecisionGap />
       <MaturityCurve />
-      {/* After the curve, not before it: once a visitor has placed themselves
-          on it, how GAMCS builds each layer, then the pillars that do it. */}
-      <HowWeHelpStack />
+      {/* The How We Help band used to sit here, between the curve and the
+          pillars. The client moved it to its own route (/how-we-help) on
+          2026-10-20 and chose to close the gap rather than leave a teaser, so
+          the curve now runs straight into the pillars that answer it. */}
       <Solutions />
       <Achievements />
       <Testimonials />

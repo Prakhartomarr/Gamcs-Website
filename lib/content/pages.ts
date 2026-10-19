@@ -26,6 +26,19 @@ export const pages = {
     description:
       "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally.",
   },
+  howWeHelp: {
+    /* Drafted 2026-10-20, when the How We Help band left the homepage for its
+       own route. Both lines are built from copy that already renders on the
+       page: the title from the nav label plus `howWeHelp.phases` (four of
+       them), the description from the same four phase names and the
+       "Decision-Ready Finance Function" of `sections.servicesHeadingAccent`.
+       The band's own heading and `sub` are the H1 and intro, so neither is
+       repeated here — a meta description has ~160 characters and `sub` runs
+       164, the same reason whoWeAre's is written short. */
+    title: "How We Help | Our Four-Phase Approach",
+    description:
+      "How GAMCS builds a decision-ready finance function in four phases — stabilise, connect and automate, explain and anticipate, decide and improve.",
+  },
   solutions: {
     /** og/twitter title; the tab title is solutionsHub.titleTag. */
     title: "Solutions",
@@ -127,7 +140,7 @@ export const pages = {
     elsewhere: [
       { label: "Case studies", href: "/case-study" },
       { label: "Founders & advisors", href: "/team" },
-      { label: "How we help", href: "/#how-we-help" },
+      { label: "How we help", href: "/how-we-help" },
       { label: "Our services", href: "/#solutions" },
     ],
     /** `{count}` is the number of services listed in `services`. */

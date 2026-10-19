@@ -39,9 +39,14 @@ export default function Testimonials() {
     const title = "title" in t ? t.title : undefined;
     return {
       quote: t.quote,
-      author: title
-        ? fill(sections.byline, { name: t.name, title, company: t.company })
-        : fill(sections.bylineNoTitle, { name: t.name, company: t.company }),
+      author: t.name,
+      /* Second line of the byline. Still chosen on the role's presence rather
+         than defaulted: `fill` leaves an unknown slot as written and an empty
+         one as nothing, so a title-less person would otherwise ship the comma
+         that belonged to the missing title. */
+      authorRole: title
+        ? fill(sections.byline, { title, company: t.company })
+        : fill(sections.bylineNoTitle, { company: t.company }),
       monogram: initials(t.name),
       image: hasArt ? photo.src : undefined,
       alt: hasArt ? photo.alt : undefined,

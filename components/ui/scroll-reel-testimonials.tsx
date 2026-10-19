@@ -25,8 +25,10 @@ import { reel } from "@/lib/content/ui";
 export interface ScrollReelTestimonial {
   /** The quote text */
   quote: string;
-  /** Author name shown below the quote */
+  /** Author name shown below the quote, on its own line */
   author: string;
+  /** Role and company, set under the name as the byline's second line */
+  authorRole?: string;
   /** Portrait image URL for the featured tile. Omit to render a monogram. */
   image?: string;
   /** Optional alt text for the portrait */
@@ -67,6 +69,11 @@ const QUOTE_CLASSES =
   "m-0 text-lg font-medium leading-[1.3] tracking-[-0.02em] text-foreground sm:text-[22px]";
 const AUTHOR_CLASSES =
   "m-0 text-sm font-medium leading-[1.3] text-muted-foreground";
+
+/* The two byline lines sit together: the flex column around them carries a
+   19px gap meant to separate the quote from the byline, which between the
+   name and the role would read as two separate things. */
+const BYLINE_CLASSES = "flex flex-col gap-[2px]";
 
 const FEATURED_SHADOW =
   "0 1.008px 0.705px -0.563px rgba(0,0,0,0.18), 0 2.389px 1.672px -1.125px rgba(0,0,0,0.17), 0 4.357px 3.05px -1.688px rgba(0,0,0,0.17), 0 7.244px 5.07px -2.25px rgba(0,0,0,0.16), 0 11.698px 8.188px -2.813px rgba(0,0,0,0.15), 0 19.148px 13.404px -3.375px rgba(0,0,0,0.13), 0 32.972px 23.08px -3.938px rgba(0,0,0,0.09), 0 60px 42px -4.5px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.6)";
@@ -446,7 +453,12 @@ export function ScrollReelTestimonials({
                   className="col-start-1 row-start-1 flex flex-col gap-[19px]"
                 >
                   <p className={QUOTE_CLASSES}>{t.quote}</p>
-                  <p className={AUTHOR_CLASSES}>{t.author}</p>
+                  <div className={BYLINE_CLASSES}>
+                    <p className={AUTHOR_CLASSES}>{t.author}</p>
+                    {t.authorRole ? (
+                      <p className={AUTHOR_CLASSES}>{t.authorRole}</p>
+                    ) : null}
+                  </div>
                 </div>
               ))}
             </div>
@@ -464,13 +476,27 @@ export function ScrollReelTestimonials({
                   staggerMs={charStaggerMs}
                 />
               </p>
-              <p className={AUTHOR_CLASSES}>
-                <Chars
-                  text={current.author}
-                  startIndex={current.quote.length + 6}
-                  staggerMs={charStaggerMs}
-                />
-              </p>
+              {/* Two lines, one reveal: the role's characters carry on from
+                  where the name's ended, so the byline writes itself in
+                  reading order instead of both lines racing. */}
+              <div className={BYLINE_CLASSES}>
+                <p className={AUTHOR_CLASSES}>
+                  <Chars
+                    text={current.author}
+                    startIndex={current.quote.length + 6}
+                    staggerMs={charStaggerMs}
+                  />
+                </p>
+                {current.authorRole ? (
+                  <p className={AUTHOR_CLASSES}>
+                    <Chars
+                      text={current.authorRole}
+                      startIndex={current.quote.length + 6 + current.author.length}
+                      staggerMs={charStaggerMs}
+                    />
+                  </p>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ export const header = {
      and FAQ is reachable from the footer alone. */
   items: [
     { label: "Who we are", href: "/who-we-are" },
-    { label: "How we help", href: "/#how-we-help" },
+    { label: "How we help", href: "/how-we-help" },
     { label: "What we do", href: "/solutions" },
     { label: "Team", href: "/team" },
     { label: "Case Studies", href: "/case-study" },
@@ -110,12 +110,14 @@ export const sections = {
      tells them apart. The new-tab note is here rather than in an icon because
      the arrow beside the word is decoration. */
   sourceLink: "{label}: {publication} (opens in a new tab)",
-  /** Testimonial byline, for a quote whose author has a role on file. */
-  byline: "{name} — {title}, {company}",
+  /* The byline is two lines: the person on the first, what they do on the
+     second, as the client's reference sets it. The name is not in these
+     templates because it needs no assembling — only the role line does. */
+  byline: "{title}, {company}",
   /* And for one who does not. Four of the six testimonials were supplied with
      a company and no role; filling the template above would have left
      "Patrick Hughes — , HungerRush" with the comma hanging off an empty slot. */
-  bylineNoTitle: "{name} — {company}",
+  bylineNoTitle: "{company}",
 } as const;
 
 export const servicePage = {

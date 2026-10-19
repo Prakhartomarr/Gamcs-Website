@@ -1042,7 +1042,7 @@ export const footer = {
        "Who we are" goes to the same place since the dropdowns came out. */
     { label: "Who we are", href: "/who-we-are" },
     { label: "Solutions", href: "/solutions" },
-    { label: "How we help", href: "/#how-we-help" },
+    { label: "How we help", href: "/how-we-help" },
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
     { label: "Careers", href: "/careers" },
