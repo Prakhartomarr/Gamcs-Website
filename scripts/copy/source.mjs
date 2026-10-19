@@ -11,9 +11,9 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const ts = createRequire(import.meta.url)("typescript");
 
-/** Which content module declares each top-level export. */
+/** Which content module declares each top-level name a locator can start with. */
 export const MODULES = {
-  "lib/content/gamcs.ts": ["site", "hero", "intro", "story", "ourStory", "primaryCta", "howWeHelp", "whyUs", "services", "achievements", "team", "testimonials", "caseStudies", "contact", "footer", "faq", "solutions", "solutionsHub", "maturityCurve", "clients", "decisionGap", "preloader", "careers"],
+  "lib/content/gamcs.ts": ["site", "offices", "hero", "intro", "story", "ourStory", "primaryCta", "howWeHelp", "whyUs", "services", "achievements", "team", "testimonials", "caseStudies", "contact", "footer", "faq", "solutions", "solutionsHub", "maturityCurve", "clients", "decisionGap", "preloader", "careers"],
   "lib/content/ui.ts": ["header", "crumbs", "cookie", "map", "reel", "sections", "servicePage", "caseCard", "roster"],
   "lib/content/pages.ts": ["pages"],
   "lib/content/legal.ts": ["legal", "privacy", "cookiePolicy"],

@@ -8,59 +8,36 @@ import CTA from '@/components/CTA';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import { cn } from '@/lib/utils';
-import { caseStudies, primaryCta, solutions } from '@/lib/content/gamcs';
-import { fill } from '@/lib/content/fill';
-import { header, type HeaderPanel as Panel } from '@/lib/content/ui';
+import { primaryCta } from '@/lib/content/gamcs';
+import { header } from '@/lib/content/ui';
 
 /* ------------------------------------------------------------------ *
  * Floating pill header.
  *
  * Chrome (sticky pill that narrows and lifts on scroll, animated menu
- * icon, full-screen mobile sheet) follows the reference component. The
- * mega-menu panels and mobile drill-down are kept, so every pillar's
- * service links and the 10 case studies stay reachable.
+ * icon, full-screen mobile sheet) follows the reference component.
+ *
+ * Every item is a plain link. The three mega-menus and the phone
+ * drill-down they fed were removed at the client's request
+ * (2026-10-19); the phone sheet now shows the same flat list as the
+ * bar, and what the panels used to reach lives in the footer.
  *
  * The reference's Sign In / Get Started pair is replaced by the single
  * real action; GAMCS has no login or self-serve signup.
  * ------------------------------------------------------------------ */
 
-/* The items and the Who We Are links are lib/content/ui.ts `header`: an item
-   with a `panel` discloses a mega-menu, one with only an `href` is a link. */
-const { items, whoLinks } = header;
-
-/* Derived from `solutions[]`, so the menu can never list a pillar that has no
-   page — or miss one that does. Three columns: the five pillars wrap to a row
-   of three and a row of two. */
-const solutionColumns = solutions.map((s) => ({
-	heading: s.navLabel,
-	href: `/solutions/${s.slug}`,
-	links: s.atAGlance.filter((l) => l !== s.navLabel).slice(0, 4),
-}));
-
-const Arrow = () => (
-	<svg viewBox="0 0 16 16" className="nav-arrow" aria-hidden="true">
-		<path d="M6 3.5L10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
-const Chevron = () => (
-	<svg viewBox="0 0 16 16" className="nav-chev" aria-hidden="true">
-		<path d="M4 6.5L8 10.5 12 6.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
-);
+const { items } = header;
 
 export function Header() {
 	const pathname = usePathname();
 	const [open, setOpen] = React.useState(false);
-	const [sub, setSub] = React.useState<Panel | null>(null);
-	const [panel, setPanel] = React.useState<Panel | null>(null);
 	const scrolled = useScroll(10);
 	const barRef = React.useRef<HTMLElement>(null);
 	const sheetRef = React.useRef<HTMLDivElement>(null);
-	const closeTimer = React.useRef<number>();
 	const wasOpen = React.useRef(false);
-	const baseId = React.useId();
-	const sheetId = `${baseId}-sheet`;
+	const sheetId = `${React.useId()}-sheet`;
 	const toggle = () => barRef.current?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+	const close = () => setOpen(false);
 
 	// lock body scroll while the mobile sheet is up
 	React.useEffect(() => {
@@ -77,15 +54,14 @@ export function Header() {
 	React.useEffect(() => {
 		const mq = window.matchMedia('(min-width: 1280px)');
 		const sync = () => {
-			if (mq.matches) closeAll();
+			if (mq.matches) setOpen(false);
 		};
 		mq.addEventListener('change', sync);
 		return () => mq.removeEventListener('change', sync);
 	}, []);
 
-	/* Move focus into the sheet on open and on each drill-down step, and hand it
-	   back to the toggle on close. Without this, opening the sheet or pressing
-	   'Solutions' dropped focus to <body>. */
+	/* Move focus into the sheet on open and hand it back to the toggle on close.
+	   Without this, opening the sheet dropped focus to <body>. */
 	React.useEffect(() => {
 		if (!open) return;
 		/* Two frames late, deliberately. The sheet only becomes `visible` in the
@@ -104,7 +80,7 @@ export function Header() {
 			cancelAnimationFrame(outer);
 			cancelAnimationFrame(inner);
 		};
-	}, [open, sub]);
+	}, [open]);
 
 	React.useEffect(() => {
 		if (open) {
@@ -118,101 +94,11 @@ export function Header() {
 
 	React.useEffect(() => {
 		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') closeAll();
-		};
-		const onClick = (e: MouseEvent) => {
-			if (!barRef.current?.contains(e.target as Node)) setPanel(null);
+			if (e.key === 'Escape') setOpen(false);
 		};
 		document.addEventListener('keydown', onKey);
-		document.addEventListener('click', onClick);
-		return () => {
-			document.removeEventListener('keydown', onKey);
-			document.removeEventListener('click', onClick);
-			window.clearTimeout(closeTimer.current);
-		};
+		return () => document.removeEventListener('keydown', onKey);
 	}, []);
-
-	/* Hover already opens a panel, so a pointer click on its trigger must not
-	   toggle it shut under the pointer: a pointer click (detail > 0) always
-	   opens, and only keyboard activation (detail 0) toggles. */
-	const hoverOpen = (k: Panel) => {
-		window.clearTimeout(closeTimer.current);
-		setPanel(k);
-	};
-	const hoverClose = () => {
-		closeTimer.current = window.setTimeout(() => setPanel(null), 120);
-	};
-	function closeAll() {
-		setPanel(null);
-		setOpen(false);
-		setSub(null);
-	}
-
-	/* Panel bodies render next to their own trigger (below). As siblings after
-	   </nav> only the last-focused trigger's panel stayed open, so the 19
-	   Solutions links and 4 Who We Are links were unreachable by keyboard. */
-	const renderPanel = (key: Panel) => {
-		if (key === 'solutions')
-			return (
-						<div className="mega-inner mega-3">
-							{solutionColumns.map((col) => (
-								<div className="mega-col" key={col.heading}>
-									<Link className="mega-head" href={col.href} onClick={closeAll}>
-										{col.heading} <Arrow />
-									</Link>
-									<ul>
-										{col.links.map((l) => (
-											<li key={l}>
-												<Link href={col.href} onClick={closeAll}>{l}</Link>
-											</li>
-										))}
-									</ul>
-								</div>
-							))}
-						</div>
-			);
-		if (key === 'case')
-			return (
-						<div className="mega-inner mega-2">
-							<div className="mega-col">
-								<Link className="mega-head" href="/case-study" onClick={closeAll}>
-									{header.allCaseStudies} <Arrow />
-								</Link>
-								<ul>
-									{caseStudies.items.slice(0, 5).map((c) => (
-										<li key={c.no}>
-											<Link href="/case-study" onClick={closeAll}>{c.title}</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-							<div className="mega-col">
-								<span className="mega-head as-label">{header.more}</span>
-								<ul>
-									{caseStudies.items.slice(5).map((c) => (
-										<li key={c.no}>
-											<Link href="/case-study" onClick={closeAll}>{c.title}</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-						</div>
-			);
-		return (
-						<div className="mega-inner mega-1">
-							<div className="mega-col">
-								<span className="mega-head as-label">{header.whoTitle}</span>
-								<ul>
-									{whoLinks.map((l) => (
-										<li key={l.title}>
-											<Link href={l.href} onClick={closeAll}>{l.title}</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-						</div>
-		);
-	};
 
 	/* The sheet covers the page but the page stays focusable, so Tab used to walk
 	   behind the overlay. Cycle within the toggle + sheet while it is open. */
@@ -239,7 +125,6 @@ export function Header() {
 		<>
 		<header
 			ref={barRef}
-			onMouseLeave={hoverClose}
 			onKeyDown={trapTab}
 			/* A floating pill inset from the page edges, translucent white over
 			   whatever is behind it. The <header> itself stays transparent and
@@ -260,64 +145,11 @@ export function Header() {
 
 				{/* full nav only where it comfortably fits the pill */}
 				<div className="nav hidden xl:flex">
-					{items.map((item) =>
-						/* Discriminate on `panel`, not `href`: Solutions carries both, and
-						   testing `href` first would send it down this plain-link branch and
-						   silently drop its menu. */
-						!('panel' in item) ? (
-							<Link key={item.label} href={item.href} onClick={closeAll} aria-current={pathname === item.href ? 'page' : undefined}>
-								{item.label}
-							</Link>
-						) : (
-							<React.Fragment key={item.label}>
-								{/* With an href the label navigates and the caret discloses the
-								    panel; without one the whole trigger is the disclosure. Hover
-								    opens the panel either way, so pointer users are unaffected. */}
-								{item.href ? (
-									<span
-										className={panel === item.panel ? 'nav-trigger is-open' : 'nav-trigger'}
-										onMouseEnter={() => hoverOpen(item.panel)}
-									>
-										<Link href={item.href} onClick={closeAll} onFocus={() => hoverOpen(item.panel)}>
-											{item.label}
-										</Link>
-										<button
-											type="button"
-											className="nav-caret"
-											aria-expanded={panel === item.panel}
-											aria-controls={`${baseId}-${item.panel}`}
-											aria-label={fill(header.menuLabel, { label: item.label })}
-											onFocus={() => hoverOpen(item.panel)}
-											onClick={(e) => setPanel(e.detail === 0 && panel === item.panel ? null : item.panel)}
-										>
-											<Chevron />
-										</button>
-									</span>
-								) : (
-								<button
-									type="button"
-									className={panel === item.panel ? 'nav-trigger is-open' : 'nav-trigger'}
-									aria-expanded={panel === item.panel}
-									aria-controls={`${baseId}-${item.panel}`}
-									onMouseEnter={() => hoverOpen(item.panel)}
-									onFocus={() => hoverOpen(item.panel)}
-									onClick={(e) => setPanel(e.detail === 0 && panel === item.panel ? null : item.panel)}
-								>
-									{item.label}
-									<Chevron />
-								</button>
-								)}
-								<div
-									id={`${baseId}-${item.panel}`}
-									className={cn('mega', panel === item.panel && 'is-open')}
-									onMouseEnter={() => hoverOpen(item.panel)}
-									hidden={panel !== item.panel}
-								>
-									{renderPanel(item.panel)}
-								</div>
-							</React.Fragment>
-						),
-					)}
+					{items.map((item) => (
+						<Link key={item.label} href={item.href} onClick={close} aria-current={pathname === item.href ? 'page' : undefined}>
+							{item.label}
+						</Link>
+					))}
 				</div>
 
 				<div className="hidden shrink-0 xl:block">
@@ -330,10 +162,7 @@ export function Header() {
 					size="icon"
 					variant="outline"
 					data-nav-toggle=""
-					onClick={() => {
-						setOpen(!open);
-						setSub(null);
-					}}
+					onClick={() => setOpen(!open)}
 					/* size-8 gave a 36px target; the touch tier is built to 44px */
 					className="size-11 xl:hidden"
 					aria-label={open ? header.closeNav : header.openNav}
@@ -345,7 +174,7 @@ export function Header() {
 			</nav>
 		</header>
 
-			{/* ---------- mobile sheet with drill-down ----------
+			{/* ---------- mobile sheet ----------
 			    OUTSIDE <header>, and that is the whole reason it works. The bar
 			    carries `is-stuck` whenever `scrolled || open`, and .site-head.is-stuck
 			    sets backdrop-filter (globals.css). A backdrop-filter makes its element
@@ -367,7 +196,7 @@ export function Header() {
 				onClick={(e) => {
 					/* the sheet is its own backdrop: a tap on the panel itself, rather
 					   than on a link inside it, closes */
-					if (e.target === e.currentTarget) closeAll();
+					if (e.target === e.currentTarget) close();
 				}}
 				className={cn(
 					'fixed inset-x-0 bottom-0 top-[var(--header-h)] z-[68] flex flex-col overflow-y-auto border-y bg-white xl:hidden',
@@ -381,81 +210,23 @@ export function Header() {
 					data-slot={open ? 'open' : 'closed'}
 					className="flex h-full w-full flex-col gap-y-2 p-4 ease-out data-[slot=closed]:animate-out data-[slot=closed]:zoom-out-95 data-[slot=open]:animate-in data-[slot=open]:zoom-in-95"
 				>
-					{!sub && (
-						<>
-							<ul className="drawer-list">
-								{items.map((item) => (
-									<li key={item.label}>
-										{!('panel' in item) ? (
-											<Link href={item.href} onClick={closeAll} aria-current={pathname === item.href ? 'page' : undefined}>{item.label}</Link>
-										) : (
-											<button type="button" onClick={() => setSub(item.panel)}>
-												{item.label}
-												<Arrow />
-											</button>
-										)}
-									</li>
-								))}
-							</ul>
-							<CTA href={primaryCta.href} onClick={closeAll} data-cta="mobile-drawer" className="mt-auto w-full">
-								{primaryCta.label}
-							</CTA>
-						</>
-					)}
-
-					{sub && (
-						<div className="drawer-sub">
-							<button type="button" className="drawer-back" onClick={() => setSub(null)}>
-								<span aria-hidden="true">‹</span> {header.goBack}
-							</button>
-
-							{sub === 'solutions' && (
-								<Link className="mega-head" href="/solutions" onClick={closeAll}>
-									{header.allSolutions} <Arrow />
-								</Link>
-							)}
-							{sub === 'solutions' &&
-								solutionColumns.map((col) => (
-									<div className="drawer-group" key={col.heading}>
-										<Link className="drawer-group-head" href={col.href} onClick={closeAll}>{col.heading}</Link>
-										<ul>
-											{col.links.map((l) => (
-												<li key={l}><Link href={col.href} onClick={closeAll}>{l}</Link></li>
-											))}
-										</ul>
-									</div>
-								))}
-
-							{sub === 'case' && (
-								<div className="drawer-group">
-									<Link className="drawer-group-head" href="/case-study" onClick={closeAll}>{header.allCaseStudies}</Link>
-									<ul>
-										{caseStudies.items.map((c) => (
-											<li key={c.no}><Link href="/case-study" onClick={closeAll}>{c.title}</Link></li>
-										))}
-									</ul>
-								</div>
-							)}
-
-							{sub === 'who' && (
-								<div className="drawer-group">
-									<ul>
-										{whoLinks.map((l) => (
-											<li key={l.title}><Link href={l.href} onClick={closeAll}>{l.title}</Link></li>
-										))}
-									</ul>
-								</div>
-							)}
-
-						</div>
-					)}
+					<ul className="drawer-list">
+						{items.map((item) => (
+							<li key={item.label}>
+								<Link href={item.href} onClick={close} aria-current={pathname === item.href ? 'page' : undefined}>{item.label}</Link>
+							</li>
+						))}
+					</ul>
+					<CTA href={primaryCta.href} onClick={close} data-cta="mobile-drawer" className="mt-auto w-full">
+						{primaryCta.label}
+					</CTA>
 
 					{/* aria-modal keeps a screen reader inside this sheet, and the toggle
 					    that closes it sits outside, so the sheet carries its own close.
 					    Hidden until it has keyboard focus. */}
 					<button
 						type="button"
-						onClick={closeAll}
+						onClick={close}
 						className="sr-only focus-visible:not-sr-only focus-visible:self-start focus-visible:rounded-full focus-visible:border focus-visible:px-4 focus-visible:py-2"
 					>
 						{header.closeNav}

@@ -94,6 +94,22 @@ export default function CTA(props: AsLink | AsButton) {
 
   if (typeof props.href === "string") {
     const { href, ...linkRest } = rest as { href: string } & Record<string, unknown>;
+    /*
+     * A bare fragment is NOT a route, so it does not go through <Link>.
+     * next/link calls preventDefault and hands the hash to the router, which
+     * scrolls but never performs a fragment navigation — so the browser never
+     * sets the focus (and the sequential-tab start point) on the target, and a
+     * keyboard user is left at the top of the page they just jumped down.
+     * A plain <a> gets both, provided the target is focusable: the in-page
+     * jump targets carry tabindex="-1" for exactly that.
+     */
+    if (href.startsWith("#")) {
+      return (
+        <a className={classes} href={href} {...press} {...(linkRest as ComponentPropsWithoutRef<"a">)}>
+          {content}
+        </a>
+      );
+    }
     return (
       <Link className={classes} href={href} {...press} {...linkRest}>
         {content}

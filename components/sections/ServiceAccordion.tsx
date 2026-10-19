@@ -23,13 +23,34 @@ import { sections } from "@/lib/content/ui";
  * on its own: it holds while the pointer is over the list or focus is inside
  * it, and stops for good the moment someone picks an item themselves — which
  * now includes the first hover. It never starts at all under
- * prefers-reduced-motion, or on a coarse pointer, which has no hover to hold
- * it with.
+ * prefers-reduced-motion, on a coarse pointer, which has no hover to hold it
+ * with, or below 768px — see AUTOPLAY.
  *
  * Below 768px the list renders as a chip strip over a single white card: same
  * buttons, same accordion semantics, styled in app/globals.css.
  */
 const ADVANCE_MS = 5200;
+/**
+ * The three conditions under which the pillars may walk themselves, as one
+ * query so a change to any of them re-reads all three.
+ *
+ * `min-width:768px` is the layout condition, and it is the breakpoint the
+ * accordion layout itself uses. From 768px up, `.svca-list` and `.svca-card`
+ * both carry a height floor sized to the tallest pillar, so an advance cannot
+ * change the section's height. Below it the design is a chip strip over a
+ * single card that is free to size to its own pillar — measured 2026-10-19 at
+ * 390px: 473px under Deal Advisory against 636px under Digital
+ * Transformation, which pushed everything from #impact to the footer down by
+ * up to 164px every 5.2s under a reader who had touched nothing. Flooring the
+ * card to the tallest pillar would buy that back with 164px of blank card, so
+ * the chip strip stays manual instead: it is a control you tap, and a real
+ * phone already never autoplayed it (pointer:coarse).
+ *
+ * `pointer:fine` is the pause condition: `held` is set by onPointerEnter, so a
+ * device with no hover has no way to hold the rotation while reading.
+ */
+const AUTOPLAY =
+  "(min-width:768px) and (pointer:fine) and (prefers-reduced-motion:no-preference)";
 /**
  * Intent, not arrival. Reaching the last pillar drags the pointer across the
  * four above it; opening on the bare pointerenter strobes the panel through
@@ -46,14 +67,15 @@ export default function ServiceAccordion() {
   const [auto, setAuto] = useState(false);
 
   useEffect(() => {
-    /* `held` is the pause, and it is set by onPointerEnter — which a touch
-       device does not reliably fire, and never keeps set. So on a phone
-       nothing ever paused and the card rotated every 5.2s under a visitor
-       who was reading it. A coarse pointer has no hover to pause with, so
-       autoplay simply never starts there. Same effect as the reduced-motion
-       read, so this adds no new hydration surface. */
-    const off = (q: string) => window.matchMedia(q).matches;
-    setAuto(!off("(prefers-reduced-motion: reduce)") && !off("(pointer: coarse)"));
+    /* Tracked rather than read once: width is the one condition here that
+       changes while the page is open — dragging a window narrow used to leave
+       the rotation running over the chip-strip layout, which is the state that
+       shifts. */
+    const mq = window.matchMedia(AUTOPLAY);
+    const sync = () => setAuto(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   const running = auto && !taken && !held;

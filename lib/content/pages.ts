@@ -43,7 +43,7 @@ export const pages = {
   team: {
     title: "Our Team | Founders & Advisors",
     description:
-      "Meet the founders and advisory board behind GA Management Consultants — 100+ combined years of FP&A, BI, audit, and CFO advisory experience.",
+      "Meet the founders and advisory board behind GA Management Consultants — 150+ combined years of FP&A, BI, audit, and CFO advisory experience.",
     theirWork: "Their work",
   },
   careers: {

@@ -9,6 +9,94 @@
 
 import type { Part } from "./fill";
 
+/**
+ * The offices a visitor can actually walk into. One card per entry in the
+ * homepage map row (components/ui/office-maps.tsx).
+ *
+ * Written out as plain literals, above `site`, because scripts/copy/source.mjs
+ * edits this file as TEXT: it walks the AST by dotted path, so a conditional
+ * spread or a `site.address.street` reference at `offices[0].street` is not
+ * something a copy editor can be handed, and one unreadable locator takes
+ * export, import and check down together (export.mjs `loadManifest` calls
+ * `read` without a net). So the registered address is typed here once and
+ * `site.address` is read back off it, not the other way round — the homepage
+ * card and the PostalAddress in the Organization JSON-LD cannot drift apart.
+ *
+ * `site.address` still answers "what is the registered address of this firm" —
+ * one place, one answer — and that is what lib/schema.ts puts in the JSON-LD
+ * and what /contact, components/Directions.tsx and the footer print.
+ * `offices` answers "where can I find you", which has three answers.
+ * The other two are not registered addresses and carry their own firm names.
+ */
+export type Office = {
+  /** The firm trading at that address. Not always site.name. */
+  name: string;
+  street: string;
+  locality: string;
+  region: string;
+  postalCode: string;
+  /** "lat,lng". The map links route to the point rather than to the written
+      address, which geocodes ~400m off, so this and `map` move with the
+      street or the pin quietly keeps the old office. */
+  coords: string;
+  /** Static basemap rendered for exactly that centre, 960x720. */
+  map: string;
+  /** Landmark line, shown under the address when the card opens. */
+  note?: string;
+  /**
+   * The one that is also site.address. Exactly one entry has it, and every
+   * consumer selects it by this flag: by position, the day the list is
+   * reordered or the registered entry is dropped, whatever lands at index 0
+   * is published as this firm's own address.
+   */
+  registered?: boolean;
+};
+
+const offices: readonly Office[] = [
+  {
+    name: "GA Management Consultants",
+    street:
+      "2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32",
+    locality: "Gurugram",
+    region: "Haryana",
+    postalCode: "122001",
+    coords: "28.4443371,77.0436624",
+    map: "/map/gurugram-sector32.webp",
+    registered: true,
+  },
+  {
+    name: "RNBP & CO",
+    street: "Second Floor, G-22, Block G, Sector 3",
+    locality: "Noida",
+    region: "Uttar Pradesh",
+    postalCode: "201301",
+    note: "Near Noida Sector 16 Metro Station, Gate No. 3",
+    coords: "28.5803285,77.3201677",
+    map: "/map/noida-sector3.webp",
+  },
+  {
+    name: "New Leaf Family Office",
+    street: "14th Floor, UB City, Concorde Block, No. 24 Vittal Mallya Road",
+    locality: "Bangalore",
+    region: "Karnataka",
+    postalCode: "560001",
+    coords: "12.9718591,77.5956698",
+    map: "/map/bangalore-ubcity.webp",
+  },
+];
+
+const registeredOffice = offices.find((o) => o.registered) ?? null;
+
+/**
+ * The cards the homepage contact panel renders (components/sections/Contact.tsx).
+ *
+ * All or nothing. Drop the registered office and what is left is two other
+ * firms' addresses standing under this firm's heading, so an unknown
+ * registered address takes the whole row off the page rather than promoting
+ * whichever entry happens to be first.
+ */
+export const officeCards: readonly Office[] = registeredOffice ? offices : [];
+
 export const site = {
   name: "GA Management Consultants",
   legalName: "GA Management Consultants LLP",
@@ -20,7 +108,10 @@ export const site = {
   url: "https://www.gamcs.in",
   email: "info@gamcs.in",
   linkedin: "https://in.linkedin.com/company/gamcs-in",
-  copyright: "© 2026 All Rights Reserved",
+  /* The client's footer document sets the whole notice as one sentence,
+     legal name included, so the bottom bar prints this alone — the separate
+     legal-name cell it used to sit beside said the name a second time. */
+  copyright: "© 2026 GA Management Consultants LLP. All rights reserved.",
   /** Brand mark. Overwrite public/brand/logo.png to change it everywhere. */
   logo: "/brand/logo.png",
   /**
@@ -30,30 +121,21 @@ export const site = {
    */
   phone: null as string | null,
   /**
-   * `coords` and `map` are part of the address, not decoration: the map
-   * links route to the coordinates rather than to the text (geocoding the
-   * written address alone lands ~400m off), and `map` is a static basemap
-   * rendered for exactly that centre. Move the office and all three change
-   * together, or the pin quietly points at the old one.
+   * The registered office, read off the flagged entry in `offices` so this,
+   * the homepage card and the JSON-LD are one string each. null when no entry
+   * is flagged: everything that prints an address — the PostalAddress in
+   * lib/schema.ts, /contact, components/Directions.tsx, the footer, the
+   * homepage map row — then renders nothing rather than guessing.
    */
-  address: {
-    street:
-      "2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32",
-    locality: "Gurugram",
-    region: "Haryana",
-    postalCode: "122001",
+  address: registeredOffice && {
+    ...registeredOffice,
     country: "IN", // ISO 3166-1 alpha-2
-    coords: "28.4443371,77.0436624",
-    map: "/map/gurugram-sector32.webp",
-  } as {
-    street: string;
-    locality: string;
-    region: string;
-    postalCode: string;
-    country: string;
-    coords: string;
-    map: string;
-  } | null,
+    /* The same country for a reader rather than for schema.org. The footer
+       prints "Gurugram, Haryana, India" because that is the contact line the
+       client's document gives; /contact and the map cards still print the
+       postal code, which is what a visitor navigating there needs. */
+    countryName: "India",
+  },
   /**
    * TODO(business): real reply-time commitment, e.g. "within 1 business day".
    * Surfaced next to the contact CTAs only when set — never guessed.
@@ -82,7 +164,7 @@ export const hero = {
 } as const;
 
 export const intro =
-  "With more than combined 100+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.";
+  "With more than combined 150+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.";
 
 
 /**
@@ -110,11 +192,11 @@ export const story = {
    * team.leadership.length + team.advisory.length, counted at render, so an
    * adviser joining moves the number without anyone remembering to come back
    * and edit it. The other two are facts that nothing else in the code can
-   * derive - the founding year is not stored anywhere, and the 100+ years is
+   * derive - the founding year is not stored anywhere, and the 150+ years is
    * the same figure `intro` states in a sentence.
    */
   stats: {
-    yearsValue: "100+",
+    yearsValue: "150+",
     yearsLabel: "combined years of industry experience",
     foundedValue: "2023",
     foundedLabel: "founded, in Gurugram",
@@ -123,58 +205,238 @@ export const story = {
 } as const;
 
 /**
- * /who-we-are -- the firm's story, in seven chapters.
+ * /who-we-are — the firm's story, as the client rewrote it on 2026-10-19.
  *
- * The client supplied this as ONE block of prose. It is split here at SENTENCE
- * boundaries only, so each chapter can hold its own part and the page can set
- * that part at the scale its section needs: not a word is reworded, trimmed or
- * paraphrased on the way in, and the headings are lifted from the same
- * sentences. Four strings are not the client's -- `scrollCue`, `secondaryCta`
- * and the two `shift` lines -- and nothing else here is new.
+ * A REPLACEMENT, not an edit. The new document is organised as a hero, a
+ * figures band, five numbered sections and a closing band, and it does not map
+ * onto the seven chapters that were here. Every string is transcribed
+ * character for character: the unspaced em dashes ("necessary—but it is not")
+ * are the client's and are deliberate, and nothing is tightened, re-punctuated
+ * or Americanised on the way in.
  *
- * `markers`, `disciplines`, `stats`, `shift` and `pillars` are the lists the
- * prose names in passing, pulled out so the layout can draw them instead of
- * leaving them buried in a comma-separated clause.
+ * Each section's list is nested INSIDE the chapter it belongs to. The previous
+ * version hoisted all five lists to the top of this object, which left a row
+ * of sibling arrays whose only clue to where they rendered was their order.
+ *
+ * Old key                     -> new key
+ *   markers[]                 -> chapters.start.journey.entries[]  (+year, +body)
+ *   stats[]                   -> glance.items[]                    (two -> six)
+ *   shift.from/toLine         -> chapters.saw.from/to              (+question, +body)
+ *   pillars[]                 -> chapters.build.items[]            (+body)
+ *   secondaryCta              -> heroCtas / closing.cta
+ *
+ * The client's document drops the "shared passion", "what we believe" and "the
+ * name" chapters outright. Per the standing instruction that retired copy is
+ * kept in this module, they are still below, under UNRENDERED — nothing on the
+ * page reads them.
  */
 export const ourStory = {
-  eyebrow: "Our Story",
+  /* The client's caps, kept. `.section-kicker` sets no text-transform, so
+     whatever is stored here is what the eyebrow reads on screen. */
+  eyebrow: "OUR STORY",
   heroLines: [
     "Built on a shared vision.",
     "Driven by financial insight.",
     "Focused on the future.",
   ],
+  heroBody:
+    "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal. Having known each other since college, qualified as Chartered Accountants, and later worked in corporate roles, they shared a conviction: finance should do more than explain what happened. It should help businesses decide what happens next.",
+  /*
+   * Both hero buttons stay on this page, so both hold a fragment rather than a
+   * route: the primary lands on the timeline the label names ("Our journey"),
+   * the secondary on the founders section. The page gives both targets
+   * tabindex="-1" so the browser moves focus there as well as the viewport —
+   * a fragment link that only scrolls leaves a keyboard user at the top.
+   */
+  heroCtas: {
+    primary: { label: "Explore Our Journey", href: "#our-journey" },
+    secondary: { label: "Meet the Founders", href: "#the-founders" },
+  },
+  /*
+   * The band under the hero. `count` is per figure, not derived: CountUp
+   * splits a string on its digits and counts them, which is right for "150+
+   * years" and "30+" and wrong for "2023" — a year ticking up from zero reads
+   * as a number, not a date. The one `count: false` is that year.
+   *
+   * "150+ years" is the client's figure. The same claim is published in
+   * three other places — `intro`, `story.stats.yearsValue` and
+   * `pages.team.description` — and all three moved to 150+ with it
+   * (client decision, 2026-10-19). The 100+ in `achievements` is a
+   * different metric, financial models delivered, and stays as it is.
+   */
+  glance: {
+    /* The client's caps, kept — `.os-h--band` sets no text-transform, so this
+       is also what renders. The chapter labels below are stored sentence case
+       ("Where it started") because `.os-label` uppercases every one of them as
+       part of its tracked micro-label treatment; the caps on screen there are
+       CSS, the caps here are the copy. */
+    heading: "GAMCS AT A GLANCE",
+    items: [
+      { value: "2023", label: "Founded", count: false },
+      { value: "50+", label: "Team & delivery professionals", count: true },
+      {
+        value: "150+ years",
+        label: "Combined experience across our leadership and advisory team",
+        count: true,
+      },
+      { value: "3", label: "Office locations", count: true },
+      { value: "30+", label: "Businesses supported", count: true },
+      { value: "10+", label: "Countries served", count: true },
+    ],
+  },
   chapters: {
     start: {
       label: "Where it started",
-      heading: "The same college, the same qualification.",
-      body:
-        "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal, whose professional journey began in the same college, continued through their Chartered Accountancy qualification, and later brought them together in the corporate world.",
+      heading: "The same college. The same qualification. A shared ambition.",
+      body: [
+        "Gaurav and Abhinav's journey began in college and continued through their Chartered Accountancy qualification and corporate experience. Along the way, they developed complementary perspectives on finance, business performance and the role technology can play in making finance more effective.",
+        "In 2023, they brought those perspectives together to establish GA Management Consultants LLP, with a vision to help businesses connect financial expertise, data and technology to make better decisions.",
+      ],
+      /*
+       * The four years are the values the client verified. Their document
+       * carried a bracketed note to themselves above each one ("[COLLEGE YEARS
+       * — insert verified year or year range]"); those notes are an editing
+       * instruction, not copy, and are transcribed nowhere.
+       */
+      journey: {
+        heading: "Our journey",
+        entries: [
+          {
+            year: "2011",
+            label: "College",
+            body: "Where the founders first got to know each other and began their shared journey.",
+          },
+          {
+            year: "2014",
+            label: "Chartered Accountancy",
+            body: "A shared foundation in finance, analysis, discipline and problem-solving.",
+          },
+          {
+            year: "2017-2023",
+            label: "Corporate experience",
+            body: "Seeing how finance, business operations and decision-making intersect—and where they often disconnect.",
+          },
+          {
+            year: "2023",
+            label: "GAMCS is founded",
+            body: "Bringing finance, data and technology together to help businesses see beyond the numbers.",
+          },
+        ],
+      },
     },
+    saw: {
+      label: "What we saw",
+      heading:
+        "Reporting tells you what happened. Finance should help you decide what happens next.",
+      body:
+        "Financial information is essential, but producing reports is only part of the job. The real value lies in understanding what drives performance, identifying what needs attention, and helping leadership teams decide what to do next.",
+      /*
+       * Two states of one thing, drawn side by side. Every word here is now the
+       * client's — the previous version's two one-line summaries were ours,
+       * written because the copy had no second line to set.
+       */
+      from: {
+        label: "Conventional reporting",
+        question: "What happened? What changed?",
+        body: "Historical visibility is necessary—but it is not the finish line.",
+      },
+      to: {
+        label: "Decision-led finance",
+        question: "Why did it happen? What should we do next?",
+        body: "Insight connects financial performance to choices, actions and outcomes.",
+      },
+    },
+    build: {
+      label: "What we set out to build",
+      heading: "Finance, data and technology—working together.",
+      body:
+        "We built GAMCS around the belief that better decisions begin with reliable financial foundations, connected information and meaningful analysis.",
+      items: [
+        {
+          heading: "Financial expertise",
+          body: "Build strong foundations in planning, reporting, modelling and business performance—so the numbers can be relied on and understood.",
+        },
+        {
+          heading: "Data & technology",
+          body: "Connect systems, improve reporting processes and make information more accessible, consistent and useful.",
+        },
+        {
+          heading: "Insight & action",
+          body: "Turn financial and operational information into clear explanations, forward-looking perspectives and better-informed decisions.",
+        },
+      ],
+      /* What is left of the old "the name" chapter: one sentence, under the
+         three items, rather than a section of its own. */
+      note:
+        "The name GA brings together the initials of Gaurav and Abhinav—a simple reflection of the partnership and shared ambition behind the firm.",
+    },
+    founders: {
+      label: "The founders",
+      heading: "Two perspectives. One shared purpose.",
+      body:
+        "GAMCS brings strategic finance and technology-led transformation together, led by founders with complementary expertise and a shared commitment to execution.",
+      /* Both cards read the same line, so it is one string, not two. It is NOT
+         team.leadership[].title — that is each founder's full specialism line
+         and is what /team prints. This page prints the short role. */
+      role: "Co-Founder & Partner",
+      /*
+       * Keyed by `team.leadership[].name`, and that is the whole sync
+       * mechanism: the cards render the name, photo and alt text out of
+       * `team.leadership`, and look the bio up by the name they just rendered.
+       * Because both objects are `as const`, `bios[person.name]` only compiles
+       * while the two sets of names agree — rename a founder on the roster and
+       * `npx tsc` fails here instead of the page silently losing a paragraph.
+       */
+      bios: {
+        "Gaurav Malik":
+          "Gaurav focuses on strategic finance, FP&A, financial modelling, profitability analysis and transaction support. He works with leadership teams to improve performance visibility and turn financial analysis into practical business decisions.",
+        "Abhinav Aggarwal":
+          "Abhinav focuses on FP&A systems, BI and analytics, automation, and finance transformation. He works at the intersection of finance and technology, helping businesses streamline reporting and build more effective finance capabilities.",
+      },
+      /* Title case, and deliberately not `sections.fullTeam` ("Meet the full
+         team"): this is the client's wording for this page. */
+      cta: "Meet the Full Team",
+    },
+    future: {
+      label: "Where we're going",
+      heading: "See beyond the numbers.",
+      body: [
+        "Our journey continues with a clear purpose: helping businesses build stronger finance functions, understand performance more deeply, and turn insight into decisions and measurable impact.",
+        "Whether the need is to strengthen finance foundations, improve reporting, connect data or support strategic decisions, we believe the right next step begins with understanding the business.",
+      ],
+      principles: [
+        {
+          heading: "Practical by design",
+          body: "Advice should lead to action, and solutions should fit the realities of the business.",
+        },
+        {
+          heading: "Connected thinking",
+          body: "Finance, data and technology work best when they are designed together.",
+        },
+        {
+          heading: "Built around the business",
+          body: "No cookie-cutter templates; focus on the operating model and decisions that matter.",
+        },
+        {
+          heading: "Impact over activity",
+          body: "Measure success by better decisions and outcomes, not simply reports delivered.",
+        },
+      ],
+    },
+
+    /* ---- UNRENDERED from here down -------------------------------------
+       Retired with the 2026-10-19 rewrite. Kept because retired copy stays in
+       this module; NOTHING on /who-we-are (or anywhere else) reads these three
+       — grep `chapters.passion`, `chapters.believe`, `chapters.name` before
+       assuming otherwise. ------------------------------------------------ */
+    /** UNRENDERED. Old chapter 02. */
     passion: {
       label: "A shared passion",
-      /* Not "A shared passion." — that repeated the label directly above it.
-         Lifted from the client's own sentence instead, like every other
-         chapter heading on this page. */
       heading: "Studied, qualified, and worked alongside each other.",
       body:
         "Having studied, qualified, and worked alongside each other, they developed a shared passion for Financial Planning & Analysis (FP&A), business intelligence, financial modelling, dashboards, and data-driven decision-making.",
     },
-    saw: {
-      label: "What they saw",
-      heading: "Beyond conventional reporting.",
-      body:
-        "Their experience in the corporate environment gave them a deeper understanding of how financial data, when interpreted effectively, can go beyond conventional reporting to become a powerful tool for strategic planning and business growth.",
-    },
-    name: {
-      label: "The name",
-      heading: "The initials, and the vision.",
-      /* Two sentences, so the chapter can set the vision and the naming as
-         separate paragraphs rather than one 400-character column. */
-      body: [
-        "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
-        "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
-      ],
-    },
+    /** UNRENDERED. Old chapter 05. */
     believe: {
       label: "What we believe",
       heading:
@@ -182,45 +444,27 @@ export const ourStory = {
       body:
         "By combining financial expertise, analytical thinking, technology, and a forward-looking perspective, we aim to empower businesses to transform complex financial information into actionable insights, informed decisions, and measurable business impact.",
     },
-    /* No body: the chapter is the two founder cards, which `team.leadership`
-       already carries. */
-    founders: {
-      label: "The founders",
-      /* Same correction as the passion chapter: the heading repeated its own
-         label. The founders' names are the client's words, from the sentence
-         that opens the story. */
-      heading: "Gaurav Malik and Abhinav Aggarwal.",
-    },
-    future: {
-      label: "Where we are going",
-      heading: "See beyond the numbers.",
-      body:
-        "Our journey is rooted in collaboration, driven by curiosity, and shaped by a commitment to helping businesses see beyond the numbers, make smarter decisions, and build a sustainable future.",
+    /** UNRENDERED. Old chapter 04; `chapters.build.note` replaced it. */
+    name: {
+      label: "The name",
+      heading: "The initials, and the vision.",
+      body: [
+        "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
+        "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
+      ],
     },
   },
-  /* The four places chapter one's sentence names, in the order it names them. */
-  markers: [
-    "College",
-    "Chartered Accountancy",
-    "The corporate floor",
-    /*
-     * Not a string of its own: the firm's legal name, by reference.
-     *
-     * export.mjs collapses rows with identical text into ONE cell carrying
-     * every code that uses it. Written out, this marker shared that cell with
-     * site.name — the brand name behind the logo, the page titles and the
-     * Organization schema — so editing the logo in the copy document would
-     * silently have rewritten the last step of this timeline. Spelling it
-     * "…LLP" only moved the collision onto site.legalName.
-     *
-     * The marker IS the company, so it should not be a second copy of the
-     * company's name that can drift from the first. It reads site.legalName
-     * and carries no manifest row; the legal name's own row is the one place
-     * it is edited.
-     */
-    site.legalName,
-  ],
-  /* The five the shared-passion sentence lists, in its order. */
+  /* The closing band. Its second button is `primaryCta` itself — the client's
+     secondary CTA here is "Schedule a Call", which is that button word for
+     word, and one conversion label beats two copies of it. */
+  closing: {
+    heading: "Better decisions begin with a clearer view.",
+    body:
+      "Tell us where your finance function needs to go. We'll help you identify the right next step—from stronger foundations to insight-led decisions.",
+    cta: { label: "Explore Our Solutions", href: "/solutions" },
+  },
+
+  /** UNRENDERED. The five the retired "shared passion" chapter listed. */
   disciplines: [
     "Financial Planning & Analysis (FP&A)",
     "Business intelligence",
@@ -228,36 +472,14 @@ export const ourStory = {
     "Dashboards",
     "Data-driven decision-making",
   ],
-  /*
-   * Both figures are read out of chapter one's sentence. They are NOT
-   * story.stats: that set is the homepage's, and "2023" reads "founded, in
-   * Gurugram" there. Same year, different point.
-   */
-  stats: [
-    { value: "2023", label: "the year the firm was founded" },
-    { value: "2", label: "founders, and the initials the firm carries" },
-  ],
-  /*
-   * Chapter three turns on one contrast, so the two states get drawn side by
-   * side. The labels are the client's words; `fromLine` and `toLine` are ours
-   * -- the only writing on this page that is not theirs, besides `scrollCue`
-   * and `secondaryCta`.
-   */
-  shift: {
-    fromLabel: "Conventional reporting",
-    fromLine: "What happened, and when.",
-    toLabel: "Strategic planning",
-    toLine: "Why it happened, and what to do.",
-  },
-  /* The four things the closing belief combines, in its order. */
+  /** UNRENDERED. The four the retired "what we believe" chapter combined;
+      `chapters.build.items` is the new copy's three, not these. */
   pillars: [
     "Financial expertise",
     "Analytical thinking",
     "Technology",
     "A forward-looking perspective",
   ],
-  /* Beside primaryCta ("Schedule a Call") at the end of the last chapter. */
-  secondaryCta: "See how we help",
 } as const;
 
 export const primaryCta = { label: "Schedule a Call", href: "/contact" } as const;
@@ -459,8 +681,13 @@ export const team = {
   headingLines: ["The people you call for", "Solutions you can trust"],
   /** Doc page 10. */
   h1: "Led by Operators Who've Sat in Your Seat",
-  body:
-    "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. Our team isn't generalist consultants — it's specialists in the specific problems CFOs and investment teams actually face.",
+  /* Two paragraphs in the page head under the H1, as the client sent them
+     (2026-10-19): what the firm is made of, then what it does with that. One
+     column of 330 characters was the version before, and it read as a block. */
+  body: [
+    "We bring together finance practitioners, experienced finance leaders and specialists in FP&A, business intelligence, finance transformation and transaction advisory.",
+    "We combine strategic perspective with hands-on execution to help businesses build stronger finance functions, understand performance and make better decisions.",
+  ],
   closingCta: "Want to work with this team directly?",
   /**
    * Names, titles, years of experience and locations are all from the copy
@@ -482,10 +709,16 @@ export const team = {
    * Transaction Advisory, Abhinav is Digital Transformation. Gaurav's alone
    * carries no "Specialist" — that is the client's wording, not an omission.
    */
+  /** The founders' portrait on the homepage Who-we-are block. */
+  foundersPhoto: "/team/founders-light.webp",
   /** Both founders, for the homepage Who-we-are block. Order matters:
       leadership[0] is on the left of the frame, [1] on the right, which is
-      what the alt text describes. */
-  foundersPhoto: "/team/founders-light.webp",
+      what the alt text describes.
+
+      `as const` on this array alone (the enclosing object cannot take it — it
+      has a getter): it narrows `name` to the two literals, which is what lets
+      /who-we-are look a founder's bio up by the name it just rendered and have
+      the compiler check the two sets of names still agree. */
   leadership: [
     {
       name: "Gaurav Malik",
@@ -520,7 +753,7 @@ export const team = {
         "His broader focus is on using technology not as an end in itself, but as an enabler of better finance processes, stronger analytical capability and faster decision-making. He is widely recognised for his ability to translate complex analysis into actionable insights and operate effectively with senior finance stakeholders.",
       ],
     },
-  ],
+  ] as const,
   /* Order is the client's: it is what the page prints, four to a row, and it
      is deliberately NOT the order of the 2026-09-28 write-up — that document
      reordered the six it showed, and the running order was kept as it was.
@@ -786,6 +1019,15 @@ export const contact = {
 
 export const footer = {
   logoLabel: "GA Management Consultants home",
+  /*
+   * The paragraph under the lockup. It used to be `intro`, which opens on the
+   * combined-years figure and so put a headline number in the footer of every
+   * page; the client sent this line for the footer on 2026-10-19. `intro` is
+   * unchanged and still carries the <meta> description, the manifest, the
+   * Organization schema and the homepage contact lead.
+   */
+  blurb:
+    "We connect finance, data and technology to help businesses understand performance, make better decisions and turn insight into impact.",
   logoAlt: "GA Management Consultants — the GA monogram in blue",
   headings: { explore: "Explore", solutions: "Solutions", legal: "Legal" },
   /** The accent link under the address, beside the email. */
@@ -794,26 +1036,33 @@ export const footer = {
   linkedinLabel: "LinkedIn",
   cookiePreferences: "Cookie Preferences",
   links: [
-    { label: "Who we are", href: "/#who-we-are" },
+    /* The Our Story page, not the homepage section it used to hit: the nav's
+       "Who we are" goes to the same place since the dropdowns came out. */
+    { label: "Who we are", href: "/who-we-are" },
     { label: "Solutions", href: "/solutions" },
     { label: "How we help", href: "/#how-we-help" },
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
     { label: "Careers", href: "/careers" },
+    /* These two were the Who We Are dropdown's other links. The footer is the
+       only place either is reachable from now. */
+    { label: "What clients say", href: "/#testimonials" },
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],
   /**
-   * The five pillar pages. Left as a literal rather than derived from
-   * `solutions[]` because that array is declared after `footer` in this file.
-   * Nothing checks that the two agree, so rename a pillar or a slug here too.
+   * The five pillar pages, labelled with each pillar's short client name
+   * (`solutions[].navLabel`) at the client's request. Left as a literal rather
+   * than derived from `solutions[]` because that array is declared after
+   * `footer` in this file. Nothing checks that the two agree, so a renamed
+   * pillar or slug has to be changed here too.
    */
   solutions: [
-    { label: "FP&A & CFO Advisory", href: "/solutions/fpa-cfo-advisory" },
-    { label: "Finance Team Extension", href: "/solutions/finance-team-extension" },
-    { label: "Digital Transformation", href: "/solutions/digital-transformation" },
-    { label: "Deal Advisory", href: "/solutions/deal-advisory" },
-    { label: "Training & Enablement", href: "/solutions/training-enablement" },
+    { label: "Advise", href: "/solutions/fpa-cfo-advisory" },
+    { label: "Build", href: "/solutions/finance-team-extension" },
+    { label: "Transform", href: "/solutions/digital-transformation" },
+    { label: "Transact", href: "/solutions/deal-advisory" },
+    { label: "Enable", href: "/solutions/training-enablement" },
   ],
   /**
    * Both are internal pages describing what this build actually does with
@@ -905,13 +1154,40 @@ export const faq = {
  * the file lacks — `metaDescription` here, and the hub's blurbs, title tag
  * and meta description — which is the site's own, reworded for five pillars.
  *
- * The five pages do not share one rigid shape (Finance Team Extension carries
- * a build sequence and a numbers strip, Digital Transformation two arms), so
+ * Every pillar's first block is now its capability groups, restructured from
+ * the client's document of 2026-10-19. The pages still do not share one rigid
+ * shape past that — Finance Team Extension carries a second list, a build
+ * sequence and a numbers strip, Training & Enablement a closing paragraph — so
  * each page is a list of typed blocks rather than a fixed set of fields.
  * ServicePageLayout renders whatever blocks a page declares, in order.
  * =================================================================== */
 
-export type ListItem = { lead: string; body: string };
+/**
+ * A row's detail, in exactly the three shapes the client's copy arrives in: a
+ * sentence of prose (`body`), a flat list of capability names (`items`), or —
+ * Transform alone — named sub-headings each carrying their own list
+ * (`subheads`). The capability groups take the list forms because the client's
+ * copy gives them sub-items, not prose, and inventing a sentence per group
+ * would be writing copy nobody approved.
+ *
+ * A union, not one record of optional fields, because the shape the optional
+ * version also permitted was `{ lead }` alone — a row that opens onto nothing.
+ * No member here is satisfiable without content, and the non-empty tuples stop
+ * `items: []` standing in for it. The one hole TypeScript cannot close is
+ * `body: ""`: there is no non-empty-string type, and a template-literal
+ * approximation would reject every real sentence or accept the empty one, so
+ * emptiness survives only as a literal pair of quotes.
+ *
+ * Writing a two-level row is unchanged — `{ lead, items: [...] }`, as before.
+ * Reading one is `"subheads" in item` / `"items" in item`: presence is the
+ * discriminant, so the copy carries no `kind` tag that only the renderer reads.
+ */
+type Subheading = { lead: string; items: [string, ...string[]] };
+
+export type ListItem =
+  | { lead: string; body: string }
+  | { lead: string; items: [string, ...string[]] }
+  | { lead: string; subheads: [Subheading, ...Subheading[]] };
 
 export type SolutionBlock =
   | { kind: "bullets"; heading: string; items: ListItem[] }
@@ -919,6 +1195,12 @@ export type SolutionBlock =
   | { kind: "prose"; heading: string; body: string }
   | { kind: "callout"; body: string }
   | { kind: "stats"; heading: string; items: { value: string; label: string }[] }
+  /* ponytail: no pillar declares `arms` since Transform was restructured on
+     2026-10-19 — this member, ServicePageLayout's branch for it and the
+     .service-arms/.service-arm rules in app/globals.css are all unreachable.
+     Kept because the retirement is a week old and the two-arm copy is still
+     on file under that pillar; delete all three together once the client has
+     signed off on the group layout. */
   | { kind: "arms"; items: { id: string; badge: string; intro: string; bullets: ListItem[]; callout?: string }[] };
 
 export type Solution = {
@@ -944,12 +1226,18 @@ export type Solution = {
 export const solutions: Solution[] = [
   {
     slug: "fpa-cfo-advisory",
-    navLabel: "FP&A & CFO Advisory",
+    /* The client's pillar name, 2026-10-19. Now the eyebrow above the pillar's
+       card (components/sections/PillarBlocks.tsx) and the footer's label for
+       it; it headed this pillar's column in the Solutions menu until the
+       dropdowns were removed. */
+    navLabel: "Advise",
     title: "FP&A & CFO Advisory",
     titleTag: "FP&A & CFO Advisory Services for CFOs & CXOs | GAMCS",
     metaDescription:
       "FP&A and CFO advisory — budgeting, forecasting, rolling cash flow models, RevOps forecasting, and board-ready reporting for growth companies and PE portfolios.",
-    h1: "FP&A That Moves at the Speed of Your Business\u00a0— Not Your Month-End Close", // \u00a0 keeps the dash off the start of a balanced line
+    /* Client copy, 2026-10-19. Rendered as the card heading on /solutions
+       and as the H1 of /solutions/fpa-cfo-advisory. */
+    h1: "Strategic Finance, FP&A & CFO Advisory",
     intro:
       "Call it FP&A advisory, call it CFO advisory — it's the same seat at the table. If your finance team is still built for controllership and statutory reporting, you already have a strategic gap. Financial statements tell you what happened. This is where you get told what to do about it.",
     tagline: "CFO-level budgeting, forecasting, and rolling models.",
@@ -958,31 +1246,74 @@ export const solutions: Solution[] = [
       body:
         "Month-end close eating 10–15 days. Board packs stitched together the night before. Cash visibility that's stale within a week. Forecasts that don't survive the first bad month.",
     },
+    /* Exactly the three capability-group leads below, in order. Three surfaces
+       read this array — the detail page's glance list, the homepage accordion
+       chips and the Solutions nav column — so keeping it in step with the
+       groups is what makes all three name the same three things. */
     atAGlance: [
-      "FP&A & CFO Advisory",
-      "Budgeting & Forecasting",
-      "Rolling Cash Flow Models",
-      "Revenue/RevOps Forecasting",
-      "Accelerated Month-End Close",
-      "Scenario & Sensitivity Analysis",
-      "Variance Analysis & Commentary",
-      "Tiered Delivery (Excel → BI → Enterprise FP&A)",
+      "CFO & Strategic Finance Advisory",
+      "FP&A & Performance Management",
+      "Financial Modelling & Business Planning",
     ],
     blocks: [
       {
         kind: "bullets",
         heading: "What you get",
+        /* Client restructure, 2026-10-19 (verbatim). Three capability groups,
+           each a plain list of sub-items, replacing the seven prose bullets
+           this pillar used to carry. "Modelling" is British on purpose — it is
+           the client's spelling. The A/B/C letters in the client's document
+           are ordering only and must not render. */
         items: [
-          { lead: "CFO-level strategic advisory", body: "a senior finance point of view on what the numbers mean, not just the numbers themselves: what the forecast implies for hiring, runway, pricing, and the next raise." },
-          { lead: "Budgeting, forecasting & rolling models", body: "annual, medium-term, and long-term plans, plus dynamic re-forecasting and 13-week rolling cash flow." },
-          { lead: "Revenue forecasting tied to RevOps", body: "pipeline-driven revenue models built on the same CAC, ROAS, and channel data your dashboards already track, so sales and finance forecast off one number, not two (see Digital Transformation's Analytics & Warehousing arm)." },
-          { lead: "Accelerated month-end close & real-time visibility", body: "faster close cycles and management reporting that's current, not three weeks stale. (Day-to-day bookkeeping and close execution runs through Finance Team Extension; this is where it becomes forward-looking analysis.)" },
-          { lead: "Scenario & sensitivity analysis", body: "best/base/worst-case modeling for the decisions that matter." },
-          { lead: "Variance analysis with real commentary", body: "line-item packs that explain why, built for boards and lenders." },
-          { lead: "A delivery model matched to your stage", body: "Excel-based FP&A live in 2–3 weeks for early-stage teams; Power BI/Tableau-driven planning for growth-stage; full enterprise FP&A for mature and PE-backed platforms (see Digital Transformation if you need the platform stood up first)." },
+          {
+            lead: "CFO & Strategic Finance Advisory",
+            items: [
+              "CFO Advisory & Strategic Decision Support",
+              "Finance Strategy & Operating Model",
+              "Strategic Planning & Business Performance",
+              "Profitability Improvement & Unit Economics",
+              "Cash Flow Forecasting & Visibility",
+              "Working Capital Management",
+              "Board & Investor Reporting",
+            ],
+          },
+          {
+            lead: "FP&A & Performance Management",
+            items: [
+              "Annual Budgeting & Annual Operating Plans (AOP)",
+              "Financial Forecasting & Rolling Forecasts",
+              "Driver-Based Planning & Scenario Analysis",
+              "Budget vs. Actuals & Variance Analysis",
+              "KPI Frameworks & Performance Management",
+            ],
+          },
+          {
+            lead: "Financial Modelling & Business Planning",
+            items: [
+              "Integrated Financial Modelling",
+              "Business Plans & Long-Range Planning",
+              "Revenue, Pricing & Unit Economics Modelling",
+              "Sensitivity Analysis & What-If Scenarios",
+              "Investment Appraisal & Business Case Modelling",
+              "Strategic Decision Modelling",
+            ],
+          },
         ],
       },
     ],
+    /* The seven prose bullets the groups above replaced, retained because the
+       new structure silently drops two cross-references the rest of the site
+       still assumes — Digital Transformation's Analytics & Warehousing arm, and
+       the Excel → Power BI/Tableau → enterprise delivery tiering. Kept as a
+       comment rather than as an unused field: a comment is the only form of
+       "retained" that cannot accidentally render.
+       - CFO-level strategic advisory: a senior finance point of view on what the numbers mean, not just the numbers themselves: what the forecast implies for hiring, runway, pricing, and the next raise.
+       - Budgeting, forecasting & rolling models: annual, medium-term, and long-term plans, plus dynamic re-forecasting and 13-week rolling cash flow.
+       - Revenue forecasting tied to RevOps: pipeline-driven revenue models built on the same CAC, ROAS, and channel data your dashboards already track, so sales and finance forecast off one number, not two (see Digital Transformation's Analytics & Warehousing arm).
+       - Accelerated month-end close & real-time visibility: faster close cycles and management reporting that's current, not three weeks stale. (Day-to-day bookkeeping and close execution runs through Finance Team Extension; this is where it becomes forward-looking analysis.)
+       - Scenario & sensitivity analysis: best/base/worst-case modeling for the decisions that matter.
+       - Variance analysis with real commentary: line-item packs that explain why, built for boards and lenders.
+       - A delivery model matched to your stage: Excel-based FP&A live in 2–3 weeks for early-stage teams; Power BI/Tableau-driven planning for growth-stage; full enterprise FP&A for mature and PE-backed platforms (see Digital Transformation if you need the platform stood up first). */
     seeItInAction: {
       heading: "See it in action",
       paragraphs: [
@@ -994,12 +1325,18 @@ export const solutions: Solution[] = [
   },
   {
     slug: "finance-team-extension",
-    navLabel: "Finance Team Extension",
+    /* Client pillar name, 2026-10-19 — the short form, as for Advise. The
+       pillar's `title` is still "Finance Team Extension": that is what the
+       homepage accordion and the title tag print, and the client restructured
+       the pillar's contents, not its name. */
+    navLabel: "Build",
     title: "Finance Team Extension",
     titleTag: "Finance Staffing, Offshoring & Centers of Excellence for PE/VC | GAMCS",
     metaDescription:
       "Finance team extension: staffing, Employer of Record, offshoring, and CoE or GCC builds — embedded finance teams for PE/VC portfolios and advisory firms.",
-    h1: "One Team, Every Portfolio Company, One View",
+    /* Client copy, 2026-10-19. The card heading on /solutions and the H1 of
+       /solutions/finance-team-extension. */
+    h1: "Finance Managed Services & Workforce Solutions",
     intro:
       "Most PE and VC portfolios have reporting. Very few have strategic FP&A depth, or a consistent way to add finance capacity as they grow. Each portfolio company runs a different ERP, a different chart of accounts, and different KPI definitions — so comparing performance across the fund becomes a manual reconciliation exercise every quarter, and every headcount decision starts from scratch.",
     tagline: "Staffing, EoR, offshoring, CoE, and GCC builds.",
@@ -1008,27 +1345,69 @@ export const solutions: Solution[] = [
       body:
         "We extend your finance team however that's actually needed — staff augmentation, Employer of Record (EoR), full offshoring or outsourcing of a function, or a dedicated, standardized Center of Excellence / Global Capability Center (GCC) — embedded in your (or your portfolio companies') finance operations and standardized around one methodology, so your investment committee finally gets an apples-to-apples view across the fund.",
     },
+    /* The three capability-group leads below, in order — same contract as
+       Advise: the glance list, the accordion chips and the nav column all read
+       this array, so it is what makes the three surfaces name one set. */
     atAGlance: [
-      "Staffing & Staff Augmentation",
-      "Employer of Record (EoR)",
-      "Offshoring & Outsourcing",
-      "Centers of Excellence (CoE)",
-      "GCC Builds",
-      "Accounting, Bookkeeping & Close",
-      "Multi-Entity, Multi-GAAP Delivery",
-      "Standardized Portfolio-Wide KPI Framework",
+      "Finance Workforce Solutions",
+      "Managed Finance Services",
+      "Finance Operating Models",
     ],
     blocks: [
       {
         kind: "bullets",
+        /* Not restructured: the client gave new contents for this block, not a
+           new heading for it, and "Finance Team Extension" is still this
+           pillar's `title`. */
         heading: "What Finance Team Extension looks like",
+        /* Client restructure, 2026-10-19 (verbatim). Three capability groups
+           replacing the four prose bullets retained below. British spellings
+           (Optimisation, Standardisation) and every parenthetical — (EoR),
+           (AP), (AR), (CoE), (GCC) — are the client's. The A/B/C letters in
+           their document are ordering only and must not render. */
         items: [
-          { lead: "Staffing & staff augmentation", body: "dedicated finance and analytics professionals who plug directly into your existing team and reporting lines, scaled up or down as the engagement needs." },
-          { lead: "Employer of Record (EoR)", body: "hire the person you want, wherever they are, without standing up a local entity yourself." },
-          { lead: "Offshoring & outsourcing of functions", body: "hand off an entire function (accounting, bookkeeping, close, reporting) to a dedicated offshore team, not just individual seats." },
-          { lead: "Centers of Excellence (CoE) & GCC builds", body: "a full, standardized finance, analytics, and automation capability center, run to one methodology across every entity or portfolio company it serves." },
+          {
+            lead: "Finance Workforce Solutions",
+            items: [
+              "Team Extension & Staff Augmentation",
+              "Employer of Record (EoR) & Employment Solutions",
+              "Specialist Finance Resource Deployment",
+              "Offshore Finance Teams",
+            ],
+          },
+          {
+            lead: "Managed Finance Services",
+            items: [
+              "Finance & Accounting Outsourcing",
+              "FP&A Managed Services",
+              "Month-End Close & Financial Reporting Support",
+              "Accounting & Bookkeeping",
+              "Financial Consolidation",
+              "Accounts Payable (AP) & Accounts Receivable (AR) Support",
+            ],
+          },
+          {
+            lead: "Finance Operating Models",
+            items: [
+              "Finance Centres of Excellence (CoE)",
+              "Global Capability Centre (GCC) Setup & Support",
+              "Offshore Finance Operating Models",
+              "Finance Process Standardisation & Documentation",
+              "Finance Operations Optimisation",
+            ],
+          },
         ],
       },
+      /* Retained, rendered nowhere. The four prose bullets the groups above
+         replaced, and the client's own "Our approach" sentence, which they
+         asked to keep on file without publishing. A block comment is the only
+         form of "retained" that cannot accidentally reach a page — an unused
+         field is one `.map` away from rendering.
+         - Staffing & staff augmentation: dedicated finance and analytics professionals who plug directly into your existing team and reporting lines, scaled up or down as the engagement needs.
+         - Employer of Record (EoR): hire the person you want, wherever they are, without standing up a local entity yourself.
+         - Offshoring & outsourcing of functions: hand off an entire function (accounting, bookkeeping, close, reporting) to a dedicated offshore team, not just individual seats.
+         - Centers of Excellence (CoE) & GCC builds: a full, standardized finance, analytics, and automation capability center, run to one methodology across every entity or portfolio company it serves.
+         Our approach: Provide flexible finance talent, managed execution and scalable operating models—from a single specialist to a dedicated finance team or Centre of Excellence. */
       {
         kind: "bullets",
         heading: "What our CoE / GCC teams run day to day",
@@ -1071,63 +1450,142 @@ export const solutions: Solution[] = [
   },
   {
     slug: "digital-transformation",
-    navLabel: "Digital Transformation",
+    navLabel: "Transform",
     title: "Digital Transformation",
     titleTag: "Digital Transformation for Finance | ERP, CRM, FP&A Tools & Analytics | GAMCS",
     metaDescription:
       "Digital transformation for finance: ERP, CRM, and FP&A platform implementation, in-house Finsensor AI software, data warehousing, and real-time BI dashboards.",
-    h1: "Two Arms, One Pillar: The Tools You Run On, and the Insight You Get Out of Them",
+    /* Client copy, 2026-10-19. The two-arm presentation this pillar led with
+       is retired below, so the H1 no longer announces two arms. `intro` is
+       unchanged by the client's instruction and still names the two halves
+       "Tools" and "Analytics & Warehousing" — the groups below are the same
+       two halves under the names the client now uses for them. */
+    h1: "Digital Finance Transformation",
     intro:
       "Buying enterprise software solves nothing on its own, and a dashboard is only as good as the data feeding it. Digital Transformation covers both halves of that problem: Tools — implementing the ERP, CRM, and FP&A platforms your business actually runs on — and Analytics & Warehousing — turning the data those platforms produce into real-time dashboards and decision intelligence. We're platform-agnostic on the third-party side, and we also build our own, in-house, through our Finsensor AI software.",
     tagline: "Tools plus real-time analytics, implemented and built in-house.",
-    atAGlance: [
-      "ERP Implementation",
-      "CRM Implementation",
-      "FP&A Platform Implementation",
-      "In-House Software (Finsensor AI)",
-      "Custom Software Development",
-      "Data Warehousing & Cloud Infrastructure",
-      "Real-Time Dashboards",
-      "RevOps & Revenue Analytics",
-      "Predictive & AI-Assisted Analytics",
-    ],
+    atAGlance: ["Technology & Platforms", "Data, Analytics & Intelligence"],
     blocks: [
       {
-        kind: "arms",
+        kind: "bullets",
+        /* "What you get" is Advise's and Transact's heading for the same block;
+           the retired two-arm layout carried no heading of its own, so this
+           reuses an approved string rather than inventing a sixth one. */
+        heading: "What you get",
+        /* Client restructure, 2026-10-19 (verbatim). The only pillar whose copy
+           has three levels: two capability groups, each a set of sub-headings,
+           each of those a list of platforms or capabilities. British spellings
+           (Optimisation, Modelling, Visualisation) are the client's, as is
+           "FinSensor AI" with a capital S — the older "Finsensor" spelling
+           survives in this pillar's `intro` and `metaDescription`, which the
+           client left unchanged. The A/B/C letters and 1./2./3. numbers in
+           their document are ordering only and must not render. */
         items: [
           {
-            id: "tools",
-            badge: "Arm 1 — Tools",
-            intro:
-              "Third-party platforms, implemented by people who actually use them — not just sell them. Half the value of an ERP, CRM, or FP&A platform gets lost in a bad implementation — a chart of accounts that doesn't match how you actually run the business, a CRM nobody trained the sales team to use, or a forecasting tool configured for data entry instead of real planning. We're platform-agnostic on purpose: we implement whatever's right for your business, not the tool we happen to have a reseller relationship with.",
-            bullets: [
-              { lead: "ERP Implementation & Optimization", body: "Oracle NetSuite, Oracle Fusion, Odoo, Zoho, SAP, QuickBooks, and others, configured around your actual chart of accounts and reporting needs." },
-              { lead: "CRM Implementation", body: "primarily Salesforce, configured so your revenue and pipeline data actually connects to your financial reporting — the foundation for RevOps and revenue analytics, not just a system of record for sales." },
-              { lead: "FP&A Platform Implementation", body: "Anaplan, Aimplan, Jedox, Prophix, Pigment, Vena, Unit4, PivotXL, and beyond. If your team already has a preferred platform, we work in it." },
-              { lead: "Our own in-house software — Finsensor AI", body: "where a third-party platform doesn't fit, we bring our own purpose-built finance software, developed in-house rather than licensed off the shelf." },
-              { lead: "Custom Software Development", body: "when no off-the-shelf tool fits the gap, we build bespoke tools instead of forcing a workaround." },
-              { lead: "Post-Go-Live Support", body: "we don't disappear after go-live; ongoing optimization and troubleshooting as your usage — and your business — matures." },
+            lead: "Technology & Platforms",
+            subheads: [
+              {
+                lead: "ERP Selection, Implementation & Optimisation",
+                items: ["Oracle NetSuite", "Oracle Fusion", "SAP", "Odoo", "Zoho"],
+              },
+              {
+                lead: "CRM Implementation & Integration",
+                items: ["Salesforce"],
+              },
+              {
+                lead: "FP&A / Enterprise Performance Management (EPM) Platforms",
+                items: ["Anaplan", "Aimplan", "Jedox", "Prophix", "Pigment", "Vena"],
+              },
+              {
+                lead: "Finance Technology & Systems",
+                items: [
+                  "Finance Systems Integration",
+                  "ERP / CRM / FP&A Platform Integration",
+                  "Finance Process Automation",
+                  "Proprietary Finance Technology — FinSensor AI",
+                ],
+              },
             ],
-            callout:
-              "Platform-agnostic, on purpose. We don't have a reseller margin riding on which system you choose — our incentive is that it works for you, not that you buy a specific license.",
           },
           {
-            id: "analytics",
-            badge: "Arm 2 — Analytics & Warehousing",
-            intro:
-              "Real-time dashboards that replace the manual board deck. Financial statements are backward-looking by definition. By the time a problem shows up in the P&L, the window to act on it has already closed. This is where that gap closes.",
-            bullets: [
-              { lead: "Data Warehousing & Cloud Infrastructure", body: "Azure, AWS, and Google Cloud/Microsoft Fabric foundations, so the analytics layer on top has clean, reliable data to work from." },
-              { lead: "Real-time interactive dashboards", body: "Power BI and Tableau, connected directly to your ERP, CRM, and HR systems, refreshing automatically." },
-              { lead: "RevOps & revenue analytics", body: "CAC, ROAS, pipeline velocity, and channel-level revenue attribution that give sales, marketing, and finance one shared view of revenue performance." },
-              { lead: "Operational analytics tied to the P&L", body: "project/customer profitability, utilization and cohort analysis, retention and LTV." },
-              { lead: "Stakeholder & board reporting", body: "board decks, investor updates, and lender/covenant tracking generated automatically instead of assembled by hand every cycle." },
-              { lead: "KPI tracking & benchmarking", body: "balanced scorecards, OKRs, and industry benchmarking." },
-              { lead: "AI built in, not bolted on", body: "anomaly detection, predictive cash-stress modeling (4–8 week liquidity forecasts), and automated commentary baked into every dashboard from day one, cutting manual analysis time by roughly 70%." },
+            lead: "Data, Analytics & Intelligence",
+            subheads: [
+              {
+                lead: "Data Foundation",
+                items: [
+                  "Data Engineering & Warehousing",
+                  "Data Integration & Modelling",
+                  "Data Pipeline Automation",
+                  "Data Quality & Governance",
+                ],
+              },
+              {
+                lead: "Business Intelligence & Reporting",
+                items: [
+                  "Power BI & Tableau Dashboards",
+                  "Executive & Management Dashboards",
+                  "Management Reporting Automation",
+                  "KPI Frameworks & Performance Visualisation",
+                ],
+              },
+              {
+                lead: "Advanced Analytics",
+                items: [
+                  "Revenue & Customer Analytics",
+                  "Profitability & Cost Analytics",
+                  "Operational & Spend Analytics",
+                  "Working Capital Analytics",
+                  "Scenario & Driver Analysis",
+                ],
+              },
+              {
+                lead: "AI & Decision Intelligence",
+                items: [
+                  "AI-Enabled Finance",
+                  "Anomaly Detection & Intelligent Alerts",
+                  "Predictive Analytics & Forecasting",
+                  "Automated Commentary & Reporting Insights",
+                  "Decision Support & Performance Intelligence",
+                ],
+              },
             ],
           },
         ],
       },
+      /* Retained, rendered nowhere. The whole two-arm presentation this pillar
+         led with — the "arms" block's badges, arm intros, its 13 bullets and
+         its platform-agnostic callout — plus the client's own "Our approach"
+         sentence, which they asked to keep on file without publishing. The
+         groups above are the same two halves of the pillar under the names the
+         client now uses. A block comment is the only form of "retained" that
+         cannot accidentally reach a page.
+
+         Arm 1 — Tools
+         Third-party platforms, implemented by people who actually use them — not just sell them. Half the value of an ERP, CRM, or FP&A platform gets lost in a bad implementation — a chart of accounts that doesn't match how you actually run the business, a CRM nobody trained the sales team to use, or a forecasting tool configured for data entry instead of real planning. We're platform-agnostic on purpose: we implement whatever's right for your business, not the tool we happen to have a reseller relationship with.
+         - ERP Implementation & Optimization: Oracle NetSuite, Oracle Fusion, Odoo, Zoho, SAP, QuickBooks, and others, configured around your actual chart of accounts and reporting needs.
+         - CRM Implementation: primarily Salesforce, configured so your revenue and pipeline data actually connects to your financial reporting — the foundation for RevOps and revenue analytics, not just a system of record for sales.
+         - FP&A Platform Implementation: Anaplan, Aimplan, Jedox, Prophix, Pigment, Vena, Unit4, PivotXL, and beyond. If your team already has a preferred platform, we work in it.
+         - Our own in-house software — Finsensor AI: where a third-party platform doesn't fit, we bring our own purpose-built finance software, developed in-house rather than licensed off the shelf.
+         - Custom Software Development: when no off-the-shelf tool fits the gap, we build bespoke tools instead of forcing a workaround.
+         - Post-Go-Live Support: we don't disappear after go-live; ongoing optimization and troubleshooting as your usage — and your business — matures.
+         Callout: Platform-agnostic, on purpose. We don't have a reseller margin riding on which system you choose — our incentive is that it works for you, not that you buy a specific license.
+
+         Arm 2 — Analytics & Warehousing
+         Real-time dashboards that replace the manual board deck. Financial statements are backward-looking by definition. By the time a problem shows up in the P&L, the window to act on it has already closed. This is where that gap closes.
+         - Data Warehousing & Cloud Infrastructure: Azure, AWS, and Google Cloud/Microsoft Fabric foundations, so the analytics layer on top has clean, reliable data to work from.
+         - Real-time interactive dashboards: Power BI and Tableau, connected directly to your ERP, CRM, and HR systems, refreshing automatically.
+         - RevOps & revenue analytics: CAC, ROAS, pipeline velocity, and channel-level revenue attribution that give sales, marketing, and finance one shared view of revenue performance.
+         - Operational analytics tied to the P&L: project/customer profitability, utilization and cohort analysis, retention and LTV.
+         - Stakeholder & board reporting: board decks, investor updates, and lender/covenant tracking generated automatically instead of assembled by hand every cycle.
+         - KPI tracking & benchmarking: balanced scorecards, OKRs, and industry benchmarking.
+         - AI built in, not bolted on: anomaly detection, predictive cash-stress modeling (4–8 week liquidity forecasts), and automated commentary baked into every dashboard from day one, cutting manual analysis time by roughly 70%.
+
+         Our approach: Connect systems, integrate data, automate reporting and apply analytics and AI to help finance move from collecting information to generating actionable intelligence.
+
+         The two arm headings carried id="tools" and id="analytics", the fragment
+         targets of two permanent redirects in next.config.mjs (lines 20–21).
+         Nothing on the page has those ids now, so those two retired URLs land
+         at the top of this page instead of at the matching half. */
     ],
     seeItInAction: {
       heading: "See it in action",
@@ -1141,37 +1599,76 @@ export const solutions: Solution[] = [
   },
   {
     slug: "deal-advisory",
-    navLabel: "Deal Advisory",
+    navLabel: "Transact",
     title: "Deal Advisory",
     titleTag: "Deal Advisory | M&A, IPO Advisory, Due Diligence & Debt Refinancing | GAMCS",
     metaDescription:
       "Deal advisory for CFOs, PE, and VC-backed companies — M&A, buy-side and sell-side due diligence, IPO readiness, debt refinancing, and investor/pitch decks.",
-    h1: "Deal-Ready Finance\u00a0— Before the Term Sheet, Not After",
+    /* Client copy, 2026-10-19. Their document has a stray leading space
+       before this line; it is not copy, so it is stripped. */
+    h1: "Transactions & Capital Advisory",
     intro:
       "The worst time to discover a gap in your financials is during due diligence, when a buyer, investor, or lead underwriter is already asking the hard questions. Most companies find out their numbers aren't deal-ready exactly when it matters most — mid-transaction, under time pressure, with leverage already shifting away from them.",
     tagline: "M&A, IPO readiness, due diligence, and debt refinancing.",
     atAGlance: [
-      "M&A Advisory",
-      "Financial Due Diligence",
-      "Quality of Earnings & Quality of Assets",
-      "Fundraise & Exit Readiness",
-      "Investor & Pitch Deck Preparation",
-      "Debt Refinancing Advisory",
-      "IPO Advisory",
+      "Transaction Advisory",
+      "Capital Advisory",
+      "Financial & Deal Readiness",
     ],
     blocks: [
       {
         kind: "bullets",
         heading: "What you get",
+        /* Client restructure, 2026-10-19 (verbatim). Three capability groups
+           replacing the six prose bullets retained below. British "Modelling"
+           and every parenthetical — (FDD), (M&A) — are the client's. The A/B/C
+           letters in their document are ordering only and must not render. */
         items: [
-          { lead: "M&A Advisory", body: "buy-side and sell-side support through diligence, negotiation, and close, from a team that's actually built the models, not just reviewed them." },
-          { lead: "Due Diligence & DD Support", body: "financial due diligence, quality of earnings (QoE) and quality of assets (QoA) analysis, risk assessment, and legal/compliance reviews." },
-          { lead: "Fundraise & Exit Readiness", body: "getting your financial house in order before you're in a data room: clean historicals, defensible forecasts, and a management pack that survives real scrutiny." },
-          { lead: "Investor & Pitch Deck Preparation", body: "the actual decks — fundraise pitch decks, investor updates, and board presentation materials — built on numbers your own diligence-ready models can defend." },
-          { lead: "Debt Refinancing Advisory", body: "preparing the financial package and providing negotiation support for a refinancing, so lenders see the same clean, defensible numbers a PE buyer or IPO underwriter would." },
-          { lead: "IPO Advisory", body: "readiness assessments and reporting infrastructure built to the standard public-market investors and regulators expect." },
+          {
+            lead: "Transaction Advisory",
+            items: [
+              "Financial Due Diligence (FDD)",
+              "Buy-Side & Sell-Side Transaction Support",
+              "Quality of Earnings Analysis",
+              "Mergers & Acquisitions (M&A) Support",
+              "Transaction Financial Modelling",
+              "Financial Performance & Deal Analysis",
+              "Transaction Readiness Support",
+            ],
+          },
+          {
+            lead: "Capital Advisory",
+            items: [
+              "IPO Readiness & Advisory",
+              "Fundraising Support",
+              "Investor Presentations & Financial Materials",
+              "Financial Modelling for Fundraising",
+              "Refinancing Support",
+              "Capital Structure & Financing Analysis",
+            ],
+          },
+          {
+            lead: "Financial & Deal Readiness",
+            items: [
+              "Financial Reporting Readiness",
+              "Business Plan & Valuation Modelling",
+              "Investor Reporting Support",
+              "Financial Analysis for Strategic Transactions",
+              "Post-Transaction Financial Integration Support",
+            ],
+          },
         ],
       },
+      /* Retained, rendered nowhere. The six prose bullets the groups above
+         replaced, and the client's own "Our approach" sentence, which they
+         asked to keep on file without publishing.
+         - M&A Advisory: buy-side and sell-side support through diligence, negotiation, and close, from a team that's actually built the models, not just reviewed them.
+         - Due Diligence & DD Support: financial due diligence, quality of earnings (QoE) and quality of assets (QoA) analysis, risk assessment, and legal/compliance reviews.
+         - Fundraise & Exit Readiness: getting your financial house in order before you're in a data room: clean historicals, defensible forecasts, and a management pack that survives real scrutiny.
+         - Investor & Pitch Deck Preparation: the actual decks — fundraise pitch decks, investor updates, and board presentation materials — built on numbers your own diligence-ready models can defend.
+         - Debt Refinancing Advisory: preparing the financial package and providing negotiation support for a refinancing, so lenders see the same clean, defensible numbers a PE buyer or IPO underwriter would.
+         - IPO Advisory: readiness assessments and reporting infrastructure built to the standard public-market investors and regulators expect.
+         Our approach: Strengthen financial analysis, reporting and transaction preparation so businesses and investors can approach critical capital and ownership events with greater confidence. */
     ],
     seeItInAction: {
       heading: "See it in action",
@@ -1184,37 +1681,60 @@ export const solutions: Solution[] = [
   },
   {
     slug: "training-enablement",
-    navLabel: "Training & Enablement",
+    navLabel: "Enable",
     title: "Training & Enablement",
     titleTag: "Finance Training & Corporate Enablement | FP&A, Tableau & More | GAMCS",
     metaDescription:
       "Training and enablement: corporate FP&A, modelling, Tableau, ESG, and analytics training, public MasterClasses via Thinking Bridge, and an FPI affiliation.",
-    h1: "Build the Capability In-House, Not Just the Deliverable",
+    h1: "Finance Capability Building & Enablement",
     intro:
       "Not every engagement should end with a dependency on us. Sometimes the highest-value thing we can do is train your existing finance team to run the models, dashboards, and frameworks themselves — and beyond client engagements, we teach this publicly too.",
     tagline: "Corporate training, public MasterClasses, and an FPI affiliation.",
-    atAGlance: [
-      "Corporate Finance Training",
-      "FP&A Training",
-      "Financial Modelling Training",
-      "Tableau & BI Training",
-      "ESG Training",
-      "Data Analytics for Finance Teams",
-      "Public MasterClasses (Thinking Bridge)",
-      "FPI Affiliation",
-    ],
+    atAGlance: ["Corporate Finance Training", "Finance Function Enablement"],
     blocks: [
       {
         kind: "bullets",
         heading: "Corporate training & enablement",
+        /* Client restructure, 2026-10-19 (verbatim). Two capability groups
+           replacing the five prose bullets retained below. British "Modelling"
+           is the client's. The A/B/C letters in their document are ordering
+           only and must not render. */
         items: [
-          { lead: "FP&A Training", body: "practical, hands-on training in budgeting, forecasting, and variance analysis frameworks your team can run independently." },
-          { lead: "Financial Modelling Training", body: "building bespoke, audit-ready models from scratch, not just filling in templates." },
-          { lead: "ESG Training", body: "reporting frameworks and metrics for teams building out ESG capability for the first time." },
-          { lead: "Tool-Based Finance Training", body: "hands-on enablement in whichever platform you're actually running (often paired with a Digital Transformation engagement)." },
-          { lead: "Data Analytics for Finance Professionals", body: "SQL and Python fundamentals aimed specifically at finance teams, not generic data science courses." },
+          {
+            lead: "Corporate Finance Training",
+            items: [
+              "FP&A & Financial Planning",
+              "Financial Modelling & Business Valuation",
+              "Budgeting, Forecasting & Scenario Planning",
+              "Power BI & Tableau for Finance",
+              "AI & Automation for Finance",
+              "Finance Business Partnering",
+              "Management Reporting & Performance Analysis",
+            ],
+          },
+          {
+            lead: "Finance Function Enablement",
+            items: [
+              "Finance Capability Assessment",
+              "Finance Process Design & SOP Development",
+              "Finance Team Upskilling",
+              "FP&A Operating Model & Ways of Working",
+              "Finance Systems & Tool Adoption",
+              "Change Management & Transformation Enablement",
+              "Finance Playbooks & Standard Operating Procedures",
+            ],
+          },
         ],
       },
+      /* Retained, rendered nowhere. The five prose bullets the groups above
+         replaced, and the client's own "Our approach" sentence, which they
+         asked to keep on file without publishing.
+         - FP&A Training: practical, hands-on training in budgeting, forecasting, and variance analysis frameworks your team can run independently.
+         - Financial Modelling Training: building bespoke, audit-ready models from scratch, not just filling in templates.
+         - ESG Training: reporting frameworks and metrics for teams building out ESG capability for the first time.
+         - Tool-Based Finance Training: hands-on enablement in whichever platform you're actually running (often paired with a Digital Transformation engagement).
+         - Data Analytics for Finance Professionals: SQL and Python fundamentals aimed specifically at finance teams, not generic data science courses.
+         Our approach: Equip finance professionals and teams with the skills, processes and tools needed to strengthen finance capabilities, embed new ways of working and sustain long-term transformation. */
       {
         kind: "prose",
         heading: "Beyond corporate engagements — our public courses",
@@ -1240,7 +1760,7 @@ export const solutionsHub = {
   h1: "Solutions Built for Every Stage of Finance.",
   /* `previews[].talkLabel` is each card's button on the hub: the card sends a
      visitor to a conversation, and the pillar's own page stays one click away
-     in the header's Solutions menu and in the footer. */
+     in the footer. */
   /* Same sentence, split so the trailing phrase can carry the accent tint.
      Kept alongside `h1` because the metadata title still wants it whole.
      The hub page sets `h1` whole, at display size over three lines; the
@@ -1260,11 +1780,11 @@ export const solutionsHub = {
   subhead:
     "From your first forecast to a fully embedded offshore team to getting deal-ready for a raise, refinancing, or exit — start where you are, and scale as you grow.",
   previews: [
-    { slug: "fpa-cfo-advisory", blurb: "CFO-level advisory, budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to your RevOps data — a forward-looking view instead of a rear-view mirror.", linkLabel: "Explore FP&A & CFO Advisory", talkLabel: "Talk to an FP&A specialist" },
-    { slug: "finance-team-extension", blurb: "Staff augmentation, Employer of Record, offshored functions, or a full CoE or GCC — accounting, bookkeeping, and reporting capacity for single companies, PE/VC portfolios, and advisory firms.", linkLabel: "Explore Finance Team Extension", talkLabel: "Talk to us about your team" },
-    { slug: "digital-transformation", blurb: "ERP, CRM, and FP&A platforms implemented agnostically or built in-house with Finsensor AI — plus the data warehousing and real-time dashboards that flag problems before they hit the P&L.", linkLabel: "Explore Digital Transformation", talkLabel: "Talk to a transformation specialist" },
-    { slug: "deal-advisory", blurb: "M&A advisory, IPO readiness, due diligence, debt refinancing, and investor/pitch deck preparation — so your numbers hold up under real scrutiny.", linkLabel: "Explore Deal Advisory", talkLabel: "Talk to a deal specialist" },
-    { slug: "training-enablement", blurb: "FP&A, financial modelling, Tableau, ESG, and data analytics training that builds lasting capability inside your own finance team — plus public MasterClasses through Thinking Bridge.", linkLabel: "Explore Training & Enablement", talkLabel: "Talk to a training specialist" },
+    { slug: "fpa-cfo-advisory", blurb: "Build a finance function that drives the business\u2014not just reports it.", linkLabel: "Explore FP&A & CFO Advisory", talkLabel: "Talk to an FP&A specialist" },
+    { slug: "finance-team-extension", blurb: "Build, extend or operate the finance capability you need\u2014without scaling overhead.", linkLabel: "Explore Finance Team Extension", talkLabel: "Talk to us about your team" },
+    { slug: "digital-transformation", blurb: "Connect systems, data and technology to transform how finance works.", linkLabel: "Explore Digital Transformation", talkLabel: "Talk to a transformation specialist" },
+    { slug: "deal-advisory", blurb: "Make your numbers ready for the moments that matter.", linkLabel: "Explore Deal Advisory", talkLabel: "Talk to a deal specialist" },
+    { slug: "training-enablement", blurb: "Build the capability to sustain transformation.", linkLabel: "Explore Training & Enablement", talkLabel: "Talk to a training specialist" },
   ],
 } as const;
 

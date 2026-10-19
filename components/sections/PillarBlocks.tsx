@@ -13,7 +13,7 @@ import Velaris from "@/components/ui/velaris";
  * plus an explanation. Nothing is authored here, so the page cannot drift from
  * /solutions/[slug]. The one exception is the button's label, which is the
  * preview's own `talkLabel`: the card sends a visitor to a conversation, and
- * the pillar's own page stays one click away in the header's Solutions menu.
+ * the pillar's own page stays one click away in the footer.
  *
  * Rows are native <details>/<summary>: keyboard operable, findable by the
  * browser's in-page search even when collapsed, and correct before hydration.
@@ -60,18 +60,15 @@ export default function PillarBlocks() {
   return (
     <div className="sol-pillars">
       {solutions.map((s, i) => {
-        /* The rows are the pillar's first `bullets` block. Team Extension has a
-           second one (what its CoE teams run day to day) and a `steps` process,
-           both left to the detail page. Digital Transformation has no `bullets`
-           block — its services sit in its two arms — so its rows are arm 1's
-           list, then arm 2's. */
+        /* The rows are the pillar's first `bullets` block: its capability
+           groups. All five pillars declare one, so there is no fallback — the
+           `arms` one this used to need went with Transform's two-arm layout.
+           Team Extension's second list (what its CoE teams run day to day) and
+           its `steps` process are left to the detail page. */
         const bullets = s.blocks.find(
           (b): b is Extract<SolutionBlock, { kind: "bullets" }> => b.kind === "bullets",
         );
-        const arms = s.blocks.find(
-          (b): b is Extract<SolutionBlock, { kind: "arms" }> => b.kind === "arms",
-        );
-        const rows = bullets?.items ?? arms?.items.flatMap((a) => a.bullets) ?? [];
+        const rows = bullets?.items ?? [];
         const preview = previewBySlug.get(s.slug);
         const paint = SHADER[s.slug] ?? SHADER_FALLBACK;
 
@@ -131,7 +128,43 @@ export default function PillarBlocks() {
                       {CHEVRON}
                     </summary>
                     <div className="sol-list-body">
-                      <p>{r.body}</p>
+                      {/* Three shapes, one panel: Transform's groups name
+                          sub-headings and list capabilities under each, the
+                          other four list capabilities directly, and a `steps`
+                          or prose row carries a sentence. */}
+                      {"subheads" in r ? (
+                        /* Transform's third level is a disclosure of its own,
+                           not a heading over an open list: its four sets hold
+                           34 names between them, and a group that spilled all
+                           of them at once buried the second group below the
+                           fold. Nested <details> is valid, and each one owns
+                           only its own panel. */
+                        <ul className="cap-subs">
+                          {r.subheads.map((sub) => (
+                            <li key={sub.lead}>
+                              <details>
+                                <summary>
+                                  <span>{sub.lead}</span>
+                                  {CHEVRON}
+                                </summary>
+                                <ul className="cap-list">
+                                  {sub.items.map((name) => (
+                                    <li key={name}>{name}</li>
+                                  ))}
+                                </ul>
+                              </details>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : "items" in r ? (
+                        <ul className="cap-list">
+                          {r.items.map((sub) => (
+                            <li key={sub}>{sub}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>{r.body}</p>
+                      )}
                     </div>
                   </details>
                 </li>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import CookiePreferencesLink from '@/components/CookiePreferencesLink';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { footer, intro, site } from '@/lib/content/gamcs';
+import { footer, site } from '@/lib/content/gamcs';
 
 /* ------------------------------------------------------------------ *
  * FlickeringText
@@ -213,9 +213,12 @@ const groups = [
 ];
 
 /* The address is optional in the content module, so the block renders only
-   when there is one. */
+   when there is one. Country, not postal code: the client's footer contact
+   line is "Gurugram, Haryana, India", and a footer is where a reader works
+   out which country the firm is in — the postal code belongs on /contact and
+   the map cards, where it is being used to get to the door. */
 const postal = site.address
-	? [site.address.locality, site.address.region, site.address.postalCode].filter(Boolean).join(', ')
+	? [site.address.locality, site.address.region, site.address.countryName].filter(Boolean).join(', ')
 	: '';
 
 const LinkedInMark = () => (
@@ -287,7 +290,7 @@ export function FlickeringFooter() {
 							/>
 							<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
 						</Link>
-						<p className="gf-intro mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{intro}</p>
+						<p className="gf-intro mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{footer.blurb}</p>
 						{site.address && (
 							<address className="gf-addr mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
 								{site.address.street}
@@ -395,14 +398,16 @@ export function FlickeringFooter() {
 			</div>
 
 			<div className="container">
-				<div className="gf-bottom grid gap-2 border-t border-line py-6 text-xs text-muted-foreground sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+				{/* One notice, not two: site.copyright now carries the legal name the
+				    way the client's footer document writes it, so the second cell that
+				    used to repeat `site.legalName` on its own row is gone — and with it
+				    the column literals that existed only to place the two beside each
+				    other. The phone rules in globals.css still give the Cookie
+				    Preferences button its own row. */}
+				<div className="gf-bottom grid gap-2 border-t border-line py-6 text-xs text-muted-foreground">
 					<span>{site.copyright}</span>
-					{/* Phone only, and mounted rather than hidden, so the grid above keeps
-					    exactly two cells at every width >=640 — the duplicated
-					    lg:grid-cols literal that aligns the copyright under the logo
-					    still describes what is actually in the row. */}
+					{/* Phone only, and mounted rather than hidden. */}
 					{phone && <CookiePreferencesLink className="gf-cookie" />}
-					<span className="sm:text-right lg:col-span-3">{site.legalName}</span>
 				</div>
 			</div>
 		</footer>

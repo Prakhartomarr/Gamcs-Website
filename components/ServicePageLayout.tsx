@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import AbstractPanel from "@/components/AbstractPanel";
 import SectionEyebrow from "@/components/SectionEyebrow";
@@ -146,9 +147,37 @@ function ServiceList({ items, numbered = false }: { items: ListItem[]; numbered?
           <span className="service-list-mark" aria-hidden="true">
             {numbered ? String(n + 1).padStart(2, "0") : "✦"}
           </span>
-          <span>
-            <strong>{item.lead}</strong> — {item.body}
-          </span>
+          {/* Transform's groups name sub-headings and list capabilities under
+              each; the other pillars' list capabilities directly; `steps` and
+              the retained prose rows carry a sentence. */}
+          {"subheads" in item ? (
+            <div>
+              <strong>{item.lead}</strong>
+              {item.subheads.map((sub) => (
+                <Fragment key={sub.lead}>
+                  <p className="cap-sub">{sub.lead}</p>
+                  <ul className="cap-list">
+                    {sub.items.map((name) => (
+                      <li key={name}>{name}</li>
+                    ))}
+                  </ul>
+                </Fragment>
+              ))}
+            </div>
+          ) : "items" in item ? (
+            <div>
+              <strong>{item.lead}</strong>
+              <ul className="cap-list">
+                {item.items.map((sub) => (
+                  <li key={sub}>{sub}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <span>
+              <strong>{item.lead}</strong> — {item.body}
+            </span>
+          )}
         </li>
       ))}
     </ul>

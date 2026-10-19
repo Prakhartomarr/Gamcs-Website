@@ -306,8 +306,6 @@ h1,h2,h3,p{margin-top:0}
 @media (scripting:none){
   .cl-grid > div{opacity:1!important;filter:none!important;transform:none!important}}
 
-/* Mobile nav open state — the original toggled these via inline JS styles. */
-
 /* Accessibility — honour reduced-motion (reveal content stays visible) */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;scroll-behavior:auto!important}
@@ -462,6 +460,12 @@ h1,h2,h3,p{margin-top:0}
 .page-head>.container{position:relative;z-index:2}
 .page-head h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch;text-wrap:balance}
 .page-head p{max-width:620px;color:var(--gray);font-size:0.9444rem;line-height:1.6;margin:0}
+/* margin:0 above is what the band wants between the H1 and the first
+   paragraph; a second one needs the gap put back or the two run together.
+   /team has three paragraphs in this band (two of intro, then the
+   mission) and /faq two; .faq-head-cta keeps its own 14px by
+   specificity, so this only changes the pairs that were flush. */
+.page-head p + p{margin-top:16px}
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
 .case-item:hover{border-color:#C3CCD1;box-shadow:0 24px 48px rgba(16,45,68,.11)}
@@ -492,15 +496,6 @@ h1,h2,h3,p{margin-top:0}
   .brand img{height:26px;width:auto}
   
   
-
-  /* drawer: full-width panel under the bar, generous targets */
-  .nav.open{display:flex;position:absolute;top:calc(100% + 6px);left:12px;right:12px;
-    flex-direction:column;align-items:stretch;gap:0;padding:8px;background:#fff;
-    border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 50px rgba(16,45,68,.16);z-index:60}
-  .nav.open a{min-height:52px;display:flex;align-items:center;padding:0 14px;
-    font-size:0.8889rem;font-weight:600;color:var(--charcoal);border-radius:12px}
-  .nav.open a:after{display:none}             /* underline sweep is a pointer affordance */
-  .nav.open a:active{background:var(--bg-soft)}
 
   /* pointer-only depth is switched off for touch */
   
@@ -595,7 +590,6 @@ h1,h2,h3,p{margin-top:0}
   /* the bar can't hold brand + CTA + burger at this width; the same CTA sits in
      the hero directly below and at the foot of the drawer */
   
-  .nav.open{padding-bottom:8px}
   .shell{width:100%;margin:0}
   /* the hero is one viewport at every width now; it grows past that
      only if its own content needs the room */
@@ -647,62 +641,15 @@ h1,h2,h3,p{margin-top:0}
 }
 
 /* =====================================================================
-   HEADER — mega-menu navigation (Tiger Analytics pattern), GAMCS brand
+   HEADER — phone drawer. The bar's own links are styled by .nav, above.
    ===================================================================== */
 
-.nav-trigger{display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;white-space:nowrap;
-  font:600 0.7778rem var(--font-sans);letter-spacing:.01em;color:#5A6165;cursor:pointer;position:relative;
-  transition:color var(--dur-hover) var(--ease-out)}
-.nav-trigger:hover,.nav-trigger.is-open{color:var(--ink)}
-/* Solutions is a link plus a caret: the label navigates, the caret discloses
-   the panel. The link inherits the trigger's colour so the pair still reads as
-   one control, and the caret carries its own 24x44 target (WCAG 2.5.8) rather
-   than relying on the label's box. */
-.nav-trigger>a{color:inherit;text-decoration:none}
-.nav-caret{display:inline-flex;align-items:center;justify-content:center;
-  min-width:24px;min-height:44px;margin:-10px -4px -10px 0;padding:0;
-  background:none;border:0;color:inherit;cursor:pointer}
-.nav-caret:focus-visible{outline:2px solid var(--blue);outline-offset:-6px;border-radius:6px}
-.nav-trigger:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--blue);
-  transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-hover) var(--ease-out)}
-.nav-trigger:hover:after,.nav-trigger.is-open:after{transform:scaleX(1)}
-.nav-chev{width:11px;height:11px;transition:transform var(--dur-hover) var(--ease-out)}
-.nav-trigger.is-open .nav-chev{transform:rotate(180deg)}
-.nav-arrow{width:13px;height:13px;flex:none;opacity:.55}
-
-/* the panel drops from the bar, full width of the shell */
-.mega{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
-  box-shadow:0 26px 50px -20px rgba(16,45,68,.22);opacity:0;transform:translateY(-6px);pointer-events:none;
-  transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
-.mega.is-open{opacity:1;transform:translateY(0);pointer-events:auto}
-.mega-inner{width:min(1160px,calc(100% - 48px));margin:auto;display:grid;gap:44px;padding:34px 0 38px}
-.mega-1{grid-template-columns:minmax(0,320px)}
-.mega-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.mega-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.mega-head{display:inline-flex;align-items:center;gap:7px;font:700 0.7778rem var(--font-sans);letter-spacing:-.01em;
-  color:var(--blue);transition:color var(--dur-hover) var(--ease-out)}
-.mega-head:hover{color:var(--blue-dark)}
-.mega-head.as-label{color:#98A0A6;font-size:0.7222rem;letter-spacing:.16em;text-transform:uppercase}
-.mega-col ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:1px}
-.mega-col li a{display:block;padding:7px 0;font-size:0.8333rem;color:#5A6165;
-  transition:color var(--dur-hover) var(--ease-out),transform var(--dur-hover) var(--ease-out)}
-/* the hover nudge is a transform, not padding-left: animating padding reflowed the list */
-.mega-col li a:hover{color:var(--ink);transform:translateX(5px)}
-
-/* ---- mobile drawer with drill-down ---- */
-
 .drawer-list{list-style:none;margin:0;padding:0}
-.drawer-list li a,.drawer-list li button,.drawer-group-head,.drawer-group li a,.drawer-back{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:56px;
-  padding:0 6px;background:none;border:0;border-bottom:1px solid #EFF1F2;
-  font:600 0.9444rem var(--font-sans);color:var(--charcoal);text-align:left;cursor:pointer}
-.drawer-list li a:active,.drawer-list li button:active{background:var(--bg-soft)}
-.drawer-back{justify-content:flex-start;gap:8px;color:var(--blue);border-bottom:0;font-size:0.8889rem;min-height:48px}
-.drawer-back span{font-size:1.1667rem;line-height:1}
-.drawer-group{margin-top:14px}
-.drawer-group-head{color:var(--blue);font-size:0.8889rem}
-.drawer-group ul{list-style:none;margin:0;padding:0}
-.drawer-group li a{font-weight:500;font-size:0.8889rem;color:#5A6165}
+.drawer-list li a{
+  width:100%;display:flex;align-items:center;gap:10px;min-height:56px;
+  padding:0 6px;border-bottom:1px solid #EFF1F2;
+  font:600 0.9444rem var(--font-sans);color:var(--charcoal);text-align:left}
+.drawer-list li a:active{background:var(--bg-soft)}
 
 /* =====================================================================
    TEAM PAGE
@@ -711,18 +658,6 @@ h1,h2,h3,p{margin-top:0}
 .team-mission{color:var(--ink)!important;font-weight:600}
 
 .team-block .section-kicker{margin-bottom:18px}
-
-@media(min-width:768px) and (max-width:1279px){
-  
-  .mega{display:none}
-}
-@media(max-width:767px){
-  
-  
-  
-  
-  .mega{display:none}
-}
 
 /* --- brand wordmark (replaces the raster mark in the bar) --- */
 
@@ -792,12 +727,24 @@ html{font-size:112.5%}
 .contact-panel{border-radius:24px;box-sizing:border-box;
   border:1px solid rgba(6,32,55,.38);
   background:var(--flute-ground);
-  display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding:56px;min-height:480px}
+  /* The stage track is a fixed 520px, not `auto`: open, the office row leaves
+     it to span the panel (.locmaps[data-open="true"]), and an auto track
+     collapses to zero when it empties — which handed the 1fr beside it another
+     58px and re-wrapped the headline under the reader anywhere from 1280 to
+     1337, where the copy still sits below its 560px cap. Held at the stage's
+     own width, the copy measures the same in both states. */
+  display:grid;grid-template-columns:1fr 520px;gap:48px;align-items:center;padding:56px;min-height:480px}
 .contact-panel-copy{max-width:560px}
 .contact-panel-copy .btn{margin-top:28px}
 .contact-lead{margin:0;font:500 1.2222rem var(--font-sans);line-height:1.42;letter-spacing:-.02em;color:#fff}
 .contact-lead span{font-weight:500;color:#EAF4FF}
-.contact-panel-stage{width:520px;height:368px;display:flex;align-items:center;justify-content:center}
+/* 388, and anchored to the top rather than centred: the stage is a column of
+   disclosure (36) + gap (12) + card, and the card's open height is 340. At 368
+   centred, the group outgrew the box every time the card expanded, so the
+   disclosure travelled 80px upward and the card's bottom edge crossed 9px into
+   the panel's padding. Reserved to the open height, the expand runs downward
+   into slack the box already has and nothing above it moves. */
+.contact-panel-stage{width:520px;height:388px;display:flex;align-items:center;justify-content:flex-start}
 
 /* ---------- services accordion (homepage) ----------
    Five pillars on the left, one open at a time, beside a brand-blue card
@@ -868,7 +815,10 @@ html{font-size:112.5%}
   .svca{grid-template-columns:1fr;gap:34px}
   /* Stacked, the card's height feeds straight into the page height, and the
      panel's chip count differs per pillar — so it gets a floor too. Tallest:
-     Digital Transformation's nine chips, 364px here and 435px at a 320px phone. */
+     Digital Transformation's nine chips, 364px here and 435px at a 320px phone.
+     This floor and .svca-list's are what let the pillars auto-advance without
+     resizing the page; ServiceAccordion.tsx gates autoplay on the 768px
+     breakpoint below, where the floors stop applying. */
   .svca-card{min-height:440px;padding:28px;order:2}
   .svca-list{order:1}
 }
@@ -929,13 +879,27 @@ html{font-size:112.5%}
 .locmap-place{margin:0;font:700 0.8333rem var(--font-sans);letter-spacing:-.02em;color:var(--ink);
   transition:transform .3s var(--ease-out)}
 .locmap:hover .locmap-place{transform:translateX(4px)}
+/* visibility, not opacity alone: a zero-height opacity:0 block is still in
+   the accessibility tree and its link is still a tab stop, so a closed card
+   read out its whole address and put an unpaintable "Get directions" ahead of
+   the button that reveals it. visibility is in the transition list because it
+   interpolates to `visible` for the whole duration — the close still animates
+   and only flips hidden once it is over. */
 .locmap-addr{margin:0;font-size:0.6667rem;line-height:1.55;color:var(--ink-muted);font-style:normal;
-  max-height:0;opacity:0;overflow:hidden;
-  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out)}
-.is-open .locmap-addr{max-height:84px;opacity:1;margin-top:7px;transition-delay:.10s}
-.locmap-dir-row{max-height:0;opacity:0;overflow:hidden;
-  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out)}
-.is-open .locmap-dir-row{max-height:44px;opacity:1;margin-top:12px;transition-delay:.18s}
+  max-height:0;opacity:0;visibility:hidden;overflow:hidden;
+  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out),
+    visibility .35s var(--ease-out)}
+/* One clamp for every card in every state. 84px was four lines, which was the
+   whole address while a card was 480px wide and the firm name was not on it;
+   it now runs to six (112px measured on Noida at viewport 320, card 242px),
+   and a clamp raised only for the open row cut the PIN code off the registered
+   office in the state the panel actually loads in. 132px is that worst case
+   plus a line, and the card's height is fixed, so the slack costs no layout. */
+.is-open .locmap-addr{max-height:132px;opacity:1;visibility:visible;margin-top:7px;transition-delay:.10s}
+.locmap-dir-row{max-height:0;opacity:0;visibility:hidden;overflow:hidden;
+  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out),
+    visibility .35s var(--ease-out)}
+.is-open .locmap-dir-row{max-height:44px;opacity:1;visibility:visible;margin-top:12px;transition-delay:.18s}
 .locmap-dir{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 14px;border-radius:999px;
   background:var(--blue);color:#fff;font:700 0.6667rem var(--font-sans);letter-spacing:-.01em;pointer-events:auto;
   transition:background .2s var(--ease-out),gap .2s var(--ease-out)}
@@ -944,23 +908,105 @@ html{font-size:112.5%}
    from the keyboard, and the link stays clickable with no stopPropagation. */
 .locmap-toggle{position:absolute;inset:0;z-index:3;background:none;border:0;padding:0;cursor:pointer;
   border-radius:16px}
-.locmap-hint{position:absolute;left:50%;transform:translateX(-50%);bottom:-26px;margin:0;
-  font-size:0.6111rem;color:#C9DCEA;opacity:0;white-space:nowrap;transition:opacity .2s var(--ease-out)}
-.locmap:hover .locmap-hint{opacity:1}
+/* Always on, not hover-only: this is the card's only statement that it opens,
+   and on touch there is no hover to reveal it. It replaced a self-opening
+   "peek" that moved the card's state with no user input.
+   Measured from the card's centre line rather than the wrapper's bottom edge,
+   because below 1280 .locmap is a 340px box reserving the open height and the
+   closed card floats in the middle of it. */
+.locmap-hint{position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 99px);margin:0;
+  font-size:0.6111rem;color:#C9DCEA;white-space:nowrap;transition:opacity .2s var(--ease-out)}
 .locmap-card.is-open + .locmap-hint{opacity:0}
+
+/* ---------- the three offices (components/ui/office-maps.tsx) ----------
+   The wrapper IS .contact-panel-stage — the client component is the panel's
+   own grid item — so the open row can span the panel instead of being trapped
+   in the 520px the single card needs. Collapsed, nothing here changes that
+   box: one 320px card, centred in it, exactly as before. */
+.locmaps{flex-direction:column;gap:12px}
+/* Open, the stage takes both columns and the row runs under the copy. It has
+   to: at 1280 the panel is 1072px inside its padding, which leaves the stage
+   520px — 163px a card once the gaps are out, narrower than the "Get
+   directions" pill inside one. The copy keeps its width through this because
+   the track it vacates is a fixed 520px rather than `auto` (see
+   .contact-panel), so emptying it gives the 1fr beside it nothing. */
+/* align-items: the stage centres its one card, which is right while there is
+   one card. Open, the row runs the panel's full width and the disclosure
+   above it lines up with the copy's left edge instead of floating mid-panel. */
+.locmaps[data-open="true"]{grid-column:1/-1;width:auto;height:auto;align-items:flex-start}
+.locmaps-row{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;
+  gap:16px;width:100%}
+.locmaps[data-open="true"] .locmaps-row{grid-template-columns:repeat(3,minmax(0,1fr));
+  justify-items:stretch}
+/* In the row a card is its track, not its own 320/480. Only while the row is
+   three across: stacked, each card keeps the 480px cap the tablet and phone
+   widths give it, and this rule outscores that cap at every width unless the
+   query holds it off. */
+@media(min-width:1024px){
+  /* The 340px floor reserves the open height, so one card expanding cannot
+     shunt the other two and the panel's bottom edge down with them. */
+  .locmaps[data-open="true"] .locmap{width:100%;height:340px;
+    display:flex;align-items:center}
+}
+.locmaps[data-open="true"] .locmap-card,
+.locmaps[data-open="true"] .locmap-card.is-open{width:100%}
+/* The disclosure. Above the row and in the flow, never over a card:
+   .locmap-toggle already covers the card edge to edge, and a second button on
+   the same pixels is two controls in one place. */
+.locmaps-toggle{display:inline-flex;align-items:center;min-height:36px;padding:0 15px;
+  border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.34);
+  color:#fff;cursor:pointer;font:700 0.6667rem var(--font-sans);letter-spacing:-.01em;
+  transition:background .2s var(--ease-out),border-color .2s var(--ease-out)}
+.locmaps-toggle:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.62)}
+/* the panel is dark; the global --blue ring all but vanishes on it */
+.locmaps-toggle:focus-visible{outline-color:#fff}
+/* Two cards appear where there was one — they arrive rather than blink in.
+   Gated on no-preference, so the reduced-motion case needs no override to
+   undo. */
+@media(prefers-reduced-motion:no-preference){
+  .locmaps[data-open="true"] .locmaps-row > *:nth-child(n+2){
+    animation:locmaps-in .42s var(--ease-out) both}
+  .locmaps[data-open="true"] .locmaps-row > *:nth-child(3){animation-delay:.07s}
+  @keyframes locmaps-in{from{opacity:0;transform:translateY(10px)}}
+}
+/* 1023, which is where the width actually steps: the panel tracks Tailwind's
+   own .container ladder, so the container holds 920px from 1024 up and drops
+   to 768px at 1023 — a card goes 266px to 215px across that one pixel and
+   then stays flat at 215px however much narrower the viewport gets. 215px
+   wraps the address to six lines against the 266px card's five, so three
+   across stops at the step rather than 124px below it. */
+@media(max-width:1023px){
+  /* 30, not 16: stacked, the gap has to clear .locmap-hint, which hangs 26px
+     below its card. */
+  .locmaps[data-open="true"] .locmaps-row{grid-template-columns:minmax(0,1fr);gap:30px}
+  /* The 340px each card reserves for its open state is dead air three times
+     over once they are stacked — 500px of empty panel between three closed
+     cards. One above the other they size to themselves, and expanding one
+     pushes the ones below, which is what a stack of disclosures does anyway.
+     Scoped to the open row: the lone collapsed card keeps its reserve, which
+     is what stops the panel jumping as it expands in place. */
+  .locmaps[data-open="true"] .locmap{height:auto}
+}
 
 @media(max-width:1279px){
   .contact-panel{grid-template-columns:1fr;gap:0;padding:44px;min-height:0}
   /* Stacked, the card's expand would otherwise push everything below it down
      and back up for the whole animation. Reserving its open height keeps the
-     page still; the closed card sits centred in that space. */
+     page still; the closed card sits centred in that space. Above 1280 the
+     stage itself holds that reserve instead, so the disclosure stays put. */
   .locmap{height:340px;display:flex;align-items:center;justify-content:center}
   .contact-panel-copy{order:2;max-width:none}
-  .contact-panel-stage{order:1;width:auto;height:auto;justify-content:flex-start;margin-bottom:32px}
+  .contact-panel-stage{order:1;width:auto;height:auto;margin-bottom:32px}
   .locmap{width:min(480px,100%)}
   .locmap-card,.locmap-card.is-open{width:100%}
   .locmap-card{height:180px}
   .locmap-card.is-open{height:340px}
+  /* The stage's own justify-content:flex-start above is the vertical axis
+     once .locmaps turns it into a column, so the left edge the stacked panel
+     wants is set on the cross axis instead — for the disclosure and for the
+     card under it. */
+  .locmaps{align-items:flex-start}
+  .locmaps-row{justify-items:start}
 }
 @media(max-width:767px){
   .contact-panel{padding:22px 24px 26px}
@@ -971,7 +1017,8 @@ html{font-size:112.5%}
   .locmap-card{height:172px}
   .locmap-card.is-open{height:340px}
   .locmap-dir{min-height:44px;padding:0 16px}   /* WCAG 2.5.5 on touch */
-  .locmap-hint{display:none}
+  /* 8px shorter card here, so the hint sits 8px closer to the centre line */
+  .locmap-hint{top:calc(50% + 95px)}
 }
 @media(prefers-reduced-motion:reduce){
   .locmap-card,.locmap-img,.locmap-layer,.locmap-grid,.locmap-place,
@@ -1522,7 +1569,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
    top and left edges of the frame all but vanish while the darker bottom-right
    still reads — the card fades out unevenly rather than cleanly. The hairline
    is what the site already puts round a white surface on a white band
-   (.locmap-card, .mega). */
+   (.locmap-card). */
 /* No border and no padding: the hairline this used to carry drew a light strip
    down the right edge and round the bottom-right corner, where the
    photograph's own backdrop is lightest. The photograph now runs to the card's
@@ -1640,14 +1687,55 @@ html[data-cookie-banner] .sticky-cta{display:none}
 .service-prose{margin:0;max-width:70ch;font-size:0.9444rem;line-height:1.68;color:var(--ink-muted)}
 
 .service-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.service-list li{display:flex;gap:16px;background:#fff;border:1px solid #E0E3E4;
+.service-list>li{display:flex;gap:16px;background:#fff;border:1px solid #E0E3E4;
   border-radius:16px;padding:22px 24px;font-size:0.8889rem;line-height:1.62;color:#5B6067;
   transition:border-color .3s var(--ease-out),box-shadow .3s var(--ease-out)}
-.service-list li:hover{border-color:#C3CCD1;box-shadow:0 18px 40px rgba(16,45,68,.08)}
+.service-list>li:hover{border-color:#C3CCD1;box-shadow:0 18px 40px rgba(16,45,68,.08)}
 .service-list strong{color:var(--ink-deep);font-weight:700}
 .service-list-mark{flex:none;font:700 0.7222rem var(--font-sans);color:var(--blue);
   min-width:22px;padding-top:2px}
 .service-list.is-steps .service-list-mark{letter-spacing:.04em}
+
+/* The Advise pillar's capability groups: a row's detail is a list of capability
+   names rather than prose. Shared by the /solutions accordion panel
+   (.sol-list-body) and this page's list cards, because it is the same object in
+   both places. 14px keeps a sub-item under its own group lead at every width
+   (the lead clamps 15→18px); the right gutter clears the .sol-list chevron. */
+.cap-list{list-style:disc;margin:8px 0 20px;padding:0 34px 0 1.15em;
+  font-size:0.7778rem;line-height:1.6;color:rgba(26,26,26,.78)}
+.cap-list li{margin:0 0 4px}
+
+/* Transform's third level — the one pillar whose copy has one: a named set
+   inside a capability group, its own capabilities under it. A <p> and not an
+   <h*> because on /solutions the group lead above it is already a <summary>,
+   and a heading inside <details> would add a rung to the document outline
+   that the other four pillars have no equivalent of. Sits above its own list
+   rather than beside it, so a four-set group reads as four short lists and
+   not as one list of twenty. */
+.cap-sub{margin:0;padding-right:34px;
+  font:600 0.8333rem/1.55 var(--font-sans);color:var(--ink-deep)}
+/* tighter above its list than between one set and the next */
+.cap-sub+.cap-list{margin:5px 0 18px}
+
+/* Transform's sub-sets as their own disclosures (components/sections/
+   PillarBlocks.tsx). Indented and set smaller than the group row above them
+   so the two rungs never read as one list, and ruled between rather than
+   around: the group panel already has an edge. */
+.cap-subs{list-style:none;margin:0;padding:0 2px 6px 18px}
+.cap-subs>li+li{border-top:1px solid var(--sol-rule)}
+.cap-subs summary{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;padding:10px 0;cursor:pointer;list-style:none;
+  font:600 0.8333rem/1.5 var(--font-sans);color:var(--ink-deep);
+  transition:color .2s var(--ease-out)}
+.cap-subs summary::-webkit-details-marker{display:none}
+.cap-subs summary:hover{color:var(--blue)}
+.cap-subs summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
+.cap-subs>li>details>summary svg{width:11px;height:20px;flex:none}
+/* its own list sits inside an already-indented panel, so it carries the rest
+   of .cap-list's 34px right gutter: the .cap-subs 2px is on the <ul>, which
+   also holds the summary rows, and those line their chevrons up with the
+   group chevron above instead of sitting 32px inboard of it. */
+.cap-subs .cap-list{margin:2px 0 14px;padding-right:32px}
 
 .service-stats{list-style:none;margin:0;padding:0;display:grid;
   grid-template-columns:repeat(4,1fr);gap:12px}
@@ -1690,14 +1778,14 @@ html[data-cookie-banner] .sticky-cta{display:none}
      of stripes that read as an image that had failed to load */
   .service-proof .abstract-panel{max-width:420px}
   /* half a tablet row is too narrow for a mark column beside the text */
-  .service-arm .service-list li{flex-direction:column;gap:8px;padding:18px 20px}
+  .service-arm .service-list>li{flex-direction:column;gap:8px;padding:18px 20px}
 }
 @media (max-width:767px){
     .service-body>.container>*+*{margin-top:40px}
   .glance{flex-direction:column;padding:18px 20px}
   .service-problem{padding:18px 20px}
   .service-stats{grid-template-columns:1fr}
-  .service-list li{flex-direction:column;gap:8px;padding:18px 20px}
+  .service-list>li{flex-direction:column;gap:8px;padding:18px 20px}
   .service-arms{grid-template-columns:1fr}
   .service-arm{padding:20px}
 }
@@ -2752,9 +2840,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- the services, one row each ---- */
 .sol-list{list-style:none;margin:0;padding:0;align-self:start}
-.sol-list li{border-bottom:1px solid var(--sol-rule)}
-.sol-list li:first-child{border-top:1px solid var(--sol-rule)}
-.sol-list summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
+.sol-list>li{border-bottom:1px solid var(--sol-rule)}
+.sol-list>li:first-child{border-top:1px solid var(--sol-rule)}
+.sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   font:400 clamp(15px,1.25vw,18px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink);transition:color .2s var(--ease-out)}
@@ -2763,7 +2851,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
 .sol-list summary svg{width:13px;height:24px;flex:none;color:var(--sol-ink);
   transition:transform .35s var(--ease-out)}
-.sol-list details[open] summary svg{transform:rotate(180deg)}
+/* `> summary`, not a descendant: Transform nests a second <details> per
+   sub-set, and the descendant form rotated those inner chevrons as soon as
+   the outer group opened, so every closed sub-set pointed up. */
+.sol-list details[open] > summary svg{transform:rotate(180deg)}
 .sol-list-body p{margin:0 0 20px;padding-right:34px;max-width:60ch;
   font-size:0.8889rem;line-height:1.6;color:rgba(26,26,26,.68)}
 /* Where the browser has it, the panel animates to its own height both ways;
@@ -2808,8 +2899,19 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 56px;align-items:start}
 .tr-duo-mid{grid-column:1 / -1;text-align:center}
 .tr-duo-mid .tr-h{max-width:none;margin:0}
-.tr-duo-note{margin:24px auto 0;max-width:56ch;font-size:0.8333rem;
+/* The note under either roster heading, renamed off the founders: the
+   advisory block has one now too, and it is the same paragraph. */
+.tr-note{margin:24px auto 0;max-width:56ch;font-size:0.8333rem;
   line-height:1.7;color:var(--ink-muted)}
+/* .eyebrow-row is flex, so a centred block needs justify-content and not
+   text-align — the same reason .quote-section .eyebrow-row has it. */
+.tr-duo-mid .eyebrow-row,
+.tr-mid .eyebrow-row{justify-content:center}
+/* These two headings are sentences, not the one-word labels that used to
+   be here, and they sit in a column narrower than they are long:
+   balanced, neither drops a lone last word onto its own line. */
+.tr-duo-mid .tr-h,
+.tr-mid .tr-h{text-wrap:balance}
 .tr-duo .tr-shot{aspect-ratio:10/13}
 .tr-duo .tr-plus{right:-30px;bottom:-30px;width:68px;height:68px}
 
@@ -2956,7 +3058,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .tr-mid{margin-bottom:36px}
   /* one column: heading, note, then a founder under the other */
   .tr-duo{grid-template-columns:1fr;gap:26px}
-  .tr-duo-note{margin-top:18px;max-width:none}
+  .tr-note{margin-top:18px;max-width:none}
   .tr-duo .tr-shot{aspect-ratio:3/4}
   /* an 18px gutter here (14px under 380): hung further than 10px past the
      card, the tile ran off the screen and was clipped flat */
@@ -4020,6 +4122,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* Not the blue flute ground here: --flute-ground is shared with the
      contact panel and the inner-page CTA band, so `background` is
      overridden on this element rather than the token being retuned. */
+  /* No floor: the card sizes to its own pillar, which varies by 164px at
+     390px (7 to 9 chips, and the tagline wraps). Flooring it to the tallest
+     would leave that much blank card under the short pillars, so instead the
+     strip stays manual — ServiceAccordion.tsx's AUTOPLAY stops at 768px, so
+     nothing resizes this card unless the visitor taps a chip themselves. */
   .svca .svca-card{
     display:block;min-height:0;padding:24px;border-radius:20px;
     background:#FEFEFE;border:1px solid #E1E5E8;
@@ -4404,18 +4511,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 		}
 
 		/* ---- 5. bottom bar -------------------------------------------- */
-		/* copyright and Cookie Preferences share row 1; the legal name, the
-		   last child, takes row 2 on its own. */
+		/* One row each: the copyright notice, then Cookie Preferences. They used
+		   to share a row because a third cell (the legal name) needed one of its
+		   own; the notice now carries the legal name itself, and at 320 it wants
+		   the full measure rather than half of it. */
 		.gf .gf-bottom {
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-columns: minmax(0, 1fr);
 			align-items: center;
 			gap: 14px 12px;
 			padding-top: 18px;
 			padding-bottom: 20px;
-		}
-		.gf .gf-bottom > :last-child {
-			grid-column: 1 / -1;
 		}
 		.gf .gf-cookie {
 			justify-self: end;
@@ -4446,57 +4552,90 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 
 /* =====================================================================
-   OUR STORY (/who-we-are) — the seven-chapter narrative.
-   Every selector is scoped under .os; no shared class is restyled.
-   ===================================================================== */
-/* =====================================================================
-   OUR STORY — /who-we-are, chapters 00–07. Appended to app/globals.css.
+   OUR STORY (/who-we-are)
+
+   Rebuilt 2026-10-19 on the client's new copy: a .page-head--art head, a
+   six-figure band, five numbered sections and a closing band, where there
+   used to be seven chapters.
 
    Every selector is under `.os`, the wrapper on that page and nowhere else,
    so no shared class is restyled: `.container`, `.section`, `.btn`,
-   `.reveal`, `.eyebrow-pill` and `.page-head` behave exactly as they do
-   today. `.os-narrow` is the one class put ON a `.container`, and the rule
-   below targets that extra class alone.
+   `.reveal`, `.page-head` and `.section-kicker` behave exactly as they do
+   elsewhere. `.os-narrow` is gone with the pull-quote chapter that used it;
+   nothing on this page now puts a class on a `.container`.
 
-   Values come from the approved comp; the widths do not. The comp is an
-   1440px artboard with a fixed 1280px measure, this runs inside the site's
-   own `.container`, so the 12-column proportions are kept and the fixed
-   pixel widths are dropped.
+   The visual language is the one that was already here — the chapter
+   rhythm, the 12-column splits, the hairline rows with a blue dot and a
+   yellow last node, the bordered card grid, the CountUp figures. What is
+   new is new MARKUP the old copy had no slot for (the figures band, the
+   dated timeline, the three build items, the four principles), and it is
+   drawn in those same terms rather than in terms of its own.
 
-   Phones (<768px) get one column, no pins, no parallax and no rail — the
-   rail needs a margin the layout does not have below 1024px.
+   Breakpoints follow the measure the page is ACTUALLY given, which is not
+   what `.container`'s own `width` asks for: Tailwind's `container` utility is
+   enabled, and its `max-width` (640/768/1024/1280/1536 at the matching
+   min-widths) clamps that width. Measured container, this page:
+     320  292    375  347    390  354    767  640
+     768  712    800  744    824-1023 768  (Tailwind's 768px cap, not 920)
+     1024 920    1280 1184   1440-1535 1280   1536+ 1440
+   So:
+     base            >=1024, where the 920+ measure the grids assume exists
+     768-1023        container 712-768 — the 12-column grids collapse here
+                     too, not just on phones: four of twelve columns is a
+                     216px measure and 26 characters a line
+     1024-1279       six-up and four-up rows halve; the 12-column grids hold
+     <=767           one column; those rules are in the appended phone
+                     region at the end of this file, except the ones that
+                     were already here for elements that survived.
    ===================================================================== */
 
 .os{
-  /* The comp's four grounds. Local, not :root — nothing else on the site
-     uses this near-black, and the page is one wrapper. */
-  --os-dark:#0B1622;
+  /* The comp's grounds. Local, not :root — the page is one wrapper. The
+     dark-ground tokens went with the dark chapters; what is left is the
+     paper set. */
   --os-rule:#E1E5E8;      /* hairlines on paper */
-  --os-caption:#6E767C;   /* 4.6:1 on #FEFEFE */
-  --os-dim:#9FB3C4;       /* body on the dark ground, 8.4:1 */
-  --os-micro:#6E8FA8;     /* labels on the dark ground, 5.3:1 */
+  /* Every caption on this page, on BOTH of the page's grounds — the old
+     #6E767C was picked against --paper (4.58:1) and the glance band is
+     --soft, where the same ink measured 4.15:1 and missed AA for 13px text.
+     This value is the darkest the caption tone needed to be to clear 4.5:1
+     on the worse ground: 4.80:1 on --soft, 5.30:1 on --paper. It also
+     replaces the old --os-micro (#6E8FA8, 3.06:1 on --soft), which existed
+     only for .os-shift-label — the one caption that sits on --soft without a
+     card background under it. */
+  --os-caption:#646C72;
   --os-grid:repeat(12,minmax(0,1fr));
   background:var(--paper);
 }
 
-/* ---- 00 · hero -------------------------------------------------------
-/* The page head is the site's own .page-head.page-head--art band now, so
-   everything the full-viewport hero needed is gone. What remains is the
-   h1 itself: three client lines, each on its own row, inside the band's
-   existing type rule. */
-/* ---- chapter shells --------------------------------------------------- */
+/* ---- section shells --------------------------------------------------- */
 .os-ch{padding:136px 0 128px;scroll-margin-top:calc(var(--header-h) + 8px)}
 .os-ch--paper{background:var(--paper);color:var(--ink)}
 .os-ch--soft{background:var(--soft);color:var(--ink)}
+/* The figures band is a band, not a section: four words and six numbers.
+   It keeps the section grounds and drops the section height, so it reads
+   as a strip under the head rather than as the first chapter. */
+.os-ch--band{padding:76px 0 72px}
 
 /* ---- type -------------------------------------------------------------
-   The brand sans throughout. An earlier version set the headings in
-   Instrument Serif; it gave the page a voice no other page had, which was
-   exactly the problem. Sizes are the chapter scale, not the site's section
-   scale, so the narrative still steps down from the page head. */
+   The brand sans throughout, at the narrative scale rather than the
+   site's section scale, so the page still steps down from the page head. */
+/* text-wrap:balance for the same reason .page-head h1 and .os-head-h have it:
+   every one of these headings is two or three lines at every width the page is
+   read at, and left to itself each one drops a single word onto its last line. */
 .os-h{margin:26px 0 0;font-family:var(--font-sans);font-weight:600;
-  font-size:clamp(30px,3vw,48px);line-height:1.08;letter-spacing:-.025em;color:var(--ink)}
+  font-size:clamp(30px,3vw,48px);line-height:1.08;letter-spacing:-.025em;
+  text-wrap:balance;color:var(--ink)}
 .os-h--close{max-width:24ch;font-size:clamp(32px,3.4vw,56px);letter-spacing:-.028em}
+/* The band's h2 is a label for six figures, not a statement, so it is set
+   at sub-head scale. It is still an h2: it is a sibling of the sections,
+   and demoting it to an h3 would skip a level under the h1.
+   Positive tracking, unlike every other heading here: the copy is the
+   client's own caps ("GAMCS AT A GLANCE"), and caps set at the -.025em the
+   sentence-case headings want close up into a block. */
+.os-h--band{margin:0;font-size:clamp(21px,1.8vw,26px);letter-spacing:.015em}
+/* "Our journey", the one h3 that heads a block rather than an item. */
+.os-sub-h{margin:0;font-size:clamp(20px,1.7vw,26px);font-weight:600;
+  letter-spacing:-.018em;color:var(--ink)}
 
 .os-label{margin:0;font-size:12px;font-weight:600;letter-spacing:.24em;
   text-transform:uppercase;color:var(--blue)}
@@ -4509,117 +4648,129 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- shared grids ---------------------------------------------------- */
 .os-split{display:grid;grid-template-columns:var(--os-grid);column-gap:32px;align-items:start}
-.os-split--mid{align-items:center}
 .os-split > .os-col{grid-column:1/span 5}
-.os-split > .os-figure,
-.os-split > .os-mark{grid-column:7/span 6}
+.os-split > .os-figure{grid-column:7/span 6}
 
-.os-head{display:grid;grid-template-columns:var(--os-grid);column-gap:32px;align-items:end}
-.os-head > :first-child{grid-column:1/span 6}
-.os-head > .os-body{grid-column:8/span 5;margin-top:0}
+.os-head{display:grid;grid-template-columns:var(--os-grid);column-gap:32px}
 .os-head--wide{margin-top:26px;align-items:start}
 .os-head--wide > .os-h{grid-column:1/span 7;margin-top:0}
 .os-head--wide > .os-body{grid-column:9/span 4;margin-top:10px}
+
+/* ---- GAMCS at a glance ------------------------------------------------
+   The site's figure language, taken from the homepage achievements:
+   weight 100, -.035em, --ink-deep, counted up by CountUp. Six across from
+   1024 up, where the measured column is 177px at 1280, 193px at 1440 and
+   220px from 1536 (where Tailwind's 1536px container cap finally stops
+   clamping the 1440px this project's `.container` asks for) against a
+   widest figure ("150+ years", the only one carrying a word) of 141-159px.
+   It halves to three below 1280 for the reason in that query. `dt` is the
+   figure and `dd` its label, which is the order the previous version of
+   this page used and the order they are read in. */
+.os-glance{margin:34px 0 0;padding:28px 0 0;border-top:1px solid var(--os-rule);
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:30px 24px}
+.os-glance-value{font:100 clamp(30px,2.4vw,40px)/1 var(--font-sans);
+  letter-spacing:-.035em;color:var(--ink-deep)}
+/* margin:12px 0 0 also clears the UA's margin-inline-start on a <dd>. */
+.os-glance-label{margin:12px 0 0;font-size:13px;line-height:1.45;
+  color:var(--os-caption);text-wrap:pretty}
 
 /* ---- 01 · where it started ------------------------------------------- */
 .os-figure{margin:0;border-radius:4px;overflow:hidden;background:#E9EDEF}
 .os-figure img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;
   object-position:center 20%}
 
-.os-stats{margin:44px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:28px 24px;border-top:1px solid var(--os-rule);padding-top:28px}
-.os-stat-value{font-size:clamp(34px,3vw,46px);line-height:1;letter-spacing:-.035em;
-  font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
-.os-stat-label{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--os-caption)}
-
-.os-markers{margin:92px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--os-rule)}
-.os-markers li{padding:26px 28px 0;border-right:1px solid var(--os-rule)}
-.os-markers li:first-child{padding-left:0}
-.os-markers li:last-child{padding-right:0;border-right:0}
-.os-marker-dot{display:block;width:9px;height:9px;border-radius:50%;background:var(--blue);
+/* The timeline. Same hairline row, blue dots and yellow last node the four
+   bare markers used to draw; each node now carries a year above its label
+   and a sentence under it, which is what the new copy added. */
+/* scroll-margin-top in its own right, not inherited from the section: this is
+   the hero's primary CTA target and it sits mid-chapter, so without it the
+   fragment jump parks the block's top at y=0 and the sticky header (90-102px)
+   covers the "Our journey" heading the reader just asked for. */
+.os-journey{margin:92px 0 0;scroll-margin-top:calc(var(--header-h) + 24px)}
+.os-tl{margin:26px 0 0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--os-rule)}
+.os-tl li{padding:26px 28px 0;border-right:1px solid var(--os-rule)}
+.os-tl li:first-child{padding-left:0}
+.os-tl li:last-child{padding-right:0;border-right:0}
+.os-tl-dot{display:block;width:9px;height:9px;border-radius:50%;background:var(--blue);
   margin-bottom:18px}
-.os-markers li:last-child .os-marker-dot{background:var(--yellow)}
-.os-marker-h{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.os-tl li:last-child .os-tl-dot{background:var(--yellow)}
+/* The year is a <span> inside the <h4>, not a <p> beside it, so heading
+   navigation announces "2011 College" rather than "College" — see the note in
+   app/who-we-are/page.tsx. display:block plus its own margin-bottom keeps the
+   two-line stack and the 8px step the <p> and the h4's margin-top used to
+   make between them, so nothing moves; line-height is pinned because it is
+   now inheriting the heading's, not the body's. */
+.os-tl-year{display:block;margin:0 0 8px;font-size:13px;line-height:1.5;
+  font-weight:600;letter-spacing:.1em;color:var(--os-caption);
+  font-variant-numeric:tabular-nums}
+.os-tl-h{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.os-tl-b{margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--gray);text-wrap:pretty}
 
-/* ---- 02 · a shared passion ------------------------------------------- */
-.os-discs{margin:72px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:1px;background:var(--line);border:1px solid var(--line)}
-.os-disc{background:var(--paper);padding:36px 26px 42px;border-top:3px solid transparent;
-  transition:border-top-color .25s var(--ease-out)}
-.os-disc:hover{border-top-color:var(--blue-light)}
-.os-disc-n{margin:0;font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--os-caption)}
-.os-disc-h{margin:60px 0 0;font-size:20px;font-weight:600;line-height:1.25;letter-spacing:-.015em;
-  color:var(--ink)}
-
-/* ---- 03 · what they saw ---------------------------------------------- */
+/* ---- 02 · what we saw ------------------------------------------------- */
 .os-shift{margin:88px 0 0;display:grid;
   grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);align-items:stretch}
 .os-shift-card{border-radius:3px;padding:44px 40px 48px}
 .os-shift-from{border:1px solid var(--line)}
 .os-shift-to{border:1px solid rgba(15,94,151,.4);background:rgba(15,94,151,.04)}
 .os-shift-arrow{display:flex;align-items:center;justify-content:center}
+/* An <h3> now, not a <p>: it names its column, and the two columns are the
+   only subdivision this section has. margin:0 clears the UA heading margin. */
 .os-shift-label{margin:0;font-size:11px;font-weight:600;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--os-micro)}
+  text-transform:uppercase;color:var(--os-caption)}
 .os-shift-to .os-shift-label{color:var(--blue)}
 .os-shift-line{margin:28px 0 0;font-size:clamp(24px,2vw,32px);line-height:1.15;
-  letter-spacing:-.02em;font-weight:500;color:var(--gray)}
+  letter-spacing:-.02em;font-weight:500;text-wrap:balance;color:var(--gray)}
 .os-shift-to .os-shift-line{color:var(--ink)}
+.os-shift-b{margin:18px 0 0;font-size:15px;line-height:1.65;color:var(--gray);
+  text-wrap:pretty}
 
-/* ---- 04 · the name ---------------------------------------------------
-   Decorative, and marked aria-hidden in the markup: the two names, the
-   arrow and the monogram say what the paragraph beside them already says. */
-.os-mark{display:flex;flex-direction:column;align-items:center;gap:30px;
-  padding:72px 24px;background:var(--soft);border-radius:4px}
-.os-mark-names{margin:0;display:flex;align-items:center;gap:clamp(20px,3vw,44px)}
-.os-mark-names span{font-size:26px;font-weight:500;
-  color:var(--gray)}
-.os-mark-names i{display:block;width:46px;height:1px;background:#C2CACF}
-.os-mark img{display:block;height:clamp(84px,9vw,128px);width:auto;object-fit:contain}
-.os-mark-caption{margin:0;font-size:12px;font-weight:600;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--os-caption);text-align:center}
+/* ---- 03 · what we set out to build ------------------------------------
+   The bordered card grid the five disciplines used, at three columns and
+   with a sentence under each heading. */
+.os-built{margin:72px 0 0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line)}
+.os-built li{background:var(--paper);padding:36px 30px 40px;border-top:3px solid transparent;
+  transition:border-top-color .25s var(--ease-out)}
+.os-built li:hover{border-top-color:var(--blue-light)}
+.os-built-n{margin:0;font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--os-caption)}
+.os-built-h{margin:48px 0 0;font-size:20px;font-weight:600;line-height:1.25;
+  letter-spacing:-.015em;color:var(--ink)}
+.os-built-b{margin:14px 0 0;font-size:15px;line-height:1.65;color:var(--gray);text-wrap:pretty}
+/* The sentence about the name GA. One line of copy where a whole chapter
+   used to be, so it is marked as an aside rather than set as a paragraph
+   that happens to follow the grid. */
+.os-note{margin:40px 0 0;max-width:72ch;padding-left:20px;
+  border-left:2px solid var(--blue-light);
+  font-size:16px;line-height:1.7;color:var(--gray)}
 
-/* ---- 05 · what we believe -------------------------------------------- */
-.os .os-narrow{max-width:1100px}
-.os-quote{margin:40px 0 0;font-size:clamp(32px,4vw,66px);line-height:1.12;
-  letter-spacing:-.012em;color:var(--ink)}
-/* The emphasis was yellow italic on a brand-blue ground. On paper that is
-   1.7:1, so it is the page's blue instead — 6.8:1 — and upright, since the
-   italic only existed to belong to the serif that is no longer here. */
-.os-quote em{font-style:normal;color:var(--blue)}
-.os-pillars{margin:60px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  border-top:1px solid var(--line)}
-.os-pillars li{padding:26px 24px 0}
-.os-pillars li:first-child{padding-left:0}
-.os-pillars li:last-child{padding-right:0}
-.os-pillars h3{margin:0;font-size:16px;font-weight:600;letter-spacing:-.005em;color:var(--ink)}
-
-/* ---- 06 · the founders -----------------------------------------------
-   No hover-revealed copy. The comp carried a bio line over each plate; the
-   two the client has written live on /team, and nothing shorter exists that
-   is not invented — so the plate is photograph, name, title, and the link
-   below goes to the bios in full. Hover is the photograph coming out of
-   grayscale, which hides nothing. */
+/* ---- 04 · the founders -----------------------------------------------
+   Two plates, each with the short bio the new copy supplies. Hover is the
+   photograph scaling; both files are already black and white on disk
+   (`*-bw.jpg`), so there is no grayscale filter to animate. */
 .os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
 .os-founder-shot{position:relative;overflow:hidden;border-radius:4px;background:#E9EDEF}
-/* No grayscale filter. The comp desaturates the plates and brings the colour
-   back on hover, but both files are already black and white on disk
-   (`*-bw.jpg`), so that filter would cost a composite layer every paint and
-   reveal nothing. The scale is the whole hover. */
 .os-founder-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
   object-position:center 18%;transition:transform .6s var(--ease-out)}
-.os-founder:hover .os-founder-shot img{transform:scale(1.04);filter:grayscale(0)}
+.os-founder:hover .os-founder-shot img{transform:scale(1.04)}
 .os-founder-name{margin:22px 0 0;font-size:26px;font-weight:600;letter-spacing:-.02em;
   color:var(--ink)}
 .os-founder-title{margin:6px 0 0;font-size:15px;line-height:1.5;color:var(--gray)}
+.os-founder-bio{margin:14px 0 0;font-size:15px;line-height:1.65;color:var(--gray);
+  text-wrap:pretty}
 .os-founders-link{margin:40px 0 0}
 /* inline-flex + min-height: the only tap target on this page that came out
    under 44px (measured 147x21 at 390). The underline still hugs the words
    because the box is inline-flex, not block. Relaxed above 1024 where a
    pointer is doing the aiming, which is the convention the footer links
    already follow. */
-.os-founders-link a{display:inline-flex;align-items:center;min-height:44px;
+/* gap:10px because the arrow is its own aria-hidden <span> now, and this box
+   is inline-flex: the word space that used to separate them was swallowed
+   when the glyph became a flex item. 10px is the step `.btn-label` already
+   puts between a label and the same glyph. */
+.os-founders-link a{display:inline-flex;align-items:center;gap:10px;min-height:44px;
   font-size:15px;font-weight:600;color:var(--blue);text-decoration:none;
   border-bottom:1px solid rgba(15,94,151,.3);padding-bottom:2px;
   transition:border-color .2s var(--ease-out)}
@@ -4627,59 +4778,82 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-founders-link a:hover{border-bottom-color:var(--blue)}
 .os-founders-link a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:2px}
 
-/* ---- 07 · where we are going ----------------------------------------- */
+/* ---- 05 · where we're going -------------------------------------------
+   The hairline row the four closing pillars used, now carrying a sentence
+   under each heading. */
+.os-principles{margin:64px 0 0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--line)}
+.os-principles li{padding:26px 24px 0}
+.os-principles li:first-child{padding-left:0}
+.os-principles li:last-child{padding-right:0}
+.os-principles h3{margin:0;font-size:17px;font-weight:600;letter-spacing:-.008em;color:var(--ink)}
+.os-principles p{margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--gray);
+  text-wrap:pretty}
+
+/* ---- the two in-page jump targets ------------------------------------
+   `.os-jump` carries the id the hero CTAs point at and tabindex="-1" so the
+   browser moves focus there, not just the viewport. It is a container, not a
+   control, and Chrome does match :focus-visible on a fragment jump — which
+   drew a 2px brand-blue rule right across the top and bottom of the founders
+   section, 1470x1500 of outline reading as a design element gone wrong. The
+   ring goes on the heading the reader just landed on instead: same
+   confirmation, at a size that reads as one thing. Same 2px/4px treatment
+   `.os-founders-link a` already uses. */
+.os-jump:focus{outline:none}
+.os-jump:focus-visible .os-jump-h{outline:2px solid var(--blue);outline-offset:6px;
+  border-radius:2px}
+
+/* ---- what comes next -------------------------------------------------- */
 .os-close .os-body{max-width:64ch}
 .os-ctas{margin:64px 0 0;display:flex;flex-wrap:wrap;gap:16px}
 
 /* ---- reduced motion --------------------------------------------------
-   StoryMotion registers nothing under this query, so the resting state
-   above is already the finished state. These three are the CSS hovers,
-   which are the only thing left that moves. */
+   Nothing on this page is scroll-linked, so the resting state above is
+   already the finished state. These are the CSS hovers, which are the
+   only thing left that moves. */
 @media (prefers-reduced-motion:reduce){
-  .os-founder-shot img,.os-disc,.os-founders-link a{transition:none}
+  .os-founder-shot img,.os-built li,.os-founders-link a{transition:none}
   .os-founder:hover .os-founder-shot img{transform:none}
 }
 
-/* ---- phones and small tablets ----------------------------------------
-   One column throughout. The comp is a desktop artboard; below 768px the
-   12-column splits collapse in DOM order (copy, then figure), the five
-   disciplines stack, the before/after stacks with the arrow rotated a
-   quarter turn to point down the page, and the markers and pillars become
-   two-up rows rather than four. Nothing pins and nothing parallaxes. */
+/* ---- phones ----------------------------------------------------------
+   The rules that were already here, for the elements that survived the
+   rewrite: the splits collapse in DOM order (copy, then figure), and the
+   before/after stacks with the arrow rotated a quarter turn to point down
+   the page. Everything NEW on this page is styled for phones in the
+   appended max-width:767px region at the end of this file. */
+/* The 12-column grids collapse at 1024, not at 768. Tailwind's
+   `.container{max-width:768px}` clamps the hand-written `width` through
+   768-1023, so the measure there is 712-768px and not the 844-920px the
+   column spans were drawn against: `.os-head--wide > .os-body` is 4 of 12
+   columns, i.e. 4x30 + 3x32 = 216px at 768 and 234.7px at 900-1023, which
+   ran the client's 231-character paragraph to nine lines of 26 characters.
+   `.os-split > .os-col` (5 columns) is narrow for the same reason. One
+   column each instead, in DOM order — copy, then figure. */
+@media (max-width:1023px){
+  .os-split,.os-head,.os-head--wide{display:block}
+  .os-split > .os-figure{margin-top:36px}
+  .os-head--wide > .os-body{margin-top:24px}
+}
+
 @media (max-width:767px){
   .os-ch{padding:72px 0 64px}
   .os-h{margin-top:18px}
+  /* Restated right after it, because the line above is (0,1,0) exactly like
+     `.os-h--band{margin:0}` and a media query adds no specificity: source
+     order alone decided it, and the band's h2 (which carries both classes)
+     was taking 18px the modifier explicitly zeroes — 66px above a heading in
+     a band padded 48px/44px. Not `:not(.os-h--band)`, which would raise this
+     to (0,2,0) and start overriding `.os-head--wide > .os-h{margin-top:0}`. */
+  .os-h--band{margin-top:0}
 
-  .os-split,.os-head,.os-head--wide{display:block}
-  .os-split > .os-figure,.os-split > .os-mark{margin-top:36px}
-  .os-head > .os-body,.os-head--wide > .os-body{margin-top:24px}
   .os-head--wide{margin-top:18px}
-
-  .os-stats{margin-top:32px;gap:24px;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-markers{margin-top:48px;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-markers li{padding:22px 18px 0;border-right:0;border-bottom:1px solid var(--os-rule)}
-  .os-markers li:nth-child(odd){padding-left:0}
-  .os-markers li:nth-child(even){padding-right:0}
-  .os-markers li:nth-last-child(-n+2){border-bottom:0;padding-bottom:0}
-
-  .os-discs{margin-top:40px;grid-template-columns:1fr}
-  .os-disc{padding:24px 20px 28px}
-  .os-disc-h{margin-top:28px;font-size:18px}
 
   .os-shift{margin-top:48px;grid-template-columns:1fr;gap:20px}
   .os-shift-card{padding:28px 24px 32px}
   .os-shift-arrow{transform:rotate(90deg)}
   .os-shift-line{margin-top:18px}
-
-  .os-mark{padding:48px 20px;gap:22px}
-  .os-mark-names span{font-size:24px}
-  .os-mark-names i{width:28px}
-
-  .os-quote{margin-top:28px}
-    .os-pillars{margin-top:40px;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-pillars li{padding:20px 16px 0}
-  .os-pillars li:nth-child(odd){padding-left:0}
-  .os-pillars li:nth-child(even){padding-right:0}
 
   .os-founders{margin-top:40px;grid-template-columns:1fr;gap:36px}
   .os-founder-name{font-size:22px}
@@ -4687,14 +4861,38 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-ctas{margin-top:40px}
 }
 
-/* Tablets: the five-up discipline strip and the four-up rows are too tight
-   between 768 and 1023px, but the splits still hold. */
-@media (min-width:768px) and (max-width:1023px){
+/* ---- 768-1279: tablets and small laptops -----------------------------
+   The measure here runs 712px (768) to 1184px (1279), pinned at 768px
+   through 834-1023 by Tailwind's `.container{max-width:768px}` — see the
+   table in this region's header. A six-column glance band would be a 99px
+   column at 768 and 133px at 1024, against a 146px widest figure, so it
+   would run out of its cell either way. Three across instead: measured
+   221px at 768, 240px at 900-1023, 291px at 1024. The four-up timeline and
+   principles rows halve for the same reason. The 12-column splits do NOT
+   hold through the bottom of this range — they collapse at 1023 in the
+   query above. */
+@media (min-width:768px) and (max-width:1279px){
   .os-ch{padding:96px 0 88px}
-  .os-discs{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-markers{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}
-  .os-markers li:nth-child(even){border-right:0;padding-right:0}
-  .os-markers li:nth-child(odd){padding-left:0}
+  .os-ch--band{padding:64px 0 60px}
+
+  .os-glance{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+  /* The three build cards stay three across here. Two across would leave the
+     third card as a half-width orphan in a grid whose 1px gaps draw it, which
+     is worse than the measure: a card is 236px at 768 and 254.7px from 824
+     (where Tailwind's 768px cap takes over), so 24px of side padding leaves
+     188-207px and the longest item runs to six lines at 768-800 and five from
+     820 up. The tighter padding is worth 12px of measure, not a line —
+     accepted, not fixed. */
+  .os-built li{padding:30px 24px 34px}
+
+  .os-tl{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
+  .os-tl li:nth-child(odd){padding-left:0}
+  .os-tl li:nth-child(even){border-right:0;padding-right:0}
+
+  .os-principles{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
+  .os-principles li:nth-child(odd){padding-left:0}
+  .os-principles li:nth-child(even){padding-right:0}
 }
 
 /* =====================================================================
@@ -5561,4 +5759,88 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc-panel{margin-top:20px;padding:24px 20px;border-radius:16px;gap:28px;
     box-shadow:0 1px 2px rgba(13,24,40,.05),
       0 10px 24px -16px rgba(13,24,40,.16)}
+}
+
+
+/* =====================================================================
+   OFFICE MAP ROW — phones (max-width:767px)
+
+   The row itself needs nothing here: it is already stacked by the 899
+   breakpoint, and .locmap's phone rules size the cards. Only the new
+   control does.
+   ===================================================================== */
+
+@media (max-width:767px){
+
+  /* WCAG 2.5.5. The same 44px floor .locmap-dir takes at this width, and for
+     the same reason: 36px is a comfortable mouse target and a poor thumb one. */
+  .locmaps-toggle{min-height:44px;padding:0 18px}
+}
+
+
+/* =====================================================================
+   OUR STORY (/who-we-are) — phones (max-width:767px)
+
+   The phone rules for everything the 2026-10-19 rewrite ADDED: the
+   figures band, the dated timeline, the three build items and their
+   closing note, the founders' bios and the four principles. The rules
+   for the elements that survived the rewrite (the splits, the
+   before/after pair, the founder plates, the CTAs) are still in the
+   max-width:767px block inside the .os region above, which is where
+   they already were; nothing is restated here.
+
+   One column throughout, except the glance band, which stays two-up: six
+   figures in one column is six screens of scrolling for the shortest
+   content on the page.
+   ===================================================================== */
+
+@media (max-width:767px){
+  .os-ch--band{padding:48px 0 44px}
+
+  /* 2x3. At 390 the container is 354px, so a column is 167px and the
+     widest figure ("150+ years" at 28px/weight 100) measures ~129px.
+     The value is allowed to wrap at its space rather than being pinned
+     with nowrap — below 340px "150+" and "years" take a line each,
+     which is ugly and is still not an overflow. */
+  .os-glance{margin-top:24px;padding-top:22px;
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 20px}
+  .os-glance-value{font-size:28px}
+  /* The value shrinks; the label does NOT. It is sentence-case running copy,
+     not a tracked micro-label, and it is the only thing that tells a reader
+     what each figure counts — 13px is this build's floor for that. It wraps
+     to the same three lines at 12px anyway, so the smaller size bought
+     nothing. */
+  .os-glance-label{margin-top:8px}
+
+  /* The hairline row becomes a hairline stack: the vertical rules between
+     the four nodes turn into one rule under each, and the last node drops
+     its rule so the section does not end on one. */
+  .os-journey{margin-top:52px}
+  .os-tl{margin-top:22px;grid-template-columns:1fr}
+  .os-tl li{padding:22px 0;border-right:0;border-bottom:1px solid var(--os-rule)}
+  .os-tl li:last-child{padding-bottom:0;border-bottom:0}
+  .os-tl-dot{margin-bottom:14px}
+  .os-tl-b{font-size:14px}
+
+  .os-shift-b{margin-top:14px;font-size:14px}
+
+  .os-built{margin-top:40px;grid-template-columns:1fr}
+  .os-built li{padding:24px 20px 28px}
+  .os-built-h{margin-top:28px;font-size:18px}
+  .os-built-b{font-size:14px}
+  .os-note{margin-top:28px;font-size:15px;padding-left:16px}
+
+  .os-founder-bio{font-size:14px}
+
+  .os-principles{margin-top:40px;grid-template-columns:1fr}
+  .os-principles li{padding:20px 0 0}
+  .os-principles li:last-child{padding-right:0}
+  .os-principles p{font-size:14px}
+}
+
+/* Very narrow phones. `.container` is 100%-28px from here down, so at 320
+   a glance column is 136px; 28px would leave "150+ years" at ~129px with
+   7px to spare, which is a rounding error away from wrapping. */
+@media (max-width:380px){
+  .os-glance-value{font-size:24px}
 }

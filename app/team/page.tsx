@@ -20,7 +20,9 @@ export default function TeamPage() {
       <section className="page-head page-head--art">
         <div className="container">
           <h1>{team.h1}</h1>
-          <p>{team.body}</p>
+          {team.body.map((para) => (
+            <p key={para.slice(0, 32)}>{para}</p>
+          ))}
           <p className="team-mission">{story.mission}</p>
           <div className="ctas page-head-ctas">
             <CTA href={primaryCta.href}
@@ -36,9 +38,10 @@ export default function TeamPage() {
       </section>
 
       {/* Founders as large staggered cards, advisers three across, each opening
-          a bio panel. The page head above keeps the H1, the standing intro and
-          the mission, so the roster's own sections carry only their headings —
-          a third paragraph of preamble between them would repeat it. */}
+          a bio panel. The page head above keeps the H1, the two-paragraph
+          intro and the mission; each roster section carries its own eyebrow,
+          heading and note, which the client wrote separately from the head and
+          which say what that group of people is, not what the firm is. */}
       <TeamRoster />
 
       <section className="section team-cta-section">

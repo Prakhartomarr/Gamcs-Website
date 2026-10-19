@@ -15,7 +15,7 @@
   "code": "HDR-LOGO-01",
   "page": "Header",
   "section": "Logo",
-  "label": "Company name — the wordmark shows the words after “GA”; also in page titles, the footer logo and the loading screen",
+  "label": "Company name — the wordmark shows the words after “GA”; also in page titles, the footer logo, the loading screen and the Gurugram office card on the homepage (HOME-OFFICES-14)",
   "kind": "text",
   "text": "GA Management Consultants",
   "source": {
@@ -41,7 +41,7 @@
   "section": "Navigation",
   "label": "Menu item 1",
   "kind": "text",
-  "text": "Who We Are",
+  "text": "Who we are",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.items[0].label"
@@ -53,7 +53,7 @@
   "section": "Navigation",
   "label": "Menu item 2",
   "kind": "text",
-  "text": "How We Help",
+  "text": "How we help",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.items[1].label"
@@ -65,7 +65,7 @@
   "section": "Navigation",
   "label": "Menu item 3",
   "kind": "text",
-  "text": "Solutions",
+  "text": "What we do",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.items[2].label"
@@ -77,7 +77,7 @@
   "section": "Navigation",
   "label": "Menu item 4",
   "kind": "text",
-  "text": "Case Study",
+  "text": "Team",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.items[3].label"
@@ -89,7 +89,7 @@
   "section": "Navigation",
   "label": "Menu item 5",
   "kind": "text",
-  "text": "Team",
+  "text": "Case Studies",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.items[4].label"
@@ -120,162 +120,6 @@
   }
  },
  {
-  "code": "HDR-NAV-08",
-  "page": "Header",
-  "section": "Navigation",
-  "label": "Caret button beside a menu item, screen-reader name — {label} is the item",
-  "kind": "aria-label",
-  "text": "{label} menu",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.menuLabel"
-  }
- },
- {
-  "code": "HDR-WHO-01",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Dropdown heading",
-  "kind": "text",
-  "text": "Who We Are",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoTitle"
-  }
- },
- {
-  "code": "HDR-WHO-02",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 1",
-  "kind": "text",
-  "text": "Our Story",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[0].title"
-  }
- },
- {
-  "code": "HDR-WHO-03",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 2",
-  "kind": "text",
-  "text": "What clients say",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[1].title"
-  }
- },
- {
-  "code": "HDR-WHO-04",
-  "page": "Header",
-  "section": "Who We Are dropdown",
-  "label": "Link 3",
-  "kind": "text",
-  "text": "FAQ",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.whoLinks[2].title"
-  }
- },
- {
-  "code": "HDR-SOL-01",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Pillar 1 name (menu column heading; also the footer, the hub rail and the pillar card label)",
-  "kind": "text",
-  "text": "FP&A & CFO Advisory",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].navLabel"
-  }
- },
- {
-  "code": "HDR-SOL-02",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Pillar 2 name (menu column heading; also the footer, the hub rail and the pillar card label)",
-  "kind": "text",
-  "text": "Finance Team Extension",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].navLabel"
-  }
- },
- {
-  "code": "HDR-SOL-03",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Pillar 3 name (menu column heading; also the footer, the hub rail and the pillar card label)",
-  "kind": "text",
-  "text": "Digital Transformation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].navLabel"
-  }
- },
- {
-  "code": "HDR-SOL-04",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Pillar 4 name (menu column heading; also the footer, the hub rail and the pillar card label)",
-  "kind": "text",
-  "text": "Deal Advisory",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].navLabel"
-  }
- },
- {
-  "code": "HDR-SOL-05",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Pillar 5 name (menu column heading; also the footer, the hub rail and the pillar card label)",
-  "kind": "text",
-  "text": "Training & Enablement",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].navLabel"
-  }
- },
- {
-  "code": "HDR-SOL-06",
-  "page": "Header",
-  "section": "Solutions dropdown",
-  "label": "Phone menu: link to the hub",
-  "kind": "text",
-  "text": "All solutions",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.allSolutions"
-  }
- },
- {
-  "code": "HDR-CASE-01",
-  "page": "Header",
-  "section": "Case Study dropdown",
-  "label": "Link to all case studies (the ten titles are under Case Studies)",
-  "kind": "text",
-  "text": "All case studies",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.allCaseStudies"
-  }
- },
- {
-  "code": "HDR-CASE-02",
-  "page": "Header",
-  "section": "Case Study dropdown",
-  "label": "Second column heading",
-  "kind": "text",
-  "text": "More",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.more"
-  }
- },
- {
   "code": "HDR-PHONE-01",
   "page": "Header",
   "section": "Phone menu",
@@ -297,18 +141,6 @@
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "header.closeNav"
-  }
- },
- {
-  "code": "HDR-PHONE-03",
-  "page": "Header",
-  "section": "Phone menu",
-  "label": "Back button inside a drill-down",
-  "kind": "button",
-  "text": "Go back",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "header.goBack"
   }
  },
  {
@@ -4617,9 +4449,9 @@
   "code": "HOME-SVCFPA-03",
   "page": "Home (/)",
   "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 1 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 1 — capability group 1's name (the same string as FPA-G1-01, so this row edits both)",
   "kind": "text",
-  "text": "FP&A & CFO Advisory",
+  "text": "CFO & Strategic Finance Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].atAGlance[0]"
@@ -4629,9 +4461,9 @@
   "code": "HOME-SVCFPA-04",
   "page": "Home (/)",
   "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 2 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 2 — capability group 2's name (the same string as FPA-G2-01, so this row edits both)",
   "kind": "text",
-  "text": "Budgeting & Forecasting",
+  "text": "FP&A & Performance Management",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].atAGlance[1]"
@@ -4641,72 +4473,12 @@
   "code": "HOME-SVCFPA-05",
   "page": "Home (/)",
   "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 3 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 3 — capability group 3's name (the same string as FPA-G3-01, so this row edits both)",
   "kind": "text",
-  "text": "Rolling Cash Flow Models",
+  "text": "Financial Modelling & Business Planning",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].atAGlance[2]"
-  }
- },
- {
-  "code": "HOME-SVCFPA-06",
-  "page": "Home (/)",
-  "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 4 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Revenue/RevOps Forecasting",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].atAGlance[3]"
-  }
- },
- {
-  "code": "HOME-SVCFPA-07",
-  "page": "Home (/)",
-  "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 5 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Accelerated Month-End Close",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].atAGlance[4]"
-  }
- },
- {
-  "code": "HOME-SVCFPA-08",
-  "page": "Home (/)",
-  "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 6 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Scenario & Sensitivity Analysis",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].atAGlance[5]"
-  }
- },
- {
-  "code": "HOME-SVCFPA-09",
-  "page": "Home (/)",
-  "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 7 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Variance Analysis & Commentary",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].atAGlance[6]"
-  }
- },
- {
-  "code": "HOME-SVCFPA-10",
-  "page": "Home (/)",
-  "section": "Services — FP&A & CFO Advisory",
-  "label": "At-a-glance chip 8 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Tiered Delivery (Excel → BI → Enterprise FP&A)",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].atAGlance[7]"
   }
  },
  {
@@ -4737,9 +4509,9 @@
   "code": "HOME-SVCFTE-03",
   "page": "Home (/)",
   "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 1 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 1 — capability group 1's name (the same string as FTE-G1-01, so this row edits both)",
   "kind": "text",
-  "text": "Staffing & Staff Augmentation",
+  "text": "Finance Workforce Solutions",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].atAGlance[0]"
@@ -4749,9 +4521,9 @@
   "code": "HOME-SVCFTE-04",
   "page": "Home (/)",
   "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 2 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 2 — capability group 2's name (the same string as FTE-G2-01, so this row edits both)",
   "kind": "text",
-  "text": "Employer of Record (EoR)",
+  "text": "Managed Finance Services",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].atAGlance[1]"
@@ -4761,72 +4533,12 @@
   "code": "HOME-SVCFTE-05",
   "page": "Home (/)",
   "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 3 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 3 — capability group 3's name (the same string as FTE-G3-01, so this row edits both)",
   "kind": "text",
-  "text": "Offshoring & Outsourcing",
+  "text": "Finance Operating Models",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].atAGlance[2]"
-  }
- },
- {
-  "code": "HOME-SVCFTE-06",
-  "page": "Home (/)",
-  "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 4 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Centers of Excellence (CoE)",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].atAGlance[3]"
-  }
- },
- {
-  "code": "HOME-SVCFTE-07",
-  "page": "Home (/)",
-  "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 5 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "GCC Builds",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].atAGlance[4]"
-  }
- },
- {
-  "code": "HOME-SVCFTE-08",
-  "page": "Home (/)",
-  "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 6 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Accounting, Bookkeeping & Close",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].atAGlance[5]"
-  }
- },
- {
-  "code": "HOME-SVCFTE-09",
-  "page": "Home (/)",
-  "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 7 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Multi-Entity, Multi-GAAP Delivery",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].atAGlance[6]"
-  }
- },
- {
-  "code": "HOME-SVCFTE-10",
-  "page": "Home (/)",
-  "section": "Services — Finance Team Extension",
-  "label": "At-a-glance chip 8 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Standardized Portfolio-Wide KPI Framework",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].atAGlance[7]"
   }
  },
  {
@@ -4857,9 +4569,9 @@
   "code": "HOME-SVCDT-03",
   "page": "Home (/)",
   "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 1 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 1 — capability group 1's name (the same string as DT-G1-01, so this row edits both)",
   "kind": "text",
-  "text": "ERP Implementation",
+  "text": "Technology & Platforms",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[2].atAGlance[0]"
@@ -4869,96 +4581,12 @@
   "code": "HOME-SVCDT-04",
   "page": "Home (/)",
   "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 2 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 2 — capability group 2's name (the same string as DT-G2-01, so this row edits both)",
   "kind": "text",
-  "text": "CRM Implementation",
+  "text": "Data, Analytics & Intelligence",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[2].atAGlance[1]"
-  }
- },
- {
-  "code": "HOME-SVCDT-05",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 3 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "FP&A Platform Implementation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[2]"
-  }
- },
- {
-  "code": "HOME-SVCDT-06",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 4 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "In-House Software (Finsensor AI)",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[3]"
-  }
- },
- {
-  "code": "HOME-SVCDT-07",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 5 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Custom Software Development",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[4]"
-  }
- },
- {
-  "code": "HOME-SVCDT-08",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 6 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Data Warehousing & Cloud Infrastructure",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[5]"
-  }
- },
- {
-  "code": "HOME-SVCDT-09",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 7 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Real-Time Dashboards",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[6]"
-  }
- },
- {
-  "code": "HOME-SVCDT-10",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 8 (also the pillar page's list)",
-  "kind": "text",
-  "text": "RevOps & Revenue Analytics",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[7]"
-  }
- },
- {
-  "code": "HOME-SVCDT-11",
-  "page": "Home (/)",
-  "section": "Services — Digital Transformation",
-  "label": "At-a-glance chip 9 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Predictive & AI-Assisted Analytics",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].atAGlance[8]"
   }
  },
  {
@@ -4989,9 +4617,9 @@
   "code": "HOME-SVCDEAL-03",
   "page": "Home (/)",
   "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 1 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 1 — capability group 1's name (the same string as DEAL-G1-01, so this row edits both)",
   "kind": "text",
-  "text": "M&A Advisory",
+  "text": "Transaction Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].atAGlance[0]"
@@ -5001,9 +4629,9 @@
   "code": "HOME-SVCDEAL-04",
   "page": "Home (/)",
   "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 2 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 2 — capability group 2's name (the same string as DEAL-G2-01, so this row edits both)",
   "kind": "text",
-  "text": "Financial Due Diligence",
+  "text": "Capital Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].atAGlance[1]"
@@ -5013,60 +4641,12 @@
   "code": "HOME-SVCDEAL-05",
   "page": "Home (/)",
   "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 3 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 3 — capability group 3's name (the same string as DEAL-G3-01, so this row edits both)",
   "kind": "text",
-  "text": "Quality of Earnings & Quality of Assets",
+  "text": "Financial & Deal Readiness",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].atAGlance[2]"
-  }
- },
- {
-  "code": "HOME-SVCDEAL-06",
-  "page": "Home (/)",
-  "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 4 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Fundraise & Exit Readiness",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].atAGlance[3]"
-  }
- },
- {
-  "code": "HOME-SVCDEAL-07",
-  "page": "Home (/)",
-  "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 5 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Investor & Pitch Deck Preparation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].atAGlance[4]"
-  }
- },
- {
-  "code": "HOME-SVCDEAL-08",
-  "page": "Home (/)",
-  "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 6 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Debt Refinancing Advisory",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].atAGlance[5]"
-  }
- },
- {
-  "code": "HOME-SVCDEAL-09",
-  "page": "Home (/)",
-  "section": "Services — Deal Advisory",
-  "label": "At-a-glance chip 7 (also the pillar page's list)",
-  "kind": "text",
-  "text": "IPO Advisory",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].atAGlance[6]"
   }
  },
  {
@@ -5097,7 +4677,7 @@
   "code": "HOME-SVCTRAIN-03",
   "page": "Home (/)",
   "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 1 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 1 — capability group 1's name (the same string as TRAIN-G1-01, so this row edits both)",
   "kind": "text",
   "text": "Corporate Finance Training",
   "source": {
@@ -5109,84 +4689,12 @@
   "code": "HOME-SVCTRAIN-04",
   "page": "Home (/)",
   "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 2 (also the pillar page's list and the Solutions menu)",
+  "label": "At-a-glance chip 2 — capability group 2's name (the same string as TRAIN-G2-01, so this row edits both)",
   "kind": "text",
-  "text": "FP&A Training",
+  "text": "Finance Function Enablement",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[4].atAGlance[1]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-05",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 3 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Financial Modelling Training",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[2]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-06",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 4 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "Tableau & BI Training",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[3]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-07",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 5 (also the pillar page's list and the Solutions menu)",
-  "kind": "text",
-  "text": "ESG Training",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[4]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-08",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 6 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Data Analytics for Finance Teams",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[5]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-09",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 7 (also the pillar page's list)",
-  "kind": "text",
-  "text": "Public MasterClasses (Thinking Bridge)",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[6]"
-  }
- },
- {
-  "code": "HOME-SVCTRAIN-10",
-  "page": "Home (/)",
-  "section": "Services — Training & Enablement",
-  "label": "At-a-glance chip 8 (also the pillar page's list)",
-  "kind": "text",
-  "text": "FPI Affiliation",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].atAGlance[7]"
   }
  },
  {
@@ -5939,7 +5447,7 @@
   "section": "Who we are",
   "label": "First figure, phone layout only — the number",
   "kind": "text",
-  "text": "100+",
+  "text": "150+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "story.stats.yearsValue"
@@ -6021,9 +5529,9 @@
   "code": "HOME-CONTACT-02",
   "page": "Home (/)",
   "section": "Contact panel",
-  "label": "Company intro (also the footer blurb and the site's default search description)",
+  "label": "Company intro (also the site's default search description)",
   "kind": "text",
-  "text": "With more than combined 100+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.",
+  "text": "With more than combined 150+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "intro"
@@ -6038,7 +5546,7 @@
   "text": "2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "site.address.street"
+   "locator": "offices[0].street"
   }
  },
  {
@@ -6050,7 +5558,7 @@
   "text": "Gurugram",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "site.address.locality"
+   "locator": "offices[0].locality"
   }
  },
  {
@@ -6062,7 +5570,7 @@
   "text": "Haryana",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "site.address.region"
+   "locator": "offices[0].region"
   }
  },
  {
@@ -6074,7 +5582,7 @@
   "text": "122001",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "site.address.postalCode"
+   "locator": "offices[0].postalCode"
   }
  },
  {
@@ -6138,6 +5646,186 @@
   }
  },
  {
+  "code": "HOME-CONTACT-12",
+  "page": "Home (/)",
+  "section": "Contact panel",
+  "label": "Directions link, screen-reader name — three cards share the visible “Get directions”, so this names the city. Must start with HOME-CONTACT-07.",
+  "kind": "aria-label",
+  "text": "Get directions to {location}",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "map.directionsTo"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-01",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Button above the map cards, closed — {count} is the number of offices, filled in by the site",
+  "kind": "button",
+  "text": "See all {count} offices",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "map.showOffices"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-02",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Button above the map cards, open",
+  "kind": "button",
+  "text": "Hide the other offices",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "map.hideOffices"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-14",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Gurugram card — firm at that address (the same cell as the company name in the header)",
+  "kind": "text",
+  "text": "GA Management Consultants",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[0].name"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-03",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — firm at that address (not GAMCS)",
+  "kind": "text",
+  "text": "RNBP & CO",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].name"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-04",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — address, line 1",
+  "kind": "text",
+  "text": "Second Floor, G-22, Block G, Sector 3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].street"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-05",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — city",
+  "kind": "text",
+  "text": "Noida",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].locality"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-06",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — state",
+  "kind": "text",
+  "text": "Uttar Pradesh",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].region"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-07",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — postcode",
+  "kind": "text",
+  "text": "201301",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].postalCode"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-08",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Noida card — landmark line under the address",
+  "kind": "text",
+  "text": "Near Noida Sector 16 Metro Station, Gate No. 3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[1].note"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-09",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Bangalore card — firm at that address (not GAMCS)",
+  "kind": "text",
+  "text": "New Leaf Family Office",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[2].name"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-10",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Bangalore card — address, line 1",
+  "kind": "text",
+  "text": "14th Floor, UB City, Concorde Block, No. 24 Vittal Mallya Road",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[2].street"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-11",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Bangalore card — city",
+  "kind": "text",
+  "text": "Bangalore",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[2].locality"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-12",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Bangalore card — state",
+  "kind": "text",
+  "text": "Karnataka",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[2].region"
+  }
+ },
+ {
+  "code": "HOME-OFFICES-13",
+  "page": "Home (/)",
+  "section": "Contact panel — offices",
+  "label": "Bangalore card — postcode",
+  "kind": "text",
+  "text": "560001",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "offices[2].postalCode"
+  }
+ },
+ {
   "code": "META-WHO-TITLE",
   "page": "Who We Are (/who-we-are)",
   "section": "Browser tab title & search description",
@@ -6167,7 +5855,7 @@
   "section": "Hero",
   "label": "Eyebrow",
   "kind": "text",
-  "text": "Our Story",
+  "text": "OUR STORY",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.eyebrow"
@@ -6210,10 +5898,202 @@
   }
  },
  {
+  "code": "WHO-STORY-09",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Hero",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal. Having known each other since college, qualified as Chartered Accountants, and later worked in corporate roles, they shared a conviction: finance should do more than explain what happened. It should help businesses decide what happens next.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.heroBody"
+  }
+ },
+ {
   "code": "WHO-STORY-10",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Chapter label",
+  "section": "Hero",
+  "label": "First button (jumps to the timeline on this page)",
+  "kind": "button",
+  "text": "Explore Our Journey",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.heroCtas.primary.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-11",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Hero",
+  "label": "Second button (jumps to the founders on this page)",
+  "kind": "button",
+  "text": "Meet the Founders",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.heroCtas.secondary.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-12",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Band heading",
+  "kind": "text",
+  "text": "GAMCS AT A GLANCE",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-13",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 1 of 6, number",
+  "kind": "text",
+  "text": "2023",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[0].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-14",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 1 of 6, what it counts",
+  "kind": "text",
+  "text": "Founded",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[0].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-15",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 2 of 6, number",
+  "kind": "text",
+  "text": "50+",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[1].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-16",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 2 of 6, what it counts",
+  "kind": "text",
+  "text": "Team & delivery professionals",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[1].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-17",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 3 of 6, number",
+  "kind": "text",
+  "text": "150+ years",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[2].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-18",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 3 of 6, what it counts",
+  "kind": "text",
+  "text": "Combined experience across our leadership and advisory team",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[2].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-19",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 4 of 6, number",
+  "kind": "text",
+  "text": "3",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[3].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-20",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 4 of 6, what it counts",
+  "kind": "text",
+  "text": "Office locations",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[3].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-21",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 5 of 6, number",
+  "kind": "text",
+  "text": "30+",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[4].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-22",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 5 of 6, what it counts",
+  "kind": "text",
+  "text": "Businesses supported",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[4].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-23",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 6 of 6, number",
+  "kind": "text",
+  "text": "10+",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[5].value"
+  }
+ },
+ {
+  "code": "WHO-STORY-24",
+  "page": "Who We Are (/who-we-are)",
+  "section": "GAMCS at a glance",
+  "label": "Figure 6 of 6, what it counts",
+  "kind": "text",
+  "text": "Countries served",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.glance.items[5].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-25",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Section label",
   "kind": "text",
   "text": "Where it started",
   "source": {
@@ -6222,430 +6102,430 @@
   }
  },
  {
-  "code": "WHO-STORY-11",
+  "code": "WHO-STORY-26",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Chapter heading",
+  "section": "Section 01 — Where it started",
+  "label": "Section heading",
   "kind": "text",
-  "text": "The same college, the same qualification.",
+  "text": "The same college. The same qualification. A shared ambition.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.start.heading"
   }
  },
  {
-  "code": "WHO-STORY-12",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Paragraph",
-  "kind": "text",
-  "text": "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal, whose professional journey began in the same college, continued through their Chartered Accountancy qualification, and later brought them together in the corporate world.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.start.body"
-  }
- },
- {
-  "code": "WHO-STORY-13",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Step 1 of 4",
-  "kind": "text",
-  "text": "College",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.markers[0]"
-  }
- },
- {
-  "code": "WHO-STORY-14",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Step 2 of 4",
-  "kind": "text",
-  "text": "Chartered Accountancy",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.markers[1]"
-  }
- },
- {
-  "code": "WHO-STORY-15",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Step 3 of 4",
-  "kind": "text",
-  "text": "The corporate floor",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.markers[2]"
-  }
- },
- {
-  "code": "WHO-STORY-17",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Figure 1, number",
-  "kind": "text",
-  "text": "2023",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.stats[0].value"
-  }
- },
- {
-  "code": "WHO-STORY-18",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Figure 1, what it counts",
-  "kind": "text",
-  "text": "the year the firm was founded",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.stats[0].label"
-  }
- },
- {
-  "code": "WHO-STORY-19",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Figure 2, number",
-  "kind": "text",
-  "text": "2",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.stats[1].value"
-  }
- },
- {
-  "code": "WHO-STORY-20",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 01 — Where it started",
-  "label": "Figure 2, what it counts",
-  "kind": "text",
-  "text": "founders, and the initials the firm carries",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.stats[1].label"
-  }
- },
- {
-  "code": "WHO-STORY-21",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Chapter label",
-  "kind": "text",
-  "text": "A shared passion",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.passion.label"
-  }
- },
- {
-  "code": "WHO-STORY-22",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Chapter heading",
-  "kind": "text",
-  "text": "Studied, qualified, and worked alongside each other.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.passion.heading"
-  }
- },
- {
-  "code": "WHO-STORY-23",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Paragraph",
-  "kind": "text",
-  "text": "Having studied, qualified, and worked alongside each other, they developed a shared passion for Financial Planning & Analysis (FP&A), business intelligence, financial modelling, dashboards, and data-driven decision-making.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.passion.body"
-  }
- },
- {
-  "code": "WHO-STORY-24",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Discipline 1 of 5",
-  "kind": "text",
-  "text": "Financial Planning & Analysis (FP&A)",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.disciplines[0]"
-  }
- },
- {
-  "code": "WHO-STORY-25",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Discipline 2 of 5",
-  "kind": "text",
-  "text": "Business intelligence",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.disciplines[1]"
-  }
- },
- {
-  "code": "WHO-STORY-26",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Discipline 3 of 5",
-  "kind": "text",
-  "text": "Financial modelling",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.disciplines[2]"
-  }
- },
- {
   "code": "WHO-STORY-27",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Discipline 4 of 5",
+  "section": "Section 01 — Where it started",
+  "label": "Paragraph 1 of 2",
   "kind": "text",
-  "text": "Dashboards",
+  "text": "Gaurav and Abhinav's journey began in college and continued through their Chartered Accountancy qualification and corporate experience. Along the way, they developed complementary perspectives on finance, business performance and the role technology can play in making finance more effective.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.disciplines[3]"
+   "locator": "ourStory.chapters.start.body[0]"
   }
  },
  {
   "code": "WHO-STORY-28",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 02 — A shared passion",
-  "label": "Discipline 5 of 5",
+  "section": "Section 01 — Where it started",
+  "label": "Paragraph 2 of 2",
   "kind": "text",
-  "text": "Data-driven decision-making",
+  "text": "In 2023, they brought those perspectives together to establish GA Management Consultants LLP, with a vision to help businesses connect financial expertise, data and technology to make better decisions.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.disciplines[4]"
+   "locator": "ourStory.chapters.start.body[1]"
   }
  },
  {
   "code": "WHO-STORY-29",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
-  "label": "Chapter label",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline heading",
   "kind": "text",
-  "text": "What they saw",
+  "text": "Our journey",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-30",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 1 of 4, year",
+  "kind": "text",
+  "text": "2011",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[0].year"
+  }
+ },
+ {
+  "code": "WHO-STORY-31",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 1 of 4, label",
+  "kind": "text",
+  "text": "College",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[0].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-32",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 1 of 4, description",
+  "kind": "text",
+  "text": "Where the founders first got to know each other and began their shared journey.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[0].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-33",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 2 of 4, year",
+  "kind": "text",
+  "text": "2014",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[1].year"
+  }
+ },
+ {
+  "code": "WHO-STORY-34",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 2 of 4, label",
+  "kind": "text",
+  "text": "Chartered Accountancy",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[1].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-35",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 2 of 4, description",
+  "kind": "text",
+  "text": "A shared foundation in finance, analysis, discipline and problem-solving.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[1].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-36",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 3 of 4, year",
+  "kind": "text",
+  "text": "2017-2023",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[2].year"
+  }
+ },
+ {
+  "code": "WHO-STORY-37",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 3 of 4, label",
+  "kind": "text",
+  "text": "Corporate experience",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[2].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-38",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 3 of 4, description",
+  "kind": "text",
+  "text": "Seeing how finance, business operations and decision-making intersect—and where they often disconnect.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[2].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-39",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 4 of 4, year",
+  "kind": "text",
+  "text": "2023",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[3].year"
+  }
+ },
+ {
+  "code": "WHO-STORY-40",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 4 of 4, label",
+  "kind": "text",
+  "text": "GAMCS is founded",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[3].label"
+  }
+ },
+ {
+  "code": "WHO-STORY-41",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 01 — Where it started",
+  "label": "Timeline entry 4 of 4, description",
+  "kind": "text",
+  "text": "Bringing finance, data and technology together to help businesses see beyond the numbers.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.start.journey.entries[3].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-42",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 02 — What we saw",
+  "label": "Section label",
+  "kind": "text",
+  "text": "What we saw",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.saw.label"
   }
  },
  {
-  "code": "WHO-STORY-30",
+  "code": "WHO-STORY-43",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
-  "label": "Chapter heading",
+  "section": "Section 02 — What we saw",
+  "label": "Section heading",
   "kind": "text",
-  "text": "Beyond conventional reporting.",
+  "text": "Reporting tells you what happened. Finance should help you decide what happens next.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.saw.heading"
   }
  },
  {
-  "code": "WHO-STORY-31",
+  "code": "WHO-STORY-44",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
+  "section": "Section 02 — What we saw",
   "label": "Paragraph",
   "kind": "text",
-  "text": "Their experience in the corporate environment gave them a deeper understanding of how financial data, when interpreted effectively, can go beyond conventional reporting to become a powerful tool for strategic planning and business growth.",
+  "text": "Financial information is essential, but producing reports is only part of the job. The real value lies in understanding what drives performance, identifying what needs attention, and helping leadership teams decide what to do next.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.saw.body"
   }
  },
  {
-  "code": "WHO-STORY-32",
+  "code": "WHO-STORY-45",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
+  "section": "Section 02 — What we saw",
   "label": "Before / after panel: left label",
   "kind": "text",
   "text": "Conventional reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.shift.fromLabel"
-  }
- },
- {
-  "code": "WHO-STORY-33",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
-  "label": "Before / after panel: left line",
-  "kind": "text",
-  "text": "What happened, and when.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.shift.fromLine"
-  }
- },
- {
-  "code": "WHO-STORY-34",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
-  "label": "Before / after panel: right label",
-  "kind": "text",
-  "text": "Strategic planning",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.shift.toLabel"
-  }
- },
- {
-  "code": "WHO-STORY-35",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 03 — What they saw",
-  "label": "Before / after panel: right line",
-  "kind": "text",
-  "text": "Why it happened, and what to do.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.shift.toLine"
-  }
- },
- {
-  "code": "WHO-STORY-36",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 04 — The name",
-  "label": "Chapter label",
-  "kind": "text",
-  "text": "The name",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.name.label"
-  }
- },
- {
-  "code": "WHO-STORY-37",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 04 — The name",
-  "label": "Chapter heading",
-  "kind": "text",
-  "text": "The initials, and the vision.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.name.heading"
-  }
- },
- {
-  "code": "WHO-STORY-38",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 04 — The name",
-  "label": "Paragraph 1 of 2",
-  "kind": "text",
-  "text": "With a clear vision to transform finance from a reporting function into a strategic engine for growth, powered by data, technology, and insights, they set out to build a consultancy that bridges the gap between financial information and meaningful business decisions.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.name.body[0]"
-  }
- },
- {
-  "code": "WHO-STORY-39",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 04 — The name",
-  "label": "Paragraph 2 of 2",
-  "kind": "text",
-  "text": "This shared ambition led to the establishment of GA Management Consultants LLP, with GA representing the initials of its founders and the vision that brought them together.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.name.body[1]"
-  }
- },
- {
-  "code": "WHO-STORY-40",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Chapter label",
-  "kind": "text",
-  "text": "What we believe",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.believe.label"
-  }
- },
- {
-  "code": "WHO-STORY-41",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Pull quote",
-  "kind": "text",
-  "text": "Finance is not just about understanding numbers, but about uncovering the insights behind them.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.believe.heading"
-  }
- },
- {
-  "code": "WHO-STORY-42",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Paragraph",
-  "kind": "text",
-  "text": "By combining financial expertise, analytical thinking, technology, and a forward-looking perspective, we aim to empower businesses to transform complex financial information into actionable insights, informed decisions, and measurable business impact.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.believe.body"
-  }
- },
- {
-  "code": "WHO-STORY-43",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Pillar 1 of 4",
-  "kind": "text",
-  "text": "Financial expertise",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.pillars[0]"
-  }
- },
- {
-  "code": "WHO-STORY-44",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Pillar 2 of 4",
-  "kind": "text",
-  "text": "Analytical thinking",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.pillars[1]"
-  }
- },
- {
-  "code": "WHO-STORY-45",
-  "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Pillar 3 of 4",
-  "kind": "text",
-  "text": "Technology",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.pillars[2]"
+   "locator": "ourStory.chapters.saw.from.label"
   }
  },
  {
   "code": "WHO-STORY-46",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 05 — What we believe",
-  "label": "Pillar 4 of 4",
+  "section": "Section 02 — What we saw",
+  "label": "Before / after panel: left question",
   "kind": "text",
-  "text": "A forward-looking perspective",
+  "text": "What happened? What changed?",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.pillars[3]"
+   "locator": "ourStory.chapters.saw.from.question"
   }
  },
  {
   "code": "WHO-STORY-47",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 06 — The founders",
-  "label": "Chapter label",
+  "section": "Section 02 — What we saw",
+  "label": "Before / after panel: left line",
+  "kind": "text",
+  "text": "Historical visibility is necessary—but it is not the finish line.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.from.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-48",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 02 — What we saw",
+  "label": "Before / after panel: right label",
+  "kind": "text",
+  "text": "Decision-led finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.to.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-49",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 02 — What we saw",
+  "label": "Before / after panel: right question",
+  "kind": "text",
+  "text": "Why did it happen? What should we do next?",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.to.question"
+  }
+ },
+ {
+  "code": "WHO-STORY-50",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 02 — What we saw",
+  "label": "Before / after panel: right line",
+  "kind": "text",
+  "text": "Insight connects financial performance to choices, actions and outcomes.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.saw.to.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-51",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Section label",
+  "kind": "text",
+  "text": "What we set out to build",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.label"
+  }
+ },
+ {
+  "code": "WHO-STORY-52",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Section heading",
+  "kind": "text",
+  "text": "Finance, data and technology—working together.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-53",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "We built GAMCS around the belief that better decisions begin with reliable financial foundations, connected information and meaningful analysis.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-54",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 1 of 3, heading",
+  "kind": "text",
+  "text": "Financial expertise",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[0].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-55",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 1 of 3, body",
+  "kind": "text",
+  "text": "Build strong foundations in planning, reporting, modelling and business performance—so the numbers can be relied on and understood.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[0].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-56",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 2 of 3, heading",
+  "kind": "text",
+  "text": "Data & technology",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[1].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-57",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 2 of 3, body",
+  "kind": "text",
+  "text": "Connect systems, improve reporting processes and make information more accessible, consistent and useful.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[1].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-58",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 3 of 3, heading",
+  "kind": "text",
+  "text": "Insight & action",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[2].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-59",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Item 3 of 3, body",
+  "kind": "text",
+  "text": "Turn financial and operational information into clear explanations, forward-looking perspectives and better-informed decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.items[2].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-60",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 03 — What we set out to build",
+  "label": "Closing note about the name GA",
+  "kind": "text",
+  "text": "The name GA brings together the initials of Gaurav and Abhinav—a simple reflection of the partnership and shared ambition behind the firm.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.build.note"
+  }
+ },
+ {
+  "code": "WHO-STORY-61",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 04 — The founders",
+  "label": "Section label",
   "kind": "text",
   "text": "The founders",
   "source": {
@@ -6654,34 +6534,94 @@
   }
  },
  {
-  "code": "WHO-STORY-48",
+  "code": "WHO-STORY-62",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 06 — The founders",
-  "label": "Chapter heading",
+  "section": "Section 04 — The founders",
+  "label": "Section heading",
   "kind": "text",
-  "text": "Gaurav Malik and Abhinav Aggarwal.",
+  "text": "Two perspectives. One shared purpose.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.founders.heading"
   }
  },
  {
-  "code": "WHO-STORY-49",
+  "code": "WHO-STORY-63",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 07 — Where we are going",
-  "label": "Chapter label",
+  "section": "Section 04 — The founders",
+  "label": "Paragraph",
   "kind": "text",
-  "text": "Where we are going",
+  "text": "GAMCS brings strategic finance and technology-led transformation together, led by founders with complementary expertise and a shared commitment to execution.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-64",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 04 — The founders",
+  "label": "Role line, printed under both founders",
+  "kind": "text",
+  "text": "Co-Founder & Partner",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.role"
+  }
+ },
+ {
+  "code": "WHO-STORY-65",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 04 — The founders",
+  "label": "Gaurav Malik — short bio (the name on the card comes from the team roster, not from here)",
+  "kind": "text",
+  "text": "Gaurav focuses on strategic finance, FP&A, financial modelling, profitability analysis and transaction support. He works with leadership teams to improve performance visibility and turn financial analysis into practical business decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.bios.Gaurav Malik"
+  }
+ },
+ {
+  "code": "WHO-STORY-66",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 04 — The founders",
+  "label": "Abhinav Aggarwal — short bio (the name on the card comes from the team roster, not from here)",
+  "kind": "text",
+  "text": "Abhinav focuses on FP&A systems, BI and analytics, automation, and finance transformation. He works at the intersection of finance and technology, helping businesses streamline reporting and build more effective finance capabilities.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.bios.Abhinav Aggarwal"
+  }
+ },
+ {
+  "code": "WHO-STORY-67",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 04 — The founders",
+  "label": "Link to the full team",
+  "kind": "button",
+  "text": "Meet the Full Team",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.founders.cta"
+  }
+ },
+ {
+  "code": "WHO-STORY-68",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Section label",
+  "kind": "text",
+  "text": "Where we're going",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.chapters.future.label"
   }
  },
  {
-  "code": "WHO-STORY-50",
+  "code": "WHO-STORY-69",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 07 — Where we are going",
-  "label": "Chapter heading",
+  "section": "Section 05 — Where we are going",
+  "label": "Section heading",
   "kind": "text",
   "text": "See beyond the numbers.",
   "source": {
@@ -6690,27 +6630,159 @@
   }
  },
  {
-  "code": "WHO-STORY-51",
+  "code": "WHO-STORY-70",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 07 — Where we are going",
-  "label": "Paragraph",
+  "section": "Section 05 — Where we are going",
+  "label": "Paragraph 1 of 2",
   "kind": "text",
-  "text": "Our journey is rooted in collaboration, driven by curiosity, and shaped by a commitment to helping businesses see beyond the numbers, make smarter decisions, and build a sustainable future.",
+  "text": "Our journey continues with a clear purpose: helping businesses build stronger finance functions, understand performance more deeply, and turn insight into decisions and measurable impact.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.chapters.future.body"
+   "locator": "ourStory.chapters.future.body[0]"
   }
  },
  {
-  "code": "WHO-STORY-52",
+  "code": "WHO-STORY-71",
   "page": "Who We Are (/who-we-are)",
-  "section": "Chapter 07 — Where we are going",
-  "label": "Second button",
-  "kind": "button",
-  "text": "See how we help",
+  "section": "Section 05 — Where we are going",
+  "label": "Paragraph 2 of 2",
+  "kind": "text",
+  "text": "Whether the need is to strengthen finance foundations, improve reporting, connect data or support strategic decisions, we believe the right next step begins with understanding the business.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "ourStory.secondaryCta"
+   "locator": "ourStory.chapters.future.body[1]"
+  }
+ },
+ {
+  "code": "WHO-STORY-72",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 1 of 4, heading",
+  "kind": "text",
+  "text": "Practical by design",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[0].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-73",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 1 of 4, body",
+  "kind": "text",
+  "text": "Advice should lead to action, and solutions should fit the realities of the business.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[0].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-74",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 2 of 4, heading",
+  "kind": "text",
+  "text": "Connected thinking",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[1].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-75",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 2 of 4, body",
+  "kind": "text",
+  "text": "Finance, data and technology work best when they are designed together.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[1].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-76",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 3 of 4, heading",
+  "kind": "text",
+  "text": "Built around the business",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[2].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-77",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 3 of 4, body",
+  "kind": "text",
+  "text": "No cookie-cutter templates; focus on the operating model and decisions that matter.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[2].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-78",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 4 of 4, heading",
+  "kind": "text",
+  "text": "Impact over activity",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[3].heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-79",
+  "page": "Who We Are (/who-we-are)",
+  "section": "Section 05 — Where we are going",
+  "label": "Principle 4 of 4, body",
+  "kind": "text",
+  "text": "Measure success by better decisions and outcomes, not simply reports delivered.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.chapters.future.principles[3].body"
+  }
+ },
+ {
+  "code": "WHO-STORY-80",
+  "page": "Who We Are (/who-we-are)",
+  "section": "What comes next (closing band)",
+  "label": "Heading",
+  "kind": "text",
+  "text": "Better decisions begin with a clearer view.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.closing.heading"
+  }
+ },
+ {
+  "code": "WHO-STORY-81",
+  "page": "Who We Are (/who-we-are)",
+  "section": "What comes next (closing band)",
+  "label": "Paragraph",
+  "kind": "text",
+  "text": "Tell us where your finance function needs to go. We'll help you identify the right next step—from stronger foundations to insight-led decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.closing.body"
+  }
+ },
+ {
+  "code": "WHO-STORY-82",
+  "page": "Who We Are (/who-we-are)",
+  "section": "What comes next (closing band)",
+  "label": "First button (the second is the site-wide Schedule a Call, HDR-NAV-07)",
+  "kind": "button",
+  "text": "Explore Our Solutions",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "ourStory.closing.cta.label"
   }
  },
  {
@@ -6858,12 +6930,24 @@
   }
  },
  {
+  "code": "HDR-SOL-01",
+  "page": "Solutions hub (/solutions)",
+  "section": "Pillar card — FP&A & CFO Advisory",
+  "label": "Pillar name (the eyebrow over the card headline; also this pillar's link in the footer)",
+  "kind": "text",
+  "text": "Advise",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].navLabel"
+  }
+ },
+ {
   "code": "SOL-FPA-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — FP&A & CFO Advisory",
   "label": "Card headline (also the pillar page's H1)",
   "kind": "text",
-  "text": "FP&A That Moves at the Speed of Your Business — Not Your Month-End Close",
+  "text": "Strategic Finance, FP&A & CFO Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].h1"
@@ -6875,7 +6959,7 @@
   "section": "Pillar card — FP&A & CFO Advisory",
   "label": "Card blurb",
   "kind": "text",
-  "text": "CFO-level advisory, budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to your RevOps data — a forward-looking view instead of a rear-view mirror.",
+  "text": "Build a finance function that drives the business—not just reports it.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.previews[0].blurb"
@@ -6894,12 +6978,24 @@
   }
  },
  {
+  "code": "HDR-SOL-02",
+  "page": "Solutions hub (/solutions)",
+  "section": "Pillar card — Finance Team Extension",
+  "label": "Pillar name (the eyebrow over the card headline; also this pillar's link in the footer)",
+  "kind": "text",
+  "text": "Build",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].navLabel"
+  }
+ },
+ {
   "code": "SOL-FTE-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — Finance Team Extension",
   "label": "Card headline (also the pillar page's H1)",
   "kind": "text",
-  "text": "One Team, Every Portfolio Company, One View",
+  "text": "Finance Managed Services & Workforce Solutions",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].h1"
@@ -6911,7 +7007,7 @@
   "section": "Pillar card — Finance Team Extension",
   "label": "Card blurb",
   "kind": "text",
-  "text": "Staff augmentation, Employer of Record, offshored functions, or a full CoE or GCC — accounting, bookkeeping, and reporting capacity for single companies, PE/VC portfolios, and advisory firms.",
+  "text": "Build, extend or operate the finance capability you need—without scaling overhead.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.previews[1].blurb"
@@ -6930,12 +7026,24 @@
   }
  },
  {
+  "code": "HDR-SOL-03",
+  "page": "Solutions hub (/solutions)",
+  "section": "Pillar card — Digital Transformation",
+  "label": "Pillar name (the eyebrow over the card headline; also this pillar's link in the footer)",
+  "kind": "text",
+  "text": "Transform",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].navLabel"
+  }
+ },
+ {
   "code": "SOL-DT-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — Digital Transformation",
   "label": "Card headline (also the pillar page's H1)",
   "kind": "text",
-  "text": "Two Arms, One Pillar: The Tools You Run On, and the Insight You Get Out of Them",
+  "text": "Digital Finance Transformation",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[2].h1"
@@ -6947,7 +7055,7 @@
   "section": "Pillar card — Digital Transformation",
   "label": "Card blurb",
   "kind": "text",
-  "text": "ERP, CRM, and FP&A platforms implemented agnostically or built in-house with Finsensor AI — plus the data warehousing and real-time dashboards that flag problems before they hit the P&L.",
+  "text": "Connect systems, data and technology to transform how finance works.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.previews[2].blurb"
@@ -6966,12 +7074,24 @@
   }
  },
  {
+  "code": "HDR-SOL-04",
+  "page": "Solutions hub (/solutions)",
+  "section": "Pillar card — Deal Advisory",
+  "label": "Pillar name (the eyebrow over the card headline; also this pillar's link in the footer)",
+  "kind": "text",
+  "text": "Transact",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].navLabel"
+  }
+ },
+ {
   "code": "SOL-DEAL-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — Deal Advisory",
   "label": "Card headline (also the pillar page's H1)",
   "kind": "text",
-  "text": "Deal-Ready Finance — Before the Term Sheet, Not After",
+  "text": "Transactions & Capital Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].h1"
@@ -6983,7 +7103,7 @@
   "section": "Pillar card — Deal Advisory",
   "label": "Card blurb",
   "kind": "text",
-  "text": "M&A advisory, IPO readiness, due diligence, debt refinancing, and investor/pitch deck preparation — so your numbers hold up under real scrutiny.",
+  "text": "Make your numbers ready for the moments that matter.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.previews[3].blurb"
@@ -7002,12 +7122,24 @@
   }
  },
  {
+  "code": "HDR-SOL-05",
+  "page": "Solutions hub (/solutions)",
+  "section": "Pillar card — Training & Enablement",
+  "label": "Pillar name (the eyebrow over the card headline; also this pillar's link in the footer)",
+  "kind": "text",
+  "text": "Enable",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].navLabel"
+  }
+ },
+ {
   "code": "SOL-TRAIN-01",
   "page": "Solutions hub (/solutions)",
   "section": "Pillar card — Training & Enablement",
   "label": "Card headline (also the pillar page's H1)",
   "kind": "text",
-  "text": "Build the Capability In-House, Not Just the Deliverable",
+  "text": "Finance Capability Building & Enablement",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[4].h1"
@@ -7019,7 +7151,7 @@
   "section": "Pillar card — Training & Enablement",
   "label": "Card blurb",
   "kind": "text",
-  "text": "FP&A, financial modelling, Tableau, ESG, and data analytics training that builds lasting capability inside your own finance team — plus public MasterClasses through Thinking Bridge.",
+  "text": "Build the capability to sustain transformation.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutionsHub.previews[4].blurb"
@@ -7146,171 +7278,255 @@
   }
  },
  {
-  "code": "FPA-B1-02",
+  "code": "FPA-G1-01",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 1 lead",
+  "label": "Group 1 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "CFO-level strategic advisory",
+  "text": "CFO & Strategic Finance Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].blocks[0].items[0].lead"
   }
  },
  {
-  "code": "FPA-B1-03",
+  "code": "FPA-G1-02",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 1 body",
+  "label": "Group 1 capability 1",
   "kind": "text",
-  "text": "a senior finance point of view on what the numbers mean, not just the numbers themselves: what the forecast implies for hiring, runway, pricing, and the next raise.",
+  "text": "CFO Advisory & Strategic Decision Support",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[0].body"
+   "locator": "solutions[0].blocks[0].items[0].items[0]"
   }
  },
  {
-  "code": "FPA-B1-04",
+  "code": "FPA-G1-03",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 2 lead",
+  "label": "Group 1 capability 2",
   "kind": "text",
-  "text": "Budgeting, forecasting & rolling models",
+  "text": "Finance Strategy & Operating Model",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[1]"
+  }
+ },
+ {
+  "code": "FPA-G1-04",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 3",
+  "kind": "text",
+  "text": "Strategic Planning & Business Performance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[2]"
+  }
+ },
+ {
+  "code": "FPA-G1-05",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 4",
+  "kind": "text",
+  "text": "Profitability Improvement & Unit Economics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[3]"
+  }
+ },
+ {
+  "code": "FPA-G1-06",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 5",
+  "kind": "text",
+  "text": "Cash Flow Forecasting & Visibility",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[4]"
+  }
+ },
+ {
+  "code": "FPA-G1-07",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 6",
+  "kind": "text",
+  "text": "Working Capital Management",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[5]"
+  }
+ },
+ {
+  "code": "FPA-G1-08",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 7",
+  "kind": "text",
+  "text": "Board & Investor Reporting",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[0].items[6]"
+  }
+ },
+ {
+  "code": "FPA-G2-01",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 2 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "FP&A & Performance Management",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].blocks[0].items[1].lead"
   }
  },
  {
-  "code": "FPA-B1-05",
+  "code": "FPA-G2-02",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 2 body",
+  "label": "Group 2 capability 1",
   "kind": "text",
-  "text": "annual, medium-term, and long-term plans, plus dynamic re-forecasting and 13-week rolling cash flow.",
+  "text": "Annual Budgeting & Annual Operating Plans (AOP)",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[1].body"
+   "locator": "solutions[0].blocks[0].items[1].items[0]"
   }
  },
  {
-  "code": "FPA-B1-06",
+  "code": "FPA-G2-03",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 3 lead",
+  "label": "Group 2 capability 2",
   "kind": "text",
-  "text": "Revenue forecasting tied to RevOps",
+  "text": "Financial Forecasting & Rolling Forecasts",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[1].items[1]"
+  }
+ },
+ {
+  "code": "FPA-G2-04",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 3",
+  "kind": "text",
+  "text": "Driver-Based Planning & Scenario Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[1].items[2]"
+  }
+ },
+ {
+  "code": "FPA-G2-05",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 4",
+  "kind": "text",
+  "text": "Budget vs. Actuals & Variance Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[1].items[3]"
+  }
+ },
+ {
+  "code": "FPA-G2-06",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 5",
+  "kind": "text",
+  "text": "KPI Frameworks & Performance Management",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[0].blocks[0].items[1].items[4]"
+  }
+ },
+ {
+  "code": "FPA-G3-01",
+  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
+  "section": "What you get",
+  "label": "Group 3 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Financial Modelling & Business Planning",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[0].blocks[0].items[2].lead"
   }
  },
  {
-  "code": "FPA-B1-07",
+  "code": "FPA-G3-02",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 3 body",
+  "label": "Group 3 capability 1",
   "kind": "text",
-  "text": "pipeline-driven revenue models built on the same CAC, ROAS, and channel data your dashboards already track, so sales and finance forecast off one number, not two (see Digital Transformation's Analytics & Warehousing arm).",
+  "text": "Integrated Financial Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[2].body"
+   "locator": "solutions[0].blocks[0].items[2].items[0]"
   }
  },
  {
-  "code": "FPA-B1-08",
+  "code": "FPA-G3-03",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 4 lead",
+  "label": "Group 3 capability 2",
   "kind": "text",
-  "text": "Accelerated month-end close & real-time visibility",
+  "text": "Business Plans & Long-Range Planning",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[3].lead"
+   "locator": "solutions[0].blocks[0].items[2].items[1]"
   }
  },
  {
-  "code": "FPA-B1-09",
+  "code": "FPA-G3-04",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 4 body",
+  "label": "Group 3 capability 3",
   "kind": "text",
-  "text": "faster close cycles and management reporting that's current, not three weeks stale. (Day-to-day bookkeeping and close execution runs through Finance Team Extension; this is where it becomes forward-looking analysis.)",
+  "text": "Revenue, Pricing & Unit Economics Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[3].body"
+   "locator": "solutions[0].blocks[0].items[2].items[2]"
   }
  },
  {
-  "code": "FPA-B1-10",
+  "code": "FPA-G3-05",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 5 lead",
+  "label": "Group 3 capability 4",
   "kind": "text",
-  "text": "Scenario & sensitivity analysis",
+  "text": "Sensitivity Analysis & What-If Scenarios",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[4].lead"
+   "locator": "solutions[0].blocks[0].items[2].items[3]"
   }
  },
  {
-  "code": "FPA-B1-11",
+  "code": "FPA-G3-06",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 5 body",
+  "label": "Group 3 capability 5",
   "kind": "text",
-  "text": "best/base/worst-case modeling for the decisions that matter.",
+  "text": "Investment Appraisal & Business Case Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[4].body"
+   "locator": "solutions[0].blocks[0].items[2].items[4]"
   }
  },
  {
-  "code": "FPA-B1-12",
+  "code": "FPA-G3-07",
   "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
   "section": "What you get",
-  "label": "Item 6 lead",
+  "label": "Group 3 capability 6",
   "kind": "text",
-  "text": "Variance analysis with real commentary",
+  "text": "Strategic Decision Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[5].lead"
-  }
- },
- {
-  "code": "FPA-B1-13",
-  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
-  "section": "What you get",
-  "label": "Item 6 body",
-  "kind": "text",
-  "text": "line-item packs that explain why, built for boards and lenders.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[5].body"
-  }
- },
- {
-  "code": "FPA-B1-14",
-  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
-  "section": "What you get",
-  "label": "Item 7 lead",
-  "kind": "text",
-  "text": "A delivery model matched to your stage",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[6].lead"
-  }
- },
- {
-  "code": "FPA-B1-15",
-  "page": "FP&A & CFO Advisory (/solutions/fpa-cfo-advisory)",
-  "section": "What you get",
-  "label": "Item 7 body",
-  "kind": "text",
-  "text": "Excel-based FP&A live in 2–3 weeks for early-stage teams; Power BI/Tableau-driven planning for growth-stage; full enterprise FP&A for mature and PE-backed platforms (see Digital Transformation if you need the platform stood up first).",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[0].blocks[0].items[6].body"
+   "locator": "solutions[0].blocks[0].items[2].items[5]"
   }
  },
  {
@@ -7422,99 +7638,219 @@
   }
  },
  {
-  "code": "FTE-B1-02",
+  "code": "FTE-G1-01",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 1 lead",
+  "label": "Group 1 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "Staffing & staff augmentation",
+  "text": "Finance Workforce Solutions",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].blocks[0].items[0].lead"
   }
  },
  {
-  "code": "FTE-B1-03",
+  "code": "FTE-G1-02",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 1 body",
+  "label": "Group 1 capability 1",
   "kind": "text",
-  "text": "dedicated finance and analytics professionals who plug directly into your existing team and reporting lines, scaled up or down as the engagement needs.",
+  "text": "Team Extension & Staff Augmentation",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].blocks[0].items[0].body"
+   "locator": "solutions[1].blocks[0].items[0].items[0]"
   }
  },
  {
-  "code": "FTE-B1-04",
+  "code": "FTE-G1-03",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 2 lead",
+  "label": "Group 1 capability 2",
   "kind": "text",
-  "text": "Employer of Record (EoR)",
+  "text": "Employer of Record (EoR) & Employment Solutions",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[0].items[1]"
+  }
+ },
+ {
+  "code": "FTE-G1-04",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 1 capability 3",
+  "kind": "text",
+  "text": "Specialist Finance Resource Deployment",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[0].items[2]"
+  }
+ },
+ {
+  "code": "FTE-G1-05",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 1 capability 4",
+  "kind": "text",
+  "text": "Offshore Finance Teams",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[0].items[3]"
+  }
+ },
+ {
+  "code": "FTE-G2-01",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 2 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Managed Finance Services",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].blocks[0].items[1].lead"
   }
  },
  {
-  "code": "FTE-B1-05",
+  "code": "FTE-G2-02",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 2 body",
+  "label": "Group 2 capability 1",
   "kind": "text",
-  "text": "hire the person you want, wherever they are, without standing up a local entity yourself.",
+  "text": "Finance & Accounting Outsourcing",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].blocks[0].items[1].body"
+   "locator": "solutions[1].blocks[0].items[1].items[0]"
   }
  },
  {
-  "code": "FTE-B1-06",
+  "code": "FTE-G2-03",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 3 lead",
+  "label": "Group 2 capability 2",
   "kind": "text",
-  "text": "Offshoring & outsourcing of functions",
+  "text": "FP&A Managed Services",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[1].items[1]"
+  }
+ },
+ {
+  "code": "FTE-G2-04",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 2 capability 3",
+  "kind": "text",
+  "text": "Month-End Close & Financial Reporting Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[1].items[2]"
+  }
+ },
+ {
+  "code": "FTE-G2-05",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 2 capability 4",
+  "kind": "text",
+  "text": "Accounting & Bookkeeping",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[1].items[3]"
+  }
+ },
+ {
+  "code": "FTE-G2-06",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 2 capability 5",
+  "kind": "text",
+  "text": "Financial Consolidation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[1].items[4]"
+  }
+ },
+ {
+  "code": "FTE-G2-07",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 2 capability 6",
+  "kind": "text",
+  "text": "Accounts Payable (AP) & Accounts Receivable (AR) Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[1].items[5]"
+  }
+ },
+ {
+  "code": "FTE-G3-01",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 3 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Finance Operating Models",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[1].blocks[0].items[2].lead"
   }
  },
  {
-  "code": "FTE-B1-07",
+  "code": "FTE-G3-02",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 3 body",
+  "label": "Group 3 capability 1",
   "kind": "text",
-  "text": "hand off an entire function (accounting, bookkeeping, close, reporting) to a dedicated offshore team, not just individual seats.",
+  "text": "Finance Centres of Excellence (CoE)",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].blocks[0].items[2].body"
+   "locator": "solutions[1].blocks[0].items[2].items[0]"
   }
  },
  {
-  "code": "FTE-B1-08",
+  "code": "FTE-G3-03",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 4 lead",
+  "label": "Group 3 capability 2",
   "kind": "text",
-  "text": "Centers of Excellence (CoE) & GCC builds",
+  "text": "Global Capability Centre (GCC) Setup & Support",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].blocks[0].items[3].lead"
+   "locator": "solutions[1].blocks[0].items[2].items[1]"
   }
  },
  {
-  "code": "FTE-B1-09",
+  "code": "FTE-G3-04",
   "page": "Finance Team Extension (/solutions/finance-team-extension)",
   "section": "What Finance Team Extension looks like",
-  "label": "Item 4 body",
+  "label": "Group 3 capability 3",
   "kind": "text",
-  "text": "a full, standardized finance, analytics, and automation capability center, run to one methodology across every entity or portfolio company it serves.",
+  "text": "Offshore Finance Operating Models",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[1].blocks[0].items[3].body"
+   "locator": "solutions[1].blocks[0].items[2].items[2]"
+  }
+ },
+ {
+  "code": "FTE-G3-05",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 3 capability 4",
+  "kind": "text",
+  "text": "Finance Process Standardisation & Documentation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[2].items[3]"
+  }
+ },
+ {
+  "code": "FTE-G3-06",
+  "page": "Finance Team Extension (/solutions/finance-team-extension)",
+  "section": "What Finance Team Extension looks like",
+  "label": "Group 3 capability 5",
+  "kind": "text",
+  "text": "Finance Operations Optimisation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[1].blocks[0].items[2].items[4]"
   }
  },
  {
@@ -7914,375 +8250,543 @@
   }
  },
  {
-  "code": "DT-ARM1-01",
+  "code": "DT-B1-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Badge",
+  "section": "What you get",
+  "label": "Block heading",
   "kind": "text",
-  "text": "Arm 1 — Tools",
+  "text": "What you get",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].badge"
+   "locator": "solutions[2].blocks[0].heading"
   }
  },
  {
-  "code": "DT-ARM1-02",
+  "code": "DT-G1-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Intro paragraph",
+  "section": "What you get",
+  "label": "Group 1 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "Third-party platforms, implemented by people who actually use them — not just sell them. Half the value of an ERP, CRM, or FP&A platform gets lost in a bad implementation — a chart of accounts that doesn't match how you actually run the business, a CRM nobody trained the sales team to use, or a forecasting tool configured for data entry instead of real planning. We're platform-agnostic on purpose: we implement whatever's right for your business, not the tool we happen to have a reseller relationship with.",
+  "text": "Technology & Platforms",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].intro"
+   "locator": "solutions[2].blocks[0].items[0].lead"
   }
  },
  {
-  "code": "DT-ARM1-03",
+  "code": "DT-G1A-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 1 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A",
   "kind": "text",
-  "text": "ERP Implementation & Optimization",
+  "text": "ERP Selection, Implementation & Optimisation",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[0].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].lead"
   }
  },
  {
-  "code": "DT-ARM1-04",
+  "code": "DT-G1A-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 1 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A — capability 1",
   "kind": "text",
-  "text": "Oracle NetSuite, Oracle Fusion, Odoo, Zoho, SAP, QuickBooks, and others, configured around your actual chart of accounts and reporting needs.",
+  "text": "Oracle NetSuite",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[0].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].items[0]"
   }
  },
  {
-  "code": "DT-ARM1-05",
+  "code": "DT-G1A-03",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 2 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A — capability 2",
   "kind": "text",
-  "text": "CRM Implementation",
+  "text": "Oracle Fusion",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[1].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].items[1]"
   }
  },
  {
-  "code": "DT-ARM1-06",
+  "code": "DT-G1A-04",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 2 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A — capability 3",
   "kind": "text",
-  "text": "primarily Salesforce, configured so your revenue and pipeline data actually connects to your financial reporting — the foundation for RevOps and revenue analytics, not just a system of record for sales.",
+  "text": "SAP",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[1].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].items[2]"
   }
  },
  {
-  "code": "DT-ARM1-07",
+  "code": "DT-G1A-05",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 3 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A — capability 4",
   "kind": "text",
-  "text": "FP&A Platform Implementation",
+  "text": "Odoo",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[2].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].items[3]"
   }
  },
  {
-  "code": "DT-ARM1-08",
+  "code": "DT-G1A-06",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 3 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading A — capability 5",
   "kind": "text",
-  "text": "Anaplan, Aimplan, Jedox, Prophix, Pigment, Vena, Unit4, PivotXL, and beyond. If your team already has a preferred platform, we work in it.",
+  "text": "Zoho",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[2].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[0].items[4]"
   }
  },
  {
-  "code": "DT-ARM1-09",
+  "code": "DT-G1B-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 4 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading B",
   "kind": "text",
-  "text": "Our own in-house software — Finsensor AI",
+  "text": "CRM Implementation & Integration",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[3].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[1].lead"
   }
  },
  {
-  "code": "DT-ARM1-10",
+  "code": "DT-G1B-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 4 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading B — capability 1",
   "kind": "text",
-  "text": "where a third-party platform doesn't fit, we bring our own purpose-built finance software, developed in-house rather than licensed off the shelf.",
+  "text": "Salesforce",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[3].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[1].items[0]"
   }
  },
  {
-  "code": "DT-ARM1-11",
+  "code": "DT-G1C-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 5 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C",
   "kind": "text",
-  "text": "Custom Software Development",
+  "text": "FP&A / Enterprise Performance Management (EPM) Platforms",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[4].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].lead"
   }
  },
  {
-  "code": "DT-ARM1-12",
+  "code": "DT-G1C-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 5 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 1",
   "kind": "text",
-  "text": "when no off-the-shelf tool fits the gap, we build bespoke tools instead of forcing a workaround.",
+  "text": "Anaplan",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[4].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[0]"
   }
  },
  {
-  "code": "DT-ARM1-13",
+  "code": "DT-G1C-03",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 6 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 2",
   "kind": "text",
-  "text": "Post-Go-Live Support",
+  "text": "Aimplan",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[5].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[1]"
   }
  },
  {
-  "code": "DT-ARM1-14",
+  "code": "DT-G1C-04",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Item 6 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 3",
   "kind": "text",
-  "text": "we don't disappear after go-live; ongoing optimization and troubleshooting as your usage — and your business — matures.",
+  "text": "Jedox",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].bullets[5].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[2]"
   }
  },
  {
-  "code": "DT-ARM1-15",
+  "code": "DT-G1C-05",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 1 — Tools",
-  "label": "Callout",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 4",
   "kind": "text",
-  "text": "Platform-agnostic, on purpose. We don't have a reseller margin riding on which system you choose — our incentive is that it works for you, not that you buy a specific license.",
+  "text": "Prophix",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[0].callout"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[3]"
   }
  },
  {
-  "code": "DT-ARM2-01",
+  "code": "DT-G1C-06",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Badge",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 5",
   "kind": "text",
-  "text": "Arm 2 — Analytics & Warehousing",
+  "text": "Pigment",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].badge"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[4]"
   }
  },
  {
-  "code": "DT-ARM2-02",
+  "code": "DT-G1C-07",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Intro paragraph",
+  "section": "What you get",
+  "label": "Group 1 sub-heading C — capability 6",
   "kind": "text",
-  "text": "Real-time dashboards that replace the manual board deck. Financial statements are backward-looking by definition. By the time a problem shows up in the P&L, the window to act on it has already closed. This is where that gap closes.",
+  "text": "Vena",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].intro"
+   "locator": "solutions[2].blocks[0].items[0].subheads[2].items[5]"
   }
  },
  {
-  "code": "DT-ARM2-03",
+  "code": "DT-G1D-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 1 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading D",
   "kind": "text",
-  "text": "Data Warehousing & Cloud Infrastructure",
+  "text": "Finance Technology & Systems",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[0].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[3].lead"
   }
  },
  {
-  "code": "DT-ARM2-04",
+  "code": "DT-G1D-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 1 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading D — capability 1",
   "kind": "text",
-  "text": "Azure, AWS, and Google Cloud/Microsoft Fabric foundations, so the analytics layer on top has clean, reliable data to work from.",
+  "text": "Finance Systems Integration",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[0].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[3].items[0]"
   }
  },
  {
-  "code": "DT-ARM2-05",
+  "code": "DT-G1D-03",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 2 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading D — capability 2",
   "kind": "text",
-  "text": "Real-time interactive dashboards",
+  "text": "ERP / CRM / FP&A Platform Integration",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[1].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[3].items[1]"
   }
  },
  {
-  "code": "DT-ARM2-06",
+  "code": "DT-G1D-04",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 2 body",
+  "section": "What you get",
+  "label": "Group 1 sub-heading D — capability 3",
   "kind": "text",
-  "text": "Power BI and Tableau, connected directly to your ERP, CRM, and HR systems, refreshing automatically.",
+  "text": "Finance Process Automation",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[1].body"
+   "locator": "solutions[2].blocks[0].items[0].subheads[3].items[2]"
   }
  },
  {
-  "code": "DT-ARM2-07",
+  "code": "DT-G1D-05",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 3 lead",
+  "section": "What you get",
+  "label": "Group 1 sub-heading D — capability 4",
   "kind": "text",
-  "text": "RevOps & revenue analytics",
+  "text": "Proprietary Finance Technology — FinSensor AI",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[2].lead"
+   "locator": "solutions[2].blocks[0].items[0].subheads[3].items[3]"
   }
  },
  {
-  "code": "DT-ARM2-08",
+  "code": "DT-G2-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 3 body",
+  "section": "What you get",
+  "label": "Group 2 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "CAC, ROAS, pipeline velocity, and channel-level revenue attribution that give sales, marketing, and finance one shared view of revenue performance.",
+  "text": "Data, Analytics & Intelligence",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[2].body"
+   "locator": "solutions[2].blocks[0].items[1].lead"
   }
  },
  {
-  "code": "DT-ARM2-09",
+  "code": "DT-G2A-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 4 lead",
+  "section": "What you get",
+  "label": "Group 2 sub-heading A",
   "kind": "text",
-  "text": "Operational analytics tied to the P&L",
+  "text": "Data Foundation",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[3].lead"
+   "locator": "solutions[2].blocks[0].items[1].subheads[0].lead"
   }
  },
  {
-  "code": "DT-ARM2-10",
+  "code": "DT-G2A-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 4 body",
+  "section": "What you get",
+  "label": "Group 2 sub-heading A — capability 1",
   "kind": "text",
-  "text": "project/customer profitability, utilization and cohort analysis, retention and LTV.",
+  "text": "Data Engineering & Warehousing",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[3].body"
+   "locator": "solutions[2].blocks[0].items[1].subheads[0].items[0]"
   }
  },
  {
-  "code": "DT-ARM2-11",
+  "code": "DT-G2A-03",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 5 lead",
+  "section": "What you get",
+  "label": "Group 2 sub-heading A — capability 2",
   "kind": "text",
-  "text": "Stakeholder & board reporting",
+  "text": "Data Integration & Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[4].lead"
+   "locator": "solutions[2].blocks[0].items[1].subheads[0].items[1]"
   }
  },
  {
-  "code": "DT-ARM2-12",
+  "code": "DT-G2A-04",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 5 body",
+  "section": "What you get",
+  "label": "Group 2 sub-heading A — capability 3",
   "kind": "text",
-  "text": "board decks, investor updates, and lender/covenant tracking generated automatically instead of assembled by hand every cycle.",
+  "text": "Data Pipeline Automation",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[4].body"
+   "locator": "solutions[2].blocks[0].items[1].subheads[0].items[2]"
   }
  },
  {
-  "code": "DT-ARM2-13",
+  "code": "DT-G2A-05",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 6 lead",
+  "section": "What you get",
+  "label": "Group 2 sub-heading A — capability 4",
   "kind": "text",
-  "text": "KPI tracking & benchmarking",
+  "text": "Data Quality & Governance",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[5].lead"
+   "locator": "solutions[2].blocks[0].items[1].subheads[0].items[3]"
   }
  },
  {
-  "code": "DT-ARM2-14",
+  "code": "DT-G2B-01",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 6 body",
+  "section": "What you get",
+  "label": "Group 2 sub-heading B",
   "kind": "text",
-  "text": "balanced scorecards, OKRs, and industry benchmarking.",
+  "text": "Business Intelligence & Reporting",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[5].body"
+   "locator": "solutions[2].blocks[0].items[1].subheads[1].lead"
   }
  },
  {
-  "code": "DT-ARM2-15",
+  "code": "DT-G2B-02",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 7 lead",
+  "section": "What you get",
+  "label": "Group 2 sub-heading B — capability 1",
   "kind": "text",
-  "text": "AI built in, not bolted on",
+  "text": "Power BI & Tableau Dashboards",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[6].lead"
+   "locator": "solutions[2].blocks[0].items[1].subheads[1].items[0]"
   }
  },
  {
-  "code": "DT-ARM2-16",
+  "code": "DT-G2B-03",
   "page": "Digital Transformation (/solutions/digital-transformation)",
-  "section": "Arm 2 — Analytics & Warehousing",
-  "label": "Item 7 body",
+  "section": "What you get",
+  "label": "Group 2 sub-heading B — capability 2",
   "kind": "text",
-  "text": "anomaly detection, predictive cash-stress modeling (4–8 week liquidity forecasts), and automated commentary baked into every dashboard from day one, cutting manual analysis time by roughly 70%.",
+  "text": "Executive & Management Dashboards",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[2].blocks[0].items[1].bullets[6].body"
+   "locator": "solutions[2].blocks[0].items[1].subheads[1].items[1]"
+  }
+ },
+ {
+  "code": "DT-G2B-04",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading B — capability 3",
+  "kind": "text",
+  "text": "Management Reporting Automation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[1].items[2]"
+  }
+ },
+ {
+  "code": "DT-G2B-05",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading B — capability 4",
+  "kind": "text",
+  "text": "KPI Frameworks & Performance Visualisation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[1].items[3]"
+  }
+ },
+ {
+  "code": "DT-G2C-01",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C",
+  "kind": "text",
+  "text": "Advanced Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].lead"
+  }
+ },
+ {
+  "code": "DT-G2C-02",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C — capability 1",
+  "kind": "text",
+  "text": "Revenue & Customer Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].items[0]"
+  }
+ },
+ {
+  "code": "DT-G2C-03",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C — capability 2",
+  "kind": "text",
+  "text": "Profitability & Cost Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].items[1]"
+  }
+ },
+ {
+  "code": "DT-G2C-04",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C — capability 3",
+  "kind": "text",
+  "text": "Operational & Spend Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].items[2]"
+  }
+ },
+ {
+  "code": "DT-G2C-05",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C — capability 4",
+  "kind": "text",
+  "text": "Working Capital Analytics",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].items[3]"
+  }
+ },
+ {
+  "code": "DT-G2C-06",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading C — capability 5",
+  "kind": "text",
+  "text": "Scenario & Driver Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[2].items[4]"
+  }
+ },
+ {
+  "code": "DT-G2D-01",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D",
+  "kind": "text",
+  "text": "AI & Decision Intelligence",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].lead"
+  }
+ },
+ {
+  "code": "DT-G2D-02",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D — capability 1",
+  "kind": "text",
+  "text": "AI-Enabled Finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].items[0]"
+  }
+ },
+ {
+  "code": "DT-G2D-03",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D — capability 2",
+  "kind": "text",
+  "text": "Anomaly Detection & Intelligent Alerts",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].items[1]"
+  }
+ },
+ {
+  "code": "DT-G2D-04",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D — capability 3",
+  "kind": "text",
+  "text": "Predictive Analytics & Forecasting",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].items[2]"
+  }
+ },
+ {
+  "code": "DT-G2D-05",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D — capability 4",
+  "kind": "text",
+  "text": "Automated Commentary & Reporting Insights",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].items[3]"
+  }
+ },
+ {
+  "code": "DT-G2D-06",
+  "page": "Digital Transformation (/solutions/digital-transformation)",
+  "section": "What you get",
+  "label": "Group 2 sub-heading D — capability 5",
+  "kind": "text",
+  "text": "Decision Support & Performance Intelligence",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[2].blocks[0].items[1].subheads[3].items[4]"
   }
  },
  {
@@ -8382,147 +8886,255 @@
   }
  },
  {
-  "code": "DEAL-B1-02",
+  "code": "DEAL-G1-01",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 1 lead",
+  "label": "Group 1 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "M&A Advisory",
+  "text": "Transaction Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].blocks[0].items[0].lead"
   }
  },
  {
-  "code": "DEAL-B1-03",
+  "code": "DEAL-G1-02",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 1 body",
+  "label": "Group 1 capability 1",
   "kind": "text",
-  "text": "buy-side and sell-side support through diligence, negotiation, and close, from a team that's actually built the models, not just reviewed them.",
+  "text": "Financial Due Diligence (FDD)",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[0].body"
+   "locator": "solutions[3].blocks[0].items[0].items[0]"
   }
  },
  {
-  "code": "DEAL-B1-04",
+  "code": "DEAL-G1-03",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 2 lead",
+  "label": "Group 1 capability 2",
   "kind": "text",
-  "text": "Due Diligence & DD Support",
+  "text": "Buy-Side & Sell-Side Transaction Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[1]"
+  }
+ },
+ {
+  "code": "DEAL-G1-04",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 3",
+  "kind": "text",
+  "text": "Quality of Earnings Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[2]"
+  }
+ },
+ {
+  "code": "DEAL-G1-05",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 4",
+  "kind": "text",
+  "text": "Mergers & Acquisitions (M&A) Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[3]"
+  }
+ },
+ {
+  "code": "DEAL-G1-06",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 5",
+  "kind": "text",
+  "text": "Transaction Financial Modelling",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[4]"
+  }
+ },
+ {
+  "code": "DEAL-G1-07",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 6",
+  "kind": "text",
+  "text": "Financial Performance & Deal Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[5]"
+  }
+ },
+ {
+  "code": "DEAL-G1-08",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 1 capability 7",
+  "kind": "text",
+  "text": "Transaction Readiness Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[0].items[6]"
+  }
+ },
+ {
+  "code": "DEAL-G2-01",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 2 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Capital Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].blocks[0].items[1].lead"
   }
  },
  {
-  "code": "DEAL-B1-05",
+  "code": "DEAL-G2-02",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 2 body",
+  "label": "Group 2 capability 1",
   "kind": "text",
-  "text": "financial due diligence, quality of earnings (QoE) and quality of assets (QoA) analysis, risk assessment, and legal/compliance reviews.",
+  "text": "IPO Readiness & Advisory",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[1].body"
+   "locator": "solutions[3].blocks[0].items[1].items[0]"
   }
  },
  {
-  "code": "DEAL-B1-06",
+  "code": "DEAL-G2-03",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 3 lead",
+  "label": "Group 2 capability 2",
   "kind": "text",
-  "text": "Fundraise & Exit Readiness",
+  "text": "Fundraising Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[1].items[1]"
+  }
+ },
+ {
+  "code": "DEAL-G2-04",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 3",
+  "kind": "text",
+  "text": "Investor Presentations & Financial Materials",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[1].items[2]"
+  }
+ },
+ {
+  "code": "DEAL-G2-05",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 4",
+  "kind": "text",
+  "text": "Financial Modelling for Fundraising",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[1].items[3]"
+  }
+ },
+ {
+  "code": "DEAL-G2-06",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 5",
+  "kind": "text",
+  "text": "Refinancing Support",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[1].items[4]"
+  }
+ },
+ {
+  "code": "DEAL-G2-07",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 2 capability 6",
+  "kind": "text",
+  "text": "Capital Structure & Financing Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[3].blocks[0].items[1].items[5]"
+  }
+ },
+ {
+  "code": "DEAL-G3-01",
+  "page": "Deal Advisory (/solutions/deal-advisory)",
+  "section": "What you get",
+  "label": "Group 3 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Financial & Deal Readiness",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[3].blocks[0].items[2].lead"
   }
  },
  {
-  "code": "DEAL-B1-07",
+  "code": "DEAL-G3-02",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 3 body",
+  "label": "Group 3 capability 1",
   "kind": "text",
-  "text": "getting your financial house in order before you're in a data room: clean historicals, defensible forecasts, and a management pack that survives real scrutiny.",
+  "text": "Financial Reporting Readiness",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[2].body"
+   "locator": "solutions[3].blocks[0].items[2].items[0]"
   }
  },
  {
-  "code": "DEAL-B1-08",
+  "code": "DEAL-G3-03",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 4 lead",
+  "label": "Group 3 capability 2",
   "kind": "text",
-  "text": "Investor & Pitch Deck Preparation",
+  "text": "Business Plan & Valuation Modelling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[3].lead"
+   "locator": "solutions[3].blocks[0].items[2].items[1]"
   }
  },
  {
-  "code": "DEAL-B1-09",
+  "code": "DEAL-G3-04",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 4 body",
+  "label": "Group 3 capability 3",
   "kind": "text",
-  "text": "the actual decks — fundraise pitch decks, investor updates, and board presentation materials — built on numbers your own diligence-ready models can defend.",
+  "text": "Investor Reporting Support",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[3].body"
+   "locator": "solutions[3].blocks[0].items[2].items[2]"
   }
  },
  {
-  "code": "DEAL-B1-10",
+  "code": "DEAL-G3-05",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 5 lead",
+  "label": "Group 3 capability 4",
   "kind": "text",
-  "text": "Debt Refinancing Advisory",
+  "text": "Financial Analysis for Strategic Transactions",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[4].lead"
+   "locator": "solutions[3].blocks[0].items[2].items[3]"
   }
  },
  {
-  "code": "DEAL-B1-11",
+  "code": "DEAL-G3-06",
   "page": "Deal Advisory (/solutions/deal-advisory)",
   "section": "What you get",
-  "label": "Item 5 body",
+  "label": "Group 3 capability 5",
   "kind": "text",
-  "text": "preparing the financial package and providing negotiation support for a refinancing, so lenders see the same clean, defensible numbers a PE buyer or IPO underwriter would.",
+  "text": "Post-Transaction Financial Integration Support",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[4].body"
-  }
- },
- {
-  "code": "DEAL-B1-12",
-  "page": "Deal Advisory (/solutions/deal-advisory)",
-  "section": "What you get",
-  "label": "Item 6 lead",
-  "kind": "text",
-  "text": "IPO Advisory",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[5].lead"
-  }
- },
- {
-  "code": "DEAL-B1-13",
-  "page": "Deal Advisory (/solutions/deal-advisory)",
-  "section": "What you get",
-  "label": "Item 6 body",
-  "kind": "text",
-  "text": "readiness assessments and reporting infrastructure built to the standard public-market investors and regulators expect.",
-  "source": {
-   "file": "lib/content/gamcs.ts",
-   "locator": "solutions[3].blocks[0].items[5].body"
+   "locator": "solutions[3].blocks[0].items[2].items[4]"
   }
  },
  {
@@ -8610,123 +9222,195 @@
   }
  },
  {
-  "code": "TRAIN-B1-02",
+  "code": "TRAIN-G1-01",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 1 lead",
+  "label": "Group 1 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
   "kind": "text",
-  "text": "FP&A Training",
+  "text": "Corporate Finance Training",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[4].blocks[0].items[0].lead"
   }
  },
  {
-  "code": "TRAIN-B1-03",
+  "code": "TRAIN-G1-02",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 1 body",
+  "label": "Group 1 capability 1",
   "kind": "text",
-  "text": "practical, hands-on training in budgeting, forecasting, and variance analysis frameworks your team can run independently.",
+  "text": "FP&A & Financial Planning",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[0].body"
+   "locator": "solutions[4].blocks[0].items[0].items[0]"
   }
  },
  {
-  "code": "TRAIN-B1-04",
+  "code": "TRAIN-G1-03",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 2 lead",
+  "label": "Group 1 capability 2",
   "kind": "text",
-  "text": "Financial Modelling Training",
+  "text": "Financial Modelling & Business Valuation",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[1]"
+  }
+ },
+ {
+  "code": "TRAIN-G1-04",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 1 capability 3",
+  "kind": "text",
+  "text": "Budgeting, Forecasting & Scenario Planning",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[2]"
+  }
+ },
+ {
+  "code": "TRAIN-G1-05",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 1 capability 4",
+  "kind": "text",
+  "text": "Power BI & Tableau for Finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[3]"
+  }
+ },
+ {
+  "code": "TRAIN-G1-06",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 1 capability 5",
+  "kind": "text",
+  "text": "AI & Automation for Finance",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[4]"
+  }
+ },
+ {
+  "code": "TRAIN-G1-07",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 1 capability 6",
+  "kind": "text",
+  "text": "Finance Business Partnering",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[5]"
+  }
+ },
+ {
+  "code": "TRAIN-G1-08",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 1 capability 7",
+  "kind": "text",
+  "text": "Management Reporting & Performance Analysis",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "solutions[4].blocks[0].items[0].items[6]"
+  }
+ },
+ {
+  "code": "TRAIN-G2-01",
+  "page": "Training & Enablement (/solutions/training-enablement)",
+  "section": "Corporate training & enablement",
+  "label": "Group 2 name (also the at-a-glance list, the Solutions menu and the homepage chips)",
+  "kind": "text",
+  "text": "Finance Function Enablement",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "solutions[4].blocks[0].items[1].lead"
   }
  },
  {
-  "code": "TRAIN-B1-05",
+  "code": "TRAIN-G2-02",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 2 body",
+  "label": "Group 2 capability 1",
   "kind": "text",
-  "text": "building bespoke, audit-ready models from scratch, not just filling in templates.",
+  "text": "Finance Capability Assessment",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[1].body"
+   "locator": "solutions[4].blocks[0].items[1].items[0]"
   }
  },
  {
-  "code": "TRAIN-B1-06",
+  "code": "TRAIN-G2-03",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 3 lead",
+  "label": "Group 2 capability 2",
   "kind": "text",
-  "text": "ESG Training",
+  "text": "Finance Process Design & SOP Development",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[2].lead"
+   "locator": "solutions[4].blocks[0].items[1].items[1]"
   }
  },
  {
-  "code": "TRAIN-B1-07",
+  "code": "TRAIN-G2-04",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 3 body",
+  "label": "Group 2 capability 3",
   "kind": "text",
-  "text": "reporting frameworks and metrics for teams building out ESG capability for the first time.",
+  "text": "Finance Team Upskilling",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[2].body"
+   "locator": "solutions[4].blocks[0].items[1].items[2]"
   }
  },
  {
-  "code": "TRAIN-B1-08",
+  "code": "TRAIN-G2-05",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 4 lead",
+  "label": "Group 2 capability 4",
   "kind": "text",
-  "text": "Tool-Based Finance Training",
+  "text": "FP&A Operating Model & Ways of Working",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[3].lead"
+   "locator": "solutions[4].blocks[0].items[1].items[3]"
   }
  },
  {
-  "code": "TRAIN-B1-09",
+  "code": "TRAIN-G2-06",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 4 body",
+  "label": "Group 2 capability 5",
   "kind": "text",
-  "text": "hands-on enablement in whichever platform you're actually running (often paired with a Digital Transformation engagement).",
+  "text": "Finance Systems & Tool Adoption",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[3].body"
+   "locator": "solutions[4].blocks[0].items[1].items[4]"
   }
  },
  {
-  "code": "TRAIN-B1-10",
+  "code": "TRAIN-G2-07",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 5 lead",
+  "label": "Group 2 capability 6",
   "kind": "text",
-  "text": "Data Analytics for Finance Professionals",
+  "text": "Change Management & Transformation Enablement",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[4].lead"
+   "locator": "solutions[4].blocks[0].items[1].items[5]"
   }
  },
  {
-  "code": "TRAIN-B1-11",
+  "code": "TRAIN-G2-08",
   "page": "Training & Enablement (/solutions/training-enablement)",
   "section": "Corporate training & enablement",
-  "label": "Item 5 body",
+  "label": "Group 2 capability 7",
   "kind": "text",
-  "text": "SQL and Python fundamentals aimed specifically at finance teams, not generic data science courses.",
+  "text": "Finance Playbooks & Standard Operating Procedures",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "solutions[4].blocks[0].items[4].body"
+   "locator": "solutions[4].blocks[0].items[1].items[6]"
   }
  },
  {
@@ -10847,7 +11531,7 @@
   "section": "Browser tab title & search description",
   "label": "Search description",
   "kind": "meta-description",
-  "text": "Meet the founders and advisory board behind GA Management Consultants — 100+ combined years of FP&A, BI, audit, and CFO advisory experience.",
+  "text": "Meet the founders and advisory board behind GA Management Consultants — 150+ combined years of FP&A, BI, audit, and CFO advisory experience.",
   "source": {
    "file": "lib/content/pages.ts",
    "locator": "pages.team.description"
@@ -10869,12 +11553,24 @@
   "code": "TEAM-HEAD-04",
   "page": "Team (/team)",
   "section": "Page head",
-  "label": "Intro",
+  "label": "Intro, paragraph 1 of 2",
   "kind": "text",
-  "text": "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. Our team isn't generalist consultants — it's specialists in the specific problems CFOs and investment teams actually face.",
+  "text": "We bring together finance practitioners, experienced finance leaders and specialists in FP&A, business intelligence, finance transformation and transaction advisory.",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "team.body"
+   "locator": "team.body[0]"
+  }
+ },
+ {
+  "code": "TEAM-HEAD-06",
+  "page": "Team (/team)",
+  "section": "Page head",
+  "label": "Intro, paragraph 2 of 2",
+  "kind": "text",
+  "text": "We combine strategic perspective with hands-on execution to help businesses build stronger finance functions, understand performance and make better decisions.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "team.body[1]"
   }
  },
  {
@@ -10893,12 +11589,24 @@
   "code": "TEAM-FOUNDERS-01",
   "page": "Team (/team)",
   "section": "Founders",
-  "label": "Heading",
+  "label": "Eyebrow",
   "kind": "text",
   "text": "Founders",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "roster.founders"
+  }
+ },
+ {
+  "code": "TEAM-FOUNDERS-16",
+  "page": "Team (/team)",
+  "section": "Founders",
+  "label": "Heading",
+  "kind": "text",
+  "text": "The People Behind the Work",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "roster.foundersHeading"
   }
  },
  {
@@ -11051,7 +11759,7 @@
   "section": "Founders",
   "label": "Note between the founders",
   "kind": "text",
-  "text": "Gaurav and Abhinav founded GAMCS after a decade each inside finance teams — FP&A, due diligence, business intelligence and transformation. They lead the work, not only the firm.",
+  "text": "GAMCS was founded by Gaurav Malik and Abhinav Aggarwal in 2023 to bring together strategic finance, FP&A and technology-led transformation. With complementary experience across finance, consulting and systems, they remain directly involved in client work—combining senior-level perspective with hands-on execution.",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "roster.foundersNote"
@@ -11061,12 +11769,36 @@
   "code": "TEAM-ADVISORS-01",
   "page": "Team (/team)",
   "section": "Advisory team",
-  "label": "Heading",
+  "label": "Eyebrow",
   "kind": "text",
   "text": "Advisory Team",
   "source": {
    "file": "lib/content/ui.ts",
    "locator": "roster.advisory"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-70",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Heading",
+  "kind": "text",
+  "text": "Experience That Strengthens Every Perspective",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "roster.advisoryHeading"
+  }
+ },
+ {
+  "code": "TEAM-ADVISORS-71",
+  "page": "Team (/team)",
+  "section": "Advisory team",
+  "label": "Note under the heading",
+  "kind": "text",
+  "text": "Our advisors bring experience across finance leadership, business performance, financial reporting, transactions, risk and technology. Their diverse perspectives complement our hands-on delivery capabilities and help us address complex business and finance challenges.",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "roster.advisoryNote"
   }
  },
  {
@@ -15643,6 +16375,18 @@
   }
  },
  {
+  "code": "FTR-BRAND-05",
+  "page": "Footer",
+  "section": "Brand",
+  "label": "Paragraph under the logo",
+  "kind": "text",
+  "text": "We connect finance, data and technology to help businesses understand performance, make better decisions and turn insight into impact.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.blurb"
+  }
+ },
+ {
   "code": "FTR-BRAND-04",
   "page": "Global elements",
   "section": "Footer brand block",
@@ -15763,27 +16507,39 @@
   }
  },
  {
-  "code": "FTR-COLS-08",
+  "code": "FTR-COLS-22",
   "page": "Footer",
   "section": "Link columns",
   "label": "Column 1, link 7",
   "kind": "text",
-  "text": "FAQ",
+  "text": "What clients say",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.links[6].label"
   }
  },
  {
-  "code": "FTR-COLS-09",
+  "code": "FTR-COLS-08",
   "page": "Footer",
   "section": "Link columns",
   "label": "Column 1, link 8",
   "kind": "text",
-  "text": "Contact Us",
+  "text": "FAQ",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.links[7].label"
+  }
+ },
+ {
+  "code": "FTR-COLS-09",
+  "page": "Footer",
+  "section": "Link columns",
+  "label": "Column 1, link 9",
+  "kind": "text",
+  "text": "Contact Us",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.links[8].label"
   }
  },
  {
@@ -15804,7 +16560,7 @@
   "section": "Link columns",
   "label": "Column 2, link 1",
   "kind": "text",
-  "text": "FP&A & CFO Advisory",
+  "text": "Advise",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.solutions[0].label"
@@ -15816,7 +16572,7 @@
   "section": "Link columns",
   "label": "Column 2, link 2",
   "kind": "text",
-  "text": "Finance Team Extension",
+  "text": "Build",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.solutions[1].label"
@@ -15828,7 +16584,7 @@
   "section": "Link columns",
   "label": "Column 2, link 3",
   "kind": "text",
-  "text": "Digital Transformation",
+  "text": "Transform",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.solutions[2].label"
@@ -15840,7 +16596,7 @@
   "section": "Link columns",
   "label": "Column 2, link 4",
   "kind": "text",
-  "text": "Deal Advisory",
+  "text": "Transact",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.solutions[3].label"
@@ -15852,7 +16608,7 @@
   "section": "Link columns",
   "label": "Column 2, link 5",
   "kind": "text",
-  "text": "Training & Enablement",
+  "text": "Enable",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.solutions[4].label"
@@ -15912,7 +16668,7 @@
   "section": "Legal line",
   "label": "Copyright",
   "kind": "text",
-  "text": "© 2026 All Rights Reserved",
+  "text": "© 2026 GA Management Consultants LLP. All rights reserved.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "site.copyright"

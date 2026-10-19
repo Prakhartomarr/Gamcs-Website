@@ -6,7 +6,7 @@ import CountUp from "@/components/motion/CountUp";
 import PageHeadArt from "@/components/PageHeadArt";
 import { ourStory, primaryCta, site, team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
-import { roster, sections } from "@/lib/content/ui";
+import { sections } from "@/lib/content/ui";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
@@ -21,25 +21,6 @@ export const metadata: Metadata = pageMetadata({
 const ch = ourStory.chapters;
 const founders = team.leadership;
 
-/**
- * Sets one phrase of a client sentence in the italic serif accent.
- *
- * It splits, it never rewrites: the rendered text content is character-for-
- * character the string in `lib/content`. If that string is ever edited and the
- * phrase is no longer in it, the line renders whole rather than wrong.
- */
-function accent(text: string, phrase: string) {
-  const at = text.indexOf(phrase);
-  if (at < 0) return text;
-  return (
-    <>
-      {text.slice(0, at)}
-      <em>{phrase}</em>
-      {text.slice(at + phrase.length)}
-    </>
-  );
-}
-
 /** `01 — WHERE IT STARTED`. The numeral is scaffolding, the label is copy. */
 function ChapterLabel({ n, children }: { n: string; children: string }) {
   return (
@@ -51,34 +32,35 @@ function ChapterLabel({ n, children }: { n: string; children: string }) {
 }
 
 /**
- * Our Story: the firm's founding, in seven chapters after the hero.
+ * Our Story: the firm's founding, in the five sections the client sent on
+ * 2026-10-19, plus a figures band under the hero and a closing band.
  *
- * This replaces the `.page-head` + `.firm-story` pair that used to be here —
- * chapter 00 is the head of the page, so there is no band above it. Every
- * sentence is client copy from `ourStory`, split at sentence boundaries only;
- * the headings are lifted out of the same paragraphs they sit above.
+ * Every sentence is client copy from `ourStory`. The page's visual language is
+ * unchanged from the seven-chapter version this replaces: the same
+ * `.page-head--art` head, the same alternating paper/soft chapter rhythm, the
+ * same `.reveal` observer in MotionLayer, the same CountUp on figures. Nothing
+ * here is scroll-linked — no parallax, no pins, no ScrollTrigger.
  *
- * Below the head everything is light — white and grey alternating, the way
- * every other inner page runs. An earlier version put chapters 03, 05 and 07
- * on dark and brand blue and opened on a full-viewport hero with a chapter
- * rail; it was a better story and a worse page, because it did not look like
- * the site it belongs to.
- *
- * Motion: reveals ride the site-wide `.reveal` observer in MotionLayer and the
- * two figures use CountUp — the same two mechanisms every other page uses.
- * Nothing here is scroll-linked: no parallax, no pins, no ScrollTrigger.
+ * Heading outline, which is the one thing a rebuild like this quietly breaks:
+ *   h1  hero
+ *   h2  GAMCS at a glance
+ *   h2  01 ... h3 Our journey ... h4 per timeline entry
+ *   h2  02 ... h3 per contrast column
+ *   h2  03 ... h3 per item
+ *   h2  04 ... h3 per founder
+ *   h2  05 ... h3 per principle
+ *   h2  What comes next
  */
 export default function WhoWeArePage() {
   return (
     <div className="os">
-      {/* ── 00 · the page head ──────────────────────────────────────
-          The same band every other inner page opens with — .page-head
-          .page-head--art, 60vh, the photograph running behind the header,
-          copy bottom-aligned. This page used to open on a full-viewport
-          hero with a chapter rail down the side; it read as a different
-          site. The three lines survive as the h1. */}
-      <section id="ch-00" className="page-head page-head--art">
+      {/* ── the page head ───────────────────────────────────────────
+          The same band every other inner page opens with. The three
+          hero lines are the h1; the hero's two buttons both stay on
+          this page, so both are plain fragment anchors (see CTA). */}
+      <section className="page-head page-head--art">
         <div className="container">
+          <div className="section-kicker">{ourStory.eyebrow}</div>
           <h1 className="os-head-h">
             {ourStory.heroLines.map((line, i) => (
               <span className="os-head-line" key={line}>
@@ -89,29 +71,57 @@ export default function WhoWeArePage() {
               </span>
             ))}
           </h1>
+          <p>{ourStory.heroBody}</p>
+          <div className="ctas page-head-ctas">
+            <CTA href={ourStory.heroCtas.primary.href} data-cta="story-journey" icon="arrow">
+              {ourStory.heroCtas.primary.label}
+            </CTA>
+            <CTA
+              href={ourStory.heroCtas.secondary.href}
+              tier="secondary"
+              data-cta="story-founders"
+              icon="arrow"
+            >
+              {ourStory.heroCtas.secondary.label}
+            </CTA>
+          </div>
         </div>
         <PageHeadArt src="/page-art/who-we-are.webp" />
       </section>
 
-      {/* ── 01 · where it started ───────────────────────────────────── */}
-      <section id="ch-01" className="os-ch os-ch--paper">
+      {/* ── GAMCS at a glance ───────────────────────────────────────
+          Six published figures in the site's own figure language —
+          weight 100, -.035em, counted up by CountUp — the way the
+          homepage achievements set theirs. `count` is per figure: the
+          founding year is the one that must not tick up from zero. */}
+      <section id="at-a-glance" className="os-ch os-ch--band os-ch--soft">
+        <div className="container">
+          <h2 className="os-h os-h--band reveal">{ourStory.glance.heading}</h2>
+          <dl className="os-glance reveal">
+            {ourStory.glance.items.map((g) => (
+              <div key={g.label}>
+                <dt className="os-glance-value">
+                  {g.count ? <CountUp value={g.value} /> : g.value}
+                </dt>
+                <dd className="os-glance-label">{g.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* ── 01 · where it started ───────────────────────────────── */}
+      <section id="where-it-started" className="os-ch os-ch--paper">
         <div className="container">
           <div className="os-split">
             <div className="os-col reveal">
               <ChapterLabel n="01">{ch.start.label}</ChapterLabel>
               <h2 className="os-h">{ch.start.heading}</h2>
-              <p className="os-body">{ch.start.body}</p>
-
-              <dl className="os-stats">
-                {ourStory.stats.map((s) => (
-                  <div key={s.value}>
-                    <dt className="os-stat-value">
-                      <CountUp value={s.value} />
-                    </dt>
-                    <dd className="os-stat-label">{s.label}</dd>
-                  </div>
-                ))}
-              </dl>
+              {ch.start.body.map((p) => (
+                <p className="os-body" key={p.slice(0, 40)}>
+                  {p}
+                </p>
+              ))}
             </div>
 
             <figure className="os-figure reveal">
@@ -129,45 +139,40 @@ export default function WhoWeArePage() {
             </figure>
           </div>
 
-          {/* the four places the paragraph above names, in order */}
-          <ol className="os-markers reveal">
-            {ourStory.markers.map((m) => (
-              <li key={m}>
-                <span className="os-marker-dot" aria-hidden="true" />
-                <h3 className="os-marker-h">{m}</h3>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* ── 02 · a shared passion ───────────────────────────────────── */}
-      <section id="ch-02" className="os-ch os-ch--soft">
-        <div className="container">
-          <div className="os-head reveal">
-            <div>
-              <ChapterLabel n="02">{ch.passion.label}</ChapterLabel>
-              <h2 className="os-h">{ch.passion.heading}</h2>
-            </div>
-            <p className="os-body">{ch.passion.body}</p>
-          </div>
-
-          <div className="os-discs reveal">
-            {ourStory.disciplines.map((d, i) => (
-              <article className="os-disc" key={d}>
-                <p className="os-disc-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="os-disc-h">{d}</h3>
-              </article>
-            ))}
+          {/* The hero's primary CTA lands here. tabIndex -1 so the browser
+              moves FOCUS to it on the fragment jump, not just the viewport —
+              without it a keyboard user is scrolled down and still at the
+              top of the tab order. */}
+          <div id="our-journey" tabIndex={-1} className="os-journey os-jump reveal">
+            <h3 className="os-sub-h os-jump-h">{ch.start.journey.heading}</h3>
+            <ol className="os-tl">
+              {ch.start.journey.entries.map((e) => (
+                <li key={e.label}>
+                  <span className="os-tl-dot" aria-hidden="true" />
+                  {/* The year is INSIDE the heading, not a sibling of it. A
+                      reader moving by heading (NVDA H, the VoiceOver rotor)
+                      lands on the h4 and hears only its own name, so a year
+                      kept outside it leaves the rotor reading "College,
+                      Chartered Accountancy, Corporate experience" — a
+                      timeline with its dates stripped out. `.os-tl-year`
+                      stays display:block, so the two lines look unchanged. */}
+                  <h4 className="os-tl-h">
+                    <span className="os-tl-year">{e.year}</span>
+                    {e.label}
+                  </h4>
+                  <p className="os-tl-b">{e.body}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* ── 03 · what they saw ──────────────────────────────────────── */}
-      <section id="ch-03" className="os-ch os-ch--soft">
+      {/* ── 02 · what we saw ────────────────────────────────────── */}
+      <section id="what-we-saw" className="os-ch os-ch--soft">
         <div className="container">
           <div className="reveal">
-            <ChapterLabel n="03">{ch.saw.label}</ChapterLabel>
+            <ChapterLabel n="02">{ch.saw.label}</ChapterLabel>
             <div className="os-head os-head--wide">
               <h2 className="os-h">{ch.saw.heading}</h2>
               <p className="os-body">{ch.saw.body}</p>
@@ -177,8 +182,9 @@ export default function WhoWeArePage() {
           {/* the shift, drawn as two states of one thing */}
           <div className="os-shift reveal">
             <div className="os-shift-card os-shift-from">
-              <p className="os-shift-label">{ourStory.shift.fromLabel}</p>
-              <p className="os-shift-line">{ourStory.shift.fromLine}</p>
+              <h3 className="os-shift-label">{ch.saw.from.label}</h3>
+              <p className="os-shift-line">{ch.saw.from.question}</p>
+              <p className="os-shift-b">{ch.saw.from.body}</p>
             </div>
             <div className="os-shift-arrow" aria-hidden="true">
               <svg width="40" height="18" viewBox="0 0 40 18" fill="none">
@@ -192,125 +198,142 @@ export default function WhoWeArePage() {
               </svg>
             </div>
             <div className="os-shift-card os-shift-to">
-              <p className="os-shift-label">{ourStory.shift.toLabel}</p>
-              <p className="os-shift-line">{ourStory.shift.toLine}</p>
+              <h3 className="os-shift-label">{ch.saw.to.label}</h3>
+              <p className="os-shift-line">{ch.saw.to.question}</p>
+              <p className="os-shift-b">{ch.saw.to.body}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 04 · the name ──────────────────────────────────────────── */}
-      <section id="ch-04" className="os-ch os-ch--paper">
+      {/* ── 03 · what we set out to build ───────────────────────── */}
+      <section id="what-we-built" className="os-ch os-ch--paper">
         <div className="container">
-          <div className="os-split os-split--mid">
-            <div className="os-col reveal">
-              <ChapterLabel n="04">{ch.name.label}</ChapterLabel>
-              <h2 className="os-h">{ch.name.heading}</h2>
-              {ch.name.body.map((p) => (
-                <p className="os-body" key={p.slice(0, 40)}>
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            <div className="os-mark reveal" aria-hidden="true">
-              <p className="os-mark-names">
-                <span>{founders[0].name.split(" ")[0]}</span>
-                <i />
-                <span>{founders[1].name.split(" ")[0]}</span>
-              </p>
-              <svg width="18" height="30" viewBox="0 0 18 30" fill="none">
-                <path
-                  d="M9 0v24M1.5 17.5L9 25l7.5-7.5"
-                  stroke="#C2CACF"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <Image src={site.logo} alt="" width={534} height={339} sizes="200px" />
-              <p className="os-mark-caption">{site.legalName}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 05 · what we believe ───────────────────────────────────── */}
-      <section id="ch-05" className="os-ch os-ch--paper">
-        <div className="container os-narrow">
           <div className="reveal">
-            <ChapterLabel n="05">{ch.believe.label}</ChapterLabel>
-            {/* The chapter's heading, set at pull-quote scale — not a
-                <blockquote>: it is the firm's own line, there is nothing to
-                cite, and chapter 05 would otherwise be the one section with no
-                heading in the outline. */}
-            <h2 className="os-quote">
-              {accent(ch.believe.heading, "uncovering the insights behind them")}
-            </h2>
-            <p className="os-body os-lead">{ch.believe.body}</p>
+            <ChapterLabel n="03">{ch.build.label}</ChapterLabel>
+            <div className="os-head os-head--wide">
+              <h2 className="os-h">{ch.build.heading}</h2>
+              <p className="os-body">{ch.build.body}</p>
+            </div>
           </div>
 
-          <ul className="os-pillars reveal">
-            {ourStory.pillars.map((p) => (
-              <li key={p}>
-                <h3>{p}</h3>
+          <ol className="os-built reveal">
+            {ch.build.items.map((it, i) => (
+              <li key={it.heading}>
+                <p className="os-built-n" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h3 className="os-built-h">{it.heading}</h3>
+                <p className="os-built-b">{it.body}</p>
               </li>
             ))}
-          </ul>
+          </ol>
+
+          {/* All that is left of the old "the name" chapter. */}
+          <p className="os-note reveal">{ch.build.note}</p>
         </div>
       </section>
 
-      {/* ── 06 · the founders ──────────────────────────────────────── */}
-      <section id="ch-06" className="os-ch os-ch--paper">
+      {/* ── 04 · the founders ───────────────────────────────────── */}
+      <section id="the-founders" tabIndex={-1} className="os-ch os-ch--soft os-jump">
         <div className="container">
           <div className="reveal">
-            <ChapterLabel n="06">{ch.founders.label}</ChapterLabel>
-            <h2 className="os-h">{ch.founders.heading}</h2>
+            <ChapterLabel n="04">{ch.founders.label}</ChapterLabel>
+            <div className="os-head os-head--wide">
+              <h2 className="os-h os-jump-h">{ch.founders.heading}</h2>
+              <p className="os-body">{ch.founders.body}</p>
+            </div>
           </div>
 
+          {/* Name, photo and alt text all come off `team.leadership` — this
+              page restates none of them. The bio is looked up by the name
+              that was just rendered, and `bios` is keyed by exactly those
+              two names, so the lookup stops compiling the day the roster
+              renames a founder. */}
           <div className="os-founders reveal">
             {founders.map((p) => (
               <article className="os-founder" key={p.name}>
                 <div className="os-founder-shot">
+                  {/* Decorative. The roster's alt ("Portrait of {name},
+                      {title}") says the name and a second wording of the role
+                      that the h3 and the title line directly below already
+                      say — about twenty words per card that carry nothing new.
+                      /team keeps that alt because there the title it names is
+                      the title the card shows. */}
                   <Image
                     src={p.photo}
-                    alt={fill(roster.portraitAlt, { name: p.name, title: p.title })}
+                    alt=""
                     width={880}
                     height={1100}
                     sizes="(max-width: 767px) 92vw, 48vw"
                   />
                 </div>
                 <h3 className="os-founder-name">{p.name}</h3>
-                <p className="os-founder-title">{p.title}</p>
+                <p className="os-founder-title">{ch.founders.role}</p>
+                <p className="os-founder-bio">{ch.founders.bios[p.name]}</p>
               </article>
             ))}
           </div>
 
           <p className="os-founders-link reveal">
-            <Link href="/team">{sections.fullTeam} →</Link>
+            {/* aria-hidden on the glyph, the way components/CTA.tsx wraps
+                every other arrow on this page — otherwise this one link's
+                accessible name is read as "Meet the Full Team right arrow". */}
+            <Link href="/team">
+              {ch.founders.cta} <span aria-hidden="true">→</span>
+            </Link>
           </p>
         </div>
       </section>
 
-      {/* ── 07 · where we are going ────────────────────────────────── */}
-      <section id="ch-07" className="os-ch os-ch--soft os-close">
+      {/* ── 05 · where we're going ──────────────────────────────── */}
+      <section id="where-were-going" className="os-ch os-ch--paper">
         <div className="container">
           <div className="reveal">
-            <ChapterLabel n="07">{ch.future.label}</ChapterLabel>
-            <h2 className="os-h os-h--close">{ch.future.heading}</h2>
-            <p className="os-body os-lead">{ch.future.body}</p>
-            <div className="os-ctas">
-              <CTA href={primaryCta.href} data-cta="firm-story" icon="diagonal">
-                {primaryCta.label}
+            <ChapterLabel n="05">{ch.future.label}</ChapterLabel>
+            <h2 className="os-h">{ch.future.heading}</h2>
+            {ch.future.body.map((p) => (
+              <p className="os-body os-lead" key={p.slice(0, 40)}>
+                {p}
+              </p>
+            ))}
+          </div>
+
+          <ul className="os-principles reveal">
+            {ch.future.principles.map((p) => (
+              <li key={p.heading}>
+                <h3>{p.heading}</h3>
+                <p>{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── what comes next ─────────────────────────────────────── */}
+      <section id="what-comes-next" className="os-ch os-ch--soft os-close">
+        <div className="container">
+          <div className="reveal">
+            <h2 className="os-h os-h--close">{ourStory.closing.heading}</h2>
+            <p className="os-body os-lead">{ourStory.closing.body}</p>
+            {/* `ctas` as well as the page-local class: it carries the
+                site-wide phone convention (.ctas .btn{width:100%}) that the
+                hero pair already gets, so both pairs on this page stack the
+                same way below 768. */}
+            <div className="ctas os-ctas">
+              <CTA href={ourStory.closing.cta.href} data-cta="story-solutions-close" icon="arrow">
+                {ourStory.closing.cta.label}
               </CTA>
-              <CTA href="/solutions" tier="secondary" icon="arrow">
-                {ourStory.secondaryCta}
+              {/* The client's secondary here is "Schedule a Call" word for
+                  word, so it IS primaryCta rather than a second copy of it.
+                  data-cta is the series the old chapter 07 reported under. */}
+              <CTA href={primaryCta.href} tier="secondary" data-cta="firm-story" icon="diagonal">
+                {primaryCta.label}
               </CTA>
             </div>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

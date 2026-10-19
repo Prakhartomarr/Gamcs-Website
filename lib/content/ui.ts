@@ -7,49 +7,29 @@
  * Strings with `{slots}` are filled at render time with lib/content/fill.ts.
  */
 
-export type HeaderPanel = "solutions" | "case" | "who";
-export type HeaderItem =
-  | { label: string; href: string }
-  /* `href` alongside `panel` makes the label a link AND keeps its menu:
-     the label navigates, a separate caret button discloses the panel. */
-  | { label: string; panel: HeaderPanel; href?: string };
+/* One shape only. Every nav item is a plain link: the three mega-menus came
+   out at the client's request (2026-10-19), so a `panel` variant would let a
+   dropdown be described again in content and silently dropped by the header. */
+export type HeaderItem = { label: string; href: string };
 
 export const header = {
   skipLink: "Skip to content",
   /** Accessible name of the logo link; the wordmark words come from site.name. */
   logoLabel: "GA Management Consultants — home",
-  /* Restored to the pre-Phase-2 set at the client's request. This deliberately
-     differs from the copy doc's GLOBAL ELEMENTS nav (Home / Solutions / Case
-     Studies / Team / FAQ) — the original was asked for back. FAQ stays
-     reachable from the Who We Are panel, pointing at the standalone /faq page. */
+  /* Sentence case as the client wrote it (2026-10-19) — not the Title Case the
+     rest of the site's chrome uses. "Who we are" goes straight to Our Story,
+     and FAQ is reachable from the footer alone. */
   items: [
-    { label: "Who We Are", panel: "who" },
-    { label: "How We Help", href: "/#how-we-help" },
-    { label: "Solutions", panel: "solutions", href: "/solutions" },
-    /* href as well as panel, like Solutions: the words go to the hub, the
-       caret beside them opens the menu. */
-    { label: "Case Study", panel: "case", href: "/case-study" },
+    { label: "Who we are", href: "/who-we-are" },
+    { label: "How we help", href: "/#how-we-help" },
+    { label: "What we do", href: "/solutions" },
     { label: "Team", href: "/team" },
+    { label: "Case Studies", href: "/case-study" },
     { label: "Careers", href: "/careers" },
   ] as HeaderItem[],
-  /** The caret button beside a nav item that is also a link. */
-  menuLabel: "{label} menu",
-  whoTitle: "Who We Are",
-  /* How We Help and Our Team are gone from here: both are already top-level
-     nav items, so the panel was repeating the bar above it. */
-  whoLinks: [
-    { title: "Our Story", href: "/who-we-are" },
-    { title: "What clients say", href: "/#testimonials" },
-    /* the standalone page now, not the homepage section it used to hit */
-    { title: "FAQ", href: "/faq" },
-  ],
-  allCaseStudies: "All case studies",
-  more: "More",
-  allSolutions: "All solutions",
   /** The phone menu. */
   openNav: "Open navigation",
   closeNav: "Close navigation",
-  goBack: "Go back",
 } as const;
 
 export const cookie = {
@@ -79,9 +59,19 @@ export const map = {
   /** Credit line for the basemap. Required by ODbL for OSM tiles. */
   attribution: "© OpenStreetMap",
   directions: "Get directions",
+  /* Accessible name for that same link. Three cards render three of them, so
+     the visible "Get directions" alone cannot tell a links list which city it
+     routes to. Opens with the visible text so speech input still matches. */
+  directionsTo: "Get directions to {location}",
   hint: "Click to expand",
   showAddress: "Show the {location} address",
   hideAddress: "Hide the {location} address",
+  /* The disclosure above the office cards (components/ui/office-maps.tsx).
+     {count} is officeCards.length, not a written number — a fourth office should
+     change this label by itself. "Hide" names no place, so it does not have
+     to be rewritten if the registered office ever moves. */
+  showOffices: "See all {count} offices",
+  hideOffices: "Hide the other offices",
   visitUs: "VISIT US",
   alt: "Map showing the {short} office at {address}",
 } as const;
@@ -141,13 +131,25 @@ export const caseCard = {
   outcome: "Outcome",
 } as const;
 
+/* Each roster block on /team is the site's standard eyebrow + heading pair:
+   the short label goes in the pill, the sentence under it is the block's one
+   <h2>, and the note is the paragraph below. `founders` and `advisory` name
+   the section, so they are the pill; they were the <h2> until the client sent
+   headings of their own (2026-10-19). */
 export const roster = {
   founders: "Founders",
-  /* The note between the two founder cards on /team. Placeholder wording until
-     the client sends their own: it says only what the roster already states. */
+  foundersHeading: "The People Behind the Work",
+  /* The note between the two founder cards. Client copy, received 2026-10-19;
+     it replaces the placeholder that stood in until they sent their own. The
+     em dash in "client work\u2014combining" is unspaced as they wrote it. */
   foundersNote:
-    "Gaurav and Abhinav founded GAMCS after a decade each inside finance teams \u2014 FP&A, due diligence, business intelligence and transformation. They lead the work, not only the firm.",
+    "GAMCS was founded by Gaurav Malik and Abhinav Aggarwal in 2023 to bring together strategic finance, FP&A and technology-led transformation. With complementary experience across finance, consulting and systems, they remain directly involved in client work\u2014combining senior-level perspective with hands-on execution.",
   advisory: "Advisory Team",
+  advisoryHeading: "Experience That Strengthens Every Perspective",
+  /* "advisors", not the "advisers" the comments in this repo use: the client's
+     spelling is the one that gets rendered. Same copy drop. */
+  advisoryNote:
+    "Our advisors bring experience across finance leadership, business performance, financial reporting, transactions, risk and technology. Their diverse perspectives complement our hands-on delivery capabilities and help us address complex business and finance challenges.",
   portraitAlt: "Portrait of {name}, {title}",
   close: "Close",
   /** Heads the middot list under a bio. */

@@ -1,6 +1,6 @@
 import CTA from "@/components/CTA";
-import LocationMap from "@/components/ui/expand-map";
-import { contact, intro, primaryCta, site } from "@/lib/content/gamcs";
+import OfficeMaps from "@/components/ui/office-maps";
+import { contact, intro, officeCards, primaryCta } from "@/lib/content/gamcs";
 
 /**
  * Homepage contact section.
@@ -10,12 +10,13 @@ import { contact, intro, primaryCta, site } from "@/lib/content/gamcs";
  * states one concrete thing instead, the office you can actually visit, and
  * hands off to directions.
  *
- * The card renders only while `site.address` is set, so clearing the address
- * collapses this back to copy and a CTA rather than shipping an empty frame.
+ * The cards render only while `officeCards` has an entry, and that list is
+ * empty whenever the registered office is unknown, so this collapses back to
+ * copy and a CTA rather than shipping an empty frame or someone else’s address.
+ * Still a server component: all of the open/closed state is inside OfficeMaps,
+ * which is the only client boundary this section has.
  */
 export default function Contact() {
-  const a = site.address;
-
   return (
     <section className="contact" id="contact">
       <div className="container">
@@ -31,16 +32,10 @@ export default function Contact() {
             </CTA>
           </div>
 
-          {a ? (
-            <div className="contact-panel-stage">
-              <LocationMap
-                location={`${a.locality}, ${a.region}`}
-                address={[a.street, `${a.locality}, ${a.region} ${a.postalCode}`]}
-                mapSrc={a.map}
-                destination={a.coords}
-              />
-            </div>
-          ) : null}
+          {/* OfficeMaps IS the stage, not something inside it: open, the row
+              has to span both columns of .contact-panel, and only a grid item
+              can do that. */}
+          {officeCards.length ? <OfficeMaps className="contact-panel-stage" /> : null}
         </div>
       </div>
     </section>
