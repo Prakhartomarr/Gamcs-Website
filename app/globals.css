@@ -5793,3 +5793,88 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:380px){
   .os-glance-value{font-size:24px}
 }
+
+
+/* =====================================================================
+   HOW WE HELP — the homepage film band (section.hwv)
+
+   The short version of /how-we-help, between the maturity curve and the
+   pillars: the same heading and sub the route renders, and the explainer
+   film. Markup in components/sections/HowWeHelpFilm.tsx.
+
+   The head needs nothing here. It is `.fin-center`/`.fin-h2`/`.fin-lead`,
+   the services band's own head, and those rules already style it; only
+   the frame around the film and the transcript's placement are new. The
+   transcript reuses `.faq-item`/`.faq-q`/`.faq-icon`/`.faq-a` outright,
+   so there is no disclosure CSS in this region at all.
+   ===================================================================== */
+
+/* This band's share of the homepage rhythm. The HOMEPAGE RHYTHM block
+   (~line 3544) sets every other band's padding by id, because several of
+   them set theirs with Tailwind utilities on the element and a class
+   selector would lose. This one has no id on purpose — it is not a nav
+   target and nothing may link to it by fragment — and no utilities, so a
+   class is enough. 44px is #solutions' value, the band it runs into, so
+   the seam between the two reads as one deliberate gap rather than two. */
+.home-tight .hwv{padding:44px 0}
+
+/* THE FRAME, and why this band is not dark.
+   The film is dark-themed and sits between two white sections. Given the
+   full width it would cut two hard seams across the homepage and read as
+   a hole in it — the page has no dark band anywhere above the footer, so
+   one appearing for 500px would look like a section that failed to load.
+   So the darkness belongs to the ARTEFACT, not to the page: an inset
+   plinth at 900px, centred, with the film held 10px inside it. The
+   plinth is the same navy family as the brand dark (#0D1828, the shadow
+   colour the maturity panel and the symptom cards already use), which
+   makes the dark edge read as a mount around a screen rather than as a
+   change of ground. Nothing here is full-bleed, so the white runs
+   continuously from the curve to the pillars behind it.
+
+   900px, not the 1374px the container gives at 1470: a 16:9 film at
+   container width is 773px tall, taller than most laptop viewports, and
+   this band is the short version of a page — it is not the hero. */
+.hwv-frame{max-width:900px;margin:44px auto 0;padding:10px;
+  background:#0D1828;border-radius:22px;
+  box-shadow:0 1px 2px rgba(13,24,40,.06),
+    0 30px 60px -34px rgba(13,24,40,.45)}
+
+/* aspect-ratio as well as the 1920x1080 attributes in the markup: the
+   attributes reserve the height with CSS off, this one survives
+   `width:100%`. Either way the frame is its final height on the first
+   paint, before any metadata arrives, so the band never jumps.
+   The ground matches the plinth because the film fades up from black —
+   a lighter one would flash behind the first frames. */
+.hwv-video{display:block;width:100%;height:auto;aspect-ratio:16/9;
+  border-radius:14px;background:#0D1828}
+
+/* The transcript, on the film's own measure rather than the container's,
+   so it reads as belonging to the frame above it. */
+.hwv-alt{max-width:900px;margin:18px auto 0}
+
+
+/* =====================================================================
+   HOW WE HELP film band — phones (max-width:767px)
+   ===================================================================== */
+
+@media (max-width:767px){
+  .home-tight .hwv{padding:32px 0}
+
+  /* `.fin-h2 .accent` is nowrap, which the services heading already has
+     to undo at 620. The same applies here, harder: "to building what
+     comes next." measures ~400px at this size and the container is 292px
+     at 320, so without this the accent clause overflows the viewport. */
+  .hwv .fin-h2 .accent{white-space:normal}
+
+  /* The plinth narrows with the film: 10px of mount around a 274px-wide
+     frame is a fifteenth of the picture. The wide ambient shadow goes
+     the same way .mc-panel's does at this width — 60px of blur under
+     something 14px from each edge spills off the viewport and reads as a
+     dirty margin instead of a lift. */
+  .hwv-frame{margin-top:28px;padding:6px;border-radius:16px;
+    box-shadow:0 1px 2px rgba(13,24,40,.05),
+      0 14px 28px -20px rgba(13,24,40,.35)}
+  .hwv-video{border-radius:11px}
+
+  .hwv-alt{margin-top:14px}
+}

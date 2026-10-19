@@ -558,6 +558,34 @@ export const howWeHelp = {
     heading: "What makes our approach different",
     sub: "Six principles that hold across every phase of the work.",
   },
+  /* THE EXPLAINER FILM, on the homepage band (components/sections/HowWeHelpFilm.tsx).
+     The band reuses `headingLead`, `headingAccent` and `sub` above rather than
+     carrying its own copies: it is the short version of /how-we-help, not a
+     second message, and two copies of one sentence drift apart the first time
+     the client edits one of them.
+
+     `alt` is the film's TEXT ALTERNATIVE and it is not decoration. The film
+     has no audio track at all and states its whole case in on-screen type, so
+     without this a visitor who cannot see it gets nothing from it (WCAG 2.1.1,
+     video-only prerecorded). It is transcribed from the frames, in order, and
+     nothing is added to it — it is client copy about the client's own
+     business, so it says what the film says and no more. */
+  video: {
+    /** The <video>'s accessible name. It says the film is silent, because a
+        visitor who hears nothing otherwise has no way to know whether that is
+        the film or their own sound, and it points at the text version so the
+        disclosure beneath is worth opening. */
+    label: "GAMCS explainer film. Silent, 47 seconds \u2014 a text version is below it.",
+    altSummary: "Read what the film shows",
+    altNote: "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears.",
+    alt: [
+      "FP&A teams spend nearly 50% of their time collecting and validating data, leaving only about a third for generating insights and driving action.",
+      "This leaves less time to diagnose performance drivers.",
+      "Four stages then appear in sequence: Stabilise, Connect & Automate, Explain & Anticipate, Decide & Improve.",
+      "Explain & anticipate: know why, and what's next.",
+      "The film closes on the GA mark with the name GA Management Consultants, the line \u201cStop reporting what happened. Start knowing what to do next.\u201d, a \u201cSchedule a call\u201d button and the address gamcs.in.",
+    ],
+  },
 } as const;
 
 /** "Why Us" section */

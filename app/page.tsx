@@ -4,6 +4,7 @@ import ClientLogos from "@/components/sections/ClientLogos";
 import DecisionGap from "@/components/sections/DecisionGap";
 import WhoWeAre from "@/components/sections/WhoWeAre";
 import MaturityCurve from "@/components/sections/MaturityCurve";
+import HowWeHelpFilm from "@/components/sections/HowWeHelpFilm";
 import Solutions from "@/components/sections/Solutions";
 import Achievements from "@/components/sections/Achievements";
 import Testimonials from "@/components/sections/Testimonials";
@@ -42,10 +43,14 @@ export default function HomePage() {
           the number and the decision — before anything about how GAMCS works. */}
       <DecisionGap />
       <MaturityCurve />
-      {/* The How We Help band used to sit here, between the curve and the
-          pillars. The client moved it to its own route (/how-we-help) on
-          2026-10-20 and chose to close the gap rather than leave a teaser, so
-          the curve now runs straight into the pillars that answer it. */}
+      {/* How we help, the short version: the heading, the sub and the
+          explainer film. The long version — the four-phase stack and the six
+          principles — is /how-we-help, which this sits ALONGSIDE rather than
+          replacing (client, 2026-10-20): the route keeps everything it has,
+          the navbar still points there, and this band is only what a reader
+          scrolling past the curve meets on the way to the pillars. The two
+          share one heading, from `howWeHelp`, rendered once on each page. */}
+      <HowWeHelpFilm />
       <Solutions />
       <Achievements />
       <Testimonials />
