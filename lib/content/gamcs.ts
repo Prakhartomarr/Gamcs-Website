@@ -614,6 +614,12 @@ export const howWeHelp = {
         silence is the film or their own device. */
     label:
       "GAMCS explainer film, 1 minute 40 seconds. It starts muted \u2014 use the player controls for sound.",
+    /* The sound toggle over the film (2026-10-21). One control, two names:
+       it is both the "turn it on" prompt when the browser has refused to
+       unmute without a gesture, and the stop control WCAG 1.4.2 asks for
+       once sound is playing on its own. */
+    soundOn: "Turn on sound",
+    soundOff: "Mute the film",
     altSummary: "Read what the film shows",
     altNote: "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears \u2014 with the labels inside the diagram grouped under the stage they appear with.",
     alt: [

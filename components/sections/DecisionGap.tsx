@@ -38,10 +38,24 @@ import { sections } from "@/lib/content/ui";
  * the same matrix, and two writers on one transform do not layer — they fight,
  * frame by frame. One owner, and it is the deck.
  *
- * Every figure is attributed in visible text — publication, sample, then the
- * link. The sample is deliberately not hidden behind the link: a percentage
- * with no sample beside it reads as fact rather than as a survey finding, and
- * the closing note says the same thing once for all three.
+ * Every figure is attributed in visible text — publication, then the link.
+ * The SAMPLE SIZE used to sit between them, and the reasoning was that a
+ * percentage with no sample beside it reads as fact rather than as a survey
+ * finding. The client had it taken out on 2026-10-21. What that argument
+ * was protecting is PARTLY still here: the publication is named in visible
+ * text and the link goes to the page that states the figure, so a reader
+ * can still check the number. What is gone is any on-page signal of how
+ * many people were surveyed.
+ *
+ * WORTH KNOWING, because the two decisions compound: `statsNote` — the line
+ * that said these are survey findings rather than a claim about every
+ * organisation — was taken out on 2026-10-20, also at the client's word
+ * (see the note below the list). With the sample sizes out as well, the
+ * three percentages now publish with a publication name and a link and
+ * nothing else. Restoring either is one element.
+ *
+ * `decisionGap.stats[].sample` is untouched in the content module, and the
+ * copy manifest still tracks all three strings.
  *
  * The figure card is clickable through to its source, which is CSS stretching
  * the ONE source link over the card — not a second wrapping anchor. A card
@@ -152,8 +166,15 @@ export default function DecisionGap() {
                 <CountUp value={s.value} />
               </dt>
               <dd className="dg-stat-label">{s.label}</dd>
+              {/* Source and link only. `s.sample` — "475 respondents",
+                  "400+ finance leaders", "2,000 US finance leaders" — came
+                  out at the client's request (2026-10-21). The citation is
+                  intact: each figure still names the publication it came
+                  from and links to the page that states it, which is what
+                  keeps the number checkable. The sample sizes stay in the
+                  content module. */}
               <dd className="dg-stat-source">
-                {s.source} &middot; {s.sample} &middot;{" "}
+                {s.source} &middot;{" "}
                 <a
                   className="dg-stat-link"
                   href={s.href}

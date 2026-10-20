@@ -5326,17 +5326,25 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     color var(--dur-hover) var(--ease-out)}
 }
 
-/* Hover behind (hover:hover) so a tap cannot leave a card stuck looking
-   half-selected until something else is tapped. Deliberately quieter
-   than selection — a border tint and the card's ground lightening to
-   white, no badge inversion: the badge is what says "this one is open",
-   and a pointer passing over a card must not be able to say that too. */
-@media (hover:hover){
-  .mc-stage-btn:hover{background:var(--white);
-    border-color:rgba(15,94,151,.38)}
-  .mc-stage-btn[aria-current="true"]:hover,
-  .mc-stage-btn[aria-selected="true"]:hover{border-color:var(--blue)}
-}
+/* NO HOVER STYLING AT ALL, as of 2026-10-21, and that is the whole
+   feature rather than its absence.
+
+   There used to be a quieter hover here — a border tint and a white ground,
+   explicitly WITHOUT the badge inversion, on the reasoning that "the badge
+   is what says this one is open, and a pointer passing over a card must not
+   be able to say that too." That reasoning died when hover started
+   selecting (MaturityCurve.tsx): a pointer passing over a card now DOES
+   open it, so the badge inverting is the truth.
+
+   So the hovered card takes the selected rule above and nothing else —
+   white ground, 2px --blue border, the shadow, and the number badge filled
+   --ink-deep with white type. Which is exactly the card the client sent.
+   Any :hover declaration here would paint over it; that is what the last
+   revision got wrong.
+
+   The transitions in the no-preference block above still run, so the card
+   eases into that state rather than snapping. Touch is unaffected: there is
+   no hover to get stuck, because there is no hover rule. */
 
 /* ---- the panel ---- */
 /* One column here; the two-column rule is in the min-width:1024px block
@@ -5664,45 +5672,26 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---------------------------------------------------------------------
-   A3 · the stage cards — hover and focus on the new ground
+   A3 · the stage cards — focus on the new ground
    ------------------------------------------------------------------ */
 
-/* REPLACES (the whole @media (hover:hover) block):
-     @media (hover:hover){
-       .mc-stage-btn:hover{background:var(--white);
-         border-color:rgba(15,94,151,.38)}
-       .mc-stage-btn[aria-current="true"]:hover,
-       .mc-stage-btn[aria-selected="true"]:hover{border-color:var(--blue)}
-     }
-   The old hover lightened an unselected card to white. White is now both
-   the selected card's ground AND the band's, so that hover said
-   "selected" and dissolved the card's edge at the same time. Hover goes
-   the other way instead: the ground DEEPENS to #E3EAEE (--blue at 6%
-   over --soft) and the hairline firms to 55% blue — 2.39:1 against the
-   hovered ground, roughly double the resting --line edge. Selection is
-   the move outward to white; hover is the move inward. Nothing can be
-   mistaken for the other, and the badge still does not invert: the badge
-   is what says "this one is open".
+/* THIS SECTION USED TO CARRY A HOVER BLOCK. It documented two successive
+   hover treatments — first a card lightening to white, then a ground
+   DEEPENING to #E3EAEE with a 55% blue hairline — each argued at length,
+   and both ended with "the badge still does not invert: the badge is what
+   says this one is open".
 
-   Text stays legible on the deeper ground: --ink-deep 14.66:1, --gray
-   5.21:1 — both still AA.
+   All of it is gone as of 2026-10-21, because hover now SELECTS the stage
+   (MaturityCurve.tsx). The badge inverting on hover is correct: the card
+   under the pointer really is the one that is open. A hovered card takes
+   the selected rule and nothing else, and any :hover declaration left here
+   would paint over it.
 
-   No transform, and none can be added: MotionLayer's quickTo owns the
-   matrix of any [data-lift] element, and these cards are expected to
-   carry it. Still behind (hover:hover) so a tap cannot strand a card
-   looking half-selected.
-
-   The selected card now pins its own background. The two rules are
-   (0,2,0) and (0,3,0), so the selected one wins on specificity — but it
-   only declared border-color before, which left the generic hover's
-   background applying to it. That was invisible while both were white. */
-@media (hover:hover){
-  .mc-stage-btn:hover{background:#E3EAEE;
-    border-color:rgba(15,94,151,.55)}
-  .mc-stage-btn[aria-current="true"]:hover,
-  .mc-stage-btn[aria-selected="true"]:hover{background:var(--white);
-    border-color:var(--blue)}
-}
+   Only the focus ring below survives from this block. */
+/* NO SEPARATE HOVER PAINT — see the note above .mc-stage-btn's selected
+   rule. A deeper #D4E0E8 fill lived here for one revision and was the thing
+   STOPPING the card looking the way the client asked: it overrode the white
+   ground of the selected state on the very card hover had just selected. */
 
 /* NEW. The global ring (globals.css:112, `button:focus-visible{outline:2px
    solid var(--blue);outline-offset:3px}`) is wrong here for one reason:
@@ -6266,7 +6255,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      on the stage. */
   .home-tight .hwv .hwv-frame{height:calc(100% - 20px);width:auto;max-width:100%;
     box-sizing:content-box;aspect-ratio:16/9;margin:0}
-  .home-tight .hwv .hwv-video{width:100%;height:100%;aspect-ratio:auto}
+  /* The element keeps its OWN 16:9 rather than taking the frame's box
+     (2026-10-21). It was width:100%/height:100% with aspect-ratio:auto, so
+     the element was whatever shape the frame's content box happened to be.
+     While that box is exactly 16:9 the two agree — but when it is not, even
+     by a rounding step, `object-fit:contain` letterboxes the PICTURE inside
+     an element the native controls still draw across in full. The controls
+     then sit wider than the film they belong to, which is the misplaced bar
+     that was reported from Windows.
+
+     Pinned to the ratio, the element is the picture: nothing to letterbox,
+     and the controls can only ever line up with it. Any slack left over
+     goes to the mount either side, which is the same colour, so it is
+     invisible. `margin-inline:auto` centres it if there ever is any. */
+  .home-tight .hwv .hwv-video{height:100%;width:auto;max-width:100%;
+    aspect-ratio:16/9;object-fit:contain;margin-inline:auto}
 }
 @media (min-width:1280px){
   .home-tight .hwv{min-height:calc(100vh - 96px)}
@@ -6371,4 +6374,35 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    cannot fit and the 64ch measure is the right answer anyway. */
 @media (min-width:1280px){
   #solutions .fin-lead{max-width:84ch}
+}
+
+/* =====================================================================
+   The film's sound toggle (2026-10-21)
+   =====================================================================
+   Top right of the mount, clear of the native controls bar along the
+   bottom. Always visible: it is the stop control for audio that starts on
+   its own (WCAG 1.4.2), and a control that only appears on hover is no
+   control at all for touch or keyboard.
+
+   On the film's own dark ground rather than a panel, so it reads as part
+   of the player. White on rgba(13,24,40,.72) over a dark film measures
+   well past AA at this size; the hairline is what keeps it findable when
+   a pale frame plays underneath. */
+.hwv-frame{position:relative}
+.hwv-sound{position:absolute;top:20px;right:20px;z-index:2;
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:34px;padding:0 12px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.34);background:rgba(13,24,40,.72);
+  color:#fff;font-size:12.5px;font-weight:500;letter-spacing:-.005em;
+  cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:background .2s var(--ease-out),border-color .2s var(--ease-out)}
+.hwv-sound-ico{display:block;flex:none}
+@media(hover:hover){
+  .hwv-sound:hover{background:rgba(13,24,40,.9);
+    border-color:rgba(255,255,255,.62)}
+}
+.hwv-sound:focus-visible{outline:2px solid #fff;outline-offset:3px}
+/* Phones: the mount's padding drops to 6px, so the inset follows it. */
+@media(max-width:767px){
+  .hwv-sound{top:12px;right:12px;min-height:30px;padding:0 10px;font-size:11.5px}
 }
