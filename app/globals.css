@@ -2422,9 +2422,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    is the only thing hover changes, so there is no filled state to invert.
    Nothing here is phone-facing — the phone block restates content, display,
    position and the whole box to draw the rail's dot instead. */
-.dg-pain::before{content:counter(dg-pain,decimal-leading-zero);
-  display:block;font-size:1.8889rem;font-weight:800;line-height:1;
-  letter-spacing:-.04em;color:#D7E2EA}
+/* NO NUMERAL (client, 2026-10-21). This drew 01-04 at 34px/800 in #D7E2EA
+   above each card's title — decoration, not content: the four symptoms are
+   not a sequence and nothing refers to them by number.
+   `content:none` rather than deleting the rule, because the phone block
+   (globals.css ~4128) re-generates this same ::before as the rail's dot and
+   restates content/display/position to do it. Removing the rule outright
+   would leave that override reading as the only definition of a pseudo
+   element whose desktop counterpart no longer exists. The dg-pain counter is
+   still incremented; only the desktop print of it is gone. */
+.dg-pain::before{content:none}
 .dg-pain-title{margin:26px 0 0;font-size:1rem;font-weight:600;line-height:1.3;
   letter-spacing:-.01em;color:var(--ink-deep)}
 .dg-pain-body{margin:12px 0 0;font-size:0.8333rem;line-height:1.55;
@@ -2656,8 +2663,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    child of the box that holds the text, so it still needs no absolute
    positioning and the text still cannot run under it. */
 .dg-turn-row{display:flex;align-items:flex-start;gap:16px}
-.dg-turn-row::before{content:"\201C";flex:none;font-size:2.2222rem;
-  line-height:.72;color:rgba(74,147,201,.55)}
+/* NO QUOTE GLYPH (client, 2026-10-21). It set a 40px left double quotation
+   mark at 55% blue before the line. The band is the section asking its own
+   question, not quoting anyone, so the mark was punctuation for a quotation
+   that is not there. With the pseudo element gone the row has one child and
+   its 16px gap has nothing to sit between, so the text starts at the band's
+   padding. */
+.dg-turn-row::before{content:none}
 
 /* The signal strip. display:none at rest, and that is the principle
    working rather than an exception to it: what the canvas holds before
@@ -6276,3 +6288,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    though, because "growth-focused businesses" is 25 characters and holding
    it on one line would push the heading off a phone. */
 .clients-head h2 .accent{color:var(--blue)}
+
+/* The four marked phrases in the gap's lead (client, 2026-10-21).
+   #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the
+   band's white and the usual UI reds sit just under it. Measured 5.64:1.
+   The site has no red token — this is the only red on the page, and it is
+   emphasis rather than a state, so it is deliberately not added to the
+   token set where a future "error" colour would want to live. */
+.dg-sub .dg-mark{color:#C7261A}
+
+/* The maturity heading's accent phrase (2026-10-21). Same tint as every
+   other section's accent; no `white-space:nowrap`, because "finance function
+   today" is 22 characters and pinning it to one line would overflow a phone. */
+.mc-h2 .accent{color:var(--blue)}

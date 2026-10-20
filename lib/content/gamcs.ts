@@ -1998,6 +1998,15 @@ export const maturityCurve = {
      has no visible label of its own. Not retired copy: a screen reader reads
      this, so it keeps its manifest row. */
   eyebrow: "The Finance Intelligence Maturity Curve",
+  /* Re-split 2026-10-21 so the blue falls on "finance function today" rather
+     than on "function today?". Three pieces, because the mark now sits in the
+     MIDDLE of the sentence and the question mark has to stay outside it —
+     tinting the "?" would colour punctuation that belongs to the whole line.
+     No space between the mark and `headingTail`, for the same reason. */
+  headingLead: "Where is your",
+  headingMark: "finance function today",
+  headingTail: "?",
+  /** RETIRED 2026-10-21: the two-piece split, whose accent was the tail. */
   heading: "Where is your finance",
   headingAccent: "function today?",
   lead:
@@ -2514,7 +2523,32 @@ export const decisionGap = {
   headingLead: "Between the numbers and the decision,",
   /** Flows inline after the lead, mid-sentence, in --blue. */
   headingAccent: "too much gets lost.",
-  lead: "Finance functions get stuck at different points. For some, the close is unpredictable. Others have their reports, but preparing them takes days. Even when the numbers are ready, the reasons behind them\u2014or the actions they call for\u2014may not be clear.",
+  /* Client's rewrite, 2026-10-21. Two changes: the second and third
+     sentences are joined with a semicolon, and the two em dashes around
+     "or the actions they call for" are spaced hyphens, as the client
+     typed them. */
+  lead: "Finance functions get stuck at different points. For some, the close is unpredictable; for others, preparing reports takes days. Even when the numbers are ready, the reasons behind them - or the actions they call for - may not be clear.",
+  /*
+   * The same sentence, split so four phrases can take the red mark the
+   * client asked for (2026-10-21). `lead` above is the plain string and is
+   * kept as the one source of the WORDS: concatenating `t` across this array
+   * reproduces it character for character, and scripts/copy/check.mjs reads
+   * `lead`. If the sentence is reworded, change `lead` and re-split.
+   *
+   * `mark` is emphasis, not information: every phrase still reads in order
+   * with the colour off, so nothing here depends on seeing red (WCAG 1.4.1).
+   */
+  leadParts: [
+    { t: "Finance functions get stuck at different points. " },
+    { t: "For some, the close is unpredictable", mark: true },
+    { t: "; for others, " },
+    { t: "preparing reports takes days", mark: true },
+    { t: ". Even when the numbers are ready, " },
+    { t: "the reasons behind them", mark: true },
+    { t: " - or the actions they call for - " },
+    { t: "may not be clear", mark: true },
+    { t: "." },
+  ] as { t: string; mark?: boolean }[],
   /** Four symptoms, numbered 01-04 by CSS counter rather than by markup. */
   pains: [
     {

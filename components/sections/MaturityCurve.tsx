@@ -169,11 +169,13 @@ export default function MaturityCurve() {
       <MaturityCurveMotion />
       <div className="container mc-inner">
         <div className="mc-head">
-          {/* One sentence, in one colour: the heading is still stored in two
-              pieces because the design it was written for coloured the second
-              one, and the retired copy stays as it is. */}
+          {/* Three pieces: the blue falls on "finance function today" and the
+              question mark stays outside it, so the tint lands on the phrase
+              and not on punctuation belonging to the whole line. */}
           <h2 className="mc-h2" id="mc-heading">
-            {maturityCurve.heading} {maturityCurve.headingAccent}
+            {maturityCurve.headingLead}{" "}
+            <span className="accent">{maturityCurve.headingMark}</span>
+            {maturityCurve.headingTail}
           </h2>
           <p className="mc-lead">{maturityCurve.lead}</p>
         </div>
