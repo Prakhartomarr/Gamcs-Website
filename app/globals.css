@@ -8,11 +8,23 @@
    Tailwind's preflight (they are declared after the @tailwind directives).
    ===================================================================== */
 :root{
-  /* Apple devices resolve -apple-system to SF Pro and download nothing; every
-     other device falls through to Inter (next/font, app/layout.tsx). system-ui
-     must not sit before Inter: on Windows it is Segoe UI and Inter would
-     never be used. */
-  --font-sans:-apple-system,BlinkMacSystemFont,var(--font-inter),sans-serif;
+  /* INTER FIRST, on every platform (client, 2026-10-21).
+     It used to lead with -apple-system, so Apple devices got SF Pro and
+     downloaded nothing while everywhere else fell through to Inter. Two
+     typefaces for one site: Inter sets about 6% wider, so every measure
+     tuned on a Mac broke somewhere on Windows, and the client was comparing
+     a Mac against a Windows laptop and seeing a different page. Three
+     separate wrapping bugs were reported before the cause was found.
+
+     Inter is the brand face, it is self-hosted through next/font as a
+     variable cut covering 100-900, and it is the only one of the two that
+     can exist on both platforms — SF Pro cannot be shipped to Windows. So
+     Inter is what everyone gets, and what is designed against.
+
+     The Apple names stay as a fallback behind it, for the case where the
+     font fails to load. `system-ui` must never sit before Inter: on Windows
+     it resolves to Segoe UI and Inter would never be used. */
+  --font-sans:var(--font-inter),-apple-system,BlinkMacSystemFont,sans-serif;
   --blue:#0F5E97;
   --blue-dark:#0A4169;
   --blue-light:#4A93C9;   /* two-tone headings, icon badges */
@@ -1111,12 +1123,20 @@ html{font-size:112.5%}
 @media(min-width:768px){
   .ach-figure-label{min-height:2.7em}
 }
-/* 100 is the lightest weight the stack has a real cut for; at this size
-   the thin face is the whole character of the row. The whole string is
-   coloured, so "$", "Bn" and the "+" ride the figure rather than being
-   picked out separately — CountUp keeps them on every frame. */
-.ach-figure-value{margin:26px 0 0;font:100 clamp(44px,4.4vw,72px)/1 var(--font-sans);
-  letter-spacing:-.035em;color:var(--blue)}
+/* 600, up from the 100 this was set in (client, 2026-10-21). The thin cut
+   was the character of the row; the client wants the figures to carry weight
+   instead. 600 rather than 700 so they match the labels above them, which
+   are the only other semibold type in the band.
+
+   Tracking tightens with the weight — -.045em against the -.035em the thin
+   face wanted — because bold strokes close the counters and the figures read
+   loose at the old value.
+
+   The whole string is coloured and weighted, so "$", "Bn" and the "+" ride
+   the figure rather than being picked out separately; CountUp keeps them on
+   every frame. */
+.ach-figure-value{margin:26px 0 0;font:600 clamp(44px,4.4vw,72px)/1 var(--font-sans);
+  letter-spacing:-.045em;color:var(--blue)}
 .ach-figure-note{margin:22px 0 0;font-size:0.8333rem;line-height:1.55;
   color:var(--ink-muted);text-wrap:pretty}
 
