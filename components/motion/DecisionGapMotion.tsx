@@ -37,21 +37,14 @@ import { gsap } from "gsap";
  * [data-lift] — the heading words, the lead, the turn's clauses — are tweened
  * with plain `y`, because nothing else is writing their transform.
  *
- * The gold rule under the heading is a pseudo-element, which GSAP cannot
- * target, so it is driven the same way: a `--dg-rule-sx` scale factor tweened
- * on the <h2> and consumed by `.dg-h2::after`. Chosen over handing it to a CSS
- * transition on an `.is-in` class because a transition would be the one piece
- * of the choreography outside the timeline — unkillable, and timed in a second
- * place. Both custom properties fall back to their resting value, so an
- * unstyled or half-styled build loses the draw, never the rule.
+ * `--dg-rise` falls back to its resting value, so an unstyled or half-styled
+ * build loses the travel, never the content.
  */
 
 /* The stylesheet contract, all of it scoped under `.dg--motion`:
      .dg--motion .dg-w{display:inline-block}
      .dg--motion .dg-pain,.dg--motion .dg-stat{translate:0 var(--dg-rise,0)}
-     .dg--motion .dg-h2::after{transform:scaleX(var(--dg-rule-sx,1));
-       transform-origin:left}
-   Those three are additive. No rule may set `opacity` or `transform` on the
+   Those two are additive. No rule may set `opacity` or `transform` on the
    elements below: the hidden values are inline and are cleared when this
    unmounts, and a rule setting them would outlive the cleanup. */
 
@@ -82,7 +75,6 @@ export default function DecisionGapMotion() {
       const pains = all(".dg-pain");
       const clauses = [...all(".dg-turn-lead"), ...all(".dg-turn-q")];
       const stats = all(".dg-stat");
-      const h2 = sec.querySelector<HTMLElement>(".dg-h2");
       const fades = [...words, ...sub, ...clauses];
 
       sec.classList.add("dg--motion");
@@ -90,7 +82,6 @@ export default function DecisionGapMotion() {
       gsap.set(words, { y: 14 });
       gsap.set(sub, { y: 12 });
       gsap.set([...pains, ...stats], { "--dg-rise": "16px" });
-      if (h2) gsap.set(h2, { "--dg-rule-sx": 0 });
       /* Only now: the inline from-values have replaced what the gate was
          holding, so there is no frame in which the section is visible. */
       release();
@@ -109,7 +100,6 @@ export default function DecisionGapMotion() {
          stagger would read as a second heading. */
       tl.to(words, { opacity: 1, y: 0, stagger: 0.045 }, 0);
       tl.to(sub, { opacity: 1, y: 0, duration: 0.5 }, 0.18);
-      if (h2) tl.to(h2, { "--dg-rule-sx": 1, duration: 0.6 }, 0.2);
       tl.to(pains, { opacity: 1, "--dg-rise": "0px", stagger: 0.07 }, 0.3);
       /* The turn is the pivot of the section, not the showreel: the two
          clauses only fade, 120ms apart, and never move. */
@@ -149,7 +139,6 @@ export default function DecisionGapMotion() {
            cancel a hover it is mid-way through. */
         gsap.set(fades, { clearProps: "opacity,transform" });
         gsap.set([...pains, ...stats], { clearProps: "opacity,--dg-rise" });
-        if (h2) gsap.set(h2, { clearProps: "--dg-rule-sx" });
         sec.classList.remove("dg--motion");
       };
     };

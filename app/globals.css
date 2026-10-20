@@ -2044,9 +2044,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 .fin-h2{margin:22px 0 0}
 .fin-h2 .accent{color:var(--blue);position:relative;white-space:nowrap}
+/* 64ch, not 52: the How We Help sub set in three lines and the client wants
+   two. It is the narrowest measure that does it, and the Solutions lead
+   shares this class and stays at two either way. */
 .fin-lead{margin:20px 0 0;color:var(--ink-muted);font-size:clamp(1rem,1.15vw,1.14rem);
-  line-height:1.62;max-width:52ch}
+  line-height:1.62;max-width:64ch}
 .fin-center{text-align:center}
+
+/* This one heading is set smaller than the other .fin-h2s so it holds one
+   line, which is what the client asked for. At the shared clamp's 50px its
+   ink measures 1409px against a 1280px container — it cannot be one line at
+   that size, so the size is the thing that gives. 42px is the cap because
+   1280 is the tightest desktop width: the container is 1184 there and the
+   ink is 1189 at 42px. Below 1280 the container drops to 920 and then 712,
+   where one line would need 32px and then 25px, and on a phone ~12px, so it
+   wraps there instead of going under the 13px floor. */
+#solutions .fin-h2{font-size:clamp(30px,3.1vw,42px)}
 .fin-center .fin-lead{margin-left:auto;margin-right:auto}
 
 /* gradient pill button with a trailing icon disc */
@@ -2283,15 +2296,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    every multi-column grid-template-columns sits inside a min-width query so a
    single column is the fallback rather than four 90px cards.
 
-   Two colour decisions worth naming, both at their rules below: --dg-rule is
-   the comp's bronze and not the brand yellow, and the turn band is --ink-deep
-   rather than the comp's lighter navy. */
-
-/* The heading's rule is a bronze the comp samples at #C2A568, which is not
-   --yellow (#F2C230) — the brand yellow at 72x2px beside 50px type reads as a
-   highlighter stroke, the bronze as a printed rule. It lives here as one
-   custom property so that judgement is reversible in a single edit: set it to
-   var(--yellow) and the section is on brand with nothing else touched. */
+   One colour decision worth naming, at its rule below: the turn band is
+   --ink-deep rather than the comp's lighter navy. (The heading's bronze rule
+   was the other; the client had it removed on 2026-10-20.) */
 
 /* .dg-inner needs no rule. It was a centred flex column; left-aligned,
    full-width children are what a plain block container already does, and the
@@ -2304,18 +2311,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    break, and the accent has to stay inline inside it rather than own a line,
    so there is no white-space rule on .dg-accent (compare .fin-h2 .accent,
    which is nowrap because it IS its own line). */
-/* 28ch, now that there is no column to be the measure. Centred and uncapped
-   the sentence ran 1223px on ONE line — wider than any other heading on the
-   site, where the curve's sits at 783px. 28ch holds it to two lines at every
-   width from 1024 up (872/826/661px box) and `balance` evens them, which is
-   the shape it had as a left column and the scale the other centred heads
-   read at. */
+/* No cap: the client wants the sentence on one line. Centred and uncapped
+   it sets at ~1223px, which is wider than any other heading here — that
+   is the trade they chose over the two balanced lines a 28ch cap gave. */
 /* Centred, as every other section head on this page is — the heading, its
    rule and the lead all on one axis. It used to be a 52/40 two-column grid
    at >=1024 with the lead beside the heading, which made this the one band
    on the page that read off-centre. */
 .dg-head{text-align:center}
-.dg-h2{margin:0 auto;max-width:28ch;text-wrap:balance}
+.dg-h2{margin:0 auto}
 /* The rule under the heading is drawn, not marked up: it is punctuation for
    the heading, and a <span> for it would be an element with nothing to say. */
 
@@ -2325,7 +2329,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Help heading, so the two centred leads read as one family. (.mc-lead is
    96ch deliberately — that one is widened to hold its sentence to two
    lines, and is not the pattern to copy.) */
-.dg-sub{margin:28px auto 0;max-width:52ch;font-size:1rem;line-height:1.6;
+.dg-sub{margin:28px auto 0;max-width:88ch;font-size:1rem;line-height:1.6;
   color:var(--ink-muted);text-wrap:pretty}
 
 /* ---- the four symptoms ---- */
@@ -2406,16 +2410,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    ===================================================================== */
 
 /* ---------------------------------------------------------------------
-   A1 · the heading: per-word from-state and the drawn rule
+   A1 · the heading: per-word from-state
    ------------------------------------------------------------------ */
-
-/* REPLACES:
-     .dg{--dg-rule:#C2A568}
-   Adds the scale the gold rule is drawn at. Default 1, so the rule is
-   full width with no JS and no custom-property support worth worrying
-   about. GSAP collapses it to 0 inline at hydration and draws it back, so
-   no stylesheet rule ever leaves the rule collapsed. */
-.dg{--dg-rule:#C2A568;--dg-rule-sx:1}
 
 /* Each word of the heading is its own box so the line can rise word by
    word. inline-block is required — a plain inline box cannot be
@@ -2445,23 +2441,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    two writers on one matrix fight frame by frame for the ~0.6s an entrance
    and a pointer can overlap. These compose in the browser instead. */
 .dg-pain,.dg-stat{translate:0 var(--dg-rise,0)}
-
-/* REPLACES:
-     .dg-h2::after{content:"";display:block;width:72px;height:2px;margin-top:32px;
-       background:var(--dg-rule)}
-   Same 72x2 bronze rule; it now draws from its left edge. A pseudo-
-   element cannot be a GSAP target, so the scale is driven through a
-   custom property on the <h2> that GSAP can tween. GSAP interpolates the
-   number itself, so this needs no @property registration (a custom
-   property is not interpolable to a CSS transition without one, and
-   nothing here asks it to be). */
-/* Centred under the heading, and growing from its own middle: the entrance
-   tweens --dg-rule-sx 0->1 on the <h2>, so the origin is what decides
-   whether it unrolls from one end or opens from the centre. Centred type
-   wants the second. */
-.dg-h2::after{content:"";display:block;width:72px;height:2px;margin:32px auto 0;
-  background:var(--dg-rule);transform:scaleX(var(--dg-rule-sx,1));
-  transform-origin:center}
 
 /* ---------------------------------------------------------------------
    A2 · the entrance gate — the ONLY rules here that hide anything
@@ -2726,7 +2705,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .dg--motion .dg-w,.dg--motion .dg-sub,.dg--motion .dg-pain,
   .dg--motion .dg-stat,.dg--motion .dg-turn-lead,
   .dg--motion .dg-turn-q{opacity:1;transform:none;translate:none}
-  .dg--motion .dg-h2{--dg-rule-sx:1}
 }
 
 /* ---- the symptoms go 2x2 until four of them can actually be read ----
