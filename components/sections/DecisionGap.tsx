@@ -95,7 +95,22 @@ export default function DecisionGap() {
               </Fragment>
             ))}
           </h2>
-          <p className="dg-sub">{c.lead}</p>
+          {/* `leadParts` is `lead` split at four phrases so each can take the
+              red mark; concatenated it IS `lead`, which is asserted in the
+              content module's comment and is what the copy check reads. The
+              spans carry no role — the colour is emphasis and the sentence
+              reads in order without it. */}
+          <p className="dg-sub">
+            {c.leadParts.map((part, i) =>
+              part.mark ? (
+                <span className="dg-mark" key={i}>
+                  {part.t}
+                </span>
+              ) : (
+                <span key={i}>{part.t}</span>
+              )
+            )}
+          </p>
         </div>
 
         {/* The stage. It is a plain wrapper below 768 (display:contents, so
