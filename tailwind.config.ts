@@ -98,6 +98,19 @@ const config: Config = {
       },
     },
   },
+  // Tailwind's own `container` is OFF (2026-10-21). This project has its own
+  // `.container` in app/globals.css and has had since the HTML port; Tailwind
+  // was emitting a second rule under the same name, whose breakpoint
+  // max-widths (640/768/1024/1280/1536) silently clamped the hand-written
+  // `width`. That is why an edge-to-edge `width:calc(100% - 44px)` still
+  // measured 1280 at a 1440 viewport, and it is the same clash already
+  // documented at globals.css:5181, where the 768px cap squeezed the 12-column
+  // grids through 768-1023 and forced them to collapse early.
+  //
+  // Nothing in the codebase wants Tailwind's version: every hand-written rule
+  // is drawn against globals.css's. Turning it off leaves exactly one
+  // `.container`, which is the only way the measure can be reasoned about.
+  corePlugins: { container: false },
   plugins: [require("tailwindcss-animate")],
 };
 

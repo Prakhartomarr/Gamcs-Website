@@ -133,7 +133,22 @@ h1,h2,h3,p{margin-top:0}
 /* Full-bleed: no card, no inset, no radius. Section backgrounds run edge
    to edge; the measure is held by .container inside them. */
 .shell{width:100%;margin:0;background:var(--paper);overflow:clip}
-.container{width:min(1440px,calc(100% - 96px));margin:auto}
+/* EDGE TO EDGE (client, 2026-10-21; reference unity-advisory.com).
+   Was min(1440px, 100% - 96px): a 48px gutter that CAPPED at 1440, so on a
+   1920 screen the content sat in the middle with 240px of nothing either
+   side, and on a 2560 one with 560px.
+
+   The reference has no cap at all. Measured across its own pages at five
+   widths, its gutter is 20px at 1280, 21px at 1440 and 22px at 1680, 1920
+   and 2560 — fixed, tiny, and the content simply gets wider. 22px here, so
+   44px off the width, which lands on their number at every size.
+
+   This is the whole site, not the page heads: the reference reads as one
+   layout because every band lines up on the same two edges, and moving the
+   heads alone would have left each headline 60px to the left of every
+   heading under it. Phones keep their own gutters below — 18px there is
+   already tighter than this. */
+.container{width:calc(100% - 44px);margin:auto}
 /* NAV */
 /* blends into the hero's light field (no white bar / hard rule), while staying
    legible as a light bar when it sticks over the darker sections below */
@@ -511,7 +526,8 @@ h1,h2,h3,p{margin-top:0}
      --art override, which takes the photographed bands to 92vh; the plain
      light bands stop at 72 because /privacy-policy and /cookie-policy use
      the same band and a full screen of air over a legal notice is silly. */
-  .page-head{display:flex;flex-direction:column;min-height:72vh;min-height:72dvh}
+  .page-head{display:flex;flex-direction:column;
+    min-height:calc(100vh - var(--header-h));min-height:calc(100dvh - var(--header-h))}
   /* The container has to FILL the band for the auto margin below to have
      free space to absorb; as an ordinary flex item it would be its own
      content's height and the two zones would sit together at the top. */
@@ -568,7 +584,7 @@ h1,h2,h3,p{margin-top:0}
      which measured 335px tall against the reference's 268 and ate the air
      this whole change is for. The container already stops it at 1280. */
   .page-head>.container>h1{
-    font-size:clamp(42px,6.05vw,88px);line-height:.96;font-weight:400;
+    font-size:clamp(36px,4.45vw,75px);line-height:.98;font-weight:400;
     letter-spacing:-.02em;max-width:none}
   /* The lead is a statement at this size, not a caption, and the narrower
      measure is what keeps it a block in the corner rather than a column of
@@ -674,7 +690,10 @@ h1,h2,h3,p{margin-top:0}
 
 /* ---------- tablet: two columns, not a stretched phone ---------- */
 @media(min-width:768px) and (max-width:1279px){
-  .container{width:min(920px,calc(100% - 56px))}
+  /* The 920px cap that used to sit here is gone with the 1440 one above:
+     at 1280 it put the content in a 920 column with 180px either side,
+     which is the opposite of edge-aligned. The base rule's 22px now
+     applies through this range too, where the reference measures 20. */
   /* the hero is one viewport at every width now; it grows past that
      only if its own content needs the room. The top clears the floating
      header the hero runs under: a bare 44px left 1024-1279 with the
@@ -1599,7 +1618,16 @@ html[data-cookie-banner] .sticky-cta{display:none}
    viewport edge than the text does. The hero clips its own overflow and 12 is
    well inside the gutter, so nothing leaves the screen. */
 .hero .ctas{margin-top:0;margin-right:-12px}
-@media (max-width:1023px){.hero .ctas{margin-top:34px;margin-right:0}}
+/* 1279, not 1023 (2026-10-21). `.hero-inner` sets its own 32px gutter and
+   opts out of .container with width:100%/max-width:none — but through
+   768-1279 it zeroes that gutter (globals.css:701) and leaned on the 920px
+   container cap for its measure instead. With that cap gone the hero runs
+   to the viewport edge there, so the -12px above had nothing left to pull
+   into: measured at 1024, the shimmer button ran to 1036 against a 1024
+   viewport. It is clipped rather than scrolled (.shell is overflow:clip),
+   which is worse — 12px sliced off a button. Above 1279 the 32px gutter is
+   back and the pull is safe, which is the only place it now applies. */
+@media (max-width:1279px){.hero .ctas{margin-top:34px;margin-right:0}}
 
 /* ---- hero lead-in ----
    The measure moves up to the wrapper. Left on the paragraph it would let the
@@ -3473,35 +3501,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    type, not a negative margin and a 60vh floor. `.page-head.page-head--art`
    is the top-level band and nothing else. */
 .page-head--art{background:#0B1622}
-.page-head.page-head--art{
-  margin-top:calc(-1 * var(--header-h));
-  min-height:60vh;min-height:60dvh;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:calc(var(--header-h) + 72px) 0 64px}
-/* .container is `margin:auto` — all four sides (globals.css:124). As a flex
-   item that means margin-top AND margin-bottom resolve to the free space,
-   which centres the copy and makes justify-content:flex-end a no-op. Zeroing
-   the block margins hands the alignment back to the flex container; the
-   inline margins stay auto, so it still centres horizontally. */
-.page-head.page-head--art>.container{margin-block:0}
-/* 92vh from 768 up (2026-10-21). The reference's hero runs from its header
-   to 849px of a 900px viewport — 94% — and that near-full screen is half of
-   why it reads the way it does: the headline gets the top of the screen and
-   the lead gets the bottom of it, rather than both sharing a 60vh strip.
-   92vh was tried first and measured: it left 140px between headline and
-   lead against the reference's 344, because our band starts 78px lower
-   (a 96px header plus a kicker the reference does not have) and our lead
-   runs six lines to their four. A full screen puts that back to ~210 and
-   lands the lead 64px off the bottom edge, against their 51.
+/* THE PHOTOGRAPHED BAND IS GONE (client, 2026-10-21). Every page head is
+   now the plain light band above: the reference's heads are type on a near
+   white ground and nothing else, and a full-bleed photograph behind them was
+   the single biggest thing between the two.
 
-   Phones keep 60vh: this band carries the same copy there in one column,
-   and a full phone screen is a headline and nothing else.
-   Placed here rather than in the arrangement block above because that block
-   comes first in the file and `.page-head.page-head--art` would win on
-   source order. */
-@media (min-width:768px){
-  .page-head.page-head--art{min-height:100vh;min-height:100dvh}
-}
+   What went with it: the negative top margin that tucked the band under the
+   header, the 60vh floor, the flex-end alignment and the header-height
+   padding — all of which existed to make a photograph read from edge to
+   edge. The eight heads that carried `page-head--art` no longer do, and the
+   ten files under /public/page-art are no longer referenced by any page.
+   They are left on disk: putting one back is the class plus the component,
+   and nothing else here has to change.
+
+   The single-class rules below stay. `page-head--art` is also worn by the
+   careers split panel (.cr-panel) and the apply dialog's panel (.ap-panel),
+   which are not page heads and still want the white-on-dark type. */
 .page-head--art h1{color:#fff}
 .page-head--art>.container>p{color:rgba(255,255,255,.88);max-width:620px}
 .page-head--art .section-kicker{color:#9CCBEA}

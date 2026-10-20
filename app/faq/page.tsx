@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageHeadArt from "@/components/PageHeadArt";
 import FAQ from "@/components/sections/FAQ";
 import Link from "next/link";
 import { faq, primaryCta } from "@/lib/content/gamcs";
@@ -24,7 +23,7 @@ export const metadata: Metadata = pageMetadata({
 export default function FaqPage() {
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{faq.heading}</h1>
           <p>{faq.intro}</p>
@@ -32,7 +31,6 @@ export default function FaqPage() {
             {faq.cta} <Link href={primaryCta.href}>{primaryCta.label}</Link>
           </p>
         </div>
-              <PageHeadArt src="/page-art/faq.webp" />
       </section>
 
       <FAQ />

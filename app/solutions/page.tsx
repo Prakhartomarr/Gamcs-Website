@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageHeadArt from "@/components/PageHeadArt";
 import PillarBlocks from "@/components/sections/PillarBlocks";
 import { solutionsHub } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -33,14 +32,13 @@ export const metadata: Metadata = {
 export default function SolutionsHubPage() {
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>
           </h1>
           <p>{solutionsHub.subhead}</p>
         </div>
-        <PageHeadArt src="/page-art/solutions.webp" />
       </section>
 
       <div className="sol">

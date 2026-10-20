@@ -1,4 +1,3 @@
-import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Directions from "@/components/Directions";
@@ -38,12 +37,11 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{contact.heading}</h1>
           <p>{t.lead}</p>
         </div>
-              <PageHeadArt src="/page-art/contact.webp" />
       </section>
 
       <section className="contact" id="contact">

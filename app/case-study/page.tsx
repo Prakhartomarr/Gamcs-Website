@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageHeadArt from "@/components/PageHeadArt";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import FluteShader from "@/components/ui/flute-shader";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
@@ -19,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
 export default function CaseStudyPage() {
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{caseStudies.heading}</h1>
           <p>{caseStudies.intro}</p>
@@ -33,7 +32,6 @@ export default function CaseStudyPage() {
             </CTA>
           </div>
         </div>
-              <PageHeadArt src="/page-art/case-study.webp" />
       </section>
 
       <section className="section">
