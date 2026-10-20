@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { howWeHelp } from "@/lib/content/gamcs";
 
 /**
@@ -44,6 +44,114 @@ export default function HowWeHelpFilm() {
      a visitor who played or scrubbed it in the meantime. */
   const pausedAt = useRef<number | null>(null);
 
+  /* ---- sound on while the band is on screen (client, 2026-10-21) ----
+     Three pieces of state, and each exists because of a specific way this
+     can go wrong.
+
+     `soundOn` drives the toggle's label and icon. It mirrors el.muted
+     rather than leading it, so the control still tells the truth when the
+     visitor mutes from the native controls bar instead.
+
+     `userMuted` is the visitor's own choice, and it OUTRANKS the scroll
+     rule for the rest of the visit. Without it, muting the film by hand and
+     scrolling away would un-mute it again on the way back, which reads as
+     the page arguing with you.
+
+     `weSetMuted` is how the volumechange handler tells our own writes from
+     theirs: the event fires either way and carries no origin. */
+  const [soundOn, setSoundOn] = useState(false);
+  const userMuted = useRef(false);
+  const weSetMuted = useRef(true);
+
+  /* Chrome and Edge PAUSE a playing video if a script unmutes it before the
+     page has had a real user gesture. So this never unmutes hopefully: it
+     asks `navigator.userActivation` first, and where that is missing it
+     unmutes and then checks whether the film was stopped as a punishment,
+     putting it back if so. Either way the toggle stays reading "Turn on
+     sound", which is the prompt and the remedy in one control — clicking it
+     IS the gesture, and every later scroll works. */
+  const setMuted = useCallback((next: boolean) => {
+    const el = video.current;
+    if (!el) return;
+    if (!next && userMuted.current) return;
+    if (!next) {
+      const activated = navigator.userActivation?.hasBeenActive;
+      if (activated === false) return;
+      const wasPlaying = !el.paused;
+      weSetMuted.current = false;
+      el.muted = false;
+      setSoundOn(true);
+      if (wasPlaying) {
+        /* A frame later: the pause, if it comes, is the browser's answer to
+           the line above. */
+        requestAnimationFrame(() => {
+          if (!el.paused || el.ended) return;
+          weSetMuted.current = true;
+          el.muted = true;
+          setSoundOn(false);
+          el.play().catch(() => {});
+        });
+      }
+      return;
+    }
+    weSetMuted.current = true;
+    el.muted = true;
+    setSoundOn(false);
+  }, []);
+
+  /* The toggle. It is also the gesture that unblocks everything above. */
+  const toggleSound = useCallback(() => {
+    const el = video.current;
+    if (!el) return;
+    if (el.muted) {
+      userMuted.current = false;
+      setMuted(false);
+    } else {
+      userMuted.current = true;
+      setMuted(true);
+    }
+  }, [setMuted]);
+
+  /* volumechange fires for our writes and the native controls alike. A mute
+     we did not ask for is the visitor's, and it sticks. */
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    const onVolume = () => {
+      setSoundOn(!el.muted);
+      if (el.muted && !weSetMuted.current) userMuted.current = true;
+      if (!el.muted) userMuted.current = false;
+    };
+    el.addEventListener("volumechange", onVolume);
+    return () => el.removeEventListener("volumechange", onVolume);
+  }, []);
+
+  /* START FETCHING ON APPROACH (client, 2026-10-21). The film is 13.4MB and
+     `preload="none"`, so before this it began downloading only when play()
+     was called — at the 0.4 edge, by which point the band is already on
+     screen and the first seconds buffer while the visitor watches. That is
+     the stutter.
+
+     A second observer with 800px of rootMargin flips preload to "auto" about
+     a screen early, so the fetch has a head start and play() meets a primed
+     buffer. It disconnects on the first hit: this is a one-way switch, and
+     the cost is still paid only by visitors heading for the band rather than
+     by every homepage load, which is what `preload="none"` was protecting. */
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    const warm = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        if (el.preload !== "auto") el.preload = "auto";
+        warm.disconnect();
+      },
+      { rootMargin: "800px 0px" }
+    );
+    warm.observe(el);
+    return () => warm.disconnect();
+  }, []);
+
   useEffect(() => {
     const el = video.current;
     if (!el) return;
@@ -61,6 +169,12 @@ export default function HowWeHelpFilm() {
             el.pause();
             pausedAt.current = el.currentTime;
           }
+          /* Silence on the way out too, and unconditionally — the film may
+             be paused by the line above, or already paused, or ended, and
+             in every one of those the band is off screen and must not be
+             the thing making noise. `userMuted` is not consulted: muting is
+             never the choice being overridden. */
+          setMuted(true);
           return;
         }
         /* On screen but under the start threshold: leave it alone. The two
@@ -68,6 +182,14 @@ export default function HowWeHelpFilm() {
            line is not missed, and it only stops once the frame is completely
            gone. One shared edge would both pause a film still half on screen
            and flip between play and pause on jitter around 40%. */
+        /* The audio edge, at 0.6 — above the 0.4 the film starts at, so a
+           band that is only half up is already playing but still silent.
+           Below it, silence; the ratio is checked on every callback rather
+           than latched, so scrolling back out part-way mutes again without
+           needing the 0 edge. */
+        if (entry.intersectionRatio >= 0.6) setMuted(false);
+        else setMuted(true);
+
         if (entry.intersectionRatio < 0.4) return;
 
         /* Back in view. Resume our own pause, and only ours: if the time has
@@ -117,11 +239,11 @@ export default function HowWeHelpFilm() {
          and the visitor misses the opening line, and it is kept well under 1
          because the frame is taller than a short laptop viewport minus the
          floating header. 0 is where it stops. */
-      { threshold: [0, 0.4] }
+      { threshold: [0, 0.4, 0.6] }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [setMuted]);
 
   return (
     <section className="section hwv" aria-labelledby="hwv-heading">
@@ -190,6 +312,53 @@ export default function HowWeHelpFilm() {
                about 47 seconds of silent film. */
             aria-label={howWeHelp.video.label}
           />
+          {/* The sound toggle, always visible — not behind hover, and not
+              the native controls bar, which only appears on hover and is
+              therefore no use to a touch or keyboard visitor looking for
+              the off switch. WCAG 1.4.2 wants a mechanism to stop audio
+              that starts on its own, and "on hover" is not one.
+
+              ONE control doing two jobs: while the film is silent it reads
+              "Turn on sound", which is also the prompt when the browser has
+              refused to unmute without a gesture — and clicking it supplies
+              that gesture. While it is playing sound it reads "Mute the
+              film" and is the stop control.
+
+              aria-live on the label: the name changes under the visitor's
+              own click, so a screen reader should hear what it became. */}
+          <button
+            type="button"
+            className="hwv-sound"
+            onClick={toggleSound}
+            aria-pressed={soundOn}
+          >
+            {/* Drawn, not an emoji: the speaker emoji renders as a colour
+                glyph on some platforms and a monochrome one on others, and
+                at this size the difference is loud. */}
+            <svg
+              className="hwv-sound-ico"
+              viewBox="0 0 16 16"
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M3.5 6h2L8.5 3.5v9L5.5 10h-2z" />
+              {soundOn ? (
+                <>
+                  <path d="M11 6.2a2.6 2.6 0 0 1 0 3.6" />
+                  <path d="M12.8 4.4a5.2 5.2 0 0 1 0 7.2" />
+                </>
+              ) : (
+                <path d="M11.2 6.2 14 9m0-2.8L11.2 9" />
+              )}
+            </svg>
+            <span>{soundOn ? howWeHelp.video.soundOff : howWeHelp.video.soundOn}</span>
+          </button>
         </div>
         </div>
 

@@ -74,8 +74,11 @@ const ICONS = [
 
 export default function MaturityCurve() {
   const { stages } = maturityCurve;
-  /* Stage 04 — Performance Insight — is where the curve is going. */
-  const [active, setActive] = useState(3);
+  /* Stage 01 — Finance Foundation (client, 2026-10-21). It opened on 04
+     before, on the reasoning that it is where the curve is going and the
+     stage most visitors are trying to picture. The client wants the curve
+     read from its start. */
+  const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   /* Where the row scrolls sideways rather than fitting five cards — phones —
@@ -211,6 +214,26 @@ export default function MaturityCurve() {
                   tabRefs.current[i] = el;
                 }}
                 onClick={() => setActive(i)}
+                /* HOVER SELECTS (client, 2026-10-21). onMouseEnter, not
+                   onPointerEnter: a touch tap fires pointerenter before the
+                   click, which would select the card under the finger and
+                   then select it again — mouse and pen only is what is
+                   wanted, and that is what onMouseEnter gives.
+
+                   It does not move focus. The arrow-key handler focuses the
+                   tab it selects because the keyboard needs focus to follow;
+                   hovering must not, or the cursor would drag focus across
+                   the row and scroll the page under a keyboard user. The one
+                   visible consequence: `tabIndex` follows `active`, so the
+                   card the mouse last rested on is the one Tab reaches. That
+                   is the same card the panel is showing, which is the right
+                   answer anyway.
+
+                   KNOWN, and accepted by the client: crossing the row swaps
+                   the panel once per card passed over, and the panel's
+                   cross-fade runs each time. Touch and keyboard are
+                   unaffected — both still select on click or arrow. */
+                onMouseEnter={() => setActive(i)}
                 /* MotionLayer's page-wide hover lift. Safe on a tab here
                    only because selection is drawn with border, ground and
                    shadow and no transform at all, so the lift has the
