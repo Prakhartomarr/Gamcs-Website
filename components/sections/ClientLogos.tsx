@@ -95,7 +95,11 @@ export default function ClientLogos() {
     <section className="clients" id="clients" aria-labelledby="clients-heading">
       <div className="container">
         <div className="clients-head reveal">
-          <h2 id="clients-heading">{clients.heading}</h2>
+          <h2 id="clients-heading">
+            {clients.headingLead}{" "}
+            <span className="accent">{clients.headingAccent}</span>{" "}
+            {clients.headingTail}
+          </h2>
           <p className="clients-sub">{clients.sub}</p>
         </div>
 

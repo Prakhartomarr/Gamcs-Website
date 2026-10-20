@@ -2459,6 +2459,13 @@ export const maturityCurve = {
  * that by shrinking it. Padded, the same rule puts it at 1.01x the median.
  */
 export const clients = {
+  /* Three pieces so the middle one can take the accent tint (client,
+     2026-10-21), the same shape `howWeHelp` and `maturityCurve` use for
+     their headings. Words unchanged; only the split is new. */
+  headingLead: "Trusted by",
+  headingAccent: "growth-focused businesses",
+  headingTail: "across the world.",
+  /** RETIRED 2026-10-21: the undivided line the three above replace. */
   heading: "Trusted by growth-focused businesses across the world.",
   sub: "From high growth startups to established businesses, we partner with organisations across sectors and geographies.",
   logos: [
