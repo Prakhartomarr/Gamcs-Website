@@ -185,6 +185,9 @@ export default function ServiceAccordion() {
         })}
       </div>
 
+      {/* No FluteShader here, at the client's word (2026-10-20): this card
+          keeps the fluted photograph. The live shader stays on the other two
+          --flute-ground surfaces, the contact panel and the closing CTA. */}
       <div className="svca-card">
         {/* The oversized pillar glyph that used to bleed off this corner is gone:
             over the fluting it read as a second pattern rather than as texture. */}

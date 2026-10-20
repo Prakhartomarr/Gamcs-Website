@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { ScrollReelTestimonials } from "@/components/ui/scroll-reel-testimonials";
 import { testimonials } from "@/lib/content/gamcs";
@@ -25,7 +25,38 @@ import { initials } from "@/lib/utils";
  *
  * A portrait missing from disk falls back to the person's initials rather than
  * to a hole.
+ *
+ * The COMPANY MARK sits at the far end of the byline row, opposite the name.
+ * It is the wall's own artwork and the wall's own solved height, not a second
+ * copy of either — see the two constants below.
  */
+
+const LOGO_DIR = path.join(process.cwd(), "public", "logos", "clients");
+
+/* The wall's per-mark heights are NOT reused here, and that is the decision
+   worth recording. They were solved so that twenty-two marks seen side by
+   side carry the same weight of ink, which makes a dense three-line mark like
+   Akshar's deliberately SMALL — 24px against Basilic Fly's 56. Scaled to a
+   byline that put Akshar at 14px, where its three lines of type are simply
+   unreadable.
+   The reel shows ONE mark at a time, seconds apart, so cross-mark evenness is
+   not what is being bought; legibility is. Two plain ceilings instead, the
+   browser honouring whichever binds first — the same two-ceiling idea the
+   wall uses, with the pair chosen for a byline rather than for a row. */
+
+/**
+ * A PNG's real pixel size, straight out of its IHDR header: next/image wants
+ * the intrinsic ratio, and each mark is trimmed to its own artwork so its true
+ * ratio is what sizing needs. The same two offsets ClientLogos reads — four
+ * lines, duplicated rather than hoisted into lib/logo-wall.ts, because that
+ * module is imported for its TYPE by a client component and pulling node:fs
+ * into it is a bundling hazard for a saving of four lines.
+ */
+function pngSize(file: string) {
+  const b = readFileSync(path.join(LOGO_DIR, file));
+  return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
+}
+
 export default function Testimonials() {
   const items = testimonials.items.map((t) => {
     const photo = "photo" in t ? t.photo : undefined;
@@ -37,6 +68,15 @@ export default function Testimonials() {
        slot as written and an empty one as nothing — either way a title-less
        author would ship the comma that belonged to the missing title. */
     const title = "title" in t ? t.title : undefined;
+    /* Skipped rather than rendered as a broken image if the artwork is not on
+       disk, the same trade ClientLogos makes: a testimonial can be added
+       before its client's mark lands. This is a server component, so the check
+       is a build-time disk read and costs nothing at runtime. */
+    const logoFile = "logo" in t ? t.logo : undefined;
+    const logo =
+      logoFile && existsSync(path.join(LOGO_DIR, logoFile))
+        ? { src: `/logos/clients/${logoFile}`, ...pngSize(logoFile) }
+        : undefined;
     return {
       quote: t.quote,
       author: t.name,
@@ -50,6 +90,7 @@ export default function Testimonials() {
       monogram: initials(t.name),
       image: hasArt ? photo.src : undefined,
       alt: hasArt ? photo.alt : undefined,
+      logo,
     };
   });
 

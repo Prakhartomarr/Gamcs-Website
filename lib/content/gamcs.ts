@@ -101,17 +101,33 @@ export const site = {
   name: "GA Management Consultants",
   legalName: "GA Management Consultants LLP",
   short: "GAMCS",
-  /** The half of the wordmark the footer sets in type: the logo draws "GA". */
+  /*
+   * The two lines the footer sets in type beside the mark, which draws the
+   * "GA" (client, 2026-10-20). The lockup reads "GA MANAGEMENT CONSULTANTS"
+   * rather than "GAMCS": the mark is the monogram and the words spell it out,
+   * so the footer now prints the firm's full name instead of its contraction.
+   *
+   * Two entries, not one string with a <br>: the stack is the lockup's shape,
+   * and a line break inside a string is a line break a stylesheet cannot see.
+   */
+  logoLines: ["MANAGEMENT", "CONSULTANTS"] as const,
+  /** RETIRED 2026-10-20: the half-wordmark the "GAMCS" lockup set in type. */
   logoWord: "MCS",
   tagline: "Driving Change, Delivering Results",
   subheading: "We turn insights into impact.",
   url: "https://www.gamcs.in",
   email: "info@gamcs.in",
   linkedin: "https://in.linkedin.com/company/gamcs-in",
-  /* The client's footer document sets the whole notice as one sentence,
-     legal name included, so the bottom bar prints this alone — the separate
-     legal-name cell it used to sit beside said the name a second time. */
-  copyright: "© 2026 GA Management Consultants LLP. All rights reserved.",
+  /* TWO CELLS AGAIN (client, 2026-10-20): the notice on the left of the
+     bottom bar, the reservation hard against its right edge.
+
+     It was one string. The client's footer document writes the whole notice
+     as one sentence, legal name included, which is why the separate cell that
+     used to repeat `site.legalName` was removed — but that was about the NAME
+     being said twice, not about the rights line. Split at the full stop, so
+     the two together still read exactly as the document writes them. */
+  copyright: "© 2026 GA Management Consultants LLP.",
+  rights: "All rights reserved.",
   /** Brand mark. Overwrite public/brand/logo.png to change it everywhere. */
   logo: "/brand/logo.png",
   /**
@@ -587,11 +603,17 @@ export const howWeHelp = {
      closes when the film is re-rendered, which is the client's call, not an
      edit to this file. */
   video: {
-    /** The <video>'s accessible name. It says the film is silent, because a
-        visitor who hears nothing otherwise has no way to know whether that is
-        the film or their own sound, and it points at the text version so the
-        disclosure beneath is worth opening. */
-    label: "GAMCS explainer film. Silent, 47 seconds \u2014 a text version is below it.",
+    /** The <video>'s accessible name, and since the transcript was removed it
+        is the ONLY text this element carries.
+        Rewritten 2026-10-20 with the re-cut film, which changed all three
+        things the old name said: it ran 47 seconds and now runs 100; it had
+        no audio track at all and now carries one (165 kbps across the full
+        length, measured \u2014 not an empty track); and the text version it
+        pointed at is gone. It starts muted because autoplay demands it, so
+        the name says so rather than leaving a visitor to wonder whether the
+        silence is the film or their own device. */
+    label:
+      "GAMCS explainer film, 1 minute 40 seconds. It starts muted \u2014 use the player controls for sound.",
     altSummary: "Read what the film shows",
     altNote: "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears \u2014 with the labels inside the diagram grouped under the stage they appear with.",
     alt: [
@@ -696,7 +718,14 @@ export const services = {
  */
 export const achievements = {
   heading: "Our Achievements",
-  lead: "Our clients have experienced",
+  /* 2026-10-20. "Our clients have experienced" was the section's H2 and it
+     has no object: experienced what? The four figures below finish the
+     sentence visually and not grammatically, which is how it reads as a
+     fragment. "Results so far" is a heading rather than an opening clause,
+     and it is honest about the set being a running total. */
+  lead: "Results so far",
+  /* RETIRED with it. `heading` above was already unrendered. */
+  leadFragment: "Our clients have experienced",
   items: [
     /* The card. CountUp splits the string on its digits and keeps the prefix
        and suffix on every frame, so "$" and "Bn+" ride the count. */
@@ -949,6 +978,14 @@ export const testimonials = {
       name: "Patrick Hughes",
       title: "CFO",
       company: "HungerRush",
+      /* The company's mark, named by its FILE in /public/logos/clients — the
+         same artwork, already trimmed and weight-solved, that the wall under
+         the hero uses. Keyed on the file rather than on `company` because the
+         two spellings differ for half of these ("Corestack"/"CoreStack",
+         "Basilic Fly Studios"/"Basilic Fly Studio", "Three 6ixty Finance"/
+         "Threesixty Finance"), and a match that silently misses would drop a
+         logo rather than fail. */
+      logo: "hungerrush.png",
       photo: { src: "/testimonials/patrick-hughes.webp", alt: "Portrait of Patrick Hughes" },
       quote:
         "GAMCS supported HungerRush\u2019s FP&A and accounting through a critical phase of our ownership transition. The team established our ARR/MRR reporting logic and cohort models, helped professionalise our monthly close, and supported a smooth handover to our in-house team. Gaurav and Rishi were responsive, thorough, and genuinely invested in getting things right. Their work gave us a strong foundation as we scaled our finance function",
@@ -957,6 +994,7 @@ export const testimonials = {
       name: "Tejas Parikh",
       title: "Founder",
       company: "Akshar Business Consulting",
+      logo: "akshar.png",
       photo: { src: "/testimonials/tejas-parikh.webp", alt: "Portrait of Tejas Parikh" },
       quote:
         "Working with GAMCS has been an absolute pleasure. The team brings a solutions-first mindset, strong financial acumen, and a clear understanding of what CFOs and senior leaders need. Its ability to build and lead technology-led FP&A teams, navigate constraints, and find practical solutions makes GAMCS a valuable partner for finance leaders focused on automation",
@@ -965,6 +1003,7 @@ export const testimonials = {
       name: "Gaurav Mehra",
       title: "CFO",
       company: "Basilic Fly Studios",
+      logo: "basilic-fly.png",
       photo: { src: "/testimonials/gaurav-mehra.webp", alt: "Portrait of Gaurav Mehra" },
       quote:
         "GAMCS was a trusted FP&A advisor throughout our engagement. The team helped us build robust budgeting and forecasting models and streamline monthly reporting. They brought a proactive, collaborative approach and a strong understanding of our evolving business needs",
@@ -973,6 +1012,7 @@ export const testimonials = {
       name: "Amol Khedkar",
       title: "Deputy Manager",
       company: "Two Brothers India Farms",
+      logo: "two-brothers-new.png",
       photo: { src: "/testimonials/amol-khedkar.webp", alt: "Portrait of Amol Khedkar" },
       quote:
         "GAMCS helped enhance our financial transparency through intuitive dashboards and KPIs. The team has a remarkable ability to distil complex financial data into clear, actionable insights, empowering our teams to make informed, strategic decisions with confidence.",
@@ -981,6 +1021,7 @@ export const testimonials = {
       name: "Venkata S Santhanaraman",
       title: "CFO",
       company: "Corestack",
+      logo: "corestack.png",
       photo: { src: "/testimonials/venkata-santhanaraman.webp", alt: "Portrait of Venkata S Santhanaraman" },
       quote:
         "I had the pleasure of working with GAMCS to develop our FP&A capabilities. The team quickly understood our forecasting models, cost structures, and reporting requirements, translating them into intuitive, scalable tools that streamlined budgeting and reduced manual effort. They anticipated challenges, proposed practical solutions, and remained responsive and open to feedback throughout.",
@@ -989,6 +1030,7 @@ export const testimonials = {
       name: "Arta Ramaj",
       title: "Founder",
       company: "Three 6ixty Finance",
+      logo: "threesixty.png",
       photo: { src: "/testimonials/arta-ramaj.webp", alt: "Portrait of Arta Ramaj" },
       quote:
         "I\u2019ve worked with the GAMCS team for three years and have found them highly capable and dependable. Their financial modelling and technical skills are first-class, and they explain complex work clearly to different audiences. They are collaborative, quick to grasp new challenges, and committed to high-quality delivery. I\u2019d recommend them without hesitation",
@@ -1080,33 +1122,80 @@ export const footer = {
   blurb:
     "We connect finance, data and technology to help businesses understand performance, make better decisions and turn insight into impact.",
   logoAlt: "GA Management Consultants — the GA monogram in blue",
-  headings: { explore: "Explore", solutions: "Solutions", legal: "Legal" },
+  /* "Resources", not "Company" (client, 2026-10-20): the column under it is
+     What clients say, FAQ and Contact Us, while the company pages — Who we
+     are, Team, Careers — are in Explore. `solutions` is retired with the
+     column it headed. */
+  headings: { explore: "Explore", resources: "Resources", legal: "Legal" },
+  /** RETIRED 2026-10-20 with their columns. */
+  retiredHeadings: { company: "Company", solutions: "Solutions" },
   /** The accent link under the address, beside the email. */
   contactLabel: "Contact Us",
   /** Now the accessible name of the LinkedIn tile rather than a text link. */
   linkedinLabel: "LinkedIn",
   cookiePreferences: "Cookie Preferences",
+  /*
+   * ONE COLUMN of links the footer owns (client, 2026-10-20).
+   *
+   * The footer used to carry its own nine-link "Explore" list. The Explore
+   * column now MIRRORS THE NAVBAR instead, and it does it by reading
+   * `header.items` in components/ui/flickering-footer.tsx rather than by
+   * repeating the six labels here — a link added to the nav appears in the
+   * footer, with the nav's own wording, and the two can never disagree.
+   *
+   * What is left for this module is the three the navbar does not carry.
+   * "What clients say" and "FAQ" were in the old Explore list; "Contact Us"
+   * was too, and also sat beside it as a blue accent link.
+   */
+  resources: [
+    { label: "What clients say", href: "/#testimonials" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact Us", href: "/contact" },
+  ],
+  /** The label on the blue button beside the LinkedIn tile. The visible text
+      IS the address: the button opens a mail client, and "Contact Us" would
+      have been a second control with the same name as the link above going
+      somewhere else (WCAG 2.4.4). */
+  emailCtaLabel: "Email {email}",
+  /**
+   * RETIRED 2026-10-20, all three. `company` and `explore` were the two
+   * columns the nine-link list had been split into the same day; `links` is
+   * the undivided list they came from. Nothing renders any of them.
+   */
+  company: [
+    { label: "Who we are", href: "/who-we-are" },
+    { label: "Founders & advisors", href: "/team" },
+    { label: "Careers", href: "/careers" },
+    { label: "Contact Us", href: "/contact" },
+  ],
+  explore: [
+    { label: "Solutions", href: "/solutions" },
+    { label: "How we help", href: "/how-we-help" },
+    { label: "Case Study", href: "/case-study" },
+    { label: "What clients say", href: "/#testimonials" },
+    { label: "FAQ", href: "/faq" },
+  ],
   links: [
-    /* The Our Story page, not the homepage section it used to hit: the nav's
-       "Who we are" goes to the same place since the dropdowns came out. */
     { label: "Who we are", href: "/who-we-are" },
     { label: "Solutions", href: "/solutions" },
     { label: "How we help", href: "/how-we-help" },
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
     { label: "Careers", href: "/careers" },
-    /* These two were the Who We Are dropdown's other links. The footer is the
-       only place either is reachable from now. */
     { label: "What clients say", href: "/#testimonials" },
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],
   /**
+   * RETIRED 2026-10-20: the client had the Solutions column taken out of the
+   * footer entirely. KNOWN CONSEQUENCE, accepted: these five pages now have
+   * no site-wide link. They stay published and are reached from the /solutions
+   * index (in Explore, as the navbar's "What we do") and from the homepage
+   * accordion. Putting the column back is this array plus one entry in
+   * `groups` in components/ui/flickering-footer.tsx.
+   *
    * The five pillar pages, labelled with each pillar's short client name
-   * (`solutions[].navLabel`) at the client's request. Left as a literal rather
-   * than derived from `solutions[]` because that array is declared after
-   * `footer` in this file. Nothing checks that the two agree, so a renamed
-   * pillar or slug has to be changed here too.
+   * (`solutions[].navLabel`) at the client's request.
    */
   solutions: [
     { label: "Advise", href: "/solutions/fpa-cfo-advisory" },
@@ -1282,7 +1371,12 @@ export const solutions: Solution[] = [
        it; it headed this pillar's column in the Solutions menu until the
        dropdowns were removed. */
     navLabel: "Advise",
-    title: "FP&A & CFO Advisory",
+    /* Client copy, 2026-10-20. This is the same sentence as `h1` below, which
+       has read it since 2026-10-19 — the homepage accordion, the Solutions hub
+       card and the og:title were the three surfaces still on the short form.
+       `titleTag` is deliberately NOT changed: that one is the search result's
+       own line and is written for it. */
+    title: "Strategic Finance, FP&A & CFO Advisory",
     titleTag: "FP&A & CFO Advisory Services for CFOs & CXOs | GAMCS",
     metaDescription:
       "FP&A and CFO advisory — budgeting, forecasting, rolling cash flow models, RevOps forecasting, and board-ready reporting for growth companies and PE portfolios.",
@@ -1291,7 +1385,12 @@ export const solutions: Solution[] = [
     h1: "Strategic Finance, FP&A & CFO Advisory",
     intro:
       "Call it FP&A advisory, call it CFO advisory — it's the same seat at the table. If your finance team is still built for controllership and statutory reporting, you already have a strategic gap. Financial statements tell you what happened. This is where you get told what to do about it.",
-    tagline: "CFO-level budgeting, forecasting, and rolling models.",
+    /* Client copy, 2026-10-20, and word-for-word the `blurb` this pillar
+       already carries in the solutions nav — one sentence, now in both
+       places. The full stop is added to match it and the other four
+       taglines, all of which close. */
+    tagline:
+      "Build a finance function that drives the business—not just reports it.",
     problem: {
       label: "The problem we solve",
       body:
@@ -1381,7 +1480,11 @@ export const solutions: Solution[] = [
        homepage accordion and the title tag print, and the client restructured
        the pillar's contents, not its name. */
     navLabel: "Build",
-    title: "Finance Team Extension",
+    /* Client copy, 2026-10-20 — the pillar's own `h1` below, which has read
+       this since 2026-10-19. Same move as the Advise pillar: the accordion,
+       the Solutions hub card and the og:title were the surfaces still on the
+       short form. `titleTag` stays as written for search. */
+    title: "Finance Managed Services & Workforce Solutions",
     titleTag: "Finance Staffing, Offshoring & Centers of Excellence for PE/VC | GAMCS",
     metaDescription:
       "Finance team extension: staffing, Employer of Record, offshoring, and CoE or GCC builds — embedded finance teams for PE/VC portfolios and advisory firms.",
@@ -1390,7 +1493,8 @@ export const solutions: Solution[] = [
     h1: "Finance Managed Services & Workforce Solutions",
     intro:
       "Most PE and VC portfolios have reporting. Very few have strategic FP&A depth, or a consistent way to add finance capacity as they grow. Each portfolio company runs a different ERP, a different chart of accounts, and different KPI definitions — so comparing performance across the fund becomes a manual reconciliation exercise every quarter, and every headcount decision starts from scratch.",
-    tagline: "Staffing, EoR, offshoring, CoE, and GCC builds.",
+    tagline:
+      "Build, extend or operate the finance capability you need—without scaling overhead.",
     problem: {
       label: "Our answer",
       body:
@@ -1502,7 +1606,7 @@ export const solutions: Solution[] = [
   {
     slug: "digital-transformation",
     navLabel: "Transform",
-    title: "Digital Transformation",
+    title: "Digital Finance Transformation",
     titleTag: "Digital Transformation for Finance | ERP, CRM, FP&A Tools & Analytics | GAMCS",
     metaDescription:
       "Digital transformation for finance: ERP, CRM, and FP&A platform implementation, in-house Finsensor AI software, data warehousing, and real-time BI dashboards.",
@@ -1514,7 +1618,8 @@ export const solutions: Solution[] = [
     h1: "Digital Finance Transformation",
     intro:
       "Buying enterprise software solves nothing on its own, and a dashboard is only as good as the data feeding it. Digital Transformation covers both halves of that problem: Tools — implementing the ERP, CRM, and FP&A platforms your business actually runs on — and Analytics & Warehousing — turning the data those platforms produce into real-time dashboards and decision intelligence. We're platform-agnostic on the third-party side, and we also build our own, in-house, through our Finsensor AI software.",
-    tagline: "Tools plus real-time analytics, implemented and built in-house.",
+    tagline:
+      "Connect systems, data and technology to transform how finance works.",
     atAGlance: ["Technology & Platforms", "Data, Analytics & Intelligence"],
     blocks: [
       {
@@ -1651,7 +1756,7 @@ export const solutions: Solution[] = [
   {
     slug: "deal-advisory",
     navLabel: "Transact",
-    title: "Deal Advisory",
+    title: "Transactions & Capital Advisory",
     titleTag: "Deal Advisory | M&A, IPO Advisory, Due Diligence & Debt Refinancing | GAMCS",
     metaDescription:
       "Deal advisory for CFOs, PE, and VC-backed companies — M&A, buy-side and sell-side due diligence, IPO readiness, debt refinancing, and investor/pitch decks.",
@@ -1660,7 +1765,7 @@ export const solutions: Solution[] = [
     h1: "Transactions & Capital Advisory",
     intro:
       "The worst time to discover a gap in your financials is during due diligence, when a buyer, investor, or lead underwriter is already asking the hard questions. Most companies find out their numbers aren't deal-ready exactly when it matters most — mid-transaction, under time pressure, with leverage already shifting away from them.",
-    tagline: "M&A, IPO readiness, due diligence, and debt refinancing.",
+    tagline: "Make your numbers ready for the moments that matter.",
     atAGlance: [
       "Transaction Advisory",
       "Capital Advisory",
@@ -1733,14 +1838,16 @@ export const solutions: Solution[] = [
   {
     slug: "training-enablement",
     navLabel: "Enable",
-    title: "Training & Enablement",
+    title: "Finance Capability Building & Enablement",
     titleTag: "Finance Training & Corporate Enablement | FP&A, Tableau & More | GAMCS",
     metaDescription:
       "Training and enablement: corporate FP&A, modelling, Tableau, ESG, and analytics training, public MasterClasses via Thinking Bridge, and an FPI affiliation.",
     h1: "Finance Capability Building & Enablement",
     intro:
       "Not every engagement should end with a dependency on us. Sometimes the highest-value thing we can do is train your existing finance team to run the models, dashboards, and frameworks themselves — and beyond client engagements, we teach this publicly too.",
-    tagline: "Corporate training, public MasterClasses, and an FPI affiliation.",
+    /* "Positioning:" led this line in the brief. That is the client's own
+       label for the slot, not copy, so it is not published. */
+    tagline: "Build the capability to sustain transformation.",
     atAGlance: ["Corporate Finance Training", "Finance Function Enablement"],
     blocks: [
       {

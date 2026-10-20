@@ -731,7 +731,11 @@ html{font-size:112.5%}
    of the picture — the contrast behind this copy had to be checked on its own
    rather than inherited. The border was --blue on --blue, i.e. invisible; over
    the picture it would have been a bright rim, so it goes dark. */
-.contact-panel{border-radius:24px;box-sizing:border-box;
+/* isolation:isolate is what lets FluteShader sit at z-index:-1 — above this
+   panel's own background, below every one of its children — without a single
+   child needing a z-index. See the .flute-shader rule for the whole idea. */
+.contact-panel{position:relative;isolation:isolate;overflow:hidden;
+  border-radius:24px;box-sizing:border-box;
   border:1px solid rgba(6,32,55,.38);
   background:var(--flute-ground);
   /* The stage track is a fixed 520px, not `auto`: open, the office row leaves
@@ -740,7 +744,7 @@ html{font-size:112.5%}
      58px and re-wrapped the headline under the reader anywhere from 1280 to
      1337, where the copy still sits below its 560px cap. Held at the stage's
      own width, the copy measures the same in both states. */
-  display:grid;grid-template-columns:1fr 520px;gap:48px;align-items:center;padding:56px;min-height:480px}
+  display:grid;grid-template-columns:1fr 448px;gap:48px;align-items:center;padding:56px;min-height:0}
 .contact-panel-copy{max-width:560px}
 .contact-panel-copy .btn{margin-top:28px}
 .contact-lead{margin:0;font:500 1.2222rem var(--font-sans);line-height:1.42;letter-spacing:-.02em;color:#fff}
@@ -751,7 +755,18 @@ html{font-size:112.5%}
    disclosure travelled 80px upward and the card's bottom edge crossed 9px into
    the panel's padding. Reserved to the open height, the expand runs downward
    into slack the box already has and nothing above it moves. */
-.contact-panel-stage{width:520px;height:388px;display:flex;align-items:center;justify-content:flex-start}
+/* 337 = the open card's 289 + the 12px gap + the 36px pill under it, which
+   is exactly what the expanded state occupies now that the disclosure sits
+   below the row. It was 388 for a 340px card.
+
+   justify-content:CENTER, not flex-start (client, 2026-10-20: "this card is
+   not aligned"). The reservation is taller than the collapsed group, so
+   anchoring to the top left the card sitting ~110px above the copy column
+   beside it, which is centred in the same panel. Centred, the group's middle
+   and the copy's middle are the same line. The cost, accepted: expanding the
+   card now lifts the group by about half the growth instead of pushing it
+   straight down. */
+.contact-panel-stage{width:448px;height:337px;display:flex;align-items:center;justify-content:center}
 
 /* ---------- services accordion (homepage) ----------
    Five pillars on the left, one open at a time, beside a brand-blue card
@@ -800,6 +815,10 @@ html{font-size:112.5%}
    near-white and no amount of scrim keeps white type readable over it.
    The scrim above it is measured, not guessed: the crop's lightest point behind
    the copy is 2.14:1 on its own, which fails body text. */
+/* Back to the photograph, at the client's word (2026-10-20). The card never
+   needed isolation:isolate — that was only there to give the live shader a
+   stacking context to sit at z-index:-1 inside, and the shader is gone from
+   this one surface. */
 .svca-card{position:relative;overflow:hidden;border-radius:24px;padding:34px;min-height:452px;
   display:grid;place-items:center;
   background:var(--flute-ground)}
@@ -847,7 +866,7 @@ html{font-size:112.5%}
 /* ---------- location map card (components/ui/expand-map.tsx) ---------- */
 .locmap{position:relative;perspective:1000px}
 .locmap-card{position:relative;overflow:hidden;border-radius:16px;background:#fff;border:1px solid var(--line);
-  width:320px;height:180px;transform-style:preserve-3d;box-shadow:0 22px 46px -24px rgba(6,32,55,.46);
+  width:272px;height:153px;transform-style:preserve-3d;box-shadow:0 22px 46px -24px rgba(6,32,55,.46);
   transition:width .52s var(--ease-out),height .52s var(--ease-out),transform .18s ease-out,box-shadow .35s var(--ease-out)}
 /* While the pointer is driving the tilt the card tracks it 1:1 — a transition
    on transform here means the card trails the cursor, which is the one thing
@@ -855,7 +874,7 @@ html{font-size:112.5%}
    settle the card back to rest once the pointer leaves. */
 .locmap-card.is-tracking{transition:width .52s var(--ease-out),height .52s var(--ease-out),
   box-shadow .35s var(--ease-out)}
-.locmap-card.is-open{width:480px;height:340px;box-shadow:0 38px 70px -30px rgba(6,32,55,.55)}
+.locmap-card.is-open{width:408px;height:289px;box-shadow:0 38px 70px -30px rgba(6,32,55,.55)}
 .locmap-grid{position:absolute;inset:0;opacity:.06;pointer-events:none;transition:opacity .3s var(--ease-out);
   background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);
   background-size:20px 20px}
@@ -921,7 +940,7 @@ html{font-size:112.5%}
    Measured from the card's centre line rather than the wrapper's bottom edge,
    because below 1280 .locmap is a 340px box reserving the open height and the
    closed card floats in the middle of it. */
-.locmap-hint{position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 99px);margin:0;
+.locmap-hint{position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 86px);margin:0;
   font-size:0.6111rem;color:#C9DCEA;white-space:nowrap;transition:opacity .2s var(--ease-out)}
 .locmap-card.is-open + .locmap-hint{opacity:0}
 
@@ -952,7 +971,7 @@ html{font-size:112.5%}
 @media(min-width:1024px){
   /* The 340px floor reserves the open height, so one card expanding cannot
      shunt the other two and the panel's bottom edge down with them. */
-  .locmaps[data-open="true"] .locmap{width:100%;height:340px;
+  .locmaps[data-open="true"] .locmap{width:100%;height:289px;
     display:flex;align-items:center}
 }
 .locmaps[data-open="true"] .locmap-card,
@@ -1001,19 +1020,27 @@ html{font-size:112.5%}
      and back up for the whole animation. Reserving its open height keeps the
      page still; the closed card sits centred in that space. Above 1280 the
      stage itself holds that reserve instead, so the disclosure stays put. */
-  .locmap{height:340px;display:flex;align-items:center;justify-content:center}
+  .locmap{height:289px;display:flex;align-items:center;justify-content:center}
   .contact-panel-copy{order:2;max-width:none}
   .contact-panel-stage{order:1;width:auto;height:auto;margin-bottom:32px}
-  .locmap{width:min(480px,100%)}
+  .locmap{width:min(408px,100%)}
   .locmap-card,.locmap-card.is-open{width:100%}
-  .locmap-card{height:180px}
-  .locmap-card.is-open{height:340px}
-  /* The stage's own justify-content:flex-start above is the vertical axis
-     once .locmaps turns it into a column, so the left edge the stacked panel
-     wants is set on the cross axis instead — for the disclosure and for the
-     card under it. */
+  .locmap-card{height:153px}
+  .locmap-card.is-open{height:289px}
+  /* The stage's own justify-content above is the vertical axis once .locmaps
+     turns it into a column, so the left edge the stacked panel wants is set
+     on the cross axis instead — for the disclosure and for the card under
+     it. */
   .locmaps{align-items:flex-start}
   .locmaps-row{justify-items:start}
+  /* And for the hint, which is positioned against the card rather than laid
+     out by that flex box, so the cross-axis rule above never reached it. It
+     stayed centred on a full-width card while the pill above it sat hard
+     left, which read as two controls that had come apart. left:0 puts it on
+     the card's own left edge, which is where the pill and the copy below
+     both start. Centred again from 1280 up, where the card is 272px in a
+     448px stage and everything in the column is centred on it. */
+  .locmap-hint{left:0;transform:none}
 }
 @media(max-width:767px){
   .contact-panel{padding:22px 24px 26px}
@@ -1022,10 +1049,10 @@ html{font-size:112.5%}
   .locmap{width:100%;perspective:none}
   .locmap-card,.locmap-card.is-open{width:100%}
   .locmap-card{height:172px}
-  .locmap-card.is-open{height:340px}
+  .locmap-card.is-open{height:289px}
   .locmap-dir{min-height:44px;padding:0 16px}   /* WCAG 2.5.5 on touch */
   /* 8px shorter card here, so the hint sits 8px closer to the centre line */
-  .locmap-hint{top:calc(50% + 95px)}
+  .locmap-hint{top:calc(50% + 82px)}
 }
 @media(prefers-reduced-motion:reduce){
   .locmap-card,.locmap-img,.locmap-layer,.locmap-grid,.locmap-place,
@@ -1042,134 +1069,77 @@ html{font-size:112.5%}
    two-part heads have a paragraph beside them. */
 .metrics .section-head{margin-bottom:48px;justify-content:center;align-items:center;
   text-align:center}
-/* Both figure sizes below are clamped against THIS box, not the viewport.
-   Tailwind's own `.container{max-width}` pins the container at 768 through
-   824-1023 and at 920 through 1024-1279, so a vw clamp went on growing the
-   numerals inside cells that had stopped growing — 25% of headline growth in
-   a band where the cell never moves. cqw tracks what actually sizes the
-   cells, so it holds still exactly when they do, in every pinned band
-   rather than the one a hand-written media query could name. */
-.ach-grid{display:grid;container-type:inline-size}
-/* The bento, at >=1024 only. It is gated rather than overridden below because
-   `grid-area` has to be set per cell, and a class plus a pseudo-class
-   out-specifies any one-class reset the narrower layouts could write.
-   Varied spans, not a feature cell beside a rail: the last row crosses back
-   under the photo, so no column runs the grid's full height. */
-@media(min-width:1024px){
-  .ach-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;
-    grid-template-areas:
-      "ph ph ph f1"
-      "ph ph ph f2"
-      "f3 f3 f4 f4"}
-  /* The wrapper stays in the DOM because the narrower layouts are a grid and a
-     list of its four children; here its children are cells of the bento
-     itself, which only works if the wrapper generates no box of its own. */
-  .ach-figures{display:contents}
-  .ach-card{grid-area:ph}
-  .ach-figure:nth-child(1){grid-area:f1}
-  .ach-figure:nth-child(2){grid-area:f2}
-  .ach-figure:nth-child(3){grid-area:f3}
-  .ach-figure:nth-child(4){grid-area:f4}
+/* ===================================================================
+   Results — four figures on a rule (2026-10-20)
+   ===================================================================
+   REPLACES the bento: a blurred stock-laptop photograph carrying
+   "$2Bn+" as a dark card, with the other four figures as bordered
+   white tiles in a 2x2 beside it. Gone with it: the photo cell, its
+   two-axis scrim (which existed only to stop the stock dashboard's own
+   KPI strip reading as the client's numbers), the `container-type`
+   box the two cqw clamps were measured against, and every tile border
+   — a hairline box around each figure was a card doing nothing a rule
+   does not do.
+
+   Four equal columns, each a rule, a label, the figure and its
+   qualifier. The figures lead with the two biggest, $2Bn+ and 150+,
+   and the fifth published figure (10+ data warehouses) is not shown
+   here; it is still in the content module, and Achievements.tsx says
+   which positions it draws.
+
+   THE FIGURES ARE --blue. They are the one thing this section exists
+   to say, and they are the only numerals on the page set in the brand
+   colour — the accent that marks a resolved point elsewhere is
+   --signal, and it is not used here, so the two never collide.
+   #0F5E97 on white is 6.86:1, which clears AA for any size. */
+.ach-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:clamp(24px,3vw,56px);row-gap:44px}
+/* The wrapper has no box of its own: its four children are the grid's
+   own cells, which is what lets them share one set of columns. */
+.ach-figures{display:contents}
+.ach-figure{display:flex;flex-direction:column;align-items:flex-start;
+  padding-top:22px;border-top:1px solid var(--line)}
+.ach-figure-label{margin:0;font-size:0.8889rem;line-height:1.35;
+  font-weight:600;color:var(--ink-deep);text-wrap:balance}
+/* A two-line floor on the label, so the four figures sit on ONE line however
+   the labels wrap. Without it "Financial models, budgets & plans delivered"
+   takes two lines where the other three take one, and its figure and note
+   drop ~19px below their neighbours'. 2.7em is 2 x the 1.35 line-height,
+   resolved against the label's own font-size. Only where there is more than
+   one figure in a row; on a phone the column is single file and a reserved
+   second line would just be a gap. */
+@media(min-width:768px){
+  .ach-figure-label{min-height:2.7em}
 }
-.ach-card{position:relative;overflow:hidden;min-height:clamp(360px,27.78vw,400px);
-  border-radius:24px;background:var(--ink-deep);padding:44px 48px;
-  display:flex;flex-direction:column;justify-content:flex-end}
-/* Soft, which is what the photograph was chosen to be. The veil below drops
-   the stock dashboard's KPI strip under 3:1, but a reader who looks still
-   resolves six figures, and a blur of roughly a quarter of their cap height
-   does not — while the chart shapes, the screen and the room, which are the
-   whole reason for the picture, survive it. scale covers the blur's own soft
-   edge, which would otherwise fade against the card's corners. */
-.ach-card img{object-fit:cover;filter:blur(3px);transform:scale(1.05)}
-/* Two jobs, which is why the vertical layer darkens at BOTH ends rather than
-   ramping off the top. Bottom: the type. Top: the photograph is a laptop
-   running a stock admin template, and its own KPI strip — six labelled
-   figures — lands on the card's top edge at every crop. Under a heading
-   reading "Our clients have experienced" a visitor has nothing to tell them
-   those are not the client's numbers, so the veil has to carry far enough up
-   to stop them resolving as figures. The chart shapes beneath survive it;
-   11px numerals do not, which is the asymmetry being traded on. */
-.ach-card::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(0deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.58) 42%,
-      rgba(8,14,22,.38) 64%,rgba(8,14,22,.68) 100%),
-    linear-gradient(90deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.5) 45%,rgba(8,14,22,.12) 100%)}
-.ach-card-value,.ach-card-label{position:relative;z-index:1}
-.ach-card-value{font:100 clamp(60px,7.2222cqw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
-.ach-card-label{margin:18px 0 0;font-size:1rem;line-height:1.4;color:rgba(255,255,255,.88)}
-/* The qualifier. It is what keeps the figure above it honest, so it is not
-   optional decoration — but it is subordinate, hence the step down. */
-.ach-card-note{position:relative;z-index:1;margin:8px 0 0;max-width:46ch;
-  font-size:0.8333rem;line-height:1.45;color:rgba(255,255,255,.72)}
-/* The four flat cells. A hairline on the band's white, the same surface every
-   other card on the site uses, so the one photograph stays the only image in
-   the section. Top-aligned, not bottom: cells of different spans are different
-   heights, and bottom-aligning put each label at a different distance from the
-   one beside it. */
-.ach-figure{display:flex;flex-direction:column;justify-content:flex-start;
-  padding:clamp(24px,2vw,30px);border:1px solid var(--line);border-radius:24px;
-  background:var(--band-white)}
-.ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-deep);
-  font-weight:500;text-wrap:balance}
-.ach-figure-note{margin:8px 0 0;font-size:0.7222rem;line-height:1.5;color:var(--ink-muted);
-  text-wrap:pretty}
-.ach-figure-value{margin-top:10px;font:100 clamp(38px,3.4722cqw,50px)/1 var(--font-sans);
-  letter-spacing:-.035em;color:var(--ink-deep)}
-@media(max-width:1023px){
-  .ach-grid{grid-template-columns:1fr;row-gap:48px}
-  .ach-card{min-height:320px}
-  /* 2x2, not 3-across: four figures in three columns leaves an orphan, and
-     each block is taller now that it carries a note. */
-  .ach-figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-    column-gap:32px;row-gap:36px;padding:0}
+/* 100 is the lightest weight the stack has a real cut for; at this size
+   the thin face is the whole character of the row. The whole string is
+   coloured, so "$", "Bn" and the "+" ride the figure rather than being
+   picked out separately — CountUp keeps them on every frame. */
+.ach-figure-value{margin:26px 0 0;font:100 clamp(44px,4.4vw,72px)/1 var(--font-sans);
+  letter-spacing:-.035em;color:var(--blue)}
+.ach-figure-note{margin:22px 0 0;font-size:0.8333rem;line-height:1.55;
+  color:var(--ink-muted);text-wrap:pretty}
+
+/* Two columns from 1024 down: at four columns a 920px container gives each
+   figure 200px, and "Financial models, budgets & plans delivered" sets to
+   four lines there while "30+" sets to one. */
+/* Two columns below 1280, not below 1024: Tailwind's `.container` pins at
+   920px through 1024-1279, where four columns are 207px each and the long
+   label sets to THREE lines — past the two the floor above reserves. */
+@media(max-width:1279px){
+  .ach-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:40px}
 }
 @media(max-width:767px){
   .metrics .section-head{margin-bottom:32px}
-  .ach-grid{row-gap:32px}
-  .ach-card{min-height:260px;border-radius:20px;padding:26px 24px}
-  .ach-card-value{font-size:60px}
-  .ach-card-label{margin-top:12px;font-size:0.8333rem;color:rgba(255,255,255,.9)}
-  .ach-figures{display:flex;flex-direction:column;gap:28px}
-  .ach-figure-label{font-size:0.7778rem}
-  .ach-figure-value{margin-top:8px;font-size:44px}
+  .ach-grid{grid-template-columns:1fr;row-gap:0}
+  .ach-figure{padding:26px 0}
+  .ach-figure-value{margin-top:18px;font-size:54px;letter-spacing:-.03em}
+  .ach-figure-note{margin-top:16px}
 }
-/* phones (<=768), the design's achievements (picture 3): the grey ground with
-   64px/20px padding, the heading at 30px, a 7/8 photo card with a bottom
-   gradient and the deal figure bottom-left, then the three figures as a
-   hairlined list, number over label (column-reverse: the DOM keeps label
-   then number, so CountUp and the reading order are unchanged). */
 @media(max-width:768px){
-  /* .metrics' own padding and ground are set after the shared band rules below */
   .metrics .container{width:calc(100% - 40px)}
-  .metrics .section-head{margin-bottom:32px}
-  .metrics .section-head h2{margin:0;font:500 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
-  .ach-grid{row-gap:24px}
-  .ach-card{aspect-ratio:7/8;min-height:0;border-radius:24px;padding:28px}
-  /* Stops placed off the measured text band, not by eye: the value's top sits
-     55% up the card at 320 and 36% at 414, so the ramp has to still be at .6
-     there. Below 32% it only has the label and the note over it. It no longer
-     ramps to zero at the top: the 7/8 cell crops sideways, so the whole photo
-     height shows here and the stock dashboard's KPI strip sits ~20% down the
-     card — the least obscured it is at any width. */
-  .ach-card::after{background:linear-gradient(0deg,rgba(13,24,40,.9) 0%,
-    rgba(13,24,40,.78) 32%,rgba(13,24,40,.62) 58%,rgba(13,24,40,.66) 100%)}
-  .ach-card-value{font-size:60px;letter-spacing:-.03em}
-  .ach-card-label{margin-top:10px;font-size:15px;line-height:1.4;color:#fff}
-  /* The note needs its own phone size: the label steps down to 15px here and
-     the note's base size IS 15px, so without this the subordinate line tied
-     with the line it qualifies — and out-led it, 1.45 against 1.4. */
-  .ach-card-note{font-size:13px}
-  .ach-figures{display:flex;flex-direction:column;gap:0}
-  /* order, not column-reverse. The DOM is label / value / note so CountUp and
-     the reading order stay put; reversing a three-child flex column would have
-     stood the qualifier on top of its own figure. */
-  .ach-figure{flex-direction:column;padding:28px 0;background:none;border-radius:0;
-    border:0;border-top:1px solid var(--line)}
-  .ach-figure-value{order:1}
-  .ach-figure-label{order:2}
-  .ach-figure-note{order:3}
-  .ach-figure-value{margin:0;font-size:56px;letter-spacing:-.03em}
-  .ach-figure-label{margin-top:8px;font-size:14px;line-height:1.4;color:var(--ink-muted)}
+  .metrics .section-head h2{margin:0;font:500 30px/1.1 var(--font-sans);
+    letter-spacing:-.02em;color:var(--ink-deep)}
 }
 
 
@@ -1240,9 +1210,28 @@ html{font-size:112.5%}
    to move to the white pill with it — the brand-blue shimmer pill is this
    background's own colour, which is why the contact panel already used the
    white one. */
-.case-cta{margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);
+.case-cta{position:relative;isolation:isolate;overflow:hidden;
+  margin-top:44px;padding:38px 42px;border-radius:var(--radius-lg);
   background:var(--flute-ground);border:1px solid rgba(6,32,55,.38);
   color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
+
+/* ---- the live flute ground (components/ui/flute-shader.tsx) ----
+   The three panels above keep their photograph; this paints over it only
+   once a WebGL frame has actually drawn. z-index:-1 inside the panels'
+   isolation:isolate puts it above their background and below their content,
+   so no child of any of them needed touching — and a flex or grid parent
+   cannot lay it out, because it is out of flow.
+   THE BLEED. An absolutely positioned child's containing block is its
+   ancestor's PADDING box, so `inset:0` leaves the panel's padding showing as
+   a frame of photograph around the shader — 34px on the solutions card,
+   42px on the CTA band. Those paddings are set in about ten rules across the
+   breakpoints and the .cr-close variant, so a negative inset per panel would
+   be ten numbers to keep in step with ten others.
+   One bleed instead, larger than the largest padding (64px, on
+   .cr-close .case-cta), with the PANEL clipping it back to its own rounded
+   rectangle. The layer keeps no radius of its own: the clip is the panel's,
+   so it is right at every radius the panel takes. */
+.flute-shader{z-index:-1;inset:-72px;pointer-events:none}
 .case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
 .service-body .case-cta h2{max-width:30ch;text-wrap:balance}
 .team-cta-section{padding-top:0}
@@ -2318,22 +2307,43 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
    The span is aria-hidden and the link keeps the full brand as its accessible
    name, so "MCS" is never read out on its own. */
-.ga-lockup{display:inline-flex;align-items:center;gap:0;width:fit-content}
-.ga-lockup-mark{height:32px;width:auto;object-fit:contain}
-/* Inter explicitly, not --font-sans. The stack resolves to SF Pro on Apple
-   and Inter everywhere else, and the two do not share cap metrics: measured
-   against the same 32px mark, SF Pro's caps came out 32px sitting 2.5px low
-   and Inter's 33px sitting 0.5px low. A wordmark that changes shape by
-   platform is not a wordmark, and Inter is self-hosted (next/font) so it is
-   always there. Pinning it makes one correction correct everywhere. */
-.ga-lockup-word{position:relative;top:.5px;
-  font-family:var(--font-inter),sans-serif;font-weight:700;font-size:42.67px;
-  line-height:1;letter-spacing:-.045em;color:#145D90;margin-left:-1px}
-/* 42.67px because Inter's caps are .75 of its em, and .75 x 42.67 is the
-   mark's 32px: the two are sized to the same cap height, not to a font-size
-   that looked close. top:.5px is the last of the difference between centring
-   a 42.67px line box and centring a 32px cap box — measured off the rendered
-   pixels, not derived, because the line box also carries Inter's descender. */
+.ga-lockup{display:inline-flex;align-items:center;gap:16px;width:fit-content}
+.ga-lockup-mark{height:44px;width:auto;object-fit:contain}
+/* ---- the name beside the mark ----------------------------------------
+   Sized by INK, not by line box. Two 22px line boxes do come to the mark's
+   44px, which is what the first cut did — and it sits visibly short, because
+   a line box carries leading above the cap and below the baseline, so the
+   type's ink spanned 35px inside a 44px box.
+
+   What the eye matches is cap-top to last baseline against the glyph. On the
+   client's artwork that span is 62px against a 70px mark, or .886; 24px caps
+   on a 38px line makes cap/line .632. Hold both at a 44px mark: the ink has
+   to span 39px, so line-height x 1.632 = 39 gives 24px a line, a 15.3px cap,
+   and 21px of Inter (its caps are .727 of the em). The name's own box comes
+   out 48px against the mark's 44 and the lockup centres the two.
+
+   The one proportion that cannot be matched is the width: the artwork's "GA"
+   is 1.39 wide for its height and logo.png is 1.58, so the type sits closer
+   to the monogram than on the reference. That is the asset, not the rule.
+
+   WHY THIS IS NOT THE OLD RULE. "MCS" was ONE line locked to the mark by
+   CAP height: 42.67px of Inter for a 32px cap beside a 32px glyph, plus a
+   measured top:.5px for the difference between centring a line box and
+   centring a cap box, plus margin-left:-1px to close the gap — because the
+   type CONTINUED the artwork's letters and the two spelled one word. None
+   of those three apply now. The stack is its own words beside the monogram,
+   not the rest of it, so it takes a real gap and is centred as a block.
+
+   Inter explicitly, not --font-sans. That stack resolves to SF Pro on Apple
+   and Inter everywhere else and the two do not share cap metrics, so the
+   .75 above would be wrong on half the machines that load the page. Inter
+   is self-hosted through next/font, so pinning it makes one derivation
+   correct everywhere. */
+.ga-lockup-name{display:flex;flex-direction:column;
+  font-family:var(--font-inter),sans-serif;font-weight:700;
+  font-size:21px;line-height:24px;letter-spacing:.004em;
+  color:#145D90;text-transform:uppercase;white-space:nowrap}
+.ga-lockup-name > span{display:block}
 
 /* ---- the decision gap ------------------------------------------------
    Left-aligned, static. No transitions, no transforms, no reveal: the section
@@ -2400,10 +2410,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    flat tint rather than a second blue token to maintain. The right padding is
    1px short of the left because .08em of tracking leaves a trailing space
    after the last digit that would otherwise sit the number left of centre. */
+/* REPLACES the index pill:
+     .dg-pain::before{content:counter(dg-pain,decimal-leading-zero);
+       display:inline-block;padding:5px 8px 5px 9px;border-radius:8px;
+       background:rgba(15,94,151,.10);font-size:0.6667rem;font-weight:600;
+       line-height:1;letter-spacing:.08em;color:var(--blue)}
+   Same counter, same element, no markup either way. It is a ghost numeral
+   now because the card is an object on a stage rather than a tile in a grid:
+   a tinted pill reads as a label stuck to a surface, and this one is lifted
+   off the surface (see the translateZ in the stage block below). The colour
+   is the only thing hover changes, so there is no filled state to invert.
+   Nothing here is phone-facing — the phone block restates content, display,
+   position and the whole box to draw the rail's dot instead. */
 .dg-pain::before{content:counter(dg-pain,decimal-leading-zero);
-  display:inline-block;padding:5px 8px 5px 9px;border-radius:8px;
-  background:rgba(15,94,151,.10);font-size:0.6667rem;font-weight:600;
-  line-height:1;letter-spacing:.08em;color:var(--blue)}
+  display:block;font-size:1.8889rem;font-weight:800;line-height:1;
+  letter-spacing:-.04em;color:#D7E2EA}
 .dg-pain-title{margin:26px 0 0;font-size:1rem;font-weight:600;line-height:1.3;
   letter-spacing:-.01em;color:var(--ink-deep)}
 .dg-pain-body{margin:12px 0 0;font-size:0.8333rem;line-height:1.55;
@@ -2521,6 +2542,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    outlive the component's clearProps on unmount. */
 .dg[data-anim="pending"] .dg-w,
 .dg[data-anim="pending"] .dg-sub,
+.dg[data-anim="pending"] .dg-stage,
 .dg[data-anim="pending"] .dg-pain,
 .dg[data-anim="pending"] .dg-stat,
 .dg[data-anim="pending"] .dg-turn-lead,
@@ -2532,6 +2554,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (scripting:none){
   .dg[data-anim="pending"] .dg-w,
   .dg[data-anim="pending"] .dg-sub,
+  .dg[data-anim="pending"] .dg-stage,
   .dg[data-anim="pending"] .dg-pain,
   .dg[data-anim="pending"] .dg-stat,
   .dg[data-anim="pending"] .dg-turn-lead,
@@ -2545,16 +2568,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* REPLACES:
      .dg-pain{counter-increment:dg-pain;padding:28px;background:var(--white);
        border:1px solid var(--line);border-radius:16px}
-   Unchanged resting look. Adds: position, so the sheen pseudo-element has
-   a containing block; and the pointer position the sheen reads.
-
-   --mx/--my default to the top centre of the card rather than to a
-   corner, because the sheen is also shown on :focus-within, where no
-   pointer event will ever have run. The card has to look right at those
-   defaults, not merely not broken. */
+   Unchanged resting look. Adds: position, so the drawn top edge has a
+   containing block. The --mx/--my pair that used to live here went with
+   the sheen; nothing ever wrote them. */
 .dg-pain{counter-increment:dg-pain;position:relative;padding:28px;
-  background:var(--white);border:1px solid var(--line);border-radius:16px;
-  --mx:50%;--my:0%}
+  background:var(--white);border:1px solid var(--line);border-radius:16px}
 
 /* Transitions live in their own no-preference query. globals.css already
    crushes every transition-duration under reduce, but a rule that only
@@ -2574,37 +2592,41 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
    NO transform in either: MotionLayer's quickTo owns it. */
 .dg-pain:focus-within{border-color:rgba(15,94,151,.38);
-  box-shadow:0 10px 30px rgba(13,24,40,.07)}
+  box-shadow:0 34px 62px -34px rgba(10,65,105,.6)}
 @media (hover:hover){
+  /* the card is also coming 108px toward the reader at this moment, so the
+     shadow has to travel with it: a 10px/.07 shadow under a card that has
+     visibly left the stage reads as a sticker, not an object */
   .dg-pain:hover{border-color:rgba(15,94,151,.38);
-    box-shadow:0 10px 30px rgba(13,24,40,.07)}
-  /* the index pill inverts: the 10%-blue tint becomes solid blue with
-     white digits. --blue on --white is 5.9:1 the other way round too. */
-  .dg-pain:hover::before{background:var(--blue);color:var(--white)}
+    box-shadow:0 34px 62px -34px rgba(10,65,105,.6)}
+  /* the numeral comes up out of its ghost. #D7E2EA is deliberately below
+     text contrast at rest — it is a decorative index, not a label, and the
+     DOM order it mirrors is the real ordering cue. */
+  .dg-pain:hover::before{color:var(--blue)}
 }
-.dg-pain:focus-within::before{background:var(--blue);color:var(--white)}
+.dg-pain:focus-within::before{color:var(--blue)}
 
-/* The pointer-following sheen.
-   Gated at min-width:768px — NOT a style preference. Below 768 the phone
-   block uses .dg-pain::after as the rail's 1px connector, and an
-   `opacity:0` resting state on this rule would delete that rail on any
-   desktop window narrower than 768px (which has hover:hover, so the
-   hover query alone does not exclude it).
+/* REPLACES the pointer sheen, which was a 5.5%-blue radial gradient fading
+   in across the whole card at `var(--mx) var(--my)`. Nothing ever wrote
+   those two properties, so it was a static wash on a fixed centre — and a
+   wash is the wrong cue for a card that now physically comes forward. The
+   edge below says the same thing in 2px and does not fight the card's own
+   lighting as it moves in z.
 
-   Restrained on purpose: 5.5% of brand blue over white, feathered to
-   nothing at 70%. At a glance you see the card brighten under the
-   pointer, not a spotlight. This is a problem statement at a consulting
-   firm. */
+   Still gated at min-width:768px, and NOT as a style preference: below 768
+   the phone block uses .dg-pain::after as the rail's 1px connector, so an
+   `opacity:0` / drawn-edge resting state here would delete that rail on any
+   desktop window narrower than 768px (which has hover:hover, so the hover
+   query alone does not exclude it). */
 @media (min-width:768px) and (prefers-reduced-motion:no-preference){
-  .dg-pain::after{content:"";position:absolute;inset:0;
-    border-radius:inherit;pointer-events:none;opacity:0;
-    background:radial-gradient(260px circle at var(--mx) var(--my),
-      rgba(15,94,151,.055),rgba(15,94,151,0) 70%);
-    transition:opacity var(--dur-panel) var(--ease-out)}
-  .dg-pain:focus-within::after{opacity:1}
+  .dg-pain::after{content:"";position:absolute;left:28px;right:28px;top:0;
+    height:2px;border-radius:0 0 2px 2px;background:var(--blue);
+    pointer-events:none;transform:scaleX(0);transform-origin:left center;
+    transition:transform var(--dur-panel) var(--ease-out)}
+  .dg-pain:focus-within::after{transform:scaleX(1)}
 }
 @media (min-width:768px) and (hover:hover) and (prefers-reduced-motion:no-preference){
-  .dg-pain:hover::after{opacity:1}
+  .dg-pain:hover::after{transform:scaleX(1)}
 }
 
 /* ---------------------------------------------------------------------
@@ -2618,7 +2640,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    signal strip can stack under the text inside the one band. The flex
    row that held the quote glyph beside the text moves down to
    .dg-turn-row, unchanged. */
-.dg-turn{display:block;margin:40px 0 0;padding:22px 36px;border-radius:16px;
+/* 16px of padding and a 36px signal, down from 22 and 48 (client,
+   2026-10-20: reduce this card by 20%). At 1440 the band was 129px —
+   22 + a 29px line of text + 14 + 48 - 6 + 22 — and is now 103, which is
+   exactly four fifths of it. The 18px text is untouched: the height was
+   all chrome, and shrinking the sentence would have cost legibility to
+   save a few pixels the padding was giving away anyway. */
+.dg-turn{display:block;margin:20px 0 0;padding:16px 36px;border-radius:16px;
   background:var(--ink-deep)}
 
 /* REPLACES:
@@ -2651,7 +2679,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    a 72px strip with 22 above it. Taking the strip to 48, its lead-in to 14 and
    the padding to 24 lands it at ~130 — the 30% the client asked for, taken off
    the air and the strip rather than off the sentence. */
-.dg-signal{display:none;height:48px;margin:14px 0 -6px}
+.dg-signal{display:none;height:36px;margin:12px 0 -6px}
 .dg-signal.is-ready{display:block}
 /* display:block, or the canvas sits on the text baseline and leaves a
    descender's worth of gap under the strip. */
@@ -2735,7 +2763,69 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Same padding; the motion variant tightens the bottom for the strip for
    the same reason as above, at the wide scale. */
 @media (min-width:1280px){
-  .dg-turn{padding:22px 40px}
+  .dg-turn{padding:16px 40px}
+}
+
+/* ---------------------------------------------------------------------
+   D · the depth stage
+   ------------------------------------------------------------------ */
+
+/* display:contents below 768, so the phone rail further down lays out
+   exactly as it did: the wrapper is not in the box tree there at all, and
+   not one `.dg .dg-pains` selector in that block had to change.
+
+   From 768 up it is the perspective container. EVERYTHING IN THIS BLOCK IS
+   RESTING STATE. The fan, the deck's tilt and the hover travel are
+   transforms GSAP writes inline, so with JS off, on a crawler, or under
+   Reduce Motion this is four square cards sitting in a panel — never a
+   collapsed stack and never a deck frozen half-dealt. That is the same
+   contract the gate above keeps, applied to geometry instead of opacity. */
+.dg-stage{display:contents}
+
+@media (min-width:768px){
+  /* Every vertical measure in this block is HALF what it was (client,
+     2026-10-20): the lead-to-stage gap 32->16, the stage's own air above the
+     cards 44->22 and below them 60->30, and the stage-to-band gap on .dg-turn
+     40->20. The side padding is untouched — the instruction was about the
+     stack, and the cards' own 24px gutters already set the horizontal rhythm. */
+  .dg-stage{display:block;position:relative;margin:16px 0 0;
+    padding:clamp(14px,1.5vw,22px) clamp(16px,2.4vw,34px) clamp(22px,2vw,30px);
+    background:linear-gradient(180deg,#F4F7F9,#FBFCFD);
+    border:1px solid #E7EBEE;border-radius:24px;
+    perspective:1500px;perspective-origin:50% 42%}
+  /* The ground: ONE blurred pool under the whole deck, not a shadow per
+     card. Four cards at four depths standing on the same surface cast one
+     pool between them; four separate pools read as four stickers. */
+  /* The pool follows the floor down. It is anchored to the panel's bottom
+     edge, so halving the bottom padding without moving it would have left it
+     floating level with the cards instead of under them. */
+  .dg-stage::after{content:"";position:absolute;left:12%;right:12%;
+    bottom:clamp(6px,0.6vw,9px);height:26px;pointer-events:none;
+    background:radial-gradient(62% 100% at 50% 0,
+      rgba(13,24,40,.16),rgba(13,24,40,0) 72%);
+    filter:blur(6px)}
+  /* preserve-3d on the DECK only. It is what lets each card hold its own z
+     while the deck tilts, which is the whole fan.
+
+     It is deliberately NOT on the card, and this is measured rather than
+     cautious: with `transform-style:preserve-3d` on .dg-pain, Chrome tears
+     the card's own background raster — card 04 rendered its white box
+     ending mid-way through the last line of body text, with the text
+     carrying on outside the card onto the stage. Reproduced at 1470 at
+     dpr 1 and dpr 2; `will-change:transform`, `backface-visibility:hidden`
+     and `isolation:isolate` each left it unchanged, and removing
+     preserve-3d from the card fixed it outright.
+
+     The cost is the floating index numeral: a translateZ on a child of a
+     flat element is flattened, so the numeral sits on the card face. At
+     34px of z inside a 1500px perspective that was ~2.3% of scale — far
+     less than the fan, the tilt and the hover travel are each worth, and
+     not worth a torn card. */
+  .dg-pains{margin:0;transform-style:preserve-3d}
+  .dg-pain{box-shadow:0 26px 52px -38px rgba(10,65,105,.55)}
+  /* the ghost numeral is a 34px block where the pill was a 12px inline one,
+     so the title's clearance comes down to match */
+  .dg-pain-title{margin:18px 0 0}
 }
 
 /* ---------------------------------------------------------------------
@@ -2753,11 +2843,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (prefers-reduced-motion:reduce){
   .dg[data-anim="pending"] .dg-w,
   .dg[data-anim="pending"] .dg-sub,
+  .dg[data-anim="pending"] .dg-stage,
   .dg[data-anim="pending"] .dg-pain,
   .dg[data-anim="pending"] .dg-stat,
   .dg[data-anim="pending"] .dg-turn-lead,
   .dg[data-anim="pending"] .dg-turn-q{opacity:1;animation:none}
-  .dg--motion .dg-w,.dg--motion .dg-sub,.dg--motion .dg-pain,
+  /* .dg-pains is in this list for the deck's pointer tilt and .dg-pain for
+     the fan: a reader who turns Reduce Motion on mid-session would otherwise
+     be left with a deck frozen mid-tilt and four cards frozen mid-deal. */
+  .dg--motion .dg-w,.dg--motion .dg-sub,.dg--motion .dg-stage,
+  .dg--motion .dg-pains,.dg--motion .dg-pain,
   .dg--motion .dg-stat,.dg--motion .dg-turn-lead,
   .dg--motion .dg-turn-q{opacity:1;transform:none;translate:none}
 }
@@ -3581,16 +3676,25 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Measured before: 1,638px of vertical padding across nine sections on a
    10,243px page.
    ===================================================================== */
-.home-tight #clients{padding:16px 0 24px}
-/* 60/36, halved from the 120/72 this section used to carry. It is still its
-   own rhythm rather than the band default, just a tighter one. */
-.home-tight #decision-gap{padding:60px 0}
-.home-tight #maturity-curve.section{padding:18px 0}
-.home-tight #solutions.section{padding:44px 0}
+/* ONE NUMBER (client, 2026-10-20). Measured across the page beforehand,
+   these nine bands were padded 16/24, 60, 18, 44, 56, 56, 56 and 54 — seven
+   different values with no scale between them, each one arrived at on its
+   own. 56px is the one four of them already shared, so it is the scale: the
+   page keeps the rhythm it mostly had and the five odd ones out join it.
+
+   ONE EXEMPTION, deliberate: .hwv, the film band, keeps its 12px. That band
+   is sized to one screen and its padding is what pays for the video's width
+   — at 56px the film loses about 150px across and no longer fills the
+   viewport, which is the thing it was built to do. Its rule is further down
+   with the rest of that layout, not here. */
+.home-tight #clients{padding:56px 0}
+.home-tight #decision-gap{padding:56px 0}
+.home-tight #maturity-curve.section{padding:56px 0}
+.home-tight #solutions.section{padding:56px 0}
 .home-tight #impact{padding:56px 0}
 .home-tight #testimonials{padding:56px 0}
 .home-tight #who-we-are{padding:56px 0}
-.home-tight #contact{padding:54px 0}
+.home-tight #contact{padding:56px 0}
 /* The two of these that anything links to by fragment — the footer's
    /#testimonials, /case-study's and the services nav's /#solutions. Without
    this the fragment aligns the section's border box to y=0 and the header,
@@ -3602,8 +3706,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    route and every link to /#how-we-help was repointed at /how-we-help. */
 .home-tight #solutions,
 .home-tight #testimonials{scroll-margin-top:calc(var(--header-h) + 16px)}
+/* Phones take two thirds of it, as one number again: the bands are stacked
+   full-width there and 56px between them is a third of a small screen. */
 @media (max-width:768px){
-  .home-tight #decision-gap.dg.section{padding:36px 0}
+  .home-tight #clients,
+  .home-tight #decision-gap.dg.section,
+  .home-tight #maturity-curve.section,
+  .home-tight #solutions.section,
+  .home-tight #impact,
+  .home-tight #testimonials,
+  .home-tight #who-we-are,
+  .home-tight #contact{padding:36px 0}
 }
 
 
@@ -4040,7 +4153,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      the page, and a 24px radius on a band this short reads as a pill.
      text-wrap:pretty, not balance — the question is five lines on a phone,
      where balance only ragged-edges them. */
-  .dg .dg-turn{margin:48px 0 0;padding:26px 20px;border-radius:14px}
+  .dg .dg-turn{margin:48px 0 0;padding:20px 20px;border-radius:14px}
   .dg .dg-turn-text{margin:0;font-size:0.9444rem;line-height:1.5;
     letter-spacing:-.005em;text-wrap:pretty}
 
@@ -4090,7 +4203,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* 56px, and less air above it: the band is inset inside a ~340px
      measure here, and the desktop's 72/22 in that box reads as a second
      block stacked in the band rather than as a strip under the text. */
-  .dg .dg-signal{height:56px;margin-top:18px}
+  .dg .dg-signal{height:44px;margin-top:14px}
 
   /* ---- the clickable figure card ---- */
   /* REPLACES:
@@ -5580,7 +5693,18 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    card the section wanted, just around the wrong third of it. The CTA band
    and the framework note stay outside: they are what the section says ABOUT
    the curve, not part of reading it. */
-.mc-board{padding:14px;border:1px solid var(--line);border-radius:22px;
+/* The gap to the head above it (client, 2026-10-20). There was none: the
+   board's top border sat on .mc-head's bottom edge, and .mc-lead's second
+   line overhangs its parent by 14px at desktop, so the sentence crossed the
+   border and read as text touching the box.
+
+   38, to paint 24 — half of the 48 this started at (client, 2026-10-20).
+   The margin is measured from .mc-head's bottom edge and the lead hangs 14px
+   past it, so 38 - 14 is the gap you actually see. 16px on phones, where the
+   lead sets to four lines inside its parent with no overhang, so the margin
+   and the gap are the same number. */
+.mc-board{margin-top:38px;
+  padding:14px;border:1px solid var(--line);border-radius:22px;
   background:var(--band-white);
   box-shadow:0 1px 2px rgba(13,24,40,.05),
     0 20px 50px -24px rgba(13,24,40,.18)}
@@ -5761,8 +5885,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (max-width:767px){
 
-  /* WCAG 2.5.5. The same 44px floor .locmap-dir takes at this width, and for
-     the same reason: 36px is a comfortable mouse target and a poor thumb one. */
+  /* 44px is the floor for a control on a touch screen; the pill is 36px
+     everywhere else. */
   .locmaps-toggle{min-height:44px;padding:0 18px}
 }
 
@@ -5888,9 +6012,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .hwv-video{display:block;width:100%;height:auto;aspect-ratio:16/9;
   border-radius:14px;background:#0D1828}
 
-/* The transcript, on the film's own measure rather than the container's,
-   so it reads as belonging to the frame above it. */
-.hwv-alt{max-width:900px;margin:18px auto 0}
+/* .hwv-alt is gone with the transcript it styled (client, 2026-10-20). It
+   was `max-width:900px;margin:18px auto 0` — the film's own measure rather
+   than the container's — and its phone rule was `margin-top:14px`. */
 
 
 /* =====================================================================
@@ -5915,6 +6039,214 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     box-shadow:0 1px 2px rgba(13,24,40,.05),
       0 14px 28px -20px rgba(13,24,40,.35)}
   .hwv-video{border-radius:11px}
-
-  .hwv-alt{margin-top:14px}
 }
+
+/* Phones: the lead runs to four lines here and the board opens a new
+   screenful, so it takes two thirds of the desktop gap rather than all of it. */
+@media(max-width:767px){
+  .mc-board{margin-top:16px}
+}
+
+/* =====================================================================
+   Footer — the brand column (2026-10-20)
+   =====================================================================
+   The lockup, one sentence and the social tile, in the reference's
+   proportions: a smaller mark, a short measure under it and an outlined
+   tile rather than a filled block.
+
+   The address, the "Contact Us" accent link and the mailto came out of
+   this column (see flickering-footer.tsx for where each still lives), so
+   the three margins that spaced them are gone with them. */
+/* THE LOCKUP IS NOT RESIZED. The 32px mark and the 42.67px word are
+   locked to each other by Inter's cap ratio plus two measured pixel
+   corrections (globals.css:2281-2295); an override on the mark alone
+   shrinks the GA and leaves MCS where it was. Scaling it properly means
+   re-deriving both the ratio and the corrections, which is not worth 6px
+   of height, so the reference's smaller mark is the one thing here that
+   is deliberately not matched. */
+.gf-intro{margin:22px 0 0;max-width:34ch;font-size:13px;line-height:1.7;
+  color:var(--muted-foreground, #6D7378)}
+/* The LinkedIn tile and the email button, one row. */
+.gf-actions{display:flex;align-items:center;gap:10px;margin-top:26px}
+/* The tile is the SVG: the mark draws its own 36px rounded square in
+   LinkedIn's blue, so this box only has to be the right size and carry the
+   focus ring. No border and no background of its own — a second rounded
+   rectangle behind the artwork's own would show at the corners. */
+.gf-soc{display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:9.7px;
+  transition:opacity .2s var(--ease-out),transform .2s var(--ease-out)}
+.gf-soc svg{display:block}
+@media(hover:hover){
+  .gf-soc:hover{opacity:.88}
+}
+.gf-soc:active{transform:scale(.95)}
+.gf-soc:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+/* 36px to stand level with the tile, and --blue rather than LinkedIn's:
+   this one is GAMCS's own control. #0F5E97 against white text is 6.86:1. */
+.gf-emailcta{display:inline-flex;align-items:center;height:36px;
+  padding:0 16px;border-radius:999px;background:var(--blue);color:#fff;
+  font-size:13.5px;font-weight:600;letter-spacing:-.005em;
+  text-decoration:none;white-space:nowrap;
+  transition:background .2s var(--ease-out),transform .2s var(--ease-out)}
+@media(hover:hover){
+  .gf-emailcta:hover{background:var(--blue-dark,#0B4A77)}
+}
+.gf-emailcta:active{transform:scale(.97)}
+.gf-emailcta:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+/* The column heads recede: the links carry the weight, which is the
+   reference's order and already the rule this footer followed. */
+.gf-grouph{letter-spacing:0}
+
+/* The bottom bar's copyright, on the footer's phone ground.
+   `text-muted-foreground` is #6D7378, which on the white desktop footer is
+   fine and on the --soft ground the footer takes below 640px measures
+   4.31:1 against #F1F3F4 — under the 4.5 AA floor for 13.5px text (axe).
+   Four points darker clears it at 4.66:1 and is the same grey to look at.
+   Scoped to this bar rather than fixed on the shared token: --muted-foreground
+   is read all over the site and this is the one place the pairing falls
+   short. */
+.gf-bottom{color:#686D72}
+
+/* The bottom bar's notice: copyright left, reservation hard right.
+   Column below 640px, where the two come to ~345px against a ~280px bar. */
+.gf-notice{display:flex;flex-direction:column;gap:4px}
+@media(min-width:640px){
+  .gf-notice{flex-direction:row;align-items:baseline;
+    justify-content:space-between;gap:16px}
+}
+
+/* =====================================================================
+   How we help — the film fills one screen (2026-10-20)
+   =====================================================================
+   The client asked for the frame to run as wide as the heading AND for
+   the whole band to sit in one page. Measured at 1440x900 those are not
+   the same thing: the heading's text is 1197px, a 16:9 film that wide is
+   662px tall, and the band comes to 928px against the 804px a 900px
+   viewport leaves under the sticky header. So the FIT wins and the width
+   follows from it.
+
+   The section becomes a viewport-tall flex column, the heading block
+   takes what it needs, and the frame takes the rest. `aspect-ratio` on
+   the frame turns that leftover HEIGHT into a width, which is the whole
+   trick — the film is as wide as the screen can afford and never a pixel
+   taller. On a 900px-tall window it comes out ~976px (up from 900); give
+   it a taller window and it grows, capped at the container so it can
+   never outrun the heading above it.
+
+   content-box, so the ratio applies inside the 10px mount and the video
+   fills it exactly rather than letterboxing by the padding.
+
+   A 400px floor: below that the film is smaller than it is today and the
+   text burnt into it stops being readable, so a very short window scrolls
+   instead. 1024 up only — the phone and tablet rules are unchanged. */
+@media (min-width:1024px){
+  /* 20px of band padding, down from the 44 .home-tight gives every other
+     section (client, 2026-10-20: "increase the size a bit more"). The film
+     is height-bound here — the width comes from whatever vertical space is
+     left — so the only way to make it bigger is to stop spending that space
+     on air. 48px of padding becomes 85px of film width. The sections above
+     and below keep their own 44, so the gap between bands is unchanged;
+     only the slack INSIDE this one is reclaimed. */
+  .home-tight .hwv{box-sizing:border-box;
+    min-height:calc(100vh - 96px);padding-top:12px;padding-bottom:12px;
+    display:flex;flex-direction:column;justify-content:center}
+  .home-tight .hwv > .container{display:flex;flex-direction:column;
+    flex:1 1 auto;min-height:0}
+  .home-tight .hwv .fin-center{flex:0 0 auto}
+  /* The stage takes the leftover height — flex-basis:0 so the height comes
+     from the free space and not from the content, which is what makes it
+     DEFINITE. The frame then reads 100% of a known number and aspect-ratio
+     turns it into a width. With the frame as the flex item itself the ratio
+     resolved against an indefinite height, so the width fell back to
+     max-width and the band grew 200px past the viewport. */
+  .home-tight .hwv .hwv-stage{flex:1 1 0;min-height:400px;
+    display:flex;justify-content:center;
+    margin-top:clamp(10px,1.4vh,20px)}
+  /* The lead's own 20px lift, halved. Every pixel above the film is a pixel
+     off its width — at 16:9 one row of vertical space buys 1.78 of
+     horizontal — so the air between the two lines of text is the cheapest
+     place left to find it. */
+  .home-tight .hwv .fin-lead{margin-top:10px}
+  /* The container is the ceiling now, not the heading's 1197px measure: on
+     a window tall enough to reach it the client wants the film bigger, and
+     the container edge is the line every other section on the page stops
+     at. Height still wins below it, which is every laptop. */
+  /* calc(100% - 20px), not 100%. box-sizing:content-box is what keeps the
+     ratio on the CONTENT box so the video is exactly 16:9 inside the mount
+     — but it also means height:100% sizes the content and then adds the
+     10px mount on each side, making the border box 20px taller than the
+     stage that was measured for it. The frame ran 20px past the stage, 12 of
+     which the band's padding absorbed and 8 of which crossed into the
+     Solutions section below (measured at 1440x900, 1440x760 and 1920x1080 —
+     the same 8px every time, because it is the padding, not the layout).
+     Taking the mount off the height first makes the border box land exactly
+     on the stage. */
+  .home-tight .hwv .hwv-frame{height:calc(100% - 20px);width:auto;max-width:100%;
+    box-sizing:content-box;aspect-ratio:16/9;margin:0}
+  .home-tight .hwv .hwv-video{width:100%;height:100%;aspect-ratio:auto}
+}
+
+/* "Click to expand" clears the disclosure pill (2026-10-20).
+   The pill moved below the row, and the hint is positioned against .locmap
+   — 9px under the card — so the two landed on each other. 58px is the pill
+   and its gaps: 12 of .locmaps' own column gap, the pill's 36px height, and
+   10 under it. Anchored to 100% rather than to the 50%+px the base rule
+   uses, so one number is right at both breakpoints: .locmap is the card's
+   own 180px from 1280 up and the 340px open-state reserve below it, and in
+   both cases 100% is the bottom of the box the pill follows.
+   Collapsed only. Open, the pill sits under a row of three and each card
+   keeps its own hint directly beneath it. */
+.locmaps[data-open="false"] .locmap-hint{top:calc(100% + 58px)}
+
+/* =====================================================================
+   Homepage typography — one heading size (2026-10-20)
+   =====================================================================
+   Every section heading on this page was clamp(30px,3.7vw,50px) except
+   Solutions, which is capped at 42 so its long line holds at 1280 (see
+   #solutions .fin-h2). The client chose to bring the page DOWN to the 42
+   rather than push Solutions up, so the exception becomes the rule and the
+   whole page shares one curve — 3.1vw, the same one Solutions was tuned
+   with, so the headings now scale together instead of diverging between
+   breakpoints.
+
+   SCOPED TO .home-tight because the shared group this overrides includes
+   `.page-head h1`, which is the H1 on nine other routes. Those keep 50px.
+   That is the scope the client picked; it does mean the homepage's headings
+   are now 8px smaller than the inner pages'.
+
+   `#solutions .fin-h2` out-specifies this (an id beats two classes) and is
+   left in place — it already resolves to the same 42px cap. */
+.home-tight .clients-head h2,
+.home-tight .section-head h2,
+.home-tight .tr-h,
+.home-tight .who-heading,
+.home-tight .mc-h2,
+.home-tight .fin-h2{font-size:clamp(30px,3.1vw,42px)}
+
+/* =====================================================================
+   Homepage typography — one lead style (2026-10-20)
+   =====================================================================
+   Measured beforehand, the six sub-lines under the headings were:
+     .clients-sub  16px / 1.60 / 500 / #55606F
+     .dg-sub       18px / 1.60 / 400 / #55606F
+     .mc-lead      16px / 1.62 / 400 / #55606F
+     .fin-lead     18px / 1.62 / 400 / #55606F   (film + Solutions)
+     .who-lead     17px / 1.65 / 500 / #0D1828
+   Three sizes, three leadings, two weights and two colours for one job.
+   The winner is the majority on every axis — 18 / 1.62 / 400 / --ink-muted
+   — so most of the page does not move and the outliers join it.
+
+   .who-lead included, which is the one judgement call here: it was darker
+   and heavier than the rest. It is still the same kind of line (a sentence
+   under a heading), so it takes the same style; its left alignment and its
+   max-width are untouched, because those come from the two-column block it
+   sits in and not from the type.
+
+   Scoped to .home-tight: .fin-lead and .section-head p are read by nine
+   other routes. */
+.home-tight .clients-sub,
+.home-tight .dg-sub,
+.home-tight .mc-lead,
+.home-tight .fin-lead,
+.home-tight .who-lead{font-size:18px;line-height:1.62;font-weight:400;
+  color:var(--ink-muted)}

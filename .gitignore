@@ -52,3 +52,6 @@ scripts/portraits/out/
 scripts/portraits/.mask.png
 __pycache__/
 scripts/portraits/backdrop.png
+
+# Screenshot baselines from the design audit — working output, not source.
+design-audit/

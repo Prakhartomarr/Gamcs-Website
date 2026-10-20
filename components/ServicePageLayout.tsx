@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import AbstractPanel from "@/components/AbstractPanel";
+import FluteShader from "@/components/ui/flute-shader";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import { primaryCta, type ListItem, type Solution } from "@/lib/content/gamcs";
 import { servicePage } from "@/lib/content/ui";
@@ -126,6 +127,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
           )}
 
           <div className="case-cta reveal">
+            <FluteShader />
             <h2>{s.closingLine}</h2>
             <CTA href={primaryCta.href} tier="secondary"
               data-cta={`solution-${s.slug}`} icon="diagonal">

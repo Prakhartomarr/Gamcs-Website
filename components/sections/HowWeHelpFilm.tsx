@@ -18,10 +18,12 @@ import { howWeHelp } from "@/lib/content/gamcs";
  * cannot drift.
  *
  * A client component for one reason: the in-view playback below. Everything
- * else here is static markup and still arrives in the server-rendered HTML,
- * including the whole text alternative — with JavaScript off the band is a
- * poster, working controls and the transcript, which is the resting state and
- * is complete on its own.
+ * else here is static markup and still arrives in the server-rendered HTML —
+ * with JavaScript off the band is a poster and working controls, which is the
+ * resting state and is complete on its own.
+ *
+ * The film's text alternative was removed at the client's instruction; see
+ * the note where it used to render, and what that costs under WCAG 1.2.1.
  */
 
 /* Asset paths, as the rest of the sections spell theirs (see Achievements'
@@ -137,7 +139,17 @@ export default function HowWeHelpFilm() {
 
         {/* The frame, not a band: see the .hwv notes in globals.css for why
             the dark film is inset on a plinth rather than given the full
-            width of a dark section. */}
+            width of a dark section.
+
+            .hwv-stage exists only from 1024 up, where the band is sized to
+            one screen. It is the flexible row that takes whatever height the
+            heading leaves, so the frame inside it has a DEFINITE height to
+            turn into a width through aspect-ratio. Without it the frame is
+            the flex item itself, and a flex item with an auto width and a
+            ratio resolves its width first — it took max-width and grew the
+            section 200px past the viewport. Below 1024 the wrapper is an
+            ordinary div that changes nothing. */}
+        <div className="hwv-stage">
         <div className="hwv-frame">
           <video
             ref={video}
@@ -151,57 +163,51 @@ export default function HowWeHelpFilm() {
                browser that refuses — complete rather than broken. */
             controls
             /* `muted` is not a taste decision: every browser refuses to
-               autoplay audible video, and the file has no audio track to
-               mute. `playsInline` stops iOS taking the film fullscreen the
-               moment it starts. */
+               autoplay audible video. It used to be moot — the delivered
+               file had no audio track — but the 2026-10-20 cut carries one,
+               measured at 165 kbps across all 100 seconds. So this now
+               genuinely silences something, and the accessible name says so.
+               `playsInline` stops iOS taking the film fullscreen the moment
+               it starts. */
             muted
             playsInline
-            /* The film is 5.7MB and every homepage visitor would otherwise
-               pay for it on a band most of them never scroll to. "none", not
-               "metadata": measured over CDP, "metadata" kept reading ahead on
-               localhost — 8.35s of a 47.2s film buffered, ~1MB, on a page
-               where the band was never brought into view. "none" fetches the
-               56KB poster and nothing else, and the frame still reserves its
+            /* The film is 13.4MB — it was 5.7MB before the 2026-10-20 cut
+               doubled its length — and every homepage visitor would
+               otherwise pay for it on a band most of them never scroll to.
+               "none", not "metadata": measured over CDP, "metadata" kept
+               reading ahead on localhost — 8.35s buffered, ~1MB, on a page
+               where the band was never brought into view. At the new size
+               that argument is twice as strong. "none" fetches the 58KB
+               poster and nothing else, and the frame still reserves its
                height because the ratio is in the markup and the stylesheet
                rather than in the file's metadata. play() starts the load
                itself, so autoplay and the controls both still work. */
             preload="none"
             /* A <video> has no text of its own, so without this it reaches
-               the accessibility tree as an unnamed media element. No
-               aria-describedby to the transcript below: a reference wins over
-               hidden-ness, so a closed disclosure would still be read out in
-               full as this element's description. It is the next thing in the
-               document instead, and the name says to look for it. */
+               the accessibility tree as an unnamed media element. It is now
+               the ONLY text this element carries, the transcript having been
+               removed, so it is the whole of what a screen reader is told
+               about 47 seconds of silent film. */
             aria-label={howWeHelp.video.label}
           />
         </div>
+        </div>
 
-        {/* THE TEXT ALTERNATIVE (WCAG 2.1.1). Visible, in a closed
-            disclosure, rather than visually hidden — three reasons:
-            the film is silent and all-type, so sighted visitors who cannot
-            play it, or will not sit through 47 seconds, want this too; it is
-            findable by the browser's own find-in-page, which hidden text is
-            not; and a page-visible alternative cannot rot unnoticed the way
-            sr-only copy does. Closed by default because the band's brief is
-            heading, sub, film — the transcript expanded would be the longest
-            thing on the homepage.
+        {/* THE TEXT ALTERNATIVE IS GONE, at the client's explicit instruction
+            (2026-10-20), and this comment is the record of what that costs.
 
-            Native <details>, and the FAQ's own card classes: same keyboard
-            behaviour, same focus ring, same +/x marker, no new CSS. */}
-        <details className="faq-item hwv-alt">
-          <summary>
-            <span className="faq-q">{howWeHelp.video.altSummary}</span>
-            <span className="faq-icon" aria-hidden="true" />
-          </summary>
-          <div className="faq-a">
-            <p>{howWeHelp.video.altNote}</p>
-            <ul>
-              {howWeHelp.video.alt.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </div>
-        </details>
+            The film has no audio track — probed on the delivered file, which
+            carries a `vide` handler and no `soun` — so it is prerecorded
+            VIDEO-ONLY content. WCAG 2.1 SC 1.2.1 requires such content to
+            have either an audio description or a text alternative that
+            presents equivalent information. It now has neither, so this band
+            does not meet 1.2.1 Level A.
+
+            The copy is deliberately LEFT IN PLACE in lib/content/gamcs.ts
+            (`howWeHelp.video.alt`, `altSummary`, `altNote`) rather than
+            deleted with the markup, so restoring it is one element. It is
+            stale against the re-cut film and would need re-checking against
+            the frames first. */}
       </div>
     </section>
   );

@@ -3,9 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import CookiePreferencesLink from '@/components/CookiePreferencesLink';
-import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useEffect, useRef, useState } from 'react';
 import { footer, site } from '@/lib/content/gamcs';
+import { fill } from '@/lib/content/fill';
+import { header } from '@/lib/content/ui';
+
 
 /* ------------------------------------------------------------------ *
  * FlickeringText
@@ -206,29 +209,41 @@ const legalGroup = {
 	label: footer.headings.legal,
 	links: footer.legal.map((l) => ({ title: l.label, href: l.href, external: 'external' in l })),
 };
+/* Three columns (client, 2026-10-20).
+
+   EXPLORE IS THE NAVBAR. It reads `header.items` rather than a list of its
+   own, so the footer carries exactly the six destinations the header does,
+   with the header's own wording — "What we do" for /solutions, "Case
+   Studies" for /case-study, "Team" for /team, where the footer used to say
+   Solutions, Case Study and Founders & advisors. A link added to the nav
+   turns up here with no edit, and the two can no longer disagree.
+
+   SOLUTIONS IS GONE. The five pillar pages it linked keep no site-wide link;
+   see lib/content/gamcs.ts for the note and for how to put it back. */
 const groups = [
-	{ label: footer.headings.explore, links: footer.links.map((l) => ({ title: l.label, href: l.href })) },
-	{ label: footer.headings.solutions, links: footer.solutions.map((l) => ({ title: l.label, href: l.href })) },
+	{ label: footer.headings.explore, links: header.items.map((l) => ({ title: l.label, href: l.href })) },
+	{ label: footer.headings.resources, links: footer.resources.map((l) => ({ title: l.label, href: l.href })) },
 	legalGroup,
 ];
 
-/* The address is optional in the content module, so the block renders only
-   when there is one. Country, not postal code: the client's footer contact
-   line is "Gurugram, Haryana, India", and a footer is where a reader works
-   out which country the firm is in — the postal code belongs on /contact and
-   the map cards, where it is being used to get to the door. */
-const postal = site.address
-	? [site.address.locality, site.address.region, site.address.countryName].filter(Boolean).join(', ')
-	: '';
-
 const LinkedInMark = () => (
-	/* The wordmark, not the four-shape approximation this used to be. That one
-	   gave the "n" a full-height left stem, so it read as "ih" — invisible at
-	   17px on desktop, obvious in the rebuilt phone footer where the tile is
-	   48px. Same two paths the team page's bio links already use. */
-	<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">
-		<path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-		<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+	/* The brand tile the client supplied: LinkedIn blue rounded square, white
+	   wordmark. Drawn rather than linked as a PNG — it is two paths and a
+	   rect, it stays crisp at any size, and it needs no network request.
+
+	   #0A66C2 is LinkedIn's own blue, not --blue (#0F5E97): a brand mark in
+	   someone else's palette stops being that brand's mark. It is the one
+	   place on the site that colour appears.
+
+	   The glyph is the same two paths the team page's bio links use — the
+	   wordmark, not the four-shape approximation this was once, which gave
+	   the "n" a full-height left stem so it read as "ih". */
+	<svg viewBox="0 0 36 36" width="36" height="36" fill="none" aria-hidden="true">
+		<rect width="36" height="36" rx="9.7" fill="#0A66C2" />
+		<g transform="translate(6 6) scale(1)" fill="#FFFFFF">
+			<path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+			<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+		</g>
 	</svg>
 );
 
@@ -267,60 +282,98 @@ export function FlickeringFooter() {
 			    contact panel on the homepage, the CTA band on the inner pages — so
 			    it read as the same question twice in one scroll. */}
 
-			{/* One grid for the whole footer: the brand block holds column 1 and the
-			    link columns run to the right edge, which is what puts the bottom
-			    bar's copyright under the logo and its credit under the last column. */}
+			{/* One grid for the whole footer: the brand block left, the three
+			    link columns hard right (client, 2026-10-20).
+
+			    THE TRACKS ARE PINNED, not fractions. As minmax(0,1fr) each they
+			    divided whatever the container happened to be, so the pitch the
+			    client approved at 1440 was a different number at 1100 and at 1900.
+			    173px tracks on a 54px gap hold that 227px pitch at every width
+			    from 1280 up; the slack always lands in the brand column, which is
+			    the 1fr. 48px at lg because a 920px container cannot give the brand
+			    column the ~245px the lockup needs AND three 227px pitches — 221
+			    there is 6px off and the band is a fixed container, so it does not
+			    drift either.
+
+			    THE LAST TRACK IS max-content, which is what right-aligns the TEXT
+			    rather than the block. "Cookie Preferences" is 134px inside a 173px
+			    track, so a block flush to the container would have left the words
+			    39px short of "All rights reserved." in the bar below. Sized to its
+			    own content, the column's right edge IS the text's right edge, and
+			    it lands on the container's. No hard-coded 39: a longer label moves
+			    it on its own. The first two stay fixed so the pitch is unchanged. */}
 			<div className="gf-topwrap container pt-14 pb-12 lg:pt-16">
-				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] lg:gap-10">
+				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_173px_173px_max-content] lg:gap-x-[48px] xl:gap-x-[54px]">
 					<div className="gf-office">
-						{/* One word, not a mark plus a label: the artwork IS the "GA",
-						    so the text beside it is "MCS" and carries the mark's own
-						    #145D90. The glyph fills its PNG edge to edge, so the type is
-						    sized by cap height to the 32px mark rather than by font-size,
-						    and the gap is closed to nothing. `logoWord` is the visible
-						    half; the link's accessible name is still the full brand. */}
+						{/* THE FULL NAME, not the contraction (client, 2026-10-20).
+						    This was the mark plus "MCS", so the artwork's "GA" and the
+						    type together read "GAMCS". It is now the mark plus
+						    MANAGEMENT / CONSULTANTS stacked beside it, which reads "GA
+						    Management Consultants".
+
+						    That changes how the two are sized to each other. "MCS" was
+						    locked to the mark by CAP HEIGHT — one line of type as tall
+						    as the glyph. The stack is locked by BLOCK HEIGHT instead:
+						    two line boxes that together come to the mark's height, so
+						    the first line's cap sits on the top of the "GA" and the
+						    second's baseline on its foot. The numbers are in
+						    globals.css, with how they were derived.
+
+						    The span is aria-hidden and the link keeps the full brand as
+						    its accessible name, so nothing is announced twice. */}
 						<Link href="/" className="ga-lockup" aria-label={footer.logoLabel}>
 							<Image
 								src={site.logo}
 								alt=""
 								width={534}
 								height={339}
-								sizes="52px"
+								sizes="72px"
 								className="ga-lockup-mark"
 							/>
-							<span className="ga-lockup-word" aria-hidden="true">{site.logoWord}</span>
+							<span className="ga-lockup-name" aria-hidden="true">
+								{site.logoLines.map((line) => (
+									<span key={line}>{line}</span>
+								))}
+							</span>
 						</Link>
-						<p className="gf-intro mt-6 max-w-[36ch] text-[13px] leading-[1.65] text-muted-foreground">{footer.blurb}</p>
-						{site.address && (
-							<address className="gf-addr mt-6 text-[13px] not-italic leading-[1.7] text-muted-foreground">
-								{site.address.street}
-								<br />
-								{postal}
-							</address>
-						)}
-						<div className="gf-reach mt-6 flex flex-col items-start gap-2">
-							<Link
-								href="/contact"
-								className="gf-contact inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+						<p className="gf-intro">{footer.blurb}</p>
+
+						{/* WHAT IS NOT HERE ANY MORE (client, 2026-10-20).
+						    - The registered office. It was three lines on every page of
+						      the site; it is still the PostalAddress in lib/schema.ts, the
+						      address on /contact and the map cards on the homepage, so
+						      nothing published it alone.
+						    - The "Contact Us" accent link. /contact is in the Company
+						      column beside this, so the footer was offering the same
+						      destination twice, once in blue.
+						    - The mailto. `site.email` is on /contact with the rest of the
+						      ways to reach the firm.
+						   The column is the lockup, one sentence and the social tile. */}
+						<div className="gf-actions">
+							<a
+								href={site.linkedin}
+								target="_blank"
+								rel="noopener"
+								aria-label={footer.linkedinLabel}
+								className="gf-soc"
 							>
-								{footer.contactLabel}
-							</Link>
+								<LinkedInMark />
+							</a>
+							{/* The address IS the label. "Contact Us" would have been a
+							    second control with the same visible name as the Contact Us
+							    link in the Resources column beside it, going somewhere else
+							    — two links, one name, two destinations (WCAG 2.4.4). The
+							    aria-label adds the verb the mailto implies, and opens with
+							    nothing the visible text does not say, so Label in Name
+							    still holds. */}
 							<a
 								href={`mailto:${site.email}`}
-								className="gf-mail inline-flex min-h-[44px] items-center text-sm font-semibold text-blue transition-colors hover:text-blue-dark lg:min-h-0 lg:py-1"
+								className="gf-emailcta"
+								aria-label={fill(footer.emailCtaLabel, { email: site.email })}
 							>
 								{site.email}
 							</a>
 						</div>
-						<a
-							href={site.linkedin}
-							target="_blank"
-							rel="noopener"
-							aria-label={footer.linkedinLabel}
-							className="gf-li mt-6 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-blue text-white transition-colors hover:bg-blue-dark"
-						>
-							<LinkedInMark />
-						</a>
 					</div>
 
 					{groups.map((g) => {
@@ -328,9 +381,27 @@ export function FlickeringFooter() {
 						const isOpen = open === g.label;
 						const cls = phone
 							? 'gf-link'
-							: 'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0.5';
+							: 'inline-flex min-h-[44px] items-center text-left text-[15px] text-foreground transition-colors hover:text-blue lg:min-h-0 lg:py-0 lg:leading-[1.2]';
 						const list = (
-							<ul className={phone ? 'gf-list' : 'mt-7 space-y-3'}>
+							<ul
+								className={
+									phone
+										? 'gf-list'
+										: /* Column rhythm, from the client's reference (2026-10-20).
+										     Measured there: links 25px apart, label 43px above the first
+										     one. Ours ran 34 and 64.
+
+										     `leading-[1.2]` is on the LIST as well as the links. Each
+										     link is an inline-flex inside its <li>, so the li's own line
+										     box is the taller of the inherited strut and the box sitting
+										     on its baseline — at the body's 1.5 the strut alone was
+										     22.5px and tightening only the link changed nothing. The
+										     4px gap is what is left after the baseline alignment adds
+										     its own 3.6 to an 18px box: 18 + 3.6 + 4 is the 25.6 pitch
+										     measured on the page. Phone keeps 44px rows. */
+										  'mt-7 space-y-3 lg:mt-5 lg:space-y-[4px] lg:leading-[1.2]'
+								}
+							>
 								{g.links.map((l) => (
 									<li key={l.title}>
 										{'external' in l && l.external ? (
@@ -360,7 +431,7 @@ export function FlickeringFooter() {
 								{/* Heading recedes, links carry the weight — the reference's order.
 								    On a phone the <h2> keeps its role and wraps the control rather
 								    than being replaced by it. */}
-								<h2 className="text-[15px] text-muted-foreground">
+								<h2 className="gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
 									{phone ? (
 										<button
 											type="button"
@@ -392,20 +463,31 @@ export function FlickeringFooter() {
 				</div>
 			</div>
 
-			{/* flickering wordmark band */}
+			{/* The flickering wordmark band. KEPT at the client's request
+			    (2026-10-20) — it was taken out in the first cut of this footer and
+			    put straight back. FlickeringText draws a dot matrix across the
+			    band and raises the opacity of the cells that fall inside "GAMCS",
+			    then flickers them at ~14fps; it samples the glyph mask once per
+			    resize, runs only while the band is on screen, and paints a single
+			    static frame under prefers-reduced-motion. */}
 			<div className="relative h-[120px] w-full sm:h-[150px] lg:h-[190px]">
 				<FlickeringText text={site.short} />
 			</div>
 
 			<div className="container">
-				{/* One notice, not two: site.copyright now carries the legal name the
-				    way the client's footer document writes it, so the second cell that
-				    used to repeat `site.legalName` on its own row is gone — and with it
-				    the column literals that existed only to place the two beside each
-				    other. The phone rules in globals.css still give the Cookie
-				    Preferences button its own row. */}
+				{/* The notice left, the reservation hard right (client, 2026-10-20).
+				    The two spans are wrapped rather than placed as separate grid
+				    items: the phone block pins .gf-bottom to a single column so the
+				    Cookie Preferences button can take a row of its own, and a second
+				    item would have taken a third. As one item the pair is a row that
+				    splits at 640 and stacks below it, where "© 2026 GA Management
+				    Consultants LLP." and "All rights reserved." come to ~345px
+				    against a 280px bar and would wrap mid-sentence on one line. */}
 				<div className="gf-bottom grid gap-2 border-t border-line py-6 text-xs text-muted-foreground">
-					<span>{site.copyright}</span>
+					<div className="gf-notice">
+						<span>{site.copyright}</span>
+						<span>{site.rights}</span>
+					</div>
 					{/* Phone only, and mounted rather than hidden. */}
 					{phone && <CookiePreferencesLink className="gf-cookie" />}
 				</div>

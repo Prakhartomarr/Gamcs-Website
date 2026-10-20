@@ -66,12 +66,21 @@ export const map = {
   hint: "Click to expand",
   showAddress: "Show the {location} address",
   hideAddress: "Hide the {location} address",
-  /* The disclosure above the office cards (components/ui/office-maps.tsx).
-     {count} is officeCards.length, not a written number — a fourth office should
-     change this label by itself. "Hide" names no place, so it does not have
-     to be rewritten if the registered office ever moves. */
+  /* RETIRED 2026-10-20, kept because retired copy is kept here. These were
+     the disclosure that fanned the office cards out into a row; the cards are
+     a stepped deck with arrows now, so there is nothing to show or hide.
+     Restoring the disclosure means restoring these two, not rewriting them. */
   showOffices: "See all {count} offices",
   hideOffices: "Hide the other offices",
+  /* The deck's two arrows. Not reel.previous/reel.next, which name a
+     testimonial — same control, different thing being stepped through. */
+  previousOffice: "Previous office",
+  nextOffice: "Next office",
+  /* Announced politely when the deck turns, and never shown: the card below
+     already names the city, so a visible copy would be the same words twice.
+     It carries the position because the deck's own depth cue — two card
+     edges behind the front one — is the thing a screen reader cannot see. */
+  officePosition: "{location}, office {index} of {count}",
   visitUs: "VISIT US",
   alt: "Map showing the {short} office at {address}",
 } as const;
