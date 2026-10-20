@@ -1,4 +1,3 @@
-import PageHeadArt from "@/components/PageHeadArt";
 import type { Metadata } from "next";
 import LegalBlocks from "@/components/LegalBlocks";
 import Rich from "@/components/Rich";
@@ -28,14 +27,13 @@ export default function CookiePolicyPage() {
 
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{cookiePolicy.title}</h1>
           <p>
             <Rich parts={cookiePolicy.intro} vars={vars} />
           </p>
         </div>
-              <PageHeadArt src="/page-art/cookie-policy.webp" />
       </section>
 
       <section className="section legal-page">

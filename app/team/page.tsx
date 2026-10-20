@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageHeadArt from "@/components/PageHeadArt";
 import FluteShader from "@/components/ui/flute-shader";
 import TeamRoster from "@/components/sections/TeamRoster";
 import { primaryCta, story, team } from "@/lib/content/gamcs";
@@ -18,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 export default function TeamPage() {
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{team.h1}</h1>
           {team.body.map((para) => (
@@ -35,7 +34,6 @@ export default function TeamPage() {
             </CTA>
           </div>
         </div>
-              <PageHeadArt src="/page-art/team.webp" />
       </section>
 
       {/* Founders as large staggered cards, advisers three across, each opening

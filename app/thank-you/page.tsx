@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageHeadArt from "@/components/PageHeadArt";
 import Rich from "@/components/Rich";
 import { site } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
@@ -37,12 +36,11 @@ export default function ThankYouPage() {
   const [check, reopen, reply] = t.steps;
   return (
     <>
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <h1>{t.h1}</h1>
           <p>{fill(t.lead, vars)}</p>
         </div>
-              <PageHeadArt src="/page-art/thank-you.webp" />
       </section>
 
       <section className="section">

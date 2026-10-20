@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import CTA from "@/components/CTA";
 import CountUp from "@/components/motion/CountUp";
-import PageHeadArt from "@/components/PageHeadArt";
 import { ourStory, primaryCta, site, team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { sections } from "@/lib/content/ui";
@@ -58,7 +57,7 @@ export default function WhoWeArePage() {
           The same band every other inner page opens with. The three
           hero lines are the h1; the hero's two buttons both stay on
           this page, so both are plain fragment anchors (see CTA). */}
-      <section className="page-head page-head--art">
+      <section className="page-head">
         <div className="container">
           <div className="section-kicker">{ourStory.eyebrow}</div>
           <h1 className="os-head-h">
@@ -86,7 +85,6 @@ export default function WhoWeArePage() {
             </CTA>
           </div>
         </div>
-        <PageHeadArt src="/page-art/who-we-are.webp" />
       </section>
 
       {/* ── GAMCS at a glance ───────────────────────────────────────
