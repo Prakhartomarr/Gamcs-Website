@@ -2539,8 +2539,8 @@ export const decisionGap = {
    * with the colour off, so nothing here depends on seeing red (WCAG 1.4.1).
    */
   leadParts: [
-    { t: "Finance functions get stuck at different points. " },
-    { t: "For some, the close is unpredictable", mark: true },
+    { t: "Finance functions get stuck at different points. For some, the " },
+    { t: "close is unpredictable", mark: true },
     { t: "; for others, " },
     { t: "preparing reports takes days", mark: true },
     { t: ". Even when the numbers are ready, " },

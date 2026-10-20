@@ -2394,7 +2394,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Help heading, so the two centred leads read as one family. (.mc-lead is
    96ch deliberately — that one is widened to hold its sentence to two
    lines, and is not the pattern to copy.) */
-.dg-sub{margin:28px auto 0;max-width:88ch;font-size:1rem;line-height:1.6;
+/* 98ch, up from 88 (2026-10-21). 88ch is 999px, and this sentence sets to
+   1982px on one line IN INTER — which is the face Windows actually gets, the
+   Apple names in --font-sans matching nothing there. Two lines want ~991px
+   each, so a 999px measure sat one pixel inside the break and tipped to
+   three, with "be clear." alone on the last. Reported from Edge and Chrome
+   on Windows and reproduced here by forcing the stack to Inter rather than
+   by guessing. 98ch is 1112px: the half plus about 12%. */
+.dg-sub{margin:28px auto 0;max-width:98ch;font-size:1rem;line-height:1.6;
   color:var(--ink-muted);text-wrap:pretty}
 
 /* ---- the four symptoms ---- */
@@ -2903,8 +2910,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* .fin-h2 is already fluid to 50px, and the cards hold their 15px body at any
    width. Only the turn and the figures are undersized on a 1440 column. */
 @media (min-width:1280px){
-  .dg-turn-text{font-size:1rem}
+  /* FLUID, not a flat 18px (2026-10-21). Reported from Edge on Windows: the
+     line wrapped to two there while holding one everywhere here. It is not a
+     browser bug — --font-sans is `-apple-system, BlinkMacSystemFont, Inter`,
+     so macOS sets this in SF Pro and Windows matches neither Apple name and
+     falls through to its own face. Different typeface, different widths, and
+     at 18px the sentence needed 1152px of the 1200 it had: 4% of slack, which
+     a few percent of metric difference eats.
+
+     Tying the size to the column gives it room at every width instead of just
+     on the one the 18px was measured against. With the padding below, the
+     headroom goes from 4% to about 11% at 1280, 1440 and 1920 alike. I could
+     not test Edge from here, so this is sized to absorb a wider face rather
+     than to a measurement of one. */
+  .dg-turn-text{font-size:clamp(16px,1.2vw,18px)}
   .dg-stat-value{font-size:2.2222rem}
+  /* 24px of side padding, down from 40: 32px straight back to the line. The
+     band is 1280 wide and holds one sentence, so the inset was generous. */
+  .dg-turn{padding:16px 24px}
 }
 
 /* =====================================================================
@@ -6295,9 +6318,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    The site has no red token — this is the only red on the page, and it is
    emphasis rather than a state, so it is deliberately not added to the
    token set where a future "error" colour would want to live. */
-.dg-sub .dg-mark{color:#C7261A}
+.dg-sub .dg-mark{color:#C7261A;font-weight:600}
 
 /* The maturity heading's accent phrase (2026-10-21). Same tint as every
    other section's accent; no `white-space:nowrap`, because "finance function
    today" is 22 characters and pinning it to one line would overflow a phone. */
 .mc-h2 .accent{color:var(--blue)}
+
+/* The Solutions lead on one line (client, 2026-10-21).
+   `.fin-lead` is capped at 64ch, which is 724px at this size — a good
+   reading measure, and 123px short of the 847px this particular sentence
+   needs, so it broke to two lines. 84ch is 950px: the 847 plus about 12%,
+   the same slack the gap band now carries, because --font-sans resolves to
+   a different face on Windows than on macOS and a measure tuned to one of
+   them wraps on the other.
+
+   Only from 1280 up. Below that the container is 920px or less, where 950
+   cannot fit and the 64ch measure is the right answer anyway. */
+@media (min-width:1280px){
+  #solutions .fin-lead{max-width:84ch}
+}
