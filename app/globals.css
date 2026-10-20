@@ -6202,8 +6202,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      on air. 48px of padding becomes 85px of film width. The sections above
      and below keep their own 44, so the gap between bands is unchanged;
      only the slack INSIDE this one is reclaimed. */
+  /* 102px below 1280, 96 at and above: the sticky header is not one height.
+     Measured — 102 at 1024 and 1265, 96 from 1280 up. The flat 96 this used
+     to subtract under-reserved by 6px on every window narrower than 1280,
+     which is most Windows laptops once their permanent scrollbar is taken
+     off the viewport. */
   .home-tight .hwv{box-sizing:border-box;
-    min-height:calc(100vh - 96px);padding-top:12px;padding-bottom:12px;
+    min-height:calc(100vh - 102px);padding-top:12px;padding-bottom:12px;
     display:flex;flex-direction:column;justify-content:center}
   .home-tight .hwv > .container{display:flex;flex-direction:column;
     flex:1 1 auto;min-height:0}
@@ -6214,7 +6219,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      turns it into a width. With the frame as the flex item itself the ratio
      resolved against an indefinite height, so the width fell back to
      max-width and the band grew 200px past the viewport. */
-  .home-tight .hwv .hwv-stage{flex:1 1 0;min-height:400px;
+  /* 300px, down from 400. The floor stops the film shrinking to an
+     unreadable size on a short window, but at 400 it was the thing PUSHING
+     the band off the screen: at 1265x640 the heading wraps to two lines and
+     the section came to 612px against 538 of usable height. 300 gives a
+     533px-wide film, smaller than the band wants but still legible, and it
+     only binds on windows short enough that the alternative is scrolling. */
+  .home-tight .hwv .hwv-stage{flex:1 1 0;min-height:300px;
     display:flex;justify-content:center;
     margin-top:clamp(10px,1.4vh,20px)}
   /* A CEILING ON THE STAGE, so the frame's ratio can always be satisfied
@@ -6257,7 +6268,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     box-sizing:content-box;aspect-ratio:16/9;margin:0}
   .home-tight .hwv .hwv-video{width:100%;height:100%;aspect-ratio:auto}
 }
-@media (min-width:1280px){.home-tight .hwv .hwv-stage{max-height:686px}}
+@media (min-width:1280px){
+  .home-tight .hwv{min-height:calc(100vh - 96px)}
+  .home-tight .hwv .hwv-stage{max-height:686px}
+}
 @media (min-width:1440px){.home-tight .hwv .hwv-stage{max-height:740px}}
 @media (min-width:1536px){.home-tight .hwv .hwv-stage{max-height:830px}}
 
