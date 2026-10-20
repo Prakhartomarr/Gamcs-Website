@@ -485,6 +485,59 @@ h1,h2,h3,p{margin-top:0}
    mission) and /faq two; .faq-head-cta keeps its own 14px by
    specificity, so this only changes the pairs that were flush. */
 .page-head p + p{margin-top:16px}
+
+/* THE ARRANGEMENT (client, 2026-10-21; reference unity-advisory.com/what-we-do).
+   Two zones with the band's free space between them: the kicker and the
+   headline at the top, the lead at the bottom left, the actions at the
+   bottom right. The reference's own scale is NOT taken — the headline
+   stays on this site's clamp(38px,4.6vw,62px) (client) — so what is
+   borrowed is the placement and the air, not the type.
+
+   NO MARKUP CHANGED, on any of the eleven heads that use this band. Every
+   one of them is a headline, one lead paragraph and an optional actions
+   row, in that order, so the split can be made with a single auto margin:
+   in a flex column an auto margin eats the free space before
+   justify-content gets it, which pins everything from the lead down to the
+   bottom and leaves the headline where it is. Pages with a second
+   paragraph (/team's mission, /faq's cta line) keep it with the lead
+   because it follows in source order.
+
+   Tab order is untouched — the actions still come last in the DOM, they
+   are only drawn to the right of the lead (WCAG 2.4.3). */
+@media (min-width:768px){
+  .page-head{display:flex;flex-direction:column;min-height:52vh;min-height:52dvh}
+  /* The container has to FILL the band for the auto margin below to have
+     free space to absorb; as an ordinary flex item it would be its own
+     content's height and the two zones would sit together at the top. */
+  .page-head>.container{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+  .page-head>.container>p:first-of-type{margin-top:auto}
+  /* THE FLOOR, and the reason the auto margin alone was not enough. An auto
+     margin only distributes space the band has LEFT OVER, so on the two
+     heads whose content already fills it — /who-we-are, three headline
+     lines over a five-line lead, and /team — it resolved to zero and the
+     lead stayed welded to the headline at the 18px this rule used to set.
+     Measured: 18px of separation at all five widths, on exactly the page
+     this was asked for.
+
+     A real margin is always paid, so the separation is now `this plus
+     whatever is spare`: the full-bodied heads get an opening they did not
+     have, the roomy ones (/contact, /privacy-policy) are unchanged because
+     their band is min-height driven and the auto margin simply keeps less.
+     vh-based so it opens with the band rather than fighting it. */
+  .page-head>.container>h1{margin-bottom:clamp(56px,9vh,120px)}
+}
+/* The actions leave the column and sit on the lead's bottom line, which is
+   where the reference puts its tag row. Out of flow rather than in a row
+   with the lead because that would need a wrapper in all eleven files.
+
+   1280px, and 1200 was measured and rejected: the lead is capped at 620px
+   and the widest actions row on the site is /who-we-are's 417px, which at
+   1200 put the buttons at x643 against a lead running to x668 — a 25px
+   overlap, on two routes. Under this width they stack beneath the lead
+   exactly as they do today. */
+@media (min-width:1280px){
+  .page-head-ctas{position:absolute;right:0;bottom:0;margin-top:0}
+}
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
 .case-item:hover{border-color:#C3CCD1;box-shadow:0 24px 48px rgba(16,45,68,.11)}
