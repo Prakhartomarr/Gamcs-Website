@@ -16,13 +16,21 @@ export const header = {
   skipLink: "Skip to content",
   /** Accessible name of the logo link; the wordmark words come from site.name. */
   logoLabel: "GA Management Consultants — home",
-  /* Sentence case as the client wrote it (2026-10-19) — not the Title Case the
-     rest of the site's chrome uses. "Who we are" goes straight to Our Story,
-     and FAQ is reachable from the footer alone. */
+  /* TITLE CASE, every word (client, 2026-10-20). These three were sentence
+     case as the client first wrote them on 2026-10-19 while "Case Studies"
+     and "Careers" were already capped, so the bar read in two conventions;
+     it is one now and matches the rest of the site's chrome.
+
+     This list is ALSO the footer's Explore column — it reads `header.items`
+     directly (components/ui/flickering-footer.tsx) — so the casing changes
+     in both places at once, which is the point of their sharing it.
+
+     "Who We Are" goes straight to Our Story, and FAQ is reachable from the
+     footer alone. */
   items: [
-    { label: "Who we are", href: "/who-we-are" },
-    { label: "How we help", href: "/how-we-help" },
-    { label: "What we do", href: "/solutions" },
+    { label: "Who We Are", href: "/who-we-are" },
+    { label: "How We Help", href: "/how-we-help" },
+    { label: "What We Do", href: "/solutions" },
     { label: "Team", href: "/team" },
     { label: "Case Studies", href: "/case-study" },
     { label: "Careers", href: "/careers" },
