@@ -567,9 +567,15 @@ export const howWeHelp = {
      `alt` is the film's TEXT ALTERNATIVE and it is not decoration. The film
      has no audio track at all and states its whole case in on-screen type, so
      without this a visitor who cannot see it gets nothing from it (WCAG 2.1.1,
-     video-only prerecorded). It is transcribed from the frames, in order, and
-     nothing is added to it — it is client copy about the client's own
-     business, so it says what the film says and no more. */
+     video-only prerecorded). Every sentence in it is quoted from the frames,
+     and the labels inside the diagram are grouped under the stage they appear
+     with rather than repeated each time the diagram grows — nothing is added,
+     because this is client copy about the client's own business.
+
+     The five figures below are the film's own, read off the frame where the
+     counters settle (t=39s). They match `achievements.items` in value; the
+     wording of the labels is the film's, which differs from the cards' in two
+     places, so they are transcribed here rather than borrowed from there. */
   video: {
     /** The <video>'s accessible name. It says the film is silent, because a
         visitor who hears nothing otherwise has no way to know whether that is
@@ -577,12 +583,17 @@ export const howWeHelp = {
         disclosure beneath is worth opening. */
     label: "GAMCS explainer film. Silent, 47 seconds \u2014 a text version is below it.",
     altSummary: "Read what the film shows",
-    altNote: "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears.",
+    altNote: "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears \u2014 with the labels inside the diagram grouped under the stage they appear with.",
     alt: [
-      "FP&A teams spend nearly 50% of their time collecting and validating data, leaving only about a third for generating insights and driving action.",
-      "This leaves less time to diagnose performance drivers.",
-      "Four stages then appear in sequence: Stabilise, Connect & Automate, Explain & Anticipate, Decide & Improve.",
-      "Explain & anticipate: know why, and what's next.",
+      "\u201cFP&A teams spend nearly 50% of their time collecting and validating data, leaving only about a third for generating insights and driving action.\u201d A bar divides the time: \u201cCollecting & validating data \u00b7 ~50%\u201d, \u201cInsights & action \u00b7 ~33%\u201d, \u201cOther\u201d.",
+      "\u201cThis leaves less time to diagnose performance drivers.\u201d The day-to-day of it surfaces around the bar: \u201cChasing inputs from 9 teams\u201d, \u201cClose slips to day 12\u201d, \u201cCRM \u2260 ledger\u201d, \u201cManual reconciliations\u201d, \u201cForecast rebuilt by hand\u201d, \u201cmgmt_pack_FINAL_v7.xlsx\u201d, \u201cBoard pack due Friday\u201d, \u201cWhy did margin drop 3 pts?\u201d, \u201cWho owns this action?\u201d",
+      "Four numbered stages then build one diagram in sequence \u2014 1 Stabilise, 2 Connect & automate, 3 Explain & anticipate, 4 Decide & improve \u2014 starting from six sources: ERP & ledger, CRM & pipeline, billing & invoicing, payroll & HR, bank feeds and spreadsheets.",
+      "\u201cStabilise: a close you can predict, every month.\u201d The six sources feed a \u201cClose & controls\u201d step \u2014 \u201cProcess, owners, checks\u201d \u2014 and the close day falls from day 12 to day 5.",
+      "\u201cConnect & automate: every system, one source of truth.\u201d A \u201cFinance warehouse\u201d on \u201cone chart of accounts\u201d joins the chain, with a counter of rows synced.",
+      "\u201cExplain & anticipate: know why, and what\u2019s next.\u201d A \u201cDriver model\u201d \u2014 \u201cWhy it moved, what\u2019s next\u201d \u2014 opens a variance bridge of EBITDA, budget versus actual, for Q3.",
+      "\u201cDecide & improve: insight that becomes owned action.\u201d A rolling forecast of revenue \u2014 base, upside, downside, 18 months \u2014 and a \u201cDecisions & owners\u201d list appear: reprice tier-B contracts (CFO), cut DSO from 62 to 48 days (AR lead), pause low-ROI campaign (CMO). Each moves from open to done, for an impact of +2.4 pts margin.",
+      "Beside the diagram, a \u201cfinance engine checks\u201d panel ticks green one line at a time as the stages build: \u201cClose checklist with owners & deadlines\u201d, \u201cReconciliations & controls in place\u201d, \u201cAll sources mapped to one chart of accounts\u201d, \u201cManagement pack refreshes itself\u201d, \u201cEvery variance explained by its driver\u201d, \u201cEvery insight has an owner and a deadline\u201d.",
+      "\u201cTrusted by CFOs, founders and PE/VC portfolios.\u201d Five figures count up: $2Bn+ transaction value supported, 30+ businesses supported, 100+ financial models, budgets & plans, 50+ dashboards delivered, 10+ data warehouses built. Two rows of client logos pass beneath them, over the line \u201cFinance \u00b7 Data \u00b7 Technology \u2014 one integrated finance engine\u201d.",
       "The film closes on the GA mark with the name GA Management Consultants, the line \u201cStop reporting what happened. Start knowing what to do next.\u201d, a \u201cSchedule a call\u201d button and the address gamcs.in.",
     ],
   },
@@ -695,7 +706,7 @@ export const achievements = {
       note: "Across planning, forecasting and business modelling.",
     },
     {
-      value: "50+",
+      value: "150+",
       label: "Dashboards built",
       note: "For reporting, performance monitoring and decision support.",
     },

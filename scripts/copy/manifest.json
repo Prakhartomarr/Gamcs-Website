@@ -3828,6 +3828,162 @@
   }
  },
  {
+  "code": "HOME-FILM-01",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "The film itself, screen-reader name — it says the film is silent, so a visitor who hears nothing knows that is the film and not their sound. The heading and lead above the film are the /how-we-help page head, edited at HOME-HELP-18 to HOME-HELP-20.",
+  "kind": "aria-label",
+  "text": "GAMCS explainer film. Silent, 47 seconds — a text version is below it.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.label"
+  }
+ },
+ {
+  "code": "HOME-FILM-02",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Disclosure under the film that opens its text version",
+  "kind": "text",
+  "text": "Read what the film shows",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.altSummary"
+  }
+ },
+ {
+  "code": "HOME-FILM-03",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, the note above the lines",
+  "kind": "text",
+  "text": "The film has no sound. Everything it says is on-screen text, and this is that text, in the order it appears — with the labels inside the diagram grouped under the stage they appear with.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.altNote"
+  }
+ },
+ {
+  "code": "HOME-FILM-04",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 1 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“FP&A teams spend nearly 50% of their time collecting and validating data, leaving only about a third for generating insights and driving action.” A bar divides the time: “Collecting & validating data · ~50%”, “Insights & action · ~33%”, “Other”.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[0]"
+  }
+ },
+ {
+  "code": "HOME-FILM-05",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 2 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“This leaves less time to diagnose performance drivers.” The day-to-day of it surfaces around the bar: “Chasing inputs from 9 teams”, “Close slips to day 12”, “CRM ≠ ledger”, “Manual reconciliations”, “Forecast rebuilt by hand”, “mgmt_pack_FINAL_v7.xlsx”, “Board pack due Friday”, “Why did margin drop 3 pts?”, “Who owns this action?”",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[1]"
+  }
+ },
+ {
+  "code": "HOME-FILM-06",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 3 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "Four numbered stages then build one diagram in sequence — 1 Stabilise, 2 Connect & automate, 3 Explain & anticipate, 4 Decide & improve — starting from six sources: ERP & ledger, CRM & pipeline, billing & invoicing, payroll & HR, bank feeds and spreadsheets.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[2]"
+  }
+ },
+ {
+  "code": "HOME-FILM-07",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 4 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“Stabilise: a close you can predict, every month.” The six sources feed a “Close & controls” step — “Process, owners, checks” — and the close day falls from day 12 to day 5.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[3]"
+  }
+ },
+ {
+  "code": "HOME-FILM-08",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 5 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“Connect & automate: every system, one source of truth.” A “Finance warehouse” on “one chart of accounts” joins the chain, with a counter of rows synced.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[4]"
+  }
+ },
+ {
+  "code": "HOME-FILM-09",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 6 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“Explain & anticipate: know why, and what’s next.” A “Driver model” — “Why it moved, what’s next” — opens a variance bridge of EBITDA, budget versus actual, for Q3.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[5]"
+  }
+ },
+ {
+  "code": "HOME-FILM-10",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 7 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“Decide & improve: insight that becomes owned action.” A rolling forecast of revenue — base, upside, downside, 18 months — and a “Decisions & owners” list appear: reprice tier-B contracts (CFO), cut DSO from 62 to 48 days (AR lead), pause low-ROI campaign (CMO). Each moves from open to done, for an impact of +2.4 pts margin.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[6]"
+  }
+ },
+ {
+  "code": "HOME-FILM-11",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 8 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "Beside the diagram, a “finance engine checks” panel ticks green one line at a time as the stages build: “Close checklist with owners & deadlines”, “Reconciliations & controls in place”, “All sources mapped to one chart of accounts”, “Management pack refreshes itself”, “Every variance explained by its driver”, “Every insight has an owner and a deadline”.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[7]"
+  }
+ },
+ {
+  "code": "HOME-FILM-12",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 9 of 10 — the film's own on-screen words",
+  "kind": "text",
+  "text": "“Trusted by CFOs, founders and PE/VC portfolios.” Five figures count up: $2Bn+ transaction value supported, 30+ businesses supported, 100+ financial models, budgets & plans, 50+ dashboards delivered, 10+ data warehouses built. Two rows of client logos pass beneath them, over the line “Finance · Data · Technology — one integrated finance engine”.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[8]"
+  }
+ },
+ {
+  "code": "HOME-FILM-13",
+  "page": "Home (/)",
+  "section": "How we help — the explainer film",
+  "label": "Text version, line 10 of 10 (the closing frame) — the film's own on-screen words",
+  "kind": "text",
+  "text": "The film closes on the GA mark with the name GA Management Consultants, the line “Stop reporting what happened. Start knowing what to do next.”, a “Schedule a call” button and the address gamcs.in.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "howWeHelp.video.alt[9]"
+  }
+ },
+ {
   "code": "HOME-SVC-01",
   "page": "Home (/)",
   "section": "Services",
@@ -4313,7 +4469,7 @@
   "section": "Our achievements",
   "label": "Figure 4 (figure 3 of 4) — the number",
   "kind": "text",
-  "text": "50+",
+  "text": "150+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[3].value"
@@ -6291,7 +6447,7 @@
   "code": "HOME-HELP-18",
   "page": "How we help (/how-we-help)",
   "section": "Page head",
-  "label": "Page heading, part 1 of 2 — the two halves join into one line",
+  "label": "Page heading, part 1 of 2 — the two halves join into one line (also the homepage How We Help band above the film, HOME-FILM-01)",
   "kind": "text",
   "text": "From knowing where you are",
   "source": {
@@ -6303,7 +6459,7 @@
   "code": "HOME-HELP-19",
   "page": "How we help (/how-we-help)",
   "section": "Page head",
-  "label": "Page heading, part 2 of 2 — plain: a page head takes no accent tint",
+  "label": "Page heading, part 2 of 2 — plain here, because a page head takes no accent tint; tinted in the homepage band (HOME-FILM-01)",
   "kind": "text",
   "text": "to building what comes next.",
   "source": {
@@ -6315,7 +6471,7 @@
   "code": "HOME-HELP-20",
   "page": "How we help (/how-we-help)",
   "section": "Page head",
-  "label": "Lead paragraph",
+  "label": "Lead paragraph (also the homepage How We Help band above the film, HOME-FILM-01)",
   "kind": "text",
   "text": "We bring the right combination of finance expertise, processes, data and technology to address today's gaps and build the capabilities your business will need next.",
   "source": {

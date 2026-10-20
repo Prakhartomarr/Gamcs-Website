@@ -17,7 +17,7 @@ import { howWeHelp } from "@/lib/content/gamcs";
  * page head renders. Reused, not duplicated into new keys, so the two places
  * cannot drift.
  *
- * A client component for one reason: the in-view autoplay below. Everything
+ * A client component for one reason: the in-view playback below. Everything
  * else here is static markup and still arrives in the server-rendered HTML,
  * including the whole text alternative — with JavaScript off the band is a
  * poster, working controls and the transcript, which is the resting state and
@@ -33,26 +33,74 @@ const POSTER = "/video/gamcs-explainer-poster.webp";
 
 export default function HowWeHelpFilm() {
   const video = useRef<HTMLVideoElement>(null);
+  /* True once we have started the film ourselves, so a second pass over the
+     band cannot start it again: it autoplays ONCE (client), it is not a loop. */
+  const autoplayed = useRef(false);
+  /* The time we paused the film at when it left the viewport, or null when the
+     pause was not ours. A time rather than a flag: it is also the proof that
+     nobody has touched the film since, so coming back into view cannot override
+     a visitor who played or scrubbed it in the meantime. */
+  const pausedAt = useRef<number | null>(null);
 
   useEffect(() => {
     const el = video.current;
     if (!el) return;
 
-    /* Reduced motion: no autoplay at all, not a quieter one. 47 seconds of
-       moving type starting by itself is exactly what this preference asks us
-       not to do. The poster stays up and the controls are already there, so
-       the visitor starts it when they want it — which also means this branch
-       needs no markup of its own. */
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
-        /* Disconnected BEFORE play(), which is what makes this play ONCE.
-           Scrolling back up past a film the visitor paused — or one they
-           watched to the end — must not restart it under them, and an
-           observer that is already gone cannot. */
-        io.disconnect();
+        if (!entry.isIntersecting) {
+          /* Gone from the viewport entirely: PAUSE. The observer deliberately
+             stays connected for this. It used to disconnect on the first
+             intersection, which made the film play once but also left a 1080p
+             decode running and the whole 5.7MB streaming four screens behind a
+             visitor who had merely scrolled past. Nothing else watches the
+             element, so this is the only place the exit edge exists. */
+          if (!el.paused && !el.ended) {
+            el.pause();
+            pausedAt.current = el.currentTime;
+          }
+          return;
+        }
+        /* On screen but under the start threshold: leave it alone. The two
+           edges are deliberately different — it starts at 40% so the opening
+           line is not missed, and it only stops once the frame is completely
+           gone. One shared edge would both pause a film still half on screen
+           and flip between play and pause on jitter around 40%. */
+        if (entry.intersectionRatio < 0.4) return;
+
+        /* Back in view. Resume our own pause, and only ours: if the time has
+           moved off the one we stopped at, or the film is already running, the
+           visitor has taken it over since and it is theirs. */
+        if (pausedAt.current !== null) {
+          const untouched = el.paused && el.currentTime === pausedAt.current;
+          pausedAt.current = null;
+          if (untouched) el.play().catch(() => {});
+          return;
+        }
+
+        /* Reduced motion: no autoplay at all, not a quieter one. 47 seconds of
+           moving type starting by itself is exactly what this preference asks
+           us not to do, and the poster plus the controls are already the whole
+           fallback, so this branch needs no markup of its own.
+
+           Read HERE rather than once at mount: the band sits most of a
+           homepage below the fold, so there is a long window in which a visitor
+           can turn the preference on — or an auditor can emulate it on an
+           already-loaded page — before the film is ever reached. A live read
+           costs nothing and needs no change listener. */
+        if (
+          autoplayed.current ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          return;
+        }
+        /* Only a film still sitting untouched at its poster starts by itself.
+           The control bar is on screen and clickable well before this 40%
+           threshold, so the visitor may already have played it — or played and
+           paused it — and taking that back is the one thing autoplay must
+           never do. */
+        if (!el.paused || el.currentTime > 0) return;
+        autoplayed.current = true;
         /* play() returns a promise that REJECTS when the browser declines:
            a stricter autoplay policy, data-saver, iOS Low Power Mode. That is
            a refusal, not a fault — the poster and the controls are the
@@ -61,12 +109,13 @@ export default function HowWeHelpFilm() {
            console. */
         el.play().catch(() => {});
       },
-      /* 40% of the frame on screen. The film is ~500px tall at desktop width,
-         so starting it at a lower ratio starts it while it is still a sliver
-         at the bottom edge and the visitor misses the opening line. Kept well
-         under 1 because the frame is taller than a short laptop viewport
-         minus the floating header. */
-      { threshold: 0.4 }
+      /* Two edges, so the callback above can tell "gone" from "not up yet".
+         0.4 is where it starts: the film is ~500px tall at desktop width, so a
+         lower ratio starts it while it is still a sliver at the bottom edge
+         and the visitor misses the opening line, and it is kept well under 1
+         because the frame is taller than a short laptop viewport minus the
+         floating header. 0 is where it stops. */
+      { threshold: [0, 0.4] }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -134,8 +183,8 @@ export default function HowWeHelpFilm() {
             findable by the browser's own find-in-page, which hidden text is
             not; and a page-visible alternative cannot rot unnoticed the way
             sr-only copy does. Closed by default because the band's brief is
-            heading, sub, film — five transcript paragraphs expanded would
-            make it the longest thing on the homepage.
+            heading, sub, film — the transcript expanded would be the longest
+            thing on the homepage.
 
             Native <details>, and the FAQ's own card classes: same keyboard
             behaviour, same focus ring, same +/x marker, no new CSS. */}

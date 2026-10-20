@@ -1033,10 +1033,37 @@ html{font-size:112.5%}
   .locmap-img{transform:none !important}
 }
 
-/* ---------- achievements: photo card + three figures ----------
+/* ---------- achievements: a bento of five published figures ----------
    Breakpoint measurements are in components/sections/Achievements.tsx. */
-.metrics .section-head{margin-bottom:48px}
-.ach-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);column-gap:72px}
+/* Centred, like the other section heads on this page. justify-content is
+   what does it: .section-head is a flex ROW here, so align-items is the
+   vertical axis and the base rule's justify-content:space-between parks a
+   lone child at the left. This head has one child — the h2 — where the
+   two-part heads have a paragraph beside them. */
+.metrics .section-head{margin-bottom:48px;justify-content:center;align-items:center;
+  text-align:center}
+.ach-grid{display:grid}
+/* The bento, at >=1024 only. It is gated rather than overridden below because
+   `grid-area` has to be set per cell, and a class plus a pseudo-class
+   out-specifies any one-class reset the narrower layouts could write.
+   Varied spans, not a feature cell beside a rail: the last row crosses back
+   under the photo, so no column runs the grid's full height. */
+@media(min-width:1024px){
+  .ach-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;
+    grid-template-areas:
+      "ph ph ph f1"
+      "ph ph ph f2"
+      "f3 f3 f4 f4"}
+  /* The wrapper stays in the DOM because the narrower layouts are a grid and a
+     list of its four children; here its children are cells of the bento
+     itself, which only works if the wrapper generates no box of its own. */
+  .ach-figures{display:contents}
+  .ach-card{grid-area:ph}
+  .ach-figure:nth-child(1){grid-area:f1}
+  .ach-figure:nth-child(2){grid-area:f2}
+  .ach-figure:nth-child(3){grid-area:f3}
+  .ach-figure:nth-child(4){grid-area:f4}
+}
 .ach-card{position:relative;overflow:hidden;min-height:clamp(360px,27.78vw,400px);
   border-radius:24px;background:var(--ink-deep);padding:44px 48px;
   display:flex;flex-direction:column;justify-content:flex-end}
@@ -1050,23 +1077,20 @@ html{font-size:112.5%}
    optional decoration — but it is subordinate, hence the step down. */
 .ach-card-note{position:relative;z-index:1;margin:8px 0 0;max-width:46ch;
   font-size:0.8333rem;line-height:1.45;color:rgba(255,255,255,.72)}
-/* Four figures now, not three. The gap carries the rhythm rather than
-   space-between, which stretched the last one away from the rest once the
-   notes made each block taller. */
-.ach-figures{display:flex;flex-direction:column;gap:clamp(20px,2.2vw,30px);padding:6px 0}
-.ach-figure{display:flex;flex-direction:column;justify-content:flex-end}
+/* The four flat cells. A hairline on the band's white, the same surface every
+   other card on the site uses, so the one photograph stays the only image in
+   the section. Top-aligned, not bottom: cells of different spans are different
+   heights, and bottom-aligning put each label at a different distance from the
+   one beside it. */
+.ach-figure{display:flex;flex-direction:column;justify-content:flex-start;
+  padding:clamp(24px,2vw,30px);border:1px solid var(--line);border-radius:24px;
+  background:var(--band-white)}
 .ach-figure-label{margin:0;font-size:0.8333rem;line-height:1.4;color:var(--ink-deep);
   font-weight:500;text-wrap:balance}
 .ach-figure-note{margin:8px 0 0;font-size:0.7222rem;line-height:1.5;color:var(--ink-muted);
   text-wrap:pretty}
 .ach-figure-value{margin-top:10px;font:100 clamp(38px,3.3vw,50px)/1 var(--font-sans);
   letter-spacing:-.035em;color:var(--ink-deep)}
-/* the container is pinned at 920 here, so the type holds still with it */
-@media(min-width:1024px) and (max-width:1279px){
-  .ach-card-value{font-size:74px}
-  .ach-figure-value{font-size:40px}
-}
-
 @media(max-width:1023px){
   .ach-grid{grid-template-columns:1fr;row-gap:48px}
   .ach-card{min-height:320px}
@@ -1074,10 +1098,6 @@ html{font-size:112.5%}
      each block is taller now that it carries a note. */
   .ach-figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
     column-gap:32px;row-gap:36px;padding:0}
-  /* Grid cells stretch to the row, and the base rule bottom-aligns them — so a
-     two-line note on one side pushed its label 19px off its neighbour's. Top
-     aligns the pair on their labels instead; the notes are free to run long. */
-  .ach-figure{justify-content:flex-start}
 }
 @media(max-width:767px){
   .metrics .section-head{margin-bottom:32px}
@@ -1109,7 +1129,8 @@ html{font-size:112.5%}
   /* order, not column-reverse. The DOM is label / value / note so CountUp and
      the reading order stay put; reversing a three-child flex column would have
      stood the qualifier on top of its own figure. */
-  .ach-figure{flex-direction:column;padding:28px 0;border-top:1px solid var(--line)}
+  .ach-figure{flex-direction:column;padding:28px 0;background:none;border-radius:0;
+    border:0;border-top:1px solid var(--line)}
   .ach-figure-value{order:1}
   .ach-figure-label{order:2}
   .ach-figure-note{order:3}
