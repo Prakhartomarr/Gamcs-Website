@@ -505,7 +505,13 @@ h1,h2,h3,p{margin-top:0}
    Tab order is untouched — the actions still come last in the DOM, they
    are only drawn to the right of the lead (WCAG 2.4.3). */
 @media (min-width:768px){
-  .page-head{display:flex;flex-direction:column;min-height:52vh;min-height:52dvh}
+  /* 72vh, up from 52. The gap is free space, so the band has to have some:
+     at 52vh the headline and the lead were close enough to read as one
+     block. The reference's hero ends at 94% of the viewport — see the
+     --art override, which takes the photographed bands to 92vh; the plain
+     light bands stop at 72 because /privacy-policy and /cookie-policy use
+     the same band and a full screen of air over a legal notice is silly. */
+  .page-head{display:flex;flex-direction:column;min-height:72vh;min-height:72dvh}
   /* The container has to FILL the band for the auto margin below to have
      free space to absorb; as an ordinary flex item it would be its own
      content's height and the two zones would sit together at the top. */
@@ -525,6 +531,53 @@ h1,h2,h3,p{margin-top:0}
      their band is min-height driven and the auto margin simply keeps less.
      vh-based so it opens with the band rather than fighting it. */
   .page-head>.container>h1{margin-bottom:clamp(56px,9vh,120px)}
+
+  /* THE SCALE, measured off the reference rather than guessed (2026-10-21).
+     unity-advisory.com/what-we-do at 1440x900, read over CDP:
+
+                       there        here, before
+       headline        87.06px      50px
+       line-height     83.58 (.96)  56 (1.12)
+       weight          400          500
+       tracking        -.02em       -.02em
+       lead            22.48px      17px
+       lead leading    29.23 (1.30) 27.2 (1.60)
+       lead weight     500          400
+       lead measure    ~530px       620px
+       headline -> lead 344px       81px
+
+     The arrangement alone was not the thing that made that page read the
+     way it does: at 50px in weight 500 the headline is a label on a
+     photograph, and at 87px in weight 400 it is the page. Everything here
+     is that table, one column moved to the other.
+
+     NOT the selector `.page-head h1`, which globals.css:1753 already sets
+     as part of the site-wide heading scale and which would win on source
+     order. The child selector takes it on specificity instead, so the nine
+     other headings that rule governs are untouched.
+
+     6.05vw hits 87px at 1440 exactly; the 88px ceiling holds it there on
+     wider screens, and the 42px floor is for the 768-1023 band. Phones
+     never reach this block and keep their clamp(30px,8.4vw,40px). */
+  /* max-width:none, and the container is the measure. The reference caps
+     its headline at 773px because its three lines are "Services Built /
+     Around CFO / Priorities." — 38 characters. Ours is "Built on a shared
+     vision. Driven by financial insight. Focused on the future.", 76, and
+     it is authored as three block spans. Capped at 18ch (989px at this
+     size) the middle span wrapped and the headline became four lines,
+     which measured 335px tall against the reference's 268 and ate the air
+     this whole change is for. The container already stops it at 1280. */
+  .page-head>.container>h1{
+    font-size:clamp(42px,6.05vw,88px);line-height:.96;font-weight:400;
+    letter-spacing:-.02em;max-width:none}
+  /* The lead is a statement at this size, not a caption, and the narrower
+     measure is what keeps it a block in the corner rather than a column of
+     prose. `:first-of-type` so /team's second and third paragraphs and
+     /faq's cta line stay as they are — the reference has one lead, and
+     setting three at 22px would make that band shout. */
+  .page-head>.container>p:first-of-type{
+    font-size:clamp(18px,1.56vw,22.5px);line-height:1.3;font-weight:500;
+    max-width:48ch}
 }
 /* The actions leave the column and sit on the lead's bottom line, which is
    where the reference puts its tag row. Out of flow rather than in a row
@@ -3431,6 +3484,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    the block margins hands the alignment back to the flex container; the
    inline margins stay auto, so it still centres horizontally. */
 .page-head.page-head--art>.container{margin-block:0}
+/* 92vh from 768 up (2026-10-21). The reference's hero runs from its header
+   to 849px of a 900px viewport — 94% — and that near-full screen is half of
+   why it reads the way it does: the headline gets the top of the screen and
+   the lead gets the bottom of it, rather than both sharing a 60vh strip.
+   92vh was tried first and measured: it left 140px between headline and
+   lead against the reference's 344, because our band starts 78px lower
+   (a 96px header plus a kicker the reference does not have) and our lead
+   runs six lines to their four. A full screen puts that back to ~210 and
+   lands the lead 64px off the bottom edge, against their 51.
+
+   Phones keep 60vh: this band carries the same copy there in one column,
+   and a full phone screen is a headline and nothing else.
+   Placed here rather than in the arrangement block above because that block
+   comes first in the file and `.page-head.page-head--art` would win on
+   source order. */
+@media (min-width:768px){
+  .page-head.page-head--art{min-height:100vh;min-height:100dvh}
+}
 .page-head--art h1{color:#fff}
 .page-head--art>.container>p{color:rgba(255,255,255,.88);max-width:620px}
 .page-head--art .section-kicker{color:#9CCBEA}
