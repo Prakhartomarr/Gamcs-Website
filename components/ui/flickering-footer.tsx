@@ -5,7 +5,7 @@ import Link from 'next/link';
 import CookiePreferencesLink from '@/components/CookiePreferencesLink';
 import { cn } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
-import { footer, site } from '@/lib/content/gamcs';
+import { footer, officeCards, site } from '@/lib/content/gamcs';
 import { fill } from '@/lib/content/fill';
 import { header } from '@/lib/content/ui';
 
@@ -303,7 +303,7 @@ export function FlickeringFooter() {
 			    it lands on the container's. No hard-coded 39: a longer label moves
 			    it on its own. The first two stay fixed so the pitch is unchanged. */}
 			<div className="gf-topwrap container pt-14 pb-12 lg:pt-16">
-				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_173px_173px_max-content] lg:gap-x-[48px] xl:gap-x-[54px]">
+				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,232px)_173px_173px_max-content] lg:gap-x-[48px] xl:gap-x-[54px]">
 					<div className="gf-office">
 						{/* THE FULL NAME, not the contraction (client, 2026-10-20).
 						    This was the mark plus "MCS", so the artwork's "GA" and the
@@ -375,6 +375,53 @@ export function FlickeringFooter() {
 							</a>
 						</div>
 					</div>
+
+					{/* OFFICES (client, 2026-10-21). The three places a visitor can
+					    actually walk into, in the white space the brand column left
+					    beside Explore.
+
+					    Read off `officeCards`, which is the same list the homepage
+					    contact panel renders and which lib/schema.ts takes the
+					    registered address from — so an office that moves moves here
+					    too, and the footer cannot drift from the map cards. That
+					    export is all-or-nothing by design: lose the registered
+					    office and it returns empty rather than leaving two other
+					    firms' addresses standing under this firm's footer, which is
+					    why this renders nothing at all in that case.
+
+					    Addresses, not links. Each one is an <address> inside a list
+					    item, which is what the element is for; the map links live on
+					    /contact and on the homepage cards, and adding a fourth copy
+					    here would be a third route to the same place. */}
+					{officeCards.length > 0 && (
+						<div className="gf-offices">
+							<h2 className="gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
+								{footer.headings.offices}
+							</h2>
+							<ul className="gf-offlist">
+								{officeCards.map((o) => (
+									<li key={o.coords}>
+										{/* The city is the heading a reader scans for, so it leads
+										    and the street follows — the order the client wrote
+										    them in. Not an <h3>: these sit under the column's h2
+										    and a heading per address would put nine of them in the
+										    outline of every page. */}
+										<address className="gf-off">
+											<span className="gf-off-city">
+												{o.locality}, {o.region}
+											</span>
+											<span className="gf-off-line">{o.street}</span>
+											<span className="gf-off-line">
+												{o.locality}, {o.region} {o.postalCode}
+											</span>
+											{o.note && <span className="gf-off-note">{o.note}</span>}
+										</address>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
+
 
 					{groups.map((g) => {
 						const panelId = `gf-panel-${g.label.replace(/\W+/g, '').toLowerCase()}`;

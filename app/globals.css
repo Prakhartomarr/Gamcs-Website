@@ -485,6 +485,59 @@ h1,h2,h3,p{margin-top:0}
    mission) and /faq two; .faq-head-cta keeps its own 14px by
    specificity, so this only changes the pairs that were flush. */
 .page-head p + p{margin-top:16px}
+
+/* THE ARRANGEMENT (client, 2026-10-21; reference unity-advisory.com/what-we-do).
+   Two zones with the band's free space between them: the kicker and the
+   headline at the top, the lead at the bottom left, the actions at the
+   bottom right. The reference's own scale is NOT taken — the headline
+   stays on this site's clamp(38px,4.6vw,62px) (client) — so what is
+   borrowed is the placement and the air, not the type.
+
+   NO MARKUP CHANGED, on any of the eleven heads that use this band. Every
+   one of them is a headline, one lead paragraph and an optional actions
+   row, in that order, so the split can be made with a single auto margin:
+   in a flex column an auto margin eats the free space before
+   justify-content gets it, which pins everything from the lead down to the
+   bottom and leaves the headline where it is. Pages with a second
+   paragraph (/team's mission, /faq's cta line) keep it with the lead
+   because it follows in source order.
+
+   Tab order is untouched — the actions still come last in the DOM, they
+   are only drawn to the right of the lead (WCAG 2.4.3). */
+@media (min-width:768px){
+  .page-head{display:flex;flex-direction:column;min-height:52vh;min-height:52dvh}
+  /* The container has to FILL the band for the auto margin below to have
+     free space to absorb; as an ordinary flex item it would be its own
+     content's height and the two zones would sit together at the top. */
+  .page-head>.container{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+  .page-head>.container>p:first-of-type{margin-top:auto}
+  /* THE FLOOR, and the reason the auto margin alone was not enough. An auto
+     margin only distributes space the band has LEFT OVER, so on the two
+     heads whose content already fills it — /who-we-are, three headline
+     lines over a five-line lead, and /team — it resolved to zero and the
+     lead stayed welded to the headline at the 18px this rule used to set.
+     Measured: 18px of separation at all five widths, on exactly the page
+     this was asked for.
+
+     A real margin is always paid, so the separation is now `this plus
+     whatever is spare`: the full-bodied heads get an opening they did not
+     have, the roomy ones (/contact, /privacy-policy) are unchanged because
+     their band is min-height driven and the auto margin simply keeps less.
+     vh-based so it opens with the band rather than fighting it. */
+  .page-head>.container>h1{margin-bottom:clamp(56px,9vh,120px)}
+}
+/* The actions leave the column and sit on the lead's bottom line, which is
+   where the reference puts its tag row. Out of flow rather than in a row
+   with the lead because that would need a wrapper in all eleven files.
+
+   1280px, and 1200 was measured and rejected: the lead is capped at 620px
+   and the widest actions row on the site is /who-we-are's 417px, which at
+   1200 put the buttons at x643 against a lead running to x668 — a 25px
+   overlap, on two routes. Under this width they stack beneath the lead
+   exactly as they do today. */
+@media (min-width:1280px){
+  .page-head-ctas{position:absolute;right:0;bottom:0;margin-top:0}
+}
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
 .case-item:hover{border-color:#C3CCD1;box-shadow:0 24px 48px rgba(16,45,68,.11)}
@@ -6140,6 +6193,43 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* The column heads recede: the links carry the weight, which is the
    reference's order and already the rule this footer followed. */
 .gf-grouph{letter-spacing:0}
+
+/* OFFICES COLUMN (client, 2026-10-21). Sits between the brand block and
+   Explore, in the white space the 1fr brand track left over.
+
+   It borrows the link columns' vertical start — the same .gf-grouph head,
+   the same 20px to the first row — so the four column heads sit on one
+   line across the footer. Below that the rhythm is its own: addresses are
+   blocks of three or four lines, not a list of single-line links, so they
+   are set smaller (13px against the links' 15px) and spaced by block
+   rather than by line. Three of them at the links' size would out-weigh
+   the navigation they stand beside. */
+.gf-offlist{display:grid;gap:18px;margin:20px 0 0;padding:0;list-style:none}
+/* <address> is italic by default in every UA sheet.
+
+   #686D72 rather than --muted-foreground (#6D7378), which is what the rest
+   of this column block uses. The footer's ground is white from 640px up and
+   --soft (#F1F3F4) below it, and on --soft the lighter grey measures 4.31:1
+   — under the AA floor for text this size. Four points darker is 4.66 there
+   and 5.2 on white, and is the same grey to look at. It is the correction
+   .gf-bottom already makes for the same reason. */
+.gf-off{display:block;font-style:normal;font-size:13px;line-height:1.55;
+  color:#686D72;text-wrap:pretty}
+.gf-off span{display:block}
+/* The city is what a reader scans for, so it is the one line in ink. */
+.gf-off-city{margin-bottom:3px;font-weight:600;color:var(--ink)}
+/* The landmark is guidance rather than address. Size separates it, not a
+   lighter grey: anything lighter than the lines above fails on --soft. */
+.gf-off-note{margin-top:3px;font-size:12.5px}
+@media (max-width:1023px){
+  /* Off the desktop grid this is a block in the phone stack, and three
+     addresses between the brand and the nav would push the navigation most
+     of a screen down. `order` puts it after the link accordions — which
+     carry order:2 — so the phone footer keeps the shape it had and gains
+     the addresses at the end of it. */
+  .gf .gf-offices{order:3}
+  .gf-offlist{gap:14px}
+}
 
 /* The bottom bar's copyright, on the footer's phone ground.
    `text-muted-foreground` is #6D7378, which on the white desktop footer is
