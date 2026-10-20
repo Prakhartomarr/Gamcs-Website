@@ -1042,7 +1042,14 @@ html{font-size:112.5%}
    two-part heads have a paragraph beside them. */
 .metrics .section-head{margin-bottom:48px;justify-content:center;align-items:center;
   text-align:center}
-.ach-grid{display:grid}
+/* Both figure sizes below are clamped against THIS box, not the viewport.
+   Tailwind's own `.container{max-width}` pins the container at 768 through
+   824-1023 and at 920 through 1024-1279, so a vw clamp went on growing the
+   numerals inside cells that had stopped growing — 25% of headline growth in
+   a band where the cell never moves. cqw tracks what actually sizes the
+   cells, so it holds still exactly when they do, in every pinned band
+   rather than the one a hand-written media query could name. */
+.ach-grid{display:grid;container-type:inline-size}
 /* The bento, at >=1024 only. It is gated rather than overridden below because
    `grid-area` has to be set per cell, and a class plus a pseudo-class
    out-specifies any one-class reset the narrower layouts could write.
@@ -1067,11 +1074,28 @@ html{font-size:112.5%}
 .ach-card{position:relative;overflow:hidden;min-height:clamp(360px,27.78vw,400px);
   border-radius:24px;background:var(--ink-deep);padding:44px 48px;
   display:flex;flex-direction:column;justify-content:flex-end}
-.ach-card img{object-fit:cover}
+/* Soft, which is what the photograph was chosen to be. The veil below drops
+   the stock dashboard's KPI strip under 3:1, but a reader who looks still
+   resolves six figures, and a blur of roughly a quarter of their cap height
+   does not — while the chart shapes, the screen and the room, which are the
+   whole reason for the picture, survive it. scale covers the blur's own soft
+   edge, which would otherwise fade against the card's corners. */
+.ach-card img{object-fit:cover;filter:blur(3px);transform:scale(1.05)}
+/* Two jobs, which is why the vertical layer darkens at BOTH ends rather than
+   ramping off the top. Bottom: the type. Top: the photograph is a laptop
+   running a stock admin template, and its own KPI strip — six labelled
+   figures — lands on the card's top edge at every crop. Under a heading
+   reading "Our clients have experienced" a visitor has nothing to tell them
+   those are not the client's numbers, so the veil has to carry far enough up
+   to stop them resolving as figures. The chart shapes beneath survive it;
+   11px numerals do not, which is the asymmetry being traded on. */
 .ach-card::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.5) 45%,rgba(8,14,22,.12) 100%)}
+  background:
+    linear-gradient(0deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.58) 42%,
+      rgba(8,14,22,.38) 64%,rgba(8,14,22,.68) 100%),
+    linear-gradient(90deg,rgba(8,14,22,.78) 0%,rgba(8,14,22,.5) 45%,rgba(8,14,22,.12) 100%)}
 .ach-card-value,.ach-card-label{position:relative;z-index:1}
-.ach-card-value{font:100 clamp(60px,7.2222vw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
+.ach-card-value{font:100 clamp(60px,7.2222cqw,104px)/1 var(--font-sans);letter-spacing:-.035em;color:var(--white)}
 .ach-card-label{margin:18px 0 0;font-size:1rem;line-height:1.4;color:rgba(255,255,255,.88)}
 /* The qualifier. It is what keeps the figure above it honest, so it is not
    optional decoration — but it is subordinate, hence the step down. */
@@ -1089,7 +1113,7 @@ html{font-size:112.5%}
   font-weight:500;text-wrap:balance}
 .ach-figure-note{margin:8px 0 0;font-size:0.7222rem;line-height:1.5;color:var(--ink-muted);
   text-wrap:pretty}
-.ach-figure-value{margin-top:10px;font:100 clamp(38px,3.3vw,50px)/1 var(--font-sans);
+.ach-figure-value{margin-top:10px;font:100 clamp(38px,3.4722cqw,50px)/1 var(--font-sans);
   letter-spacing:-.035em;color:var(--ink-deep)}
 @media(max-width:1023px){
   .ach-grid{grid-template-columns:1fr;row-gap:48px}
@@ -1103,7 +1127,6 @@ html{font-size:112.5%}
   .metrics .section-head{margin-bottom:32px}
   .ach-grid{row-gap:32px}
   .ach-card{min-height:260px;border-radius:20px;padding:26px 24px}
-  .ach-card::after{background:linear-gradient(0deg,rgba(8,14,22,.82) 0%,rgba(8,14,22,.45) 60%,rgba(8,14,22,.2) 100%)}
   .ach-card-value{font-size:60px}
   .ach-card-label{margin-top:12px;font-size:0.8333rem;color:rgba(255,255,255,.9)}
   .ach-figures{display:flex;flex-direction:column;gap:28px}
@@ -1122,9 +1145,20 @@ html{font-size:112.5%}
   .metrics .section-head h2{margin:0;font:500 30px/1.1 var(--font-sans);letter-spacing:-.02em;color:var(--ink-deep)}
   .ach-grid{row-gap:24px}
   .ach-card{aspect-ratio:7/8;min-height:0;border-radius:24px;padding:28px}
-  .ach-card::after{background:linear-gradient(180deg,rgba(13,24,40,0) 40%,rgba(13,24,40,.78) 100%)}
+  /* Stops placed off the measured text band, not by eye: the value's top sits
+     55% up the card at 320 and 36% at 414, so the ramp has to still be at .6
+     there. Below 32% it only has the label and the note over it. It no longer
+     ramps to zero at the top: the 7/8 cell crops sideways, so the whole photo
+     height shows here and the stock dashboard's KPI strip sits ~20% down the
+     card — the least obscured it is at any width. */
+  .ach-card::after{background:linear-gradient(0deg,rgba(13,24,40,.9) 0%,
+    rgba(13,24,40,.78) 32%,rgba(13,24,40,.62) 58%,rgba(13,24,40,.66) 100%)}
   .ach-card-value{font-size:60px;letter-spacing:-.03em}
   .ach-card-label{margin-top:10px;font-size:15px;line-height:1.4;color:#fff}
+  /* The note needs its own phone size: the label steps down to 15px here and
+     the note's base size IS 15px, so without this the subordinate line tied
+     with the line it qualifies — and out-led it, 1.45 against 1.4. */
+  .ach-card-note{font-size:13px}
   .ach-figures{display:flex;flex-direction:column;gap:0}
   /* order, not column-reverse. The DOM is label / value / note so CountUp and
      the reading order stay put; reversing a three-child flex column would have

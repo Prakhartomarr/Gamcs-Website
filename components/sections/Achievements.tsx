@@ -13,13 +13,15 @@ import { achievements } from "@/lib/content/gamcs";
  * is spans over the same markup, not a re-nesting of it.
  *
  * Why spans rather than a feature cell beside a rail (>=1024): the photo is
- * 3x2 of a 4x3 grid, 30+/100+ stack in the fourth column, and 50+/10+ halve
- * the last row. So the last row crosses under the photo instead of continuing
- * the right-hand column, and no column runs the full height — the thing a
- * big-cell-plus-regular-grid layout gives away immediately. Three cell shapes
- * come out of it at a 1374px container: 1025x~420 for the photo, 328x~210 for
- * the pair (near square), 677x~170 for the last row (wide).
- * - 768-1023: photo full width, figures 2x2 beneath it. Four tiles in three
+ * 3x2 of a 4x3 grid, the first two figures stack in the fourth column, and
+ * the last two halve the bottom row. So that row crosses under the photo
+ * instead of continuing the right-hand column, and no column runs the full
+ * height — the thing a big-cell-plus-regular-grid layout gives away
+ * immediately. Three cell shapes come out of it: the photo wide, the pair
+ * near square, the bottom row wide and shallow. Exact sizes are not written
+ * down here because they move with the container ladder below and a stale
+ * number here is what produced a wrong `sizes` attribute once already.
+ * - 769-1023: photo full width, figures 2x2 beneath it. Four tiles in three
  *   columns would orphan one, and the spans above have no room to read.
  * - <=768: the phone artboard — photo, then the figures as a hairlined list,
  *   number over label. Unchanged by the bento.
@@ -49,16 +51,23 @@ export default function Achievements() {
         <div className="ach-grid">
           {card && (
             <article className="ach-card reveal">
-              {/* sizes = the cell's own width, which is 3/4 of the container
-                  less a gap from >=1024 (1075px at the 1440px cap), the whole
-                  container at 768-1023, and the container's phone width below
-                  that. The photo is 2000x1425 and object-fit:cover, so the
-                  wider-than-tall cell crops its top and bottom. */}
+              {/* sizes is the cell's measured width, band by band. It takes
+                  five terms because the container is clamped twice: by its own
+                  `width:min(1440px,calc(100% - 96px))`, and again by Tailwind's
+                  `.container{max-width}` — so the container ladder is 768 at
+                  769-1023, 920 at 1024-1279, 1184 at 1280, 1280 to 1535 and
+                  1440 from 1536, and the photo cell (3 of 4 columns + 2 gaps,
+                  = .75C - 5) is 768 / 685 / 883 / 955 / 1075. A single term
+                  for the whole of >=1024 over-declared by up to 390px and
+                  bought the next variant up the ladder for nothing.
+                  The photo is 2000x1425 and object-fit:cover: the wide cells
+                  crop its top and bottom, and the 7/8 phone cell crops its
+                  sides instead. */}
               <Image
                 src="/page-art/impact-dashboard.webp"
                 alt=""
                 fill
-                sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1023px) calc(100vw - 96px), 1075px"
+                sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1023px) min(768px, calc(100vw - 56px)), (max-width: 1279px) 685px, (max-width: 1535px) 955px, 1075px"
               />
               <div className="ach-card-value">
                 <CountUp value={card.value} />

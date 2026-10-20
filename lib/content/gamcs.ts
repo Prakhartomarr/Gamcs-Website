@@ -573,9 +573,19 @@ export const howWeHelp = {
      because this is client copy about the client's own business.
 
      The five figures below are the film's own, read off the frame where the
-     counters settle (t=39s). They match `achievements.items` in value; the
-     wording of the labels is the film's, which differs from the cards' in two
-     places, so they are transcribed here rather than borrowed from there. */
+     counters settle (t=39s), and the wording of the labels is the film's,
+     which differs from the cards' in two places — so they are transcribed
+     here rather than borrowed from `achievements.items`.
+
+     Four of the five still agree with `achievements.items`. Dashboards does
+     not: the grid now publishes 150+ at the client's word, and the frame this
+     line transcribes still counts to 50+. Do NOT reconcile it by editing the
+     number here. This is a text alternative to a video (WCAG 2.1.1) and its
+     only job is to say what the frame says; writing 150+ into it would make
+     it describe a frame that does not exist, and would leave the sighted
+     visitor who watches the film the only one seeing the discrepancy. It
+     closes when the film is re-rendered, which is the client's call, not an
+     edit to this file. */
   video: {
     /** The <video>'s accessible name. It says the film is silent, because a
         visitor who hears nothing otherwise has no way to know whether that is
