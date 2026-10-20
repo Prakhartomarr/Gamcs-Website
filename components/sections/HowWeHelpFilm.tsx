@@ -62,6 +62,10 @@ export default function HowWeHelpFilm() {
   const [soundOn, setSoundOn] = useState(false);
   const userMuted = useRef(false);
   const weSetMuted = useRef(true);
+  /* Set once the browser has refused an unmute, so we stop asking until a
+     real gesture arrives. Without it every observer callback would retry and
+     the film would stutter between paused and playing as you scroll. */
+  const blocked = useRef(false);
 
   /* Chrome and Edge PAUSE a playing video if a script unmutes it before the
      page has had a real user gesture. So this never unmutes hopefully: it
@@ -75,23 +79,35 @@ export default function HowWeHelpFilm() {
     if (!el) return;
     if (!next && userMuted.current) return;
     if (!next) {
-      const activated = navigator.userActivation?.hasBeenActive;
-      if (activated === false) return;
+      /* TRY FIRST, ASK AFTERWARDS. This used to refuse outright whenever
+         `navigator.userActivation.hasBeenActive` was false, which threw away
+         the one case where a browser DOES allow unmuted playback without a
+         click: Chrome's Media Engagement Index grants it to sites a visitor
+         plays media on regularly. Refusing to attempt meant those visitors
+         got silence too, for no reason.
+
+         So it attempts, then checks whether the browser took it back. Once
+         refused it stops attempting — `blocked` — until sticky activation
+         appears, so the row of observer callbacks a scroll produces cannot
+         turn into a pause/resume stutter. */
+      if (blocked.current && !navigator.userActivation?.hasBeenActive) return;
       const wasPlaying = !el.paused;
       weSetMuted.current = false;
       el.muted = false;
       setSoundOn(true);
-      if (wasPlaying) {
-        /* A frame later: the pause, if it comes, is the browser's answer to
-           the line above. */
-        requestAnimationFrame(() => {
-          if (!el.paused || el.ended) return;
-          weSetMuted.current = true;
-          el.muted = true;
-          setSoundOn(false);
-          el.play().catch(() => {});
-        });
-      }
+      /* A frame later, because the browser's answer — pausing the film, or
+         simply putting `muted` back — lands after this tick. Both are a
+         refusal and both are handled the same way. */
+      requestAnimationFrame(() => {
+        const refusedByPause = wasPlaying && el.paused && !el.ended;
+        const refusedByMute = el.muted;
+        if (!refusedByPause && !refusedByMute) return;
+        blocked.current = true;
+        weSetMuted.current = true;
+        el.muted = true;
+        setSoundOn(false);
+        if (refusedByPause) el.play().catch(() => {});
+      });
       return;
     }
     weSetMuted.current = true;
@@ -110,6 +126,38 @@ export default function HowWeHelpFilm() {
       userMuted.current = true;
       setMuted(true);
     }
+  }, [setMuted]);
+
+  /* Any gesture anywhere on the page clears the block and re-tries, so a
+     visitor who clicks something — a nav link, the cookie banner — and then
+     scrolls to the band gets sound without having to find the toggle.
+     Sticky activation is page-wide; it does not have to be this element. */
+  useEffect(() => {
+    const onGesture = (e: Event) => {
+      /* NOT a gesture inside the film. `pointerup` on the window fires
+         BEFORE the toggle's own `click`, so without this the sequence ran
+         twice and inverted: the retry unmuted, then the toggle saw an
+         unmuted film and muted it — pressing "Turn on sound" silenced it.
+         The native controls' own mute button is inside the frame too and
+         would fight the visitor the same way. */
+      const target = e.target;
+      if (target instanceof Element && target.closest(".hwv-frame")) return;
+      if (!blocked.current) return;
+      blocked.current = false;
+      const el = video.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const vis =
+        Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) /
+        (r.height || 1);
+      if (vis >= 0.6) setMuted(false);
+    };
+    window.addEventListener("pointerup", onGesture);
+    window.addEventListener("keyup", onGesture);
+    return () => {
+      window.removeEventListener("pointerup", onGesture);
+      window.removeEventListener("keyup", onGesture);
+    };
   }, [setMuted]);
 
   /* volumechange fires for our writes and the native controls alike. A mute
