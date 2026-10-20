@@ -1132,7 +1132,12 @@ export const footer = {
      What clients say, FAQ and Contact Us, while the company pages — Who we
      are, Team, Careers — are in Explore. `solutions` is retired with the
      column it headed. */
-  headings: { explore: "Explore", resources: "Resources", legal: "Legal" },
+  headings: {
+    offices: "Offices",
+    explore: "Explore",
+    resources: "Resources",
+    legal: "Legal",
+  },
   /** RETIRED 2026-10-20 with their columns. */
   retiredHeadings: { company: "Company", solutions: "Solutions" },
   /** The accent link under the address, beside the email. */

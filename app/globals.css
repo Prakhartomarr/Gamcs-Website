@@ -6141,6 +6141,43 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    reference's order and already the rule this footer followed. */
 .gf-grouph{letter-spacing:0}
 
+/* OFFICES COLUMN (client, 2026-10-21). Sits between the brand block and
+   Explore, in the white space the 1fr brand track left over.
+
+   It borrows the link columns' vertical start — the same .gf-grouph head,
+   the same 20px to the first row — so the four column heads sit on one
+   line across the footer. Below that the rhythm is its own: addresses are
+   blocks of three or four lines, not a list of single-line links, so they
+   are set smaller (13px against the links' 15px) and spaced by block
+   rather than by line. Three of them at the links' size would out-weigh
+   the navigation they stand beside. */
+.gf-offlist{display:grid;gap:18px;margin:20px 0 0;padding:0;list-style:none}
+/* <address> is italic by default in every UA sheet.
+
+   #686D72 rather than --muted-foreground (#6D7378), which is what the rest
+   of this column block uses. The footer's ground is white from 640px up and
+   --soft (#F1F3F4) below it, and on --soft the lighter grey measures 4.31:1
+   — under the AA floor for text this size. Four points darker is 4.66 there
+   and 5.2 on white, and is the same grey to look at. It is the correction
+   .gf-bottom already makes for the same reason. */
+.gf-off{display:block;font-style:normal;font-size:13px;line-height:1.55;
+  color:#686D72;text-wrap:pretty}
+.gf-off span{display:block}
+/* The city is what a reader scans for, so it is the one line in ink. */
+.gf-off-city{margin-bottom:3px;font-weight:600;color:var(--ink)}
+/* The landmark is guidance rather than address. Size separates it, not a
+   lighter grey: anything lighter than the lines above fails on --soft. */
+.gf-off-note{margin-top:3px;font-size:12.5px}
+@media (max-width:1023px){
+  /* Off the desktop grid this is a block in the phone stack, and three
+     addresses between the brand and the nav would push the navigation most
+     of a screen down. `order` puts it after the link accordions — which
+     carry order:2 — so the phone footer keeps the shape it had and gains
+     the addresses at the end of it. */
+  .gf .gf-offices{order:3}
+  .gf-offlist{gap:14px}
+}
+
 /* The bottom bar's copyright, on the footer's phone ground.
    `text-muted-foreground` is #6D7378, which on the white desktop footer is
    fine and on the --soft ground the footer takes below 640px measures
