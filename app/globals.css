@@ -6162,6 +6162,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .home-tight .hwv .hwv-stage{flex:1 1 0;min-height:400px;
     display:flex;justify-content:center;
     margin-top:clamp(10px,1.4vh,20px)}
+  /* A CEILING ON THE STAGE, so the frame's ratio can always be satisfied
+     (2026-10-21). The frame takes a definite height from this box and turns
+     it into a width through aspect-ratio — but when that width exceeded the
+     container, `max-width` clamped it and the height did NOT come back down,
+     because a ratio does not feed a clamped width back into a definite
+     height. On a tall window the frame went square and then portrait:
+     measured 1.07 at 1280x1400 and 0.98 at 1440x1600 against the 1.78 it is
+     meant to be, with the film letterboxing inside a near-square mount the
+     same colour as its own background, which is why it read as a huge empty
+     box rather than as a wrong aspect ratio.
+
+     The cap is the widest the film can be at that breakpoint, converted back
+     to a height: container x 9/16, plus the 20px the mount adds. Container
+     widths measured, not assumed — 920 / 1184 / 1280 / 1440 at 1024 / 1280 /
+     1440 / 1536, which is Tailwind's container ladder, not the viewport.
+     Past the cap the extra height is slack the section centres. */
+  .home-tight .hwv .hwv-stage{max-height:537px}
   /* The lead's own 20px lift, halved. Every pixel above the film is a pixel
      off its width — at 16:9 one row of vertical space buys 1.78 of
      horizontal — so the air between the two lines of text is the cheapest
@@ -6185,6 +6202,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     box-sizing:content-box;aspect-ratio:16/9;margin:0}
   .home-tight .hwv .hwv-video{width:100%;height:100%;aspect-ratio:auto}
 }
+@media (min-width:1280px){.home-tight .hwv .hwv-stage{max-height:686px}}
+@media (min-width:1440px){.home-tight .hwv .hwv-stage{max-height:740px}}
+@media (min-width:1536px){.home-tight .hwv .hwv-stage{max-height:830px}}
 
 /* "Click to expand" clears the disclosure pill (2026-10-20).
    The pill moved below the row, and the hint is positioned against .locmap
@@ -6250,3 +6270,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .home-tight .fin-lead,
 .home-tight .who-lead{font-size:18px;line-height:1.62;font-weight:400;
   color:var(--ink-muted)}
+
+/* The clients heading's accent phrase (2026-10-21). Same tint and the same
+   .accent class the other section headings use; no `white-space:nowrap`
+   though, because "growth-focused businesses" is 25 characters and holding
+   it on one line would push the heading off a phone. */
+.clients-head h2 .accent{color:var(--blue)}
