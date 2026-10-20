@@ -157,6 +157,23 @@ function ArtStabilise({ on }: ArtProps) {
               className="ml-auto h-[3px] rounded-full"
               style={{ width: open ? 10 : 34, background: s }}
             />
+            {/* axe reports this span at 3.47:1 and is wrong — do not "fix"
+                it by darkening the chip. It reads the background as #9cbdd4,
+                which is what you get by compositing `color-mix(..., 16%,
+                transparent)` as if the layer under it were the blue itself.
+                Sampled off the rendered page at deviceScaleFactor 3, the chip
+                paints #D8E6EE, and #0F5E97 on that is 5.37:1 — over the 4.5
+                floor, not under it.
+
+                It is also exempt twice over: the whole stage is aria-hidden
+                because it is a picture of the rail, and 5px owner tags inside
+                a drawing of a close checklist are WCAG 1.4.3's incidental
+                text — "part of a picture that contains significant other
+                visual content". Making the background opaque would satisfy
+                the tool, but `ink` is C.faint on an unlit slab, so it would
+                also hand axe four pale-on-pale chips it currently cannot see,
+                and the lit/unlit contrast is the thing this whole illustration
+                is built on. */}
             <span
               className="rounded-[3px] px-[3px] py-px text-[5px] font-bold tracking-[.1em]"
               style={{ background: mix(ink, 16), color: ink }}
@@ -539,9 +556,19 @@ export default function HowWeHelpStack() {
                   >
                     {p.name}
                   </span>
+                  {/* C.muted, not C.faint. The idle numeral used the layer-
+                      label colour, which C declares as decoration only — and
+                      it is not decoration here, it is the phase number inside
+                      a button a visitor clicks. #98A0A6 on the white band
+                      measured 2.65:1 against the 4.5 AA floor for 13px
+                      (axe, 1440). The label beside it was already on C.muted
+                      and clears it at 6.39:1, so the row now reads in one
+                      colour; the name keeps its own weight by being uppercase
+                      at .1em in the heading face, which is where that
+                      hierarchy actually came from. */}
                   <span
                     className="text-[13px] font-semibold leading-none tracking-[.08em]"
-                    style={{ color: on ? C.blue : C.faint, transition: `color ${dur} ease` }}
+                    style={{ color: on ? C.blue : C.muted, transition: `color ${dur} ease` }}
                   >
                     {p.n}
                   </span>
