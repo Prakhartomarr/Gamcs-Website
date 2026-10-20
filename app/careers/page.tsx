@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CTA from "@/components/CTA";
 import CareersSplit from "@/components/careers/CareersSplit";
+import FluteShader from "@/components/ui/flute-shader";
 import { careers, story, whyUs } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -57,6 +58,7 @@ export default function CareersPage() {
       <section className="cr-wide cr-close cr-dark">
         <div className="container">
           <div className="case-cta reveal">
+            <FluteShader />
             <h2>{closing.heading}</h2>
             <div className="ctas">
               {closing.links.map((l) => (

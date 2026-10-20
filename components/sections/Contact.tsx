@@ -1,4 +1,5 @@
 import CTA from "@/components/CTA";
+import FluteShader from "@/components/ui/flute-shader";
 import OfficeMaps from "@/components/ui/office-maps";
 import { contact, intro, officeCards, primaryCta } from "@/lib/content/gamcs";
 
@@ -21,6 +22,7 @@ export default function Contact() {
     <section className="contact" id="contact">
       <div className="container">
         <div className="contact-panel">
+          <FluteShader />
           <div className="contact-panel-copy">
             <p className="contact-lead">
               {contact.heading} <span>{intro}</span>

@@ -28,10 +28,15 @@ import { sections } from "@/lib/content/ui";
  * The four symptoms are a <ul> and the figures a <dl>, so the section reads in
  * order with no stylesheet at all.
  *
- * `data-lift` on each symptom and each figure opts them into the hover lift
- * MotionLayer already binds page-wide (one gsap.quickTo per node, no new
- * observers here). GSAP owns their transform, so hover CSS on these cards must
- * stay to colour, border and shadow.
+ * `data-lift` on each FIGURE opts it into the hover lift MotionLayer already
+ * binds page-wide (one gsap.quickTo per node, no new observers here). GSAP
+ * owns their transform, so hover CSS on the figures must stay to colour,
+ * border and shadow.
+ *
+ * The symptom cards deliberately do NOT carry it any more. They sit in a 3D
+ * deck whose fan, pointer tilt and hover travel DecisionGapMotion writes on
+ * the same matrix, and two writers on one transform do not layer — they fight,
+ * frame by frame. One owner, and it is the deck.
  *
  * Every figure is attributed in visible text — publication, sample, then the
  * link. The sample is deliberately not hidden behind the link: a percentage
@@ -93,14 +98,21 @@ export default function DecisionGap() {
           <p className="dg-sub">{c.lead}</p>
         </div>
 
-        <ul className="dg-pains">
-          {c.pains.map((p) => (
-            <li className="dg-pain" key={p.title} data-lift>
-              <h3 className="dg-pain-title">{p.title}</h3>
-              <p className="dg-pain-body">{p.body}</p>
-            </li>
-          ))}
-        </ul>
+        {/* The stage. It is a plain wrapper below 768 (display:contents, so
+            the phone rail below is laid out exactly as it was) and the
+            perspective container from 768 up. The deck's fan, the pointer
+            tilt and the hover travel are all written by GSAP, so with JS off
+            this is four cards in a panel — never a collapsed stack. */}
+        <div className="dg-stage">
+          <ul className="dg-pains">
+            {c.pains.map((p) => (
+              <li className="dg-pain" key={p.title}>
+                <h3 className="dg-pain-title">{p.title}</h3>
+                <p className="dg-pain-body">{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         {/* The turn. Its quote mark is a pseudo-element on the row: it is
             punctuation around the sentence, not content, and a screen reader
@@ -144,6 +156,13 @@ export default function DecisionGap() {
           ))}
         </dl>
 
+        {/* `c.statsNote` is deliberately NOT rendered (client, 2026-10-20).
+            It was added here earlier the same day and taken out again at the
+            client's word, so the copy and `.dg-note`'s styling both stay
+            where they are: restoring it is one element, not a rewrite. The
+            trade it makes is on the record — three survey percentages now
+            publish without the line that says they are survey findings and
+            not a claim about every organisation. */}
       </div>
 
       <DecisionGapMotion />

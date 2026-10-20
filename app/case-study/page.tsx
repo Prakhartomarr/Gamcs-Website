@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHeadArt from "@/components/PageHeadArt";
 import CaseStudyCard from "@/components/CaseStudyCard";
+import FluteShader from "@/components/ui/flute-shader";
 import { caseStudies, primaryCta } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { pages } from "@/lib/content/pages";
@@ -51,6 +52,7 @@ export default function CaseStudyPage() {
           </div>
 
           <div className="case-cta">
+            <FluteShader />
             <h2>{t.closing}</h2>
             <CTA href={primaryCta.href} tier="secondary"
               data-cta="case-study-footer" icon="diagonal">

@@ -1,6 +1,6 @@
 import type { SolutionBlock } from "@/lib/content/gamcs";
 import { previewBySlug, primaryCta, solutions } from "@/lib/content/gamcs";
-import Velaris from "@/components/ui/velaris";
+import Velaris, { VELARIS_MOTION } from "@/components/ui/velaris";
 
 /**
  * The five pillars, built to docs/unity-spec.md: two equal columns inside a
@@ -87,9 +87,9 @@ export default function PillarBlocks() {
               <span className="sol-card-paint" aria-hidden="true">
                 <Velaris
                   height="100%"
-                  dpr={1.5}
-                  speed={1.1}
-                  grain={0.22}
+                  /* The shared pace, so these cards and the flute panels
+                     cannot drift apart again. Only the colours are local. */
+                  {...VELARIS_MOTION}
                   bg={paint.bg}
                   colors={paint.colors}
                 />

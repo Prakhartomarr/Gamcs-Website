@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 
 /**
- * The decision gap's entrance. Renders nothing; it only animates the section
- * it is mounted inside.
+ * The decision gap's entrance and its deck. Renders nothing; it only animates
+ * the section it is mounted inside.
  *
  * The approved plain section is the resting state, so this is a gate before it
  * is a timeline: `dg--motion` lands on the section only once this effect has
@@ -17,36 +17,43 @@ import { gsap } from "gsap";
  * stylesheet needs to hide anything for this to work, so nothing can strand
  * the section invisible if this component never mounts or throws.
  *
+ * That contract now covers GEOMETRY as well as opacity. The stylesheet's
+ * `.dg-stage` block is four square cards in a panel; the fan, the deck's tilt
+ * and the hover travel are transforms written here. A reader with no JS gets
+ * the panel, never a deck frozen half-dealt.
+ *
  * One IntersectionObserver and one timeline, deliberately. MotionLayer's
  * header records the measurement: ScrollTrigger.batch put ~50 scroll-measured
  * triggers on the page and took style-recalc from 298ms to 583ms, because it
  * reads layout on the main thread. This section does not need scrub, pin or
  * progress — it needs "play once, when seen" — which is an observer's whole
- * job, done off the main thread. Keeping it to one timeline also means the
- * rhythm is legible in one block and killable in one call.
+ * job, done off the main thread.
  *
- * TRANSFORM OWNERSHIP. MotionLayer binds a gsap.quickTo hover lift to every
- * [data-lift] element, which is both the symptom cards and the figure cards.
- * `transform` is therefore already owned, and a second writer on the same
- * matrix does not layer — it fights, frame by frame, for the ~0.6s the
- * entrance and a pointer can overlap. So the cards' rise is NOT a transform:
- * it is a `--dg-rise` length the stylesheet feeds to the independent
- * `translate` property, which composes with `transform` in the browser instead
- * of competing for it. Hover keeps the matrix, the entrance keeps the
- * property, and neither has to know about the other. Elements that are not
- * [data-lift] — the heading words, the lead, the turn's clauses — are tweened
- * with plain `y`, because nothing else is writing their transform.
+ * TRANSFORM OWNERSHIP. The symptom cards no longer carry `data-lift`, so
+ * MotionLayer's page-wide quickTo hover lift never binds to them and this
+ * file is the single writer on their matrix — which it has to be, because the
+ * fan, the deal-out and the hover all live on the same transform. The figures
+ * still carry it, so their travel still rides the independent `--dg-rise`
+ * length rather than `transform`, and the two systems never meet.
  *
- * `--dg-rise` falls back to its resting value, so an unstyled or half-styled
- * build loses the travel, never the content.
+ * THE FAN IS MEASURED, NOT TABULATED. Each card's rotation and depth come
+ * from where its centre actually sits across the deck, so the same code gives
+ * a four-across fan at 1280, a gentler two-up fan at 768, and nothing at all
+ * on the phone rail — with no breakpoint table to drift out of step with the
+ * stylesheet, and no wrong answer after a font swap or a copy change.
  */
 
-/* The stylesheet contract, all of it scoped under `.dg--motion`:
-     .dg--motion .dg-w{display:inline-block}
-     .dg--motion .dg-pain,.dg--motion .dg-stat{translate:0 var(--dg-rise,0)}
-   Those two are additive. No rule may set `opacity` or `transform` on the
-   elements below: the hidden values are inline and are cleared when this
-   unmounts, and a rule setting them would outlive the cleanup. */
+/* The stylesheet contract:
+     .dg-stage{display:contents}                       (<768: no box at all)
+     @media (min-width:768px){ .dg-stage{perspective:1500px}
+                               .dg-pains{transform-style:preserve-3d}
+                               .dg-pain{transform-style:preserve-3d} }
+     .dg-stat{translate:0 var(--dg-rise,0)}
+   No rule may set `opacity` or `transform` on the elements below outside the
+   gate: the hidden values are inline and are cleared when this unmounts, and
+   a rule setting them would outlive the cleanup. */
+
+type Fan = { rotationY: number; z: number; y: number; x: number };
 
 export default function DecisionGapMotion() {
   useEffect(() => {
@@ -72,16 +79,74 @@ export default function DecisionGapMotion() {
         Array.from(sec.querySelectorAll<T>(sel));
       const words = all(".dg-w");
       const sub = all(".dg-sub");
-      const pains = all(".dg-pain");
+      const stage = sec.querySelector<HTMLElement>(".dg-stage");
+      const deck = sec.querySelector<HTMLElement>(".dg-pains");
+      const cards = all<HTMLElement>(".dg-pain");
       const clauses = [...all(".dg-turn-lead"), ...all(".dg-turn-q")];
       const stats = all(".dg-stat");
       const fades = [...words, ...sub, ...clauses];
 
+      /* The stage is only a box from 768 up — below that it is
+         display:contents and the phone block draws the rail instead. */
+      const spatial = window.matchMedia("(min-width: 768px)");
+      const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+      const fans = new Map<HTMLElement, Fan>();
+
+      /* Must run before anything is transformed: it reads laid-out geometry.
+         `t` is the card centre's position across the deck, -1 at the left
+         edge to +1 at the right, so the outer cards turn and recede most and
+         a card at the centre barely moves — which is what a hand of cards
+         does. `x` is the from-value: a fraction of the distance to the deck's
+         centre, so the four start as a loose stack and are dealt out. */
+      const measure = () => {
+        fans.clear();
+        if (!deck || !spatial.matches) return;
+        const dr = deck.getBoundingClientRect();
+        const dcx = dr.left + dr.width / 2;
+        const half = dr.width / 2 || 1;
+        cards.forEach((card) => {
+          const r = card.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const t = (cx - dcx) / half;
+          fans.set(card, {
+            rotationY: -t * 11,
+            z: -Math.abs(t) * 58,
+            y: Math.abs(t) * 10,
+            x: (dcx - cx) * 0.18,
+          });
+        });
+      };
+
       sec.classList.add("dg--motion");
-      gsap.set([...fades, ...pains, ...stats], { opacity: 0 });
+      measure();
+
+      gsap.set(fades, { opacity: 0 });
       gsap.set(words, { y: 14 });
       gsap.set(sub, { y: 12 });
-      gsap.set([...pains, ...stats], { "--dg-rise": "16px" });
+      gsap.set(stats, { opacity: 0, "--dg-rise": "16px" });
+      if (stage) gsap.set(stage, { opacity: 0, y: spatial.matches ? 26 : 0 });
+      /* `.dg-note` is not animated because it is not rendered — see the note
+         in DecisionGap.tsx. If it comes back it needs a tween HERE and a
+         selector in all four gate lists, or it paints and then snaps. */
+
+      const dealt = spatial.matches && fans.size > 0;
+      if (dealt) {
+        const mid = (cards.length - 1) / 2;
+        cards.forEach((card, i) => {
+          const f = fans.get(card);
+          if (!f) return;
+          gsap.set(card, {
+            opacity: 0,
+            x: f.x,
+            y: 26,
+            z: -220,
+            rotationY: 0,
+            rotationZ: (i - mid) * 1.6,
+          });
+        });
+      } else {
+        gsap.set(cards, { opacity: 0, y: 16 });
+      }
       /* Only now: the inline from-values have replaced what the gate was
          holding, so there is no frame in which the section is visible. */
       release();
@@ -89,7 +154,7 @@ export default function DecisionGapMotion() {
       /* power4.out is quintic-out, which is the curve --ease-out
          (cubic-bezier(.23,1,.32,1)) encodes — same motion vocabulary as the
          CSS reveals, without registering CustomEase for one section. .56s is
-         --dur-reveal; the whole thing lands by ~1.36s. */
+         --dur-reveal. */
       const tl = gsap.timeline({
         paused: true,
         defaults: { duration: 0.56, ease: "power4.out" },
@@ -100,13 +165,148 @@ export default function DecisionGapMotion() {
          stagger would read as a second heading. */
       tl.to(words, { opacity: 1, y: 0, stagger: 0.045 }, 0);
       tl.to(sub, { opacity: 1, y: 0, duration: 0.5 }, 0.18);
-      tl.to(pains, { opacity: 1, "--dg-rise": "0px", stagger: 0.07 }, 0.3);
+      /* The stage arrives first and empty: the reader sees the surface, then
+         the cards land on it. */
+      if (stage) tl.to(stage, { opacity: 1, y: 0, duration: 0.7 }, 0.36);
+
+      if (dealt) {
+        cards.forEach((card, i) => {
+          const f = fans.get(card);
+          if (!f) return;
+          tl.to(
+            card,
+            {
+              opacity: 1,
+              x: 0,
+              y: f.y,
+              z: f.z,
+              rotationY: f.rotationY,
+              rotationZ: 0,
+              duration: 0.95,
+              ease: "power3.out",
+            },
+            0.58 + i * 0.085
+          );
+        });
+      } else {
+        tl.to(cards, { opacity: 1, y: 0, stagger: 0.07 }, 0.4);
+      }
+
       /* The turn is the pivot of the section, not the showreel: the two
          clauses only fade, 120ms apart, and never move. */
-      tl.to(clauses, { opacity: 1, duration: 0.44, stagger: 0.12 }, 0.52);
+      tl.to(clauses, { opacity: 1, duration: 0.44, stagger: 0.12 }, 1.08);
       /* The figures rise and fade only — CountUp owns the numbers and starts
          on its own intersect, so counting them here would run them twice. */
-      tl.to(stats, { opacity: 1, "--dg-rise": "0px", stagger: 0.07 }, 0.66);
+      tl.to(stats, { opacity: 1, "--dg-rise": "0px", stagger: 0.07 }, 1.18);
+
+      /* Listeners are recorded as they are bound so teardown can remove
+         exactly what was added, including on a breakpoint this run never
+         took. */
+      const bound: Array<[HTMLElement, string, EventListener]> = [];
+      const on = (el: HTMLElement, type: string, fn: EventListener) => {
+        el.addEventListener(type, fn);
+        bound.push([el, type, fn]);
+      };
+
+      if (stage && deck && dealt && fine.matches) {
+        /* The deck tilts toward the pointer. quickTo retargets an existing
+           tween instead of starting a new one per move, so this is two
+           property writes a frame rather than a tween per event. The clamps
+           are small on purpose: 5 and 7 degrees is enough for the cards to
+           separate in depth and not enough for the section to read as
+           unstable under the cursor. */
+        const rx = gsap.quickTo(deck, "rotationX", { duration: 0.6, ease: "power3.out" });
+        const ry = gsap.quickTo(deck, "rotationY", { duration: 0.6, ease: "power3.out" });
+        on(stage, "pointermove", (e) => {
+          const r = stage.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          const ev = e as PointerEvent;
+          rx(-((ev.clientY - r.top) / r.height - 0.5) * 5);
+          ry(((ev.clientX - r.left) / r.width - 0.5) * 7);
+        });
+        on(stage, "pointerleave", () => {
+          rx(0);
+          ry(0);
+        });
+
+        /* Pick one up: it comes off the stage, straightens toward the
+           reader, and the other three settle back. The guard matters —
+           a pointer resting over the deck while the entrance is still
+           running would otherwise fight the deal for the rest of it. */
+        cards.forEach((card) => {
+          on(card, "pointerenter", () => {
+            if (tl.progress() < 1) return;
+            const f = fans.get(card);
+            if (!f) return;
+            gsap.to(card, {
+              z: f.z + 108,
+              y: f.y - 12,
+              rotationY: f.rotationY * 0.3,
+              duration: 0.5,
+              ease: "power3.out",
+              overwrite: "auto",
+            });
+            cards.forEach((other) => {
+              if (other === card) return;
+              const g = fans.get(other);
+              if (!g) return;
+              gsap.to(other, {
+                z: g.z - 26,
+                opacity: 0.72,
+                duration: 0.5,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+            });
+          });
+          on(card, "pointerleave", () => {
+            if (tl.progress() < 1) return;
+            cards.forEach((other) => {
+              const g = fans.get(other);
+              if (!g) return;
+              gsap.to(other, {
+                z: g.z,
+                y: g.y,
+                rotationY: g.rotationY,
+                opacity: 1,
+                duration: 0.6,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+            });
+          });
+        });
+      }
+
+      /* The fan is a function of laid-out width, so a resize invalidates it —
+         including a resize that crosses 768 in either direction, which is why
+         the transforms are cleared before re-measuring rather than adjusted.
+         Only once the entrance has landed: re-measuring mid-deal would read
+         the cards' in-flight positions. */
+      let rid = 0;
+      const onResize = () => {
+        window.clearTimeout(rid);
+        rid = window.setTimeout(() => {
+          if (tl.progress() < 1) return;
+          gsap.set(cards, { clearProps: "transform" });
+          if (deck) gsap.set(deck, { clearProps: "transform" });
+          measure();
+          if (spatial.matches && fans.size) {
+            cards.forEach((card) => {
+              const f = fans.get(card);
+              if (!f) return;
+              gsap.set(card, {
+                x: 0,
+                y: f.y,
+                z: f.z,
+                rotationY: f.rotationY,
+                rotationZ: 0,
+              });
+            });
+          }
+        }, 180);
+      };
+      window.addEventListener("resize", onResize);
 
       const io = new IntersectionObserver(
         ([entry]) => {
@@ -131,14 +331,21 @@ export default function DecisionGapMotion() {
 
       teardown = () => {
         window.clearTimeout(net);
+        window.clearTimeout(rid);
+        window.removeEventListener("resize", onResize);
+        bound.forEach(([el, type, fn]) => el.removeEventListener(type, fn));
         io.disconnect();
         tl.kill();
-        /* Clear exactly what was set and nothing more. `transform` is cleared
-           on the elements this owns outright, and deliberately NOT on the
-           cards: that matrix is MotionLayer's, and clearing it here would
-           cancel a hover it is mid-way through. */
+        gsap.killTweensOf(cards);
+        if (deck) gsap.killTweensOf(deck);
+        /* Clear exactly what was set and nothing more. The cards' transform
+           IS cleared here, unlike the old version — this file owns it now
+           that they are no longer [data-lift]. */
         gsap.set(fades, { clearProps: "opacity,transform" });
-        gsap.set([...pains, ...stats], { clearProps: "opacity,--dg-rise" });
+        gsap.set(stats, { clearProps: "opacity,--dg-rise" });
+        gsap.set(cards, { clearProps: "opacity,transform" });
+        if (stage) gsap.set(stage, { clearProps: "opacity,transform" });
+        if (deck) gsap.set(deck, { clearProps: "transform" });
         sec.classList.remove("dg--motion");
       };
     };

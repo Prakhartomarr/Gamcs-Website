@@ -35,6 +35,13 @@ export interface ScrollReelTestimonial {
   alt?: string;
   /** Fallback shown when `image` is omitted (e.g. "AK") */
   monogram?: string;
+  /**
+   * The company's mark, set at the far end of the byline row opposite the
+   * name. `width`/`height` are the file's own pixels: each mark is trimmed to
+   * its own artwork, so its true ratio is what the two ceilings below size
+   * against.
+   */
+  logo?: { src: string; width: number; height: number };
 }
 
 export interface ScrollReelTestimonialsProps {
@@ -74,6 +81,65 @@ const AUTHOR_CLASSES =
    19px gap meant to separate the quote from the byline, which between the
    name and the role would read as two separate things. */
 const BYLINE_CLASSES = "flex flex-col gap-[2px]";
+/* The byline is a ROW: name and role at the start, the company's mark pushed
+   to the far end. items-CENTER since the marks were resized (2026-10-20):
+   they were all 30px, shorter than the two-line byline, so sitting them on
+   its bottom edge read as a baseline. Area-solved they run 34-56px, taller
+   than the byline for the square ones, and bottom-aligning a 56px mark
+   against 44px of type hangs it off the top instead. Centred, every mark
+   balances on the block whatever its shape. */
+const BYLINE_ROW_CLASSES = "flex items-center justify-between gap-6";
+
+/* One optical size for every mark, which a height cap alone cannot give.
+   These files run from 0.70:1 (WWF, taller than wide) to 5.37:1 (One of Us,
+   a long wordmark). Pinned to a common HEIGHT the wordmark carries three
+   times the square's area and the square looks shrunken — which is what was
+   happening: Basilic Fly is 1.11:1, so a 30px ceiling drew it 33x30 and the
+   type inside the artwork came out about 6px tall, below reading size.
+
+   So the size is solved on AREA. h = sqrt(A/r), w = h * r gives every mark
+   the same number of pixels of ink whatever its shape, and the two clamps
+   catch the ends: at this area a 0.70 ratio wants to be 88px tall against a
+   44px byline, and a 5.37 wordmark wants to be 170px wide. Caps win over the
+   area, so a clamped mark is slightly smaller than the rest rather than
+   out of scale with the block it sits in. */
+const MARK_AREA = 5400;
+const MARK_MAX_H = 56;
+const MARK_MAX_W = 180;
+
+function markSize(w: number, h: number) {
+  const ratio = w / h;
+  let height = Math.sqrt(MARK_AREA / ratio);
+  let width = height * ratio;
+  if (height > MARK_MAX_H) {
+    height = MARK_MAX_H;
+    width = height * ratio;
+  }
+  if (width > MARK_MAX_W) {
+    width = MARK_MAX_W;
+    height = width / ratio;
+  }
+  return { width: Math.round(width), height: Math.round(height) };
+}
+
+/**
+ * The company's mark. `alt=""` deliberately: the company is written in full
+ * in the byline inches away, so a name here is the same string announced
+ * twice — and the mark carries no information the role line does not.
+ */
+function CompanyMark({ logo }: { logo: NonNullable<ScrollReelTestimonial["logo"]> }) {
+  const size = markSize(logo.width, logo.height);
+  return (
+    <Image
+      src={logo.src}
+      alt=""
+      width={logo.width}
+      height={logo.height}
+      style={{ width: size.width, height: size.height }}
+      className="shrink-0 select-none object-contain"
+    />
+  );
+}
 
 const FEATURED_SHADOW =
   "0 1.008px 0.705px -0.563px rgba(0,0,0,0.18), 0 2.389px 1.672px -1.125px rgba(0,0,0,0.17), 0 4.357px 3.05px -1.688px rgba(0,0,0,0.17), 0 7.244px 5.07px -2.25px rgba(0,0,0,0.16), 0 11.698px 8.188px -2.813px rgba(0,0,0,0.15), 0 19.148px 13.404px -3.375px rgba(0,0,0,0.13), 0 32.972px 23.08px -3.938px rgba(0,0,0,0.09), 0 60px 42px -4.5px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.6)";
@@ -453,11 +519,17 @@ export function ScrollReelTestimonials({
                   className="col-start-1 row-start-1 flex flex-col gap-[19px]"
                 >
                   <p className={QUOTE_CLASSES}>{t.quote}</p>
-                  <div className={BYLINE_CLASSES}>
-                    <p className={AUTHOR_CLASSES}>{t.author}</p>
-                    {t.authorRole ? (
-                      <p className={AUTHOR_CLASSES}>{t.authorRole}</p>
-                    ) : null}
+                  {/* the mark is measured here too: it can stand taller than
+                      the two lines of type beside it, and the stage's height
+                      comes from this block */}
+                  <div className={BYLINE_ROW_CLASSES}>
+                    <div className={BYLINE_CLASSES}>
+                      <p className={AUTHOR_CLASSES}>{t.author}</p>
+                      {t.authorRole ? (
+                        <p className={AUTHOR_CLASSES}>{t.authorRole}</p>
+                      ) : null}
+                    </div>
+                    {t.logo ? <CompanyMark logo={t.logo} /> : null}
                   </div>
                 </div>
               ))}
@@ -479,23 +551,30 @@ export function ScrollReelTestimonials({
               {/* Two lines, one reveal: the role's characters carry on from
                   where the name's ended, so the byline writes itself in
                   reading order instead of both lines racing. */}
-              <div className={BYLINE_CLASSES}>
-                <p className={AUTHOR_CLASSES}>
-                  <Chars
-                    text={current.author}
-                    startIndex={current.quote.length + 6}
-                    staggerMs={charStaggerMs}
-                  />
-                </p>
-                {current.authorRole ? (
+              <div className={BYLINE_ROW_CLASSES}>
+                <div className={BYLINE_CLASSES}>
                   <p className={AUTHOR_CLASSES}>
                     <Chars
-                      text={current.authorRole}
-                      startIndex={current.quote.length + 6 + current.author.length}
+                      text={current.author}
+                      startIndex={current.quote.length + 6}
                       staggerMs={charStaggerMs}
                     />
                   </p>
-                ) : null}
+                  {current.authorRole ? (
+                    <p className={AUTHOR_CLASSES}>
+                      <Chars
+                        text={current.authorRole}
+                        startIndex={current.quote.length + 6 + current.author.length}
+                        staggerMs={charStaggerMs}
+                      />
+                    </p>
+                  ) : null}
+                </div>
+                {/* The mark does not write itself in: the per-character
+                    reveal is for text being typed out, and a logo fading in
+                    beside half-written type reads as two things arriving,
+                    not one. It comes with the block. */}
+                {current.logo ? <CompanyMark logo={current.logo} /> : null}
               </div>
             </div>
           </div>

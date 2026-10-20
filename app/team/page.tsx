@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHeadArt from "@/components/PageHeadArt";
+import FluteShader from "@/components/ui/flute-shader";
 import TeamRoster from "@/components/sections/TeamRoster";
 import { primaryCta, story, team } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -47,6 +48,7 @@ export default function TeamPage() {
       <section className="section team-cta-section">
         <div className="container">
           <div className="case-cta">
+            <FluteShader />
             <h2>{team.closingCta}</h2>
             <CTA href={primaryCta.href} tier="secondary"
               data-cta="team-footer" icon="diagonal">

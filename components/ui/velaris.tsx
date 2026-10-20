@@ -114,11 +114,32 @@ export interface VelarisProps {
   height?: string;
   /** Cap on the backing store's pixel ratio. 2 is the device's, 1.5 is plenty for a background. */
   dpr?: number;
+  /**
+   * Cover the nearest positioned ancestor instead of being a block of its
+   * own. For a panel that already HAS a background and wants this over it:
+   * `height` is ignored, no children wrapper is rendered, and the whole
+   * thing leaves the accessibility tree. See components/ui/flute-shader.tsx.
+   */
+  layer?: boolean;
   className?: string;
   children?: React.ReactNode;
 }
 
 const DEFAULT_COLORS = ["#86efac", "#4ade80", "#059669", "#000000"];
+
+/**
+ * ONE PACE FOR EVERY VELARIS ON THE SITE (client, 2026-10-20: "i want the
+ * motion same in every card").
+ *
+ * The solution cards ran at 1.1 and the flute panels at 0.5, so two surfaces
+ * a reader meets within one scroll were visibly drifting at different rates.
+ * Spread this instead of passing the three by hand, so they cannot drift
+ * again — only the colours differ per surface, which is the point.
+ *
+ * `dpr` caps the backing store: a full-width panel at the device's own ratio
+ * is ~2.5M pixels of shader a frame for something deliberately out of focus.
+ */
+export const VELARIS_MOTION = { speed: 1.6, grain: 0.2, dpr: 1.5 } as const;
 
 const hexToRgb = (hex: string): [number, number, number] => {
   const h = hex.replace("#", "");
@@ -136,6 +157,7 @@ const Velaris = ({
   grain = 0.3,
   height = "100vh",
   dpr = 2,
+  layer = false,
   className,
   children,
 }: VelarisProps) => {
@@ -257,14 +279,24 @@ const Velaris = ({
   return (
     <div
       ref={containerRef}
-      style={{ height }}
-      className={cn("relative w-full overflow-hidden", className)}
+      style={layer ? undefined : { height }}
+      className={cn(
+        layer ? "absolute inset-0 overflow-hidden" : "relative w-full overflow-hidden",
+        className
+      )}
+      aria-hidden={layer ? true : undefined}
     >
+      {/* The context is created with WebGL's default alpha:true, so until a
+          frame is drawn — no WebGL, a failed program, a lost context — this
+          canvas is TRANSPARENT and whatever the container has behind it
+          shows through. That is the whole fallback, and it is why nothing
+          here needs an opacity gate. */}
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
-      <div className="relative z-10 h-full w-full">{children}</div>
+      {layer ? null : <div className="relative z-10 h-full w-full">{children}</div>}
     </div>
   );
 };
