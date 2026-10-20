@@ -6255,21 +6255,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      on the stage. */
   .home-tight .hwv .hwv-frame{height:calc(100% - 20px);width:auto;max-width:100%;
     box-sizing:content-box;aspect-ratio:16/9;margin:0}
-  /* The element keeps its OWN 16:9 rather than taking the frame's box
-     (2026-10-21). It was width:100%/height:100% with aspect-ratio:auto, so
-     the element was whatever shape the frame's content box happened to be.
-     While that box is exactly 16:9 the two agree — but when it is not, even
-     by a rounding step, `object-fit:contain` letterboxes the PICTURE inside
-     an element the native controls still draw across in full. The controls
-     then sit wider than the film they belong to, which is the misplaced bar
-     that was reported from Windows.
+  /* The element takes the frame's box. It does NOT resolve 16:9 for itself
+     (2026-10-21, second pass): one ratio, resolved once, by the frame.
 
-     Pinned to the ratio, the element is the picture: nothing to letterbox,
-     and the controls can only ever line up with it. Any slack left over
-     goes to the mount either side, which is the same colour, so it is
-     invisible. `margin-inline:auto` centres it if there ever is any. */
-  .home-tight .hwv .hwv-video{height:100%;width:auto;max-width:100%;
-    aspect-ratio:16/9;object-fit:contain;margin-inline:auto}
+     Yesterday it did the opposite — width:auto with its own aspect-ratio and
+     max-width:100% — on the theory that pinning the element to the picture's
+     ratio would stop the native control bar drawing wider than the film. It
+     did the reverse. Two independent resolutions of the same 16:9 can
+     disagree, and while they disagree the bar lays out across one box and
+     the picture sits in the other, which separates exactly the two things
+     the change was meant to keep together.
+
+     Caught on a screen recording: the whole control cluster — mute,
+     fullscreen, overflow — translated 281 device px left and stayed there
+     for 3.2 seconds, then snapped back when the film was scrubbed. The
+     glyphs measured identical in both states (30px, 9px, 9px, 7px; 99px
+     apart) so nothing was scaled; the bar was simply laid out at 7/8 of the
+     element's width, with the frame's mount showing through beside it. The
+     frame itself never moved.
+
+     The frame's content box is exactly 16:9 already — that is what
+     box-sizing:content-box plus aspect-ratio above buys — so filling it
+     costs no letterbox, and object-fit:contain stays only as the guarantee
+     that a box which is somehow not 16:9 crops nothing and distorts
+     nothing. */
+  .home-tight .hwv .hwv-video{height:100%;width:100%;object-fit:contain;margin:0}
 }
 @media (min-width:1280px){
   .home-tight .hwv{min-height:calc(100vh - 96px)}
