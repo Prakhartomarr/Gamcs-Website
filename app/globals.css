@@ -3365,6 +3365,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-pillar[data-flip] .sol-card{order:2}
 
 .sol-card{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;
+  /* The one-screen floor. Still what the stacked layout below 1024 uses,
+     where the card is a banner above its list and has nothing to match; from
+     1024 up it is dropped — see the note under .sol-list. */
   min-height:clamp(480px,88.2vh,794px);
   /* the floor the shader drifts over: what shows without WebGL, in print,
      and before the first frame */
@@ -3433,6 +3436,30 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* …and the last row loses the 20px its list carried underneath it, which is
    the same gap at the other end. */
 .sol-list>li:last-child .sol-list-body>:last-child{margin-bottom:0}
+
+/* THE CARD FOLLOWS ITS LIST FROM 1024 UP (client, 2026-10-22), where the two
+   sit side by side and the card is the thing the list is being aligned to.
+
+   The 794px floor was the reason three pillars could not reach their own
+   card: Build's list is 698, Enable's 580, Transform's 111 collapsed, and
+   `space-between` had to put the difference somewhere — 48px and 214px into
+   their gaps. Dropping the floor lets the grid row take whatever the taller
+   of the two needs, so for four of the five the card and the list are the
+   same height by construction and there is no slack left to distribute.
+
+   Measured with the floor off: Advise 791/791, Build 698/698, Transact
+   791/791, Enable 580/580 — card and list identical. Transform is the one
+   the row cannot settle, because its own content (eyebrow, headline, sub and
+   the CTA) needs 366 while its two collapsed groups come to 111; its slack
+   falls from 683 to 255, which is as far as this can take it while the
+   groups stay folded.
+
+   WHAT IT COSTS: the five panels are no longer one height down the page.
+   That was the point of the floor, and it is the trade the client chose over
+   the gaps. */
+@media (min-width:1024px){
+  .sol-card{min-height:0}
+}
 .sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   /* 16→19px since 2026-10-22, from 15→18 — see the note on .cap-list for
