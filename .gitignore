@@ -55,3 +55,16 @@ scripts/portraits/backdrop.png
 
 # Screenshot baselines from the design audit — working output, not source.
 design-audit/
+
+# Agent tooling, not site code (2026-10-21). `.agents/` is 2.4MB of a skill
+# installed from the GitHub repo in skills-lock.json — a dozen executable
+# .mjs scripts that drive a headless browser for design work. It is tooling
+# for whoever is editing the site, in the same category as node_modules:
+# third-party code this project did not write and does not ship. The lock
+# file records the source and a content hash, so `npx skills add` rebuilds
+# it; keeping 2.4MB of someone else's scripts in a client's website repo
+# buys nothing and means every clone carries them.
+# .claude/launch.json stays tracked — that one IS this project's config.
+.agents/
+.claude/skills/
+skills-lock.json
