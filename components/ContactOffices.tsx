@@ -136,12 +136,22 @@ export default function ContactOffices({ className }: { className?: string }) {
           three 960x720 basemaps on the page and load all of them; and with
           one panel every tab's `aria-controls` has to name the id that is
           actually in the document, or two of the three point at nothing. */}
+      {/* NO tabIndex. The APG puts a tabpanel in the tab order only when it
+          holds nothing focusable, so a reader can reach its content at all;
+          this one always holds the "Get directions" link, so adding one gave
+          a keyboard user an extra stop on a 1228x555 box for nothing.
+
+          It also gave that stop a focus ring that could not be seen: the
+          panel spans the whole card, so `outline-offset:-4px` drew the ring
+          beneath the tablist (which paints above it) and beneath the map
+          (which is the panel's own child, so it paints after the outline).
+          Roughly two thirds of the perimeter never rendered, and the half
+          over the map never could. Removing the stop removes both. */}
       <div
         className="cxo-panel"
         role="tabpanel"
         id={`${base}-panel`}
         aria-labelledby={`${base}-tab-${active}`}
-        tabIndex={0}
       >
         <div className="cxo-detail">
           {/* Not an <h3>: these sit under the section's own h2 and the tab

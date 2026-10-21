@@ -7046,9 +7046,19 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      ratio any more. */
   min-height:607px}
 /* Three equal, filling the column, so the row ends flush with the address
-   under it. They were 150px each and stopped 91px short. */
+   under it. They were 150px each and stopped 91px short.
+
+   auto-fit rather than repeat(3), for the same reason as the phone rule
+   below: it gives three across whenever three fit and wraps rather than
+   clipping when they do not. At every desktop width there is room for three
+   or more tracks, so auto-fit collapses the spares and the three items share
+   the row — identical to repeat(3) today. It matters at 1024, the narrowest
+   width this branch covers, where the column leaves each tab 88px of inside
+   and "Gurugram" sets to 81: seven pixels of margin, and a longer city name
+   would have clipped with no way to tell until someone looked. */
 .cxo-tabs{grid-row:1;grid-column:1;z-index:1;
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(116px,1fr));
+  gap:14px}
 /* Cards, not pills: a badge over a name, which is the reference's tab. 96px
    tall and 150px wide clears the 44px target several times over. */
 .cxo-tab{display:flex;flex-direction:column;align-items:flex-start;gap:14px;
@@ -7075,14 +7085,26 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      it. Focus is a separate mechanism and is untouched. */
   pointer-events:none}
 .cxo-panel > *{pointer-events:auto}
-/* The panel takes focus when a tab is chosen, so it needs a ring of its own
-   — without one the focus simply disappears (WCAG 2.4.7). Inset rather than
-   offset now that the panel is the size of the card. */
-.cxo-panel:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;
+/* A safety net, not a live state: the panel is no longer in the tab order
+   (see ContactOffices.tsx), so this only fires if something focuses it
+   programmatically. The offset is POSITIVE — inset, the ring drew inside a
+   box whose own child (the map) and whose overlapping sibling (the tablist,
+   z-index 1) both paint on top of it, so most of it never rendered. Outside
+   the box it lands on the card's own padding, where nothing covers it. */
+.cxo-panel:focus-visible{outline:2px solid var(--blue);outline-offset:2px;
   border-radius:24px}
 /* Bottom of the column, so its last line sits level with the bottom of the
-   map beside it. */
-.cxo-detail{align-self:end}
+   map beside it.
+
+   The padding is the tab row. The panel spans the WHOLE card, tab row
+   included, so a detail bottom-aligned in it grows upward — and the tab
+   cards are opaque, so past a certain height the address would slide behind
+   them and the card would not grow, because the overflow is inside a box
+   that is already tall enough. Measured, today's three offices clear the
+   tabs by 270-302px at every desktop width, so this changes nothing on
+   screen; it is here so that a longer address pushes the card taller
+   instead of disappearing. 98 of tab + 26 of gap. */
+.cxo-detail{align-self:end;padding-top:124px}
 .cxo-city{margin:0;font-size:1.3333rem;line-height:1.25;font-weight:600;
   letter-spacing:-.02em;color:var(--ink-deep)}
 .cxo-addr{display:grid;gap:4px;margin:14px 0 0;font-style:normal;
@@ -7136,6 +7158,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .cx-card{padding:30px 24px;border-radius:22px}
   .cx-inner{padding:22px 20px;border-radius:16px}
   .cxo{padding:18px;border-radius:22px}
-  .cxo-tab{flex:1 1 auto;min-width:0;min-height:84px;padding:14px}
-  .cxo-tabs{gap:10px}
+  /* THREE EQUAL COLUMNS DO NOT FIT A PHONE. Measured: at 320px each tab
+     was 71px wide with 43px inside it, and "Gurugram" sets to 81px — it
+     overflowed by 38px, and still by 18px at 390 and 4px at 430. Only 768
+     and up had room.
+
+     auto-fit lets the row decide: three across wherever they fit, two with
+     the third wrapping where they do not, one at the very bottom. auto-fit
+     collapses the tracks it does not need, so with three items and room for
+     more the three simply share the width — the 768 layout is unchanged.
+
+     116px, and the number is load-bearing. "Gurugram" sets to 81px and the
+     tab carries 28px of padding, so 109 is the floor below which it
+     overflows. 104 was tried first and was wrong by 4px: at 430 three 104s
+     plus two 10px gaps come to 332 inside 335, so it still laid out three
+     across and still clipped. 116 forces the wrap one step earlier. */
+  .cxo-tabs{grid-template-columns:repeat(auto-fit,minmax(116px,1fr));gap:10px}
+  .cxo-tab{min-width:0;min-height:84px;padding:14px}
 }
