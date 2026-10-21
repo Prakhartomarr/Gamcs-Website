@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import FluteShader from "@/components/ui/flute-shader";
+import { PRINCIPLE_ICONS } from "@/components/ui/stroke-icons";
 import Link from "next/link";
 import CTA from "@/components/CTA";
 import CountUp from "@/components/motion/CountUp";
@@ -290,50 +292,81 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 05 · where we're going ──────────────────────────────── */}
+      {/* REBUILT to the client's reference (2026-10-21): the four principles
+          as a 2x2 of white cards on the left, the chapter's label, heading
+          and body in a narrower column on the right. It was a stacked
+          heading-then-four-across-row.
+
+          No button in the right-hand column. The reference carries one, but
+          every label it could take is already the CTA card at the foot of
+          this page — a second copy two sections apart is one destination
+          offered twice, and inventing a third label is copy nobody wrote. */}
       <section id="where-were-going" className="os-ch os-ch--paper">
         <div className="container">
-          <div className="reveal">
-            <ChapterLabel n="05">{ch.future.label}</ChapterLabel>
-            <h2 className="os-h">{ch.future.heading}</h2>
-            {ch.future.body.map((p) => (
-              <p className="os-body os-lead" key={p.slice(0, 40)}>
-                {p}
-              </p>
-            ))}
-          </div>
+          <div className="os-future">
+            <ul className="os-principles reveal">
+              {ch.future.principles.map((p) => (
+                <li className="os-principle" key={p.heading}>
+                  {/* Same 24x24 / 1.7-stroke idiom as the solution pillars
+                      and the six "how we help" points; see PRINCIPLE_ICONS
+                      for why these are new geometry rather than reused
+                      glyphs. Decorative — the heading beside it says what
+                      the card is. */}
+                  <span className="os-principle-icon" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.7}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {PRINCIPLE_ICONS[p.heading]}
+                    </svg>
+                  </span>
+                  <h3>{p.heading}</h3>
+                  <p>{p.body}</p>
+                </li>
+              ))}
+            </ul>
 
-          <ul className="os-principles reveal">
-            {ch.future.principles.map((p) => (
-              <li key={p.heading}>
-                <h3>{p.heading}</h3>
-                <p>{p.body}</p>
-              </li>
-            ))}
-          </ul>
+            <div className="os-future-copy reveal">
+              <ChapterLabel n="05">{ch.future.label}</ChapterLabel>
+              <h2 className="os-h">{ch.future.heading}</h2>
+              {ch.future.body.map((p) => (
+                <p className="os-body os-lead" key={p.slice(0, 40)}>
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── what comes next ─────────────────────────────────────── */}
-      <section id="what-comes-next" className="os-ch os-ch--soft os-close">
+      {/* THE SITE'S STANDARD CTA CARD (client, 2026-10-21), the same
+          `.case-cta` + <FluteShader/> that closes /team, /careers,
+          /case-study and every service page. This page had its own: a pale
+          band with a heading, a lead and two buttons, which was the one
+          closing treatment on the site that did not match the others.
+
+          It is dark, and the client asked for no dark theme in the two
+          sections above — the CTA was exempted explicitly, because matching
+          the rest of the site is the point of using the standard card.
+
+          `ourStory.closing.body` stops rendering: the card is a heading and
+          one control. The string stays in the content module. */}
+      <section className="section os-close-cta">
         <div className="container">
-          <div className="reveal">
-            <h2 className="os-h os-h--close">{ourStory.closing.heading}</h2>
-            <p className="os-body os-lead">{ourStory.closing.body}</p>
-            {/* `ctas` as well as the page-local class: it carries the
-                site-wide phone convention (.ctas .btn{width:100%}) that the
-                hero pair already gets, so both pairs on this page stack the
-                same way below 768. */}
-            <div className="ctas os-ctas">
-              <CTA href={ourStory.closing.cta.href} data-cta="story-solutions-close" icon="arrow">
-                {ourStory.closing.cta.label}
-              </CTA>
-              {/* The client's secondary here is "Schedule a Call" word for
-                  word, so it IS primaryCta rather than a second copy of it.
-                  data-cta is the series the old chapter 07 reported under. */}
-              <CTA href={primaryCta.href} tier="secondary" data-cta="firm-story" icon="diagonal">
-                {primaryCta.label}
-              </CTA>
-            </div>
+          <div className="case-cta reveal">
+            <FluteShader />
+            <h2>{ourStory.closing.heading}</h2>
+            {/* The client's own secondary here was "Schedule a Call" word for
+                word, so the card's single control IS primaryCta. data-cta is
+                the series this page already reported under. */}
+            <CTA href={primaryCta.href} tier="secondary" data-cta="firm-story" icon="diagonal">
+              {primaryCta.label}
+            </CTA>
           </div>
         </div>
       </section>

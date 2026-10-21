@@ -53,6 +53,59 @@ export const STROKE_ICONS: Record<string, ReactNode> = {
   ),
 };
 
+/**
+ * Glyphs for the four principles in /who-we-are's "where we're going"
+ * chapter, keyed by each principle's `heading` the way STEP_ICONS is keyed by
+ * its point's `lead` — so reordering `ourStory.chapters.future.principles`
+ * cannot silently pair the wrong icon with the wrong copy.
+ *
+ * NEW GEOMETRY, not reused glyphs (client, 2026-10-21). The two sets above
+ * are keyed to solution pillars and to the six "how we help" points, and
+ * neither has a member that means "practical" or "impact over activity".
+ * What is reused is the idiom: a 24x24 box, 1.7 stroke, round caps and
+ * joins, colour from `currentColor` — so these sit in a tinted square beside
+ * the others without looking imported.
+ */
+export const PRINCIPLE_ICONS: Record<string, ReactNode> = {
+  /* A checklist: advice that leads to action. */
+  "Practical by design": (
+    <>
+      <path d="M3.6 6.4 5 7.8l2.6-2.6" />
+      <path d="M3.6 12.4 5 13.8l2.6-2.6" />
+      <path d="M3.6 18.4 5 19.8l2.6-2.6" />
+      <path d="M11 6.6h9.4M11 12.6h9.4M11 18.6h9.4" />
+    </>
+  ),
+  /* Three nodes on one frame: finance, data and technology designed
+     together rather than bolted to each other. */
+  "Connected thinking": (
+    <>
+      <circle cx="12" cy="4.9" r="2.4" />
+      <circle cx="5.2" cy="17.6" r="2.4" />
+      <circle cx="18.8" cy="17.6" r="2.4" />
+      <path d="M10.9 7 6.3 15.5M13.1 7l4.6 8.5M7.6 17.6h8.8" />
+    </>
+  ),
+  /* A frame drawn around a centre: built around the business, not over it. */
+  "Built around the business": (
+    <>
+      <path d="M4 8.4V5.2a1.2 1.2 0 0 1 1.2-1.2h3.2" />
+      <path d="M15.6 4h3.2A1.2 1.2 0 0 1 20 5.2v3.2" />
+      <path d="M20 15.6v3.2a1.2 1.2 0 0 1-1.2 1.2h-3.2" />
+      <path d="M8.4 20H5.2A1.2 1.2 0 0 1 4 18.8v-3.2" />
+      <circle cx="12" cy="12" r="3.1" />
+    </>
+  ),
+  /* A line that climbs and keeps going: outcomes, not output. */
+  "Impact over activity": (
+    <>
+      <path d="M3.8 19.2h16.4" />
+      <path d="M6.4 15.4l4-4.4 3.2 2.8 5.4-6.2" />
+      <path d="M15.2 7.6h4v4" />
+    </>
+  ),
+};
+
 export const ARROW = (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M5 12h14M13 6l6 6-6 6" />

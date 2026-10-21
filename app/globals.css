@@ -5373,15 +5373,76 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* ---- 05 · where we're going -------------------------------------------
    The hairline row the four closing pillars used, now carrying a sentence
    under each heading. */
-.os-principles{margin:64px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  border-top:1px solid var(--line)}
-.os-principles li{padding:26px 24px 0}
-.os-principles li:first-child{padding-left:0}
-.os-principles li:last-child{padding-right:0}
-.os-principles h3{margin:0;font-size:17px;font-weight:600;letter-spacing:-.008em;color:var(--ink)}
-.os-principles p{margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--gray);
+/* "WHERE WE'RE GOING", rebuilt to the client's reference (2026-10-21).
+   The four principles are a 2x2 of white cards on the left and the chapter's
+   label, heading and body sit in a narrower column on the right. It was a
+   stacked heading with the four principles in one hairline-topped row
+   underneath.
+
+   2.25fr : 1fr is the reference's own split — the cards are the subject and
+   the copy introduces them, so the copy takes the narrower half. */
+.os-future{display:grid;grid-template-columns:minmax(0,2.25fr) minmax(0,1fr);
+  gap:48px;align-items:start}
+.os-principles{margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+/* 32px of radius is the reference's. The cards sit on this chapter's own
+   --paper ground, so they are white with a hairline rather than a shadow:
+   four shadowed boxes in a 2x2 read as floating, and nothing else on this
+   page floats. */
+.os-principle{display:flex;flex-direction:column;align-items:flex-start;
+  padding:28px 26px;border-radius:32px;background:#fff;
+  border:1px solid var(--os-rule)}
+/* The icon idiom the solution pillars and the six how-we-help points use: a
+   24px glyph in a tinted rounded square, stroke from currentColor. */
+.os-principle-icon{display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:14px;
+  background:rgba(15,94,151,.08);color:var(--blue)}
+.os-principle-icon svg{width:22px;height:22px;display:block}
+.os-principles h3{margin:20px 0 0;font-size:17px;font-weight:600;
+  letter-spacing:-.008em;color:var(--ink)}
+.os-principles p{margin:10px 0 0;font-size:15px;line-height:1.6;color:var(--gray);
   text-wrap:pretty}
+/* The copy column. `position:sticky` is deliberately NOT here: the cards are
+   only two rows deep, so there is nothing long enough to scroll past. */
+.os-future-copy .os-h{margin-top:14px}
+.os-future-copy .os-lead{max-width:none}
+
+/* THE FOUNDERS, in the same card treatment (client, 2026-10-21). Portrait,
+   name, role and bio were bare on the page; they are a white rounded card
+   each now, matching the four above.
+
+   The shot keeps the half-width cap it was given earlier today — 50% OF THE
+   CARD now rather than of the column, which lands it within ~25px of the
+   308px it was, so the client's own sizing survives the move. */
+.os-founder{padding:28px 26px;border-radius:32px;background:#fff;
+  border:1px solid var(--os-rule)}
+.os-founder .os-founder-name{margin-top:20px}
+
+/* The closing band is the site's standard `.case-cta` now, which brings its
+   own padding and ground; this only has to give the section its rhythm. */
+.os-close-cta{padding:0 0 96px}
+.os-close-cta .case-cta{margin-top:0}
+
+/* THE SPLIT ONLY WORKS WHERE THERE IS ROOM FOR TWO COLUMNS. Measured before
+   this rule: at 768 the copy column came out 204px and at 390 it was 94px —
+   a chapter heading and two paragraphs in a 94px gutter. Stacked, and the
+   copy goes FIRST, because it is the chapter's own label, heading and body
+   and the cards are what it introduces. */
+/* 1279, not 1023. The reference's right-hand column is 263px and holds an
+   eyebrow, a heading and ONE short lead; this one holds two paragraphs of
+   ~180 characters. Measured at 1024 it came to 268px and 608px tall against
+   489px of cards — the column introducing the cards was taller than them.
+   The split earns its keep from 1280 up, where the copy gets ~350px. */
+@media (max-width:1279px){
+  .os-future{grid-template-columns:1fr;gap:32px}
+  .os-future-copy{order:-1}
+  .os-future-copy .os-h{margin-top:12px}
+}
+@media (max-width:639px){
+  .os-principles{grid-template-columns:1fr;gap:16px}
+  .os-principle{padding:24px 22px;border-radius:24px}
+  .os-founder{padding:22px 20px;border-radius:24px}
+}
 
 /* ---- the two in-page jump targets ------------------------------------
    `.os-jump` carries the id the hero CTAs point at and tabindex="-1" so the
