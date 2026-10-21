@@ -38,7 +38,11 @@ export default function WhoWeAre() {
         <div className="who-row">
           <div className="who-copy reveal">
             <SectionEyebrow label={sections.whoWeAre} />
-            <h2 className="who-heading">{story.heading}</h2>
+            <h2 className="who-heading">
+              {story.headingLead}
+              <span className="accent">{story.headingAccent}</span>
+              {story.headingTail}
+            </h2>
             <p className="who-lead">{story.lead}</p>
 
             {/* Phone only. `.who-stats` is display:none until 767px, so on

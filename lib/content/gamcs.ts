@@ -196,8 +196,14 @@ export const story = {
    * 108-character sentence breaks all four, so the section heading is its own
    * field and "Driving Change, Delivering Results" stays the tagline.
    */
-  heading:
-    "We connect finance, data and technology to transform reporting into decisions \u2014 and insights into impact.",
+  /* One sentence, split so the middle clause can take the accent tint
+     (client, 2026-10-21). The three concatenate back to the original
+     character for character, including the spaces that sit on `headingLead`
+     and `headingTail` rather than between the spans: a gap introduced by the
+     markup would show up as a double space when the accent is removed. */
+  headingLead: "We connect ",
+  headingAccent: "finance, data and technology to transform reporting into decisions",
+  headingTail: " \u2014 and insights into impact.",
   lead:
     "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.",
   mission:
