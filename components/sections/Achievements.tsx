@@ -32,9 +32,20 @@ import { achievements } from "@/lib/content/gamcs";
  */
 
 /* Positions rather than values, so a figure can be re-worded in the content
-   file without touching this: 0 $2Bn+, 3 150+, 2 100+, 1 30+, 4 15+,
-   5 Up to 90%. */
-const SHOWN = [0, 3, 2, 1, 4, 5] as const;
+   file without touching this: 0 $2Bn+, 3 150+, 5 Up to 90%, 1 30+, 4 15+,
+   2 100+.
+
+   "Up to 90%" AND "100+" TRADED PLACES (client, 2026-10-22) — the third and
+   sixth cells, which are the right-hand column of each row at three across.
+   Worth knowing what it does to the reading: the band's five other figures
+   count what was BUILT and that one counts what it DID, so the set no longer
+   closes on its only outcome. It ends on "Financial models, budgets & plans
+   delivered" instead and the outcome now sits at the end of the first row.
+
+   The order only reads as rows at three columns. It wraps to two from 768
+   and to one below 640, where these two become cells 3 and 6 of a different
+   shape — nothing to fix, just not a layout that can hold a pairing. */
+const SHOWN = [0, 3, 5, 1, 4, 2] as const;
 
 export default function Achievements() {
   const figures = SHOWN.map((i) => achievements.items[i]).filter(Boolean);
