@@ -110,7 +110,6 @@ export const sections = {
   learnMore: "Learn more",
   atAGlance: "At a glance",
   testimonials: "Testimonials",
-  whoWeAre: "Who we are",
   aboutFirm: "About our firm",
   meetFounders: "Meet our founders",
   /* The link to /team inside the phone's founders reveal. It cannot reuse

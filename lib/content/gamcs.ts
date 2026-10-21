@@ -1139,6 +1139,11 @@ export const footer = {
      are, Team, Careers — are in Explore. `solutions` is retired with the
      column it headed. */
   headings: {
+    /* `connect` heads the brand column's social and email row. The other
+       four head a list of links; this one heads two controls, which is why
+       it reads as an invitation rather than as a category (client,
+       2026-10-21). */
+    connect: "Let's connect",
     offices: "Offices",
     explore: "Explore",
     resources: "Resources",

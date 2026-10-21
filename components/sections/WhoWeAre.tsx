@@ -1,5 +1,4 @@
 import Image from "next/image";
-import SectionEyebrow from "@/components/SectionEyebrow";
 import { site, story, team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { roster, sections } from "@/lib/content/ui";
@@ -37,7 +36,13 @@ export default function WhoWeAre() {
       <div className="container">
         <div className="who-row">
           <div className="who-copy reveal">
-            <SectionEyebrow label={sections.whoWeAre} />
+            {/* The "Who we are" eyebrow pill is gone (client, 2026-10-21).
+                It named the section above a heading that already says what
+                the section is, which is the pill-tag eyebrow the brief rules
+                out. `sections.whoWeAre` went with it: this was its only
+                reader. The links to this page carry their own labels: the
+                nav's in ui.ts (header.items), the footer's in gamcs.ts
+                (footer.links). */}
             <h2 className="who-heading">
               {story.headingLead}
               <span className="accent">{story.headingAccent}</span>

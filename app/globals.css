@@ -4937,21 +4937,37 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 		}
 
 		/* ---- 3. office block ------------------------------------------ */
-		/* Two columns so the mail field and the LinkedIn tile share a row.
-		   The email link and the tile are not siblings in the markup — the
-		   wrapper goes display:contents rather than being moved, which is
-		   what keeps the >=640 box tree identical. */
+		/* ONE column. This was two — minmax(0,1fr) and a 48px cell — so a
+		   mail field and the LinkedIn tile could share a row back when they
+		   were separate children here. They are not: the tile and the email
+		   button now live together in .gf-actions, which is a flex row of its
+		   own. Every child of this grid is full width, and the spare 48px
+		   track was waiting to catch the next child added above .gf-actions
+		   and squeeze it (adding the "Let's connect" head did exactly that,
+		   pushing the 129px button into 48px and off a 390px screen). */
 		.gf .gf-office {
 			order: 1;
 			margin-top: 0;
 			margin-bottom: 32px;
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) 48px;
+			grid-template-columns: minmax(0, 1fr);
 			align-items: center;
 			gap: 16px 12px;
 		}
-		/* The lockup opens the footer, spanning both columns above the
-		   address. Deliberately NOT resized: the 32px mark and the 42.67px
+		/* The grid's own 16px row gap spaces the head and the row here, so
+		   the unscoped 26px/14px above would land on top of it. Zeroed, not
+		   re-tuned: this column is a stack of full-width blocks on a phone,
+		   and one rhythm for all of them is the point. */
+		.gf .gf-connecth {
+			margin: 0;
+		}
+		.gf .gf-connecth + .gf-actions {
+			margin-top: 0;
+		}
+		/* The lockup opens the footer. The span is left in place now that
+		   the grid is single-track — 1 / -1 is column 1 either way, and it
+		   is what makes this correct again if a second track returns.
+		   Deliberately NOT resized: the 32px mark and the 42.67px
 		   word are locked to each other by Inter's cap ratio and a measured
 		   half-pixel correction (globals.css:2135-2145), so a phone-only
 		   font-size would break the wordmark rather than scale it. It
@@ -6418,6 +6434,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* The column heads recede: the links carry the weight, which is the
    reference's order and already the rule this footer followed. */
 .gf-grouph{letter-spacing:0}
+/* "Let's connect" takes over the 26px that used to space .gf-actions off
+   the blurb, and the row tucks under its own head at 14px. Measured, not
+   borrowed from the link columns' 20px: those sit above a line of text,
+   this one above two 36px controls whose boxes already carry air the
+   glyphs do not fill. */
+.gf-connecth{margin-top:26px}
+.gf-connecth + .gf-actions{margin-top:14px}
 
 /* OFFICES COLUMN (client, 2026-10-21). Sits between the brand block and
    Explore, in the white space the 1fr brand track left over.
@@ -6454,6 +6477,29 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      the addresses at the end of it. */
   .gf .gf-offices{order:3}
   .gf-offlist{gap:14px}
+}
+
+/* 1024-1279: THE FIVE COLUMNS DO NOT FIT, so the addresses take a row of
+   their own.
+
+   Measured, because adding this column on 2026-10-21 was checked at 1440
+   and 390 and not between. .container is min(920px, 100% - 56px) through
+   this range, so the grid is 920px wide at every width in it; five tracks
+   plus four 48px gaps ask for 232 + 173 + 173 + 140 + 192 = 910, and the
+   brand track is minmax(0, 1fr), which means it — not one of the fixed
+   tracks — absorbs the whole shortfall. It resolved to 10px: a 175px
+   lockup and a 175px contact row spilling out of a 10px cell, straight
+   across the addresses beside them.
+
+   Dropping the addresses to row 2 gives the brand column 290px back and
+   sets the three of them side by side across the full measure, which is
+   the one place they have room to be read as a row. `order` moves the
+   block without moving the markup, the same lever the phone stack uses
+   above. */
+@media (min-width:1024px) and (max-width:1279px){
+  .gf .gf-top{grid-template-columns:minmax(0,1fr) 173px 173px max-content}
+  .gf .gf-offices{order:1;grid-column:1/-1}
+  .gf-offlist{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 }
 
 /* The bottom bar's copyright, on the footer's phone ground.

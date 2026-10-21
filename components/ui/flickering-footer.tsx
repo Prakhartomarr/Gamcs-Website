@@ -348,7 +348,16 @@ export function FlickeringFooter() {
 						      destination twice, once in blue.
 						    - The mailto. `site.email` is on /contact with the rest of the
 						      ways to reach the firm.
-						   The column is the lockup, one sentence and the social tile. */}
+						   The column is the lockup, one sentence, and a headed row with
+						   the social tile and the email button. */}
+						{/* A heading over the social tile and the email button. The other four
+						    column heads name a category of links; this one is an invitation,
+						    because what it heads is two controls rather than a list (client,
+						    2026-10-21). Same <h2> treatment as the rest so the footer has one
+						    heading level across its columns. */}
+						<h2 className="gf-connecth gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
+							{footer.headings.connect}
+						</h2>
 						<div className="gf-actions">
 							<a
 								href={site.linkedin}

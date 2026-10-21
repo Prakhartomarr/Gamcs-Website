@@ -4992,18 +4992,6 @@
   }
  },
  {
-  "code": "HOME-WHO-01",
-  "page": "Home (/)",
-  "section": "Who we are",
-  "label": "Eyebrow",
-  "kind": "text",
-  "text": "Who we are",
-  "source": {
-   "file": "lib/content/ui.ts",
-   "locator": "sections.whoWeAre"
-  }
- },
- {
   "code": "HOME-WHO-02",
   "page": "Home (/)",
   "section": "Who we are",
@@ -16531,6 +16519,18 @@
   }
  },
  {
+  "code": "FTR-BRAND-06",
+  "page": "Footer",
+  "section": "Footer brand block",
+  "label": "Heading over the LinkedIn tile and the email button",
+  "kind": "text",
+  "text": "Let's connect",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.headings.connect"
+  }
+ },
+ {
   "code": "FTR-BRAND-04",
   "page": "Global elements",
   "section": "Footer brand block",
@@ -16564,6 +16564,18 @@
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "site.short"
+  }
+ },
+ {
+  "code": "FTR-COLS-23",
+  "page": "Footer",
+  "section": "Link columns",
+  "label": "Offices column heading",
+  "kind": "text",
+  "text": "Offices",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.headings.offices"
   }
  },
  {
