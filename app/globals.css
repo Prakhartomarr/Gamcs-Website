@@ -5351,16 +5351,36 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Two plates, each with the short bio the new copy supplies. Hover is the
    photograph scaling; both files are already black and white on disk
    (`*-bw.jpg`), so there is no grayscale filter to animate. */
-.os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
-/* HALF SIZE (client, 2026-10-21). The portraits rendered 616x770 each at
-   1440 — 770px of face, taller than most of the chapters around them. 50%
-   of the width takes them to 308x385; `aspect-ratio` on the img below keeps
-   the height in step, so this is one number rather than two.
+/* COLUMNS CAPPED AT 370, NOT 1fr (client, 2026-10-21): "reduce it by 40%".
+   Free columns put the card at 616 wide and 988 tall at 1440, and 696x1088
+   at 1920 — a portrait card taller than the viewport. 370 is 60% of the 616.
 
-   On the card, not the grid: the client asked for the images to halve, and
-   the name, role and bio under each keep the column's own measure. */
-.os-founder-shot{position:relative;overflow:hidden;border-radius:4px;
-  background:#E9EDEF;max-width:50%}
+   Capped on the COLUMN, and the grid centred, rather than max-width on the
+   card: a capped card inside a free 616 column centres inside it, which
+   would have left 123px of dead space either side of each card plus the
+   48px gap — 290px between two cards that are meant to read as a pair.
+   Capping the track moves the slack outside the grid instead.
+
+   The height does not fall a full 40%: 988 -> ~700, because the name, role
+   and bio under the photograph are type at a fixed size and do not scale
+   with the card. The photograph does, 586 -> 340. */
+.os-founders{margin:68px 0 0;display:grid;
+  grid-template-columns:repeat(2,minmax(0,370px));justify-content:center;gap:48px}
+/* NO WIDTH CAP. This carried `max-width:50%` from 2026-10-21, when the
+   client asked for the portraits to halve; the card then overrode it to 75%,
+   and now the card's own even 14px inset is the only thing setting the
+   width. A cap here would fight it silently — which it did: taking the 75%
+   override off dropped the shot to 293px, because this rule was still the
+   one answering. `aspect-ratio` on the img keeps the height in step. */
+/* ROUNDER (client, 2026-10-21), and concentric rather than a round number.
+   A corner inside a rounded corner only looks right when its radius is the
+   outer radius minus the gap between them — otherwise the two curves run at
+   different rates and the gap between them visibly thickens round the bend.
+   The gap is the card's 14px padding, so this is `--card-r` minus 14: 18px
+   in the 32px card, 10px in the 24px one on a phone. One expression, both. */
+.os-founder-shot{position:relative;overflow:hidden;
+  border-radius:calc(var(--card-r, 32px) - 14px);
+  background:#E9EDEF}
 .os-founder-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
   object-position:center 18%;transition:transform .6s var(--ease-out)}
 .os-founder:hover .os-founder-shot img{transform:scale(1.04)}
@@ -5428,24 +5448,28 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    name, role and bio were bare on the page; they are a white rounded card
    each now, matching the four above.
 
-   THE SHOT IS 75% OF THE CARD (client, 2026-10-21). It was 50%, which is
-   where the "halve the images" instruction left it — 281px inside a 564px
-   content box, so 142px of white sat either side of every portrait. 75%
-   takes it to 423x529 and the white to 70px a side, which is air around the
-   picture rather than a gap in the card. 4:5 is kept, so the card grows
-   from 610 to ~790. */
-/* CENTRED (client, 2026-10-21). The portrait is capped at half the card, so
-   left-aligned it sat against one edge with an empty half beside it. Centred,
-   the card reads as a portrait card: the shot in the middle with the name,
-   role and bio under it on the same axis.
+   ONE EVEN INSET, AND THE SHOT FILLS IT (client, 2026-10-21). The photo was
+   capped at 75% of the card, which put 97px of white beside it against 29px
+   above — the sides were 3.3x the top, and that imbalance is what reads as
+   a hole in the card rather than air around the picture.
+
+   So the cap is gone and the padding carries the whole inset: 14px, even on
+   all four sides, which is also half the 26px the sides used to run. At 1440
+   that is a 586x733 portrait with 15px of white on every edge of the card
+   (14 padding + the 1px rule). The card grows 810 -> ~1015; it is a portrait
+   card, and the height is the photo's. */
+/* CENTRED (client, 2026-10-21). Back when the portrait was capped at half
+   the card, left-aligned it sat against one edge with an empty half beside
+   it. Centred, the card reads as a portrait card: the shot on top with the
+   name, role and bio under it on the same axis — which is still what holds
+   now that the shot runs edge to edge.
 
    The whole card, not only the shot — a centred image over left-ragged text
    puts two different axes in one box. The bio is three or four lines, which
    is about as much centred body copy as stays comfortable; anything longer
    and this would want to go back to left. */
-.os-founder{padding:28px 26px;border-radius:32px;background:#fff;
+.os-founder{--card-r:32px;padding:14px;border-radius:var(--card-r);background:#fff;
   border:1px solid var(--os-rule);text-align:center}
-.os-founder .os-founder-shot{max-width:75%;margin-inline:auto}
 /* The bio stays centred and gets a measure. It was running the card's full
    564px — 71 characters a line — and centred copy wants far less than that,
    because every line starts in a different place and a long one makes the
@@ -5480,7 +5504,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:639px){
   .os-principles{grid-template-columns:1fr;gap:16px}
   .os-principle{padding:24px 22px;border-radius:24px}
-  .os-founder{padding:22px 20px;border-radius:24px}
+  .os-founder{--card-r:24px}
 }
 
 /* ---- the two in-page jump targets ------------------------------------
@@ -5547,7 +5571,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-shift-arrow{transform:rotate(90deg)}
   .os-shift-line{margin-top:18px}
 
-  .os-founders{margin-top:40px;grid-template-columns:1fr;gap:36px}
+  .os-founders{margin-top:40px;grid-template-columns:minmax(0,370px);gap:36px}
   .os-founder-name{font-size:22px}
   .os-founders-link{margin-top:32px}
   .os-ctas{margin-top:40px}

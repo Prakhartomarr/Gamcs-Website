@@ -265,12 +265,14 @@ export default function WhoWeArePage() {
                     alt=""
                     width={880}
                     height={1100}
-                    /* 24vw, not 48: the shot is capped at half its column
-                       from 2026-10-21, and `sizes` is what next/image picks
-                       the srcset candidate from — left at 48vw it would keep
-                       fetching an image twice the width it now draws. 46vw on
-                       a phone for the same reason. */
-                    sizes="(max-width: 767px) 46vw, 24vw"
+                    /* Measured, because `sizes` is what next/image picks
+                       the srcset candidate from and the shot's width has
+                       moved twice. It fills the card's 14px inset, and the
+                       card's track is capped at 370 — so above ~800 the shot
+                       is a flat 340px however wide the window gets, and only
+                       below that does it scale with the viewport. Rounded up
+                       in each band so the hint never under-asks. */
+                    sizes="(max-width: 639px) 85vw, (max-width: 1023px) 50vw, 340px"
                   />
                 </div>
                 <h3 className="os-founder-name">{p.name}</h3>
