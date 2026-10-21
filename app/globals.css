@@ -5414,8 +5414,18 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    The shot keeps the half-width cap it was given earlier today — 50% OF THE
    CARD now rather than of the column, which lands it within ~25px of the
    308px it was, so the client's own sizing survives the move. */
+/* CENTRED (client, 2026-10-21). The portrait is capped at half the card, so
+   left-aligned it sat against one edge with an empty half beside it. Centred,
+   the card reads as a portrait card: the shot in the middle with the name,
+   role and bio under it on the same axis.
+
+   The whole card, not only the shot — a centred image over left-ragged text
+   puts two different axes in one box. The bio is three or four lines, which
+   is about as much centred body copy as stays comfortable; anything longer
+   and this would want to go back to left. */
 .os-founder{padding:28px 26px;border-radius:32px;background:#fff;
-  border:1px solid var(--os-rule)}
+  border:1px solid var(--os-rule);text-align:center}
+.os-founder .os-founder-shot{margin-inline:auto}
 .os-founder .os-founder-name{margin-top:20px}
 
 /* The closing band is the site's standard `.case-cta` now, which brings its
