@@ -1872,9 +1872,15 @@ html[data-cookie-banner] .sticky-cta{display:none}
    "Who we are" is left and a lone "07" numbers nothing. Phones get the pill. */
 @media (max-width:768px){
   .eyebrow-row{gap:0;margin-bottom:20px}
-  /* achievements on the grey ground (the rest of its phone layout is with
-     the .ach-* rules); here because the band rules above set both */
-  .metrics{padding:64px 0;background:#F4F5F6}
+  /* NO GREY GROUND ANY MORE. This dates from when #impact and #testimonials
+     were two sections and the grey told them apart. They are one band now
+     ("Our Impact, Told by the Numbers and Our Clients" heads the figures AND
+     the carousel, and the carousel's own h2 is sr-only), so on a phone the
+     grey stopped the band dead after the last figure and the quotes began on
+     white with no visible heading over them — the "and Our Clients" half of
+     the heading pointing at what looked like a separate section. Desktop was
+     already one white expanse; this is the same band on a phone. */
+  .metrics{padding:64px 0}
 }
 
 /* ---- hero shader stack (replaces the canvas ribbon field) ----
@@ -4102,10 +4108,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .home-tight #decision-gap.dg.section,
   .home-tight #maturity-curve.section,
   .home-tight #solutions.section,
-  .home-tight #impact,
   .home-tight #testimonials,
   .home-tight #who-we-are,
   .home-tight #contact{padding:36px 0}
+  /* #impact is out of that list because it is the top HALF of a band. The
+     desktop rule above drops its bottom padding so the two halves meet once
+     rather than twice; this block was handing the bottom padding straight
+     back, so on a phone the band paid 36 + 36 in the middle of itself. */
+  .home-tight #impact{padding:36px 0 0}
 }
 
 
@@ -5006,6 +5016,31 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 		}
 		.gf .gf-link:active {
 			color: var(--blue);
+		}
+
+		/* ---- 2b. Find us, under the accordion stack -------------------- */
+		/* CLEAR OF THE CLOSING HAIRLINE. `order:3` puts this block after the
+		   link groups, and `.gf-group:last-child` draws a border-bottom to
+		   close that stack — so with no margin the "Find us" head sat ON the
+		   rule, measured 0px at 320/360/390/430, and read as part of the Legal
+		   row rather than as the start of a new block. It is the only block in
+		   the phone footer whose head touched a border. 32px is the phone
+		   stack's own rhythm, the gap `.gf-office` already carries below it.
+		   From 640 up there is no accordion and no border, and the block
+		   already clears by 54px, so this is scoped to the accordion. */
+		.gf .gf-offices {
+			margin-top: 32px;
+		}
+		/* THE CITIES TAKE THE LINKS' INK HERE TOO. `.gf-off` is --ink
+		   (#202020), which IS what the links resolve to from 640 up — but on a
+		   phone the links are --charcoal (#464646), so the three city names
+		   came out the darkest text in the footer and the newest column read as
+		   the emphasised one. The rule's own note asks for "the links' own
+		   weight... same size and same ink, so the column sits level with the
+		   navigation beside it"; this is that promise kept at phone widths.
+		   8.48:1 on the footer's --soft ground, the same as the links. */
+		.gf .gf-off {
+			color: var(--charcoal);
 		}
 
 		/* ---- 3. office block ------------------------------------------ */
