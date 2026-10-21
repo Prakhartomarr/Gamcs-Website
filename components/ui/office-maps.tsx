@@ -173,7 +173,7 @@ export default function OfficeMaps({ className }: { className?: string }) {
 
                    This was written to match the footer's Offices column line
                    for line. It no longer does: that column is "Find us" now
-                   and prints city and state only (client, 2026-10-21), which
+                   and prints the city alone since 2026-10-22, which
                    makes these cards the one place on the site that shows all
                    three streets. Not a coupling to restore — the two have
                    different jobs — but the reason the full lines matter here

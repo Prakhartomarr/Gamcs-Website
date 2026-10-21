@@ -475,8 +475,17 @@ export function FlickeringFooter() {
 							<ul className="gf-offlist">
 								{officeCards.map((o) => (
 									<li className="gf-off" key={o.coords}>
+										{/* THE CITY ALONE (client, 2026-10-22). This printed
+										    "Gurugram, Haryana" — itself already a trim from the
+										    full street address on 2026-10-21. The state was
+										    doing no work here: the column's job is to say where
+										    the firm is, the three cities are unambiguous, and
+										    the office's full address is one click away at the
+										    other end of this link. Each name is still unique, so
+										    the three links are still distinguishable in a screen
+										    reader's link list. */}
 										<Link href={`/contact?office=${officeSlug(o)}#offices`}>
-											{o.locality}, {o.region}
+											{o.locality}
 										</Link>
 									</li>
 								))}
