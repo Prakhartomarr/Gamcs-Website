@@ -7151,7 +7151,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    INSIDE something that has decided it wants one. `.who-mission` sets
    `color:var(--ink)` on itself, so this needs the extra class to win. */
 .who-mission .accent{color:var(--blue)}
-.who-lead .accent{color:var(--blue)}
+/* Bold as well as blue (client, 2026-10-22). 600, which is the weight
+   `.who-mission` already sets on itself two paragraphs down — so the two
+   emphasised clauses in this column carry the same weight rather than
+   inventing a second one. The paragraph around it stays at its own weight;
+   only the vision clause lifts. */
+.who-lead .accent{color:var(--blue);font-weight:600}
 
 /* The four marked phrases in the gap's lead (client, 2026-10-21).
    #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the
