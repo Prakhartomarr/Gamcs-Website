@@ -104,6 +104,24 @@ export default function HowWeHelpFilm({
          appears, so the row of observer callbacks a scroll produces cannot
          turn into a pause/resume stutter. */
       if (blocked.current && !navigator.userActivation?.hasBeenActive) return;
+      /* A PAUSED FILM IS ALWAYS REPORTED MUTED, and we do not even attempt.
+         Browsers police unmuted PLAYBACK, not the muted property, so setting
+         `muted = false` on a stopped element always "succeeds" and tells us
+         nothing: `wasPlaying` is false, so `refusedByPause` cannot fire, and
+         `refusedByMute` is false because nothing was taken back. Both checks
+         passed and the toggle settled on "Mute the film", aria-pressed=true,
+         over a silent still at currentTime 0.
+
+         The observer at the bottom of this file calls us whenever the band is
+         60% visible, playing or not, so this was reached every time autoplay
+         had been declined — which on a phone is every time. Measured on
+         /how-we-help at 390: paused, t=0, muted=false, "Mute the film". */
+      if (el.paused || el.ended) {
+        weSetMuted.current = true;
+        el.muted = true;
+        setSoundOn(false);
+        return;
+      }
       const wasPlaying = !el.paused;
       weSetMuted.current = false;
       el.muted = false;
@@ -134,6 +152,28 @@ export default function HowWeHelpFilm({
     if (!el) return;
     if (el.muted) {
       userMuted.current = false;
+      /* THE CLICK IS THE GESTURE, so unmuted playback is legal from inside
+         this call stack even where every earlier attempt was refused.
+
+         And a still with its sound turned on is a request to HEAR it, which
+         means starting it: since the guard above now leaves a paused film
+         muted, `setMuted(false)` alone would mute it straight back and the
+         button would look dead. This is the path a phone visitor takes,
+         because autoplay has usually been declined by the time they get here. */
+      blocked.current = false;
+      if (el.paused || el.ended) {
+        weSetMuted.current = false;
+        el.muted = false;
+        setSoundOn(true);
+        el.play().catch(() => {
+          /* Refused even with the gesture: say so rather than leave the
+             toggle claiming sound over a still. */
+          weSetMuted.current = true;
+          el.muted = true;
+          setSoundOn(false);
+        });
+        return;
+      }
       setMuted(false);
     } else {
       userMuted.current = true;
