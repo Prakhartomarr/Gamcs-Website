@@ -167,16 +167,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 02 · what we saw ────────────────────────────────────── */}
-      {/* THE PAGE'S ONE DARK BAND (2026-10-21). This chapter is the hinge of
-          the story — reporting on one side, deciding on the other — so it is
-          the chapter that gets to stop the scroll. `os-ch--decision` is the
-          page head's motif again: near-black ground, a blue light rising from
-          the bottom corners, a grid that fades before it meets an edge.
-
-          It is also the answer to the brief's "no more than two consecutive
-          centred heading-paragraph-grid sections": five of the six chapters
-          are type on a pale ground, and this one is not. */}
-      <section id="what-we-saw" className="os-ch os-ch--decision">
+      <section id="what-we-saw" className="os-ch os-ch--soft">
         <div className="container">
           <div className="reveal">
             <ChapterLabel n="02">{ch.saw.label}</ChapterLabel>
@@ -197,7 +188,7 @@ export default function WhoWeArePage() {
               <svg width="40" height="18" viewBox="0 0 40 18" fill="none">
                 <path
                   d="M0 9h36M29 1.5L37 9l-8 7.5"
-                  stroke="currentColor"
+                  stroke="var(--blue)"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"

@@ -5054,66 +5054,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-tl-b{margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--gray);text-wrap:pretty}
 
 /* ---- 02 · what we saw ------------------------------------------------- */
-/* THE DECISION BAND (2026-10-21). One dark chapter on a pale page, and the
-   same motif as the page head so the two read as one idea rather than two
-   decorations: a blue light out of the bottom corners over a square grid
-   that is masked away before it reaches an edge.
-
-   WHY THE CARDS WENT. This was two bordered boxes with an arrow between
-   them, which is the card-in-a-card the brief rules out — a hairline box
-   around a statement does nothing a rule does not already do, and drawing
-   the "before" and the "after" as two separate objects is the opposite of
-   what the copy says, which is that they are two states of one thing. They
-   are now two columns of one surface, divided by a single rule, and the
-   arrow sits on that rule. */
-.os-ch--decision{position:relative;isolation:isolate;
-  background:var(--ink-deep);color:#fff;overflow:hidden}
-.os-ch--decision::before,.os-ch--decision::after{
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
-.os-ch--decision::after{
-  background:
-    radial-gradient(90% 70% at 6% 112%, color-mix(in srgb,var(--blue) 62%,transparent), transparent 60%),
-    radial-gradient(85% 68% at 96% 116%, color-mix(in srgb,var(--blue) 46%,transparent), transparent 58%)}
-.os-ch--decision::before{
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size:72px 72px;
-  -webkit-mask-image:radial-gradient(120% 100% at 50% 115%, #000 16%, transparent 70%);
-  mask-image:radial-gradient(120% 100% at 50% 115%, #000 16%, transparent 70%)}
-.os-ch--decision .os-label{color:#9CCBEA}
-.os-ch--decision .os-h{color:#fff}
-.os-ch--decision .os-body{color:rgba(255,255,255,.76)}
-
 .os-shift{margin:88px 0 0;display:grid;
   grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);align-items:stretch}
-/* No border, no fill, no radius: the grid column IS the box. The right-hand
-   state keeps the only rule on the row, which is also what the arrow sits on,
-   so "from" reads as open and "to" as the side that has been arrived at. */
-.os-shift-card{padding:8px 0 0}
-.os-shift-to{padding-left:48px;border-left:1px solid rgba(255,255,255,.16)}
-.os-shift-arrow{display:flex;align-items:center;justify-content:center;
-  color:#9CCBEA}
+.os-shift-card{border-radius:3px;padding:44px 40px 48px}
+.os-shift-from{border:1px solid var(--line)}
+.os-shift-to{border:1px solid rgba(15,94,151,.4);background:rgba(15,94,151,.04)}
+.os-shift-arrow{display:flex;align-items:center;justify-content:center}
 /* An <h3> now, not a <p>: it names its column, and the two columns are the
    only subdivision this section has. margin:0 clears the UA heading margin. */
 .os-shift-label{margin:0;font-size:11px;font-weight:600;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(255,255,255,.52)}
-/* THE DECISION POINT, and the page's one accent. The brief asked for a single
-   mark that says "this is the insight" and for it to be used nowhere else;
-   this is it — one dot, on the state the whole page argues for. It is drawn
-   rather than typed so it never reaches a screen reader, where "•" before a
-   heading is noise. */
-.os-shift-to .os-shift-label{display:flex;align-items:center;gap:10px;color:#9CCBEA}
-.os-shift-to .os-shift-label::before{content:"";flex:none;
-  width:7px;height:7px;border-radius:50%;background:var(--yellow);
-  box-shadow:0 0 0 5px color-mix(in srgb,var(--yellow) 22%,transparent)}
+  text-transform:uppercase;color:var(--os-caption)}
 .os-shift-to .os-shift-label{color:var(--blue)}
-.os-shift-line{margin:28px 0 0;font-size:clamp(24px,2.1vw,34px);line-height:1.15;
-  letter-spacing:-.02em;font-weight:500;text-wrap:balance;
-  color:rgba(255,255,255,.58)}
-.os-shift-to .os-shift-line{color:#fff}
-.os-shift-b{margin:18px 0 0;font-size:15px;line-height:1.65;
-  color:rgba(255,255,255,.62);text-wrap:pretty}
+.os-shift-line{margin:28px 0 0;font-size:clamp(24px,2vw,32px);line-height:1.15;
+  letter-spacing:-.02em;font-weight:500;text-wrap:balance;color:var(--gray)}
+.os-shift-to .os-shift-line{color:var(--ink)}
+.os-shift-b{margin:18px 0 0;font-size:15px;line-height:1.65;color:var(--gray);
+  text-wrap:pretty}
 
 /* ---- 03 · what we set out to build ------------------------------------
    The bordered card grid the five disciplines used, at three columns and
@@ -5139,24 +5095,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Two plates, each with the short bio the new copy supplies. Hover is the
    photograph scaling; both files are already black and white on disk
    (`*-bw.jpg`), so there is no grayscale filter to animate. */
-/* MEASURED, not guessed: at 1440 these two columns are 696px wide and the
-   shot is 4/5, so each portrait rendered 870px tall. Two of them filled a
-   screen and a half between the chapter heading and the first word of a bio,
-   and the names sat below the fold of their own photograph.
-
-   Capped at 420px the pair reads at 525px instead, and the stagger below
-   gives the row a direction so it is a spread rather than two passport
-   photos. The cap is on the SHOT, not the column, so the bio underneath
-   keeps the full 696px measure it was set against. */
-.os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:48px;align-items:start}
-.os-founder-shot{max-width:420px}
-/* The second portrait drops, the way a magazine would set a pair. Nothing
-   below it moves: both founders are grid items in one row, so the offset is
-   contained and the section's height is set by the taller of the two. */
-@media (min-width:1024px){
-  .os-founder:nth-child(2){margin-top:72px}
-}
+.os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
 .os-founder-shot{position:relative;overflow:hidden;border-radius:4px;background:#E9EDEF}
 .os-founder-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
   object-position:center 18%;transition:transform .6s var(--ease-out)}
@@ -5257,11 +5196,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-head--wide{margin-top:18px}
 
   .os-shift{margin-top:48px;grid-template-columns:1fr;gap:20px}
-  .os-shift-card{padding:8px 0 0}
-  /* Stacked, the dividing rule has to turn with the columns or the two
-     states run together. */
-  .os-shift-to{padding:24px 0 0;border-left:0;
-    border-top:1px solid rgba(255,255,255,.16)}
+  .os-shift-card{padding:28px 24px 32px}
   .os-shift-arrow{transform:rotate(90deg)}
   .os-shift-line{margin-top:18px}
 
