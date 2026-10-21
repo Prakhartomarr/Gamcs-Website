@@ -1049,10 +1049,15 @@ export const team = {
 export const testimonials = {
   /* NO LONGER VISIBLE (client, 2026-10-21). `achievements.heading` now heads
      this carousel and the figures above it as one band. The string stays and
-     is still rendered, screen-reader only: the footer's "What clients say"
-     link lands on #testimonials, and a reader arriving there should be told
-     what they have arrived at. */
-  heading: "What our clients say about us",
+     is still rendered, screen-reader only, so the carousel keeps a heading in
+     the document outline rather than none at all.
+
+     "Testimonials" since 2026-10-22, matching the footer link's new label:
+     that link lands on #impact now, at the top of the band, so a reader who
+     follows it and then moves by heading reaches this one under the name they
+     clicked. The sentence it replaces read better aloud but named the same
+     destination with different words. */
+  heading: "Testimonials",
   items: [
     {
       name: "Patrick Hughes",
@@ -1240,9 +1245,16 @@ export const footer = {
    * What is left for this module is the three the navbar does not carry.
    * "What clients say" and "FAQ" were in the old Explore list; "Contact Us"
    * was too, and also sat beside it as a blue accent link.
+   *
+   * "What clients say" is "Testimonials" since 2026-10-22 and points at
+   * /#impact, not /#testimonials: the figures and the quotes are one band
+   * under one heading now, and that heading — "Our Impact, Told by the
+   * Numbers and Our Clients" — sits on #impact. #testimonials has no visible
+   * heading of its own any more, so landing there put a visitor among faces
+   * and a quote with nothing naming the section.
    */
   resources: [
-    { label: "What clients say", href: "/#testimonials" },
+    { label: "Testimonials", href: "/#impact" },
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],
@@ -1267,7 +1279,7 @@ export const footer = {
     { label: "Solutions", href: "/solutions" },
     { label: "How we help", href: "/how-we-help" },
     { label: "Case Study", href: "/case-study" },
-    { label: "What clients say", href: "/#testimonials" },
+    { label: "Testimonials", href: "/#impact" },
     { label: "FAQ", href: "/faq" },
   ],
   links: [
@@ -1277,7 +1289,7 @@ export const footer = {
     { label: "Case Study", href: "/case-study" },
     { label: "Founders & advisors", href: "/team" },
     { label: "Careers", href: "/careers" },
-    { label: "What clients say", href: "/#testimonials" },
+    { label: "Testimonials", href: "/#impact" },
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],

@@ -4091,7 +4091,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .home-tight #who-we-are{padding:56px 0}
 .home-tight #contact{padding:56px 0}
 /* The two of these that anything links to by fragment — the footer's
-   /#testimonials, /case-study's and the services nav's /#solutions. Without
+   /#impact, /case-study's and the services nav's /#solutions. Without
    this the fragment aligns the section's border box to y=0 and the header,
    which floats over the page, covers the first thing that names the section:
    #solutions' and #testimonials' h2 landed under it by ~18px. Same value as
@@ -4099,7 +4099,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    target that already had it.
    #how-we-help was the third until 2026-10-20, when the band became its own
    route and every link to /#how-we-help was repointed at /how-we-help. */
+/* #impact joined them on 2026-10-22, when the footer's testimonials link was
+   repointed at the band's heading. #testimonials KEEPS its offset: the id is
+   still in the document and still a valid target for anything that has the
+   old URL, and an anchor with no margin would drop whoever used it under the
+   header. */
 .home-tight #solutions,
+.home-tight #impact,
 .home-tight #testimonials{scroll-margin-top:calc(var(--header-h) + 16px)}
 /* Phones take two thirds of it, as one number again: the bands are stacked
    full-width there and 56px between them is a third of a small screen. */
