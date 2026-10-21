@@ -7,15 +7,26 @@ import { howWeHelp } from "@/lib/content/gamcs";
  * The homepage How We Help band: the heading, the sub, the explainer film and
  * the film's text alternative. Between the maturity curve and the pillars.
  *
- * ALONGSIDE /how-we-help, not instead of it (client, 2026-10-20). That route
- * keeps the four-phase stack and the six principles; this is the short version
- * a scrolling reader meets. It is deliberately NOT a nav target — the navbar's
- * "How we help" still goes to the route — so it carries no id and nothing
- * links to it by fragment.
+ * ON BOTH (client, 2026-10-21). The homepage renders it whole — heading,
+ * lead and film — as the short version a scrolling reader meets. /how-we-help
+ * renders it with `heading={false}`, directly under its page head and above
+ * the four-phase stack.
  *
- * COPY: the same `howWeHelp.headingLead` / `headingAccent` / `sub` the route's
- * page head renders. Reused, not duplicated into new keys, so the two places
- * cannot drift.
+ * `heading` exists because the head here is the SAME two strings as that
+ * route's <h1> and sub: `howWeHelp.headingLead` / `headingAccent` / `sub`,
+ * shared so the two places cannot drift. Rendered whole on that page they
+ * would print twice within one screen, once white on the banner and once
+ * dark beneath it. The homepage has no banner above this band, so there it
+ * keeps them.
+ *
+ * It is deliberately NOT a nav target on the homepage — the navbar's "How we
+ * help" goes to the route — so it carries no id and nothing links to it by
+ * fragment.
+ *
+ * SIZING is unaffected by the move: every one-screen rule for this band is
+ * scoped `.home-tight .hwv`, and only the homepage wraps its sections in
+ * `.home-tight`. On the route the band falls back to the base rules — a
+ * 900px centred frame at 16:9 — which is what it should be there anyway.
  *
  * A client component for one reason: the in-view playback below. Everything
  * else here is static markup and still arrives in the server-rendered HTML —
@@ -33,7 +44,9 @@ import { howWeHelp } from "@/lib/content/gamcs";
 const SRC = "/video/gamcs-explainer.mp4";
 const POSTER = "/video/gamcs-explainer-poster.webp";
 
-export default function HowWeHelpFilm() {
+export default function HowWeHelpFilm({
+  heading = true,
+}: { heading?: boolean } = {}) {
   const video = useRef<HTMLVideoElement>(null);
   /* True once we have started the film ourselves, so a second pass over the
      band cannot start it again: it autoplays ONCE (client), it is not a loop. */
@@ -294,18 +307,27 @@ export default function HowWeHelpFilm() {
   }, [setMuted]);
 
   return (
-    <section className="section hwv" aria-labelledby="hwv-heading">
+    <section
+      className={heading ? "section hwv" : "section hwv hwv--bare"}
+      /* Only when the heading is here to do the naming. Without it the
+         section is a plain container rather than a landmark with a borrowed
+         name — and it does not need one: the page's own <h1> is directly
+         above it, and the <video> carries `howWeHelp.video.label`. */
+      aria-labelledby={heading ? "hwv-heading" : undefined}
+    >
       <div className="container">
         {/* The head is the services band's head markup exactly — .fin-center
             .reveal, .fin-h2 with the accent clause, .fin-lead — so this band
             joins the homepage's section rhythm instead of inventing one. */}
-        <div className="fin-center reveal">
-          <h2 className="fin-h2" id="hwv-heading">
-            {howWeHelp.headingLead}{" "}
-            <span className="accent">{howWeHelp.headingAccent}</span>
-          </h2>
-          <p className="fin-lead">{howWeHelp.sub}</p>
-        </div>
+        {heading ? (
+          <div className="fin-center reveal">
+            <h2 className="fin-h2" id="hwv-heading">
+              {howWeHelp.headingLead}{" "}
+              <span className="accent">{howWeHelp.headingAccent}</span>
+            </h2>
+            <p className="fin-lead">{howWeHelp.sub}</p>
+          </div>
+        ) : null}
 
         {/* The frame, not a band: see the .hwv notes in globals.css for why
             the dark film is inset on a plinth rather than given the full

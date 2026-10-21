@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import HowWeHelpFilm from "@/components/sections/HowWeHelpFilm";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import { howWeHelp } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -53,6 +54,12 @@ export default function HowWeHelpPage() {
           <p>{howWeHelp.sub}</p>
         </div>
       </section>
+
+      {/* The same film the homepage carries, under the head and above the
+          phases (client, 2026-10-21). `heading={false}`: the band's own h2
+          and lead ARE this page's h1 and sub — the same three content keys —
+          so rendered whole they would print twice on one screen. */}
+      <HowWeHelpFilm heading={false} />
 
       <HowWeHelpStack />
     </>
