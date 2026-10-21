@@ -265,14 +265,21 @@ export default function WhoWeArePage() {
                     alt=""
                     width={880}
                     height={1100}
-                    /* Measured, because `sizes` is what next/image picks
-                       the srcset candidate from and the shot's width has
-                       moved twice. It fills the card's 14px inset, and the
-                       card's track is capped at 370 — so above ~800 the shot
-                       is a flat 340px however wide the window gets, and only
-                       below that does it scale with the viewport. Rounded up
-                       in each band so the hint never under-asks. */
-                    sizes="(max-width: 639px) 85vw, (max-width: 1023px) 50vw, 340px"
+                    /* A FLAT 340px, AND DELIBERATELY NO `vw`. The card's
+                       track is capped at 370, so the shot is exactly 340 from
+                       viewport 406 up and 254-339 below it — one number covers
+                       the lot, over-asking by at most a third on a 320 phone.
+
+                       The `vw` matters more than the accuracy. next/image
+                       builds the srcset from `deviceSizes` plus `imageSizes`,
+                       but the moment `sizes` contains ANY vw it drops every
+                       candidate below `deviceSizes[0] * smallestRatio`. With
+                       `85vw` that floor is 640*0.85 = 544, so 384w was never
+                       generated and a 1x screen had to take 640w for a 324px
+                       box: measured 1.98x at 390, 1.88x at 639, 1.94x at 1023.
+                       With no vw the full ladder is offered and 1x takes 384w
+                       — 5,332 bytes against 10,072, twice per page. */
+                    sizes="340px"
                   />
                 </div>
                 <h3 className="os-founder-name">{p.name}</h3>

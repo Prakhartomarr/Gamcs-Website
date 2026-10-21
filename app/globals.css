@@ -5178,7 +5178,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- section shells --------------------------------------------------- */
-.os-ch{padding:136px 0 128px;scroll-margin-top:calc(var(--header-h) + 8px)}
+/* ONE RADIUS FOR EVERY CARD IN THESE CHAPTERS (client, 2026-10-21: the last
+   few days' work should read the same on a phone as on a desktop). It had
+   already drifted — the shift cards and the built cards stayed 32px on a
+   354px phone card while the founders and the principles dropped to 24px,
+   because each rule carried its own number and only two of them were
+   revisited. One property, declared here and stepped down once below 640,
+   so a card added later inherits the right corner without being told. */
+.os-ch{--card-r:32px;padding:136px 0 128px;scroll-margin-top:calc(var(--header-h) + 8px)}
 .os-ch--paper{background:var(--paper);color:var(--ink)}
 .os-ch--soft{background:var(--soft);color:var(--ink)}
 /* The figures band is a band, not a section: four words and six numbers.
@@ -5259,7 +5266,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   color:var(--os-caption);text-wrap:pretty}
 
 /* ---- 01 · where it started ------------------------------------------- */
-.os-figure{margin:0;border-radius:4px;overflow:hidden;background:#E9EDEF}
+/* The card corner, not 4px (client, 2026-10-21). This photograph sits
+   beside the chapter's copy with nothing framing it, so it IS the card on
+   its side of the split; at 4px it was the one square-cornered block on a
+   page of 32px ones. */
+.os-figure{margin:0;border-radius:var(--card-r);overflow:hidden;background:#E9EDEF}
 .os-figure img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;
   object-position:center 20%}
 
@@ -5271,12 +5282,22 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    fragment jump parks the block's top at y=0 and the sticky header (90-102px)
    covers the "Our journey" heading the reader just asked for. */
 .os-journey{margin:92px 0 0;scroll-margin-top:calc(var(--header-h) + 24px)}
+/* FOUR CARDS (client, 2026-10-21), in the treatment chapters 02 to 05
+   already wear. It was a hairline rule across the top with the four nodes
+   divided by vertical hairlines — the one chapter on this page still
+   outside the card language.
+
+   The same shape as `.os-built`: white, a hairline, `--card-r`, and the
+   hover on the card's own border. The dots stay, and the last one stays
+   yellow; inside a card they read as the node marker rather than as the
+   only thing holding the row together. */
 .os-tl{margin:26px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  border-top:1px solid var(--os-rule)}
-.os-tl li{padding:26px 28px 0;border-right:1px solid var(--os-rule)}
-.os-tl li:first-child{padding-left:0}
-.os-tl li:last-child{padding-right:0;border-right:0}
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.os-tl li{background:#fff;border:1px solid var(--os-rule);border-radius:var(--card-r);
+  padding:26px 24px 28px;transition:border-color .25s var(--ease-out)}
+@media(hover:hover){
+  .os-tl li:hover{border-color:rgba(15,94,151,.28)}
+}
 .os-tl-dot{display:block;width:9px;height:9px;border-radius:50%;background:var(--blue);
   margin-bottom:18px}
 .os-tl li:last-child .os-tl-dot{background:var(--yellow)}
@@ -5303,7 +5324,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    two states, and the colour is what says which of them this firm is for —
    two identical white cards would need the reader to parse the captions to
    find that out. */
-.os-shift-card{border-radius:32px;padding:32px 30px 34px;background:#fff;
+.os-shift-card{border-radius:var(--card-r);padding:32px 30px 34px;background:#fff;
   border:1px solid var(--os-rule)}
 .os-shift-to{border-color:rgba(15,94,151,.26);background:rgba(15,94,151,.05)}
 .os-shift-arrow{display:flex;align-items:center;justify-content:center}
@@ -5328,7 +5349,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    top of a 32px radius cuts the corners off. */
 .os-built{margin:72px 0 0;padding:0;list-style:none;
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.os-built li{background:#fff;border:1px solid var(--os-rule);border-radius:32px;
+.os-built li{background:#fff;border:1px solid var(--os-rule);border-radius:var(--card-r);
   padding:28px 26px 30px;transition:border-color .25s var(--ease-out)}
 @media(hover:hover){
   .os-built li:hover{border-color:rgba(15,94,151,.28)}
@@ -5365,7 +5386,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    and bio under the photograph are type at a fixed size and do not scale
    with the card. The photograph does, 586 -> 340. */
 .os-founders{margin:68px 0 0;display:grid;
-  grid-template-columns:repeat(2,minmax(0,370px));justify-content:center;gap:48px}
+  grid-template-columns:repeat(2,minmax(0,370px));gap:48px}
+/* THE CENTRING IS SCOPED, because on the base rule it fired in exactly the
+   bands where it hurt and nowhere it helped (review, measured by toggling
+   only this declaration): below 768 there is ONE column, so centring a 370px
+   card in a 640px container indented it 135px at 700 and 117px at 640 while
+   the chapter's heading, its body and the team link all sat on the
+   container's left edge — the only block on the page that did not line up.
+   At 768-1023 the tracks squeeze to 332-360 and it is a no-op; from 1280 the
+   rail places the grid in its own track and it is a no-op again. It earns
+   its keep only at 1024-1279, where two capped cards leave 66-198px of slack
+   that is better split than hung off one side. */
+@media (min-width:768px){
+  .os-founders{justify-content:center}
+}
 /* NO WIDTH CAP. This carried `max-width:50%` from 2026-10-21, when the
    client asked for the portraits to halve; the card then overrode it to 75%,
    and now the card's own even 14px inset is the only thing setting the
@@ -5427,7 +5461,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    four shadowed boxes in a 2x2 read as floating, and nothing else on this
    page floats. */
 .os-principle{display:flex;flex-direction:column;align-items:flex-start;
-  padding:28px 26px;border-radius:32px;background:#fff;
+  padding:28px 26px;border-radius:var(--card-r);background:#fff;
   border:1px solid var(--os-rule)}
 /* The icon idiom the solution pillars and the six how-we-help points use: a
    24px glyph in a tinted rounded square, stroke from currentColor. */
@@ -5468,7 +5502,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    puts two different axes in one box. The bio is three or four lines, which
    is about as much centred body copy as stays comfortable; anything longer
    and this would want to go back to left. */
-.os-founder{--card-r:32px;padding:14px;border-radius:var(--card-r);background:#fff;
+.os-founder{padding:14px;border-radius:var(--card-r);background:#fff;
   border:1px solid var(--os-rule);text-align:center}
 /* The bio stays centred and gets a measure. It was running the card's full
    564px — 71 characters a line — and centred copy wants far less than that,
@@ -5538,9 +5572,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-future-copy .os-h{margin-top:12px}
 }
 @media (max-width:639px){
+  /* 24px, not 32. A 32px corner on a 354px-wide card is proportionally far
+     rounder than on a 616px one and starts eating into the content; the
+     radius scales with the card. */
+  .os-ch{--card-r:24px}
   .os-principles{grid-template-columns:1fr;gap:16px}
-  .os-principle{padding:24px 22px;border-radius:24px}
-  .os-founder{--card-r:24px}
+  .os-principle{padding:24px 22px}
 }
 
 /* ---- the two in-page jump targets ------------------------------------
@@ -5638,13 +5675,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      accepted, not fixed. */
   .os-built li{padding:30px 24px 34px}
 
-  .os-tl{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
-  .os-tl li:nth-child(odd){padding-left:0}
-  .os-tl li:nth-child(even){border-right:0;padding-right:0}
+  .os-tl{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .os-tl li{padding:26px 22px 28px}
 
-  .os-principles{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
-  .os-principles li:nth-child(odd){padding-left:0}
-  .os-principles li:nth-child(even){padding-right:0}
+  /* The nth-child rules that used to zero one side of each cell went with
+     the hairline grid. `.os-principles li` is (0,1,1) and `.os-principle`
+     is (0,1,0), so they outranked the card's own padding whatever the
+     order, and took the horizontal padding off every card below 1280. */
+  .os-principles{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .os-principle{padding:28px 24px 30px}
 }
 
 /* =====================================================================
@@ -6500,9 +6539,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      the four nodes turn into one rule under each, and the last node drops
      its rule so the section does not end on one. */
   .os-journey{margin-top:52px}
-  .os-tl{margin-top:22px;grid-template-columns:1fr}
-  .os-tl li{padding:22px 0;border-right:0;border-bottom:1px solid var(--os-rule)}
-  .os-tl li:last-child{padding-bottom:0;border-bottom:0}
+  .os-tl{margin-top:22px;grid-template-columns:1fr;gap:16px}
+  .os-tl li{padding:24px 20px 26px}
   .os-tl-dot{margin-bottom:14px}
   .os-tl-b{font-size:14px}
 
@@ -6519,8 +6557,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .os-founder-bio{font-size:14px}
 
   .os-principles{margin-top:40px;grid-template-columns:1fr}
-  .os-principles li{padding:20px 0 0}
-  .os-principles li:last-child{padding-right:0}
   .os-principles p{font-size:14px}
 }
 
