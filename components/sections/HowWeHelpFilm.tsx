@@ -65,12 +65,17 @@ import { howWeHelp } from "@/lib/content/gamcs";
    /page-art/…): a src is a path, not copy, so it stays out of the content
    module.
 
-   The cover is the frame at t=73.0s, chosen by the client: stage 4 of the
+   The cover is the frame at t=76.0s, chosen by the client: stage 4 of the
    film, with all three decisions showing "Done" and the impact line reading
    "+2.4 pts margin". Lifted from the mp4 itself at its native 1920x1080
    rather than from a screen grab, so it is exactly 16:9 and has been through
-   one encode instead of two. It replaces a 6s frame that no visitor ever saw,
-   because the autoplay covered it within a frame of load. */
+   one encode instead of two.
+
+   RE-CUT 2026-10-22: the film went from 100s to 117s and the same moment
+   moved from t=73.0 to t=76.0, so the cover was lifted again rather than
+   left pointing at whatever now sits at 73 — which is the middle of the
+   stage BEFORE this one. Found by reading the frames, not by scaling the old
+   timestamp: the cut did not stretch uniformly. */
 const SRC = "/video/gamcs-explainer.mp4";
 const POSTER = "/video/gamcs-explainer-cover.webp";
 
@@ -222,8 +227,8 @@ export default function HowWeHelpFilm({
         {/* THE TEXT ALTERNATIVE IS GONE, at the client's explicit instruction
             (2026-10-20), and this comment is the record of what that costs.
 
-            The delivered film now carries an audio track — 165 kbps across
-            all 100 seconds, measured — so it is prerecorded SYNCHRONISED
+            The delivered film carries an audio track — 162 kbps across all
+            117 seconds, measured — so it is prerecorded SYNCHRONISED
             media, and WCAG 2.1 asks for captions (1.2.2) as well as the audio
             description or full text alternative 1.2.3 wants. It has neither,
             so this band does not meet 1.2.2 or 1.2.3 at Level A.

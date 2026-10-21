@@ -659,16 +659,17 @@ export const howWeHelp = {
     /** The <video>'s accessible name, and since the transcript was removed it
         is the ONLY text this element carries.
         Rewritten 2026-10-20 with the re-cut film, which changed all three
-        things the old name said: it ran 47 seconds and now runs 100; it had
-        no audio track at all and now carries one (165 kbps across the full
-        length, measured \u2014 not an empty track); and the text version it
+        things the old name said: it ran 47 seconds, then 100, and runs 117
+        since the 2026-10-22 cut; it had no audio track at all and now
+        carries one (162 kbps across the full length, measured \u2014 not an
+        empty track); and the text version it
         pointed at is gone.
 
         NO LONGER SAYS "starts muted" (client, 2026-10-22). The film does not
         start on its own any more \u2014 it waits for the play button and starts
         with its sound on \u2014 so the old warning described something that can
         no longer happen. */
-    label: "GAMCS explainer film, 1 minute 40 seconds, with sound.",
+    label: "GAMCS explainer film, 1 minute 57 seconds, with sound.",
     /* The play button over the cover image (client, 2026-10-22). The button
        has no visible text \u2014 it is a triangle on the film \u2014 so this IS its
        accessible name rather than an addition to one. */

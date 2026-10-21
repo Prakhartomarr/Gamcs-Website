@@ -1048,13 +1048,18 @@ html{font-size:112.5%}
 .locmap{position:relative;perspective:1000px}
 .locmap-card{position:relative;overflow:hidden;border-radius:16px;background:#fff;border:1px solid var(--line);
   width:272px;height:153px;transform-style:preserve-3d;box-shadow:0 22px 46px -24px rgba(6,32,55,.46);
-  transition:width .52s var(--ease-out),height .52s var(--ease-out),transform .18s ease-out,box-shadow .35s var(--ease-out)}
+  /* .30s, down from .52 (client, 2026-10-22). The card's arrival is the
+     panel's `.reveal` at --dur-reveal 560ms followed by this open, and the
+     two together read as about a second and a half before it settles; the
+     client asked for a second. The transform stays at .18 — that is the
+     pointer tilt settling, not the opening. */
+  transition:width .30s var(--ease-out),height .30s var(--ease-out),transform .18s ease-out,box-shadow .25s var(--ease-out)}
 /* While the pointer is driving the tilt the card tracks it 1:1 — a transition
    on transform here means the card trails the cursor, which is the one thing
    direct manipulation must not do. The transform transition exists only to
    settle the card back to rest once the pointer leaves. */
-.locmap-card.is-tracking{transition:width .52s var(--ease-out),height .52s var(--ease-out),
-  box-shadow .35s var(--ease-out)}
+.locmap-card.is-tracking{transition:width .30s var(--ease-out),height .30s var(--ease-out),
+  box-shadow .25s var(--ease-out)}
 .locmap-card.is-open{width:408px;height:289px;box-shadow:0 38px 70px -30px rgba(6,32,55,.55)}
 .locmap-grid{position:absolute;inset:0;opacity:.06;pointer-events:none;transition:opacity .3s var(--ease-out);
   background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);
@@ -1094,19 +1099,24 @@ html{font-size:112.5%}
    and only flips hidden once it is over. */
 .locmap-addr{margin:0;font-size:0.6667rem;line-height:1.55;color:var(--ink-muted);font-style:normal;
   max-height:0;opacity:0;visibility:hidden;overflow:hidden;
-  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out),
-    visibility .35s var(--ease-out)}
+  /* Shortened with the card above, or the rows would still be sliding in
+     after it had finished growing. */
+  transition:max-height .22s var(--ease-out),opacity .18s var(--ease-out),margin .22s var(--ease-out),
+    visibility .22s var(--ease-out)}
 /* One clamp for every card in every state. 84px was four lines, which was the
    whole address while a card was 480px wide and the firm name was not on it;
    it now runs to six (112px measured on Noida at viewport 320, card 242px),
    and a clamp raised only for the open row cut the PIN code off the registered
    office in the state the panel actually loads in. 132px is that worst case
    plus a line, and the card's height is fixed, so the slack costs no layout. */
-.is-open .locmap-addr{max-height:132px;opacity:1;visibility:visible;margin-top:7px;transition-delay:.10s}
+.is-open .locmap-addr{max-height:132px;opacity:1;visibility:visible;margin-top:7px;transition-delay:.05s}
 .locmap-dir-row{max-height:0;opacity:0;visibility:hidden;overflow:hidden;
-  transition:max-height .35s var(--ease-out),opacity .25s var(--ease-out),margin .35s var(--ease-out),
-    visibility .35s var(--ease-out)}
-.is-open .locmap-dir-row{max-height:44px;opacity:1;visibility:visible;margin-top:12px;transition-delay:.18s}
+  transition:max-height .22s var(--ease-out),opacity .18s var(--ease-out),margin .22s var(--ease-out),
+    visibility .22s var(--ease-out)}
+/* .10s, so the last thing to arrive settles at .10 + .22 = .32s rather than
+   .18 + .35 = .53s. The staircase is kept — address then button — just
+   climbed faster. */
+.is-open .locmap-dir-row{max-height:44px;opacity:1;visibility:visible;margin-top:12px;transition-delay:.10s}
 .locmap-dir{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 14px;border-radius:999px;
   background:var(--blue);color:#fff;font:700 0.6667rem var(--font-sans);letter-spacing:-.01em;pointer-events:auto;
   transition:background .2s var(--ease-out),gap .2s var(--ease-out)}
@@ -1145,8 +1155,11 @@ html{font-size:112.5%}
 .locdeck{display:flex;flex-direction:column;align-items:center;gap:18px}
 .locdeck-stage{position:relative;width:100%;min-height:312px;
   display:grid;place-items:center;perspective:1200px}
+/* .30s, down from .62 (client, 2026-10-22): the turn itself is twice as
+   quick. The rhythm it turns on is unchanged — the intro still holds the
+   card open 2.5s and then deals every 3s — it just gets there sooner. */
 .locdeck-item{grid-area:1/1;transform-style:preserve-3d;
-  transition:transform .62s var(--ease-out),opacity .62s var(--ease-out);
+  transition:transform .30s var(--ease-out),opacity .30s var(--ease-out);
   will-change:transform}
 /* ONE EACH SIDE (client, 2026-10-21). This was a pile with both neighbours
    stacked up and to the right; the client wants the deck to read the way the

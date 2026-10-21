@@ -74,8 +74,12 @@ const EASE_INOUT = "cubic-bezier(0.65,0,0.35,1)";
 
 const QUOTE_CLASSES =
   "m-0 text-lg font-medium leading-[1.3] tracking-[-0.02em] text-foreground sm:text-[22px]";
+/* Brand blue since 2026-10-22 (client), was text-muted-foreground. One
+   constant for both render paths — the static byline and the character-
+   revealed one — so the name and the role cannot end up two colours.
+   #0F5E97 on the band's white measures 6.79:1, past AA for 14px type. */
 const AUTHOR_CLASSES =
-  "m-0 text-sm font-medium leading-[1.3] text-muted-foreground";
+  "m-0 text-sm font-medium leading-[1.3] text-blue";
 
 /* The two byline lines sit together: the flex column around them carries a
    19px gap meant to separate the quote from the byline, which between the
