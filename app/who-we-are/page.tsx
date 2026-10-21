@@ -235,7 +235,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── 04 · the founders ───────────────────────────────────── */}
-      <section id="the-founders" tabIndex={-1} className="os-ch os-ch--soft os-jump">
+      <section id="the-founders" tabIndex={-1} className="os-ch os-ch--soft os-jump os-ch--rail">
         <div className="container">
           <div className="reveal">
             <ChapterLabel n="04">{ch.founders.label}</ChapterLabel>

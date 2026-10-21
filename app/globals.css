@@ -5481,6 +5481,42 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-founder .os-founder-bio{max-width:40ch;margin-inline:auto}
 .os-founder .os-founder-name{margin-top:20px}
 
+/* THE CHAPTER HEAD MOVES INTO THE LEFT GUTTER (client, 2026-10-21): "there
+   is too much empty space on the page". Once both founder tracks hit their
+   370 ceiling the pair is a fixed 788 wide, so centring it left 246px of
+   bare ground either side at 1440. The head goes in that space rather than
+   in a band above it — copy left, cards right.
+
+   1280 AND UP ONLY. The rail needs 788 for the cards plus a readable measure
+   beside them. Measured, the container leaves 348 at 1280, 444 at 1440 and
+   604 at 1920 — but 84 at 1024, which is a 44px heading in an 84px column.
+   Below 1280 the chapter keeps the stacked head it has now.
+
+   PLACED, SO THE DOM ORDER CAN STAY HEAD -> CARDS -> LINK. The link reads
+   last, after the two people it refers to, and renders under the body on the
+   left. Nothing inside a card is focusable, so the link is the only tab stop
+   in the section and visual order and focus order cannot disagree. */
+@media (min-width:1280px){
+  /* ROWS PINNED `auto 1fr`, not left implicit. The card grid spans both rows,
+     and Chrome spreads a spanning item's surplus height evenly over the auto
+     tracks it covers — which pushed row 1 from 274 to 474 and left the team
+     link stranded 215px below the paragraph it belongs to. `auto` holds row 1
+     to the head's own height; `1fr` gives row 2 the remainder, and the link
+     sits at the top of it, directly under the body. */
+  .os-ch--rail > .container{display:grid;grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:auto 1fr;column-gap:56px;align-items:start}
+  .os-ch--rail > .container > :first-child{grid-column:1;grid-row:1}
+  .os-ch--rail > .container > .os-founders{grid-column:2;grid-row:1/span 2;margin-top:0}
+  .os-ch--rail > .container > .os-founders-link{grid-column:1;grid-row:2;margin-top:28px}
+  /* The head's own 12-column split put the heading in 7/12 of the rail and
+     the body in 4/12 — 250px and 143px at 1440. Blocked out, they stack and
+     both sit on the page's left edge, which is what was asked for. `display:
+     block` drops the children's `grid-column` the same way the narrow-width
+     rule above already does for this element. */
+  .os-ch--rail .os-head--wide{display:block}
+  .os-ch--rail .os-head--wide > .os-body{margin-top:18px}
+}
+
 /* The closing band is the site's standard `.case-cta` now, which brings its
    own padding and ground; this only has to give the section its rhythm. */
 .os-close-cta{padding:0 0 96px}
