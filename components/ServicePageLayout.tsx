@@ -23,7 +23,7 @@ export default function ServicePageLayout({ solution }: { solution: Solution }) 
 
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-pillar">
         <div className="container">
           <h1>{s.h1}</h1>
           <p>{s.intro}</p>

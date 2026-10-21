@@ -133,22 +133,7 @@ h1,h2,h3,p{margin-top:0}
 /* Full-bleed: no card, no inset, no radius. Section backgrounds run edge
    to edge; the measure is held by .container inside them. */
 .shell{width:100%;margin:0;background:var(--paper);overflow:clip}
-/* EDGE TO EDGE (client, 2026-10-21; reference unity-advisory.com).
-   Was min(1440px, 100% - 96px): a 48px gutter that CAPPED at 1440, so on a
-   1920 screen the content sat in the middle with 240px of nothing either
-   side, and on a 2560 one with 560px.
-
-   The reference has no cap at all. Measured across its own pages at five
-   widths, its gutter is 20px at 1280, 21px at 1440 and 22px at 1680, 1920
-   and 2560 — fixed, tiny, and the content simply gets wider. 22px here, so
-   44px off the width, which lands on their number at every size.
-
-   This is the whole site, not the page heads: the reference reads as one
-   layout because every band lines up on the same two edges, and moving the
-   heads alone would have left each headline 60px to the left of every
-   heading under it. Phones keep their own gutters below — 18px there is
-   already tighter than this. */
-.container{width:calc(100% - 44px);margin:auto}
+.container{width:min(1440px,calc(100% - 96px));margin:auto}
 /* NAV */
 /* blends into the hero's light field (no white bar / hard rule), while staying
    legible as a light bar when it sticks over the darker sections below */
@@ -501,57 +486,102 @@ h1,h2,h3,p{margin-top:0}
    specificity, so this only changes the pairs that were flush. */
 .page-head p + p{margin-top:16px}
 
-/* THE INSET CARD (client, 2026-10-21; reference investflowtemplate.webflow.io).
-   This REPLACES the edge-to-edge Unity arrangement that stood here earlier
-   today — a one-screen light band with the headline at the top and the lead
-   pinned to the bottom. The client moved the reference, so the whole block
-   went with it rather than being layered over.
+/* THE GLOW BAND (client, 2026-10-21; reference
+   investflowtemplate.webflow.io/home-pages/home-v3).
 
-   Measured off /company-pages/about at 1440x900: a rounded card in
-   rgb(0,16,53) inset 20px from the viewport, ~380px tall, with the type
-   stacked and CENTRED inside it — h1 40px/600 at -0.8px tracking in white,
-   a 16px/24px lead in #CBD2EA about 410px wide, then a pill button. Their
-   navbar sits inside that card; ours does NOT (client), so the floating
-   header stays exactly as it is on every route, the landing page included,
-   and the card begins underneath it.
+   Measured off that page at 1440x900: a section inset 20px with a 32px
+   radius, ground rgb(0,16,53), a 40px/600 headline at -0.8px tracking centred
+   in white, a 16px/500 lead, and a rgb(35,101,255) pill at radius 300px. The
+   band runs 487px tall there.
 
-   The inset is 22px rather than their 20 so the card's edges land on the
-   same line as every other band's content — .container is calc(100% - 44px)
-   since the edge-to-edge change above, and a card 2px wider than the text
-   under it reads as a mistake rather than as a decision. */
+   THE GLOW IS NOT THEIR IMAGE. Theirs is a JPG on Webflow's CDN that ships
+   with a paid template, so it is not ours to copy; these are three radial
+   gradients doing the same job. No licensed asset in the repo, no request to
+   make, and it rescales to any width instead of banding on a wide screen.
+   What is being matched is the shape: a near-black dome sitting low and
+   centre, an electric ring around it, the field going almost white into the
+   four corners.
+
+   ELECTRIC BLUE IS SCOPED TO THIS BAND (client). #2365FF and #001035 are
+   written as literals rather than tokens precisely so they cannot leak:
+   --blue (#0F5E97) is still the accent everywhere else on the site, and the
+   head is meant to read as a banner rather than as the page continuing. */
 .page-head{
-  margin:12px 22px 0;padding:72px 28px 76px;
-  border-radius:28px;background:var(--ink-deep);
-  text-align:center;isolation:isolate}
-/* The glow and the grid, both drawn rather than fetched. Their card lifts a
-   blue light out of the bottom corners over a faint square grid; this is the
-   same two ideas in --blue instead of their electric one, which is the
-   difference between a GAMCS page and a template screenshot.
-
-   ::before is the light, ::after the grid, and the grid sits UNDER the light
-   so the mesh fades out exactly where the glow is brightest — which is what
-   stops it reading as graph paper. Both are inert: aria-hidden is for the
-   accessibility tree and these are pseudo-elements, which never reach it. */
-.page-head::before,.page-head::after{
-  content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
-  pointer-events:none}
-.page-head::after{
+  --ph-hue:224;                    /* the only thing that changes per route */
+  --ph-x:50%; --ph-y:72%;          /* where the glow is centred */
+  --ph-tx:50%; --ph-ty:50%;        /* where the copy sits, so the scrim follows it */
+  /* THE MESH IS THE SAME ON EVERY HEAD (client, 2026-10-21). It used to be a
+     different pattern per route — dots here, diagonals there, arcs on the
+     case studies — which made eleven different objects rather than one band
+     seen eleven times. One grid, and the colour carries the difference. */
+  --ph-pattern:
+    linear-gradient(to right, rgba(255,255,255,.20) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.20) 1px, transparent 1px);
+  --ph-pattern-size:72px 72px;
+  margin:20px;padding:72px 28px;
+  border-radius:32px;
+  text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
   background:
-    radial-gradient(120% 85% at 8% 118%, color-mix(in srgb,var(--blue) 72%,transparent), transparent 62%),
-    radial-gradient(110% 80% at 94% 122%, color-mix(in srgb,var(--blue) 55%,transparent), transparent 60%)}
-.page-head::before{
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.055) 1px, transparent 1px);
-  background-size:72px 72px;
-  /* Faded out at the top and the sides so the mesh never meets an edge. */
-  -webkit-mask-image:radial-gradient(130% 100% at 50% 118%, #000 18%, transparent 72%);
-  mask-image:radial-gradient(130% 100% at 50% 118%, #000 18%, transparent 72%)}
+    /* THE SCRIM. Measured first without it: the lightest pixel behind
+       /who-we-are's three headline lines was #C3D7FF at 1440 and #F2F7FF on a
+       phone, which is white on white at 1.08 to 1. Short single-line heads
+       were fine and everything taller walked out of the dome into the pale
+       field.
 
-/* The stack. One column, centred, with the measures capped in ch so the lead
-   wraps near the reference's 410px rather than running the card's full
-   width — centred type that long is the thing that makes a hero look
-   unconsidered. */
+       It is deliberately TIGHT and centred on the copy rather than a wash
+       over the whole band: a wash passed the contrast check but flattened the
+       blue into near-black, which was not the reference. This covers the
+       ~530px the type occupies and leaves the ring bright either side. */
+    radial-gradient(60% 78% at var(--ph-tx) var(--ph-ty), rgba(0,7,26,.95) 0%, rgba(0,7,26,.82) 50%, rgba(0,7,26,.30) 76%, rgba(0,7,26,0) 92%),
+    radial-gradient(56% 78% at var(--ph-x) var(--ph-y), #00061A 0%, #000E30 46%, rgba(0,14,48,0) 80%),
+    radial-gradient(92% 112% at var(--ph-x) var(--ph-y),
+      hsl(var(--ph-hue) 100% 50%) 0%, hsl(var(--ph-hue) 100% 57%) 28%,
+      hsl(var(--ph-hue) 100% 68%) 56%, hsl(var(--ph-hue) 100% 84% / 0) 84%),
+    radial-gradient(145% 135% at 50% 110%,
+      hsl(var(--ph-hue) 100% 90%) 0%, hsl(var(--ph-hue) 100% 95%) 55%,
+      hsl(var(--ph-hue) 100% 97%) 100%),
+    #001035}
+/* The pattern. White through `overlay`, which lightens it over the dark core
+   and darkens it over the pale corners, so one layer stays visible right
+   across the band instead of disappearing at one end. Each route swaps the
+   image and the tile size below; nothing else about the band changes. */
+.page-head::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  border-radius:inherit;
+  background-image:var(--ph-pattern);
+  background-size:var(--ph-pattern-size);
+  mix-blend-mode:overlay}
+
+/* ONE HUE AND ONE GLOW ORIGIN PER ROUTE (client, 2026-10-21). Same band,
+   same mesh, same geometry; what changes is where the light sits and what
+   colour it is.
+
+   The hues stay inside 196-242, which is azure through to indigo. That is
+   deliberately a narrow band: rotate further and the heads stop reading as
+   one set and start reading as a colour-coded site, which is a different
+   decision and not the one asked for. Saturation and lightness are fixed in
+   the gradient above, so a route only ever picks an angle.
+
+   Pairs that sit next to each other in the nav get hues that are not
+   neighbours, so moving between two pages is a visible change rather than a
+   shade nobody notices. */
+.page-head.ph-story{--ph-hue:224;--ph-x:50%;--ph-y:72%}
+.page-head.ph-team{--ph-hue:206;--ph-x:42%;--ph-y:76%}
+.page-head.ph-solutions{--ph-hue:234;--ph-x:62%;--ph-y:74%}
+.page-head.ph-case{--ph-hue:199;--ph-x:50%;--ph-y:92%}
+.page-head.ph-help{--ph-hue:216;--ph-x:30%;--ph-y:70%}
+.page-head.ph-faq{--ph-hue:238;--ph-x:70%;--ph-y:72%}
+.page-head.ph-contact{--ph-hue:210;--ph-x:50%;--ph-y:64%}
+.page-head.ph-thanks{--ph-hue:228;--ph-x:50%;--ph-y:86%}
+.page-head.ph-privacy{--ph-hue:242;--ph-x:22%;--ph-y:84%}
+.page-head.ph-cookie{--ph-hue:196;--ph-x:78%;--ph-y:84%}
+.page-head.ph-pillar{--ph-hue:220;--ph-x:44%;--ph-y:70%}
+
+/* The stack: one centred column. The measures are capped in ch and the dome
+   is centred, so the type always sits on the dark part of the gradient and
+   never drifts out over the pale corners, which is the one way white copy on
+   this band can fail. */
 .page-head>.container{display:flex;flex-direction:column;align-items:center}
 .page-head>.container>*{width:100%}
 .page-head>.container>h1{
@@ -559,21 +589,34 @@ h1,h2,h3,p{margin-top:0}
   letter-spacing:-.02em;color:#fff;max-width:20ch;margin:0 auto}
 .page-head>.container>p{
   margin:18px auto 0;max-width:50ch;
-  /* 0.8889rem is 16px: the root is 18px here, so a bare 1rem landed at 18
-     and ran two points over the reference. 50ch rather than their ~410px
-     measure because our leads are long — /who-we-are's is 290 characters
-     against their 100 — and at their width it set eight centred lines. */
   font-size:0.8889rem;line-height:1.5;font-weight:500;letter-spacing:-.02em;
   color:#CBD2EA}
-.page-head-ctas{justify-content:center;margin-top:30px}
+
+/* Their button: electric blue, a 300px radius, and the arrow in a white disc
+   rather than loose beside the label. The disc is CTA's own aria-hidden glyph
+   span restyled, so no markup changed and the arrow still never reaches a
+   screen reader. */
+.page-head-ctas{justify-content:center;margin-top:34px}
+.page-head .btn{min-height:56px;padding:0 10px 0 28px;gap:14px;
+  font-size:0.8889rem;border-radius:300px}
+.page-head .btn-shimmer{background:#2365FF;border-color:#2365FF;color:#fff}
+.page-head .btn-light{background:rgba(255,255,255,.10);color:#fff;
+  border-color:rgba(255,255,255,.38)}
+.page-head .btn .btn-label{display:inline-flex;align-items:center;gap:14px}
+.page-head .btn .btn-label>span[aria-hidden="true"]{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  font-size:15px;line-height:1;background:#fff;color:#2365FF}
+.page-head .btn-light .btn-label>span[aria-hidden="true"]{color:#001035}
+
 /* Everything else a head can carry, on the dark ground. These mirror the
    `.page-head--art` set, which no longer reaches these bands: that class
    stayed behind on the careers panel and the apply dialog. */
-.page-head .section-kicker{color:#9CCBEA}
+.page-head .section-kicker{color:#9ECBFF}
 .page-head .eyebrow-row{justify-content:center}
 .page-head .team-mission{color:#fff!important;font-weight:600}
 .page-head .faq-head-cta{color:#CBD2EA}
-.page-head .faq-head-cta a{color:#9CCBEA;font-weight:700}
+.page-head .faq-head-cta a{color:#9ECBFF;font-weight:700}
 .page-head .crumbs{justify-content:center}
 .page-head .crumbs a{color:rgba(255,255,255,.72)}
 .page-head .crumbs a:hover,.page-head .crumbs [aria-current="page"]{color:#fff}
@@ -581,9 +624,28 @@ h1,h2,h3,p{margin-top:0}
 .page-head .tbc{color:rgba(255,255,255,.88)}
 .page-head .eyebrow-pill{background:rgba(255,255,255,.14);
   border-color:rgba(255,255,255,.32);color:#fff}
+
+@media (min-width:768px){
+  /* 487px is the reference band's height at 1440. A floor rather than a fixed
+     height: /team carries three paragraphs and two buttons and would be
+     clipped by a hard 487. */
+  .page-head{min-height:487px}
+}
 @media (max-width:767px){
-  .page-head{margin:8px 14px 0;padding:48px 20px 52px;border-radius:22px}
+  .page-head{margin:12px;padding:52px 20px;border-radius:24px;
+    /* A phone band is 366 wide and 723 tall, and a percentage ellipse sized
+       for a 1400x487 banner cannot cover that: measured, the lightest pixel
+       behind the headline was #8E9DB4, or 2.75 to 1 against white. So the
+       phone gets its own stack, scrimmed along the long axis with the glow
+       kept as a rise from the bottom edge. The rim light is barely legible at
+       this width anyway. */
+    background:
+      linear-gradient(180deg, rgba(0,11,36,.90) 0%, rgba(0,11,36,.76) 46%, rgba(0,11,36,.88) 100%),
+      radial-gradient(130% 62% at 50% 104%, #1E5BFF 0%, #3A76FF 42%, rgba(99,158,255,0) 80%),
+      #001035}
   .page-head::before{background-size:48px 48px}
+  .page-head .btn{min-height:52px;padding:0 8px 0 22px}
+  .page-head .btn .btn-label>span[aria-hidden="true"]{width:32px;height:32px}
 }
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
@@ -668,10 +730,7 @@ h1,h2,h3,p{margin-top:0}
 
 /* ---------- tablet: two columns, not a stretched phone ---------- */
 @media(min-width:768px) and (max-width:1279px){
-  /* The 920px cap that used to sit here is gone with the 1440 one above:
-     at 1280 it put the content in a 920 column with 180px either side,
-     which is the opposite of edge-aligned. The base rule's 22px now
-     applies through this range too, where the reference measures 20. */
+  .container{width:min(920px,calc(100% - 56px))}
   /* the hero is one viewport at every width now; it grows past that
      only if its own content needs the room. The top clears the floating
      header the hero runs under: a bare 44px left 1024-1279 with the
@@ -752,10 +811,10 @@ h1,h2,h3,p{margin-top:0}
   .contact-box{padding:26px;gap:28px}
   .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
   .section,.contact{padding:60px 0}
-  /* The card sets its own phone padding up at the inset-card block, which
-     comes earlier in the file; this line used to win on source order and
-     put the old band's 44/32 back. It is the card's numbers now. */
-  .page-head{margin:8px 14px 0;padding:48px 20px 52px;border-radius:22px}
+  /* The glow band sets its own phone numbers up at its own block, which
+     comes earlier in the file; this line used to win on source order and put
+     the old pale band's 44/32 padding back. */
+  .page-head{margin:12px;padding:52px 20px;border-radius:24px}
 }
 
 /* very narrow phones */
@@ -884,7 +943,17 @@ html{font-size:112.5%}
    and the copy's middle are the same line. The cost, accepted: expanding the
    card now lifts the group by about half the growth instead of pushing it
    straight down. */
-.contact-panel-stage{width:448px;height:337px;display:flex;align-items:center;justify-content:center}
+/* 392px, up from 337 (2026-10-21). The reservation was sized for one card at
+   its open 408x289 plus the hint. The deck is taller than that by what the
+   pile reaches upward (37px) and by the arrow row under it (44px plus an 18px
+   gap), and `.contact-panel` clips its overflow, so at 337 the arrows were
+   cut off below the panel's bottom edge. Measured: the deck needs 374 and
+   this leaves it a little air.
+
+   Still a fixed reservation rather than `auto`, for the reason in the panel
+   rule above: an auto track changes width as the card opens and re-wraps the
+   headline in the column beside it. */
+.contact-panel-stage{width:448px;height:392px;display:flex;align-items:center;justify-content:center}
 
 /* ---------- services accordion (homepage) ----------
    Five pillars on the left, one open at a time, beside a brand-blue card
@@ -1067,6 +1136,93 @@ html{font-size:112.5%}
    own grid item — so the open row can span the panel instead of being trapped
    in the 520px the single card needs. Collapsed, nothing here changes that
    box: one 320px card, centred in it, exactly as before. */
+/* THE OFFICE DECK (client, 2026-10-21; reference: their screen recording).
+   A pile, not a fan: the front card sits flat and square on, the two behind
+   peek out up and to the right with a little perspective so the stack reads
+   as physical rather than as a slideshow. The 21st.dev component this started
+   from threw the neighbours 60-86px left and right; the recording is much
+   tighter than that, and tighter also keeps the pile inside the panel column
+   it has to live in.
+
+   The card itself is 272x153 and grows to 408x289 when opened, so the stage
+   is sized for the open state plus the pile's own reach. Without that the
+   cards behind would be clipped and an opened front card would push the CTA
+   panel taller mid-interaction. */
+.locdeck{display:flex;flex-direction:column;align-items:center;gap:18px}
+.locdeck-stage{position:relative;width:100%;min-height:312px;
+  display:grid;place-items:center;perspective:1200px}
+.locdeck-item{grid-area:1/1;transform-style:preserve-3d;
+  transition:transform .62s var(--ease-out),opacity .62s var(--ease-out);
+  will-change:transform}
+/* ONE EACH SIDE (client, 2026-10-21). This was a pile with both neighbours
+   stacked up and to the right; the client wants the deck to read the way the
+   reference does, one card peeking from the left and one from the right.
+
+   The sides are not arbitrary: depth 1 is the office the NEXT arrow brings
+   in, so it waits on the right, and depth 2 is the one the BACK arrow brings
+   in, so it waits on the left. Pressing an arrow pulls in the card that is
+   already sitting on that side.
+
+   86px is as far as they can go. The open card is 408px wide in a 448px
+   stage, so a neighbour at 0.86 scale reaches 261px from centre, which puts
+   it 37px outside the stage and still inside the panel's 48px gap. Further
+   and it would cross into the copy column. */
+.locdeck-item[data-depth="0"]{transform:none;z-index:3;opacity:1}
+.locdeck-item[data-depth="1"]{
+  transform:translate3d(86px,-28px,-70px) rotateY(-14deg) scale(.86);
+  z-index:2;opacity:.9}
+.locdeck-item[data-depth="2"]{
+  transform:translate3d(-86px,-28px,-70px) rotateY(14deg) scale(.86);
+  z-index:2;opacity:.9}
+/* OPEN, the neighbours step back. The front card grows from 272 to 408 wide,
+   so at 86px they sit entirely behind it and the deck reads as a single card.
+   Working it through: a closed neighbour is 272 at 0.86 scale and the
+   translateZ(-70) under a 1200px perspective shrinks it again to 0.945, so it
+   is 221px wide, 110 either side of its own centre. To clear the open card's
+   204px half-width and still show about 50px, that centre has to sit 142px
+   out, which is 150px of translate before the perspective takes its cut.
+   Its outer edge lands 28px past the stage, inside the panel's 48px gap. */
+.locdeck[data-expanded="true"] .locdeck-item[data-depth="1"]{
+  transform:translate3d(150px,-34px,-70px) rotateY(-14deg) scale(.86)}
+.locdeck[data-expanded="true"] .locdeck-item[data-depth="2"]{
+  transform:translate3d(-150px,-34px,-70px) rotateY(14deg) scale(.86)}
+/* The cards behind are `inert`, which stops pointer events on its own in
+   supporting browsers; this is the belt to that braces, and it also keeps a
+   stray hover tilt from firing on a card nobody can reach. */
+.locdeck-item:not([data-depth="0"]){pointer-events:none}
+
+.locdeck-nav{display:flex;align-items:center;justify-content:center;gap:14px}
+.locdeck-arrow{display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(255,255,255,.42);background:rgba(255,255,255,.12);color:#fff;
+  transition:background .25s var(--ease-out),border-color .25s var(--ease-out),
+    transform .18s var(--ease-out)}
+@media(hover:hover){
+  .locdeck-arrow:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.7)}
+}
+.locdeck-arrow:active{transform:scale(.94)}
+.locdeck-arrow:focus-visible{outline:2px solid #fff;outline-offset:3px}
+/* The office name sits between the arrows and is the live region, so the
+   change is announced once rather than twice. 13.5px on the CTA's dark
+   panel: #DCE6F0 measures 11.3:1 there. */
+.locdeck-status{margin:0;min-width:11ch;text-align:center;
+  font-size:0.75rem;font-weight:600;letter-spacing:-.01em;color:#DCE6F0}
+
+@media (prefers-reduced-motion:reduce){
+  .locdeck-item{transition:none}
+}
+@media (max-width:767px){
+  /* A phone column has no gutters to lend, so the neighbours tuck in to
+     where they still read as two cards waiting either side. */
+  .locdeck-stage{min-height:268px}
+  .locdeck-item[data-depth="1"]{transform:translate3d(46px,-18px,-50px) rotateY(-11deg) scale(.88)}
+  .locdeck-item[data-depth="2"]{transform:translate3d(-46px,-18px,-50px) rotateY(11deg) scale(.88)}
+  .locdeck[data-expanded="true"] .locdeck-item[data-depth="1"]{
+    transform:translate3d(96px,-22px,-50px) rotateY(-11deg) scale(.88)}
+  .locdeck[data-expanded="true"] .locdeck-item[data-depth="2"]{
+    transform:translate3d(-96px,-22px,-50px) rotateY(11deg) scale(.88)}
+}
+
 .locmaps{flex-direction:column;gap:12px}
 /* Open, the stage takes both columns and the row runs under the copy. It has
    to: at 1280 the panel is 1072px inside its padding, which leaves the stage
@@ -1599,16 +1755,7 @@ html[data-cookie-banner] .sticky-cta{display:none}
    viewport edge than the text does. The hero clips its own overflow and 12 is
    well inside the gutter, so nothing leaves the screen. */
 .hero .ctas{margin-top:0;margin-right:-12px}
-/* 1279, not 1023 (2026-10-21). `.hero-inner` sets its own 32px gutter and
-   opts out of .container with width:100%/max-width:none — but through
-   768-1279 it zeroes that gutter (globals.css:701) and leaned on the 920px
-   container cap for its measure instead. With that cap gone the hero runs
-   to the viewport edge there, so the -12px above had nothing left to pull
-   into: measured at 1024, the shimmer button ran to 1036 against a 1024
-   viewport. It is clipped rather than scrolled (.shell is overflow:clip),
-   which is worse — 12px sliced off a button. Above 1279 the 32px gutter is
-   back and the pull is safe, which is the only place it now applies. */
-@media (max-width:1279px){.hero .ctas{margin-top:34px;margin-right:0}}
+@media (max-width:1023px){.hero .ctas{margin-top:34px;margin-right:0}}
 
 /* ---- hero lead-in ----
    The measure moves up to the wrapper. Left on the paragraph it would let the
@@ -5013,8 +5160,19 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    this page used and the order they are read in. */
 .os-glance{margin:34px 0 0;padding:28px 0 0;border-top:1px solid var(--os-rule);
   display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:30px 24px}
-.os-glance-value{font:100 clamp(30px,2.4vw,40px)/1 var(--font-sans);
-  letter-spacing:-.035em;color:var(--ink-deep)}
+/* BOLD, from weight 100 (client, 2026-10-21). Hairline numerals read as
+   decoration at this size; these are the firm's claims and now carry the
+   weight to say so.
+
+   600 and -.03em are not picked by eye: they are what `.ach-figure-value`
+   already uses for the homepage results band, so the two sets of figures on
+   the site finally match. The size stays at its own clamp because this is a
+   six-across strip and that one is four. The colour stays --ink-deep rather
+   than taking the results band's blue: blue is the accent on a band that has
+   nothing else competing, and six blue numbers under a blue heading accent
+   would be three blue things in one screen. */
+.os-glance-value{font:600 clamp(30px,2.4vw,40px)/1 var(--font-sans);
+  letter-spacing:-.03em;color:var(--ink-deep)}
 /* margin:12px 0 0 also clears the UA's margin-inline-start on a <dd>. */
 .os-glance-label{margin:12px 0 0;font-size:13px;line-height:1.45;
   color:var(--os-caption);text-wrap:pretty}
@@ -6515,6 +6673,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    though, because "growth-focused businesses" is 25 characters and holding
    it on one line would push the heading off a phone. */
 .clients-head h2 .accent{color:var(--blue)}
+
+/* The Who we are heading's accent clause (client, 2026-10-21). Same tint and
+   the same .accent class as the clients and maturity headings, so the three
+   marked phrases on the homepage read as one device rather than three. It is
+   the middle of the sentence here, not the tail, which is why the spans carry
+   their own spaces in the content module. */
+.who-heading .accent{color:var(--blue)}
 
 /* The four marked phrases in the gap's lead (client, 2026-10-21).
    #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the

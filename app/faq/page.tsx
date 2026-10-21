@@ -23,7 +23,7 @@ export const metadata: Metadata = pageMetadata({
 export default function FaqPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-faq">
         <div className="container">
           <h1>{faq.heading}</h1>
           <p>{faq.intro}</p>

@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-privacy">
         <div className="container">
           <h1>{privacy.title}</h1>
           <p>

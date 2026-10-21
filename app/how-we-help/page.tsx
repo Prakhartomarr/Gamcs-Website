@@ -36,7 +36,7 @@ export default function HowWeHelpPage() {
           adding `page-head--art` here plus <PageHeadArt src="/page-art/how-we-help.webp" />
           inside this section is all this band needs to match /solutions, /team
           and /who-we-are. */}
-      <section className="page-head">
+      <section className="page-head ph-help">
         <div className="container">
           {/* One sentence, stored split so the section's `.fin-h2 .accent`
               could tint the second clause and draw its underline. There is no

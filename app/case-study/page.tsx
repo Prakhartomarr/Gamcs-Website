@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
 export default function CaseStudyPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-case">
         <div className="container">
           <h1>{caseStudies.heading}</h1>
           <p>{caseStudies.intro}</p>
