@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { solutions } from "@/lib/content/gamcs";
 
 /**
@@ -13,48 +10,15 @@ import { solutions } from "@/lib/content/gamcs";
  * scripting off, and the browser handles focus and history for free. The
  * pill is the styling.
  *
- * STATIC, NOT STICKY (client). There is an orphaned `.pillar-rail` rule in
- * globals.css from an earlier sticky version — this does not use it; see
- * `.sol-rail` there instead.
+ * STATIC, NOT STICKY (client).
  *
- * The active mark is the only reason this is a client component. Note what
- * it can and cannot do while the row is static: it tracks the pillar in view
- * correctly, but the row scrolls away with the page head, so the mark is
- * visible mainly on arrival and when scrolling back up. Sticky is what would
- * make it a position indicator the whole way down.
+ * ALL FIVE PILLS LOOK THE SAME (client, 2026-10-22). An earlier version
+ * marked the pillar in view with aria-current and painted that pill blue,
+ * which is why this was a client component. The observer is gone, so this is
+ * a server component again — no hooks, no browser API, nothing to hydrate.
+ * Keep it that way: re-adding the mark means re-adding "use client".
  */
 export default function PillarRail() {
-  const [active, setActive] = useState<string | null>(null);
-
-  useEffect(() => {
-    const sections = solutions
-      .map((s) => document.getElementById(s.slug))
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (!sections.length) return;
-
-    /* A band across the upper third: a pillar counts as "the one being read"
-       once its top passes into it, which is how a reader perceives it —
-       rather than whichever happens to cover the most pixels, which on a
-       tall section flips late and on a short one never wins at all. */
-    const io = new IntersectionObserver(
-      (entries) => {
-        const seen = entries.filter((e) => e.isIntersecting);
-        if (!seen.length) return;
-        /* Last in document order, so scrolling down hands over at the
-           boundary instead of sticking on the earlier section. */
-        const next = seen.sort(
-          (a, b) =>
-            sections.indexOf(a.target as HTMLElement) -
-            sections.indexOf(b.target as HTMLElement)
-        )[seen.length - 1];
-        setActive(next.target.id);
-      },
-      { rootMargin: "-18% 0px -72% 0px", threshold: 0 }
-    );
-    sections.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
   if (!solutions.length) return null;
 
   return (
@@ -63,14 +27,7 @@ export default function PillarRail() {
         <ul>
           {solutions.map((s) => (
             <li key={s.slug}>
-              <a
-                href={`#${s.slug}`}
-                className="sol-rail-pill"
-                /* `page` rather than `true`: these point within the current
-                   document, which is exactly what aria-current="page" is
-                   for in an in-page nav. */
-                aria-current={active === s.slug ? "page" : undefined}
-              >
+              <a href={`#${s.slug}`} className="sol-rail-pill">
                 {s.navLabel}
               </a>
             </li>

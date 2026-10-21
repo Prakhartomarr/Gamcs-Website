@@ -16,8 +16,8 @@ const t = pages.solutions;
  * page switches ground: everything inside `.sol` carries the off-white and the
  * larger type scale measured in docs/unity-spec.md.
  *
- * A jump rail of the five pillar anchors used to sit under the band; it was
- * taken out. The #slug anchors it pointed at are still on the cards.
+ * A jump rail of the five pillar anchors sits under the band (PillarRail),
+ * pointing at the #slug anchors on the cards below.
  */
 
 export const metadata: Metadata = {

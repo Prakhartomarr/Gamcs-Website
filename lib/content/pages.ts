@@ -57,6 +57,9 @@ export const pages = {
     title: "Our Team | Founders & Advisors",
     description:
       "Meet the founders and advisory board behind GA Management Consultants — 150+ combined years of FP&A, BI, audit, and CFO advisory experience.",
+    /* RETIRED 2026-10-22 (client): the /team page head's second button was
+       taken out along with its "Schedule a Call" partner. Kept, not deleted
+       — manifest row TEAM-HEAD-05 points here. Nothing renders it. */
     theirWork: "Their work",
   },
   careers: {

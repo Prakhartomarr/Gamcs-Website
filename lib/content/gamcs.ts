@@ -311,8 +311,12 @@ export const story = {
  * page reads them.
  */
 export const ourStory = {
-  /* The client's caps, kept. `.section-kicker` sets no text-transform, so
-     whatever is stored here is what the eyebrow reads on screen. */
+  /* RETIRED 2026-10-22 (client): the eyebrow was taken off the page head.
+     Kept, not deleted — copy-manifest row WHO-STORY-05 points here and
+     scripts/copy/source.mjs throws on a locator it cannot resolve. Nothing
+     renders it. The client's caps are preserved for whenever it comes back:
+     `.section-kicker` sets no text-transform, so what is stored is what
+     would read on screen. */
   eyebrow: "OUR STORY",
   heroLines: [
     "Built on a shared vision.",
@@ -322,11 +326,16 @@ export const ourStory = {
   heroBody:
     "GA Management Consultants LLP was founded in 2023 by Gaurav Malik and Abhinav Aggarwal. Having known each other since college, qualified as Chartered Accountants, and later worked in corporate roles, they shared a conviction: finance should do more than explain what happened. It should help businesses decide what happens next.",
   /*
-   * Both hero buttons stay on this page, so both hold a fragment rather than a
-   * route: the primary lands on the timeline the label names ("Our journey"),
-   * the secondary on the founders section. The page gives both targets
-   * tabindex="-1" so the browser moves focus there as well as the viewport —
-   * a fragment link that only scrolls leaves a keyboard user at the top.
+   * RETIRED 2026-10-22 (client): the hero button pair was taken out of the
+   * page head. Kept, not deleted — manifest rows WHO-STORY-10 and -11 point
+   * at these two labels. Nothing renders them.
+   *
+   * Both held a fragment rather than a route, because both targets are on
+   * this page: the primary landed on the timeline its label names, the
+   * secondary on the founders section. Those sections are still there and
+   * still carry tabindex="-1"; with the buttons gone nothing links to them,
+   * so they are reached by scrolling. Re-render these two and the focus
+   * handling works as before.
    */
   heroCtas: {
     primary: { label: "Explore Our Journey", href: "#our-journey" },
@@ -2819,23 +2828,32 @@ export const careers = {
   locationEither: { id: "either", label: "Either" },
   open: {
     eyebrow: "Open applications",
-    heading: "Pick the track you want to grow in.",
-    sub: "We don't have named openings right now. We do read every application, and we hire ahead of demand in all five practice areas.",
+    heading: "No open roles right now.",
+    sub: "We still read every application, and we hire ahead of demand. Send your CV and we will come back to you when something opens.",
+    other: "Prefer email?",
+    otherLead: "Write to",
+    /*
+     * RETIRED 2026-10-22 (client): the filterable list of the five practice-area
+     * tracks was taken off the page, so the two filter labels, the card pill and
+     * its caption, the counter and the per-card button no longer render. Kept,
+     * not deleted — manifest rows CAREERS-OPEN-* point at every one of them and
+     * scripts/copy/source.mjs throws on a locator it cannot resolve.
+     */
     areaLabel: "Practice area",
     locationLabel: "Location",
     all: "All",
     chip: "Open application",
     workOn: "You'd work on:",
-    other: "Don't see your track?",
-    otherLead: "Write to",
     /** `{shown}` of `{total}` after the filters. */
     showingTracks: "Showing {shown} of {total} tracks",
     showingOpenings: "Showing {shown} of {total} openings",
     apply: "Apply",
   },
   roles: [] as CareerRole[],
-  /* Every track is open in both locations today, so the location filter
-     relabels the cards and never empties the list. */
+  /* NOT DEAD DATA, though nothing lists these any more (client, 2026-10-22).
+     The ids are the Apply form's track select (ApplyDialog) and the whitelist
+     /api/careers validates `track` against, and scripts/careers-api-check.mjs
+     posts `fpa`. Renaming or dropping an id rejects live applications. */
   tracks: [
     { id: "fpa", title: "FP&A & CFO Advisory", workOn: "Budgeting, forecasting, rolling cash flow models, accelerated close, and revenue forecasts tied to RevOps data." },
     { id: "fte", title: "Finance Team Extension", workOn: "Accounting, bookkeeping and reporting capacity for single companies, PE/VC portfolios and advisory firms." },

@@ -6,23 +6,9 @@ import PageHeadArt from "@/components/PageHeadArt";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import ApplyDialog, { type ApplyRequest } from "@/components/careers/ApplyDialog";
 import { careers } from "@/lib/content/gamcs";
-import { fill } from "@/lib/content/fill";
-import { pages } from "@/lib/content/pages";
 
-const { open, tracks, roles, locations } = careers;
+const { open } = careers;
 const mailto = `mailto:${careers.email}`;
-
-/* One list: named roles (none today) sit above the open-application tracks. */
-const rows = [
-  ...roles.map((r) => ({ id: r.id, track: r.track, title: r.title, body: r.summary, label: "", locations: r.locations })),
-  ...tracks.map((t) => ({ id: t.id, track: t.id, title: t.title, body: t.workOn, label: open.workOn, locations: locations.map((l) => l.id) })),
-];
-
-const Chevron = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M6 9l6 6 6-6" />
-  </svg>
-);
 const Mail = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -31,20 +17,18 @@ const Mail = ({ size = 16 }: { size?: number }) => (
 );
 
 /**
- * The split: the dark panel that stays put, and the track list it filters.
- * `children` are the server-rendered blocks that follow the tracks in the
- * scrolling column (Why GAMCS, How we work).
+ * The split: the dark panel that stays put, and the column that scrolls past
+ * it. `children` are the server-rendered blocks in that column (Why GAMCS,
+ * How we work), below the no-openings section this renders itself.
  *
  * The panel is plain CSS `position: sticky`. The only script on it is a
  * sentinel that marks it `data-pinned` once the page has moved, which folds
- * the breadcrumb, intro and meta line away so the filters and Apply still fit
- * a 720px-high laptop. The lane is a stretched grid cell, so the column beside
- * it never moves when the panel changes height.
+ * the intro and meta line away so Apply still fits a 720px-high laptop. The
+ * lane is a stretched grid cell, so the column beside it never moves when the
+ * panel changes height.
  */
 export default function CareersSplit({ children }: { children: ReactNode }) {
   const id = useId();
-  const [area, setArea] = useState("all");
-  const [loc, setLoc] = useState("all");
   const [pinned, setPinned] = useState(false);
   const [bar, setBar] = useState(false);
   const [request, setRequest] = useState<ApplyRequest | null>(null);
@@ -80,42 +64,9 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
     return () => io.disconnect();
   }, []);
 
-  const shown = rows.filter((r) => (area === "all" || r.track === area) && (loc === "all" || r.locations.includes(loc)));
-  const locLabel = (ids: string[]) =>
-    locations.filter((l) => ids.includes(l.id) && (loc === "all" || l.id === loc)).map((l) => l.label).join(" · ");
-
-  /* Every Apply opens the overlay; a track's own button pre-selects it, and a
-     chosen location filter carries into the form's location preference. */
-  const apply = (track?: string) => ({ type: "button" as const, onClick: () => setRequest({ track, loc }) });
-
-  const filters = (suffix: string, className: string) => (
-    <div className={className}>
-      <div>
-        <label htmlFor={`${id}-area-${suffix}`}>{open.areaLabel}</label>
-        <div className="cr-select">
-          <select id={`${id}-area-${suffix}`} value={area} onChange={(e) => setArea(e.target.value)}>
-            <option value="all">{open.all}</option>
-            {tracks.map((t) => (
-              <option key={t.id} value={t.id}>{t.title}</option>
-            ))}
-          </select>
-          <Chevron />
-        </div>
-      </div>
-      <div>
-        <label htmlFor={`${id}-loc-${suffix}`}>{open.locationLabel}</label>
-        <div className="cr-select">
-          <select id={`${id}-loc-${suffix}`} value={loc} onChange={(e) => setLoc(e.target.value)}>
-            <option value="all">{open.all}</option>
-            {locations.map((l) => (
-              <option key={l.id} value={l.id}>{l.label}</option>
-            ))}
-          </select>
-          <Chevron />
-        </div>
-      </div>
-    </div>
-  );
+  /* Every Apply opens the overlay. Nothing pre-selects a track or a location
+     any more, so the form asks for both itself. */
+  const apply = () => ({ type: "button" as const, onClick: () => setRequest({}) });
 
   return (
     <>
@@ -139,7 +90,6 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
                 </p>
               </div></div>
               <div className="cr-rule" />
-              {filters("p", "cr-filters")}
               <div className="ctas" ref={heroCtas}>
                 <CTA {...apply()} icon="diagonal" data-cta="careers-hero">{careers.applyLabel}</CTA>
               </div>
@@ -149,38 +99,31 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
         </div>
 
         <div className="cr-col">
+          {/* NO OPENINGS (client, 2026-10-22). This was a filterable list of
+              the five practice-area tracks, each with an "Open application"
+              pill and its own Apply button, under a "Showing 5 of 5 tracks"
+              counter. The client has nothing open, and the cards read as five
+              vacancies, so the list, the counter and both filter renders are
+              gone. What is left says so and keeps the CV route open.
+
+              The copy the list used — open.chip/workOn/areaLabel/locationLabel/
+              all/showingTracks/showingOpenings/apply, and careers.tracks — is
+              still in gamcs.ts and still resolves for the copy manifest. Note
+              careers.tracks is NOT dead: its ids are the Apply form's track
+              select and the whitelist /api/careers validates against. */}
           <section id="tracks" aria-labelledby={`${id}-tracks`} className="reveal">
             <SectionEyebrow label={open.eyebrow} />
             <h2 id={`${id}-tracks`}>{open.heading}</h2>
             <p className="cr-sub">{open.sub}</p>
-            {filters("t", "cr-filters cr-filters--page")}
-            <p className="cr-count" aria-live="polite">
-              {fill(roles.length ? open.showingOpenings : open.showingTracks, { shown: shown.length, total: rows.length })}
-            </p>
-            <ul className="cr-tracks">
-              {rows.map((r, i) => (
-                <li key={r.id} className="cr-track" hidden={!shown.includes(r)}>
-                  <div className="cr-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</div>
-                  <div>
-                    <h3>{r.title}</h3>
-                    {r.label ? <div className="cr-caps">{r.label}</div> : null}
-                    <p>{r.body}</p>
-                    <div className="cr-chips">
-                      <span className="cr-chip cr-chip--open">{open.chip}</span>
-                      <span className="cr-chip">{locLabel(r.locations)}</span>
-                    </div>
-                  </div>
-                  <CTA {...apply(tracks.some((t) => t.id === r.track) ? r.track : undefined)} icon="diagonal" data-cta={`careers-track-${r.id}`} srSuffix={`to ${r.title}`}>{open.apply}</CTA>
-                </li>
-              ))}
-              {/* Survives every filter, so the list can never read as empty. */}
-              <li className="cr-other">
-                <p>
-                  {open.other} <span>{open.otherLead} <a href={mailto}>{careers.email}</a></span>
-                </p>
-                <Mail size={22} />
-              </li>
-            </ul>
+            <div className="ctas">
+              <CTA {...apply()} icon="diagonal" data-cta="careers-open">{careers.applyLabel}</CTA>
+            </div>
+            <div className="cr-other">
+              <p>
+                {open.other} <span>{open.otherLead} <a href={mailto}>{careers.email}</a></span>
+              </p>
+              <Mail size={22} />
+            </div>
           </section>
           {children}
         </div>

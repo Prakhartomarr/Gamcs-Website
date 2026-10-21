@@ -3327,10 +3327,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:#F9F9F8;color:var(--sol-ink)}
 
 /* ---- the jump rail, under the head band ---- */
-/* Sticks under the 90px header, scrolls sideways rather than wrapping to two
-   rows, which the labels do below ~1200px. It scrolls, so it has to look like
-   it: without the mask the last pillars are cut off with nothing to say they
-   existed. */
 /* THE PILLAR ROW under /solutions' page head (client, 2026-10-22, against
    unity-advisory.com/what-we-do). Five jump buttons to the five blocks
    below.
@@ -3357,10 +3353,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media(hover:hover){
   .sol-rail-pill:hover{background:rgba(15,94,151,.12);color:var(--blue)}
 }
-/* The pillar being read. aria-current carries it, so the style follows the
-   state a screen reader is already given rather than a class that could
-   disagree with it. */
-.sol-rail-pill[aria-current="page"]{background:var(--blue);color:#fff}
 .sol-rail-pill:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.sol-rail-pill{transition:none}}
 @media (max-width:767px){

@@ -24,15 +24,13 @@ export default function TeamPage() {
             <p key={para.slice(0, 32)}>{para}</p>
           ))}
           <p className="team-mission">{story.mission}</p>
-          <div className="ctas page-head-ctas">
-            <CTA href={primaryCta.href}
-              data-cta="team-hero" icon="diagonal">
-              {primaryCta.label}
-            </CTA>
-            <CTA href="/case-study" tier="secondary" icon="arrow">
-              {t.theirWork}
-            </CTA>
-          </div>
+          {/* NO BUTTONS IN THIS HEAD (client, 2026-10-22). "Schedule a Call"
+              and "Their work" were both taken out; the band is headline,
+              intro and mission only. The closing band below still carries
+              "Schedule a Call", and /case-study is still reachable from the
+              nav and seven other places, so nothing is orphaned.
+              `pages.team.theirWork` is kept unrendered — manifest row
+              TEAM-HEAD-05 points at it. */}
         </div>
       </section>
 

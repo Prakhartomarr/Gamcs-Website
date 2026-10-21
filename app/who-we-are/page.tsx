@@ -57,11 +57,18 @@ export default function WhoWeArePage() {
     <div className="os">
       {/* ── the page head ───────────────────────────────────────────
           The same band every other inner page opens with. The three
-          hero lines are the h1; the hero's two buttons both stay on
-          this page, so both are plain fragment anchors (see CTA). */}
+          hero lines are the h1.
+
+          STRIPPED TO HEADLINE + BODY (client, 2026-10-22). The "OUR STORY"
+          eyebrow and the "Explore Our Journey" / "Meet the Founders" button
+          pair were taken out. `ourStory.eyebrow` and `ourStory.heroCtas` are
+          kept in gamcs.ts unrendered — three copy-manifest locators point at
+          them (WHO-STORY-05/10/11) and source.mjs throws on a missing one.
+          The #our-journey and #the-founders sections are still on the page;
+          those buttons were the only links to them, so they are reached by
+          scrolling now. */}
       <section className="page-head ph-story">
         <div className="container">
-          <div className="section-kicker">{ourStory.eyebrow}</div>
           <h1 className="os-head-h">
             {ourStory.heroLines.map((line, i) => (
               <span className="os-head-line" key={line}>
@@ -73,19 +80,6 @@ export default function WhoWeArePage() {
             ))}
           </h1>
           <p>{ourStory.heroBody}</p>
-          <div className="ctas page-head-ctas">
-            <CTA href={ourStory.heroCtas.primary.href} data-cta="story-journey" icon="arrow">
-              {ourStory.heroCtas.primary.label}
-            </CTA>
-            <CTA
-              href={ourStory.heroCtas.secondary.href}
-              tier="secondary"
-              data-cta="story-founders"
-              icon="arrow"
-            >
-              {ourStory.heroCtas.secondary.label}
-            </CTA>
-          </div>
         </div>
       </section>
 
