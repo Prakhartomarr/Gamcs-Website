@@ -3346,7 +3346,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
 
 /* ---- the five blocks ---- */
+/* THE PILLARS JOIN THE PAGE'S CONTAINER (client, 2026-10-22: too much empty
+   space on the far right). They ran 21px from the viewport edge while every
+   other section on the site sits in `min(1440px, 100% - 96px)` centred, so on
+   a wide screen each half grew far past what its content needed: measured at
+   1920 the list column was 929px and its longest line ended 556px short of
+   the column's own right edge.
+
+   Narrowing the block does not fill that space so much as stop manufacturing
+   it — what is left reads as the page's margin, the same margin every other
+   section has, instead of a hole inside the section.
+
+   1024 up only: below that the pillars stack and --sol-edge's 12-21px is the
+   gutter the phone layout wants. */
 .sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px)}
+@media (min-width:1024px){
+  .sol-pillars{width:min(1440px,calc(100% - 96px));margin-inline:auto}
+}
 .sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:20px;padding:21px var(--sol-edge);
   /* clears the header and the rail that sticks under it */
@@ -3380,8 +3396,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-card p{margin:clamp(14px,1.3vw,19px) 0 0;max-width:533px;color:#F9F9F8;
   font:500 clamp(16px,1.32vw,19px)/1.2 var(--font-sans)}
 /* a button, not a pill: 55px tall at the reference, on a small radius */
+/* The button follows the tagline it belongs to. It was `margin-top:auto`,
+   which pinned it to the foot of a card whose height comes from the list
+   beside it — on Advise that left 375px of bare gradient between the two,
+   and the card read as two things held apart rather than one block of
+   content. The height still comes from the list; the slack is simply
+   gradient now, which is what the card is. */
 .sol-talk{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
-  margin-top:auto;min-height:55px;padding:0 22px;border-radius:8px;
+  margin-top:clamp(26px,2.8vw,40px);min-height:55px;padding:0 22px;border-radius:8px;
   background:#F9F9F8;color:#0D1828;text-decoration:none;
   font:500 clamp(14px,1.1vw,15.5px)/1 var(--font-sans);letter-spacing:-.01em;
   transition:background .2s var(--ease-out),transform .2s var(--ease-out)}
