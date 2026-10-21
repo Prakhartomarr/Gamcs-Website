@@ -5335,7 +5335,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    photograph scaling; both files are already black and white on disk
    (`*-bw.jpg`), so there is no grayscale filter to animate. */
 .os-founders{margin:68px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
-.os-founder-shot{position:relative;overflow:hidden;border-radius:4px;background:#E9EDEF}
+/* HALF SIZE (client, 2026-10-21). The portraits rendered 616x770 each at
+   1440 — 770px of face, taller than most of the chapters around them. 50%
+   of the width takes them to 308x385; `aspect-ratio` on the img below keeps
+   the height in step, so this is one number rather than two.
+
+   On the card, not the grid: the client asked for the images to halve, and
+   the name, role and bio under each keep the column's own measure. */
+.os-founder-shot{position:relative;overflow:hidden;border-radius:4px;
+  background:#E9EDEF;max-width:50%}
 .os-founder-shot img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
   object-position:center 18%;transition:transform .6s var(--ease-out)}
 .os-founder:hover .os-founder-shot img{transform:scale(1.04)}

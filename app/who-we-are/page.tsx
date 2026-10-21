@@ -263,7 +263,12 @@ export default function WhoWeArePage() {
                     alt=""
                     width={880}
                     height={1100}
-                    sizes="(max-width: 767px) 92vw, 48vw"
+                    /* 24vw, not 48: the shot is capped at half its column
+                       from 2026-10-21, and `sizes` is what next/image picks
+                       the srcset candidate from — left at 48vw it would keep
+                       fetching an image twice the width it now draws. 46vw on
+                       a phone for the same reason. */
+                    sizes="(max-width: 767px) 46vw, 24vw"
                   />
                 </div>
                 <h3 className="os-founder-name">{p.name}</h3>
