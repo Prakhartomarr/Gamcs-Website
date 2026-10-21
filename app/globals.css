@@ -3356,10 +3356,37 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-pillar[data-flip] .sol-card{order:2}
 
 .sol-card{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;
+  /* The one-screen panel. Kept below 1024, where the pillar stacks and the
+     card stands alone with nothing to line up against; dropped above it, so
+     the card ends where its list ends — see the note after this rule. */
   min-height:clamp(480px,88.2vh,794px);
   /* the floor the shader drifts over: what shows without WebGL, in print,
      and before the first frame */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#F9F9F8}
+/* THE CARD ENDS WHERE ITS LIST ENDS (client, 2026-10-22). The list is
+   top-aligned and sized by its own content; the card was a flat 794px, so
+   the two columns started together and finished anywhere from 64px to 686px
+   apart. Dropping the floor lets the grid row take the taller of the two,
+   which for four of the five pillars is the list:
+
+     fpa-cfo-advisory        794 -> 730   list 730   diff 64 -> 0
+     finance-team-extension  794 -> 646   list 646   diff 148 -> 0
+     deal-advisory           794 -> 730   list 730   diff 64 -> 0
+     training-enablement     794 -> 532   list 532   diff 262 -> 0
+     digital-transformation  794 -> 366   list 108   diff 686 -> 258
+
+   TRANSFORM CANNOT REACH ZERO and nothing here can make it. Its two groups
+   are collapsed, so the list is 108px, while the card's own content — eyebrow,
+   two-line headline, sub and the CTA at the foot — measures 366. The card is
+   already as short as its contents allow; the remaining 258px is the card
+   being taller than the list, not the floor.
+
+   The panels are no longer one height down the page. That is the trade the
+   client asked for: the alignment between a card and its own list, rather
+   than between the five cards. */
+@media (min-width:1024px){
+  .sol-card{min-height:0}
+}
 .sol-card-paint{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
 /* The scrim buys the text its contrast, and it used to cost the gradient its
    life: 0.6 of near-black over the whole card left five gradients looking like
