@@ -3363,29 +3363,36 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* the floor the shader drifts over: what shows without WebGL, in print,
      and before the first frame */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#F9F9F8}
-/* THE CARD ENDS WHERE ITS LIST ENDS (client, 2026-10-22). The list is
-   top-aligned and sized by its own content; the card was a flat 794px, so
-   the two columns started together and finished anywhere from 64px to 686px
-   apart. Dropping the floor lets the grid row take the taller of the two,
-   which for four of the five pillars is the list:
+/* ONE CARD HEIGHT, 730px (client, 2026-10-22).
 
-     fpa-cfo-advisory        794 -> 730   list 730   diff 64 -> 0
-     finance-team-extension  794 -> 646   list 646   diff 148 -> 0
-     deal-advisory           794 -> 730   list 730   diff 64 -> 0
-     training-enablement     794 -> 532   list 532   diff 262 -> 0
-     digital-transformation  794 -> 366   list 108   diff 686 -> 258
+   The floor was 794. Briefly it was removed altogether so each card ended
+   exactly where its own list ended — which it did, on four pillars — but
+   that made the five dark panels five different heights down the page, and
+   the client wants them uniform. 730 is the number: the height of the two
+   longest lists, Advise and Transact, so the tallest content still sets the
+   card rather than an arbitrary figure.
 
-   TRANSFORM CANNOT REACH ZERO and nothing here can make it. Its two groups
-   are collapsed, so the list is 108px, while the card's own content — eyebrow,
-   two-line headline, sub and the CTA at the foot — measures 366. The card is
-   already as short as its contents allow; the remaining 258px is the card
-   being taller than the list, not the floor.
+   WHAT THAT MEANS PER PILLAR, measured:
 
-   The panels are no longer one height down the page. That is the trade the
-   client asked for: the alignment between a card and its own list, rather
-   than between the five cards. */
+     fpa-cfo-advisory        card 730   list 730   level
+     deal-advisory           card 730   list 730   level
+     finance-team-extension  card 730   list 646    84px short
+     training-enablement     card 730   list 532   198px short
+     digital-transformation  card 730   list 108   622px short
+
+   Three lists finish above their card's bottom edge and keep their natural
+   spacing. That is the accepted trade: cards uniform with each other rather
+   than each one matched to its own list.
+
+   A FLOOR, NOT A FIXED HEIGHT. Transform with every group opened measures
+   1542, and a hard 730 would leave 800px of list hanging outside the dark
+   panel. min-height lets the card take the taller of the two.
+
+   Below 1024 the pillar stacks and the card stands alone with nothing to
+   line up against, so it keeps its own one-screen clamp above — a flat 730
+   there would be 170px of empty panel on a phone. */
 @media (min-width:1024px){
-  .sol-card{min-height:0}
+  .sol-card{min-height:730px}
 }
 .sol-card-paint{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
 /* The scrim buys the text its contrast, and it used to cost the gradient its
