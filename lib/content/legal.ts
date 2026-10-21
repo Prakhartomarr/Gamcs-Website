@@ -82,7 +82,32 @@ export const privacy = {
         { text: "hosting provider, its location, and log retention period", tbc: true },
       ],
     },
-    { h2: "4. Cookies" },
+    /* ADDED 2026-10-21, from the structure of the reference policies the
+       client sent: both separate WHAT is collected from WHY, and the purpose
+       is its own disclosure rather than something a reader infers from the
+       legal basis further down. Every purpose below is one this build can
+       actually carry out. */
+    { h2: "4. How we use your information" },
+    {
+      ul: [
+        ["To answer an enquiry you send us, and to carry on that correspondence."],
+        [
+          "To consider an application you make through the careers page, and to contact you about it.",
+        ],
+        [
+          "To understand how this website is used, so we can improve it. This happens only where you have turned analytics on; see section 5.",
+        ],
+        [
+          "To keep the site available and secure, and to investigate problems with it.",
+        ],
+      ],
+    },
+    {
+      p: [
+        "We do not use your information to build a profile of you, we do not sell it, and we do not use it to advertise to you anywhere else.",
+      ],
+    },
+    { h2: "5. Cookies" },
     { p: ["This site uses:"] },
     {
       ul: [
@@ -103,7 +128,7 @@ export const privacy = {
         ".",
       ],
     },
-    { h2: "5. Third-party services" },
+    { h2: "6. Third-party services" },
     {
       p: [
         "We use the following third-party services, each with their own privacy practices:",
@@ -141,7 +166,7 @@ export const privacy = {
         "We do not sell your information, and we do not use it for advertising or profiling.",
       ],
     },
-    { h2: "6. Our legal basis for processing your data" },
+    { h2: "7. Our legal basis for processing your data" },
     {
       ul: [
         [
@@ -161,7 +186,27 @@ export const privacy = {
         ],
       ],
     },
-    { h2: "7. How long we keep your data" },
+    /* ADDED 2026-10-21. Both reference policies carry a security section and
+       this one had none. The technical measures listed are the ones actually
+       configured in next.config.mjs and verifiable in a response header; the
+       organisational side is a business fact and is marked. */
+    { h2: "8. How we protect your information" },
+    {
+      p: [
+        "The site is served over HTTPS, so what passes between your browser and it is encrypted in transit. Every response carries a set of protective headers: browsers are told not to guess at file types, not to let the site be framed by another, not to send the full referring address to other sites, and to refuse the camera, microphone and location to anything on the page.",
+      ],
+    },
+    {
+      p: [
+        "The contact form is the part worth repeating here: it posts nothing to a server of ours, so what you type into it is not stored by us unless you send the email it prepares.",
+      ],
+    },
+    {
+      p: [
+        { text: "the organisational measures GAMCS applies to enquiries and applications once they reach a mailbox, including who can read them", tbc: true },
+      ],
+    },
+    { h2: "9. How long we keep your data" },
     {
       ul: [
         [
@@ -174,7 +219,7 @@ export const privacy = {
         ],
       ],
     },
-    { h2: "8. Your rights" },
+    { h2: "10. Your rights" },
     { p: ["Depending on your location, you may have the right to:"] },
     {
       ul: [
@@ -199,20 +244,20 @@ export const privacy = {
         { text: "which data protection regimes apply and which supervisory authority to name", tbc: true },
       ],
     },
-    { h2: "9. Children" },
+    { h2: "11. Children" },
     {
       p: [
         "This site is aimed at businesses and is not directed at children. We do not knowingly collect information from anyone under 18.",
       ],
     },
-    { h2: "10. Changes to this policy" },
+    { h2: "12. Changes to this policy" },
     {
       p: [
         "We will post any changes on this page. ",
         { text: "effective date of this version", tbc: true },
       ],
     },
-    { h2: "11. Contact" },
+    { h2: "13. Contact" },
     {
       p: [
         "Questions about this policy: ",
@@ -269,13 +314,35 @@ export const cookiePolicy = {
         ],
       ],
     },
-    { h2: "4. Third-Party Cookies" },
+    /* ADDED 2026-10-21. The reference cookie policies the client sent each
+       carry a "we do not use" section, and it is the most checkable thing on
+       a page like this. Every line below was verified against the build:
+       the only external script in the whole site is the GA4 tag in
+       components/Analytics.tsx, there is no <iframe> anywhere, the office
+       maps are static images rather than an embed, and the typefaces are
+       self-hosted through next/font so no request leaves for them.
+
+       This section carries no "to be confirmed" markers because none of it
+       is a business fact: it is a statement about the code, and it stops
+       being true the moment someone adds a tag. */
+    { h2: "4. What this site does not use" },
+    {
+      ul: [
+        ["No advertising, retargeting or conversion cookies."],
+        ["No social media tracking pixels."],
+        ["No cross-site tracking, device fingerprinting or data brokers."],
+        [
+          "No third-party embeds that could set cookies of their own. The office maps are static images, not an embedded map, and the typefaces are served from this site rather than fetched from a font provider.",
+        ],
+      ],
+    },
+    { h2: "5. Third-Party Cookies" },
     {
       p: [
         "Some cookies may be placed by third-party services that appear on our pages. We do not control these cookies, so we recommend reviewing the relevant third parties’ own cookie and privacy policies. Third-party services we may use include web analytics providers and social media platforms.",
       ],
     },
-    { h2: "5. How to Manage or Disable Cookies" },
+    { h2: "6. How to Manage or Disable Cookies" },
     {
       p: [
         "You can control cookies through your browser settings — most browsers let you view, manage, delete, and block cookies under “Settings,” “Preferences,” or “Privacy” — and, where presented, through our cookie banner. Please note that blocking essential cookies may affect how the website functions.",
@@ -288,19 +355,32 @@ export const cookiePolicy = {
         ".",
       ],
     },
-    { h2: "6. Consent" },
+    { h2: "7. Consent" },
+    {
+      /* ADDED 2026-10-21: where the choice is actually kept. The reference
+         calls this a consent audit trail. Worth stating plainly because the
+         answer here is unusual and in the visitor's favour: the preference
+         is not itself a cookie, so clearing cookies alone will not reset it,
+         and nothing about the choice is sent to us. */
+      p: [
+        "Your choice is stored in your own browser, under the name ",
+        { text: "gamcs_cookie_consent", strong: true },
+        ", and not as a cookie. It stays on your device and is never sent to us. Clearing your browser's site data for this site removes it and the banner returns; you can also change the choice at any time from the Cookie Preferences link in the footer.",
+      ],
+    },
+
     {
       p: [
         "For non-essential cookies, we rely on your consent, which you may withdraw at any time by adjusting your browser settings or cookie preferences. Essential cookies do not require consent as they are necessary for the website to operate.",
       ],
     },
-    { h2: "7. Changes to This Cookie Policy" },
+    { h2: "8. Changes to This Cookie Policy" },
     {
       p: [
         "We may update this Cookie Policy from time to time. We will post any updates on this page and revise the effective date above.",
       ],
     },
-    { h2: "8. Contact Us" },
+    { h2: "9. Contact Us" },
     {
       p: [
         "{legalName} · ",
