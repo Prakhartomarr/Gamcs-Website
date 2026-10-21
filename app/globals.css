@@ -7136,8 +7136,14 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
    84px, well past the 24x24 WCAG 2.5.8 asks for, and sized the same at
    every width: it is a target on a dark field, not a piece of type, so it
-   does not want to shrink with the band. The triangle is nudged 3px right
-   because a triangle's optical centre is not its bounding box's. */
+   does not want to shrink with the band.
+
+   NO NUDGE ON THE SVG. A triangle's optical centre is its centroid rather
+   than its bounding box, and that correction belongs in the path's own
+   vertices, where it scales with the icon — see the note in
+   HowWeHelpFilm.tsx. It was a translateX here on top of a path that was
+   already drawn off-centre, and the two compounded: measured 4.88px right
+   of the circle's centre at 1440 and 4.5px at 390. */
 .hwv-frame{position:relative}
 .hwv-play{position:absolute;inset:0;margin:auto;z-index:2;
   width:84px;height:84px;display:grid;place-items:center;
@@ -7146,7 +7152,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   transition:background .22s var(--ease-out),border-color .22s var(--ease-out),
     transform .22s var(--ease-out)}
-.hwv-play svg{width:30px;height:30px;display:block;transform:translateX(3px)}
+.hwv-play svg{width:30px;height:30px;display:block}
 @media(hover:hover){
   .hwv-play:hover{background:rgba(15,94,151,.9);
     border-color:rgba(255,255,255,.72);transform:scale(1.06)}

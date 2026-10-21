@@ -201,8 +201,15 @@ export default function HowWeHelpFilm({
                 {/* Drawn rather than a glyph: ▶ renders as a colour emoji on
                     some platforms and monochrome on others, and at this size
                     the difference is loud. */}
+                {/* CENTRED ON ITS CENTROID, not its bounding box. A
+                    triangle's visual balance point is its centroid, which
+                    for this one sits a third of the way from the base — so a
+                    triangle whose BOX is centred reads as pushed right.
+                    These vertices put the centroid on 12,12 exactly:
+                    x (8.5+8.5+19)/3 = 12, y (5.2+18.8+12)/3 = 12. No nudge
+                    on the element, so it stays centred at any size. */}
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M8 5.2v13.6L19 12z" fill="currentColor" />
+                  <path d="M8.5 5.2v13.6L19 12z" fill="currentColor" />
                 </svg>
                 {/* The button shows a triangle and no words, so this is its
                     whole accessible name rather than an addition to one. */}
