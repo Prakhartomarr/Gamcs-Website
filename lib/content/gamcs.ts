@@ -647,15 +647,20 @@ export const howWeHelp = {
         things the old name said: it ran 47 seconds and now runs 100; it had
         no audio track at all and now carries one (165 kbps across the full
         length, measured \u2014 not an empty track); and the text version it
-        pointed at is gone. It starts muted because autoplay demands it, so
-        the name says so rather than leaving a visitor to wonder whether the
-        silence is the film or their own device. */
-    label:
-      "GAMCS explainer film, 1 minute 40 seconds. It starts muted \u2014 use the player controls for sound.",
-    /* The sound toggle over the film (2026-10-21). One control, two names:
-       it is both the "turn it on" prompt when the browser has refused to
-       unmute without a gesture, and the stop control WCAG 1.4.2 asks for
-       once sound is playing on its own. */
+        pointed at is gone.
+
+        NO LONGER SAYS "starts muted" (client, 2026-10-22). The film does not
+        start on its own any more \u2014 it waits for the play button and starts
+        with its sound on \u2014 so the old warning described something that can
+        no longer happen. */
+    label: "GAMCS explainer film, 1 minute 40 seconds, with sound.",
+    /* The play button over the cover image (client, 2026-10-22). The button
+       has no visible text \u2014 it is a triangle on the film \u2014 so this IS its
+       accessible name rather than an addition to one. */
+    play: "Play the film",
+    /* RETIRED 2026-10-22 with the sound toggle the autoplay needed. Nothing
+       renders them: the film starts audible on a click, and the player's own
+       controls carry mute from there. */
     soundOn: "Turn on sound",
     soundOff: "Mute the film",
     altSummary: "Read what the film shows",

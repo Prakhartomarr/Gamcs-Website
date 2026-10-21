@@ -7122,34 +7122,48 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* =====================================================================
-   The film's sound toggle (2026-10-21)
+   The film's play button (client, 2026-10-22)
    =====================================================================
-   Top right of the mount, clear of the native controls bar along the
-   bottom. Always visible: it is the stop control for audio that starts on
-   its own (WCAG 1.4.2), and a control that only appears on hover is no
-   control at all for touch or keyboard.
+   This block was the sound toggle, which existed only to recover from an
+   autoplay that started the film silently. The film waits for a press now
+   and starts with its sound on, so the toggle and every rule it needed are
+   gone; the player's own controls carry mute from the first frame.
 
-   On the film's own dark ground rather than a panel, so it reads as part
-   of the player. White on rgba(13,24,40,.72) over a dark film measures
-   well past AA at this size; the hairline is what keeps it findable when
-   a pale frame plays underneath. */
+   Dead centre of the cover, because that is the one thing to do here and
+   nothing else is competing for the middle. `inset:0` plus `margin:auto`
+   centres a fixed-size box in both axes without a transform, which keeps
+   the hover scale from fighting a translate.
+
+   84px, well past the 24x24 WCAG 2.5.8 asks for, and sized the same at
+   every width: it is a target on a dark field, not a piece of type, so it
+   does not want to shrink with the band. The triangle is nudged 3px right
+   because a triangle's optical centre is not its bounding box's. */
 .hwv-frame{position:relative}
-.hwv-sound{position:absolute;top:20px;right:20px;z-index:2;
-  display:inline-flex;align-items:center;gap:7px;
-  min-height:34px;padding:0 12px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.34);background:rgba(13,24,40,.72);
-  color:#fff;font-size:12.5px;font-weight:500;letter-spacing:-.005em;
-  cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  transition:background .2s var(--ease-out),border-color .2s var(--ease-out)}
-.hwv-sound-ico{display:block;flex:none}
+.hwv-play{position:absolute;inset:0;margin:auto;z-index:2;
+  width:84px;height:84px;display:grid;place-items:center;
+  border-radius:50%;border:1px solid rgba(255,255,255,.4);
+  background:rgba(13,24,40,.62);color:#fff;cursor:pointer;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:background .22s var(--ease-out),border-color .22s var(--ease-out),
+    transform .22s var(--ease-out)}
+.hwv-play svg{width:30px;height:30px;display:block;transform:translateX(3px)}
 @media(hover:hover){
-  .hwv-sound:hover{background:rgba(13,24,40,.9);
-    border-color:rgba(255,255,255,.62)}
+  .hwv-play:hover{background:rgba(15,94,151,.9);
+    border-color:rgba(255,255,255,.72);transform:scale(1.06)}
 }
-.hwv-sound:focus-visible{outline:2px solid #fff;outline-offset:3px}
-/* Phones: the mount's padding drops to 6px, so the inset follows it. */
+/* White, not the brand blue the rest of the site focuses in: the ring sits
+   on a dark film, where #0F5E97 against rgba(13,24,40,.62) is nowhere near
+   the 3:1 WCAG 1.4.11 wants of a focus indicator. */
+.hwv-play:focus-visible{outline:3px solid #fff;outline-offset:3px}
+/* Phones: the mount's padding drops to 6px and the frame to ~192px tall, so
+   an 84px disc is nearly half its height. */
 @media(max-width:767px){
-  .hwv-sound{top:12px;right:12px;min-height:30px;padding:0 10px;font-size:11.5px}
+  .hwv-play{width:64px;height:64px}
+  .hwv-play svg{width:24px;height:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hwv-play{transition:none}
+  .hwv-play:hover{transform:none}
 }
 
 /* =====================================================================
