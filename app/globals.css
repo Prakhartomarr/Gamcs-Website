@@ -5295,9 +5295,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* ---- 02 · what we saw ------------------------------------------------- */
 .os-shift{margin:88px 0 0;display:grid;
   grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);align-items:stretch}
-.os-shift-card{border-radius:3px;padding:44px 40px 48px}
-.os-shift-from{border:1px solid var(--line)}
-.os-shift-to{border:1px solid rgba(15,94,151,.4);background:rgba(15,94,151,.04)}
+/* The card treatment the founders and the principles took (client,
+   2026-10-21): 32px of radius, white, a hairline. These were 3px-radius
+   boxes, one outlined and one tinted.
+
+   The tint on the "to" card stays. The whole section is one thing shown in
+   two states, and the colour is what says which of them this firm is for —
+   two identical white cards would need the reader to parse the captions to
+   find that out. */
+.os-shift-card{border-radius:32px;padding:32px 30px 34px;background:#fff;
+  border:1px solid var(--os-rule)}
+.os-shift-to{border-color:rgba(15,94,151,.26);background:rgba(15,94,151,.05)}
 .os-shift-arrow{display:flex;align-items:center;justify-content:center}
 /* An <h3> now, not a <p>: it names its column, and the two columns are the
    only subdivision this section has. margin:0 clears the UA heading margin. */
@@ -5311,16 +5319,25 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   text-wrap:pretty}
 
 /* ---- 03 · what we set out to build ------------------------------------
-   The bordered card grid the five disciplines used, at three columns and
-   with a sentence under each heading. */
+   Three separate cards, in the same treatment as the founders and the
+   principles (client, 2026-10-21). It was one bordered grid: cells divided
+   by 1px of --line showing through a gap, with a 3px transparent top border
+   that turned blue on hover.
+
+   The hover moves to the card's own border, because a 3px stripe across the
+   top of a 32px radius cuts the corners off. */
 .os-built{margin:72px 0 0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1px;background:var(--line);border:1px solid var(--line)}
-.os-built li{background:var(--paper);padding:36px 30px 40px;border-top:3px solid transparent;
-  transition:border-top-color .25s var(--ease-out)}
-.os-built li:hover{border-top-color:var(--blue-light)}
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.os-built li{background:#fff;border:1px solid var(--os-rule);border-radius:32px;
+  padding:28px 26px 30px;transition:border-color .25s var(--ease-out)}
+@media(hover:hover){
+  .os-built li:hover{border-color:rgba(15,94,151,.28)}
+}
 .os-built-n{margin:0;font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--os-caption)}
-.os-built-h{margin:48px 0 0;font-size:20px;font-weight:600;line-height:1.25;
+/* 20px, down from 48: that gap was holding the number apart from the
+   heading across a tall bordered cell, and inside a card it just left a
+   hole. */
+.os-built-h{margin:20px 0 0;font-size:20px;font-weight:600;line-height:1.25;
   letter-spacing:-.015em;color:var(--ink)}
 .os-built-b{margin:14px 0 0;font-size:15px;line-height:1.65;color:var(--gray);text-wrap:pretty}
 /* The sentence about the name GA. One line of copy where a whole chapter
@@ -6421,7 +6438,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
   .os-built{margin-top:40px;grid-template-columns:1fr}
   .os-built li{padding:24px 20px 28px}
-  .os-built-h{margin-top:28px;font-size:18px}
+  /* 20, matching the desktop value now that it came down from 48 — this
+     was the phone's smaller version of the old gap and ended up larger. */
+  .os-built-h{margin-top:20px;font-size:18px}
   .os-built-b{font-size:14px}
   .os-note{margin-top:28px;font-size:15px;padding-left:16px}
 
