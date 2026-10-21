@@ -2096,23 +2096,14 @@ html[data-cookie-banner] .sticky-cta{display:none}
    both places. 14px keeps a sub-item under its own group lead at every width
    the right gutter clears the .sol-list chevron.
 
-   17px since 2026-10-22 — 14, then 15, now this (client). The last step is
-   not only readability: the stretch that makes the list span its card was
-   putting 32px into EVERY gap on the two longest pillars, because 18 bullet
-   lines and three leads came to 730 in a 794 card and flex shared the 64 out
-   between the rows. Growing the TEXT spends that 64 instead of the gaps do —
-   at 17px the content comes to ~792, the stretch has ~2px left to give, and
-   what is between the groups is the list's own 20px and 16px again.
-
-   The earlier note's ceiling still bounds it. */
-/*  15px, up from 14 (client, for readability). The ceiling is
+   15px since 2026-10-22, up from 14 (client, for readability). The ceiling is
    the dark card beside it on /solutions: that card is a fixed 794px and the
    two longest lists — Advise and Transact — ran 731px, so there were 63px to
    spend. 18 bullet lines at +1.6px of leading is ~29px, and the three group
    leads at +1.5px is ~5px, which lands inside it with room left rather than
    betting the layout on an exact fit. */
 .cap-list{list-style:disc;margin:8px 0 20px;padding:0 34px 0 1.15em;
-  font-size:0.9444rem;line-height:1.6;color:rgba(26,26,26,.78)}
+  font-size:0.8333rem;line-height:1.6;color:rgba(26,26,26,.78)}
 .cap-list li{margin:0 0 4px}
 
 /* Transform's third level — the one pillar whose copy has one: a named set
@@ -3365,9 +3356,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-pillar[data-flip] .sol-card{order:2}
 
 .sol-card{position:relative;isolation:isolate;overflow:hidden;border-radius:12px;
-  /* The one-screen floor. Still what the stacked layout below 1024 uses,
-     where the card is a banner above its list and has nothing to match; from
-     1024 up it is dropped — see the note under .sol-list. */
   min-height:clamp(480px,88.2vh,794px);
   /* the floor the shader drifts over: what shows without WebGL, in print,
      and before the first frame */
@@ -3403,69 +3391,38 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-talk:focus-visible{outline:2px solid #F9F9F8;outline-offset:3px}
 
 /* ---- the services, one row each ---- */
-/* THE LIST SPANS THE CARD (client, 2026-10-22): the first group's text
-   starts at the card's top edge and the last capability ends at its bottom,
-   on every pillar, so the two columns read as one block rather than a full
-   panel beside a short list.
+/* TOP-ALIGNED, NATURAL SPACING (client, 2026-10-22).
 
-   `stretch` + `space-between`, not a height calculation: the row is already
-   as tall as the card (min-height:clamp(480px,88.2vh,794px) on .sol-card),
-   so stretching the <ul> into it and letting flex share out what is left
-   puts the last row's edge on the card's edge whatever the copy says.
+   This briefly stretched to the card and shared the slack out with
+   `space-between`, so the last capability landed on the card's bottom edge.
+   It did that — measured bottom gaps of 8px on four pillars — but the slack
+   is not evenly spread across the five: Advise and Transact were 57px short,
+   which absorbs invisibly, while Build was 141, Enable 254 and Transform
+   357. Those three carried that distance BETWEEN their rows instead, and
+   Transform's two collapsed groups ended up ~430px apart. Shown both, the
+   client chose natural spacing everywhere over an exact bottom edge on two
+   pillars out of five.
 
-   WHAT IT COSTS, measured before: the bottom shortfall was 57px on Advise
-   and Transact but 141 on Build, 254 on Enable and 357 on Transform, whose
-   two groups are collapsed. Those three now carry that distance between
-   their rows instead of below them — Transform especially, where two rows
-   share ~670px. Accepted at the client's asking: the alternative was the
-   alignment holding on two pillars out of five.
-
-   When a list is TALLER than the card — Transform with every group open,
-   measured 1542 — there is no free space and space-between is inert, so it
-   stacks exactly as before. */
-.sol-list{list-style:none;margin:0;padding:0;align-self:stretch;
-  display:flex;flex-direction:column;justify-content:space-between}
+   THE TWO PADDING TRIMS BELOW ARE KEPT. They are what puts the first line on
+   the card's top edge, which is the half of that ask costing nothing. */
+.sol-list{list-style:none;margin:0;padding:0;align-self:start}
 .sol-list>li{border-bottom:1px solid var(--sol-rule)}
 .sol-list>li:first-child{border-top:1px solid var(--sol-rule)}
 /* The first row loses the padding that held its text 19px below the card's
    top, and the min-height with it: `align-items:center` would otherwise
    re-centre the line inside a 60px box and put it straight back. What is
-   left above the cap is the 1px rule and the line's own half-leading. */
+   left above the cap is the 1px rule and the line's own half-leading —
+   measured 3px. */
 .sol-list>li:first-child>.sol-list-head,
 .sol-list>li:first-child>details>summary{padding-top:0;min-height:0}
-/* …and the last row loses the 20px its list carried underneath it, which is
-   the same gap at the other end. */
+/* …and the last row loses the 20px its list carried underneath it, so the
+   list box ends on its own last line rather than 20px below it. */
 .sol-list>li:last-child .sol-list-body>:last-child{margin-bottom:0}
-
-/* THE CARD FOLLOWS ITS LIST FROM 1024 UP (client, 2026-10-22), where the two
-   sit side by side and the card is the thing the list is being aligned to.
-
-   The 794px floor was the reason three pillars could not reach their own
-   card: Build's list is 698, Enable's 580, Transform's 111 collapsed, and
-   `space-between` had to put the difference somewhere — 48px and 214px into
-   their gaps. Dropping the floor lets the grid row take whatever the taller
-   of the two needs, so for four of the five the card and the list are the
-   same height by construction and there is no slack left to distribute.
-
-   Measured with the floor off: Advise 791/791, Build 698/698, Transact
-   791/791, Enable 580/580 — card and list identical. Transform is the one
-   the row cannot settle, because its own content (eyebrow, headline, sub and
-   the CTA) needs 366 while its two collapsed groups come to 111; its slack
-   falls from 683 to 255, which is as far as this can take it while the
-   groups stay folded.
-
-   WHAT IT COSTS: the five panels are no longer one height down the page.
-   That was the point of the floor, and it is the trade the client chose over
-   the gaps. */
-@media (min-width:1024px){
-  .sol-card{min-height:0}
-}
 .sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   /* 16→19px since 2026-10-22, from 15→18 — see the note on .cap-list for
-     the headroom this is spending. 17→20px since the list began spanning its
-     card — see .cap-list. */
-  font:400 clamp(17px,1.39vw,20px)/1.5 var(--font-sans);letter-spacing:normal;
+     the headroom this is spending. */
+  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink);transition:color .2s var(--ease-out)}
 /* The group lead where there is no disclosure (client, 2026-10-22): four of
    the five pillars list their capabilities open, and only Transform still
@@ -3475,7 +3432,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    is what stops an <h3> arriving bold. */
 .sol-list>li>.sol-list-head{display:flex;align-items:center;margin:0;
   min-height:60px;padding:16px 2px;
-  font:400 clamp(17px,1.39vw,20px)/1.5 var(--font-sans);letter-spacing:normal;
+  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink)}
 .sol-list summary::-webkit-details-marker{display:none}
 .sol-list summary:hover{color:var(--blue)}
