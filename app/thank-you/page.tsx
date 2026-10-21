@@ -36,7 +36,7 @@ export default function ThankYouPage() {
   const [check, reopen, reply] = t.steps;
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-thanks">
         <div className="container">
           <h1>{t.h1}</h1>
           <p>{fill(t.lead, vars)}</p>

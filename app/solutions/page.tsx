@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 export default function SolutionsHubPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-solutions">
         <div className="container">
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>

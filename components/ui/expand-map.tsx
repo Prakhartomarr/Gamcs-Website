@@ -38,6 +38,22 @@ export type LocationMapProps = {
   destination: string;
   /** Credit line for the basemap. Required by ODbL for OSM tiles. */
   attribution?: string;
+  /**
+   * CONTROLLED OPEN, used by OfficeMaps so the deck owns the state rather
+   * than each card owning its own.
+   *
+   * The first version let every card keep its own `open` and had the deck
+   * force the outgoing one shut. That produced the bug the client reported:
+   * expand a card, press an arrow, and the next office arrives closed, so
+   * you have to open it again to read the address you were already reading.
+   * One flag on the deck means expanded stays expanded while you page
+   * through the offices.
+   *
+   * Uncontrolled when omitted: /contact mounts a LocationMap on its own and
+   * still wants a card that opens and closes by itself.
+   */
+  open?: boolean;
+  onOpenChange?: (next: boolean) => void;
   className?: string;
 };
 
@@ -47,9 +63,19 @@ export default function LocationMap({
   mapSrc,
   destination,
   attribution = map.attribution,
+  open: openProp,
+  onOpenChange,
   className,
 }: LocationMapProps) {
-  const [open, setOpen] = useState(false);
+  const [selfOpen, setSelfOpen] = useState(false);
+  /* Controlled when the deck passes `open`, its own otherwise. */
+  const controlled = openProp !== undefined;
+  const open = controlled ? openProp : selfOpen;
+  const toggle = () => {
+    const next = !open;
+    if (!controlled) setSelfOpen(next);
+    onOpenChange?.(next);
+  };
   const cardRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
 
@@ -172,7 +198,7 @@ export default function LocationMap({
           className="locmap-toggle"
           aria-expanded={open}
           aria-controls={panelId}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggle}
         >
           <span className="sr-only">
             {fill(open ? map.hideAddress : map.showAddress, { location })}

@@ -57,7 +57,7 @@ export default function WhoWeArePage() {
           The same band every other inner page opens with. The three
           hero lines are the h1; the hero's two buttons both stay on
           this page, so both are plain fragment anchors (see CTA). */}
-      <section className="page-head">
+      <section className="page-head ph-story">
         <div className="container">
           <div className="section-kicker">{ourStory.eyebrow}</div>
           <h1 className="os-head-h">

@@ -37,7 +37,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-contact">
         <div className="container">
           <h1>{contact.heading}</h1>
           <p>{t.lead}</p>

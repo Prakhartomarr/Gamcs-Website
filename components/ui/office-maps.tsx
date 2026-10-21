@@ -1,110 +1,173 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import LocationMap from "@/components/ui/expand-map";
-import { fill } from "@/lib/content/fill";
 import { officeCards } from "@/lib/content/gamcs";
-import { map } from "@/lib/content/ui";
 
 /* ----------------------------------------------------------------
  * OfficeMaps
  *
- * The registered office's card, and a disclosure that puts the other two
- * beside it. Every card is still a LocationMap, still a static image, still
- * opens on its own for its own address and directions.
+ * The three offices as a pile of cards, front one flat and square on, the
+ * other two peeking out behind it, with a pair of arrows underneath to deal
+ * through them (client, 2026-10-21, against a screen recording they sent).
  *
- * WHERE THE TRIGGER GOES, and why it is not on the card.
- * LocationMap already covers its whole card with a real button
- * (.locmap-toggle, z-3) — that is how the card opens from the keyboard and
- * announces its state. A second button laid over the same card to reveal the
- * other offices would be two controls occupying the same pixels, and putting
- * one inside the other is invalid HTML on top of that; the usual escape, a
- * click handler on a wrapping div with stopPropagation, is not a control at
- * all. So the trigger is a SIBLING, above the row and in the flow: the card
- * keeps its one job, the trigger has its own, and no event has to be stopped.
+ * WHAT THIS REPLACES. A single registered-office card plus a "See all 3
+ * offices" disclosure that laid the other two out in a row beside it. The
+ * pile shows there are three without being told, so the disclosure has gone
+ * and with it the remount-on-toggle trick that used to stop the row's
+ * collapse animating a width nobody asked to animate.
  *
- * IT NOW SITS BELOW THE ROW, under the card and above "Click to expand"
- * (client, 2026-10-20). It used to be first in the DOM as well as first on
- * the page, so the region it controlled followed it in the tab order. It has
- * moved in the DOM rather than being pushed down with `order`: visual order
- * and focus order stay the same as each other either way, and a mismatch
- * between them is the thing WCAG 2.4.3 is actually about. The cost is that
- * the keyboard now reaches the cards before the control that reveals them,
- * which `aria-controls` still describes correctly.
+ * GURUGRAM STARTS AT THE FRONT, found by the `registered` flag rather than by
+ * position: by index the front card would be whatever entry happens to be
+ * first, which is not necessarily this firm's own address.
  *
- * Focus stays put on the trigger across a toggle, because nothing it could
- * be sitting on is ever unmounted.
+ * TWO CONTROLS, NOT ONE. The arrows change which office is in front; the
+ * front card keeps the job it already had, which is to open on click and show
+ * its address and directions. Clicking the pile to advance it would have
+ * meant taking that away, or making one card mean two different things
+ * depending on where it sits, which is not something a screen reader can
+ * announce.
  *
- * Motion: none here. The row's entrance lives in globals.css behind
- * prefers-reduced-motion: no-preference, and each card's own transitions are
- * LocationMap's problem, which it already handles.
+ * THE CARDS BEHIND ARE `inert`. They are visible, so `aria-hidden` alone
+ * would be a lie about content a sighted visitor can see, and on its own it
+ * would leave their button and directions link in the tab order behind a card
+ * nobody can read. `inert` removes both at once. It is set through a ref
+ * because React 18 does not forward the attribute from JSX.
+ *
+ * No autoplay (client). Nothing moves here until an arrow is pressed, so
+ * there is no moving content to pause and nothing competing with the CTA
+ * beside it.
  * ---------------------------------------------------------------- */
 
+const FRONT = Math.max(
+  0,
+  officeCards.findIndex((o) => o.registered)
+);
+
 export default function OfficeMaps({ className }: { className?: string }) {
-  const [open, setOpen] = useState(false);
-  const rowId = useId();
-  /* Collapsed is the registered office alone, found by its flag: by
-     position this card is whatever entry happens to be first, which is not
-     this firm's address to publish. Same component, same props it had as the
-     single card. */
-  const shown = open ? officeCards : officeCards.filter((o) => o.registered);
+  const [active, setActive] = useState(FRONT);
+  /* ONE FLAG FOR THE WHOLE DECK, not one per card. Expanded stays expanded
+     while you page through the offices; before this the outgoing card was
+     forced shut and the incoming one arrived closed, so changing office while
+     reading an address meant opening it again every time. */
+  const [expanded, setExpanded] = useState(false);
+  const count = officeCards.length;
+
+  const step = useCallback(
+    (delta: number) => setActive((i) => (i + delta + count) % count),
+    [count]
+  );
+
+  if (count === 0) return null;
 
   return (
     <div
-      className={["locmaps", className].filter(Boolean).join(" ")}
-      data-open={open}
+      className={["locdeck", className].filter(Boolean).join(" ")}
+      /* The neighbours have to stand further off once the front card opens:
+         it grows 272 -> 408 wide and would otherwise cover them completely.
+         CSS reads this; the measurement is in the comment there. */
+      data-expanded={expanded}
     >
-      <div className="locmaps-row" id={rowId}>
-        {shown.map((o) => (
-          <LocationMap
-            /* The `open` state is IN THE KEY, so toggling the row remounts
-               every card instead of re-rendering it (client, 2026-10-20).
-
-               THE BUG IT FIXES. .locmap-card carries `transition: width .52s`
-               for its own expand, and in the open row its width is 100% of a
-               third of the panel. Collapsing re-rendered the same element with
-               a new width, so that transition ran on a layout change nobody
-               asked to animate: measured, the card dropped to 45px, grew back
-               out from a fixed left edge over 520ms with its centre sliding
-               159px to the right, and then jumped left to centre once the
-               tween finished. Right, back, then centre.
-
-               A card that has just mounted has no previous width to transition
-               FROM, so it paints at 320px, centred, on the first frame. The
-               same remount also drops the card's own `open` state, which is
-               what makes an expanded card snap shut with the row rather than
-               being left at 480x340 in a 520px stage.
-
-               Cost: the image reloads from cache and any pointer tilt resets.
-               Focus is safe — the trigger is a sibling and is never unmounted,
-               and it is where focus has to be to press it. */
-            key={`${o.coords}-${open}`}
-            location={`${o.locality}, ${o.region}`}
-            /* The firm name leads the address because it is not the same firm
-               at all three: the Noida and Bangalore cards would otherwise read
-               as GAMCS branches. It is inside the card, so the collapsed view
-               is unchanged. */
-            address={[
-              o.name,
-              o.street,
-              `${o.locality}, ${o.region} ${o.postalCode}`,
-              ...(o.note ? [o.note] : []),
-            ]}
-            mapSrc={o.map}
-            destination={o.coords}
-          />
-        ))}
+      <div className="locdeck-stage">
+        {officeCards.map((o, i) => {
+          /* 0 is the front card; 1 is the one the next arrow brings in and
+             peeks from the right, 2 is the one the back arrow brings in and
+             peeks from the left. Depth drives the transform in globals.css,
+             so the arithmetic lives here and the look lives there. */
+          const depth = (i - active + count) % count;
+          return (
+            <DeckItem key={o.coords} depth={depth}>
+              <LocationMap
+                location={`${o.locality}, ${o.region}`}
+                /* The same lines the footer's Offices column prints, and
+                   deliberately so (client, 2026-10-21): city, street, then
+                   city, region and postcode, with the landmark note where
+                   there is one.
+                   KNOWN CONSEQUENCE, already flagged on the footer: `o.name`
+                   is dropped, so the Noida and Bangalore cards no longer say
+                   which firm trades at those addresses and can read as GAMCS
+                   branches. The name is still in `officeCards` and is one
+                   line to put back. */
+                address={[
+                  o.street,
+                  `${o.locality}, ${o.region} ${o.postalCode}`,
+                  ...(o.note ? [o.note] : []),
+                ]}
+                mapSrc={o.map}
+                destination={o.coords}
+                open={depth === 0 && expanded}
+                onOpenChange={setExpanded}
+              />
+            </DeckItem>
+          );
+        })}
       </div>
 
-      <button
-        type="button"
-        className="locmaps-toggle"
-        aria-expanded={open}
-        aria-controls={rowId}
-        onClick={() => setOpen((v) => !v)}
-      >
-        {open ? map.hideOffices : fill(map.showOffices, { count: officeCards.length })}
-      </button>
+      <div className="locdeck-nav">
+        <button
+          type="button"
+          className="locdeck-arrow"
+          onClick={() => step(-1)}
+          aria-label="Previous office"
+        >
+          <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+            <path
+              d="M16 7H1.5M7 1.5L1 7l6 5.5"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        {/* The only thing that announces the change. The arrows keep one name
+            each rather than naming the office they will reveal, so their
+            labels do not shift under a screen reader between presses. */}
+        <p className="locdeck-status" aria-live="polite">
+          {officeCards[active].locality}, {officeCards[active].region}
+          <span className="sr-only">
+            {" "}
+            — office {active + 1} of {count}
+          </span>
+        </p>
+
+        <button
+          type="button"
+          className="locdeck-arrow"
+          onClick={() => step(1)}
+          aria-label="Next office"
+        >
+          <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden="true">
+            <path
+              d="M1 7h14.5M10 1.5L16 7l-6 5.5"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* `inert` has to go on through a ref: React 18 drops an unknown `inert` prop
+   rather than writing the attribute, and the boolean-attribute spelling
+   (`inert=""`) is what the browser reads. */
+function DeckItem({ depth, children }: { depth: number; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (depth === 0) el.removeAttribute("inert");
+    else el.setAttribute("inert", "");
+  }, [depth]);
+
+  return (
+    <div className="locdeck-item" data-depth={depth} ref={ref}>
+      {children}
     </div>
   );
 }

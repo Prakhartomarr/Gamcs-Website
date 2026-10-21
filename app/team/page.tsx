@@ -17,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
 export default function TeamPage() {
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-team">
         <div className="container">
           <h1>{team.h1}</h1>
           {team.body.map((para) => (

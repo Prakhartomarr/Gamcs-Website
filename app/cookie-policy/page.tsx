@@ -27,7 +27,7 @@ export default function CookiePolicyPage() {
 
   return (
     <>
-      <section className="page-head">
+      <section className="page-head ph-cookie">
         <div className="container">
           <h1>{cookiePolicy.title}</h1>
           <p>
