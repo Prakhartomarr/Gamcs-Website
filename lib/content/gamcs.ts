@@ -216,13 +216,17 @@ export const intro =
    the only one of the five regions not capitalised, so this is read as a slip
    rather than a style. One word to put back if it was deliberate. */
 const LEAD_OPENING =
-  "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients globally across India, US, UK, Middle East and APAC. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear ";
+  "GA Management Consultants (GAMCS) is a high-impact Management Consulting Firm serving clients globally across India, US, UK, Middle East and APAC. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear ";
 /* The word that announces the clause, set apart from the body so it can take
    the ink and the weight (client, 2026-10-22) — the same treatment "Our
    mission is simple:" already has in the line below. The colon belongs to it:
    it is the hinge between the sentence and the claim, not the last character
-   of the sentence. */
-const LEAD_CUE = "vision:";
+   of the sentence.
+
+   CAPITALISED MID-SENTENCE at the client's asking, as "Management Consulting
+   Firm" is in the opening. Both are deliberate, not slips — noted here so
+   neither gets "corrected" back by someone tidying the copy later. */
+const LEAD_CUE = "Vision:";
 const LEAD_ACCENT =
   "to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.";
 
