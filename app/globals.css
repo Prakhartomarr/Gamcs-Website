@@ -3346,23 +3346,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
 
 /* ---- the five blocks ---- */
-/* THE PILLARS JOIN THE PAGE'S CONTAINER (client, 2026-10-22: too much empty
-   space on the far right). They ran 21px from the viewport edge while every
-   other section on the site sits in `min(1440px, 100% - 96px)` centred, so on
-   a wide screen each half grew far past what its content needed: measured at
-   1920 the list column was 929px and its longest line ended 556px short of
-   the column's own right edge.
-
-   Narrowing the block does not fill that space so much as stop manufacturing
-   it — what is left reads as the page's margin, the same margin every other
-   section has, instead of a hole inside the section.
-
-   1024 up only: below that the pillars stack and --sol-edge's 12-21px is the
-   gutter the phone layout wants. */
 .sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px)}
-@media (min-width:1024px){
-  .sol-pillars{width:min(1440px,calc(100% - 96px));margin-inline:auto}
-}
 .sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:20px;padding:21px var(--sol-edge);
   /* clears the header and the rail that sticks under it */
@@ -3396,14 +3380,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-card p{margin:clamp(14px,1.3vw,19px) 0 0;max-width:533px;color:#F9F9F8;
   font:500 clamp(16px,1.32vw,19px)/1.2 var(--font-sans)}
 /* a button, not a pill: 55px tall at the reference, on a small radius */
-/* The button follows the tagline it belongs to. It was `margin-top:auto`,
-   which pinned it to the foot of a card whose height comes from the list
-   beside it — on Advise that left 375px of bare gradient between the two,
-   and the card read as two things held apart rather than one block of
-   content. The height still comes from the list; the slack is simply
-   gradient now, which is what the card is. */
 .sol-talk{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
-  margin-top:clamp(26px,2.8vw,40px);min-height:55px;padding:0 22px;border-radius:8px;
+  margin-top:auto;min-height:55px;padding:0 22px;border-radius:8px;
   background:#F9F9F8;color:#0D1828;text-decoration:none;
   font:500 clamp(14px,1.1vw,15.5px)/1 var(--font-sans);letter-spacing:-.01em;
   transition:background .2s var(--ease-out),transform .2s var(--ease-out)}
@@ -3413,9 +3391,39 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-talk:focus-visible{outline:2px solid #F9F9F8;outline-offset:3px}
 
 /* ---- the services, one row each ---- */
-.sol-list{list-style:none;margin:0;padding:0;align-self:start}
+/* THE LIST SPANS THE CARD (client, 2026-10-22): the first group's text
+   starts at the card's top edge and the last capability ends at its bottom,
+   on every pillar, so the two columns read as one block rather than a full
+   panel beside a short list.
+
+   `stretch` + `space-between`, not a height calculation: the row is already
+   as tall as the card (min-height:clamp(480px,88.2vh,794px) on .sol-card),
+   so stretching the <ul> into it and letting flex share out what is left
+   puts the last row's edge on the card's edge whatever the copy says.
+
+   WHAT IT COSTS, measured before: the bottom shortfall was 57px on Advise
+   and Transact but 141 on Build, 254 on Enable and 357 on Transform, whose
+   two groups are collapsed. Those three now carry that distance between
+   their rows instead of below them — Transform especially, where two rows
+   share ~670px. Accepted at the client's asking: the alternative was the
+   alignment holding on two pillars out of five.
+
+   When a list is TALLER than the card — Transform with every group open,
+   measured 1542 — there is no free space and space-between is inert, so it
+   stacks exactly as before. */
+.sol-list{list-style:none;margin:0;padding:0;align-self:stretch;
+  display:flex;flex-direction:column;justify-content:space-between}
 .sol-list>li{border-bottom:1px solid var(--sol-rule)}
 .sol-list>li:first-child{border-top:1px solid var(--sol-rule)}
+/* The first row loses the padding that held its text 19px below the card's
+   top, and the min-height with it: `align-items:center` would otherwise
+   re-centre the line inside a 60px box and put it straight back. What is
+   left above the cap is the 1px rule and the line's own half-leading. */
+.sol-list>li:first-child>.sol-list-head,
+.sol-list>li:first-child>details>summary{padding-top:0;min-height:0}
+/* …and the last row loses the 20px its list carried underneath it, which is
+   the same gap at the other end. */
+.sol-list>li:last-child .sol-list-body>:last-child{margin-bottom:0}
 .sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   /* 16→19px since 2026-10-22, from 15→18 — see the note on .cap-list for
