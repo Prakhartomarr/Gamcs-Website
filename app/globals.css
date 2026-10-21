@@ -501,111 +501,89 @@ h1,h2,h3,p{margin-top:0}
    specificity, so this only changes the pairs that were flush. */
 .page-head p + p{margin-top:16px}
 
-/* THE ARRANGEMENT (client, 2026-10-21; reference unity-advisory.com/what-we-do).
-   Two zones with the band's free space between them: the kicker and the
-   headline at the top, the lead at the bottom left, the actions at the
-   bottom right. The reference's own scale is NOT taken — the headline
-   stays on this site's clamp(38px,4.6vw,62px) (client) — so what is
-   borrowed is the placement and the air, not the type.
+/* THE INSET CARD (client, 2026-10-21; reference investflowtemplate.webflow.io).
+   This REPLACES the edge-to-edge Unity arrangement that stood here earlier
+   today — a one-screen light band with the headline at the top and the lead
+   pinned to the bottom. The client moved the reference, so the whole block
+   went with it rather than being layered over.
 
-   NO MARKUP CHANGED, on any of the eleven heads that use this band. Every
-   one of them is a headline, one lead paragraph and an optional actions
-   row, in that order, so the split can be made with a single auto margin:
-   in a flex column an auto margin eats the free space before
-   justify-content gets it, which pins everything from the lead down to the
-   bottom and leaves the headline where it is. Pages with a second
-   paragraph (/team's mission, /faq's cta line) keep it with the lead
-   because it follows in source order.
+   Measured off /company-pages/about at 1440x900: a rounded card in
+   rgb(0,16,53) inset 20px from the viewport, ~380px tall, with the type
+   stacked and CENTRED inside it — h1 40px/600 at -0.8px tracking in white,
+   a 16px/24px lead in #CBD2EA about 410px wide, then a pill button. Their
+   navbar sits inside that card; ours does NOT (client), so the floating
+   header stays exactly as it is on every route, the landing page included,
+   and the card begins underneath it.
 
-   Tab order is untouched — the actions still come last in the DOM, they
-   are only drawn to the right of the lead (WCAG 2.4.3). */
-@media (min-width:768px){
-  /* 72vh, up from 52. The gap is free space, so the band has to have some:
-     at 52vh the headline and the lead were close enough to read as one
-     block. The reference's hero ends at 94% of the viewport — see the
-     --art override, which takes the photographed bands to 92vh; the plain
-     light bands stop at 72 because /privacy-policy and /cookie-policy use
-     the same band and a full screen of air over a legal notice is silly. */
-  .page-head{display:flex;flex-direction:column;
-    min-height:calc(100vh - var(--header-h));min-height:calc(100dvh - var(--header-h))}
-  /* The container has to FILL the band for the auto margin below to have
-     free space to absorb; as an ordinary flex item it would be its own
-     content's height and the two zones would sit together at the top. */
-  .page-head>.container{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
-  .page-head>.container>p:first-of-type{margin-top:auto}
-  /* THE FLOOR, and the reason the auto margin alone was not enough. An auto
-     margin only distributes space the band has LEFT OVER, so on the two
-     heads whose content already fills it — /who-we-are, three headline
-     lines over a five-line lead, and /team — it resolved to zero and the
-     lead stayed welded to the headline at the 18px this rule used to set.
-     Measured: 18px of separation at all five widths, on exactly the page
-     this was asked for.
+   The inset is 22px rather than their 20 so the card's edges land on the
+   same line as every other band's content — .container is calc(100% - 44px)
+   since the edge-to-edge change above, and a card 2px wider than the text
+   under it reads as a mistake rather than as a decision. */
+.page-head{
+  margin:12px 22px 0;padding:72px 28px 76px;
+  border-radius:28px;background:var(--ink-deep);
+  text-align:center;isolation:isolate}
+/* The glow and the grid, both drawn rather than fetched. Their card lifts a
+   blue light out of the bottom corners over a faint square grid; this is the
+   same two ideas in --blue instead of their electric one, which is the
+   difference between a GAMCS page and a template screenshot.
 
-     A real margin is always paid, so the separation is now `this plus
-     whatever is spare`: the full-bodied heads get an opening they did not
-     have, the roomy ones (/contact, /privacy-policy) are unchanged because
-     their band is min-height driven and the auto margin simply keeps less.
-     vh-based so it opens with the band rather than fighting it. */
-  .page-head>.container>h1{margin-bottom:clamp(56px,9vh,120px)}
+   ::before is the light, ::after the grid, and the grid sits UNDER the light
+   so the mesh fades out exactly where the glow is brightest — which is what
+   stops it reading as graph paper. Both are inert: aria-hidden is for the
+   accessibility tree and these are pseudo-elements, which never reach it. */
+.page-head::before,.page-head::after{
+  content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
+  pointer-events:none}
+.page-head::after{
+  background:
+    radial-gradient(120% 85% at 8% 118%, color-mix(in srgb,var(--blue) 72%,transparent), transparent 62%),
+    radial-gradient(110% 80% at 94% 122%, color-mix(in srgb,var(--blue) 55%,transparent), transparent 60%)}
+.page-head::before{
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size:72px 72px;
+  /* Faded out at the top and the sides so the mesh never meets an edge. */
+  -webkit-mask-image:radial-gradient(130% 100% at 50% 118%, #000 18%, transparent 72%);
+  mask-image:radial-gradient(130% 100% at 50% 118%, #000 18%, transparent 72%)}
 
-  /* THE SCALE, measured off the reference rather than guessed (2026-10-21).
-     unity-advisory.com/what-we-do at 1440x900, read over CDP:
-
-                       there        here, before
-       headline        87.06px      50px
-       line-height     83.58 (.96)  56 (1.12)
-       weight          400          500
-       tracking        -.02em       -.02em
-       lead            22.48px      17px
-       lead leading    29.23 (1.30) 27.2 (1.60)
-       lead weight     500          400
-       lead measure    ~530px       620px
-       headline -> lead 344px       81px
-
-     The arrangement alone was not the thing that made that page read the
-     way it does: at 50px in weight 500 the headline is a label on a
-     photograph, and at 87px in weight 400 it is the page. Everything here
-     is that table, one column moved to the other.
-
-     NOT the selector `.page-head h1`, which globals.css:1753 already sets
-     as part of the site-wide heading scale and which would win on source
-     order. The child selector takes it on specificity instead, so the nine
-     other headings that rule governs are untouched.
-
-     6.05vw hits 87px at 1440 exactly; the 88px ceiling holds it there on
-     wider screens, and the 42px floor is for the 768-1023 band. Phones
-     never reach this block and keep their clamp(30px,8.4vw,40px). */
-  /* max-width:none, and the container is the measure. The reference caps
-     its headline at 773px because its three lines are "Services Built /
-     Around CFO / Priorities." — 38 characters. Ours is "Built on a shared
-     vision. Driven by financial insight. Focused on the future.", 76, and
-     it is authored as three block spans. Capped at 18ch (989px at this
-     size) the middle span wrapped and the headline became four lines,
-     which measured 335px tall against the reference's 268 and ate the air
-     this whole change is for. The container already stops it at 1280. */
-  .page-head>.container>h1{
-    font-size:clamp(36px,4.45vw,75px);line-height:.98;font-weight:400;
-    letter-spacing:-.02em;max-width:none}
-  /* The lead is a statement at this size, not a caption, and the narrower
-     measure is what keeps it a block in the corner rather than a column of
-     prose. `:first-of-type` so /team's second and third paragraphs and
-     /faq's cta line stay as they are — the reference has one lead, and
-     setting three at 22px would make that band shout. */
-  .page-head>.container>p:first-of-type{
-    font-size:clamp(18px,1.56vw,22.5px);line-height:1.3;font-weight:500;
-    max-width:48ch}
-}
-/* The actions leave the column and sit on the lead's bottom line, which is
-   where the reference puts its tag row. Out of flow rather than in a row
-   with the lead because that would need a wrapper in all eleven files.
-
-   1280px, and 1200 was measured and rejected: the lead is capped at 620px
-   and the widest actions row on the site is /who-we-are's 417px, which at
-   1200 put the buttons at x643 against a lead running to x668 — a 25px
-   overlap, on two routes. Under this width they stack beneath the lead
-   exactly as they do today. */
-@media (min-width:1280px){
-  .page-head-ctas{position:absolute;right:0;bottom:0;margin-top:0}
+/* The stack. One column, centred, with the measures capped in ch so the lead
+   wraps near the reference's 410px rather than running the card's full
+   width — centred type that long is the thing that makes a hero look
+   unconsidered. */
+.page-head>.container{display:flex;flex-direction:column;align-items:center}
+.page-head>.container>*{width:100%}
+.page-head>.container>h1{
+  font-size:clamp(30px,2.8vw,44px);line-height:1.115;font-weight:600;
+  letter-spacing:-.02em;color:#fff;max-width:20ch;margin:0 auto}
+.page-head>.container>p{
+  margin:18px auto 0;max-width:50ch;
+  /* 0.8889rem is 16px: the root is 18px here, so a bare 1rem landed at 18
+     and ran two points over the reference. 50ch rather than their ~410px
+     measure because our leads are long — /who-we-are's is 290 characters
+     against their 100 — and at their width it set eight centred lines. */
+  font-size:0.8889rem;line-height:1.5;font-weight:500;letter-spacing:-.02em;
+  color:#CBD2EA}
+.page-head-ctas{justify-content:center;margin-top:30px}
+/* Everything else a head can carry, on the dark ground. These mirror the
+   `.page-head--art` set, which no longer reaches these bands: that class
+   stayed behind on the careers panel and the apply dialog. */
+.page-head .section-kicker{color:#9CCBEA}
+.page-head .eyebrow-row{justify-content:center}
+.page-head .team-mission{color:#fff!important;font-weight:600}
+.page-head .faq-head-cta{color:#CBD2EA}
+.page-head .faq-head-cta a{color:#9CCBEA;font-weight:700}
+.page-head .crumbs{justify-content:center}
+.page-head .crumbs a{color:rgba(255,255,255,.72)}
+.page-head .crumbs a:hover,.page-head .crumbs [aria-current="page"]{color:#fff}
+.page-head .crumbs-sep{color:rgba(255,255,255,.45)}
+.page-head .tbc{color:rgba(255,255,255,.88)}
+.page-head .eyebrow-pill{background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.32);color:#fff}
+@media (max-width:767px){
+  .page-head{margin:8px 14px 0;padding:48px 20px 52px;border-radius:22px}
+  .page-head::before{background-size:48px 48px}
 }
 .case-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .case-item{background:#fff;border:1px solid #E0E3E4;border-radius:20px;padding:28px;transition:box-shadow .3s var(--ease-out),border-color .3s var(--ease-out)}
@@ -774,7 +752,10 @@ h1,h2,h3,p{margin-top:0}
   .contact-box{padding:26px;gap:28px}
   .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
   .section,.contact{padding:60px 0}
-  .page-head{padding:44px 0 32px}
+  /* The card sets its own phone padding up at the inset-card block, which
+     comes earlier in the file; this line used to win on source order and
+     put the old band's 44/32 back. It is the card's numbers now. */
+  .page-head{margin:8px 14px 0;padding:48px 20px 52px;border-radius:22px}
 }
 
 /* very narrow phones */
