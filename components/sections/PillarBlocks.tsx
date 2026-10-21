@@ -70,6 +70,11 @@ export default function PillarBlocks() {
         );
         const rows = bullets?.items ?? [];
         const preview = previewBySlug.get(s.slug);
+        /* Transform is the one pillar that keeps its disclosures (client,
+           2026-10-22): its groups carry a third level, 34 capability names
+           across four sets, and spilling all of them at once buried the group
+           below it. The other four list a handful of lines each. */
+        const isTransform = s.slug === "digital-transformation";
         const paint = SHADER[s.slug] ?? SHADER_FALLBACK;
 
         return (
@@ -120,55 +125,82 @@ export default function PillarBlocks() {
             </div>
 
             <ul className="sol-list reveal">
-              {rows.map((r) => (
-                <li key={r.lead}>
-                  <details>
-                    <summary>
-                      <span>{r.lead}</span>
-                      {CHEVRON}
-                    </summary>
-                    <div className="sol-list-body">
-                      {/* Three shapes, one panel: Transform's groups name
-                          sub-headings and list capabilities under each, the
-                          other four list capabilities directly, and a `steps`
-                          or prose row carries a sentence. */}
-                      {"subheads" in r ? (
+              {rows.map((r) => {
+                /* THE PANEL, built once and placed either inside a disclosure
+                   or straight onto the row. */
+                const body = (
+                  <div className="sol-list-body">
+                    {/* Three shapes, one panel: Transform's groups name
+                        sub-headings and list capabilities under each, the
+                        other four list capabilities directly, and a `steps`
+                        or prose row carries a sentence. */}
+                    {"subheads" in r ? (
                         /* Transform's third level is a disclosure of its own,
                            not a heading over an open list: its four sets hold
                            34 names between them, and a group that spilled all
                            of them at once buried the second group below the
                            fold. Nested <details> is valid, and each one owns
                            only its own panel. */
-                        <ul className="cap-subs">
-                          {r.subheads.map((sub) => (
-                            <li key={sub.lead}>
-                              <details>
-                                <summary>
-                                  <span>{sub.lead}</span>
-                                  {CHEVRON}
-                                </summary>
-                                <ul className="cap-list">
-                                  {sub.items.map((name) => (
-                                    <li key={name}>{name}</li>
-                                  ))}
-                                </ul>
-                              </details>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : "items" in r ? (
-                        <ul className="cap-list">
-                          {r.items.map((sub) => (
-                            <li key={sub}>{sub}</li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>{r.body}</p>
-                      )}
-                    </div>
-                  </details>
-                </li>
-              ))}
+                      <ul className="cap-subs">
+                        {r.subheads.map((sub) => (
+                          <li key={sub.lead}>
+                            <details>
+                              <summary>
+                                <span>{sub.lead}</span>
+                                {CHEVRON}
+                              </summary>
+                              <ul className="cap-list">
+                                {sub.items.map((name) => (
+                                  <li key={name}>{name}</li>
+                                ))}
+                              </ul>
+                            </details>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : "items" in r ? (
+                      <ul className="cap-list">
+                        {r.items.map((sub) => (
+                          <li key={sub}>{sub}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>{r.body}</p>
+                    )}
+                  </div>
+                );
+
+                return (
+                  <li key={r.lead}>
+                    {isTransform ? (
+                      <details>
+                        <summary>
+                          <span>{r.lead}</span>
+                          {CHEVRON}
+                        </summary>
+                        {body}
+                      </details>
+                    ) : (
+                      /* OPEN, AND NOT A DISCLOSURE AT ALL (client,
+                         2026-10-22). Only Transform keeps its dropdowns — its
+                         four sets hold 34 names between them, which is what
+                         the folding was for. The other four pillars carry one
+                         flat list per group and were hiding a handful of lines
+                         behind a click each.
+
+                         An <h3>, where the collapsible version is a <summary>:
+                         with nothing to operate, the group lead is a heading
+                         over its list, and it joins the page outline under the
+                         pillar's own h2 instead of being invisible to anyone
+                         moving by heading. */
+                      <>
+                        <h3 className="sol-list-head">{r.lead}</h3>
+                        {body}
+                      </>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         );

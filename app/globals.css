@@ -3386,6 +3386,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   font:400 clamp(15px,1.25vw,18px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink);transition:color .2s var(--ease-out)}
+/* The group lead where there is no disclosure (client, 2026-10-22): four of
+   the five pillars list their capabilities open, and only Transform still
+   folds. Same type, same height, same rule rhythm as the summary above, so a
+   visitor moving between pillars sees one list style rather than two — it
+   simply has no chevron and nothing to press. `font:` carries the 400, which
+   is what stops an <h3> arriving bold. */
+.sol-list>li>.sol-list-head{display:flex;align-items:center;margin:0;
+  min-height:60px;padding:16px 2px;
+  font:400 clamp(15px,1.25vw,18px)/1.5 var(--font-sans);letter-spacing:normal;
+  color:var(--sol-ink)}
 .sol-list summary::-webkit-details-marker{display:none}
 .sol-list summary:hover{color:var(--blue)}
 .sol-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
