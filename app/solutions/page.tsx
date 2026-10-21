@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PillarBlocks from "@/components/sections/PillarBlocks";
+import PillarRail from "@/components/sections/PillarRail";
 import { solutionsHub } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -40,6 +41,10 @@ export default function SolutionsHubPage() {
           <p>{solutionsHub.subhead}</p>
         </div>
       </section>
+
+      {/* The five pillars as jump buttons, under the head and above the
+          blocks they point at (client, 2026-10-22). */}
+      <PillarRail />
 
       <div className="sol">
         <PillarBlocks />

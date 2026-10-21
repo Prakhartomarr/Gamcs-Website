@@ -3331,25 +3331,51 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    rows, which the labels do below ~1200px. It scrolls, so it has to look like
    it: without the mask the last pillars are cut off with nothing to say they
    existed. */
-.pillar-rail{position:sticky;top:var(--header-h);z-index:20;background:var(--band-white);
-  border-bottom:1px solid rgba(16,45,68,.10)}
-.pillar-rail ul{list-style:none;margin:0;padding:0 40px 0 0;display:flex;gap:6px;
-  overflow-x:auto;scrollbar-width:thin;
-  -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);
-  mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
-.pillar-rail a{display:inline-flex;align-items:center;min-height:44px;
-  padding:0 13px;white-space:nowrap;text-decoration:none;
-  font:600 0.7222rem var(--font-sans);letter-spacing:.02em;color:var(--ink-muted);
-  border-bottom:2px solid transparent;transition:color .2s var(--ease-out),
-  border-color .2s var(--ease-out)}
-.pillar-rail a:hover{color:var(--blue);border-bottom-color:var(--blue)}
-.pillar-rail a:focus-visible{outline:2px solid var(--blue);outline-offset:-4px;border-radius:4px}
+/* THE PILLAR ROW under /solutions' page head (client, 2026-10-22, against
+   unity-advisory.com/what-we-do). Five jump buttons to the five blocks
+   below.
+
+   This replaces an orphaned `.pillar-rail` block — a STICKY version of the
+   same idea that no component had rendered for some time. The client chose
+   static, so the sticky positioning, the horizontal scroll and the fade mask
+   it needed are all gone with it rather than left to rot.
+
+   Tinted rather than filled: the reference sets these at 12px on a soft grey
+   wash, which reads as a quiet filter row. Five brand-blue pills directly
+   under the nav would be the loudest thing on the page and would compete
+   with "Schedule a Call" a few pixels above them. */
+.sol-rail{background:var(--band-white);padding:0 0 26px}
+.sol-rail ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.sol-rail-pill{display:inline-flex;align-items:center;
+  /* 36px, not the reference's 28: that is under the 24x24 WCAG 2.5.8 asks
+     for only in height terms, but these sit in a row 10px apart, and a
+     target a visitor taps on a phone wants more than 28. */
+  min-height:36px;padding:0 14px;border-radius:8px;
+  background:rgba(16,45,68,.06);color:var(--ink-deep);text-decoration:none;
+  font:600 0.7222rem var(--font-sans);letter-spacing:.02em;white-space:nowrap;
+  transition:background .2s var(--ease-out),color .2s var(--ease-out)}
+@media(hover:hover){
+  .sol-rail-pill:hover{background:rgba(15,94,151,.12);color:var(--blue)}
+}
+/* The pillar being read. aria-current carries it, so the style follows the
+   state a screen reader is already given rather than a class that could
+   disagree with it. */
+.sol-rail-pill[aria-current="page"]{background:var(--blue);color:#fff}
+.sol-rail-pill:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.sol-rail-pill{transition:none}}
+@media (max-width:767px){
+  .sol-rail{padding-bottom:18px}
+  .sol-rail ul{gap:8px}
+  .sol-rail-pill{min-height:34px;padding:0 12px}
+}
 
 /* ---- the five blocks ---- */
 .sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px)}
 .sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:20px;padding:21px var(--sol-edge);
-  /* clears the header and the rail that sticks under it */
+  /* Clears the floating header. The +56 was written for a rail that used to
+     stick beneath it; the row is static now, so the extra is just breathing
+     room above the section a jump lands on, which is worth keeping. */
   scroll-margin-top:calc(var(--header-h) + 56px)}
 /* even blocks swap sides. Source order is unchanged, so the card is still
    read before its list. */
