@@ -7050,6 +7050,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    INSIDE something that has decided it wants one. `.who-mission` sets
    `color:var(--ink)` on itself, so this needs the extra class to win. */
 .who-mission .accent{color:var(--blue)}
+.who-lead .accent{color:var(--blue)}
 
 /* The four marked phrases in the gap's lead (client, 2026-10-21).
    #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the

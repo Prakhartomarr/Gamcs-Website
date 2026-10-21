@@ -191,6 +191,20 @@ export const intro =
    /careers both print the whole sentence as one string, and a split that left
    three copies of the same words in the file would drift the first time one
    of them was edited. Change either half and all three pages follow. */
+/* The lead in two halves as well (client, 2026-10-22), for the same reason
+   and on the same pattern: the clause after "a clear vision:" is set in brand
+   blue, and `lead` is assembled from the two so the words exist once.
+
+   The reach line is the client's new copy — "serving clients globally across
+   India, US, UK, Middle East and APAC" replaces "across India and globally".
+   "Middle East" is capitalised here; the brief wrote "Middle east", which is
+   the only one of the five regions not capitalised, so this is read as a slip
+   rather than a style. One word to put back if it was deliberate. */
+const LEAD_BODY =
+  "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients globally across India, US, UK, Middle East and APAC. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: ";
+const LEAD_ACCENT =
+  "to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.";
+
 const MISSION_LEAD = "Our mission is simple: ";
 const MISSION_ACCENT = "make finance a source of insight, not just information.";
 
@@ -215,8 +229,10 @@ export const story = {
   headingLead: "We connect ",
   headingAccent: "finance, data and technology to transform reporting into decisions",
   headingTail: " \u2014 and insights into impact.",
-  lead:
-    "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.",
+  leadAccent: LEAD_ACCENT,
+  /* The whole paragraph. One consumer renders it split, but `story.lead` is a
+     row in scripts/copy/manifest.json and the audit reads it as a string. */
+  lead: LEAD_BODY + LEAD_ACCENT,
   missionLead: MISSION_LEAD,
   missionAccent: MISSION_ACCENT,
   /* The whole sentence, for /team and /careers, which print it unsplit. */

@@ -50,7 +50,15 @@ export default function WhoWeAre() {
               <span className="accent">{story.headingAccent}</span>
               {story.headingTail}
             </h2>
-            <p className="who-lead">{story.lead}</p>
+            <p className="who-lead">
+              {story.lead.slice(0, story.lead.length - story.leadAccent.length)}
+              {/* The vision clause in brand blue (client, 2026-10-22). Sliced
+                  off the assembled string rather than printing a separate
+                  `leadBody` key, so there is exactly one place the paragraph
+                  is written and no way for a half to be edited out of step
+                  with the whole. */}
+              <span className="accent">{story.leadAccent}</span>
+            </p>
 
             {/* Phone only. `.who-stats` is display:none until 767px, so on
                 desktop this generates no box and the column below it is
