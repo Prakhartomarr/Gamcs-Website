@@ -351,9 +351,18 @@ export const ourStory = {
        part of its tracked micro-label treatment; the caps on screen there are
        CSS, the caps here are the copy. */
     heading: "GAMCS AT A GLANCE",
+    /* EVERY WORD CAPITALISED (client, 2026-10-22), "Of" included. That is not
+       conventional title case, which leaves short prepositions lower — "Years
+       of Combined Experience". The client asked for every word, so every word
+       it is; this note is here so the odd one out is not read as a slip and
+       quietly corrected. "Founded" was already one word.
+
+       SCOPED TO THIS BLOCK. "Businesses supported" is also an achievements
+       label on the homepage, and that band was not part of the ask — it still
+       reads sentence case. */
     items: [
       { value: "2023", label: "Founded", count: false },
-      { value: "50+", label: "Team & delivery professionals", count: true },
+      { value: "50+", label: "Team & Delivery Professionals", count: true },
       /* Shortened 2026-10-21 so the strip reads as one row. "150+ years" with
          a label running "Combined experience across our leadership and
          advisory team" set three lines deep while every other label set one,
@@ -361,10 +370,10 @@ export const ourStory = {
          into the label, so the figure is still years and not an unlabelled
          150. What the client accepted losing: "across our leadership and
          advisory team", which said whose years they are. */
-      { value: "150+", label: "Years of combined experience", count: true },
-      { value: "3", label: "Office locations", count: true },
-      { value: "30+", label: "Businesses supported", count: true },
-      { value: "10+", label: "Countries served", count: true },
+      { value: "150+", label: "Years Of Combined Experience", count: true },
+      { value: "3", label: "Office Locations", count: true },
+      { value: "30+", label: "Businesses Supported", count: true },
+      { value: "10+", label: "Countries Served", count: true },
     ],
   },
   chapters: {
