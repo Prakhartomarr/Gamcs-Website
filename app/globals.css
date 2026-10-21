@@ -2096,14 +2096,23 @@ html[data-cookie-banner] .sticky-cta{display:none}
    both places. 14px keeps a sub-item under its own group lead at every width
    the right gutter clears the .sol-list chevron.
 
-   15px since 2026-10-22, up from 14 (client, for readability). The ceiling is
+   17px since 2026-10-22 — 14, then 15, now this (client). The last step is
+   not only readability: the stretch that makes the list span its card was
+   putting 32px into EVERY gap on the two longest pillars, because 18 bullet
+   lines and three leads came to 730 in a 794 card and flex shared the 64 out
+   between the rows. Growing the TEXT spends that 64 instead of the gaps do —
+   at 17px the content comes to ~792, the stretch has ~2px left to give, and
+   what is between the groups is the list's own 20px and 16px again.
+
+   The earlier note's ceiling still bounds it. */
+/*  15px, up from 14 (client, for readability). The ceiling is
    the dark card beside it on /solutions: that card is a fixed 794px and the
    two longest lists — Advise and Transact — ran 731px, so there were 63px to
    spend. 18 bullet lines at +1.6px of leading is ~29px, and the three group
    leads at +1.5px is ~5px, which lands inside it with room left rather than
    betting the layout on an exact fit. */
 .cap-list{list-style:disc;margin:8px 0 20px;padding:0 34px 0 1.15em;
-  font-size:0.8333rem;line-height:1.6;color:rgba(26,26,26,.78)}
+  font-size:0.9444rem;line-height:1.6;color:rgba(26,26,26,.78)}
 .cap-list li{margin:0 0 4px}
 
 /* Transform's third level — the one pillar whose copy has one: a named set
@@ -3427,8 +3436,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   /* 16→19px since 2026-10-22, from 15→18 — see the note on .cap-list for
-     the headroom this is spending. */
-  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
+     the headroom this is spending. 17→20px since the list began spanning its
+     card — see .cap-list. */
+  font:400 clamp(17px,1.39vw,20px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink);transition:color .2s var(--ease-out)}
 /* The group lead where there is no disclosure (client, 2026-10-22): four of
    the five pillars list their capabilities open, and only Transform still
@@ -3438,7 +3448,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    is what stops an <h3> arriving bold. */
 .sol-list>li>.sol-list-head{display:flex;align-items:center;margin:0;
   min-height:60px;padding:16px 2px;
-  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
+  font:400 clamp(17px,1.39vw,20px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink)}
 .sol-list summary::-webkit-details-marker{display:none}
 .sol-list summary:hover{color:var(--blue)}
