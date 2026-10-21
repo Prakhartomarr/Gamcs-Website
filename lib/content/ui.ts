@@ -111,10 +111,20 @@ export const sections = {
   atAGlance: "At a glance",
   testimonials: "Testimonials",
   aboutFirm: "About our firm",
+  /* The homepage's link to /team, beside "About our firm" (client,
+     2026-10-21). It said "Meet our founders" and shared `meetFounders` with
+     the phone control below, which was wrong in both directions: this one
+     goes to /team, which is the whole roster and not just the two of them.
+     Split rather than renamed, because the phone control still means the
+     founders. */
+  meetTeam: "Meet our team",
+  /* NOT the link above. This labels the button that opens the phone's
+     reveal, and what the reveal shows is the two founders' faces. */
   meetFounders: "Meet our founders",
-  /* The link to /team inside the phone's founders reveal. It cannot reuse
-     `meetFounders`: that string now labels the button that opens the reveal,
-     and the panel it opens is already showing the founders. */
+  /* The link to /team inside that reveal, once it is open. It cannot reuse
+     either of the two above: `meetFounders` labels the control that opened
+     the panel the reader is already looking at, and `meetTeam` is the
+     homepage's own button, which does not render at this width. */
   fullTeam: "Meet the full team",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",

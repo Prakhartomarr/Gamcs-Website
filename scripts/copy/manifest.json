@@ -5124,6 +5124,18 @@
   }
  },
  {
+  "code": "HOME-WHO-09",
+  "page": "Home (/)",
+  "section": "Who we are",
+  "label": "Link to the team page, beside \"About our firm\"",
+  "kind": "text",
+  "text": "Meet our team",
+  "source": {
+   "file": "lib/content/ui.ts",
+   "locator": "sections.meetTeam"
+  }
+ },
+ {
   "code": "HOME-WHO-07",
   "page": "Home (/)",
   "section": "Who we are",

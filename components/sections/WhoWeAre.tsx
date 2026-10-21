@@ -98,7 +98,7 @@ export default function WhoWeAre() {
                 data-cta="who-founders"
                 className="who-founders-btn"
               >
-                {sections.meetFounders}
+                {sections.meetTeam}
               </CTA>
             </div>
           </div>
