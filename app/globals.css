@@ -7178,7 +7178,17 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    what that would want. */
 .cx-formwrap{display:flex;flex-direction:column}
 .cx-formwrap .form{gap:20px 18px}
-.cx-formwrap .field{gap:9px}
+/* min-width:0 BECAUSE A GRID ITEM'S min-width IS `auto`, which resolves to
+   its MIN-CONTENT width and so refuses to shrink past it. `.field` holds a
+   pill input carrying 44px of horizontal padding on top of an <input>'s own
+   intrinsic ~20-character width, which comes to about 240px; in the
+   1024-1279 band `.cx-formwrap` is 471px and `.form`'s two tracks are
+   226.5px each, so the field hung 13.3px out of the card on its right —
+   measured identical at 1024, 1100 and 1279, while 1280 and 1440 have
+   roomier tracks and were clean. The track governs now. */
+.cx-formwrap .field{gap:9px;min-width:0}
+.cx-formwrap .field input,
+.cx-formwrap .field textarea{min-width:0;max-width:100%}
 /* Was 700 at 12px with .12em of tracking in #AEB7BA — a micro-label for a
    dark card. The reference's are ordinary labels: normal case, readable
    size, ink. */
@@ -7382,7 +7392,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .cxo-tabs{grid-row:1;grid-column:1}
   .cxo-panel{grid-row:2;grid-column:1;grid-template-columns:1fr;gap:24px;
     pointer-events:auto}
-  .cxo-detail{align-self:start}
+  /* AND THE RESERVATION GOES WITH IT. The 124px above is room for the
+     tablist, which on desktop LIES OVER this panel (.cxo-panel spans
+     grid-row 1/-1 under .cxo-tabs at z-index 1). Stacked, the panel is
+     grid-row 2 — under the tabs, not beneath them — so nothing is
+     overlapping and the padding was just a hole: measured 150px of blank
+     card between the city tabs and "Gurugram, Haryana" at 360, 390, 430,
+     768 and 1023 (124 of padding plus the 26 gap). `align-self` was reset
+     here and this was not. */
+  .cxo-detail{align-self:start;padding-top:0}
   .cxo-map{height:auto;aspect-ratio:16/11}
 }
 @media (max-width:767px){
