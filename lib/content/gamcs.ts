@@ -774,8 +774,15 @@ export const achievements = {
      It heads the figures AND the testimonials below them — the two are one
      band now, and the heading names both halves of it, which is why the
      testimonial carousel no longer carries a visible heading of its own. */
+  /* Three marked phrases, not two (client, 2026-10-22): "Impact" joins
+     "Numbers" and "Our Clients" in brand blue, and "Told" loses its capital.
+     The band's h2 is sentence case now apart from the proper noun pairing at
+     the end, and the three blue phrases are the claim's three nouns — what
+     was achieved, and the two things that evidence it. */
   headingParts: [
-    "Our Impact, Told by the ",
+    "Our ",
+    { text: "Impact", em: true },
+    ", told by the ",
     { text: "Numbers", em: true },
     " and ",
     { text: "Our Clients", em: true },
