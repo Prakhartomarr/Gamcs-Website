@@ -461,8 +461,11 @@ export const ourStory = {
           body: "Turn financial and operational information into clear explanations, forward-looking perspectives and better-informed decisions.",
         },
       ],
-      /* What is left of the old "the name" chapter: one sentence, under the
-         three items, rather than a section of its own. */
+      /* RETIRED 2026-10-22 (client): what was left of the old "the name"
+         chapter, one sentence under the three items. Nothing renders it now —
+         the chapter ends on its cards. Kept because retired copy is kept here
+         and because scripts/copy/manifest.json carries a row that reads this
+         locator; deleting the key breaks the audit. */
       note:
         "The name GA brings together the initials of Gaurav and Abhinav—a simple reflection of the partnership and shared ambition behind the firm.",
     },

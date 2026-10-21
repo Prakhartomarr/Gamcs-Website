@@ -5417,7 +5417,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .os-built-b{margin:14px 0 0;font-size:15px;line-height:1.65;color:var(--gray);text-wrap:pretty}
 /* The sentence about the name GA. One line of copy where a whole chapter
    used to be, so it is marked as an aside rather than set as a paragraph
-   that happens to follow the grid. */
+   that happens to follow the grid.
+
+   UNRENDERED since 2026-10-22, when the client had the sentence taken off
+   the page. Kept with the copy it styled: restoring one restores the other,
+   and this is the only rule that uses the class. */
 .os-note{margin:40px 0 0;max-width:72ch;padding-left:20px;
   border-left:2px solid var(--blue-light);
   font-size:16px;line-height:1.7;color:var(--gray)}

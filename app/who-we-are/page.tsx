@@ -229,8 +229,15 @@ export default function WhoWeArePage() {
             ))}
           </ol>
 
-          {/* All that is left of the old "the name" chapter. */}
-          <p className="os-note reveal">{ch.build.note}</p>
+          {/* THE "NAME GA" LINE IS GONE (client, 2026-10-22). It was the last
+              sentence of a chapter that had already been reduced to one line;
+              the chapter now ends on its three cards.
+
+              `ourStory.chapters.build.note` is DELIBERATELY still in the
+              content module, and scripts/copy/manifest.json has a row that
+              reads it, so removing the key would break the copy audit rather
+              than tidy anything. Putting the sentence back is this element,
+              nothing else. */}
         </div>
       </section>
 
