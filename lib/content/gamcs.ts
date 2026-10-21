@@ -296,11 +296,14 @@ export const ourStory = {
     items: [
       { value: "2023", label: "Founded", count: false },
       { value: "50+", label: "Team & delivery professionals", count: true },
-      {
-        value: "150+ years",
-        label: "Combined experience across our leadership and advisory team",
-        count: true,
-      },
+      /* Shortened 2026-10-21 so the strip reads as one row. "150+ years" with
+         a label running "Combined experience across our leadership and
+         advisory team" set three lines deep while every other label set one,
+         which left this cell hanging below the other five. The unit moves
+         into the label, so the figure is still years and not an unlabelled
+         150. What the client accepted losing: "across our leadership and
+         advisory team", which said whose years they are. */
+      { value: "150+", label: "Years of combined experience", count: true },
       { value: "3", label: "Office locations", count: true },
       { value: "30+", label: "Businesses supported", count: true },
       { value: "10+", label: "Countries served", count: true },
@@ -729,14 +732,32 @@ export const services = {
  * text that appeared nowhere.
  */
 export const achievements = {
-  heading: "Our Achievements",
-  /* 2026-10-20. "Our clients have experienced" was the section's H2 and it
-     has no object: experienced what? The four figures below finish the
-     sentence visually and not grammatically, which is how it reads as a
-     fragment. "Results so far" is a heading rather than an opening clause,
-     and it is honest about the set being a running total. */
+  /* RENDERED AGAIN 2026-10-21, rewritten by the client, and set in parts
+     the same day so "Numbers" and "Our Clients" can take the blue.
+
+     Parts rather than four named fields (`headingLead`/`headingMark`/… is
+     what story and maturityCurve do) because two separate phrases are
+     tinted here, and a second set of lead/mark/tail names for one heading
+     reads worse than a list. `em` is the existing mark: components/Rich.tsx
+     renders it as <em>, and `.section-head h2 em` has been "blue, not
+     italic" since long before this.
+
+     It heads the figures AND the testimonials below them — the two are one
+     band now, and the heading names both halves of it, which is why the
+     testimonial carousel no longer carries a visible heading of its own. */
+  headingParts: [
+    "Our Impact, Told by the ",
+    { text: "Numbers", em: true },
+    " and ",
+    { text: "Our Clients", em: true },
+  ],
+  /* RETIRED 2026-10-20, then overtaken: "Results so far" replaced the
+     fragment below as this band's H2 and was itself unrendered the same day.
+     `heading` above is what the band prints now. */
   lead: "Results so far",
-  /* RETIRED with it. `heading` above was already unrendered. */
+  /* RETIRED with it. "Our clients have experienced" has no object:
+     experienced what? The figures finish the sentence visually and not
+     grammatically, which is how it read as a fragment. */
   leadFragment: "Our clients have experienced",
   items: [
     /* The card. CountUp splits the string on its digits and keeps the prefix
@@ -761,10 +782,23 @@ export const achievements = {
       label: "Dashboards built",
       note: "For reporting, performance monitoring and decision support.",
     },
+    /* 15+, up from the 10+ this entry carried while it was unrendered
+       (client, 2026-10-21), with the client's own qualifier. */
     {
-      value: "10+",
+      value: "15+",
       label: "Data warehouses built",
-      note: "Connecting financial and operational data for reporting and analysis.",
+      note: "Across data integration, reporting and analytics engagements.",
+    },
+    /* The one outcome figure in the set: everything above counts what was
+       built, this counts what it did (client, 2026-10-21). "Up to" is the
+       client's hedge and stays in the value, where CountUp reads it as the
+       prefix and animates only the 90. The qualifier came with a leading
+       asterisk and is set without one — it sits in the cell where every
+       other note sits, so there is no footnote for it to point at. */
+    {
+      value: "Up to 90%",
+      label: "Reporting time reduced",
+      note: "Achieved on selected reporting workflows following process and automation improvements.",
     },
   ],
 } as const;
@@ -984,6 +1018,11 @@ export const team = {
  * `title` is every author's own, as the client gave it.
  */
 export const testimonials = {
+  /* NO LONGER VISIBLE (client, 2026-10-21). `achievements.heading` now heads
+     this carousel and the figures above it as one band. The string stays and
+     is still rendered, screen-reader only: the footer's "What clients say"
+     link lands on #testimonials, and a reader arriving there should be told
+     what they have arrived at. */
   heading: "What our clients say about us",
   items: [
     {
@@ -1144,7 +1183,11 @@ export const footer = {
        it reads as an invitation rather than as a category (client,
        2026-10-21). */
     connect: "Let's connect",
-    offices: "Offices",
+    /* The column heads three city names, not three postal addresses, so it
+       invites rather than labels — the same move "Let's connect" makes above
+       it (client, 2026-10-21). The key still says `offices`: it names the
+       column's content, which has not changed. */
+    offices: "Find us",
     explore: "Explore",
     resources: "Resources",
     legal: "Legal",
@@ -1174,10 +1217,11 @@ export const footer = {
     { label: "FAQ", href: "/faq" },
     { label: "Contact Us", href: "/contact" },
   ],
-  /** The label on the blue button beside the LinkedIn tile. The visible text
-      IS the address: the button opens a mail client, and "Contact Us" would
-      have been a second control with the same name as the link above going
-      somewhere else (WCAG 2.4.4). */
+  /** The WHOLE accessible name of the mail tile beside the LinkedIn one.
+      It used to label a blue pill whose visible text was the address, so the
+      aria-label only had to add the verb; since 2026-10-21 the control is an
+      icon tile with no visible text at all, and this string is the only name
+      a screen reader gets for it. Keep the address in it. */
   emailCtaLabel: "Email {email}",
   /**
    * RETIRED 2026-10-20, all three. `company` and `explore` were the two
@@ -2021,10 +2065,12 @@ export const maturityCurve = {
      this, so it keeps its manifest row. */
   eyebrow: "The Finance Intelligence Maturity Curve",
   /* Re-split 2026-10-21 so the blue falls on "finance function today" rather
-     than on "function today?". Three pieces, because the mark now sits in the
-     MIDDLE of the sentence and the question mark has to stay outside it —
-     tinting the "?" would colour punctuation that belongs to the whole line.
-     No space between the mark and `headingTail`, for the same reason. */
+     than on "function today?". Three pieces, because the mark sits in the
+     MIDDLE of the sentence. The question mark was briefly left outside the
+     tint and is now inside it at the client's word, so `headingTail` renders
+     within the same span as `headingMark` — see MaturityCurve.tsx. It stays
+     its own string because the copy deck has a row for it. No space between
+     the two: they are one phrase. */
   headingLead: "Where is your",
   headingMark: "finance function today",
   headingTail: "?",

@@ -232,8 +232,10 @@ const LinkedInMark = () => (
 	   rect, it stays crisp at any size, and it needs no network request.
 
 	   #0A66C2 is LinkedIn's own blue, not --blue (#0F5E97): a brand mark in
-	   someone else's palette stops being that brand's mark. It is the one
-	   place on the site that colour appears.
+	   someone else's palette stops being that brand's mark. It used to be the
+	   one place on the site that colour appeared; MailMark takes it too now,
+	   at the client's asking, so the two tiles match. Change one and change
+	   the other.
 
 	   The glyph is the same two paths the team page's bio links use — the
 	   wordmark, not the four-shape approximation this was once, which gave
@@ -243,6 +245,36 @@ const LinkedInMark = () => (
 		<g transform="translate(6 6) scale(1)" fill="#FFFFFF">
 			<path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
 			<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+		</g>
+	</svg>
+);
+
+const MailMark = () => (
+	/* The mail tile, replacing the blue "info@gamcs.in" pill that used to sit
+	   here (client, 2026-10-21). Drawn, like the LinkedIn mark beside it, so
+	   the two tiles are the same 36px rounded square and stay crisp at any
+	   size.
+
+	   #0A66C2, the same blue as the LinkedIn tile beside it (client,
+	   2026-10-21). It was --blue (#0F5E97) for a few minutes, on the
+	   reasoning that this tile is GAMCS's own control while LinkedIn's mark
+	   has to stay in LinkedIn's palette — but the two squares sit 10px
+	   apart, and at that distance two near-blues read as a mistake rather
+	   than as a distinction. One blue for the pair.
+
+	   The glyph is stroked, not filled: at 20x14 the filled envelope's white
+	   seams close up, and a 1.7px outline is what stays readable. */
+	<svg viewBox="0 0 36 36" width="36" height="36" fill="none" aria-hidden="true">
+		<rect width="36" height="36" rx="9.7" fill="#0A66C2" />
+		<g
+			transform="translate(8 11)"
+			stroke="#FFFFFF"
+			strokeWidth="1.7"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		>
+			<rect x="0.85" y="0.85" width="18.3" height="12.3" rx="2.6" />
+			<path d="M2 2.1 10 8.5 18 2.1" />
 		</g>
 	</svg>
 );
@@ -303,7 +335,7 @@ export function FlickeringFooter() {
 			    it lands on the container's. No hard-coded 39: a longer label moves
 			    it on its own. The first two stay fixed so the pitch is unchanged. */}
 			<div className="gf-topwrap container pt-14 pb-12 lg:pt-16">
-				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,232px)_173px_173px_max-content] lg:gap-x-[48px] xl:gap-x-[54px]">
+				<div className="gf-top grid gap-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_173px_173px_173px_max-content] lg:gap-x-[48px] xl:gap-x-[54px]">
 					<div className="gf-office">
 						{/* THE FULL NAME, not the contraction (client, 2026-10-20).
 						    This was the mark plus "MCS", so the artwork's "GA" and the
@@ -346,18 +378,36 @@ export function FlickeringFooter() {
 						    - The "Contact Us" accent link. /contact is in the Company
 						      column beside this, so the footer was offering the same
 						      destination twice, once in blue.
-						    - The mailto. `site.email` is on /contact with the rest of the
-						      ways to reach the firm.
-						   The column is the lockup, one sentence, and a headed row with
-						   the social tile and the email button. */}
-						{/* A heading over the social tile and the email button. The other four
+						    - The mailto. BACK, twice, on 2026-10-21 — as the address under
+						      "Let's connect" and as the tile beside LinkedIn. The bullet
+						      stays as the record of why it left: `site.email` is also on
+						      /contact with the rest of the ways to reach the firm.
+						   The column is the lockup, one sentence, and a headed block:
+						   the address, then the LinkedIn and mail tiles. */}
+						{/* A heading over the address and the two tiles. The other four
 						    column heads name a category of links; this one is an invitation,
-						    because what it heads is two controls rather than a list (client,
-						    2026-10-21). Same <h2> treatment as the rest so the footer has one
-						    heading level across its columns. */}
-						<h2 className="gf-connecth gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
-							{footer.headings.connect}
-						</h2>
+						    because what it heads is a way to reach the firm rather than a
+						    list of pages (client, 2026-10-21). Same <h2> treatment as the
+						    rest so the footer has one heading level across its columns.
+
+						    The heading and the address are one block, not two children of
+						    .gf-office: on a phone that grid spaces every child by its own
+						    16px row gap, which would push the address off its heading. */}
+						<div className="gf-connect">
+							<h2 className="gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
+								{footer.headings.connect}
+							</h2>
+							{/* The address in full, under the heading that introduces it.
+							    It is a link as well as a label — an email address that
+							    cannot be clicked is a string to copy by hand — and the mail
+							    tile below goes to the same place. Two links, one
+							    destination, different names: that is a logo-and-"Home"
+							    pair, not the two-links-one-name collision (WCAG 2.4.4)
+							    the old "Contact Us" accent link was removed for. */}
+							<a className="gf-email" href={`mailto:${site.email}`}>
+								{site.email}
+							</a>
+						</div>
 						<div className="gf-actions">
 							<a
 								href={site.linkedin}
@@ -368,19 +418,17 @@ export function FlickeringFooter() {
 							>
 								<LinkedInMark />
 							</a>
-							{/* The address IS the label. "Contact Us" would have been a
-							    second control with the same visible name as the Contact Us
-							    link in the Resources column beside it, going somewhere else
-							    — two links, one name, two destinations (WCAG 2.4.4). The
-							    aria-label adds the verb the mailto implies, and opens with
-							    nothing the visible text does not say, so Label in Name
-							    still holds. */}
+							{/* A tile, not a pill with the address in it: the address is
+							    already set out above, and two controls of the same size read
+							    as one row. It carries no visible text, so the aria-label is
+							    the whole accessible name — "Email info@gamcs.in", which
+							    says both the verb and the destination. */}
 							<a
 								href={`mailto:${site.email}`}
-								className="gf-emailcta"
+								className="gf-soc"
 								aria-label={fill(footer.emailCtaLabel, { email: site.email })}
 							>
-								{site.email}
+								<MailMark />
 							</a>
 						</div>
 					</div>
@@ -398,10 +446,22 @@ export function FlickeringFooter() {
 					    firms' addresses standing under this firm's footer, which is
 					    why this renders nothing at all in that case.
 
-					    Addresses, not links. Each one is an <address> inside a list
-					    item, which is what the element is for; the map links live on
-					    /contact and on the homepage cards, and adding a fourth copy
-					    here would be a third route to the same place. */}
+					    CITY AND STATE, NOTHING ELSE (client, 2026-10-21). The street,
+					    postcode and landmark are still on `officeCards`, and two
+					    pages print all three in full: the homepage map deck and
+					    /contact, whose office tabs replaced <Directions> later the
+					    same day — <Directions> read `site.address` and so showed the
+					    registered office alone. lib/schema.ts publishes that office
+					    as a PostalAddress either way, so the address a search engine
+					    indexes is unchanged.
+
+					    No <address> any more either. It was wrapping three lines of
+					    real postal address; one line naming a city is a place, not the
+					    contact information that element is for.
+
+					    Not links, in any case. The map links live on /contact and on
+					    the homepage cards, and adding a fourth copy here would be a
+					    third route to the same place. */}
 					{officeCards.length > 0 && (
 						<div className="gf-offices">
 							<h2 className="gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
@@ -409,22 +469,8 @@ export function FlickeringFooter() {
 							</h2>
 							<ul className="gf-offlist">
 								{officeCards.map((o) => (
-									<li key={o.coords}>
-										{/* The city is the heading a reader scans for, so it leads
-										    and the street follows — the order the client wrote
-										    them in. Not an <h3>: these sit under the column's h2
-										    and a heading per address would put nine of them in the
-										    outline of every page. */}
-										<address className="gf-off">
-											<span className="gf-off-city">
-												{o.locality}, {o.region}
-											</span>
-											<span className="gf-off-line">{o.street}</span>
-											<span className="gf-off-line">
-												{o.locality}, {o.region} {o.postalCode}
-											</span>
-											{o.note && <span className="gf-off-note">{o.note}</span>}
-										</address>
+									<li className="gf-off" key={o.coords}>
+										{o.locality}, {o.region}
 									</li>
 								))}
 							</ul>

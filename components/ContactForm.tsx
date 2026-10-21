@@ -123,7 +123,20 @@ export default function ContactForm() {
 
         return (
           <div
-            className={f.name === "goal" || f.name === "source" ? "field full" : "field"}
+            /* Full width: the long free-text fields, and the email.
+
+               The email is the odd one — it is a short field. It is here
+               because the content module's order is name, title, company,
+               phone, source, email, goal, and with `source` and `goal`
+               spanning, `email` was the only field left in its row and sat
+               as a lone half-width box with white space beside it. Spanning
+               it is a layout fix for that; reordering the fields would have
+               been the other way, and the order is the client's. */
+            className={
+              f.name === "goal" || f.name === "source" || f.name === "email"
+                ? "field full"
+                : "field"
+            }
             key={f.name}
           >
             <label htmlFor={f.name}>

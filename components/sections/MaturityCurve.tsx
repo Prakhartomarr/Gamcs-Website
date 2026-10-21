@@ -172,13 +172,20 @@ export default function MaturityCurve() {
       <MaturityCurveMotion />
       <div className="container mc-inner">
         <div className="mc-head">
-          {/* Three pieces: the blue falls on "finance function today" and the
-              question mark stays outside it, so the tint lands on the phrase
-              and not on punctuation belonging to the whole line. */}
+          {/* The mark and the question mark are both blue (client,
+              2026-10-21). They were deliberately split for a few hours so
+              the tint landed on the phrase and not on punctuation belonging
+              to the whole line; the client wants the "?" to carry it too, so
+              both pieces go inside the same span. The strings stay separate
+              in the content module rather than being merged into one —
+              `headingMark` and `headingTail` are each a row of the client's
+              copy deck, and merging them would take a row out of it. */}
           <h2 className="mc-h2" id="mc-heading">
             {maturityCurve.headingLead}{" "}
-            <span className="accent">{maturityCurve.headingMark}</span>
-            {maturityCurve.headingTail}
+            <span className="accent">
+              {maturityCurve.headingMark}
+              {maturityCurve.headingTail}
+            </span>
           </h2>
           <p className="mc-lead">{maturityCurve.lead}</p>
         </div>

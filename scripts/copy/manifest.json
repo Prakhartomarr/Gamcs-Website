@@ -4335,12 +4335,48 @@
   "code": "HOME-IMPACT-01",
   "page": "Home (/)",
   "section": "Achievements",
-  "label": "Eyebrow",
+  "label": "Heading over the figures and the testimonials \u2014 part 1 of 4 (plain). Keep the trailing space.",
   "kind": "text",
-  "text": "Our Achievements",
+  "text": "Our Impact, Told by the ",
   "source": {
    "file": "lib/content/gamcs.ts",
-   "locator": "achievements.heading"
+   "locator": "achievements.headingParts[0]"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-21",
+  "page": "Home (/)",
+  "section": "Achievements",
+  "label": "Heading \u2014 part 2 of 4, set in blue",
+  "kind": "text",
+  "text": "Numbers",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.headingParts[1].text"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-22",
+  "page": "Home (/)",
+  "section": "Achievements",
+  "label": "Heading \u2014 part 3 of 4 (plain). Keep the space at each end.",
+  "kind": "text",
+  "text": " and ",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.headingParts[2]"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-23",
+  "page": "Home (/)",
+  "section": "Achievements",
+  "label": "Heading \u2014 part 4 of 4, set in blue",
+  "kind": "text",
+  "text": "Our Clients",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.headingParts[3].text"
   }
  },
  {
@@ -4503,9 +4539,9 @@
   "code": "HOME-IMPACT-15",
   "page": "Home (/)",
   "section": "Our achievements",
-  "label": "Figure 5 (figure 4 of 4) — the number",
+  "label": "Figure 5 of 6 — the number",
   "kind": "text",
-  "text": "10+",
+  "text": "15+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[4].value"
@@ -4515,7 +4551,7 @@
   "code": "HOME-IMPACT-16",
   "page": "Home (/)",
   "section": "Our achievements",
-  "label": "Figure 5 — what it counts",
+  "label": "Figure 5 of 6 — what it counts",
   "kind": "text",
   "text": "Data warehouses built",
   "source": {
@@ -4527,12 +4563,48 @@
   "code": "HOME-IMPACT-17",
   "page": "Home (/)",
   "section": "Our achievements",
-  "label": "Figure 5 — qualifier beneath it",
+  "label": "Figure 5 of 6 — qualifier beneath it",
   "kind": "text",
-  "text": "Connecting financial and operational data for reporting and analysis.",
+  "text": "Across data integration, reporting and analytics engagements.",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "achievements.items[4].note"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-18",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 6 of 6 — the number",
+  "kind": "text",
+  "text": "Up to 90%",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[5].value"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-19",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 6 of 6 — what it counts",
+  "kind": "text",
+  "text": "Reporting time reduced",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[5].label"
+  }
+ },
+ {
+  "code": "HOME-IMPACT-20",
+  "page": "Home (/)",
+  "section": "Our achievements",
+  "label": "Figure 6 of 6 — qualifier beneath it",
+  "kind": "text",
+  "text": "Achieved on selected reporting workflows following process and automation improvements.",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "achievements.items[5].note"
   }
  },
  {
@@ -4551,7 +4623,7 @@
   "code": "HOME-TESTI-02",
   "page": "Home (/)",
   "section": "Testimonials",
-  "label": "Heading",
+  "label": "Heading — screen-reader only since 2026-10-21, still read aloud",
   "kind": "text",
   "text": "What our clients say about us",
   "source": {
@@ -5621,7 +5693,7 @@
   "section": "GAMCS at a glance",
   "label": "Figure 3 of 6, number",
   "kind": "text",
-  "text": "150+ years",
+  "text": "150+",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.glance.items[2].value"
@@ -5633,7 +5705,7 @@
   "section": "GAMCS at a glance",
   "label": "Figure 3 of 6, what it counts",
   "kind": "text",
-  "text": "Combined experience across our leadership and advisory team",
+  "text": "Years of combined experience",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "ourStory.glance.items[2].label"
@@ -16555,6 +16627,18 @@
   }
  },
  {
+  "code": "FTR-COLS-24",
+  "page": "Footer",
+  "section": "Footer brand block",
+  "label": "Mail tile, screen-reader name ({email} is filled in)",
+  "kind": "aria-label",
+  "text": "Email {email}",
+  "source": {
+   "file": "lib/content/gamcs.ts",
+   "locator": "footer.emailCtaLabel"
+  }
+ },
+ {
   "code": "FTR-BRAND-03",
   "page": "Footer",
   "section": "Brand",
@@ -16570,9 +16654,9 @@
   "code": "FTR-COLS-23",
   "page": "Footer",
   "section": "Link columns",
-  "label": "Offices column heading",
+  "label": "Find us column heading",
   "kind": "text",
-  "text": "Offices",
+  "text": "Find us",
   "source": {
    "file": "lib/content/gamcs.ts",
    "locator": "footer.headings.offices"

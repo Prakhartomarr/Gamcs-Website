@@ -97,11 +97,17 @@ export default function Testimonials() {
   return (
     <section className="quote-section" id="testimonials">
       <div className="container">
-        <div className="section-head reveal">
-          <div>
-            <h2>{testimonials.heading}</h2>
-          </div>
-        </div>
+        {/* HEADING REMOVED FROM THE PAGE (client, 2026-10-21), not from the
+            document. `achievements.heading` above now covers the figures and
+            this carousel as one band, so a second visible heading here would
+            say the same thing twice.
+
+            It stays as an <h2> the eye cannot see because the footer's "What
+            clients say" link points at #testimonials: a reader who follows it
+            lands here with no visible heading in reach, and `sr-only` leaves
+            them a name for the place they have arrived at while taking no
+            space from the layout. */}
+        <h2 className="sr-only">{testimonials.heading}</h2>
         {/* bg-muted is all but identical to the section's --soft, so the
             card is lifted to white to read against it. */}
         <ScrollReelTestimonials

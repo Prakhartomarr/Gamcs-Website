@@ -6,8 +6,8 @@ import CTA from "@/components/CTA";
 import WhoFoundersReveal from "@/components/sections/WhoFoundersReveal";
 
 /**
- * Who we are: the copy, its CTA and the mission line on the left, the
- * founders' portrait on the right over a link to the team page.
+ * Who we are: the copy, the mission line and both links on the left, the
+ * founders' portrait on the right.
  *
  * The portrait is the real founders rather than stock photography — the reason
  * an earlier version used `AbstractPanel` was that it would not depict people
@@ -16,7 +16,9 @@ import WhoFoundersReveal from "@/components/sections/WhoFoundersReveal";
  * takes 7.3% off each side, which on this frame is backdrop either side of the
  * two of them and not shoulder.
  *
- * The link to the team page sits inside the card rather than under it.
+ * The link to the team page used to sit inside the card. It moved out beside
+ * "About our firm" on 2026-10-21; what is still inside the card is the phone
+ * reveal, which is a different control.
  */
 export default function WhoWeAre() {
   /* Left of frame, then right — the order the alt text names them in. */
@@ -63,15 +65,42 @@ export default function WhoWeAre() {
               ))}
             </div>
 
-            {/* The section opens the story and hands the rest to /who-we-are.
-                It used to point at /contact, which is not what the label says. */}
-            <CTA href="/who-we-are" tier="secondary" icon="diagonal">
-              {sections.aboutFirm}
-            </CTA>
-
-            {/* The mission closes the copy column, beside the portrait, rather
-                than running the container's full width underneath the row. */}
+            {/* The mission now sits above the buttons rather than closing the
+                column beneath them (client, 2026-10-21) — the two swapped
+                places. It keeps its blue rule: directly under the lead
+                paragraph, that rule is the only thing stopping it reading as
+                a third paragraph of body copy. */}
             <p className="who-mission reveal">{story.mission}</p>
+
+            {/* Both links, one row (client, 2026-10-21). "Meet our founders"
+                used to sit on frosted glass inside the portrait; it is the
+                same CTA with the same href, moved out and left to the plain
+                outlined treatment it had underneath. Two outlined pills, not
+                one filled: the page's one filled button is "Schedule a Call"
+                in the header, and this section is not asking for a
+                conversion.
+
+                The wrapper carries no margin of its own. `.who-copy .btn`
+                already spaces a button from what is above it — 30px here,
+                28px on a phone — and leaving that on the buttons means the
+                row needs no second set of numbers to keep in step. */}
+            <div className="who-ctas">
+              {/* The section opens the story and hands the rest to
+                  /who-we-are. It used to point at /contact, which is not
+                  what the label says. */}
+              <CTA href="/who-we-are" tier="secondary" icon="diagonal">
+                {sections.aboutFirm}
+              </CTA>
+              <CTA
+                href="/team"
+                tier="secondary"
+                icon="arrow"
+                data-cta="who-founders"
+                className="who-founders-btn"
+              >
+                {sections.meetFounders}
+              </CTA>
+            </div>
           </div>
 
           <div className="who-figure reveal">
@@ -83,22 +112,13 @@ export default function WhoWeAre() {
                 height={880}
                 sizes="(max-width: 1279px) 92vw, 530px"
               />
-              {/* Inside the card, bottom left, on frosted glass. It is the same
-                  CTA as before — same href, same arrow — restyled by the class;
-                  it is still the Link that component renders. */}
-              <CTA
-                href="/team"
-                tier="secondary"
-                icon="arrow"
-                data-cta="who-founders"
-                className="who-founders-btn"
-              >
-                {sections.meetFounders}
-              </CTA>
-
-              {/* Phone only, and the replacement for the link above rather
-                  than an addition to it: `.who-reveal` is display:none until
-                  767px, where the same block hides `.who-founders-btn`. */}
+              {/* Phone only, and still the replacement for the "Meet our
+                  founders" link rather than an addition to it: `.who-reveal`
+                  is display:none until 767px, where the same block hides
+                  `.who-founders-btn` wherever it now sits. The link left this
+                  card on 2026-10-21; the reveal did not, because on a phone
+                  it is a different control — it opens a panel with the
+                  founders' faces rather than navigating to /team. */}
               <WhoFoundersReveal
                 founders={founders.map((f) => ({ name: f.name, title: f.title, photo: f.photo }))}
                 openLabel={sections.meetFounders}

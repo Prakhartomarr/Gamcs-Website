@@ -79,10 +79,16 @@ export default function OfficeMaps({ className }: { className?: string }) {
             <DeckItem key={o.coords} depth={depth}>
               <LocationMap
                 location={`${o.locality}, ${o.region}`}
-                /* The same lines the footer's Offices column prints, and
-                   deliberately so (client, 2026-10-21): city, street, then
-                   city, region and postcode, with the landmark note where
-                   there is one.
+                /* City, street, then city, region and postcode, with the
+                   landmark note where there is one.
+
+                   This was written to match the footer's Offices column line
+                   for line. It no longer does: that column is "Find us" now
+                   and prints city and state only (client, 2026-10-21), which
+                   makes these cards the one place on the site that shows all
+                   three streets. Not a coupling to restore — the two have
+                   different jobs — but the reason the full lines matter here
+                   is now that they are not anywhere else.
                    KNOWN CONSEQUENCE, already flagged on the footer: `o.name`
                    is dropped, so the Noida and Bangalore cards no longer say
                    which firm trades at those addresses and can read as GAMCS
