@@ -5543,7 +5543,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    puts two different axes in one box. The bio is three or four lines, which
    is about as much centred body copy as stays comfortable; anything longer
    and this would want to go back to left. */
-.os-founder{padding:14px;border-radius:var(--card-r);background:#fff;
+.os-founder{position:relative;padding:14px;border-radius:var(--card-r);background:#fff;
   border:1px solid var(--os-rule);text-align:center}
 /* The bio stays centred and gets a measure. It was running the card's full
    564px — 71 characters a line — and centred copy wants far less than that,
@@ -5554,6 +5554,44 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    than the average letter — 48ch measured out at 60 characters a line, not
    the 50 it looks like it should be. 40 lands it on 50. */
 .os-founder .os-founder-bio{max-width:40ch;margin-inline:auto}
+
+/* The LinkedIn tile (client, 2026-10-22), on the portrait's top-right.
+
+   28px from the card's edge, which is 14px inside the photograph — the card
+   pads 14 and the photo starts there. The photo's corner is
+   `--card-r` minus 14, so 18px at desktop: a 38px tile whose nearest corner
+   sits 14px in clears that curve rather than being clipped by it.
+
+   WHITE TILE, BLUE GLYPH, rather than a bare white glyph on the photograph.
+   These are black-and-white portraits with mid-grey studio backgrounds, and
+   the grey behind the top-right corner is not the same value in both — a
+   bare glyph would have to survive whatever is behind it in the next
+   photograph too. The tile carries its own contrast with it.
+
+   38px, comfortably past the 24x24 of WCAG 2.5.8 and close to the 44 iOS
+   asks for, on a target that sits over a photograph and has no text to
+   widen it. */
+.os-founder-li{position:absolute;top:28px;right:28px;z-index:2;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.94);color:var(--blue);
+  box-shadow:0 2px 10px rgba(13,24,40,.18);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transition:background .2s var(--ease-out),color .2s var(--ease-out),
+    transform .2s var(--ease-out)}
+@media(hover:hover){
+  .os-founder-li:hover{background:var(--blue);color:#fff;transform:scale(1.06)}
+}
+.os-founder-li:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+/* Phones: the card is the viewport's width and the photo fills it, so the
+   tile comes in with the smaller radius. */
+@media (max-width:639px){
+  .os-founder-li{top:24px;right:24px;width:34px;height:34px}
+}
+@media (prefers-reduced-motion:reduce){
+  .os-founder-li{transition:none}
+  .os-founder-li:hover{transform:none}
+}
 .os-founder .os-founder-name{margin-top:20px}
 
 /* THE CHAPTER HEAD MOVES INTO THE LEFT GUTTER (client, 2026-10-21): "there

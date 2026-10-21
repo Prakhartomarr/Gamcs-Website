@@ -282,6 +282,31 @@ export default function WhoWeArePage() {
                     sizes="340px"
                   />
                 </div>
+                {/* Top right of the card, over the portrait's own corner.
+                    Rendered only where there is a real profile to point at:
+                    `linkedinUrl` is a personal URL and only the two founders
+                    publish one. An earlier version of /team linked a
+                    per-person icon at the COMPANY page for everyone, which is
+                    why the field is a URL rather than a boolean — so the
+                    guard is the point, not ceremony. */}
+                {p.linkedinUrl ? (
+                  <a
+                    className="os-founder-li"
+                    href={p.linkedinUrl}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={fill(sections.linkedinOf, { name: p.name })}
+                  >
+                    {/* The wordmark path the roster and the footer tile both
+                        use. Not the four-shape approximation that preceded
+                        it: that gave the "n" a full-height left stem and read
+                        as "ih" at small sizes. */}
+                    <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true">
+                      <path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+                      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
+                    </svg>
+                  </a>
+                ) : null}
                 <h3 className="os-founder-name">{p.name}</h3>
                 <p className="os-founder-title">{ch.founders.role}</p>
                 <p className="os-founder-bio">{ch.founders.bios[p.name]}</p>

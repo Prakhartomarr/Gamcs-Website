@@ -128,6 +128,13 @@ export const sections = {
   fullTeam: "Meet the full team",
   /** The founders' portrait; the names come from team.leadership. */
   foundersAlt: "{first} and {second}, founders of {siteName}",
+  /* The LinkedIn tile on each founder card (client, 2026-10-22). NAMED PER
+     PERSON, not "LinkedIn" twice: two links with the same accessible name
+     going to different profiles is exactly what WCAG 2.4.4 is about — in a
+     screen reader's link list they are indistinguishable, and so is tabbing
+     between them. The tile shows a glyph and no words, so this is the whole
+     of its name rather than an addition to one. */
+  linkedinOf: "{name} on LinkedIn",
   /* Accessible name for a figure's source link in the decision gap. All three
      read "Source" on the page, and three links with the same name fail WCAG
      2.4.4 — in a screen reader's link list they are indistinguishable, and so
