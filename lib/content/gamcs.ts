@@ -97,6 +97,21 @@ const registeredOffice = offices.find((o) => o.registered) ?? null;
  */
 export const officeCards: readonly Office[] = registeredOffice ? offices : [];
 
+/**
+ * The office's name in a URL: /contact?office=gurugram#offices.
+ *
+ * DERIVED FROM `locality`, not stored on the Office. A stored slug is a
+ * second place the city's name lives and a second place to forget to edit;
+ * derived, the link the footer writes and the tab /contact looks up can never
+ * disagree, because both call this. It is exported so they do.
+ *
+ * Not the index, which would make a shared link point at a different office
+ * the day the order changes, and not `coords`, which is unreadable in an
+ * address bar and moves when a pin is corrected.
+ */
+export const officeSlug = (o: Office) =>
+  o.locality.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 export const site = {
   name: "GA Management Consultants",
   legalName: "GA Management Consultants LLP",

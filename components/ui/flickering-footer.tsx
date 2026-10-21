@@ -5,7 +5,7 @@ import Link from 'next/link';
 import CookiePreferencesLink from '@/components/CookiePreferencesLink';
 import { cn } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
-import { footer, officeCards, site } from '@/lib/content/gamcs';
+import { footer, officeCards, officeSlug, site } from '@/lib/content/gamcs';
 import { fill } from '@/lib/content/fill';
 import { header } from '@/lib/content/ui';
 
@@ -467,10 +467,17 @@ export function FlickeringFooter() {
 							<h2 className="gf-grouph text-[15px] text-muted-foreground lg:text-[14px]">
 								{footer.headings.offices}
 							</h2>
+							{/* Each city goes to its own office on /contact (client,
+							    2026-10-22): the hash scrolls to the VISIT US card and
+							    the query tells its tablist which tab to open. Both
+							    halves of that URL are built from `officeSlug`, which
+							    /contact reads with the same function. */}
 							<ul className="gf-offlist">
 								{officeCards.map((o) => (
 									<li className="gf-off" key={o.coords}>
-										{o.locality}, {o.region}
+										<Link href={`/contact?office=${officeSlug(o)}#offices`}>
+											{o.locality}, {o.region}
+										</Link>
 									</li>
 								))}
 							</ul>

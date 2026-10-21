@@ -6829,6 +6829,27 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    --foreground in the :root block. 15.9:1 on white and 14.3:1 on the --soft
    ground the footer takes below 640px. */
 .gf-off{font-size:15px;line-height:1.2;color:var(--ink);text-wrap:pretty}
+/* THE CITIES ARE LINKS NOW (client, 2026-10-22) — each one goes to its own
+   office on /contact. The note above describes them as plain text that only
+   borrowed the links' ink; they take the links' behaviour too, because a link
+   that gives no sign it is one is a link most visitors never press, and these
+   sit beside three columns that do respond.
+
+   The colour stays inherited, so the phone's --charcoal and the desktop's
+   --ink both still reach them from the rule above and the two cannot drift.
+
+   min-height:24px is WCAG 2.5.8's floor. The line is 18px at 15px/1.2, and
+   the list's 7px gap left a 25px pitch — which passes only by the spacing
+   exception, and only by 1px. Making the target itself 24px tall stops it
+   depending on a gap nobody will remember is load-bearing. */
+.gf-off a{display:inline-flex;align-items:center;min-height:24px;
+  color:inherit;text-decoration:none;
+  transition:color .2s var(--ease-out)}
+@media(hover:hover){
+  .gf-off a:hover{color:var(--blue)}
+}
+.gf-off a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;
+  border-radius:3px}
 @media (max-width:1023px){
   /* Off the desktop grid this is a block in the phone stack, and three
      addresses between the brand and the nav would push the navigation most
@@ -7359,8 +7380,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* ---- the three offices ------------------------------------------------ */
 /* A tinted band with its own radius, inset from the page like `.page-head`
    is, rather than a full-bleed colour change. */
+/* scroll-margin-top because this is a jump target now: the footer's three
+   city links land on #offices. The header floats over the page, and the
+   section's own 56px of top padding is less than the header is tall, so
+   without this "VISIT US" arrives underneath it. Same value as the
+   homepage's own jump targets use. */
 .cx-offices{margin:80px 20px 0;padding:56px 0 60px;border-radius:32px;
-  background:#F1F5FE}
+  background:#F1F5FE;scroll-margin-top:calc(var(--header-h) + 16px)}
 .cx-h{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.15;
   font-weight:600;letter-spacing:-.02em;color:var(--ink-deep)}
 .cx-h--center{text-align:center}

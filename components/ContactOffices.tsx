@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useId, useRef, useState } from "react";
-import { officeCards, site } from "@/lib/content/gamcs";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { officeCards, officeSlug, site } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { map } from "@/lib/content/ui";
 
@@ -60,6 +60,33 @@ const codeFor = (region: string) =>
 
 export default function ContactOffices({ className }: { className?: string }) {
   const [active, setActive] = useState(0);
+  /* Set once, from /contact?office=<slug>, which the footer's three city
+     links write. `window.location.search` in an effect rather than
+     `useSearchParams`: that hook opts the whole route into dynamic rendering
+     unless it is wrapped in a Suspense boundary, and this is a tab index on a
+     static page, not something worth giving up the static render for.
+
+     The cost is that it lands after hydration, so an office other than the
+     first shows Gurugram for a frame. Nothing moves on screen but the tab's
+     own selected state, and the alternative costs every visitor the static
+     page.
+
+     Unknown or missing slug falls through to the default, so a hand-typed or
+     stale URL still gets a working card. */
+  useEffect(() => {
+    const want = new URLSearchParams(window.location.search).get("office");
+    if (!want) return;
+    const i = officeCards.findIndex((o) => officeSlug(o) === want);
+    if (i < 0) return;
+    setActive(i);
+    /* Focus the tab they asked for, so a keyboard or screen-reader visitor
+       arrives ON the control rather than at the top of the page with the
+       whole document between them and it. preventScroll because the browser
+       is already scrolling to #offices from the same URL — focus() would
+       otherwise fight it and win, landing the tab at the viewport's top edge
+       instead of the card below the header. */
+    tabsRef.current[i]?.focus({ preventScroll: true });
+  }, []);
   const base = useId().replace(/:/g, "");
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const count = officeCards.length;
