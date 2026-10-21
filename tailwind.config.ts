@@ -17,8 +17,13 @@ const config: Config = {
       // by Tailwind 3.4 and compile to nothing, so the easings are named.
       transitionTimingFunction: {
         reel: "cubic-bezier(0.22,1,0.36,1)",
-        panel: "cubic-bezier(.5,.85,.25,1.15)",
-        label: "cubic-bezier(.5,.85,.25,1.8)",
+        // `panel` and `label` are gone (2026-10-21). Both overshot — 1.15 and
+        // 1.8 past the end point — and neither was used anywhere: zero hits
+        // for ease-panel, ease-label or either curve across app, components
+        // and lib. They came in with the initial commit and nothing ever
+        // reached for them, so this removes dead config rather than
+        // retuning motion that was on screen. Tailwind only emits a timing
+        // utility that something uses, so the built CSS is unchanged.
       },
       colors: {
         // GAMCS brand
