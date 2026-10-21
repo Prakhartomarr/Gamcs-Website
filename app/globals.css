@@ -5297,8 +5297,27 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    It halves to three below 1280 for the reason in that query. `dt` is the
    figure and `dd` its label, which is the order the previous version of
    this page used and the order they are read in. */
+/* EVEN GAPS, MEASURED BETWEEN THE INK (client, 2026-10-22). Six equal 1fr
+   tracks hold six labels that are not equal: "Founded" inks 85px and "Years
+   Of Combined Experience" 192, so the space a reader SEES between figures ran
+   132, 31, 25, 117 and 80px at 1440 while the column gap was a uniform 24.
+
+   Sizing each track to its own label and letting `space-between` share out
+   the rest makes them identical by construction, whatever the copy says:
+   about 94px at 1440. The same fix the footer's columns took on 2026-10-22,
+   and for the same reason.
+
+   It costs the even pitch — the figures no longer start at regular
+   intervals. Equal pitch and equal gaps cannot both hold while the labels
+   differ in width, and the gaps are the half you can see. */
 .os-glance{margin:34px 0 0;padding:28px 0 0;border-top:1px solid var(--os-rule);
-  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:30px 24px}
+  display:grid;grid-template-columns:repeat(6,max-content);gap:30px 24px}
+/* 1280 up only: that is where the strip is six across. Below it the grid is
+   three columns and then one, where the tracks fill the row and there is no
+   free space for this to distribute. */
+@media (min-width:1280px){
+  .os-glance{justify-content:space-between}
+}
 /* BOLD, from weight 100 (client, 2026-10-21). Hairline numerals read as
    decoration at this size; these are the firm's claims and now carry the
    weight to say so.
@@ -5412,8 +5431,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* 20px, down from 48: that gap was holding the number apart from the
    heading across a tall bordered cell, and inside a card it just left a
    hole. */
+/* Brand blue (client, 2026-10-22), was --ink. These three are the only card
+   titles on the page that take it — the founders, the principles and the
+   journey keep their ink, so this is chapter 03's own treatment rather than a
+   new rule for every card. */
 .os-built-h{margin:20px 0 0;font-size:20px;font-weight:600;line-height:1.25;
-  letter-spacing:-.015em;color:var(--ink)}
+  letter-spacing:-.015em;color:var(--blue)}
 .os-built-b{margin:14px 0 0;font-size:15px;line-height:1.65;color:var(--gray);text-wrap:pretty}
 /* The sentence about the name GA. One line of copy where a whole chapter
    used to be, so it is marked as an aside rather than set as a paragraph

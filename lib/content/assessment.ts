@@ -208,7 +208,9 @@ export const assessment = {
     disclaimer: "This self-assessment is an indicative guide based on your responses, not an audit, independently validated maturity rating or industry benchmark. Capabilities can vary across teams and processes. The stage shown summarises your response pattern; review the individual scores to identify gaps.",
     review: "Review answers",
     restart: "Start again",
-    explore: "Explore GAMCS solutions",
+    /* Reworded 2026-10-22 (client). It was "Explore GAMCS solutions"; the
+       destination is unchanged. */
+    explore: "Explore how we can help you?",
     exploreHref: "/solutions",
   },
 } as const;
