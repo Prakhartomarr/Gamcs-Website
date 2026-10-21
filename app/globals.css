@@ -6825,6 +6825,42 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .gf-offlist{display:flex;flex-wrap:wrap;gap:8px 44px}
 }
 
+/* 1280 UP: EVERY GAP THE SAME, measured between the INK rather than between
+   the tracks (client, 2026-10-22).
+
+   The column gap was already a uniform 54px. What was uneven was the space a
+   reader actually sees, because the four link tracks were a fixed 173px and
+   the text in them is not: "Bangalore, Karnataka" inks 152px and all but
+   fills its track, while "How We Help" is 96 and "Testimonials" 88 and both
+   leave ~80px of slack behind them. So the column with the longest line got
+   the least air after it. Measured at 1440, ink to ink:
+
+     brand -> Find us    188px
+     Find us -> Explore   75px   <- less than half the others
+     Explore -> Resources 131px
+     Resources -> Legal   138px
+
+   Sizing each track to its own content and letting `space-between` share out
+   what is left makes the four gaps identical by construction, whatever the
+   copy says: ~131px at 1440, 109 at 1280, 173 at 1920. Three of the four
+   barely move; the cramped one opens up.
+
+   WHAT IT COSTS: the columns no longer start at even 173px intervals. Equal
+   pitch and equal gaps cannot both hold while the columns carry
+   different-length text, and the client chose the gaps.
+
+   `max-content` is safe on the brand track because `.gf-intro` already caps
+   itself at 278.84px — without that the blurb would set as one long line and
+   the track would ask for the whole footer. Measured: the column's
+   max-content is 279px.
+
+   Scoped to 1280 and up on purpose. The band below keeps the arrangement
+   above, where Find us has its own row and the brand track is the one
+   absorbing the shortfall; and under 1024 the columns are accordions. */
+@media (min-width:1280px){
+  .gf .gf-top{grid-template-columns:repeat(5,max-content);justify-content:space-between}
+}
+
 /* The bottom bar's copyright, on the footer's phone ground.
    `text-muted-foreground` is #6D7378, which on the white desktop footer is
    fine and on the --soft ground the footer takes below 640px measures
