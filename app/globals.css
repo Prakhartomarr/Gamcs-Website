@@ -7170,6 +7170,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    inventing a second one. The paragraph around it stays at its own weight;
    only the vision clause lifts. */
 .who-lead .accent{color:var(--blue);font-weight:600}
+/* "vision:" — the word that hands the sentence over to the claim. --ink and
+   600, which is exactly what "Our mission is simple:" carries in the line
+   below, so the column's two lead-ins read as the same device rather than as
+   two inventions. */
+.who-lead .who-lead-cue{color:var(--ink);font-weight:600}
 
 /* The four marked phrases in the gap's lead (client, 2026-10-21).
    #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the

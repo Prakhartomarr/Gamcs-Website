@@ -51,12 +51,13 @@ export default function WhoWeAre() {
               {story.headingTail}
             </h2>
             <p className="who-lead">
-              {story.lead.slice(0, story.lead.length - story.leadAccent.length)}
-              {/* The vision clause in brand blue (client, 2026-10-22). Sliced
-                  off the assembled string rather than printing a separate
-                  `leadBody` key, so there is exactly one place the paragraph
-                  is written and no way for a half to be edited out of step
-                  with the whole. */}
+              {/* Three parts, printed in the order `story.lead` assembles
+                  them. This used to slice the accent off the end of the
+                  assembled string; a second styled span in the middle made
+                  that arithmetic the wrong tool, and naming the pieces is
+                  what stops the markup and the sentence drifting apart. */}
+              {story.leadOpening}
+              <span className="who-lead-cue">{story.leadCue}</span>{" "}
               <span className="accent">{story.leadAccent}</span>
             </p>
 

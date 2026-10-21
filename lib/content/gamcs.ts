@@ -215,8 +215,14 @@ export const intro =
    "Middle East" is capitalised here; the brief wrote "Middle east", which is
    the only one of the five regions not capitalised, so this is read as a slip
    rather than a style. One word to put back if it was deliberate. */
-const LEAD_BODY =
-  "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients globally across India, US, UK, Middle East and APAC. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: ";
+const LEAD_OPENING =
+  "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients globally across India, US, UK, Middle East and APAC. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear ";
+/* The word that announces the clause, set apart from the body so it can take
+   the ink and the weight (client, 2026-10-22) — the same treatment "Our
+   mission is simple:" already has in the line below. The colon belongs to it:
+   it is the hinge between the sentence and the claim, not the last character
+   of the sentence. */
+const LEAD_CUE = "vision:";
 const LEAD_ACCENT =
   "to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.";
 
@@ -244,10 +250,14 @@ export const story = {
   headingLead: "We connect ",
   headingAccent: "finance, data and technology to transform reporting into decisions",
   headingTail: " \u2014 and insights into impact.",
+  leadOpening: LEAD_OPENING,
+  leadCue: LEAD_CUE,
   leadAccent: LEAD_ACCENT,
-  /* The whole paragraph. One consumer renders it split, but `story.lead` is a
-     row in scripts/copy/manifest.json and the audit reads it as a string. */
-  lead: LEAD_BODY + LEAD_ACCENT,
+  /* The whole paragraph, reassembled from its three parts in order — single
+     space between the cue and the clause, as the sentence reads. One consumer
+     renders it split, but `story.lead` is a row in
+     scripts/copy/manifest.json and the audit reads it as a string. */
+  lead: LEAD_OPENING + LEAD_CUE + " " + LEAD_ACCENT,
   missionLead: MISSION_LEAD,
   missionAccent: MISSION_ACCENT,
   /* The whole sentence, for /team and /careers, which print it unsplit. */
