@@ -395,7 +395,11 @@ export const ourStory = {
             body: "A shared foundation in finance, analysis, discipline and problem-solving.",
           },
           {
-            year: "2017-2023",
+            /* 2014-2023, not 2017 (client, 2026-10-22). It now starts the
+               same year as the Chartered Accountancy card beside it, which
+               is deliberate: the qualification and the corporate years run
+               together rather than one finishing before the other begins. */
+            year: "2014-2023",
             label: "Corporate experience",
             body: "Seeing how finance, business operations and decision-making intersect—and where they often disconnect.",
           },

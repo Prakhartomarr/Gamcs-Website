@@ -7008,7 +7008,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      only binds on windows short enough that the alternative is scrolling. */
   .home-tight .hwv .hwv-stage{flex:1 1 0;min-height:300px;
     display:flex;justify-content:center;
-    margin-top:clamp(10px,1.4vh,20px)}
+    /* 4vh, up from 1.4 (client, 2026-10-22: more air between the sub and the
+       film). 1.4vh was 14px on a 1000px window, which read as the film
+       touching the paragraph. 40px there now, 28 on a short window, 56 on a
+       tall one.
+
+       IT IS NOT FREE, and that is why it is a clamp rather than a number:
+       this band is a flex column filling the viewport, the stage takes
+       whatever height the heading leaves, and the frame turns that height
+       into its WIDTH through aspect-ratio. Every pixel of margin is 16/9 of
+       a pixel of film. It costs nothing while the frame is width-capped at
+       the container, which is the common case on a laptop; the floor stays
+       low so that a short window, where the film IS height-bound, pays the
+       least. */
+    margin-top:clamp(28px,4vh,56px)}
   /* A CEILING ON THE STAGE, so the frame's ratio can always be satisfied
      (2026-10-21). The frame takes a definite height from this box and turns
      it into a width through aspect-ratio — but when that width exceeded the
