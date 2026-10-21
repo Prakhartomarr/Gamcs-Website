@@ -5510,7 +5510,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
    2.25fr : 1fr is the reference's own split — the cards are the subject and
    the copy introduces them, so the copy takes the narrower half. */
-.os-future{display:grid;grid-template-columns:minmax(0,2.25fr) minmax(0,1fr);
+/* 1.75fr, down from 2.25 (client, 2026-10-22: the two columns did not end
+   together). They START together — left, right and top edges all measured
+   exact — but the copy ran 74px past the cards at 1440, because a 379px
+   measure set it 74px taller than the 2x2 grid beside it. Widening the copy
+   is the lever: fewer lines, not a nudge on the box. 448px at 1440. */
+.os-future{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);
   gap:48px;align-items:start}
 .os-principles{margin:0;padding:0;list-style:none;
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
