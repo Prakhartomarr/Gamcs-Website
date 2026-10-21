@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import ContactOffices from "@/components/ContactOffices";
 import Rich from "@/components/Rich";
-import { contact, site, team } from "@/lib/content/gamcs";
+import { contact, site } from "@/lib/content/gamcs";
 import { map } from "@/lib/content/ui";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -59,7 +59,12 @@ export default function ContactPage() {
        Registered name  the footer's bottom bar, in site.copyright
 
      The strings stay in lib/content/pages.ts. Nothing was deleted from the
-     copy deck; three rows stopped rendering. */
+     copy deck; three rows stopped rendering.
+
+     AND THE TWO FOUNDER ADDRESSES WENT ON 2026-10-22, which were rendered
+     separately below this array rather than being part of it. What the card
+     carries now is the general inbox, and the phone the moment site.phone is
+     filled in. */
   const details = [
     { label: t.generalInquiries, value: site.email, href: `mailto:${site.email}` },
     ...(site.phone
@@ -81,9 +86,10 @@ export default function ContactPage() {
 
               {/* The white card inside the dark one, where the reference puts
                   its "Partner with our vision" block — and kept as short as
-                  that block is. Three rows, all of them an address a person
-                  answers; see the note on `details` for the three that came
-                  out and where each still appears. */}
+                  that block is. One row now: the general inbox, plus the
+                  phone the moment `site.phone` is filled in. See the note on
+                  `details` for the five that came out across 2026-10-21 and
+                  2026-10-22, and where each still appears. */}
               <div className="cx-inner">
                 <div className="section-kicker">{t.detailsKicker}</div>
                 <ul className="contact-details">
@@ -101,19 +107,12 @@ export default function ContactPage() {
                       </a>
                     </li>
                   ))}
-                  {/* Direct founder addresses, per the copy doc. Rendered
-                      from team.leadership so the names and titles cannot
-                      drift from the team page. */}
-                  {team.leadership
-                    .filter((m) => "email" in m && m.email)
-                    .map((m) => (
-                      <li key={m.name}>
-                        <span className="contact-details-label">{m.name}</span>
-                        <a className="contact-details-value" href={`mailto:${m.email}`}>
-                          {m.email} ↗
-                        </a>
-                      </li>
-                    ))}
+                  {/* THE TWO FOUNDER ADDRESSES ARE GONE (client,
+                      2026-10-22). They were rendered from `team.leadership`,
+                      so the addresses themselves are untouched and still
+                      published on /team — this card just stops repeating
+                      them. The general inbox above is now the only address
+                      it carries. */}
 
                   {/* Rendered only when a real commitment exists — see
                       site.responseTime in lib/content/gamcs.ts. */}
