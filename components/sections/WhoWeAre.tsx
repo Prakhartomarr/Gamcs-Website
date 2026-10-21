@@ -70,15 +70,27 @@ export default function WhoWeAre() {
                 places. It keeps its blue rule: directly under the lead
                 paragraph, that rule is the only thing stopping it reading as
                 a third paragraph of body copy. */}
-            <p className="who-mission reveal">{story.mission}</p>
+            <p className="who-mission reveal">
+              {story.missionLead}
+              {/* Brand blue, the same `.accent` span the heading above uses
+                  (client, 2026-10-22). /team and /careers keep the sentence
+                  whole and unaccented — there it is a quotation, here it is
+                  the section's own claim. */}
+              <span className="accent">{story.missionAccent}</span>
+            </p>
 
             {/* Both links, one row (client, 2026-10-21). "Meet our founders"
                 used to sit on frosted glass inside the portrait; it is the
                 same CTA with the same href, moved out and left to the plain
-                outlined treatment it had underneath. Two outlined pills, not
-                one filled: the page's one filled button is "Schedule a Call"
-                in the header, and this section is not asking for a
-                conversion.
+                outlined treatment it had underneath.
+
+                BOTH FILLED NOW (client, 2026-10-22), in the header button's
+                blue. This carried "two outlined pills, not one filled" on the
+                reasoning that the page's only filled button was "Schedule a
+                Call" and this section is not asking for a conversion. The
+                client has asked for the filled treatment here; noting the
+                trade rather than re-arguing it — the header's button is no
+                longer the only filled pill above the fold.
 
                 The wrapper carries no margin of its own. `.who-copy .btn`
                 already spaces a button from what is above it — 30px here,
@@ -88,12 +100,12 @@ export default function WhoWeAre() {
               {/* The section opens the story and hands the rest to
                   /who-we-are. It used to point at /contact, which is not
                   what the label says. */}
-              <CTA href="/who-we-are" tier="secondary" icon="diagonal">
+              <CTA href="/who-we-are" tier="primary" icon="diagonal">
                 {sections.aboutFirm}
               </CTA>
               <CTA
                 href="/team"
-                tier="secondary"
+                tier="primary"
                 icon="arrow"
                 data-cta="who-founders"
                 className="who-founders-btn"

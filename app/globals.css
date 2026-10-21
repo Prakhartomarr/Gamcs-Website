@@ -7043,6 +7043,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    the middle of the sentence here, not the tail, which is why the spans carry
    their own spaces in the content module. */
 .who-heading .accent{color:var(--blue)}
+/* The mission's second half, in the same blue as the heading's accent above
+   it (client, 2026-10-22). Scoped per parent the way every other `.accent` on
+   this page is — `.fin-h2`, `.clients-head h2`, `.mc-h2`, `.who-heading` —
+   rather than as one global rule, because the span is only ever an accent
+   INSIDE something that has decided it wants one. `.who-mission` sets
+   `color:var(--ink)` on itself, so this needs the extra class to win. */
+.who-mission .accent{color:var(--blue)}
 
 /* The four marked phrases in the gap's lead (client, 2026-10-21).
    #C7261A, not a brighter red: at 18px this text needs 4.5:1 against the

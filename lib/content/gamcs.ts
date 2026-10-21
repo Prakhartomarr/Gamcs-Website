@@ -183,6 +183,17 @@ export const intro =
   "With more than combined 150+ years of industry experience, GA Management Consultants is a consultancy firm committed to creating impact & value for clients and communities.";
 
 
+/* THE MISSION IN TWO HALVES (client, 2026-10-22), so the homepage can set the
+   second one in brand blue the way `headingAccent` is set in the heading
+   above it.
+
+   `mission` is BUILT from them rather than written a third time: /team and
+   /careers both print the whole sentence as one string, and a split that left
+   three copies of the same words in the file would drift the first time one
+   of them was edited. Change either half and all three pages follow. */
+const MISSION_LEAD = "Our mission is simple: ";
+const MISSION_ACCENT = "make finance a source of insight, not just information.";
+
 /**
  * Company story. `heading` and `lead` carry the homepage section; `mission` is
  * quoted again on /team and /careers. The long `body`/`close` prose that used
@@ -206,8 +217,10 @@ export const story = {
   headingTail: " \u2014 and insights into impact.",
   lead:
     "GA Management Consultants (GAMCS) is a high-impact management consulting firm serving clients across India and globally. Founded in 2023 by Gaurav Malik and Abhinav Aggarwal, GAMCS was built with a clear vision: to transform finance from a reporting function into a strategic engine for growth\u2014powered by data, technology, and insight.",
-  mission:
-    "Our mission is simple: make finance a source of insight, not just information.",
+  missionLead: MISSION_LEAD,
+  missionAccent: MISSION_ACCENT,
+  /* The whole sentence, for /team and /careers, which print it unsplit. */
+  mission: MISSION_LEAD + MISSION_ACCENT,
   /*
    * The three figures the phone layout sets between the lead and the
    * portrait. There is no third value here on purpose: it is
