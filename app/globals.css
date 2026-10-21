@@ -5428,9 +5428,12 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    name, role and bio were bare on the page; they are a white rounded card
    each now, matching the four above.
 
-   The shot keeps the half-width cap it was given earlier today — 50% OF THE
-   CARD now rather than of the column, which lands it within ~25px of the
-   308px it was, so the client's own sizing survives the move. */
+   THE SHOT IS 75% OF THE CARD (client, 2026-10-21). It was 50%, which is
+   where the "halve the images" instruction left it — 281px inside a 564px
+   content box, so 142px of white sat either side of every portrait. 75%
+   takes it to 423x529 and the white to 70px a side, which is air around the
+   picture rather than a gap in the card. 4:5 is kept, so the card grows
+   from 610 to ~790. */
 /* CENTRED (client, 2026-10-21). The portrait is capped at half the card, so
    left-aligned it sat against one edge with an empty half beside it. Centred,
    the card reads as a portrait card: the shot in the middle with the name,
@@ -5442,7 +5445,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    and this would want to go back to left. */
 .os-founder{padding:28px 26px;border-radius:32px;background:#fff;
   border:1px solid var(--os-rule);text-align:center}
-.os-founder .os-founder-shot{margin-inline:auto}
+.os-founder .os-founder-shot{max-width:75%;margin-inline:auto}
+/* The bio stays centred and gets a measure. It was running the card's full
+   564px — 71 characters a line — and centred copy wants far less than that,
+   because every line starts in a different place and a long one makes the
+   eye hunt for the next. ~50 characters is the comfortable end of it.
+
+   40ch, not 48. `ch` is the width of a zero, which in this face is narrower
+   than the average letter — 48ch measured out at 60 characters a line, not
+   the 50 it looks like it should be. 40 lands it on 50. */
+.os-founder .os-founder-bio{max-width:40ch;margin-inline:auto}
 .os-founder .os-founder-name{margin-top:20px}
 
 /* The closing band is the site's standard `.case-cta` now, which brings its
