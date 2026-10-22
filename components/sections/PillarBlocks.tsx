@@ -1,5 +1,5 @@
 import type { SolutionBlock } from "@/lib/content/gamcs";
-import { previewBySlug, primaryCta, solutions } from "@/lib/content/gamcs";
+import { platforms, previewBySlug, primaryCta, solutions } from "@/lib/content/gamcs";
 import Velaris, { VELARIS_MOTION } from "@/components/ui/velaris";
 
 /**
@@ -15,10 +15,7 @@ import Velaris, { VELARIS_MOTION } from "@/components/ui/velaris";
  * preview's own `talkLabel`: the card sends a visitor to a conversation, and
  * the pillar's own page stays one click away in the footer.
  *
- * Rows are native <details>/<summary>: keyboard operable, findable by the
- * browser's in-page search even when collapsed, and correct before hydration.
- * The open and close is a grid row going 0fr → 1fr, which animates in every
- * browser; `height: auto` does not.
+ * Rows are always open: an <h3> over its list, no disclosures.
  *
  * Each card's shader: one brand blue held, and the rest a deeper register of
  * the same hue. The pale tints these palettes started with (mint, sky, lilac)
@@ -43,18 +40,9 @@ const SHADER: Record<string, { bg: string; colors: string[] }> = {
 };
 const SHADER_FALLBACK = SHADER["fpa-cfo-advisory"];
 
-const CHEVRON = (
-  <svg viewBox="0 0 13 24" aria-hidden="true">
-    <path
-      d="M2.5 9.5L6.5 13.5 10.5 9.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+/* Transform's platform rows, left off the hub (client, 2026-10-22): they
+   are the platforms band on /how-we-help now, and stay on the detail page. */
+const HUB_HIDDEN = new Set(platforms.groups);
 
 export default function PillarBlocks() {
   return (
@@ -68,13 +56,13 @@ export default function PillarBlocks() {
         const bullets = s.blocks.find(
           (b): b is Extract<SolutionBlock, { kind: "bullets" }> => b.kind === "bullets",
         );
-        const rows = bullets?.items ?? [];
+        /* Transform's two group titles are dropped here and its eight
+           sub-headings become rows of their own, open like every other
+           pillar's (client, 2026-10-22). The detail page keeps the groups. */
+        const rows = (bullets?.items ?? [])
+          .flatMap((r) => ("subheads" in r ? r.subheads : [r]))
+          .filter((r) => !HUB_HIDDEN.has(r.lead));
         const preview = previewBySlug.get(s.slug);
-        /* Transform is the one pillar that keeps its disclosures (client,
-           2026-10-22): its groups carry a third level, 34 capability names
-           across four sets, and spilling all of them at once buried the group
-           below it. The other four list a handful of lines each. */
-        const isTransform = s.slug === "digital-transformation";
         const paint = SHADER[s.slug] ?? SHADER_FALLBACK;
 
         return (
@@ -126,39 +114,11 @@ export default function PillarBlocks() {
 
             <ul className="sol-list reveal">
               {rows.map((r) => {
-                /* THE PANEL, built once and placed either inside a disclosure
-                   or straight onto the row. */
                 const body = (
                   <div className="sol-list-body">
-                    {/* Three shapes, one panel: Transform's groups name
-                        sub-headings and list capabilities under each, the
-                        other four list capabilities directly, and a `steps`
-                        or prose row carries a sentence. */}
-                    {"subheads" in r ? (
-                        /* Transform's third level is a disclosure of its own,
-                           not a heading over an open list: its four sets hold
-                           34 names between them, and a group that spilled all
-                           of them at once buried the second group below the
-                           fold. Nested <details> is valid, and each one owns
-                           only its own panel. */
-                      <ul className="cap-subs">
-                        {r.subheads.map((sub) => (
-                          <li key={sub.lead}>
-                            <details>
-                              <summary>
-                                <span>{sub.lead}</span>
-                                {CHEVRON}
-                              </summary>
-                              <ul className="cap-list">
-                                {sub.items.map((name) => (
-                                  <li key={name}>{name}</li>
-                                ))}
-                              </ul>
-                            </details>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : "items" in r ? (
+                    {/* Two shapes, one panel: a list of capabilities, or a
+                        `steps` or prose row carrying a sentence. */}
+                    {"items" in r ? (
                       <ul className="cap-list">
                         {r.items.map((sub) => (
                           <li key={sub}>{sub}</li>
@@ -172,32 +132,12 @@ export default function PillarBlocks() {
 
                 return (
                   <li key={r.lead}>
-                    {isTransform ? (
-                      <details>
-                        <summary>
-                          <span>{r.lead}</span>
-                          {CHEVRON}
-                        </summary>
-                        {body}
-                      </details>
-                    ) : (
-                      /* OPEN, AND NOT A DISCLOSURE AT ALL (client,
-                         2026-10-22). Only Transform keeps its dropdowns — its
-                         four sets hold 34 names between them, which is what
-                         the folding was for. The other four pillars carry one
-                         flat list per group and were hiding a handful of lines
-                         behind a click each.
-
-                         An <h3>, where the collapsible version is a <summary>:
-                         with nothing to operate, the group lead is a heading
-                         over its list, and it joins the page outline under the
-                         pillar's own h2 instead of being invisible to anyone
-                         moving by heading. */
-                      <>
-                        <h3 className="sol-list-head">{r.lead}</h3>
-                        {body}
-                      </>
-                    )}
+                    {/* OPEN, AND NOT A DISCLOSURE AT ALL (client,
+                        2026-10-22). An <h3>: with nothing to operate, the
+                        lead is a heading over its list, and it joins the page
+                        outline under the pillar's own h2. */}
+                    <h3 className="sol-list-head">{r.lead}</h3>
+                    {body}
                   </li>
                 );
               })}

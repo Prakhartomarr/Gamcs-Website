@@ -79,9 +79,13 @@ import { howWeHelp } from "@/lib/content/gamcs";
 const SRC = "/video/gamcs-explainer.mp4";
 const POSTER = "/video/gamcs-explainer-cover.webp";
 
+/** A head of the page's own, for a route whose <h1> already says the default
+    one (client, 2026-10-22: /how-we-help gets a kicker, title and line). */
+type FilmHead = { kicker: string; title: string; sub: string };
+
 export default function HowWeHelpFilm({
   heading = true,
-}: { heading?: boolean } = {}) {
+}: { heading?: boolean | FilmHead } = {}) {
   const video = useRef<HTMLVideoElement>(null);
   /* Has the visitor started it? Drives both the play button and the native
      control bar. */
@@ -140,7 +144,9 @@ export default function HowWeHelpFilm({
 
   return (
     <section
-      className={heading ? "section hwv" : "section hwv hwv--bare"}
+      className={
+        heading === true ? "section hwv" : heading ? "section hwv hwv--route" : "section hwv hwv--bare"
+      }
       /* Only when the heading is here to do the naming. Without it the
          section is a plain container rather than a landmark with a borrowed
          name — and it does not need one: the page's own <h1> is directly
@@ -151,13 +157,19 @@ export default function HowWeHelpFilm({
         {/* The head is the services band's head markup exactly — .fin-center
             .reveal, .fin-h2 with the accent clause, .fin-lead — so this band
             joins the homepage's section rhythm instead of inventing one. */}
-        {heading ? (
+        {heading === true ? (
           <div className="fin-center reveal">
             <h2 className="fin-h2" id="hwv-heading">
               {howWeHelp.headingLead}{" "}
               <span className="accent">{howWeHelp.headingAccent}</span>
             </h2>
             <p className="fin-lead">{howWeHelp.sub}</p>
+          </div>
+        ) : heading ? (
+          <div className="fin-center reveal">
+            <span className="section-kicker">{heading.kicker}</span>
+            <h2 className="fin-h2" id="hwv-heading">{heading.title}</h2>
+            <p className="fin-lead">{heading.sub}</p>
           </div>
         ) : null}
 

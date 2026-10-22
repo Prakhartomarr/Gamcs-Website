@@ -38,13 +38,12 @@ export default function SolutionsHubPage() {
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>
           </h1>
+          {/* The five pillars as jump buttons, between the heading and the
+              subhead (client, 2026-10-22). */}
+          <PillarRail />
           <p>{solutionsHub.subhead}</p>
         </div>
       </section>
-
-      {/* The five pillars as jump buttons, under the head and above the
-          blocks they point at (client, 2026-10-22). */}
-      <PillarRail />
 
       <div className="sol">
         <PillarBlocks />

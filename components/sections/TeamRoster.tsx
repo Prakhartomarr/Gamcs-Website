@@ -5,7 +5,6 @@ import Image from "next/image";
 import { team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { roster } from "@/lib/content/ui";
-import SectionEyebrow from "@/components/SectionEyebrow";
 
 /**
  * The team page roster: the two founders side by side under their heading,
@@ -153,12 +152,12 @@ export default function TeamRoster() {
       <section className="section tr" id="people">
         <div className="container">
           <div className="tr-duo">
-            {/* Eyebrow, heading, note — the same three-part head every other
-                section on the site uses. "Founders" names the section, so it
-                is the pill, and the client's sentence is the one <h2>. */}
+            {/* Heading, subheading, note. "Founders" is the bold <h2> and the
+                client's sentence sits under it (client, 2026-10-22: it was
+                the pill above the sentence). */}
             <div className="tr-duo-mid">
-              <SectionEyebrow label={roster.founders} />
-              <h2 className="tr-h">{roster.foundersHeading}</h2>
+              <h2 className="tr-h">{roster.founders}</h2>
+              <p className="tr-sub">{roster.foundersHeading}</p>
               <p className="tr-note">{roster.foundersNote}</p>
             </div>
             {FOUNDERS.map((p) => (
@@ -169,8 +168,8 @@ export default function TeamRoster() {
 
           <div className="tr-block">
             <div className="tr-mid">
-              <SectionEyebrow label={roster.advisory} />
-              <h2 className="tr-h">{roster.advisoryHeading}</h2>
+              <h2 className="tr-h">{roster.advisory}</h2>
+              <p className="tr-sub">{roster.advisoryHeading}</p>
               <p className="tr-note">{roster.advisoryNote}</p>
             </div>
             <div className="tr-grid">

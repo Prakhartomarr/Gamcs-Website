@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 import { STEP_ICONS } from "@/components/ui/stroke-icons";
-import { howWeHelp, whyUs } from "@/lib/content/gamcs";
+import { howWeHelp } from "@/lib/content/gamcs";
 
 /**
  * "How GAMCS Helps" — four sequential phases on an isometric stack, then the
@@ -10,8 +10,8 @@ import { howWeHelp, whyUs } from "@/lib/content/gamcs";
  *
  * The stack used to carry the six `whyUs.points`, which asked a reader to take
  * six parallel claims as a sequence they never were. The sequence is
- * `howWeHelp.phases`; the points are qualities, so they get a grid with no
- * numbers on it.
+ * `howWeHelp.phases`; the principles below it are `howWeHelp.principles`,
+ * numbered 01–06 as the client wrote them (2026-10-22).
  *
  * Layer 01 sits on TOP and the stack descends to 04. An earlier pass had 01 at
  * the bottom so the foundation was literally underneath; the client reviewed
@@ -74,18 +74,24 @@ const PHASE_ICONS = [
   "Scale Capability. Not Overhead.",
 ].map((k) => STEP_ICONS[k]);
 
-/* "One Team. One Integrated Finance Engine." -> the claim and its follow-on.
-   The same cut app/careers/page.tsx makes on these same leads; one split rule
-   for the leads, not two that can drift apart. */
-const PRINCIPLES = whyUs.points.map((p) => {
-  const cut = p.lead.indexOf(". ") + 1;
-  return {
-    claim: p.lead.slice(0, cut),
-    rest: p.lead.slice(cut + 1),
-    body: p.body,
-    icon: STEP_ICONS[p.lead],
-  };
-});
+/* The six principles (client copy, 2026-10-22), each given one of the
+   STEP_ICONS glyphs on meaning: the spark for starting from the decision,
+   people for finance and technology together, the graph for needs before
+   platforms, layers for advice into action, the checked document for
+   numbers you can trust, the chart for scale. Keyed by position, so a
+   reordered list re-pairs them: reorder this too. */
+const PRINCIPLE_ICONS = [
+  "Intelligence Built In. Not Bolted On.",
+  "One Team. One Integrated Finance Engine.",
+  "Independent by Design. Outcomes Above Platforms.",
+  "Industry-Agnostic. Business-Specific.",
+  "Boardroom Ready. Deal Room Proven.",
+  "Scale Capability. Not Overhead.",
+].map((k) => STEP_ICONS[k]);
+const PRINCIPLES = howWeHelp.principles.items.map((p, i) => ({
+  ...p,
+  icon: PRINCIPLE_ICONS[i],
+}));
 
 /* ── Slab artwork ───────────────────────────────────────────────────────────
    One picture per phase, drawn flat in the slab's own plane and then tilted
@@ -752,13 +758,15 @@ export default function HowWeHelpStack() {
         {/* ── The six principles ─────────────────────────────────────────── */}
         <div className="mt-20 border-t pt-14 md:mt-28 md:pt-16" style={{ borderColor: C.line }}>
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between md:gap-10">
-            <h2
-              className="text-[26px] font-medium leading-tight tracking-[-.015em]"
-              style={{ color: C.navy }}
-            >
-              {howWeHelp.principles.heading}
-            </h2>
-            <p className="text-[15px] leading-snug md:max-w-[34ch] md:text-right" style={{ color: C.gray }}>
+            <div>
+              <span className="section-kicker uppercase">{howWeHelp.principles.kicker}</span>
+              {/* .fin-h2, the scale every other section head on the page
+                  uses (client, 2026-10-22: it was 26px against their 50). */}
+              <h2 className="fin-h2 !mt-2">
+                {howWeHelp.principles.heading}
+              </h2>
+            </div>
+            <p className="text-[15px] leading-snug md:max-w-[44ch] md:text-right" style={{ color: C.gray }}>
               {howWeHelp.principles.sub}
             </p>
           </div>
@@ -766,7 +774,7 @@ export default function HowWeHelpStack() {
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {PRINCIPLES.map((p) => (
               <li
-                key={p.claim}
+                key={p.n}
                 className="rounded-[16px] border p-5 transition-[transform,border-color] duration-200 [border-color:var(--line)] hover:-translate-y-0.5 hover:[border-color:color-mix(in_srgb,var(--ink-deep)_28%,var(--white))] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                 style={{ background: C.panel }}
               >
@@ -787,13 +795,8 @@ export default function HowWeHelpStack() {
                     {p.icon}
                   </svg>
                 </span>
-                <h3 className="mt-4 text-[15px] leading-snug">
-                  <span className="font-bold" style={{ color: C.navy }}>
-                    {p.claim}
-                  </span>{" "}
-                  <span className="font-medium" style={{ color: C.gray }}>
-                    {p.rest}
-                  </span>
+                <h3 className="mt-4 text-[15px] font-bold leading-snug" style={{ color: C.navy }}>
+                  <span style={{ color: C.blue }}>{p.n}.</span> {p.title}
                 </h3>
                 <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: C.muted }}>
                   {p.body}

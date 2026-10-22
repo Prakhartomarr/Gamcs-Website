@@ -618,6 +618,35 @@ export const primaryCta = { label: "Schedule a Call", href: "/contact" } as cons
  * (lib/content/fill.ts). `firstPhaseNote` stands in for `buildsOn` on phase
  * 01, which has nothing beneath it.
  */
+/* The platforms band at the foot of /how-we-help (client, 2026-10-22).
+   `groups` names Transform's platform rows by their lead: this band lists
+   them, and the /solutions hub leaves them out (PillarBlocks). Renaming one
+   in the Transform pillar means renaming it here too.
+
+   TODO(business): heading and sub are placeholder copy pending client
+   sign-off. Prophix, Vena and Aimplan have no logo file: their tiles show the
+   name until one is supplied at public/logos/platforms/. */
+export const platforms = {
+  heading: "Platforms We Implement",
+  sub: "We're platform-agnostic. We select, implement and integrate the ERP, CRM and FP&A tools your finance function runs on.",
+  groups: [
+    "ERP Selection, Implementation & Optimisation",
+    "CRM Implementation & Integration",
+    "FP&A / Enterprise Performance Management (EPM) Platforms",
+  ],
+  logos: {
+    "Oracle NetSuite": "/logos/platforms/netsuite.png",
+    "Oracle Fusion": "/logos/platforms/oracle.svg",
+    SAP: "/logos/platforms/sap.svg",
+    Odoo: "/logos/platforms/odoo.svg",
+    Zoho: "/logos/platforms/zoho.svg",
+    Salesforce: "/logos/platforms/salesforce.svg",
+    Anaplan: "/logos/platforms/anaplan.svg",
+    Jedox: "/logos/platforms/jedox.jpg",
+    Pigment: "/logos/platforms/pigment.svg",
+  } as Record<string, string>,
+};
+
 export const howWeHelp = {
   /** UNRENDERED since 2026-10-20: the client had the eyebrow taken off
       this band. Kept because they ask for retired copy to be retained. */
@@ -626,6 +655,22 @@ export const howWeHelp = {
   headingLead: "From knowing where you are",
   headingAccent: "to building what comes next.",
   sub: "We bring the right combination of finance expertise, processes, data and technology to address today's gaps and build the capabilities your business will need next.",
+  /* The film's own head on /how-we-help, above the video (client copy,
+     2026-10-22). The homepage keeps headingLead/headingAccent/sub there. */
+  filmHead: {
+    kicker: "OUR APPROACH IN PRACTICE",
+    title: "Four phases. One direction: better decisions.",
+    sub: "From establishing a reliable financial foundation to turning insight into action, we help finance teams connect data, understand performance and build the capabilities needed to make better business decisions.",
+  },
+  /* Under the film on /how-we-help, above the phases (client copy,
+     2026-10-22). */
+  afterFilm: {
+    title: "Every Finance Function Starts Somewhere Different.",
+    paragraphs: [
+      "Not every business needs the same intervention. Some need stronger financial processes and reliable reporting. Others need connected data, deeper performance insights or better forward-looking decisions.",
+      "We start by understanding where you are today, identify the gaps that matter most, and build the capabilities that move your finance function forward.",
+    ],
+  },
   phases: [
     {
       n: "01",
@@ -667,9 +712,20 @@ export const howWeHelp = {
   /* The arrow buttons show only a chevron, so their name lives here. */
   prevLabel: "Previous phase",
   nextLabel: "Next phase",
+  /* Client copy, 2026-10-22. Its own six now, not `whyUs.points`: those
+     still feed /careers. The kicker is uppercased by CSS. */
   principles: {
-    heading: "What makes our approach different",
-    sub: "Six principles that hold across every phase of the work.",
+    kicker: "Our Principles",
+    heading: "Built Around the Decisions That Matter",
+    sub: "Six principles shape how we connect finance, data and technology—from the first business question to practical action.",
+    items: [
+      { n: "01", title: "Start With the Decision", body: "We begin with the business question, then shape the analysis, processes and tools needed to answer it." },
+      { n: "02", title: "Finance and Technology, Together", body: "Financial expertise, data and technology work together—from source information to management insight." },
+      { n: "03", title: "Business Needs Before Technology", body: "We recommend systems and tools around your business needs, not a preferred platform." },
+      { n: "04", title: "From Advice to Action", body: "We translate recommendations into practical processes, reporting and capabilities your team can use." },
+      { n: "05", title: "Numbers You Can Trust", body: "Clear ownership, consistent definitions and traceable analysis help decision-makers rely on the numbers." },
+      { n: "06", title: "Capability That Scales With You", body: "Build, extend or transform your finance capability as business needs evolve." },
+    ],
   },
   /* THE EXPLAINER FILM, on the homepage band (components/sections/HowWeHelpFilm.tsx).
      The band reuses `headingLead`, `headingAccent` and `sub` above rather than
@@ -852,6 +908,8 @@ export const achievements = {
     " and ",
     { text: "Our Clients", em: true },
   ],
+  /* The line under the heading (client copy, 2026-10-22). */
+  sub: "The results we help deliver, and the experiences of the people we work with",
   /* RETIRED 2026-10-20, then overtaken: "Results so far" replaced the
      fragment below as this band's H2 and was itself unrendered the same day.
      `heading` above is what the band prints now. */
@@ -1105,7 +1163,7 @@ export const team = {
  * Client testimonials, in the order the client supplied them.
  *
  * Every quote is reproduced verbatim — not retyped, not trimmed, not
- * repunctuated. Four of the six end without a full stop because that is how
+ * repunctuated. Four of the first six end without a full stop because that is how
  * they were given to us; adding one would be editing a named person's words.
  *
  * `photo` is the author's own portrait. Each one is mapped to its person from
@@ -1191,6 +1249,27 @@ export const testimonials = {
       photo: { src: "/testimonials/arta-ramaj.webp", alt: "Portrait of Arta Ramaj" },
       quote:
         "I\u2019ve worked with the GAMCS team for three years and have found them highly capable and dependable. Their financial modelling and technical skills are first-class, and they explain complex work clearly to different audiences. They are collaborative, quick to grasp new challenges, and committed to high-quality delivery. I\u2019d recommend them without hesitation",
+    },
+    /* Client copy, 2026-10-22. Portraits paired by the client in chat, not
+       by appearance, then replaced with the square studio shots they sent
+       the same day. */
+    {
+      name: "Mooi Geok Tay",
+      title: "Senior Director \u2013 Finance & Administration",
+      company: "WWF Malaysia",
+      logo: "wwf.png",
+      photo: { src: "/testimonials/mooi-geok-tay.webp", alt: "Portrait of Mooi Geok Tay" },
+      quote:
+        "Working with GA Management Consultants has been a positive experience. The team is professional, approachable and responsive, consistently going the extra mile to meet our needs. We have seen tangible results from their work and value their customer-focused, solutions-driven approach.",
+    },
+    {
+      name: "Aaquib Shahi",
+      title: "Finance Head",
+      company: "ProcDNA",
+      logo: "procdna.png",
+      photo: { src: "/testimonials/aaquib-shahi.webp", alt: "Portrait of Aaquib Shahi" },
+      quote:
+        "GAMCS helped us build a robust financial model that gives us greater visibility into our cost structure and profitability. It enables us to track costs, assess profitability and calculate overhead costs per resource, supporting better cost management and more informed business decisions.",
     },
   ],
 } as const;

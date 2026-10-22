@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HowWeHelpFilm from "@/components/sections/HowWeHelpFilm";
+import HowWeHelpPlatforms from "@/components/sections/HowWeHelpPlatforms";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import { howWeHelp } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -56,12 +57,29 @@ export default function HowWeHelpPage() {
       </section>
 
       {/* The same film the homepage carries, under the head and above the
-          phases (client, 2026-10-21). `heading={false}`: the band's own h2
-          and lead ARE this page's h1 and sub — the same three content keys —
-          so rendered whole they would print twice on one screen. */}
-      <HowWeHelpFilm heading={false} />
+          phases (client, 2026-10-21). Its homepage head is this page's h1
+          and sub, so here it takes a head of its own, `filmHead` (client,
+          2026-10-22). */}
+      <HowWeHelpFilm heading={howWeHelp.filmHead} />
+
+      {/* Under the film, leading into the phases (client, 2026-10-22). The
+          film's own head markup — .fin-center, .fin-h2, .fin-lead — so the
+          two read as a pair. */}
+      <section className="section hwh-after" aria-labelledby="hwh-after-h">
+        <div className="container">
+          <div className="fin-center reveal">
+            <h2 className="fin-h2" id="hwh-after-h">{howWeHelp.afterFilm.title}</h2>
+            {howWeHelp.afterFilm.paragraphs.map((p) => (
+              <p className="fin-lead" key={p.slice(0, 24)}>{p}</p>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <HowWeHelpStack />
+
+      {/* The platforms band, closing the page (client, 2026-10-22). */}
+      <HowWeHelpPlatforms />
     </>
   );
 }

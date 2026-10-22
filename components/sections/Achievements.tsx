@@ -65,6 +65,7 @@ export default function Achievements() {
             <h2>
               <Rich parts={achievements.headingParts} />
             </h2>
+            <p className="metrics-sub">{achievements.sub}</p>
           </div>
         </div>
 
