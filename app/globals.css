@@ -7814,6 +7814,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
      bottom padding plus .section's 108. 68 brings it to ~140.
    - The film's own head sat 44px off the video, tighter than any heading
      on the page sits off what it introduces. 56px. */
+/* 30% less space above the film's kicker (client, 2026-10-22): 136px from
+   the page head down to it, 95 now, all of it taken off .section's 108. */
+.hwv--route{padding-top:67px}
 .hwv--route .fin-center{margin-bottom:56px}
 /* The line above the film in two lines (client, 2026-10-22): ~1,770px set
    on one line, so 940px holds it in two balanced lines. */
@@ -7824,6 +7827,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .hwh-after .fin-lead{max-width:1080px;text-wrap:balance}
 .hwh-platforms{padding-top:68px}
 @media (max-width:767px){
+  .hwv--route{padding-top:42px} /* the same 30% off the phone's 60 */
   .hwv--route .fin-center{margin-bottom:32px}
 }
 /* The line under the impact heading (client, 2026-10-22). The .fin-lead
