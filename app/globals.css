@@ -580,7 +580,16 @@ h1,h2,h3,p{margin-top:0}
 .page-head>.container>*{width:100%}
 .page-head>.container>h1{
   font-size:clamp(30px,2.8vw,44px);line-height:1.115;font-weight:600;
-  letter-spacing:-.02em;color:#fff;max-width:20ch;margin:0 auto}
+  /* 22ch, not 20 (client, 2026-10-22: "1 or 2 lines"). At 20ch the measure
+     is 532px, and two heads needed only a little more to fall from three
+     lines to two: /how-we-help wanted 540px and /solutions 570px. 22ch is
+     585px, which clears both and breaks them at their natural clause —
+     "From knowing where you are / to building what comes next." and
+     "Solutions Built for Every Stage / of the Finance Maturity Curve".
+     Measured, not guessed. A wider measure can only ever remove lines, so
+     no other head gained one; /who-we-are is unaffected either way because
+     its sentences are block spans. */
+  letter-spacing:-.02em;color:#fff;max-width:22ch;margin:0 auto}
 .page-head>.container>p{
   margin:18px auto 0;max-width:50ch;
   font-size:0.8889rem;line-height:1.5;font-weight:500;letter-spacing:-.02em;
