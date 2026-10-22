@@ -4361,33 +4361,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* --bg-soft is .page-head's ground, so the route opens on the same field
    as /team and /faq. The 96px top is .page-head's too. */
 .fma{background:var(--bg-soft);padding:96px 0 88px}
+/* With the head in the blue band above (client, 2026-10-22), the card opens
+   the section: no 96px run-up, and no top margin on the card itself. */
+.fma{padding-top:20px}
+.fma .fma-card{margin-top:0}
+/* The two small lines under the lead, on the band: the meta in the lead's
+   colour a step smaller, the note smaller and fainter still. */
+.page-head>.container>p.ph-assess-meta{margin-top:14px;font-size:0.7778rem}
+.page-head>.container>p.ph-assess-note{margin-top:8px;font-size:0.6944rem;
+  color:rgba(203,210,234,.78)}
 
 /* .container is min(1440px,...) above 1280, and an assessment read at
    1440px is a line of body copy a reader has to track with their head.
    The measure is capped here rather than on the card so the head and the
    card share one left edge. */
 .fma-inner{max-width:900px}
-
-/* ---- the head -------------------------------------------------------
-   Type scale lifted from .page-head so this reads as the same furniture:
-   the h1 clamp and the lead's 0.9444rem/1.6 are that block's values. */
-/* --blue on --bg-soft measures 6.16:1. Same treatment as .section-kicker,
-   which this is the page-level version of. */
-.fma-eyebrow{margin:0;font-size:0.7222rem;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--blue)}
-.fma-h1{font-size:clamp(38px,4.6vw,62px);line-height:1.02;letter-spacing:-.035em;
-  margin:14px 0 18px;max-width:20ch;text-wrap:balance}
-/* --gray on --bg-soft measures 5.71:1 — .page-head p's colour, kept. */
-.fma-lead{margin:0;max-width:620px;color:var(--gray);font-size:0.9444rem;
-  line-height:1.6}
-/* The practical line (how long it takes, what it is not). --ink-muted on
-   --bg-soft measures 5.75:1. */
-.fma-meta{margin:18px 0 0;max-width:620px;color:var(--ink-muted);
-  font-size:0.8333rem;line-height:1.55}
-/* 12.5px, the smallest type on the page. #5F6875 on --bg-soft measures
-   5.08:1 — AA for body text, which the smallest type needs most. */
-.fma-note{margin:10px 0 0;max-width:620px;color:#5F6875;font-size:0.6944rem;
-  line-height:1.5}
 
 /* ---- the panel ------------------------------------------------------
    A white card on the soft ground with a --line hairline: the same three
@@ -6035,11 +6023,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (max-width:767px){
 
-  /* .page-head's phone padding, for the same reason it has it. */
-  .fma{padding:44px 0 48px}
-  .fma-h1{font-size:clamp(30px,8.4vw,40px)}
-  .fma-lead{font-size:0.8889rem}
-  .fma-meta{margin-top:14px}
+  /* The card opens the section under the head band on a phone too. */
+  .fma{padding:16px 0 48px}
 
   .fma-card{margin-top:30px;padding:22px 18px;border-radius:16px}
 

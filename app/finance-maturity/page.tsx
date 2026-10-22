@@ -21,23 +21,31 @@ export const metadata: Metadata = pageMetadata({
  * interactive, and MaturityAssessment is the one client boundary. Nothing it
  * collects leaves the browser, so there is nothing here to render per request.
  *
- * No `page-head--art`: the other routes pair that class with a file under
- * /page-art, and this route has no artwork of its own.
+ * THE SITE'S HEAD BAND (client, 2026-10-22: "the blue color head is not
+ * present on the assessment page"). The eyebrow, h1, lead and the two small
+ * lines sit in the same `.page-head` every other route opens with; the card
+ * follows on the soft ground below it.
  */
 export default function FinanceMaturityPage() {
   return (
-    <section className="fma">
-      <div className="container fma-inner">
-        <header className="fma-head">
-          <p className="fma-eyebrow">{assessment.eyebrow}</p>
-          <h1 className="fma-h1">{assessment.heading}</h1>
-          <p className="fma-lead">{assessment.lead}</p>
-          <p className="fma-meta">{assessment.meta}</p>
-          <p className="fma-note">{assessment.note}</p>
-        </header>
+    <>
+      <section className="page-head ph-assess">
+        <div className="container">
+          {/* A div, not a p: `.page-head>.container>p` would out-rank the
+              kicker's own colour. */}
+          <div className="section-kicker">{assessment.eyebrow}</div>
+          <h1>{assessment.heading}</h1>
+          <p>{assessment.lead}</p>
+          <p className="ph-assess-meta">{assessment.meta}</p>
+          <p className="ph-assess-note">{assessment.note}</p>
+        </div>
+      </section>
 
-        <MaturityAssessment />
-      </div>
-    </section>
+      <section className="fma">
+        <div className="container fma-inner">
+          <MaturityAssessment />
+        </div>
+      </section>
+    </>
   );
 }
