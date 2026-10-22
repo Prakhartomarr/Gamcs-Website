@@ -24,15 +24,6 @@ export default function WhoWeAre() {
   /* Left of frame, then right — the order the alt text names them in. */
   const founders = team.leadership;
 
-  /* Counted, never typed: the third figure is everyone the /team page lists,
-     so an adviser joining moves it on its own. */
-  const people = team.leadership.length + team.advisory.length;
-  const stats = [
-    { value: story.stats.yearsValue, label: story.stats.yearsLabel },
-    { value: story.stats.foundedValue, label: story.stats.foundedLabel },
-    { value: String(people), label: story.stats.peopleLabel },
-  ];
-
   return (
     <section className="section who" id="who-we-are">
       <div className="container">
@@ -61,18 +52,9 @@ export default function WhoWeAre() {
               <span className="accent">{story.leadAccent}</span>
             </p>
 
-            {/* Phone only. `.who-stats` is display:none until 767px, so on
-                desktop this generates no box and the column below it is
-                unchanged; the order it renders in on mobile is set by
-                `order` on the grid, not by its position here. */}
-            <div className="who-stats">
-              {stats.map((s) => (
-                <div className="who-stat" key={s.label}>
-                  <div className="who-stat-value">{s.value}</div>
-                  <p className="who-stat-label">{s.label}</p>
-                </div>
-              ))}
-            </div>
+            {/* The phone-only figures row (150+ / 2023 / 10) is gone (client,
+                2026-10-22: "remove this from mobile"). Its copy stays in
+                `story.stats`. */}
 
             {/* The mission now sits above the buttons rather than closing the
                 column beneath them (client, 2026-10-21) — the two swapped

@@ -4987,17 +4987,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    SECTION 03 — Who we are (mobile). Appended to app/globals.css.
 
    Desktop is copy-beside-portrait; mobile is one column, portrait-led:
-   eyebrow, heading, lead, three numbers, portrait card, mission, CTA.
+   eyebrow, heading, lead, portrait card, mission, CTA.
    ===================================================================== */
 
-/* The ONLY two declarations outside the mobile block, and the only ones in
-   this file that can be read above 767px. Both name classes that do not
-   exist on `main` — `.who-stats` is the new figures row, `.who-reveal` the
-   new tap-to-reveal — and both only stop them generating a box. Above
-   767px the section therefore renders exactly as it does today: the figures
-   and the reveal are absent and the card keeps its own `.who-founders-btn`,
-   which is hidden on mobile instead (below). */
-.who-stats,
+/* The ONLY declaration outside the mobile block: `.who-reveal`, the
+   tap-to-reveal, generates no box above 767px, where the card keeps its own
+   `.who-founders-btn` (hidden on mobile instead, below). The phone-only
+   figures row it once shared this rule with is gone (client, 2026-10-22). */
 .who-reveal{display:none}
 
 @media (max-width:767px){
@@ -5022,7 +5018,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .who .who-copy > .eyebrow-row{order:1}
   .who .who-heading{order:2}
   .who .who-lead{order:3}
-  .who .who-stats{order:4}
   .who .who-figure{order:5}
   .who .who-mission{order:6}
   /* The comp's pull-quote rule: 3px yellow, not the 2px blue the section
@@ -5048,20 +5043,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     letter-spacing:-.025em;font-weight:600;color:var(--ink)}
   .who .who-lead{margin:20px 0 0;max-width:none;font-size:16px;line-height:1.6;
     font-weight:400;color:var(--gray)}
-
-  /* ---- three numbers --------------------------------------------------
-     Equal thirds between a top and a bottom hairline. The third value is
-     counted from the roster in the component, not typed. */
-  .who .who-stats{display:flex;margin-top:36px;
-    border-top:1px solid #E1E5E8;border-bottom:1px solid #E1E5E8}
-  .who .who-stat{flex:1 1 0;min-width:0;padding:18px 12px}
-  .who .who-stat:first-child{padding-left:0}
-  .who .who-stat:last-child{padding-right:0}
-  .who .who-stat + .who-stat{border-left:1px solid #E1E5E8}
-  .who .who-stat-value{font-size:26px;line-height:1;letter-spacing:-.03em;
-    font-weight:600;color:var(--ink)}
-  .who .who-stat-label{margin:8px 0 0;font-size:12px;line-height:1.35;
-    color:var(--gray);overflow-wrap:break-word}
 
   /* ---- portrait card --------------------------------------------------
      20px radius and the comp's crop. The in-card link that desktop shows
