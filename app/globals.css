@@ -7698,12 +7698,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    is the entire point of this element. */
 .cxo{position:relative;margin:30px 0 0;padding:26px;border-radius:28px;
   background:#fff;display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
-  grid-template-rows:auto 1fr;gap:26px;
-  /* 555 of content + 52 of padding, which is the height the card already
-     had. The map stretches to it; it is not driven by the image's own
-     ratio any more. */
-  min-height:607px}
+  /* 0.82fr, not 1.1: a smaller map (client, 2026-10-22), ~540px wide at 1440
+     instead of 630, and the text column takes the difference. The panel
+     below repeats these columns so the tabs stay over the address. */
+  grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
+  grid-template-rows:auto 1fr;gap:26px}
+/* No floor any more (client, 2026-10-22: "reduce the card size"). It was
+   607px for a map that filled it; with the smaller map that left ~85px of
+   blank card under it. The card is now the map's height plus its padding,
+   and the address centres in the same height beside it. */
 /* Three equal, filling the column, so the row ends flush with the address
    under it. They were 150px each and stopped 91px short.
 
@@ -7722,9 +7725,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    times over. The state-code badge over the name is gone (client,
    2026-10-22: "remove these HR UP KA"), so the name centres in the card
    rather than leaving the badge's row empty above it. */
-.cxo-tab{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;
+.cxo-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px; /* centred both ways (client, 2026-10-22) */
   min-width:0;min-height:96px;padding:16px 18px;border-radius:18px;
-  border:1px solid var(--line);background:#fff;cursor:pointer;text-align:left;
+  border:1px solid var(--line);background:#fff;cursor:pointer;text-align:center;
   transition:background .2s var(--ease-out),border-color .2s var(--ease-out)}
 @media(hover:hover){
   .cxo-tab:hover{border-color:#C9DAF7}
@@ -7735,7 +7738,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   color:var(--ink)}
 .cxo-tab[aria-selected="true"] .cxo-name{color:var(--blue)}
 .cxo-panel{grid-row:1/-1;grid-column:1/-1;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:26px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);gap:26px;
   /* See the note on .cxo: the panel's box lies over the tablist, so it
      hands pointer events back to its own children and to the tabs beneath
      it. Focus is a separate mechanism and is untouched. */
@@ -7761,6 +7764,11 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    screen; it is here so that a longer address pushes the card taller
    instead of disappearing. 98 of tab + 26 of gap. */
 .cxo-detail{align-self:end;padding-top:124px}
+/* CENTRED in the space under the tabs, not on the floor of it (client,
+   2026-10-22): the column stretches, 96px of padding clears the tab row,
+   and the address sits in the middle of what is left. */
+.cxo-detail{align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+  padding-top:96px} /* the tab row exactly, so the gaps above and below match */
 .cxo-city{margin:0;font-size:1.3333rem;line-height:1.25;font-weight:600;
   letter-spacing:-.02em;color:var(--ink-deep)}
 .cxo-addr{display:grid;gap:4px;margin:14px 0 0;font-style:normal;
@@ -7782,6 +7790,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    in the trim. */
 .cxo-map{position:relative;height:100%;border-radius:22px;overflow:hidden;
   background:#E9EDEF}
+/* Smaller, and level with the tabs (client, 2026-10-22): its own 540x470
+   shape at the top of the card rather than stretched to the card's full
+   555px. The basemaps are 960x720, so `cover` still trims only the edges. */
+.cxo-map{height:auto;aspect-ratio:540/470;align-self:start}
 .cxo-map img{display:block;width:100%;height:100%;object-fit:cover}
 /* ODbL credit, on a plate so it is legible over whatever tile is in that
    corner. */
