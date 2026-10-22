@@ -58,6 +58,11 @@ export default function MotionLayer() {
     document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
     // --- hover/press: GSAP owns transform; quickTo retargets on interruption ---
+    /* Each quickTo is a PAUSED tween, and a paused tween stays on GSAP's global
+       timeline until it is killed. Removing the listeners alone left every one
+       of them there, holding its element — and through it the whole detached
+       page: ~2,400 DOM nodes per visit to the homepage (2026-10-23). So each
+       cleanup kills its tweens too. */
     const cleanups: (() => void)[] = [];
     const bind = (el: HTMLElement, y: number, scale?: number) => {
       const yTo = gsap.quickTo(el, "y", { duration: 0.25, ease: "power3" });
@@ -75,6 +80,8 @@ export default function MotionLayer() {
       cleanups.push(() => {
         el.removeEventListener("pointerenter", enter);
         el.removeEventListener("pointerleave", leave);
+        yTo.tween.kill();
+        sTo?.tween.kill();
       });
     };
 
@@ -104,6 +111,8 @@ export default function MotionLayer() {
         el.removeEventListener("pointerdown", down);
         el.removeEventListener("pointerup", up);
         el.removeEventListener("pointercancel", off);
+        yTo.tween.kill();
+        sTo.tween.kill();
       });
     };
 
