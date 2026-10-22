@@ -177,7 +177,15 @@ export default function LogoCloudSwap({
   showNames = true,
   entrance = false,
 }: LogoCloudSwapProps) {
-  const reduced = useReducedMotion() ?? false;
+  /* Read only after hydration. The server cannot know the setting, so it
+     renders the full-motion `hidden` variant; reading it on the client's first
+     render handed the reduced one to LogoItem and React reported a `style`
+     mismatch on every mark (2026-10-23). From the second render on it is the
+     real setting, which is before the wall's in-view entrance can fire. */
+  const prefersReduced = useReducedMotion() ?? false;
+  const [hydrated, setHydrated] = React.useState(false);
+  React.useEffect(() => setHydrated(true), []);
+  const reduced = hydrated && prefersReduced;
   const wall = React.useRef<HTMLDivElement>(null);
   /* `once: false` — a wall that has scrolled away stops waving. */
   const inView = useInView(wall, { margin: "0px 0px -80px 0px" });
