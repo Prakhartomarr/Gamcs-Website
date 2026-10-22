@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { LinkedInMark, MailMark } from "@/components/ui/flickering-footer";
 import Image from "next/image";
 import { team } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
@@ -222,24 +223,15 @@ export default function TeamRoster() {
                     {active.linkedinUrl ? (
                       <a href={active.linkedinUrl} target="_blank" rel="noopener"
                         aria-label={roster.linkedin}>
-                        {/* The wordmark, not the old four-shape approximation:
-                            that one gave the "n" a full-height left stem, so at
-                            this size it read as "ih". The same path is still in
-                            the footer's tile, where 17px hides it. */}
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                          <path d="M5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-                          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28z" />
-                        </svg>
+                        {/* The footer's own tiles (client, 2026-10-22: "use
+                            the same icons as in footer"), imported rather
+                            than redrawn so the two cannot drift. */}
+                        <LinkedInMark />
                       </a>
                     ) : null}
                     {active.email ? (
                       <a href={`mailto:${active.email}`} aria-label={roster.email}>
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
-                          stroke="currentColor" strokeWidth={1.7} strokeLinecap="round"
-                          strokeLinejoin="round" aria-hidden="true">
-                          <rect x="3" y="5" width="18" height="14" rx="2" />
-                          <path d="m3 7 9 6 9-6" />
-                        </svg>
+                        <MailMark />
                       </a>
                     ) : null}
                   </div>

@@ -3736,7 +3736,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   width:44px;height:44px;padding:0;border:0;background:none;border-radius:10px;
   color:var(--blue);
   transition:color .2s var(--ease-out),background .2s var(--ease-out)}
-.tr-ovlinks a:hover{color:var(--blue-dark);background:rgba(15,94,151,.07)}
+/* The links are the footer's drawn tiles now (client, 2026-10-22): the tile
+   is the artwork, so hover dims it as .gf-soc does rather than tinting a
+   second box around it. */
+.tr-ovlinks a:hover{opacity:.88}
 .tr-ovlinks a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* top:24, not -38. The portrait was meant to break the block's top edge, but
    .tr-ovin is a scroll container and a scroll container clips a negative

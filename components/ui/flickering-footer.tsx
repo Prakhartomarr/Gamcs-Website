@@ -226,7 +226,7 @@ const groups = [
 	legalGroup,
 ];
 
-const LinkedInMark = () => (
+export const LinkedInMark = () => (
 	/* The brand tile the client supplied: LinkedIn blue rounded square, white
 	   wordmark. Drawn rather than linked as a PNG — it is two paths and a
 	   rect, it stays crisp at any size, and it needs no network request.
@@ -249,7 +249,7 @@ const LinkedInMark = () => (
 	</svg>
 );
 
-const MailMark = () => (
+export const MailMark = () => (
 	/* The mail tile, replacing the blue "info@gamcs.in" pill that used to sit
 	   here (client, 2026-10-21). Drawn, like the LinkedIn mark beside it, so
 	   the two tiles are the same 36px rounded square and stay crisp at any
