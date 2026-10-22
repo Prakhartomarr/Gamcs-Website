@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import HowWeHelpFilm from "@/components/sections/HowWeHelpFilm";
 import HowWeHelpPlatforms from "@/components/sections/HowWeHelpPlatforms";
+import CtaBand from "@/components/sections/CtaBand";
 import HowWeHelpStack from "@/components/sections/HowWeHelpStack";
 import { howWeHelp } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -80,8 +81,11 @@ export default function HowWeHelpPage() {
 
       <HowWeHelpStack />
 
-      {/* The platforms band, closing the page (client, 2026-10-22). */}
+      {/* The platforms band (client, 2026-10-22). */}
       <HowWeHelpPlatforms />
+
+      {/* The closing CTA band, the Team page's (client, 2026-10-23). */}
+      <CtaBand heading={howWeHelp.closingCta} dataCta="how-we-help-footer" />
     </>
   );
 }

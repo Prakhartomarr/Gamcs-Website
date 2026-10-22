@@ -14,6 +14,7 @@ export default function LegalBlocks({
     <div className="legal-body">
       {blocks.map((b, i) => {
         if ("h2" in b) return <h2 key={i}>{b.h2}</h2>;
+        if ("h3" in b) return <h3 key={i}>{b.h3}</h3>;
         if ("ul" in b) {
           return (
             <ul key={i}>

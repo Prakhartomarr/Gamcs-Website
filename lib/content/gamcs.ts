@@ -634,39 +634,122 @@ export const itemLinks: Record<string, string> = {
 };
 
 /* The tools marquee above "Our Impact" on the homepage (client,
-   2026-10-22): the platforms band's logos plus the tools the client keeps in
-   their own files (cloud, BI, accounting). Only names with a logo file are
-   listed; Aimplan, Prophix and Vena have none yet and are left out rather
-   than shown as text in a row of marks.
+   2026-10-22). Since 2026-10-23 its marks are every tool in
+   `platforms.categories` (the integration carousel), so the two lists
+   cannot disagree; QuickBooks, which only the marquee carried, went with
+   that change.
 
    TODO(business): the kicker is placeholder copy pending sign-off. */
 export const toolCloud = {
   kicker: "Platforms and tools we work with",
-  logos: [
-    { name: "Oracle NetSuite", src: "/logos/platforms/netsuite.png" },
-    { name: "Microsoft Azure", src: "/logos/platforms/azure.svg" },
-    { name: "SAP", src: "/logos/platforms/sap.svg" },
-    { name: "Tableau", src: "/logos/platforms/tableau.svg" },
-    { name: "Salesforce", src: "/logos/platforms/salesforce.svg" },
-    { name: "AWS", src: "/logos/platforms/aws.svg" },
-    { name: "Anaplan", src: "/logos/platforms/anaplan.svg" },
-    { name: "Microsoft Excel", src: "/logos/platforms/excel.svg" },
-    { name: "Oracle Fusion", src: "/logos/platforms/oracle.svg" },
-    { name: "QuickBooks", src: "/logos/platforms/quickbooks.svg" },
-    { name: "Jedox", src: "/logos/platforms/jedox.jpg" },
-    { name: "Google Cloud", src: "/logos/platforms/google-cloud.svg" },
-    { name: "Odoo", src: "/logos/platforms/odoo.svg" },
-    { name: "Pigment", src: "/logos/platforms/pigment.svg" },
-    { name: "Zoho", src: "/logos/platforms/zoho.svg" },
-  ],
 };
 
 export const platforms = {
-  heading: "Platforms We Implement",
+  heading: "Platforms & Tools We Work With",
   sub: "We're platform-agnostic. We select, implement and integrate the ERP, CRM and FP&A tools your finance function runs on.",
-  /* The button under the arcs (client, 2026-10-22). Placeholder label,
-     like the heading and sub above. */
+  /* UNRENDERED since 2026-10-23: the button under the carousel gave way to
+     the page's closing CTA band. Kept because retired copy is retained. */
   cta: { label: "Talk to us", href: "/contact" },
+  /* The feature carousel's slides (client list, 2026-10-23): `chip` is the
+     short label on the left rail, `title` the full name on the card. Logo
+     files live in /public/logos/platforms. Descriptions are placeholder copy.
+     The homepage tool strip reads these same tools: `strip` swaps in a
+     wordmark where the card's icon would be unreadable unlabelled, and
+     `labelled` sets the name beside marks that have no wordmark. */
+  categories: [
+    {
+      id: "reporting",
+      chip: "Reporting & Dashboards",
+      title: "Reporting & Dashboarding",
+      description: "Board-ready dashboards and packs your leadership actually reads.",
+      tools: [
+        { name: "Power BI", src: "/logos/platforms/power-bi.svg", labelled: true },
+        { name: "Tableau", src: "/logos/platforms/tableau-icon.svg", strip: "/logos/platforms/tableau.svg" },
+        { name: "Excel", src: "/logos/platforms/excel.svg", labelled: true },
+        { name: "PowerPoint", src: "/logos/platforms/powerpoint.svg", labelled: true },
+      ],
+    },
+    {
+      id: "erp",
+      chip: "ERP",
+      title: "ERP Tools",
+      description: "Selection, implementation and optimisation of your core ledger.",
+      tools: [
+        { name: "Oracle NetSuite", src: "/logos/platforms/netsuite.png" },
+        { name: "Oracle Fusion", src: "/logos/platforms/oracle.svg" },
+        { name: "SAP", src: "/logos/platforms/sap.svg" },
+        { name: "Odoo", src: "/logos/platforms/odoo.svg" },
+        { name: "Zoho", src: "/logos/platforms/zoho.svg", strip: "/logos/platforms/zoho-color.svg" },
+        { name: "Dynamics 365", src: "/logos/platforms/dynamics-365.svg", labelled: true },
+      ],
+    },
+    {
+      id: "crm",
+      chip: "CRM",
+      title: "CRM Implementation & Integration",
+      description: "Pipeline and customer data wired straight into finance.",
+      tools: [
+        { name: "Salesforce", src: "/logos/platforms/salesforce.svg", strip: "/logos/platforms/salesforce-wordmark.svg" },
+        { name: "HubSpot", src: "/logos/platforms/hubspot.svg" },
+      ],
+    },
+    {
+      id: "epm",
+      chip: "FP&A / EPM",
+      title: "FP&A / Enterprise Performance Management",
+      description: "Planning, budgeting and forecasting on one connected model.",
+      tools: [
+        { name: "Anaplan", src: "/logos/platforms/anaplan.svg" },
+        { name: "Aimplan", src: "/logos/platforms/aimplan.svg" },
+        { name: "Jedox", src: "/logos/platforms/jedox.jpg" },
+        { name: "Prophix", src: "/logos/platforms/prophix.svg" },
+        { name: "Pigment", src: "/logos/platforms/pigment.svg" },
+        { name: "Vena", src: "/logos/platforms/vena.svg", strip: "/logos/platforms/vena-wordmark.svg" },
+      ],
+    },
+    {
+      id: "analytics",
+      chip: "Data & Programming",
+      title: "Data Analytics & Programming",
+      description: "Custom models, pipelines and apps where off-the-shelf stops.",
+      tools: [
+        { name: "Python", src: "/logos/platforms/python.svg", labelled: true },
+        { name: "React", src: "/logos/platforms/react.svg", labelled: true },
+        { name: "Node.js", src: "/logos/platforms/nodejs.svg" },
+        { name: "SQL", src: "/logos/platforms/sql.svg", labelled: true },
+        { name: "Apache Spark", src: "/logos/platforms/spark.svg" },
+        { name: "PySpark", src: "/logos/platforms/spark.svg", labelled: true },
+        { name: "PyTorch", src: "/logos/platforms/pytorch.svg", strip: "/logos/platforms/pytorch-wordmark.svg" },
+      ],
+    },
+    {
+      id: "warehousing",
+      chip: "Data Warehousing",
+      title: "Data Warehousing",
+      description: "One governed source of truth across every system you run.",
+      tools: [
+        { name: "Azure", src: "/logos/platforms/azure.svg", labelled: true },
+        { name: "AWS", src: "/logos/platforms/aws.svg", strip: "/logos/platforms/aws-wordmark.svg" },
+        { name: "Microsoft Fabric", src: "/logos/platforms/fabric.png", labelled: true },
+        { name: "Google Cloud", src: "/logos/platforms/google-cloud.svg", labelled: true },
+        { name: "Snowflake", src: "/logos/platforms/snowflake.svg", strip: "/logos/platforms/snowflake-wordmark.svg" },
+        { name: "Databricks", src: "/logos/platforms/databricks.svg" },
+      ],
+    },
+    {
+      id: "ai",
+      chip: "AI Tools",
+      title: "AI Tools",
+      description: "Practical AI for close, analysis and commentary, safely deployed.",
+      tools: [
+        { name: "ChatGPT", src: "/logos/platforms/chatgpt.svg", labelled: true },
+        { name: "Gemini", src: "/logos/platforms/gemini.svg" },
+        { name: "Copilot", src: "/logos/platforms/copilot.svg", labelled: true },
+        { name: "Claude", src: "/logos/platforms/claude.svg", strip: "/logos/platforms/claude-wordmark.svg" },
+        { name: "Perplexity", src: "/logos/platforms/perplexity.svg", strip: "/logos/platforms/perplexity-wordmark.svg" },
+      ],
+    },
+  ],
   groups: [
     "ERP Selection, Implementation & Optimisation",
     "CRM Implementation & Integration",
@@ -686,6 +769,9 @@ export const platforms = {
 };
 
 export const howWeHelp = {
+  /* The closing CTA band (client, 2026-10-23), the Team page's band.
+     TODO(business): placeholder copy pending sign-off. */
+  closingCta: "Ready to turn reporting into decisions?",
   /** UNRENDERED since 2026-10-20: the client had the eyebrow taken off
       this band. Kept because they ask for retired copy to be retained. */
   eyebrow: "How GAMCS helps",
@@ -1306,7 +1392,7 @@ export const testimonials = {
     },
     {
       name: "Aaquib Shahi",
-      title: "Finance Head",
+      title: "Finance Manager",
       company: "ProcDNA",
       logo: "procdna.png",
       photo: { src: "/testimonials/aaquib-shahi.webp", alt: "Portrait of Aaquib Shahi" },
@@ -2213,6 +2299,9 @@ export const solutions: Solution[] = [
  * reworded for the five pillars.
  */
 export const solutionsHub = {
+  /* The closing CTA band (client, 2026-10-23), the Team page's band.
+     TODO(business): placeholder copy pending sign-off. */
+  closingCta: "Not sure where to start? Let's talk it through.",
   titleTag: "Solutions | FP&A, Team Extension, Digital Transformation & Deal Advisory | GAMCS",
   metaDescription:
     "Explore GAMCS's five solution pillars: FP&A & CFO Advisory, Finance Team Extension, Digital Transformation, Deal Advisory, and Training & Enablement.",

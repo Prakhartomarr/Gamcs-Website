@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import FluteShader from "@/components/ui/flute-shader";
 import TeamRoster from "@/components/sections/TeamRoster";
-import { primaryCta, story, team } from "@/lib/content/gamcs";
+import { story, team } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
-import CTA from "@/components/CTA";
+import CtaBand from "@/components/sections/CtaBand";
 
 const t = pages.team;
 
@@ -33,9 +32,11 @@ export default function TeamPage() {
               made it stand out as a separate block. A span, not a <strong> —
               this is a visual accent, not a change in meaning, and the page
               head should not announce emphasis to a screen reader that the
-              sentence does not carry. */}
+              sentence does not carry. It starts on its own line (client,
+              2026-10-23), so "Our" no longer ends the paragraph's last line. */}
           <p>
-            {team.body.join(" ")}{" "}
+            {team.body.join(" ")}
+            <br />
             <span className="team-mission">{story.mission}</span>
           </p>
           {/* NO BUTTONS IN THIS HEAD (client, 2026-10-22). "Schedule a Call"
@@ -55,18 +56,7 @@ export default function TeamPage() {
           which say what that group of people is, not what the firm is. */}
       <TeamRoster />
 
-      <section className="section team-cta-section">
-        <div className="container">
-          <div className="case-cta">
-            <FluteShader />
-            <h2>{team.closingCta}</h2>
-            <CTA href={primaryCta.href} tier="secondary"
-              data-cta="team-footer" icon="diagonal">
-              {primaryCta.label}
-            </CTA>
-          </div>
-        </div>
-      </section>
+      <CtaBand heading={team.closingCta} dataCta="team-footer" />
     </>
   );
 }

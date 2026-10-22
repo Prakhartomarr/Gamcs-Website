@@ -1590,7 +1590,7 @@ html{font-size:112.5%}
 .flute-shader{z-index:-1;inset:-72px;pointer-events:none}
 .case-cta h2{margin:0;font-size:clamp(24px,2.6vw,34px);line-height:1.1;letter-spacing:-.035em;max-width:18ch}
 .service-body .case-cta h2{max-width:30ch;text-wrap:balance}
-.team-cta-section{padding-top:0}
+.cta-band-section{padding-top:0}
 
 /* --- 404 ------------------------------------------------------------ */
 .notfound{padding-top:132px;text-align:left}
@@ -1628,9 +1628,12 @@ html{font-size:112.5%}
 .legal-body{max-width:760px}
 .legal-body h2{font-size:1.1111rem;letter-spacing:-.03em;margin:38px 0 12px}
 .legal-body h2:first-child{margin-top:0}
+.legal-body h3{font-size:0.9444rem;font-weight:600;letter-spacing:-.01em;margin:22px 0 8px;color:var(--ink)}
+.legal-body h2+h3{margin-top:4px}
 .legal-body p,.legal-body li{font-size:0.8889rem;line-height:1.7;color:#4A5560}
 .legal-body p{margin:0 0 12px}
-.legal-body ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px}
+.legal-body ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px;list-style:disc}
+.legal-body li::marker{color:#8A949C}
 .legal-body a{color:var(--blue);font-weight:600}
 /* deliberately loud: an unfilled placeholder must not survive a review */
 .tbc{display:inline-block;background:#FFF1F1;color:#8A1F1F;border:1px dashed #D98A8A;
@@ -3418,7 +3421,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 
 /* ---- the five blocks ---- */
-.sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px)}
+.sol-pillars{display:grid;padding-bottom:clamp(24px,3vw,48px);
+  --sol-card-pad:clamp(22px,3.6vw,52px)}
 .sol-pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:20px;padding:21px var(--sol-edge);
   /* Clears the floating header. The +56 was written for a rail that used to
@@ -3437,36 +3441,21 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   /* the floor the shader drifts over: what shows without WebGL, in print,
      and before the first frame */
   background:linear-gradient(180deg,var(--blue),#0C5387);color:#F9F9F8}
-/* ONE CARD HEIGHT, 730px (client, 2026-10-22).
+/* EACH CARD ENDS WHERE ITS LIST ENDS (client, 2026-10-23).
 
-   The floor was 794. Briefly it was removed altogether so each card ended
-   exactly where its own list ended — which it did, on four pillars — but
-   that made the five dark panels five different heights down the page, and
-   the client wants them uniform. 730 is the number: the height of the two
-   longest lists, Advise and Transact, so the tallest content still sets the
-   card rather than an arbitrary figure.
+   This replaces the uniform 730px card of 2026-10-22, which left three
+   lists finishing above their card's bottom edge. The card stretches to its
+   grid row (the list is `align-self:start`, the card is not), so with a low
+   floor the row — and the card — is exactly as tall as the list.
 
-   WHAT THAT MEANS PER PILLAR, measured:
-
-     fpa-cfo-advisory        card 730   list 730   level
-     deal-advisory           card 730   list 730   level
-     finance-team-extension  card 730   list 646    84px short
-     training-enablement     card 730   list 532   198px short
-     digital-transformation  card 730   list 108   622px short
-
-   Three lists finish above their card's bottom edge and keep their natural
-   spacing. That is the accepted trade: cards uniform with each other rather
-   than each one matched to its own list.
-
-   A FLOOR, NOT A FIXED HEIGHT. Transform with every group opened measures
-   1542, and a hard 730 would leave 800px of list hanging outside the dark
-   panel. min-height lets the card take the taller of the two.
+   The 480 floor is for Transform, whose list is collapsed to ~108px: the
+   card still needs room for its eyebrow, title, line and button. Opening
+   Transform's groups grows the list, and the card grows with it.
 
    Below 1024 the pillar stacks and the card stands alone with nothing to
-   line up against, so it keeps its own one-screen clamp above — a flat 730
-   there would be 170px of empty panel on a phone. */
+   line up against, so it keeps its own one-screen clamp above. */
 @media (min-width:1024px){
-  .sol-card{min-height:730px}
+  .sol-card{min-height:480px}
 }
 .sol-card-paint{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
 /* The scrim buys the text its contrast, and it used to cost the gradient its
@@ -3480,8 +3469,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:linear-gradient(180deg,rgba(4,16,30,.46) 0%,rgba(4,16,30,.44) 50%,
     rgba(4,16,30,.24) 72%,rgba(4,16,30,.06) 88%,rgba(4,16,30,0) 100%)}
 .sol-card-body{position:relative;z-index:1;display:flex;flex-direction:column;
-  height:100%;padding:clamp(22px,3.6vw,52px)}
-.sol-eyebrow{display:block;font:500 15px/1.2 var(--font-sans);letter-spacing:.02em; /* 13px until 2026-10-22 (client: "a little bigger") */
+  height:100%;padding:var(--sol-card-pad)}
+.sol-eyebrow{display:block;font:700 15px/1.2 var(--font-sans);letter-spacing:.08em;text-transform:uppercase; /* 13px until 2026-10-22 (client: "a little bigger"); bold caps since 2026-10-23 */
   color:rgba(249,249,248,.86)}
 /* The full width of the card body, not the old 533px cap (client,
    2026-10-22): at 1440 that is what lets "Strategic Finance, FP&A & CFO
@@ -3517,39 +3506,36 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    357. Those three carried that distance BETWEEN their rows instead, and
    Transform's two collapsed groups ended up ~430px apart. Shown both, the
    client chose natural spacing everywhere over an exact bottom edge on two
-   pillars out of five.
-
-   THE TWO PADDING TRIMS BELOW ARE KEPT. They are what puts the first line on
-   the card's top edge, which is the half of that ask costing nothing. */
-.sol-list{list-style:none;margin:0;padding:0;align-self:start}
-.sol-list>li{border-bottom:1px solid var(--sol-rule)}
-.sol-list>li:first-child{border-top:1px solid var(--sol-rule)}
-/* The first row loses the padding that held its text 19px below the card's
-   top, and the min-height with it: `align-items:center` would otherwise
-   re-centre the line inside a 60px box and put it straight back. What is
-   left above the cap is the 1px rule and the line's own half-leading —
-   measured 3px. */
-.sol-list>li:first-child>.sol-list-head,
-.sol-list>li:first-child>details>summary{padding-top:0;min-height:0}
-/* …and the last row loses the 20px its list carried underneath it, so the
-   list box ends on its own last line rather than 20px below it. */
-.sol-list>li:last-child .sol-list-body>:last-child{margin-bottom:0}
+   pillars out of five. (Since 2026-10-23 the card instead takes the
+   list's height, so both edges meet without spreading anything.) */
+.sol-list{list-style:none;margin:0;padding:0;align-self:start;
+  display:grid;gap:16px}
+/* EACH GROUP IN ITS OWN BOX (client, 2026-10-23), replacing the hairlines
+   between groups: the Who We Are "what we set out to build" card (.os-built
+   li) — white, its hairline, its 32px corner and padding. The dark card
+   spans the stack edge to edge: the list is `align-self:start` and the card
+   stretches to the row, so the first box's top and the last box's bottom
+   are the card's own edges with nothing to trim. */
+.sol-list>li{background:#fff;border:1px solid #E1E5E8;border-radius:32px;
+  padding:28px 26px 30px}
+.sol-list>li .sol-list-body>:last-child{margin-bottom:0}
 .sol-list>li>details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
   min-height:60px;padding:16px 2px;cursor:pointer;list-style:none;
   /* 16→19px since 2026-10-22, from 15→18 — see the note on .cap-list for
      the headroom this is spending. */
-  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
+  font:600 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
   color:var(--sol-ink);transition:color .2s var(--ease-out)}
 /* The group lead where there is no disclosure (client, 2026-10-22): four of
    the five pillars list their capabilities open, and only Transform still
    folds. Same type, same height, same rule rhythm as the summary above, so a
    visitor moving between pillars sees one list style rather than two — it
    simply has no chevron and nothing to press. `font:` carries the 400, which
-   is what stops an <h3> arriving bold. */
+   sets the weight: 600 since 2026-10-23, semibold leads over 400 bullets. */
 .sol-list>li>.sol-list-head{display:flex;align-items:center;margin:0;
-  min-height:60px;padding:16px 2px;
-  font:400 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
-  color:var(--sol-ink)}
+  padding:0 0 14px;
+  font:600 clamp(16px,1.32vw,19px)/1.5 var(--font-sans);letter-spacing:normal;
+  /* brand blue inside the box, as on the reference card (2026-10-23) */
+  color:var(--blue)}
 .sol-list summary::-webkit-details-marker{display:none}
 .sol-list summary:hover{color:var(--blue)}
 .sol-list summary:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;border-radius:6px}
@@ -3576,6 +3562,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     rgba(4,16,30,.48) 74%,rgba(4,16,30,.24) 92%,rgba(4,16,30,.10) 100%)}
   .sol-pillar[data-flip] .sol-card{order:0}
   .sol-card{min-height:clamp(420px,62vh,560px)}
+}
+/* the reference card's phone size */
+@media (max-width:767px){
+  .sol-list>li{border-radius:24px;padding:24px 20px 28px}
 }
 @media (prefers-reduced-motion:reduce){
   .sol-list summary svg,.sol-list details::details-content,.sol-talk,.sol-talk svg{transition:none}

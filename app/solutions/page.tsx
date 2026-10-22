@@ -3,6 +3,7 @@ import PillarBlocks from "@/components/sections/PillarBlocks";
 import PillarRail from "@/components/sections/PillarRail";
 import ToolLogos from "@/components/sections/ToolLogos";
 import { solutionsHub } from "@/lib/content/gamcs";
+import CtaBand from "@/components/sections/CtaBand";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
 
@@ -53,6 +54,9 @@ export default function SolutionsHubPage() {
       <div className="sol">
         <PillarBlocks />
       </div>
+
+      {/* The closing CTA band, the Team page's (client, 2026-10-23). */}
+      <CtaBand heading={solutionsHub.closingCta} dataCta="solutions-footer" />
     </>
   );
 }
