@@ -590,6 +590,23 @@ h1,h2,h3,p{margin-top:0}
      no other head gained one; /who-we-are is unaffected either way because
      its sentences are block spans. */
   letter-spacing:-.02em;color:#fff;max-width:22ch;margin:0 auto}
+/* The accent inside a page-head h1. UPRIGHT, not italic (client, 2026-10-22:
+   "fix this line"). Two reasons it was wrong:
+
+   1. It was the only italic heading accent on the site. `.hero h1 em`,
+      `.section-head h2 em` and `.notfound-title em` all reset to
+      font-style:normal and mark the accent with colour instead. `.page-head
+      h1 em` simply had no rule, so /solutions fell through to the browser
+      default.
+   2. There is no italic to fall through TO. app/layout.tsx loads Inter with
+      no `style: ["normal","italic"]`, so only the upright face ships and the
+      browser was slanting it mechanically — a synthetic oblique at 40px.
+
+   Colour, not italic, is how this site marks an accent. #9ECBFF rather than
+   var(--blue), which is a light-background colour and manages only 2.73:1 on
+   this band; #9ECBFF is the page head's own accent (see .page-head
+   .section-kicker just below) and measures 11.05:1. */
+.page-head h1 em{font-style:normal;color:#9ECBFF}
 .page-head>.container>p{
   margin:18px auto 0;max-width:50ch;
   font-size:0.8889rem;line-height:1.5;font-weight:500;letter-spacing:-.02em;
