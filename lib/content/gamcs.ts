@@ -636,6 +636,9 @@ export const itemLinks: Record<string, string> = {
 export const platforms = {
   heading: "Platforms We Implement",
   sub: "We're platform-agnostic. We select, implement and integrate the ERP, CRM and FP&A tools your finance function runs on.",
+  /* The button under the arcs (client, 2026-10-22). Placeholder label,
+     like the heading and sub above. */
+  cta: { label: "Talk to us", href: "/contact" },
   groups: [
     "ERP Selection, Implementation & Optimisation",
     "CRM Implementation & Integration",
