@@ -7893,5 +7893,8 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    and the marquee it runs in (components/ui/marquee.tsx). The track slides
    by half its width: it holds the logos twice. */
 @keyframes marquee{to{transform:translateX(-50%)}}
-.tool-logos{padding:72px 0 8px}
-@media (max-width:767px){.tool-logos{padding:48px 0 0}}
+/* 96px of clear space on each side (client, 2026-10-22: "even out the top
+   and bottom space"): the services band above ends in 56 of its own padding
+   and the impact head below opens with 56 plus ~10 of line spacing. */
+.tool-logos{padding:40px 0 30px}
+@media (max-width:767px){.tool-logos{padding:19px 0}} /* 55px each side on a phone */
