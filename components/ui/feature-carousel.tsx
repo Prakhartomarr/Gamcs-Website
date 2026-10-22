@@ -144,7 +144,7 @@ export function FeatureCarousel({ items }: { items: CarouselItem[] }) {
                 >
                   <div className="flex items-center gap-3">
                     <span className="h-2 w-2 rounded-full bg-blue" />
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#5B6067]">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#5B6067]">
                       {String(index + 1).padStart(2, "0")} / {String(len).padStart(2, "0")}
                     </span>
                   </div>
@@ -169,7 +169,7 @@ export function FeatureCarousel({ items }: { items: CarouselItem[] }) {
                             className="max-h-8 max-w-full object-contain md:max-h-9"
                           />
                         </span>
-                        <span className="text-[11px] font-medium leading-tight text-charcoal md:text-xs">{tool.name}</span>
+                        <span className="text-xs font-medium leading-tight text-charcoal">{tool.name}</span>
                       </li>
                     ))}
                   </ul>

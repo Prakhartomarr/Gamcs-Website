@@ -28,6 +28,9 @@ export function Marquee({
         "group relative w-full overflow-hidden",
         "[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]",
         "motion-reduce:[mask-image:none]",
+        /* Phones with reduced motion: one row the visitor can swipe, rather than
+           36 marks wrapped into a ~1,200px column (2026-10-23). */
+        "max-sm:motion-reduce:overflow-x-auto",
         className,
       )}
     >
@@ -35,11 +38,11 @@ export function Marquee({
         className={cn(
           "flex w-max [animation:marquee_var(--marquee-duration)_linear_infinite]",
           "group-hover:[animation-play-state:paused]",
-          "motion-reduce:w-full motion-reduce:[animation:none]",
+          "motion-reduce:w-full motion-reduce:[animation:none] max-sm:motion-reduce:w-max",
         )}
         style={{ "--marquee-duration": duration } as CSSProperties}
       >
-        <div className="flex shrink-0 items-center motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center">
+        <div className="flex shrink-0 items-center motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-y-5 max-sm:motion-reduce:w-max max-sm:motion-reduce:flex-nowrap">
           {children}
         </div>
         <div className="flex shrink-0 items-center motion-reduce:hidden" aria-hidden="true">

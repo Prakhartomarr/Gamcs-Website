@@ -10,6 +10,9 @@ import { cn } from "@/lib/utils";
  * platform and tool marks beside it; stacked and centred on a phone.
  *
  * The marks are every tool in the integration carousel (client, 2026-10-23).
+ * Below 640px they shrink (112px boxes, 12px gutters) to keep the row in
+ * proportion with a phone; with reduced motion there the row swipes instead
+ * of scrolling itself (see components/ui/marquee.tsx).
  * Wordmarks are fitted into the same 140x40 box, so they sit on one optical
  * line; a mark with no wordmark (`labelled`) is a 32px icon with the tool's
  * name beside it, since an unlabelled Excel or SQL glyph reads as nothing.
@@ -33,15 +36,15 @@ export default function ToolLogos({ className }: { className?: string } = {}) {
           <Marquee className="min-w-0 flex-1" duration={duration}>
           {marks.map((t) =>
             t.labelled ? (
-              <span key={t.name} className="mx-6 flex h-10 shrink-0 items-center gap-2.5 sm:mx-9">
-                <span className="relative block h-8 w-8 shrink-0">
+              <span key={t.name} className="mx-3 flex h-9 shrink-0 items-center gap-2 sm:mx-9 sm:h-10 sm:gap-2.5">
+                <span className="relative block h-7 w-7 shrink-0 sm:h-8 sm:w-8">
                   <Image src={t.src} alt="" fill sizes="32px"
                     className="pointer-events-none select-none object-contain" />
                 </span>
-                <span className="whitespace-nowrap text-[15px] font-semibold text-charcoal">{t.name}</span>
+                <span className="whitespace-nowrap text-sm font-semibold text-charcoal sm:text-[15px]">{t.name}</span>
               </span>
             ) : (
-              <span key={t.name} className="relative mx-6 block h-10 w-[140px] shrink-0 sm:mx-9">
+              <span key={t.name} className="relative mx-3 block h-9 w-[112px] shrink-0 sm:mx-9 sm:h-10 sm:w-[140px]">
                 {/* multiply drops the white box the Jedox JPG carries */}
                 <Image src={t.strip ?? t.src} alt={t.name} fill sizes="140px"
                   className="pointer-events-none select-none object-contain mix-blend-multiply" />
