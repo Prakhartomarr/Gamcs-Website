@@ -68,7 +68,11 @@ export default function HowWeHelpPage() {
       <section className="section hwh-after" aria-labelledby="hwh-after-h">
         <div className="container">
           <div className="fin-center reveal">
-            <h2 className="fin-h2" id="hwh-after-h">{howWeHelp.afterFilm.title}</h2>
+            <h2 className="fin-h2" id="hwh-after-h">
+              {`${howWeHelp.afterFilm.titleLead} `}
+              <span className="accent">{howWeHelp.afterFilm.titleAccent}</span>
+              {` ${howWeHelp.afterFilm.titleTail}`}
+            </h2>
             <p className="fin-lead">{howWeHelp.afterFilm.body}</p>
           </div>
         </div>

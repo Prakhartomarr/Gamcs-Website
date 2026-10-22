@@ -763,10 +763,14 @@ export default function HowWeHelpStack() {
               {/* .fin-h2, the scale every other section head on the page
                   uses (client, 2026-10-22: it was 26px against their 50). */}
               <h2 className="fin-h2 !mt-2">
-                {howWeHelp.principles.heading}
+                {`${howWeHelp.principles.headingLead} `}
+                {/* .fin-h2 .accent is nowrap; this phrase may wrap on a phone. */}
+                <span className="accent [white-space:normal]">{howWeHelp.principles.headingAccent}</span>
               </h2>
             </div>
-            <p className="text-[15px] leading-snug md:max-w-[44ch] md:text-right" style={{ color: C.gray }}>
+            {/* 50ch, not 44: two balanced lines beside the heading rather than
+                three (client, 2026-10-22). */}
+            <p className="text-[15px] leading-snug [text-wrap:balance] md:max-w-[50ch] md:text-right" style={{ color: C.gray }}>
               {howWeHelp.principles.sub}
             </p>
           </div>

@@ -33,31 +33,6 @@ import { map } from "@/lib/content/ui";
  * to be one box, and one box cannot be two disjoint grid areas.
  */
 
-/**
- * Two-letter codes for the badge on each tab (client, 2026-10-21, matching
- * the reference's NY / CA / UK).
- *
- * Official Indian state codes, not copy: they are an abbreviation OF
- * `office.region`, which is already published, so they are not a string the
- * client has to approve or maintain. The fallback builds initials from the
- * region itself, so a fourth office in a state not listed here still gets a
- * badge rather than an empty pill.
- */
-const STATE_CODE: Record<string, string> = {
-  Haryana: "HR",
-  "Uttar Pradesh": "UP",
-  Karnataka: "KA",
-};
-
-const codeFor = (region: string) =>
-  STATE_CODE[region] ??
-  region
-    .split(/\s+/)
-    .map((w) => w[0] ?? "")
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
 export default function ContactOffices({ className }: { className?: string }) {
   const [active, setActive] = useState(0);
   /* Set once, from /contact?office=<slug>, which the footer's three city
@@ -148,12 +123,6 @@ export default function ContactOffices({ className }: { className?: string }) {
             onClick={() => setActive(i)}
             onKeyDown={(e) => onKeyDown(e, i)}
           >
-            {/* The badge is decorative shorthand for the line beneath it —
-                "HR" read out after "Gurugram" is noise, and the region is
-                already in the panel. */}
-            <span className="cxo-code" aria-hidden="true">
-              {codeFor(o.region)}
-            </span>
             <span className="cxo-name">{o.locality}</span>
           </button>
         ))}

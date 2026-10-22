@@ -672,7 +672,11 @@ export const howWeHelp = {
   /* Under the film on /how-we-help, above the phases (client copy,
      2026-10-22). One paragraph, set to three lines on desktop. */
   afterFilm: {
-    title: "Every Finance Function Starts Somewhere Different.",
+    /* Split so "Finance Function" takes the accent blue (client,
+       2026-10-22). Read together it is the same sentence. */
+    titleLead: "Every",
+    titleAccent: "Finance Function",
+    titleTail: "Starts Somewhere Different.",
     body: "Not every business needs the same intervention. Some need stronger financial processes and reliable reporting. Others need connected data, deeper performance insights or better forward-looking decisions. We start by understanding where you are today, identify the gaps that matter most, and build the capabilities that move your finance function forward.",
   },
   phases: [
@@ -720,7 +724,10 @@ export const howWeHelp = {
      still feed /careers. The kicker is uppercased by CSS. */
   principles: {
     kicker: "Our Principles",
-    heading: "Built Around the Decisions That Matter",
+    /* Split so "Decisions That Matter" takes the accent blue (client,
+       2026-10-22). */
+    headingLead: "Built Around the",
+    headingAccent: "Decisions That Matter",
     sub: "Six principles shape how we connect finance, data and technology—from the first business question to practical action.",
     items: [
       { n: "01", title: "Start With the Decision", body: "We begin with the business question, then shape the analysis, processes and tools needed to answer it." },
@@ -2910,7 +2917,8 @@ export const careers = {
   intro:
     "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. We hire people who want to own outcomes, not just deliverables.",
   applyLabel: "Apply now",
-  meta: "Gurugram · Remote across India",
+  /* All three offices (client, 2026-10-22), named as `offices` names them. */
+  meta: "Gurugram · Noida · Bangalore · Remote across India",
   locations: [
     { id: "ggn", label: "Gurugram" },
     { id: "remote", label: "Remote, India" },
