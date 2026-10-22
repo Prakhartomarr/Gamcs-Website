@@ -318,6 +318,11 @@ export const ourStory = {
      `.section-kicker` sets no text-transform, so what is stored is what
      would read on screen. */
   eyebrow: "OUR STORY",
+  /* The page head shows the FIRST TWO only (client, 2026-10-22) — see
+     HERO_LINES in app/who-we-are/page.tsx. "Focused on the future." is kept
+     here, not deleted: manifest row WHO-STORY-08 points at [2] and
+     scripts/copy/source.mjs throws on an index it cannot resolve. Do not
+     splice this array. */
   heroLines: [
     "Built on a shared vision.",
     "Driven by financial insight.",

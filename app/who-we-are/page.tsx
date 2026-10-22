@@ -13,6 +13,9 @@ import { pageMetadata } from "@/lib/seo";
 
 const t = pages.whoWeAre;
 
+/* How many of ourStory.heroLines the page head shows. */
+const HERO_LINES = 2;
+
 export const metadata: Metadata = pageMetadata({
   title: t.title,
   description: t.description,
@@ -69,13 +72,22 @@ export default function WhoWeArePage() {
           scrolling now. */}
       <section className="page-head ph-story">
         <div className="container">
+          {/* TWO LINES (client, 2026-10-22). The third sentence, "Focused on
+              the future.", is no longer shown. heroLines still holds all
+              three: manifest rows WHO-STORY-06/07/08 point at [0], [1] AND
+              [2], and source.mjs throws on an index it cannot resolve — so
+              the sentence is sliced off here rather than spliced out of the
+              array. Raise HERO_LINES to 3 to bring it back.
+
+              Both remaining sentences fit the h1's 532px measure on their
+              own line (443px and 495px), so this needs no layout change. */}
           <h1 className="os-head-h">
-            {ourStory.heroLines.map((line, i) => (
+            {ourStory.heroLines.slice(0, HERO_LINES).map((line, i, shown) => (
               <span className="os-head-line" key={line}>
                 {line}
                 {/* The lines are block spans; without this the accessible name
                     runs them together as "…vision.Driven by…". */}
-                {i < ourStory.heroLines.length - 1 ? " " : null}
+                {i < shown.length - 1 ? " " : null}
               </span>
             ))}
           </h1>
