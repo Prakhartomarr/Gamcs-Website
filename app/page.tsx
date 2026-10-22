@@ -7,6 +7,7 @@ import MaturityCurve from "@/components/sections/MaturityCurve";
 import HowWeHelpFilm from "@/components/sections/HowWeHelpFilm";
 import Solutions from "@/components/sections/Solutions";
 import Achievements from "@/components/sections/Achievements";
+import ToolLogos from "@/components/sections/ToolLogos";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import { pageMetadata } from "@/lib/seo";
@@ -52,6 +53,8 @@ export default function HomePage() {
           share one heading, from `howWeHelp`, rendered once on each page. */}
       <HowWeHelpFilm />
       <Solutions />
+      {/* The tools logo cloud, above the impact figures (client, 2026-10-22). */}
+      <ToolLogos />
       <Achievements />
       <Testimonials />
       <WhoWeAre />

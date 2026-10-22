@@ -7889,3 +7889,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* An outbound name inside a capability list (components/LinkedText.tsx). */
 .cap-link{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 @media(hover:hover){.cap-link:hover{color:var(--blue-dark)}}
+/* The tools logo cloud above "Our Impact" (components/sections/ToolLogos.tsx)
+   and the marquee it runs in (components/ui/marquee.tsx). The track slides
+   by half its width: it holds the logos twice. */
+@keyframes marquee{to{transform:translateX(-50%)}}
+.tool-logos{padding:72px 0 8px}
+@media (max-width:767px){.tool-logos{padding:48px 0 0}}

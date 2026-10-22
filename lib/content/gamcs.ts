@@ -633,6 +633,34 @@ export const itemLinks: Record<string, string> = {
   "FinSensor AI": "https://finsensor.ai/",
 };
 
+/* The tools marquee above "Our Impact" on the homepage (client,
+   2026-10-22): the platforms band's logos plus the tools the client keeps in
+   their own files (cloud, BI, accounting). Only names with a logo file are
+   listed; Aimplan, Prophix and Vena have none yet and are left out rather
+   than shown as text in a row of marks.
+
+   TODO(business): the kicker is placeholder copy pending sign-off. */
+export const toolCloud = {
+  kicker: "Platforms and tools we work with",
+  logos: [
+    { name: "Oracle NetSuite", src: "/logos/platforms/netsuite.png" },
+    { name: "Microsoft Azure", src: "/logos/platforms/azure.svg" },
+    { name: "SAP", src: "/logos/platforms/sap.svg" },
+    { name: "Tableau", src: "/logos/platforms/tableau.svg" },
+    { name: "Salesforce", src: "/logos/platforms/salesforce.svg" },
+    { name: "AWS", src: "/logos/platforms/aws.svg" },
+    { name: "Anaplan", src: "/logos/platforms/anaplan.svg" },
+    { name: "Microsoft Excel", src: "/logos/platforms/excel.svg" },
+    { name: "Oracle Fusion", src: "/logos/platforms/oracle.svg" },
+    { name: "QuickBooks", src: "/logos/platforms/quickbooks.svg" },
+    { name: "Jedox", src: "/logos/platforms/jedox.jpg" },
+    { name: "Google Cloud", src: "/logos/platforms/google-cloud.svg" },
+    { name: "Odoo", src: "/logos/platforms/odoo.svg" },
+    { name: "Pigment", src: "/logos/platforms/pigment.svg" },
+    { name: "Zoho", src: "/logos/platforms/zoho.svg" },
+  ],
+};
+
 export const platforms = {
   heading: "Platforms We Implement",
   sub: "We're platform-agnostic. We select, implement and integrate the ERP, CRM and FP&A tools your finance function runs on.",
