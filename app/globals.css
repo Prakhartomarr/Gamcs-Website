@@ -7898,3 +7898,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    and the impact head below opens with 56 plus ~10 of line spacing. */
 .tool-logos{padding:40px 0 30px}
 @media (max-width:767px){.tool-logos{padding:19px 0}} /* 55px each side on a phone */
+/* The same cloud under the /solutions head (client, 2026-10-22): 64px clear
+   above and below. The head band brings ~20 of its own and the pillars ~21,
+   so the padding is the rest. On the pillars' own off-white ground, so the
+   strip and the cards under it read as one block. */
+.tool-logos--page{padding:44px 0 43px;background:#F9F9F8}
+@media (max-width:767px){.tool-logos--page{padding:36px 0 30px}} /* 48px each side on a phone */

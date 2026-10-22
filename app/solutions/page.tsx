@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PillarBlocks from "@/components/sections/PillarBlocks";
 import PillarRail from "@/components/sections/PillarRail";
+import ToolLogos from "@/components/sections/ToolLogos";
 import { solutionsHub } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
 import { pageMetadata } from "@/lib/seo";
@@ -44,6 +45,10 @@ export default function SolutionsHubPage() {
           <p>{solutionsHub.subhead}</p>
         </div>
       </section>
+
+      {/* The homepage's tools logo cloud, between the head and the pillars
+          (client, 2026-10-22). */}
+      <ToolLogos className="tool-logos--page" />
 
       <div className="sol">
         <PillarBlocks />
