@@ -53,6 +53,9 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
   const prog = useRef({ p: active });
   const reveal = useRef({ r: 1 });
   const tween = useRef<gsap.core.Tween | null>(null);
+  /* The one-time "it moves" hint. Anything else that moves the marker kills
+     it first, so the hint can never fight a real choice. */
+  const nudge = useRef<gsap.core.Tween | null>(null);
   const size = useRef({ w: 0, h: 0 });
   const lastStage = useRef(active);
   const activeRef = useRef(active);
@@ -60,6 +63,7 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
 
   const [near, setNear] = useState(false);
   const [mode, setMode] = useState<"svg" | "gl" | "fallback">("svg");
+  const [why, setWhy] = useState<string>();
   const modeRef = useRef(mode);
   modeRef.current = mode;
   const [touched, setTouched] = useState(false);
@@ -105,6 +109,7 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
     (i: number) => {
       const target = Math.min(Math.max(i, 0), count - 1);
       if (heading.current === target && tween.current?.isActive()) return;
+      nudge.current?.kill();
       tween.current?.kill();
       heading.current = target;
       if (target !== lastStage.current) {
@@ -159,25 +164,28 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
     const rv = reveal.current;
     rv.r = 0;
     paint();
-    let tl: gsap.core.Timeline | undefined;
+    let draw: gsap.core.Tween | undefined;
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       io.disconnect();
-      tl = gsap.timeline();
-      tl.to(rv, { r: 1, duration: 1.4, ease: ease.inOut, onUpdate: paint });
-      if (window.matchMedia("(pointer: coarse)").matches) {
-        tl.to(prog.current, {
-          p: activeRef.current + (activeRef.current < count - 1 ? 0.35 : -0.35),
-          duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1,
-          onUpdate: () => setP(prog.current.p),
-        }, "+=0.2");
-      }
+      draw = gsap.to(rv, {
+        r: 1, duration: 1.4, ease: ease.inOut, onUpdate: paint,
+        onComplete: () => {
+          if (!window.matchMedia("(pointer: coarse)").matches || tween.current?.isActive()) return;
+          nudge.current = gsap.to(prog.current, {
+            p: `+=${activeRef.current < count - 1 ? 0.35 : -0.35}`,
+            duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1, delay: 0.2,
+            onUpdate: () => setP(prog.current.p),
+          });
+        },
+      });
     }, { threshold: 0.35 });
     io.observe(el);
     return () => {
       pre.disconnect();
       io.disconnect();
-      tl?.kill();
+      draw?.kill();
+      nudge.current?.kill();
       rv.r = 1;
       paint();
     };
@@ -209,6 +217,7 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
       }
       if (Math.abs(dx) < ASCENT.slop) return;
       d.locked = true;
+      nudge.current?.kill();
       tween.current?.kill();
       heading.current = null;
       area.current?.setPointerCapture(e.pointerId);
@@ -257,7 +266,7 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
   };
 
   return (
-    <div className="mc-ascent" ref={root} data-mode={mode} data-touched={touched || undefined}>
+    <div className="mc-ascent" ref={root} data-mode={mode} data-fallback={why} data-touched={touched || undefined}>
       <div
         className="mc-ascent-area"
         ref={area}
@@ -284,7 +293,8 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
             reduced={reduced}
             marker={marker}
             onReady={() => setMode("gl")}
-            onFallback={() => {
+            onFallback={(reason) => {
+              setWhy(reason);
               setMode("fallback");
               requestAnimationFrame(paint);
             }}
@@ -311,9 +321,12 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
                 setTouched(true);
                 go(i);
               }}
-              /* Hover selects with a mouse (client, 2026-10-21); onMouseEnter
-                 rather than pointerenter so a tap does not select twice. */
-              onMouseEnter={() => go(i)}
+              /* Hover selects with a mouse (client, 2026-10-21). Only where
+                 hover is real: a phone's emulated mouse events, or content
+                 scrolling under a resting cursor, must not pick a stage. */
+              onMouseEnter={() => {
+                if (window.matchMedia("(hover: hover)").matches) go(i);
+              }}
             >
               <span className="mc-node-n">{s.n}</span>
               <span className="mc-node-name">{s.name}</span>

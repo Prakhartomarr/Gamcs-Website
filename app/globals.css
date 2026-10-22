@@ -6677,10 +6677,77 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    arise here. There is deliberately no --mc-rise equivalent: animate
    .mc-stage, not .mc-stage-btn.
  */
+/* =====================================================================
+   THE ASCENT (2026-10-23) — the maturity curve as the control. Drag along
+   the line, tap a node, or arrow through the tablist; the panel beneath
+   answers. Phone first; desktop widens the line and names the nodes.
+   Markup and behaviour: components/maturity/.
+   ===================================================================== */
+.mc-ascent{position:relative}
+.mc-ascent-area{position:relative;height:clamp(176px,50vw,300px);
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;cursor:grab}
+.mc-ascent-area:active{cursor:grabbing}
+/* Four ruled lines behind the curve: a ledger page, quietly. */
+.mc-ascent-area::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0 calc(25% - 1px),
+    rgba(15,94,151,.07) calc(25% - 1px) 25%)}
+.mc-ascent-svg,.mc-ascent-host,.mc-ascent-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.mc-ascent-svg path{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;
+  transition:opacity .4s var(--ease-out)}
+/* WebGL has painted: it draws the line now, the SVG stands down. */
+.mc-ascent[data-mode="gl"] .mc-ascent-svg path{opacity:0}
+/* Placed and shown by script; invisible until then so it never sits at 0,0. */
+.mc-ascent-marker{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;
+  border-radius:50%;background:#fff;border:3px solid var(--blue);opacity:0;
+  box-shadow:0 0 0 7px rgba(15,94,151,.14),0 6px 18px rgba(10,65,105,.32);
+  pointer-events:none;transition:opacity .3s var(--ease-out)}
+
+.mc-ascent-nodes{position:relative;height:52px;margin:0;padding:0;list-style:none}
+.mc-ascent-nodes li{position:absolute;top:2px;left:calc(var(--x) * 100%);transform:translateX(-50%)}
+.mc-node{display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;
+  border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mc-node-n{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:#fff;color:#5B6067;
+  font:600 14px/1 var(--font-sans);font-variant-numeric:tabular-nums;
+  transition:background var(--dur-hover) var(--ease-out),color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),box-shadow var(--dur-hover) var(--ease-out),
+    transform var(--dur-press) var(--ease-out)}
+/* The tap's own answer, inside --dur-press. */
+.mc-node:active .mc-node-n{transform:scale(.88)}
+.mc-node[aria-selected="true"] .mc-node-n{background:var(--blue);border-color:var(--blue);color:#fff;
+  box-shadow:0 8px 20px -8px rgba(10,65,105,.55)}
+.mc-node:focus-visible{outline:none}
+.mc-node:focus-visible .mc-node-n{outline:2px solid var(--blue);outline-offset:3px}
+/* On phones the name is for screen readers; the panel prints it. */
+.mc-node-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.mc-ascent-hint{margin:8px 0 0;text-align:center;font-size:14px;color:#6B7280;
+  transition:opacity .4s var(--ease-out)}
+.mc-ascent-hint span{display:inline-block;color:var(--blue);animation:mcNudgeL 1.8s ease-in-out infinite}
+.mc-ascent-hint span:last-child{animation-name:mcNudgeR}
+@keyframes mcNudgeL{50%{transform:translateX(-4px)}}
+@keyframes mcNudgeR{50%{transform:translateX(4px)}}
+.mc-ascent[data-touched] .mc-ascent-hint{opacity:0}
+@media (pointer:fine){.mc-ascent-hint{display:none}}
+
+@media (min-width:1024px){
+  .mc-ascent-area{height:300px}
+  .mc-ascent-nodes{height:96px}
+  .mc-node-name{position:static;width:auto;height:auto;overflow:visible;clip:auto;
+    max-width:15ch;white-space:normal;text-align:center;
+    font-size:14px;font-weight:600;line-height:1.3;color:#5B6067}
+  .mc-node[aria-selected="true"] .mc-node-name{color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){
+  .mc-ascent-hint span{animation:none}
+  .mc-node-n,.mc-ascent-marker,.mc-ascent-svg path{transition:none}
+}
+
 .mc[data-anim="pending"] .mc-h2,
 .mc[data-anim="pending"] .mc-lead,
 .mc[data-anim="pending"] .mc-railsvg,
-.mc[data-anim="pending"] .mc-stage,
+.mc[data-anim="pending"] .mc-ascent,
 .mc[data-anim="pending"] .mc-panel,
 .mc[data-anim="pending"] .mc-cta{opacity:0;animation:mcGate .4s ease 2.6s forwards}
 @keyframes mcGate{to{opacity:1}}
@@ -6691,7 +6758,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc[data-anim="pending"] .mc-h2,
   .mc[data-anim="pending"] .mc-lead,
   .mc[data-anim="pending"] .mc-railsvg,
-  .mc[data-anim="pending"] .mc-stage,
+  .mc[data-anim="pending"] .mc-ascent,
   .mc[data-anim="pending"] .mc-panel,
   .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
 }
@@ -6747,7 +6814,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc[data-anim="pending"] .mc-h2,
   .mc[data-anim="pending"] .mc-lead,
   .mc[data-anim="pending"] .mc-railsvg,
-  .mc[data-anim="pending"] .mc-stage,
+  .mc[data-anim="pending"] .mc-ascent,
   .mc[data-anim="pending"] .mc-panel,
   .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
 }

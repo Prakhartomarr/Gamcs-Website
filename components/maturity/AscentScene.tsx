@@ -27,7 +27,8 @@ type Props = {
   reduced: boolean;
   marker: React.RefObject<HTMLSpanElement>;
   onReady: () => void;
-  onFallback: () => void;
+  /** Hands back to the SVG; `reason` lands on the instrument as data-fallback. */
+  onFallback: (reason: string) => void;
 };
 
 /* The vertex shader rebuilds the curve from `t` alone. baseY and noise are
@@ -37,7 +38,10 @@ type Props = {
 const VERT = `
 attribute vec2 aVert; // x: t along the line 0..1, y: side -1|1
 uniform vec2 uRes;
-uniform float uAmp, uTime, uWidth;
+uniform float uAmp, uTime;
+// Shared with the fragment shader, so it must match its precision exactly
+// (GLSL ES 1.0 refuses to link a uniform declared at two precisions).
+uniform mediump float uWidth;
 varying float vSide, vT;
 float baseY(float t){ float s = t*t*(3.0-2.0*t); return 0.14 + 0.66*(0.3*t + 0.7*s); }
 float n3(float t, float k){
@@ -82,19 +86,27 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
 }
 
 export default function AscentScene({ count, getProgress, getReveal, reduced, marker, onReady, onFallback }: Props) {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const host = useRef<HTMLDivElement>(null);
   /* Callbacks in refs, so a parent re-render never tears the context down. */
   const cb = useRef({ onReady, onFallback, getProgress, getReveal });
   cb.current = { onReady, onFallback, getProgress, getReveal };
 
   useEffect(() => {
-    const el = canvas.current;
-    if (!el) return;
+    /* A fresh canvas per effect run. Cleanup loses its context on purpose
+       (that frees the GPU at once rather than at GC), and a lost context
+       cannot be handed back: re-using one canvas would give a remount (React
+       dev's double effect, a hot reload) a dead context. */
+    const box = host.current;
+    if (!box) return;
+    const el = document.createElement("canvas");
+    el.className = "mc-ascent-gl";
+    box.appendChild(el);
     const nav = navigator as Navigator & { deviceMemory?: number };
     const gl = el.getContext("webgl", { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: "low-power" });
     let tier: Tier = guessTier(!!gl, nav.deviceMemory, nav.hardwareConcurrency);
     if (!gl || tier === "low") {
-      cb.current.onFallback();
+      cb.current.onFallback(gl ? "low-tier" : "no-webgl");
+      el.remove();
       return;
     }
 
@@ -102,14 +114,16 @@ export default function AscentScene({ count, getProgress, getReveal, reduced, ma
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
     const prog = gl.createProgram();
     if (!vs || !fs || !prog) {
-      cb.current.onFallback();
+      cb.current.onFallback("shader");
+      el.remove();
       return;
     }
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      cb.current.onFallback();
+      cb.current.onFallback("link");
+      el.remove();
       return;
     }
     gl.useProgram(prog);
@@ -208,7 +222,7 @@ export default function AscentScene({ count, getProgress, getReveal, reduced, ma
           tier = stepDown(tier);
           if (tier === "low") {
             stop();
-            cb.current.onFallback();
+            cb.current.onFallback(`slow:${(probeSum / probe).toFixed(0)}ms`);
             return;
           }
           probe = probeSum = 0;
@@ -240,7 +254,7 @@ export default function AscentScene({ count, getProgress, getReveal, reduced, ma
     const onLost = (e: Event) => {
       e.preventDefault();
       stop();
-      cb.current.onFallback();
+      cb.current.onFallback("context-lost");
     };
     el.addEventListener("webglcontextlost", onLost);
     size();
@@ -256,8 +270,9 @@ export default function AscentScene({ count, getProgress, getReveal, reduced, ma
       gl.deleteShader(vs);
       gl.deleteShader(fs);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
+      el.remove();
     };
   }, [count, reduced, marker]);
 
-  return <canvas ref={canvas} className="mc-ascent-gl" aria-hidden="true" />;
+  return <div ref={host} className="mc-ascent-host" aria-hidden="true" />;
 }
