@@ -1223,6 +1223,10 @@ html{font-size:112.5%}
    supporting browsers; this is the belt to that braces, and it also keeps a
    stray hover tilt from firing on a card nobody can reach. */
 .locdeck-item:not([data-depth="0"]){pointer-events:none}
+/* The "Click to expand" hint belongs to the card in front; the side cards
+   cannot be clicked, and their hints peeked out past the panel edge on a
+   phone (client, 2026-10-22). */
+.locdeck-item:not([data-depth="0"]) .locmap-hint{visibility:hidden}
 
 .locdeck-nav{display:flex;align-items:center;justify-content:center;gap:14px}
 .locdeck-arrow{display:inline-flex;align-items:center;justify-content:center;
@@ -1331,6 +1335,12 @@ html{font-size:112.5%}
   .contact-panel-copy{order:2;max-width:none}
   .contact-panel-stage{order:1;width:auto;height:auto;margin-bottom:32px}
   .locmap{width:min(408px,100%)}
+  /* In the deck, the item is a grid item centred in the stage, so it shrinks
+     to its content — and its content is this percentage-wide card. Each sized
+     off the other and both collapsed to their 2px borders (client,
+     2026-10-22: "the map card is not correct on mobile"). The item takes the
+     stage's width instead and centres the card in it. */
+  .locdeck-item{width:100%;display:flex;justify-content:center}
   .locmap-card,.locmap-card.is-open{width:100%}
   .locmap-card{height:153px}
   .locmap-card.is-open{height:289px}
