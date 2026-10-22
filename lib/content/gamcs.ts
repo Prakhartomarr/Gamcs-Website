@@ -626,6 +626,13 @@ export const primaryCta = { label: "Schedule a Call", href: "/contact" } as cons
    TODO(business): heading and sub are placeholder copy pending client
    sign-off. Prophix, Vena and Aimplan have no logo file: their tiles show the
    name until one is supplied at public/logos/platforms/. */
+/* Names in capability lists that link out (client, 2026-10-22: the
+   FinSensor link was missing). Matched as a phrase inside a list item, so
+   "Proprietary Finance Technology — FinSensor AI" links its last two words. */
+export const itemLinks: Record<string, string> = {
+  "FinSensor AI": "https://finsensor.ai/",
+};
+
 export const platforms = {
   heading: "Platforms We Implement",
   sub: "We're platform-agnostic. We select, implement and integrate the ERP, CRM and FP&A tools your finance function runs on.",
@@ -1922,7 +1929,8 @@ export const solutions: Solution[] = [
             lead: "Data, Analytics & Intelligence",
             subheads: [
               {
-                lead: "Data Foundation",
+                /* "Data Foundation" until 2026-10-22 (client). */
+                lead: "Data Warehousing",
                 items: [
                   "Data Engineering & Warehousing",
                   "Data Integration & Modelling",

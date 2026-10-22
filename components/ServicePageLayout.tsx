@@ -6,6 +6,7 @@ import SectionEyebrow from "@/components/SectionEyebrow";
 import { primaryCta, type ListItem, type Solution } from "@/lib/content/gamcs";
 import { servicePage } from "@/lib/content/ui";
 import CTA from "@/components/CTA";
+import LinkedText from "@/components/LinkedText";
 
 /**
  * The shared rhythm for the five pillar pages:
@@ -160,7 +161,7 @@ function ServiceList({ items, numbered = false }: { items: ListItem[]; numbered?
                   <p className="cap-sub">{sub.lead}</p>
                   <ul className="cap-list">
                     {sub.items.map((name) => (
-                      <li key={name}>{name}</li>
+                      <li key={name}><LinkedText text={name} /></li>
                     ))}
                   </ul>
                 </Fragment>

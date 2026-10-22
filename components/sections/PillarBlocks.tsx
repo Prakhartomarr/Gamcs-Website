@@ -1,6 +1,7 @@
 import type { SolutionBlock } from "@/lib/content/gamcs";
 import { platforms, previewBySlug, primaryCta, solutions } from "@/lib/content/gamcs";
 import Velaris, { VELARIS_MOTION } from "@/components/ui/velaris";
+import LinkedText from "@/components/LinkedText";
 
 /**
  * The five pillars, built to docs/unity-spec.md: two equal columns inside a
@@ -43,6 +44,10 @@ const SHADER_FALLBACK = SHADER["fpa-cfo-advisory"];
 /* Transform's platform rows, left off the hub (client, 2026-10-22): they
    are the platforms band on /how-we-help now, and stay on the detail page. */
 const HUB_HIDDEN = new Set(platforms.groups);
+/* Rows the hub moves to the end of their pillar's list (client, 2026-10-22:
+   Finance Technology & Systems after AI & Decision Intelligence). The
+   detail page keeps it inside its own group. */
+const HUB_LAST = new Set(["Finance Technology & Systems"]);
 
 export default function PillarBlocks() {
   return (
@@ -61,7 +66,8 @@ export default function PillarBlocks() {
            pillar's (client, 2026-10-22). The detail page keeps the groups. */
         const rows = (bullets?.items ?? [])
           .flatMap((r) => ("subheads" in r ? r.subheads : [r]))
-          .filter((r) => !HUB_HIDDEN.has(r.lead));
+          .filter((r) => !HUB_HIDDEN.has(r.lead))
+          .sort((a, b) => Number(HUB_LAST.has(a.lead)) - Number(HUB_LAST.has(b.lead)));
         const preview = previewBySlug.get(s.slug);
         const paint = SHADER[s.slug] ?? SHADER_FALLBACK;
 
@@ -121,7 +127,7 @@ export default function PillarBlocks() {
                     {"items" in r ? (
                       <ul className="cap-list">
                         {r.items.map((sub) => (
-                          <li key={sub}>{sub}</li>
+                          <li key={sub}><LinkedText text={sub} /></li>
                         ))}
                       </ul>
                     ) : (

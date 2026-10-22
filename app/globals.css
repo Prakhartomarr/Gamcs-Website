@@ -3458,12 +3458,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     rgba(4,16,30,.24) 72%,rgba(4,16,30,.06) 88%,rgba(4,16,30,0) 100%)}
 .sol-card-body{position:relative;z-index:1;display:flex;flex-direction:column;
   height:100%;padding:clamp(22px,3.6vw,52px)}
-.sol-eyebrow{display:block;font:500 13px/1.2 var(--font-sans);letter-spacing:.02em;
+.sol-eyebrow{display:block;font:500 15px/1.2 var(--font-sans);letter-spacing:.02em; /* 13px until 2026-10-22 (client: "a little bigger") */
   color:rgba(249,249,248,.86)}
-.sol-card h2{margin:clamp(14px,1.5vw,22px) 0 0;max-width:533px;color:#F9F9F8;
-  font:400 clamp(38px,3.7vw,53px)/1.0 var(--font-sans);letter-spacing:-.01em}
-.sol-card p{margin:clamp(14px,1.3vw,19px) 0 0;max-width:533px;color:#F9F9F8;
-  font:500 clamp(16px,1.32vw,19px)/1.2 var(--font-sans)}
+/* The full width of the card body, not the old 533px cap (client,
+   2026-10-22): at 1440 that is what lets "Strategic Finance, FP&A & CFO
+   Advisory" set in two lines, and the line under it in one at 17.5px
+   (615px at the old 19px, against a 585px body). */
+/* 39px at 1440, down from 53 (client, 2026-10-22: "Transactions & Capital
+   Advisory" in one line, every card's heading at the same size). It sets to
+   780px at 53px against a 585px body; 2.7vw keeps it at ~574 of 585 at 1440
+   and scales with the card below that. */
+.sol-card h2{margin:clamp(14px,1.5vw,22px) 0 0;color:#F9F9F8;
+  font:400 clamp(28px,2.7vw,39px)/1.05 var(--font-sans);letter-spacing:-.01em}
+.sol-card p{margin:clamp(14px,1.3vw,19px) 0 0;color:#F9F9F8;
+  font:500 clamp(15px,1.22vw,17.5px)/1.2 var(--font-sans)}
 /* a button, not a pill: 55px tall at the reference, on a small radius */
 .sol-talk{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;
   margin-top:auto;min-height:55px;padding:0 22px;border-radius:8px;
@@ -7852,3 +7860,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    colour and size the page's other heading leads use, centred under the h2. */
 .metrics-sub{margin:16px auto 0;max-width:60ch;color:var(--ink-muted);
   font-size:clamp(1rem,1.15vw,1.14rem);line-height:1.6;text-wrap:balance}
+/* An outbound name inside a capability list (components/LinkedText.tsx). */
+.cap-link{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+@media(hover:hover){.cap-link:hover{color:var(--blue-dark)}}
