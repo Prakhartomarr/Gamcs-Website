@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import CTA from "@/components/CTA";
-import PageHeadArt from "@/components/PageHeadArt";
 import SectionEyebrow from "@/components/SectionEyebrow";
 import ApplyDialog, { type ApplyRequest } from "@/components/careers/ApplyDialog";
 import { careers } from "@/lib/content/gamcs";
@@ -74,7 +73,6 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
         <div className="cr-lane">
           <div className="cr-sentinel" ref={sentinel} aria-hidden="true" />
           <aside className="cr-panel page-head--art" aria-label="Careers at GAMCS" data-pinned={pinned ? "" : undefined}>
-            <PageHeadArt src="/page-art/team.webp" />
             <div className="cr-panel-in">
               {/* ONE SENTENCE (client, 2026-10-22: heads run to 1 or 2 lines).
                   The light-blue accent, "Build your career doing it.", is no
@@ -86,6 +84,13 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
               <h1>{careers.h1}</h1>
               <div className="cr-fold"><div>
                 <p className="cr-intro">{careers.intro}</p>
+              </div></div>
+              {/* The contact card's white inner card (client, 2026-10-22: "same
+                  as contact us page"), sitting on the glow the way .cx-inner
+                  does there. Location, Apply and the inbox move into it. The
+                  location keeps its fold, so a pinned panel still sheds it. */}
+              <div className="cx-inner cr-inner">
+              <div className="cr-fold"><div>
                 <p className="cr-meta">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z" />
@@ -94,11 +99,11 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
                   {careers.meta}
                 </p>
               </div></div>
-              <div className="cr-rule" />
               <div className="ctas" ref={heroCtas}>
                 <CTA {...apply()} icon="diagonal" data-cta="careers-hero">{careers.applyLabel}</CTA>
               </div>
               <a className="cr-mail" href={mailto}><Mail />{careers.email}</a>
+              </div>
             </div>
           </aside>
         </div>

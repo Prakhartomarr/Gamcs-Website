@@ -3921,23 +3921,24 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Why GAMCS and How we work. The split then ends, and How we hire, Life at
    GAMCS and the closing band run full width. Sizes are px, from the boards.
    ===================================================================== */
-.cr-split{display:grid;grid-template-columns:440px minmax(0,1fr);column-gap:64px;align-items:stretch;padding-top:14px}
+/* The contact page's split (client, 2026-10-22: "make the cards size like
+   this"): the card takes 1fr to the column's 1.15fr, 40px apart, as .cx-grid. */
+.cr-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);column-gap:40px;align-items:stretch;padding-top:14px}
 .cr-lane{margin-bottom:112px}
 .cr-col{min-width:0;padding-bottom:112px}
 .cr-sentinel{height:1px;margin-bottom:-1px}
 
 /* `page-head--art` on the same element supplies the white crumbs and kicker. */
-.cr-panel{position:relative;overflow:hidden;border-radius:24px;color:#fff;isolation:isolate}
+.cr-panel{position:relative;overflow:hidden;border-radius:28px;color:#fff;isolation:isolate}
 .cr-panel .page-head-art{z-index:-1}
 .cr-panel .page-head-art::after{background:rgba(13,24,40,.84)}
-.cr-panel-in{padding:30px 32px 26px}
+.cr-panel-in{padding:44px 40px}
 .cr-panel .crumbs{margin:-14px 0 2px}
 .cr-panel .crumbs a{display:inline-flex;align-items:center;min-height:44px}
 .cr-panel h1{margin:12px 0 0;font-size:40px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
 .cr-panel h1 span{display:block;color:#9CC8EA}
 .cr-intro{margin:18px 0 0;font-size:15px;line-height:1.55;color:#E3E9EF}
 .cr-meta{display:flex;align-items:center;gap:8px;margin:14px 0 0;font-size:14px;font-weight:500}
-.cr-rule{height:1px;margin:22px 0 18px;background:rgba(255,255,255,.18)}
 .cr-filters{display:flex;flex-direction:column;gap:12px}
 .cr-filters label{display:block;margin-bottom:8px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#D5DDE6}
 .cr-select{position:relative}
@@ -3956,6 +3957,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 @media (min-width:1024px) and (min-height:640px){
   .cr-panel{position:sticky;top:calc(var(--header-h) + 12px)}
+  /* The contact card's height: 751px, its height beside the form at 1440,
+     capped to the screen so a pinned panel still fits under the header.
+     A flex column so the white card sits at the foot, over the glow, as
+     .cx-inner does there. */
+  .cr-panel{display:flex;flex-direction:column;
+    min-height:min(751px,calc(100vh - var(--header-h) - 36px))}
+  .cr-panel-in{flex:1;display:flex;flex-direction:column}
+  .cr-panel-in>.cr-fold{margin-bottom:26px}
+  .cr-panel .cr-panel-in>.cr-inner{margin-top:auto}
   .cr-panel[data-pinned] .cr-fold{grid-template-rows:0fr;opacity:0;visibility:hidden}
   .cr-panel[data-pinned] h1{font-size:30px}
 }
@@ -4022,8 +4032,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 
 /* ---- 1024–1279: a narrower panel, Apply under the track copy ---- */
 @media (max-width:1279px){
-  .cr-split{grid-template-columns:380px minmax(0,1fr);column-gap:40px}
-  .cr-panel-in{padding-inline:26px}
   .cr-panel h1{font-size:34px}
   .cr-track{grid-template-columns:64px minmax(0,1fr);padding:28px}
   .cr-track .btn{grid-column:2;justify-self:start;margin-top:20px}
@@ -4044,7 +4052,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .cr-panel h1{margin-top:8px;font-size:32px}
   .cr-intro{margin-top:12px;font-size:14px;line-height:1.5}
   .cr-meta{margin-top:10px}
-  .cr-rule{margin:14px 0 12px}
   .cr-filters{gap:8px}
   .cr-filters label{margin-bottom:5px}
   .cr-select select{height:44px}
@@ -4070,7 +4077,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .cr-panel h1{font-size:31px}
   .cr-intro{font-size:16px}
   .cr-meta{margin-top:16px}
-  .cr-panel .cr-rule,.cr-panel .cr-filters{display:none}
+  .cr-panel .cr-filters{display:none}
   .cr-panel .ctas{margin-top:24px}
   .cr-panel .ctas .btn,.cr-close .btn{min-height:48px}
   .cr-col{padding:56px 16px 80px}
@@ -7504,18 +7511,29 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    would leak if lifted — the recipe is restated here at the same hue the
    heads now use (206), so the two stay recognisably one family. */
 .cx-card{position:relative;overflow:hidden;display:flex;flex-direction:column;
-  border-radius:28px;padding:44px 40px;color:#fff;
+  border-radius:28px;padding:44px 40px;color:#fff}
+/* The careers panel wears the same ground (client, 2026-10-22: "make this
+   card same as contact us page"); its building photograph is gone. */
+.cx-card,.cr-panel{
   background:
     radial-gradient(132% 60% at 50% 104%,
       #E6F0FF 0%, #74B4FF 22%, #2E7BFF 46%, rgba(0,18,60,0) 84%),
     linear-gradient(180deg, #00091F 0%, #000C28 46%, #001038 100%),
     #00091F}
-.cx-card::before{content:"";position:absolute;inset:0;pointer-events:none;
+.cx-card::before,.cr-panel::before{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(to right, rgba(255,255,255,.16) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,.16) 1px, transparent 1px);
   background-size:64px 64px;mix-blend-mode:overlay}
-.cx-card > *{position:relative;z-index:1}
+.cx-card > *,.cr-panel-in{position:relative;z-index:1}
+/* The careers panel's white card: dark type and a blue focus ring on it,
+   where the panel around it is white-on-dark. Block flow, not the contact
+   card's flex column, so its gap above is a margin, not `auto`. */
+.cr-panel .cr-inner{margin-top:26px;color:var(--ink-deep)}
+.cr-inner .cr-meta{margin:0 0 4px}
+.cr-inner .ctas{margin-top:14px}
+.cr-inner .cr-mail{color:var(--ink-deep)}
+.cr-panel .cr-inner a:focus-visible,.cr-panel .cr-inner button:focus-visible{outline-color:var(--blue)}
 .cx-h1{margin:0;font-size:clamp(32px,3.2vw,44px);line-height:1.08;
   font-weight:600;letter-spacing:-.025em;color:#fff;max-width:14ch}
 .cx-lead{margin:18px 0 0;font-size:0.9444rem;line-height:1.6;
