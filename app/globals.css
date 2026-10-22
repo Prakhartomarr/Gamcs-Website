@@ -1252,12 +1252,16 @@ html{font-size:112.5%}
   /* A phone column has no gutters to lend, so the neighbours tuck in to
      where they still read as two cards waiting either side. */
   .locdeck-stage{min-height:268px}
-  .locdeck-item[data-depth="1"]{transform:translate3d(46px,-18px,-50px) rotateY(-11deg) scale(.88)}
-  .locdeck-item[data-depth="2"]{transform:translate3d(-46px,-18px,-50px) rotateY(11deg) scale(.88)}
+  /* In % of the item, which is the stage's width: with the front card capped
+     at 76% of it (client, 2026-10-22), 17% shows ~13% of the stage of each
+     neighbour at every phone width. Open or closed alike — on a phone the
+     card opens taller, not wider, so the neighbours need not step back. */
+  .locdeck-item[data-depth="1"],
   .locdeck[data-expanded="true"] .locdeck-item[data-depth="1"]{
-    transform:translate3d(96px,-22px,-50px) rotateY(-11deg) scale(.88)}
+    transform:translate3d(17%,-18px,-50px) rotateY(-11deg) scale(.88)}
+  .locdeck-item[data-depth="2"],
   .locdeck[data-expanded="true"] .locdeck-item[data-depth="2"]{
-    transform:translate3d(-96px,-22px,-50px) rotateY(11deg) scale(.88)}
+    transform:translate3d(-17%,-18px,-50px) rotateY(11deg) scale(.88)}
 }
 
 .locmaps{flex-direction:column;gap:12px}
@@ -1341,6 +1345,14 @@ html{font-size:112.5%}
      2026-10-22: "the map card is not correct on mobile"). The item takes the
      stage's width instead and centres the card in it. */
   .locdeck-item{width:100%;display:flex;justify-content:center}
+  /* NOT THE STAGE'S FULL WIDTH (client, 2026-10-22: "map cards too wide").
+     At 100% the front card hid both neighbours behind it; capped, they peek
+     out either side as they do on desktop. Two classes, so the phone's
+     `.locmap{width:100%}` further down cannot undo it inside the deck. */
+  .locdeck .locmap{width:min(300px,76%)}
+  /* Centred under the card again: the left-hand alignment below was for the
+     full-width stacked card, which the deck no longer is. */
+  .locdeck .locmap-hint{left:50%;transform:translateX(-50%)}
   .locmap-card,.locmap-card.is-open{width:100%}
   .locmap-card{height:153px}
   .locmap-card.is-open{height:289px}
@@ -1368,8 +1380,9 @@ html{font-size:112.5%}
   .locmap-card{height:172px}
   .locmap-card.is-open{height:289px}
   .locmap-dir{min-height:44px;padding:0 16px}   /* WCAG 2.5.5 on touch */
-  /* 8px shorter card here, so the hint sits 8px closer to the centre line */
-  .locmap-hint{top:calc(50% + 82px)}
+  /* The phone card is 172px, 86 from centre to edge: 96 puts the hint 10px
+     clear of it. At 82 it sat 4px over the card's bottom edge. */
+  .locmap-hint{top:calc(50% + 96px)}
 }
 @media(prefers-reduced-motion:reduce){
   .locmap-card,.locmap-img,.locmap-layer,.locmap-grid,.locmap-place,
