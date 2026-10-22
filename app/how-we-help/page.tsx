@@ -69,9 +69,7 @@ export default function HowWeHelpPage() {
         <div className="container">
           <div className="fin-center reveal">
             <h2 className="fin-h2" id="hwh-after-h">{howWeHelp.afterFilm.title}</h2>
-            {howWeHelp.afterFilm.paragraphs.map((p) => (
-              <p className="fin-lead" key={p.slice(0, 24)}>{p}</p>
-            ))}
+            <p className="fin-lead">{howWeHelp.afterFilm.body}</p>
           </div>
         </div>
       </section>

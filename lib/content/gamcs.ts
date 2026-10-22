@@ -663,13 +663,10 @@ export const howWeHelp = {
     sub: "From establishing a reliable financial foundation to turning insight into action, we help finance teams connect data, understand performance and build the capabilities needed to make better business decisions.",
   },
   /* Under the film on /how-we-help, above the phases (client copy,
-     2026-10-22). */
+     2026-10-22). One paragraph, set to three lines on desktop. */
   afterFilm: {
     title: "Every Finance Function Starts Somewhere Different.",
-    paragraphs: [
-      "Not every business needs the same intervention. Some need stronger financial processes and reliable reporting. Others need connected data, deeper performance insights or better forward-looking decisions.",
-      "We start by understanding where you are today, identify the gaps that matter most, and build the capabilities that move your finance function forward.",
-    ],
+    body: "Not every business needs the same intervention. Some need stronger financial processes and reliable reporting. Others need connected data, deeper performance insights or better forward-looking decisions. We start by understanding where you are today, identify the gaps that matter most, and build the capabilities that move your finance function forward.",
   },
   phases: [
     {
