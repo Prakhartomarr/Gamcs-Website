@@ -18,7 +18,7 @@ export default function ToolLogos({ className }: { className?: string } = {}) {
         <div className="flex flex-col items-center gap-6 md:flex-row md:gap-0">
           <p
             id="tool-logos-h"
-            className="section-kicker m-0 text-center uppercase leading-relaxed [text-wrap:balance] md:mr-10 md:w-[270px] md:shrink-0 md:border-r md:border-[#E3E7EB] md:py-2 md:pr-10 md:text-left"
+            className="section-kicker m-0 text-center !tracking-normal leading-relaxed [text-wrap:balance] md:mr-10 md:w-[185px] md:[text-wrap:wrap] md:shrink-0 md:border-r md:border-[#E3E7EB] md:py-2 md:pr-10 md:text-left"
           >
             {toolCloud.kicker}
           </p>
