@@ -20,10 +20,24 @@ export default function TeamPage() {
       <section className="page-head ph-team">
         <div className="container">
           <h1>{team.h1}</h1>
-          {team.body.map((para) => (
-            <p key={para.slice(0, 32)}>{para}</p>
-          ))}
-          <p className="team-mission">{story.mission}</p>
+          {/* ONE PARAGRAPH (client, 2026-10-22). This was three: the two
+              team.body entries and story.mission under it, each in its own
+              <p>. Joined at render — team.body is left a two-element array
+              because manifest rows point at [0] and [1], and story.mission is
+              shared copy that the homepage accents and /careers prints, so
+              neither is rewritten to suit this page.
+
+              The mission keeps its emphasis as the closing clause rather than
+              being flattened into the rest: .page-head .team-mission is white
+              at 600 against the paragraph's #CBD2EA at 500, which is what
+              made it stand out as a separate block. A span, not a <strong> —
+              this is a visual accent, not a change in meaning, and the page
+              head should not announce emphasis to a screen reader that the
+              sentence does not carry. */}
+          <p>
+            {team.body.join(" ")}{" "}
+            <span className="team-mission">{story.mission}</span>
+          </p>
           {/* NO BUTTONS IN THIS HEAD (client, 2026-10-22). "Schedule a Call"
               and "Their work" were both taken out; the band is headline,
               intro and mission only. The closing band below still carries
