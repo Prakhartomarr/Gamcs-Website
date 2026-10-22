@@ -9,13 +9,15 @@ import { cn } from "@/lib/utils";
  * Changes from the original:
  * - Tailwind 3. `size-90`, `size-18`, `shadow-xs` and `mask-[...]` are v4
  *   names that compile to nothing here; these are the v3 equivalents.
- * - Tiles are placed in percentages of a square, not 72px steps, so the grid
- *   shrinks with the column instead of overflowing a phone.
+ * - The original's geometry, matched to its demo (client, 2026-10-22): a
+ *   360px square of 72px tiles that touch, fading hard to the edges. Placed
+ *   in percentages of that square (20% = 72/360) rather than px, so below
+ *   360px of column it shrinks instead of overflowing a phone.
  * - Logos come in as props. The twelve sit on the odd cells of a 5x5
- *   checkerboard (no corners, which the fade would swallow), and four empty
- *   tiles on the edge midpoints keep the scattered texture. The centre is
- *   left open (client, 2026-10-22: the GA mark there was removed). A logo
- *   with no `src` shows its name.
+ *   checkerboard (no corners, which the fade would swallow); five empty
+ *   tiles (the edge midpoints and the centre, where the GA mark was until
+ *   the client had it removed) keep the scattered texture. A logo with no
+ *   `src` shows its name.
  */
 
 export type IntegrationLogo = { name: string; src?: string };
@@ -24,7 +26,7 @@ const LOGO_CELLS = [
   [0, 1], [0, 3], [1, 0], [1, 2], [1, 4], [2, 1],
   [2, 3], [3, 0], [3, 2], [3, 4], [4, 1], [4, 3],
 ] as const;
-const EMPTY_CELLS = [[0, 2], [2, 0], [2, 4], [4, 2]] as const;
+const EMPTY_CELLS = [[0, 2], [2, 0], [2, 2], [2, 4], [4, 2]] as const;
 const CELL = 20; // % of the square per grid cell
 
 export function Integrations({
@@ -39,7 +41,7 @@ export function Integrations({
       <div className="max-w-xl">{children}</div>
 
       <div className="flex justify-center md:justify-end">
-        <div className="relative aspect-square w-full max-w-[440px] [mask-image:radial-gradient(ellipse_at_center,black_62%,transparent_100%)]">
+        <div className="relative aspect-square w-full max-w-[360px] [mask-image:radial-gradient(ellipse_at_center,black,black,transparent)]">
           {EMPTY_CELLS.map(([row, col]) => (
             <Tile key={`e${row}${col}`} row={row} col={col} empty />
           ))}
@@ -48,12 +50,12 @@ export function Integrations({
             return (
               <Tile key={logo.name} row={row} col={col} label={logo.name}>
                 {logo.src ? (
-                  <span className="relative block h-[52%] w-[84%]">
+                  <span className="relative block h-[40%] w-[72%]">
                     <Image src={logo.src} alt={logo.name} fill sizes="72px"
                       className="pointer-events-none select-none object-contain" />
                   </span>
                 ) : (
-                  <span className="px-1 text-center text-[clamp(10px,1.3vw,13px)] font-semibold leading-tight text-[#0D1828]">
+                  <span className="px-1 text-center text-[11px] font-semibold leading-tight text-[#0D1828]">
                     {logo.name}
                   </span>
                 )}
@@ -84,13 +86,13 @@ function Tile({
       title={label}
       className={cn(
         "absolute flex items-center justify-center rounded-md border",
-        empty ? "bg-secondary/40" : "bg-card shadow-sm",
+        empty ? "bg-secondary/30" : "bg-card shadow-sm",
       )}
       style={{
-        left: `${col * CELL + 1}%`,
-        top: `${row * CELL + 1}%`,
-        width: `${CELL - 2}%`,
-        height: `${CELL - 2}%`,
+        left: `${col * CELL}%`,
+        top: `${row * CELL}%`,
+        width: `${CELL}%`,
+        height: `${CELL}%`,
       }}
     >
       {children}
