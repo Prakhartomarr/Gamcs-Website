@@ -2819,6 +2819,9 @@ export type CareerRole = {
 export const careers = {
   email: "careers@gamcs.in",
   h1: "Help finance teams decide faster.",
+  /* RETIRED 2026-10-22 (client): the panel h1 is one sentence now, so this
+     light-blue second line is not rendered. Kept, not deleted — manifest row
+     CAREERS-HEAD-04 points here and source.mjs throws on a missing locator. */
   h1Accent: "Build your career doing it.",
   intro:
     "GAMCS operates as part of a global FP&A consulting network, serving clients from early-stage startups through PE-backed enterprises. We hire people who want to own outcomes, not just deliverables.",

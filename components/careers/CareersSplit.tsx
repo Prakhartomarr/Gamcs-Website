@@ -76,9 +76,14 @@ export default function CareersSplit({ children }: { children: ReactNode }) {
           <aside className="cr-panel page-head--art" aria-label="Careers at GAMCS" data-pinned={pinned ? "" : undefined}>
             <PageHeadArt src="/page-art/team.webp" />
             <div className="cr-panel-in">
-              <h1>
-                {careers.h1} <span>{careers.h1Accent}</span>
-              </h1>
+              {/* ONE SENTENCE (client, 2026-10-22: heads run to 1 or 2 lines).
+                  The light-blue accent, "Build your career doing it.", is no
+                  longer shown: it took the h1 to four lines in this 376px
+                  panel, and two lines needed 620px, which would have taken
+                  244px off the column beside it. careers.h1Accent stays in
+                  gamcs.ts — manifest row CAREERS-HEAD-04 points at it. The
+                  `.cr-panel h1 span` rule in globals.css goes unused. */}
+              <h1>{careers.h1}</h1>
               <div className="cr-fold"><div>
                 <p className="cr-intro">{careers.intro}</p>
                 <p className="cr-meta">
