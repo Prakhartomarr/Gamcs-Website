@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 import { gsap } from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { dur, ease, stagger } from "@/lib/motion";
+
+gsap.registerPlugin(SplitText);
 
 /**
  * The maturity curve's entrance. Renders nothing; it only animates the section
@@ -67,14 +71,21 @@ export default function MaturityCurveMotion() {
       }
 
       const all = (sel: string) => Array.from(sec.querySelectorAll<HTMLElement>(sel));
-      const head = [...all(".mc-h2"), ...all(".mc-lead")];
-      const cards = all(".mc-stage");
-      const panel = all(".mc-panel");
+      /* The heading rises line by line out of a mask (The Ascent, 2026-10-23);
+         the lead, the instrument, the panel and the CTA follow as plain
+         fades. The instrument draws its own curve in once it is in view. */
+      const h2 = sec.querySelector<HTMLElement>(".mc-h2");
+      const split = h2 ? SplitText.create(h2, { type: "lines", mask: "lines" }) : null;
+      const lines = split ? (split.lines as HTMLElement[]) : [];
+      const head = all(".mc-lead");
+      const cards = all(".mc-ascent");
+      const panel = [...all(".mc-panel"), ...all(".mc-cta")];
       const moved = [...head, ...cards];
 
       gsap.set([...moved, ...panel], { opacity: 0 });
       gsap.set(head, { y: 14 });
       gsap.set(cards, { y: 16 });
+      gsap.set(lines, { yPercent: 105 });
       /* Only now: the inline from-values have replaced what the gate was
          holding, so there is no frame in which the section is visible. */
       release();
@@ -83,10 +94,11 @@ export default function MaturityCurveMotion() {
          is what --ease-out encodes, --dur-reveal is 560ms. Lands by ~1.2s. */
       const tl = gsap.timeline({
         paused: true,
-        defaults: { duration: 0.56, ease: "power4.out" },
+        defaults: { duration: dur.reveal, ease: ease.out },
       });
-      tl.to(head, { opacity: 1, y: 0, stagger: 0.08 }, 0);
-      tl.to(cards, { opacity: 1, y: 0, stagger: 0.06 }, 0.26);
+      tl.to(lines, { yPercent: 0, duration: dur.reveal * 1.3, stagger: stagger * 1.5 }, 0);
+      tl.to(head, { opacity: 1, y: 0 }, 0.18);
+      tl.to(cards, { opacity: 1, y: 0 }, 0.3);
       /* The panel only fades. It is the largest surface in the section, and a
          surface that size arriving on a slide reads as the page reflowing. */
       tl.to(panel, { opacity: 1, duration: 0.5 }, 0.62);
@@ -115,6 +127,7 @@ export default function MaturityCurveMotion() {
         io.disconnect();
         tl.kill();
         gsap.set([...moved, ...panel], { clearProps: "opacity,transform" });
+        split?.revert();
         sec.setAttribute("data-anim", "in");
       };
     };

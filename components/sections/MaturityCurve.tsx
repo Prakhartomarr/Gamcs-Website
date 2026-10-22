@@ -4,13 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import CTA from "@/components/CTA";
 import MaturityCurveMotion from "@/components/motion/MaturityCurveMotion";
-import MaturityRail from "@/components/motion/MaturityRail";
+import AscentInstrument from "@/components/maturity/AscentInstrument";
 import { maturityCurve } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
+import { dur, prefersReducedMotion, stagger } from "@/lib/motion";
 
 /**
- * The finance maturity curve: a row of five stage cards that are the tabs, and
- * the chosen stage's panel beneath them.
+ * The finance maturity curve: THE ASCENT (2026-10-23). The curve itself is the
+ * control — drag along it, tap a node, or arrow through the tablist — and the
+ * chosen stage's panel sits directly beneath it, so on a phone the answer to
+ * a touch is on screen with the touch. It replaced a row of five stage cards
+ * whose panel sat ~1,000px below them on phones. See components/maturity/.
  *
  * ALL COPY LIVES IN `maturityCurve` (lib/content/gamcs.ts), not here — this
  * file is markup and interaction only.
@@ -79,23 +83,6 @@ export default function MaturityCurve() {
      stage most visitors are trying to picture. The client wants the curve
      read from its start. */
   const [active, setActive] = useState(0);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  /* Where the row scrolls sideways rather than fitting five cards — phones —
-     the chosen card has to be brought into view itself; a click on a
-     half-visible card would otherwise select a card the visitor cannot see. */
-  const row = useRef<HTMLUListElement>(null);
-  useEffect(() => {
-    const box = row.current;
-    const tab = tabRefs.current[active];
-    if (!box || !tab || box.scrollWidth <= box.clientWidth) return;
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    box.scrollTo({
-      left: tab.offsetLeft - (box.clientWidth - tab.offsetWidth) / 2,
-      behavior: reduced ? "auto" : "smooth",
-    });
-  }, [active]);
-
   /* The panel's cross-fade on a pick. It lives HERE and not in
      MaturityCurveMotion because React already knows the moment the selection
      changes: a key-change effect is that moment exactly, with no observer
@@ -115,19 +102,19 @@ export default function MaturityCurve() {
       picked.current = true;
       return;
     }
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || prefersReducedMotion()) return;
     const parts = Array.from(el.children);
-    /* 200ms is --dur-panel rounded down: the panel is answering a click, so
-       it has to be finished before the visitor looks for the answer. */
+    /* dur.swap is --dur-panel rounded down: the panel is answering a touch,
+       so it has to be finished before the visitor looks for the answer. */
     const tween = gsap.fromTo(
       parts,
       { opacity: 0, y: 6 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.2,
+        duration: dur.swap,
         ease: "power2.out",
-        stagger: 0.05,
+        stagger: stagger * 0.7,
         clearProps: "opacity,transform",
       }
     );
@@ -136,22 +123,6 @@ export default function MaturityCurve() {
       gsap.set(parts, { clearProps: "opacity,transform" });
     };
   }, [active]);
-
-  /* The WAI-ARIA tabs pattern, automatic activation: an arrow key both moves
-     focus and swaps the panel, and only the selected tab is in the tab order,
-     so the row is one stop rather than five. */
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    const last = stages.length - 1;
-    let next: number | null = null;
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = Math.min(active + 1, last);
-    if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = Math.max(active - 1, 0);
-    if (e.key === "Home") next = 0;
-    if (e.key === "End") next = last;
-    if (next === null) return;
-    e.preventDefault();
-    setActive(next);
-    tabRefs.current[next]?.focus();
-  };
 
   const stage = stages[active];
   /* `stages` is `as const`, so each stage's `blocks` is its own readonly tuple
@@ -195,67 +166,14 @@ export default function MaturityCurve() {
             CTA band stays outside it — it is what the section says ABOUT the
             curve, not part of it. */}
         <div className="mc-board">
-        {/* The curve fragment over the row, now drawn rather than bordered.
-            The wrapper stays: `.mc-rail` is the flow box — its width, its
-            54px of height, its auto left margin and its display:none on
-            phones — and the svg inside only fills it. */}
-        <div className="mc-rail" aria-hidden="true">
-          <MaturityRail count={stages.length} active={active} />
-        </div>
-
-        {/* A list of five, so the row still reads as five stages with no
-            stylesheet; the <li>s are presentational only because a tablist may
-            own nothing but its tabs. */}
-        <ul className="mc-stages" ref={row} role="tablist" aria-label={maturityCurve.eyebrow} onKeyDown={onKeyDown}>
-          {stages.map((s, i) => (
-            <li className="mc-stage" key={s.n} role="presentation">
-              <button
-                className="mc-stage-btn"
-                type="button"
-                role="tab"
-                id={`mc-tab-${s.n}`}
-                aria-selected={i === active}
-                aria-controls="mc-panel"
-                tabIndex={i === active ? 0 : -1}
-                ref={(el) => {
-                  tabRefs.current[i] = el;
-                }}
-                onClick={() => setActive(i)}
-                /* HOVER SELECTS (client, 2026-10-21). onMouseEnter, not
-                   onPointerEnter: a touch tap fires pointerenter before the
-                   click, which would select the card under the finger and
-                   then select it again — mouse and pen only is what is
-                   wanted, and that is what onMouseEnter gives.
-
-                   It does not move focus. The arrow-key handler focuses the
-                   tab it selects because the keyboard needs focus to follow;
-                   hovering must not, or the cursor would drag focus across
-                   the row and scroll the page under a keyboard user. The one
-                   visible consequence: `tabIndex` follows `active`, so the
-                   card the mouse last rested on is the one Tab reaches. That
-                   is the same card the panel is showing, which is the right
-                   answer anyway.
-
-                   KNOWN, and accepted by the client: crossing the row swaps
-                   the panel once per card passed over, and the panel's
-                   cross-fade runs each time. Touch and keyboard are
-                   unaffected — both still select on click or arrow. */
-                onMouseEnter={() => setActive(i)}
-                /* MotionLayer's page-wide hover lift. Safe on a tab here
-                   only because selection is drawn with border, ground and
-                   shadow and no transform at all, so the lift has the
-                   matrix to itself — and the entrance moves the <li>, not
-                   this button, for the same reason. */
-                data-lift
-              >
-                <span className="mc-stage-n">{s.n}</span>
-                <span className="mc-stage-name">{s.name}</span>
-                <span className="mc-stage-q">{s.cardQuestion}</span>
-                <span className="mc-stage-tag">{s.tag}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        <AscentInstrument
+          stages={stages}
+          active={active}
+          onChange={setActive}
+          label={maturityCurve.eyebrow}
+          hint={maturityCurve.ascentHint}
+          panelId="mc-panel"
+        />
 
         {/* One panel, re-filled on each pick, rather than five with four
             hidden: the stages share a shape, and only one of them is ever a

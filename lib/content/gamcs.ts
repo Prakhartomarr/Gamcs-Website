@@ -2404,6 +2404,9 @@ export const maturityCurve = {
   lead:
     "Finance maturity isn't just about closing faster or using more technology. It is about how reliably you produce the numbers, how clearly you explain performance, and how effectively insight shapes decisions.",
   hint: "Select a stage to explore what it looks like, the outcome to aim for, and the next practical move.",
+  /* The Ascent (2026-10-23): the touch hint under the curve, shown until
+     the first drag or tap. */
+  ascentHint: "Swipe along the curve",
   /** Repeated under every panel that shows a number. */
   illustrative: "Illustrative example — not a real client figure.",
   /** UNRENDERED since 2026-10-20: the client had the framework note taken
