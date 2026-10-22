@@ -3594,13 +3594,18 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     rgba(13,24,40,.14) 86%,rgba(13,24,40,0))}
 .tr-grid .tr-name{font-size:1.0556rem}
 .tr-grid .tr-role{font-size:0.7222rem;margin-top:4px}
+.tr-grid .tr-meta{font-size:0.6667rem;margin-top:5px}
 .tr-grid .tr-rule{width:20px;margin-bottom:10px}
-.tr-grid .tr-plus{right:-22px;bottom:-22px;width:48px;height:48px}
+.tr-grid .tr-plus{right:-22px;bottom:-22px;width:48px;height:48px;border-radius:12px}
 
 .tr-card{display:block;position:relative;width:100%;padding:0;border:0;background:none;
   font:inherit;color:inherit;text-align:left;cursor:pointer}
 .tr-card:focus-visible{outline:2px solid var(--blue);outline-offset:8px}
-.tr-shot{position:relative;display:block;overflow:hidden;background:var(--band-soft)}
+/* 24px (client, 2026-10-22: "round all the team page cards"). These were
+   square. overflow:hidden was already here for the hover zoom, so the
+   photograph and the caption gradient both clip to the corner for free. */
+.tr-shot{position:relative;display:block;overflow:hidden;border-radius:24px;
+  background:var(--band-soft)}
 /* Greyscale in CSS, not on disk: nine photographs shot in nine places read as
    one set this way, and the colour originals stay untouched. */
 /* Stands in for a headshot the client has not sent: the person's initials on
@@ -3620,10 +3625,23 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   background:linear-gradient(to top,rgba(13,24,40,.9),rgba(13,24,40,.55) 42%,rgba(13,24,40,0))}
 .tr-rule{display:block;width:26px;height:2px;margin:0 0 14px;background:var(--blue-light)}
 .tr-name{display:block;font:500 1.3333rem var(--font-sans);letter-spacing:-.025em;color:#fff}
+/* UPRIGHT, not italic (client, 2026-10-22). app/layout.tsx loads Inter with
+   no `style:["normal","italic"]`, so there is no italic face to use and the
+   browser was slanting the upright one. Same fix as `.page-head h1 em`. The
+   role is already a step down in size and opacity from the name, so it stays
+   subordinate without the slant. */
 .tr-role{display:block;margin-top:5px;font-size:0.7778rem;line-height:1.4;
-  font-style:italic;color:rgba(255,255,255,.86)}
+  color:rgba(255,255,255,.86)}
+/* Years and location, under the role. A step below it again in both size and
+   opacity: three lines of white on a photograph need a clear order or they
+   read as one block. */
+.tr-meta{display:block;margin-top:7px;font-size:0.7222rem;line-height:1.35;
+  letter-spacing:.01em;color:rgba(255,255,255,.68)}
 /* centred on the card's bottom-right corner, hanging outside it */
-.tr-plus{position:absolute;display:grid;place-items:center;background:#fff;color:var(--blue);
+/* rounded with the card (client, 2026-10-22) — a square tile on a 24px card
+   corner was the one hard edge left in the section */
+.tr-plus{position:absolute;display:grid;place-items:center;border-radius:16px;
+  background:#fff;color:var(--blue);
   box-shadow:0 18px 34px -18px rgba(13,24,40,.45);
   transition:color .2s var(--ease-out),box-shadow .3s var(--ease-out)}
 .tr-plus svg{width:22px;height:22px}

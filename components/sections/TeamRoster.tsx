@@ -46,6 +46,13 @@ const FOUNDERS = team.leadership as readonly Member[];
 const ADVISERS = team.advisory as readonly Member[];
 const EVERYONE: readonly Member[] = [...FOUNDERS, ...ADVISERS];
 
+/* "13+ years · Delhi, India". ONE rule for the card and the panel both: they
+   printed the same two fields, and two joins in two places is how they drift.
+   All ten people carry both today, but filter(Boolean) keeps a card with only
+   one of them from printing a stray separator. */
+const metaOf = (p: Member) =>
+  [p.experience, p.location].filter(Boolean).join(" · ");
+
 /** "Ramesh Yadav" -> "RY", for the tile that stands in for a missing headshot. */
 const initials = (name: string) =>
   name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
@@ -89,6 +96,14 @@ function Card({
           <span className="tr-rule" />
           <span className="tr-name">{person.name}</span>
           <span className="tr-role">{person.title}</span>
+          {/* Years and location on the front (client, 2026-10-22). It only
+              showed once the panel was open, so the thing a visitor scans a
+              roster for — how senior, and where — took a click per person.
+              Still in the panel too: the card is a glance, the panel is the
+              record, and a reader who opens it should not find less. */}
+          {metaOf(person) ? (
+            <span className="tr-meta">{metaOf(person)}</span>
+          ) : null}
         </span>
       </span>
       <span className="tr-plus" aria-hidden="true">
@@ -131,9 +146,7 @@ export default function TeamRoster() {
   }, [open, close]);
 
   const active = EVERYONE.find((p) => p.name === open) ?? null;
-  const meta = active
-    ? [active.experience, active.location].filter(Boolean).join(" · ")
-    : "";
+  const meta = active ? metaOf(active) : "";
 
   return (
     <>
