@@ -7815,6 +7815,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    - The film's own head sat 44px off the video, tighter than any heading
      on the page sits off what it introduces. 56px. */
 .hwv--route .fin-center{margin-bottom:56px}
+/* The line above the film in two lines (client, 2026-10-22): ~1,770px set
+   on one line, so 940px holds it in two balanced lines. */
+.hwv--route .fin-lead{max-width:940px;text-wrap:balance}
 .hwh-after{padding-bottom:64px}
 /* One paragraph in three lines (client, 2026-10-22): ~3,050px set on one
    line, so 1,080px holds it in three balanced lines under the heading. */
