@@ -12,6 +12,15 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || site.url
 ).replace(/\/$/, "");
 
+/**
+ * Whether search engines may index this build (2026-10-23). The live site is
+ * built on AWS Amplify; a Vercel build (Vercel sets VERCEL=1 on every one)
+ * is a preview copy, so it says noindex — in the page and in an
+ * X-Robots-Tag header (next.config.mjs) — and can never compete with
+ * www.gamcs.in in results. If production ever moves to Vercel, change this.
+ */
+export const INDEXABLE = process.env.VERCEL !== "1";
+
 export const absolute = (path: string) =>
   new URL(path, SITE_URL + "/").toString();
 

@@ -12,8 +12,9 @@ import { GaLogoSprite } from "@/components/ui/GaLogo";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
-import { OG_IMAGE, SITE_URL, absolute } from "@/lib/seo";
-import { intro, site } from "@/lib/content/gamcs";
+import { INDEXABLE, OG_IMAGE, SITE_URL, absolute } from "@/lib/seo";
+import { site } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 import { header } from "@/lib/content/ui";
 
 /* The fallback face only. Apple devices resolve -apple-system (SF Pro) first in
@@ -34,20 +35,21 @@ export const metadata: Metadata = {
     default: `${site.name} — ${site.tagline}`,
     template: `%s | ${site.name}`,
   },
-  description: intro,
+  description: pages.home.description,
   applicationName: site.name,
   authors: [{ name: site.name, url: SITE_URL }],
   creator: site.name,
   publisher: site.legalName,
   alternates: { canonical: absolute("/") },
+  /* Indexable on the live (Amplify) build only; see INDEXABLE. */
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    index: INDEXABLE,
+    follow: INDEXABLE,
+    googleBot: { index: INDEXABLE, follow: INDEXABLE, "max-image-preview": "large" },
   },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
-    description: intro,
+    description: pages.home.description,
     url: absolute("/"),
     siteName: site.name,
     locale: "en_IN",
@@ -57,7 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
-    description: intro,
+    description: pages.home.description,
     images: [OG_IMAGE.url],
   },
   category: "business",

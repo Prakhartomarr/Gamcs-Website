@@ -55,6 +55,10 @@ const nextConfig = {
         source: "/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
+          /* A Vercel build is a preview copy, never the live site (that is
+             AWS Amplify): keep every response out of search indexes. Mirrors
+             INDEXABLE in lib/seo.ts. */
+          ...(process.env.VERCEL === "1" ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           /* No third party has a reason to frame this site. */
           { key: "X-Frame-Options", value: "SAMEORIGIN" },

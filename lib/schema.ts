@@ -1,6 +1,6 @@
 import { faq, site, team } from "@/lib/content/gamcs";
 import { SITE_URL, absolute } from "@/lib/seo";
-import { intro } from "@/lib/content/gamcs";
+import { pages } from "@/lib/content/pages";
 
 /**
  * Structured data, built only from facts the site already publishes.
@@ -25,7 +25,9 @@ export function organizationSchema() {
     logo: absolute(site.logo),
     image: absolute("/opengraph-image"),
     email: site.email,
-    description: intro,
+    /* What Google shows as the firm's description (2026-10-23): the
+       homepage's search description, not the older "150+ years" intro. */
+    description: pages.home.description,
     slogan: site.tagline,
     sameAs: [site.linkedin],
     founder: team.leadership.map((m) => ({
@@ -56,7 +58,9 @@ export function websiteSchema() {
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
     name: site.name,
-    description: intro,
+    /* What Google shows as the firm's description (2026-10-23): the
+       homepage's search description, not the older "150+ years" intro. */
+    description: pages.home.description,
     inLanguage: "en",
     publisher: { "@id": ORG_ID },
   };
