@@ -2327,7 +2327,7 @@ export const solutionDemos: Record<string, { app: string; title: string; label: 
   "deal-advisory": {
     app: "Power BI",
     title: "Deal Prediction Engine",
-    label: "Demo: a Power BI deal prediction engine, zooming into the funding-stage scatter plots as the portfolio is filtered.",
+    label: "Demo: a Power BI deal prediction engine, filtering by country, zooming into the funding-stage scatter plots, then opening a company's fundraising drivers.",
   },
   "training-enablement": {
     app: "Excel",
