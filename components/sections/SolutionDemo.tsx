@@ -5,7 +5,7 @@ import { solutionDemos } from "@/lib/content/gamcs";
 
 /**
  * One pillar's demo loop in an app window (client, 2026-10-23): a silent
- * 12s cut of the client's own Power BI / Excel recording.
+ * 15s zoom tour of the client's own Power BI / Excel recording.
  *
  * Plays only while on screen (IntersectionObserver) and never under
  * prefers-reduced-motion, where the poster stands in. `loop` is off while
