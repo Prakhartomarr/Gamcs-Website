@@ -171,108 +171,130 @@ const Velaris = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const gl = canvas.getContext("webgl");
-    if (!gl) return;
+    /* Nothing is set up until the panel first comes near the viewport
+       (2026-10-23). Every one of these used to create a context and compile
+       its program during hydration, wherever it sat on the page; until then
+       the canvas is transparent, which is the same ground the fallback
+       already relies on. */
+    let teardown: (() => void) | null = null;
+    let start = () => {};
+    let stop = () => {};
+    const setup = () => {
+      const gl = canvas.getContext("webgl");
+      if (!gl) return;
 
-    const createShader = (type: number, src: string) => {
-      const s = gl.createShader(type);
-      if (!s) return null;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+      const createShader = (type: number, src: string) => {
+        const s = gl.createShader(type);
+        if (!s) return null;
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+      };
+
+      const vs = createShader(gl.VERTEX_SHADER, vertexShaderGLSL);
+      const fs = createShader(gl.FRAGMENT_SHADER, fragmentShaderGLSL);
+      const program = gl.createProgram();
+      /* Nothing painted: the container's own background is what shows. */
+      if (!vs || !fs || !program) return;
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+      gl.useProgram(program);
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW,
+      );
+
+      const pos = gl.getAttribLocation(program, "position");
+      gl.enableVertexAttribArray(pos);
+      gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+      const locs = {
+        res: gl.getUniformLocation(program, "u_resolution"),
+        time: gl.getUniformLocation(program, "u_time"),
+        grain: gl.getUniformLocation(program, "u_grain"),
+        colors: gl.getUniformLocation(program, "u_colors"),
+        bg: gl.getUniformLocation(program, "u_bg"),
+      };
+      const palette = new Float32Array(
+        colorKey.split(",").slice(0, 4).flatMap(hexToRgb),
+      );
+      const ground = hexToRgb(bg);
+
+      const draw = (t: number) => {
+        gl.uniform2f(locs.res, canvas.width, canvas.height);
+        gl.uniform1f(locs.time, t * 0.001 * speed);
+        gl.uniform1f(locs.grain, grain);
+        gl.uniform3f(locs.bg, ground[0], ground[1], ground[2]);
+        gl.uniform3fv(locs.colors, palette);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      };
+
+      const resize = () => {
+        const scale = Math.min(window.devicePixelRatio, dpr);
+        canvas.width = Math.max(1, Math.round(container.clientWidth * scale));
+        canvas.height = Math.max(1, Math.round(container.clientHeight * scale));
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        draw(still ? 0 : last);
+      };
+
+      /* One frame, held, for anyone who asked for less motion. */
+      const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+      let raf = 0;
+      let last = 0;
+      const loop = (t: number) => {
+        last = t;
+        draw(t);
+        raf = requestAnimationFrame(loop);
+      };
+      start = () => {
+        if (still || raf) return;
+        raf = requestAnimationFrame(loop);
+      };
+      stop = () => {
+        if (!raf) return;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      const ro = new ResizeObserver(resize);
+      ro.observe(container);
+      resize();
+
+      teardown = () => {
+        ro.disconnect();
+        stop();
+        gl.deleteProgram(program);
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+        gl.deleteBuffer(buffer);
+      };
     };
-
-    const vs = createShader(gl.VERTEX_SHADER, vertexShaderGLSL);
-    const fs = createShader(gl.FRAGMENT_SHADER, fragmentShaderGLSL);
-    const program = gl.createProgram();
-    /* Nothing painted: the container's own background is what shows. */
-    if (!vs || !fs || !program) return;
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
-    gl.useProgram(program);
-
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-
-    const pos = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-
-    const locs = {
-      res: gl.getUniformLocation(program, "u_resolution"),
-      time: gl.getUniformLocation(program, "u_time"),
-      grain: gl.getUniformLocation(program, "u_grain"),
-      colors: gl.getUniformLocation(program, "u_colors"),
-      bg: gl.getUniformLocation(program, "u_bg"),
-    };
-    const palette = new Float32Array(
-      colorKey.split(",").slice(0, 4).flatMap(hexToRgb),
-    );
-    const ground = hexToRgb(bg);
-
-    const draw = (t: number) => {
-      gl.uniform2f(locs.res, canvas.width, canvas.height);
-      gl.uniform1f(locs.time, t * 0.001 * speed);
-      gl.uniform1f(locs.grain, grain);
-      gl.uniform3f(locs.bg, ground[0], ground[1], ground[2]);
-      gl.uniform3fv(locs.colors, palette);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    };
-
-    const resize = () => {
-      const scale = Math.min(window.devicePixelRatio, dpr);
-      canvas.width = Math.max(1, Math.round(container.clientWidth * scale));
-      canvas.height = Math.max(1, Math.round(container.clientHeight * scale));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      draw(still ? 0 : last);
-    };
-
-    /* One frame, held, for anyone who asked for less motion. */
-    const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    let raf = 0;
-    let last = 0;
-    const loop = (t: number) => {
-      last = t;
-      draw(t);
-      raf = requestAnimationFrame(loop);
-    };
-    const start = () => {
-      if (still || raf) return;
-      raf = requestAnimationFrame(loop);
-    };
-    const stop = () => {
-      if (!raf) return;
-      cancelAnimationFrame(raf);
-      raf = 0;
-    };
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(container);
-    resize();
 
     /* Off screen costs nothing: five of these on one page is four too many to
        animate at once. */
+    let ready = false;
     const io = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      ([entry]) => {
+        if (!entry.isIntersecting) return stop();
+        if (!ready) {
+          ready = true;
+          setup();
+        }
+        start();
+      },
       { rootMargin: "120px" },
     );
     io.observe(container);
 
     return () => {
       io.disconnect();
-      ro.disconnect();
-      stop();
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-      gl.deleteBuffer(buffer);
+      teardown?.();
     };
   }, [bg, colorKey, speed, grain, dpr]);
 
