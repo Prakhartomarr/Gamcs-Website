@@ -8164,4 +8164,20 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .svca .svca-card.has-demo .svd{margin:0 0 18px;border-color:#E1E5E8;
     box-shadow:0 8px 20px -14px rgba(16,40,60,.35)}
 }
+/* Side by side (1280+): the card runs edge to edge with the list — top of
+   the first pillar to the bottom of the last (client, 2026-10-23). The window
+   is taller than 16:9 there, so the video covers it, trimming a little off
+   its left and right edges rather than leaving white bands. */
+@media (min-width:1280px){
+  .svca-card.has-demo{align-self:stretch}
+  /* The list's 490px floor left 19px below the last pillar; the card now
+     sets the row's rhythm with the list's own height instead. */
+  .svca-list{min-height:0}
+  .svca-card.has-demo .svd{height:100%;display:flex;flex-direction:column}
+  .svca-card.has-demo .svd-screen{flex:1;min-height:0;aspect-ratio:auto}
+  .svca-card.has-demo .svd-video{object-fit:cover}
+  /* The Excel clip is a white sheet with its row labels at the edge: show it
+     whole on white rather than trim the labels. */
+  .svca-card.has-demo .svd[data-slug="training-enablement"] .svd-video{object-fit:contain}
+}
 @media (prefers-reduced-motion:reduce){.svd{animation:none!important}}

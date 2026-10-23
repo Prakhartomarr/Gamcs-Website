@@ -51,7 +51,7 @@ export default function SolutionDemo({
   const src = `/video/solutions/${slug}`;
 
   return (
-    <figure className="svd">
+    <figure className="svd" data-slug={slug}>
       <figcaption className="svd-bar">
         <span className="svd-dots" aria-hidden="true">
           <i />
