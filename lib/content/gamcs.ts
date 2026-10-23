@@ -3169,7 +3169,7 @@ export const careers = {
       { kind: "image", src: "/careers/life/mystery-rooms.webp", title: "Escape-room challenge", caption: "Locked in together. We got out." },
       { kind: "image", src: "/careers/life/in-the-office.webp", title: "Back at the office", caption: "Where the work happens, and the plans for the next outing." },
       { kind: "image", src: "/careers/life/team-lunch.webp", title: "Team lunch", caption: "Close done. Lunch is on us." },
-      { kind: "image", src: "", title: "Weekend getaway", caption: "New city, same people, fewer slide decks." },
+      { kind: "image", src: "/careers/life/diwali-hamper.webp", title: "Diwali hampers", caption: "Diyas, sweets and a little something with everyone's name on it." },
     ] as { kind: "video" | "image"; src: string; poster?: string; title: string; caption: string }[],
     placeholder: "Photo coming soon",
     placeholderVideo: "Video coming soon",
