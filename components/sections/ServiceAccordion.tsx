@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CTA from "@/components/CTA";
+import SolutionDemo from "@/components/sections/SolutionDemo";
 import { ARROW, STROKE_ICONS } from "@/components/ui/stroke-icons";
 import { solutions } from "@/lib/content/gamcs";
 import { sections } from "@/lib/content/ui";
@@ -80,14 +81,20 @@ export default function ServiceAccordion() {
 
   const running = auto && !taken && !held;
 
+  /* While a demo clip is actually playing, the clip's own end advances the
+     accordion (2026-10-23); the timer is only the fallback for a clip that
+     cannot play. */
+  const [playing, setPlaying] = useState(false);
+  const next = useCallback(() => setActive((i) => (i + 1) % solutions.length), []);
+
   useEffect(() => {
-    if (!running) return;
+    if (!running || playing) return;
     const t = window.setTimeout(
-      () => setActive((i) => (i + 1) % solutions.length),
+      next,
       ADVANCE_MS
     );
     return () => window.clearTimeout(t);
-  }, [running, active]);
+  }, [running, active, playing, next]);
 
   const pick = useCallback((i: number) => {
     setTaken(true);
@@ -188,13 +195,23 @@ export default function ServiceAccordion() {
       {/* No FluteShader here, at the client's word (2026-10-20): this card
           keeps the fluted photograph. The live shader stays on the other two
           --flute-ground surfaces, the contact panel and the closing CTA. */}
-      <div className="svca-card">
+      <div className="svca-card has-demo">
         {/* The oversized pillar glyph that used to bleed off this corner is gone:
             over the fluting it read as a second pattern rather than as texture. */}
         {/* Below 768px the list is a chip strip and every .svca-body is
             hidden, so the card carries the whole pillar: its index, its
             tagline and its link. `md:hidden` keeps all three out of the
             desktop render — DOM order is unchanged there. */}
+        {/* The pillar's demo (2026-10-23). On desktop it IS the card; the
+            panel below stays for phones, where it is the only place the
+            pillar's tagline and link appear. */}
+        <SolutionDemo
+          key={`demo-${s.slug}`}
+          slug={s.slug}
+          loop={!running}
+          onEnded={running ? next : undefined}
+          onPlayable={setPlaying}
+        />
         <div className="svca-panel" key={s.slug}>
           <span className="svca-index md:hidden" aria-hidden="true">
             {String(active + 1).padStart(2, "0")}

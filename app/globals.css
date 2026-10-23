@@ -8125,3 +8125,37 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .dgf-sum,.dgf-chev,.dgf-d::details-content{transition:none}
   .dg-sub .dg-mark{transition:none;background-size:100% 1.5px}
 }
+
+/* =====================================================================
+   SOLUTION DEMOS (client, 2026-10-23) — each pillar's Power BI / Excel loop
+   in an app window inside the accordion's card. Desktop: the window IS the
+   card (the text panel is hidden; the list on the left already carries the
+   pillar's title and link). Phones: the window sits above the panel, which
+   stays because it is the only place there for the tagline and link.
+   Markup: components/sections/SolutionDemo.tsx.
+   ===================================================================== */
+.svd{margin:0;width:100%;border-radius:14px;overflow:hidden;background:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 28px 60px -26px rgba(4,16,30,.6),0 2px 6px rgba(4,16,30,.18)}
+.svd-bar{display:flex;align-items:center;gap:10px;height:34px;padding:0 12px;
+  background:#F3F5F7;border-bottom:1px solid #E1E5E8;
+  font:600 12px/1 var(--font-sans);color:#3F4A57}
+.svd-dots{display:flex;gap:6px;flex:none}
+.svd-dots i{display:block;width:10px;height:10px;border-radius:50%;background:#D5DBE0}
+.svd-title{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.svd-app{flex:none;padding:4px 8px;border-radius:999px;font-size:11px;
+  color:var(--blue);background:rgba(15,94,151,.09)}
+/* One frame for every clip: the dashboards are ~16:9, the Excel model is
+   wider and letterboxes on white, which is the sheet's own colour. */
+.svd-screen{aspect-ratio:16/9;background:#fff}
+.svd-video{display:block;width:100%;height:100%;object-fit:contain}
+@media (min-width:768px){
+  .svca-card.has-demo{padding:28px}
+  .svca-card.has-demo .svca-panel{display:none}
+  .svca-card.has-demo .svd{animation:svca-swap .5s var(--ease-out) both}
+}
+@media (max-width:767px){
+  .svca .svca-card.has-demo .svd{margin:0 0 18px;border-color:#E1E5E8;
+    box-shadow:0 8px 20px -14px rgba(16,40,60,.35)}
+}
+@media (prefers-reduced-motion:reduce){.svd{animation:none!important}}

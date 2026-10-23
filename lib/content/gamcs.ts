@@ -2298,6 +2298,40 @@ export const solutions: Solution[] = [
  * text, so `blurb`, `titleTag` and `metaDescription` are the site's own,
  * reworded for the five pillars.
  */
+/* The homepage accordion's demo loops (client, 2026-10-23): one 12s silent
+   clip per pillar, cut from the client's own Power BI / Excel screen
+   recordings and cleared by them for public use. Files are
+   /public/video/solutions/<slug>.mp4 with a .webp poster of the first frame.
+   `app` and `title` fill the window bar; `label` is the video's accessible
+   name. */
+export const solutionDemos: Record<string, { app: string; title: string; label: string }> = {
+  "fpa-cfo-advisory": {
+    app: "Power BI",
+    title: "Finance Board Deck",
+    label: "Demo: a Power BI board deck with revenue, profit, EBITDA and cash against budget, switching period and currency.",
+  },
+  "finance-team-extension": {
+    app: "Power BI",
+    title: "People Cost Dashboard",
+    label: "Demo: a Power BI people-cost dashboard, filtering by entity and department as headcount and cost trends update.",
+  },
+  "digital-transformation": {
+    app: "Power BI",
+    title: "CFO View",
+    label: "Demo: a Power BI CFO view of turnover, margin and cost drivers, switching currency and scenario.",
+  },
+  "deal-advisory": {
+    app: "Power BI",
+    title: "Deal Prediction Engine",
+    label: "Demo: a Power BI deal prediction engine, filtering a portfolio of companies by country and funding stage.",
+  },
+  "training-enablement": {
+    app: "Excel",
+    title: "Budget vs Actual",
+    label: "Demo: an Excel budget-versus-actual model whose in-cell variance chart updates as figures change.",
+  },
+};
+
 export const solutionsHub = {
   /* The closing CTA band (client, 2026-10-23), the Team page's band.
      TODO(business): placeholder copy pending sign-off. */
