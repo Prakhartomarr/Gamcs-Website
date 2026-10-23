@@ -8149,10 +8149,16 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    wider and letterboxes on white, which is the sheet's own colour. */
 .svd-screen{aspect-ratio:16/9;background:#fff}
 .svd-video{display:block;width:100%;height:100%;object-fit:contain}
+/* Desktop: the window is the whole card (client, 2026-10-23) — no fluted
+   blue frame around it, no padding, no fixed height; the card takes the
+   window's own 16:9 size. */
 @media (min-width:768px){
-  .svca-card.has-demo{padding:28px}
+  .svca-card.has-demo{display:block;min-height:0;padding:0;border-radius:16px;
+    background:none;overflow:visible}
   .svca-card.has-demo .svca-panel{display:none}
-  .svca-card.has-demo .svd{animation:svca-swap .5s var(--ease-out) both}
+  .svca-card.has-demo .svd{border-color:#DCE1E5;
+    box-shadow:0 30px 60px -30px rgba(13,24,40,.35),0 2px 8px rgba(13,24,40,.08);
+    animation:svca-swap .5s var(--ease-out) both}
 }
 @media (max-width:767px){
   .svca .svca-card.has-demo .svd{margin:0 0 18px;border-color:#E1E5E8;
