@@ -277,6 +277,15 @@ h1,h2,h3,p{margin-top:0}
 .hero[data-anim="pending"] .hero-rule,.hero[data-anim="pending"] .orbit-ring,.hero[data-anim="pending"] .ga-core,
 .hero[data-anim="pending"] .card,.hero[data-anim="pending"] .chipwrap,.hero[data-anim="pending"] .hero-clients{opacity:0;animation:animGateFallback .5s ease 2.9s forwards}
 @keyframes animGateFallback{to{opacity:1}}
+/* Not while the preloader is in the page (2026-10-23). On a full load the
+   opaque panel already hides the hero, so the gate hid nothing anyone could
+   see, and it held the hero's first paint back until hydration: that paint
+   is the page's LCP. The entrance itself is unchanged — Hero still sets the
+   start state and plays it. Once the preloader unmounts the gate is back, so
+   a client-side visit to / still has nothing flash before GSAP takes over. */
+body:has(> .preloader) .hero[data-anim="pending"] .line-inner,
+body:has(> .preloader) .hero[data-anim="pending"] .hero-lede,
+body:has(> .preloader) .hero[data-anim="pending"] .ctas{opacity:1;animation:none}
 
 @media (prefers-reduced-motion: reduce){
   .hero[data-anim] .line-inner,.hero[data-anim] .hero-lede,.hero[data-anim] .ctas,
