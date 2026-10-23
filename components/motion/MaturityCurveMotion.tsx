@@ -78,7 +78,7 @@ export default function MaturityCurveMotion() {
       const split = h2 ? SplitText.create(h2, { type: "lines", mask: "lines" }) : null;
       const lines = split ? (split.lines as HTMLElement[]) : [];
       const head = all(".mc-lead");
-      const cards = all(".mc-ascent");
+      const cards = [...all(".mc-ascent"), ...all(".mc-stage")];
       const panel = [...all(".mc-panel"), ...all(".mc-cta")];
       const moved = [...head, ...cards];
 

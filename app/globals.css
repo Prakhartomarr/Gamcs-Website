@@ -6758,6 +6758,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .mc[data-anim="pending"] .mc-lead,
 .mc[data-anim="pending"] .mc-railsvg,
 .mc[data-anim="pending"] .mc-ascent,
+.mc[data-anim="pending"] .mc-stage,
 .mc[data-anim="pending"] .mc-panel,
 .mc[data-anim="pending"] .mc-cta{opacity:0;animation:mcGate .4s ease 2.6s forwards}
 @keyframes mcGate{to{opacity:1}}
@@ -6769,6 +6770,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc[data-anim="pending"] .mc-lead,
   .mc[data-anim="pending"] .mc-railsvg,
   .mc[data-anim="pending"] .mc-ascent,
+.mc[data-anim="pending"] .mc-stage,
   .mc[data-anim="pending"] .mc-panel,
   .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
 }
@@ -6825,6 +6827,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc[data-anim="pending"] .mc-lead,
   .mc[data-anim="pending"] .mc-railsvg,
   .mc[data-anim="pending"] .mc-ascent,
+.mc[data-anim="pending"] .mc-stage,
   .mc[data-anim="pending"] .mc-panel,
   .mc[data-anim="pending"] .mc-cta{opacity:1;animation:none}
 }
@@ -8179,3 +8182,15 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .svca-card.has-demo .svd[data-slug="training-enablement"] .svd-video{object-fit:contain}
 }
 @media (prefers-reduced-motion:reduce){.svd{animation:none!important}}
+
+/* Maturity curve: desktop keeps the five stage cards under the drawn rail
+   (client, 2026-10-23); the Ascent instrument is for tablets and phones. */
+@media (max-width:1023px){.mc .mc-desk{display:none!important}}
+@media (min-width:1024px){.mc .mc-ascent{display:none}}
+/* Desktop cards left-aligned, as in the client's reference (2026-10-23;
+   they were centred on 2026-10-20): number top-left, name and question
+   under it, the tag pinned to the bottom so the five line up. */
+@media (min-width:1024px){
+  .mc .mc-stage-btn{align-items:flex-start;text-align:left;padding:20px 22px}
+  .mc .mc-stage-tag{margin-top:auto;padding-top:22px}
+}

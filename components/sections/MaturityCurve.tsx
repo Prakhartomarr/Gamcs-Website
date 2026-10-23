@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import CTA from "@/components/CTA";
 import MaturityCurveMotion from "@/components/motion/MaturityCurveMotion";
 import AscentInstrument from "@/components/maturity/AscentInstrument";
+import MaturityRail from "@/components/motion/MaturityRail";
 import { maturityCurve } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { dur, prefersReducedMotion, stagger } from "@/lib/motion";
@@ -124,6 +125,21 @@ export default function MaturityCurve() {
     };
   }, [active]);
 
+  /* The desktop tablist's keys (WAI-ARIA tabs, automatic activation). */
+  const deskTabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const onDeskKey = (e: React.KeyboardEvent) => {
+    const last = stages.length - 1;
+    let next: number | null = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = Math.min(active + 1, last);
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = Math.max(active - 1, 0);
+    if (e.key === "Home") next = 0;
+    if (e.key === "End") next = last;
+    if (next === null) return;
+    e.preventDefault();
+    setActive(next);
+    deskTabs.current[next]?.focus();
+  };
+
   const stage = stages[active];
   /* `stages` is `as const`, so each stage's `blocks` is its own readonly tuple
      of literal types; widening here keeps .map() off a five-way union. */
@@ -166,6 +182,71 @@ export default function MaturityCurve() {
             CTA band stays outside it — it is what the section says ABOUT the
             curve, not part of it. */}
         <div className="mc-board">
+        {/* DESKTOP (1024+, client 2026-10-23): the five stage cards under the
+            drawn rail, exactly as before the Ascent. The stylesheet shows
+            these from 1024 and the Ascent instrument below it. */}
+        {/* The curve fragment over the row, now drawn rather than bordered.
+            The wrapper stays: `.mc-rail` is the flow box — its width, its
+            54px of height, its auto left margin and its display:none on
+            phones — and the svg inside only fills it. */}
+        <div className="mc-rail mc-desk" aria-hidden="true">
+          <MaturityRail count={stages.length} active={active} />
+        </div>
+
+        {/* A list of five, so the row still reads as five stages with no
+            stylesheet; the <li>s are presentational only because a tablist may
+            own nothing but its tabs. */}
+        <ul className="mc-stages mc-desk" role="tablist" aria-label={maturityCurve.eyebrow} onKeyDown={onDeskKey}>
+          {stages.map((s, i) => (
+            <li className="mc-stage" key={s.n} role="presentation">
+              <button
+                className="mc-stage-btn"
+                type="button"
+                role="tab"
+                id={`mc-dtab-${s.n}`}
+                aria-selected={i === active}
+                aria-controls="mc-panel"
+                tabIndex={i === active ? 0 : -1}
+                ref={(el) => {
+                  deskTabs.current[i] = el;
+                }}
+                onClick={() => setActive(i)}
+                /* HOVER SELECTS (client, 2026-10-21). onMouseEnter, not
+                   onPointerEnter: a touch tap fires pointerenter before the
+                   click, which would select the card under the finger and
+                   then select it again — mouse and pen only is what is
+                   wanted, and that is what onMouseEnter gives.
+
+                   It does not move focus. The arrow-key handler focuses the
+                   tab it selects because the keyboard needs focus to follow;
+                   hovering must not, or the cursor would drag focus across
+                   the row and scroll the page under a keyboard user. The one
+                   visible consequence: `tabIndex` follows `active`, so the
+                   card the mouse last rested on is the one Tab reaches. That
+                   is the same card the panel is showing, which is the right
+                   answer anyway.
+
+                   KNOWN, and accepted by the client: crossing the row swaps
+                   the panel once per card passed over, and the panel's
+                   cross-fade runs each time. Touch and keyboard are
+                   unaffected — both still select on click or arrow. */
+                onMouseEnter={() => setActive(i)}
+                /* MotionLayer's page-wide hover lift. Safe on a tab here
+                   only because selection is drawn with border, ground and
+                   shadow and no transform at all, so the lift has the
+                   matrix to itself — and the entrance moves the <li>, not
+                   this button, for the same reason. */
+                data-lift
+              >
+                <span className="mc-stage-n">{s.n}</span>
+                <span className="mc-stage-name">{s.name}</span>
+                <span className="mc-stage-q">{s.cardQuestion}</span>
+                <span className="mc-stage-tag">{s.tag}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
         <AscentInstrument
           stages={stages}
           active={active}
