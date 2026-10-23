@@ -3168,7 +3168,7 @@ export const careers = {
       { kind: "image", src: "/careers/life/karting-lineup.webp", title: "On the grid", caption: "The whole team, helmets off, before the first race." },
       { kind: "image", src: "/careers/life/mystery-rooms.webp", title: "Escape-room challenge", caption: "Locked in together. We got out." },
       { kind: "image", src: "/careers/life/in-the-office.webp", title: "Back at the office", caption: "Where the work happens, and the plans for the next outing." },
-      { kind: "image", src: "", title: "Diwali at the office", caption: "Lights, sweets and a very competitive rangoli." },
+      { kind: "image", src: "/careers/life/team-lunch.webp", title: "Team lunch", caption: "Close done. Lunch is on us." },
       { kind: "image", src: "", title: "Weekend getaway", caption: "New city, same people, fewer slide decks." },
     ] as { kind: "video" | "image"; src: string; poster?: string; title: string; caption: string }[],
     placeholder: "Photo coming soon",
