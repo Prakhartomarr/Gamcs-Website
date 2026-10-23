@@ -2331,8 +2331,8 @@ export const solutionDemos: Record<string, { app: string; title: string; label: 
   },
   "training-enablement": {
     app: "Excel",
-    title: "Variance Chart",
-    label: "Demo: an Excel in-cell variance chart, zooming in as its bars update with the figures.",
+    title: "Budget vs Actual in Excel",
+    label: "Demo: an Excel budget-versus-actual pack, a cost variance chart, then an in-cell variance chart, each zooming in as the figures update.",
   },
 };
 
