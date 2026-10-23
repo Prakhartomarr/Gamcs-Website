@@ -2300,7 +2300,8 @@ export const solutions: Solution[] = [
  */
 /* The homepage accordion's demo loops (client, 2026-10-23): one 15s silent
    zoom tour per pillar (wide shot, zoom on one visual, out, zoom on another),
-   cut from the client's own Power BI / Excel screen recordings and cleared by
+   rendered at 1080p30 from the client's own Power BI / Excel screen recordings
+   (HD on 2026-10-23: 720p looked soft on retina screens) and cleared by
    them for public use. The Excel clip shows only the variance chart and its
    row labels, at the client's request. Files are
    /public/video/solutions/<slug>.mp4 with a .webp poster of the first frame.
