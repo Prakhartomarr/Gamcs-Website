@@ -2322,7 +2322,7 @@ export const solutionDemos: Record<string, { app: string; title: string; label: 
   "digital-transformation": {
     app: "Power BI",
     title: "A Year of Rides, Replayed",
-    label: "Demo: a custom Power BI visual replaying a year of ride bookings in a day, zooming into the filling dot columns and the outcome bar.",
+    label: "Demo: a custom Power BI visual replaying a year of ride bookings in a day, zooming into the filling dot columns and then the headline figures.",
   },
   "deal-advisory": {
     app: "Power BI",
