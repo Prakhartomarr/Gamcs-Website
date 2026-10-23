@@ -3146,6 +3146,34 @@ export const careers = {
     headingLead: "Built differently.",
     headingAccent: "That includes the team.",
   },
+  /* LIFE AT GAMCS (client, 2026-10-23): offsites, festivals and day outs,
+     as a photo wall above the closing ask. Placeholder copy; media to come.
+     Drop files in /public/careers/life/ and set `src` — a tile with no
+     `src` renders as a labelled placeholder. `kind: "video"` plays muted
+     and looped; give it a `poster` image too. */
+  life: {
+    eyebrow: "Life at GAMCS",
+    headingLead: "We work hard on the numbers.",
+    headingAccent: "We make time for each other too.",
+    lead:
+      "Offsites, festivals and the odd long lunch. The moments that turn a team of specialists into people who pick up the phone for each other.",
+    tiles: [
+      {
+        kind: "video",
+        src: "",
+        poster: "",
+        title: "Annual offsite",
+        caption: "Two days away from the spreadsheets: strategy in the mornings, everything else after.",
+      },
+      { kind: "image", src: "", title: "Diwali at the office", caption: "Lights, sweets and a very competitive rangoli." },
+      { kind: "image", src: "", title: "Team day out", caption: "Out of the office, phones mostly away." },
+      { kind: "image", src: "", title: "Holi", caption: "The one day nobody minds a little colour on the dashboard." },
+      { kind: "image", src: "", title: "Month-end lunch", caption: "Close done. Lunch is on us." },
+      { kind: "image", src: "", title: "Weekend getaway", caption: "New city, same people, fewer slide decks." },
+    ] as { kind: "video" | "image"; src: string; poster?: string; title: string; caption: string }[],
+    placeholder: "Photo coming soon",
+    placeholderVideo: "Video coming soon",
+  },
   closing: {
     heading: "Not ready to apply?",
     links: [

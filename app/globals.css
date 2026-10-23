@@ -8194,3 +8194,51 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
   .mc .mc-stage-btn{align-items:flex-start;text-align:left;padding:20px 22px}
   .mc .mc-stage-tag{margin-top:auto;padding-top:22px}
 }
+
+/* =====================================================================
+   LIFE AT GAMCS (careers, 2026-10-23) — a bento wall of offsites,
+   festivals and day outs above the closing ask. Desktop: 3 columns, the
+   video spans 2x2 with two photos beside it and three beneath (9 cells,
+   no gaps). Phones: a swipeable row.
+   Markup: components/careers/LifeAtGamcs.tsx.
+   ===================================================================== */
+.cr-life{padding:24px 0 8px}
+.cr-life-head{max-width:760px}
+.cr-life-head .fin-lead{max-width:62ch}
+/* The site's accent is nowrap for short phrases; this one is a clause. */
+.cr-life .fin-h2 .accent{white-space:normal}
+.cr-life-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:240px;gap:16px;margin:44px 0 0;padding:0;list-style:none}
+.cr-life-tile{position:relative;overflow:hidden;border-radius:22px;
+  background:#EEF2F5;isolation:isolate}
+.cr-life-tile--1{grid-column:span 2;grid-row:span 2}
+.cr-life-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .8s var(--ease-out)}
+@media (hover:hover){.cr-life-tile:hover .cr-life-media{transform:scale(1.04)}}
+/* caption on a scrim at the foot of each tile */
+.cr-life-cap{position:absolute;inset:auto 0 0 0;z-index:1;padding:44px 20px 18px;
+  color:#fff;background:linear-gradient(to top,rgba(10,24,40,.78),rgba(10,24,40,0))}
+.cr-life-cap h3{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.cr-life-cap p{margin:4px 0 0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.86)}
+.cr-life-tile:not(.cr-life-tile--1) .cr-life-cap p{display:none}
+/* Placeholder until the client's media lands. */
+.cr-life-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;padding-bottom:40px;
+  border:1.5px dashed #C3CDD6;border-radius:22px;color:#7A8794;
+  background:repeating-linear-gradient(135deg,#F3F6F8 0 12px,#EEF2F5 12px 24px)}
+.cr-life-ph svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.cr-life-ph span{font-size:13px;font-weight:600;letter-spacing:.02em}
+@media (max-width:1023px){
+  .cr-life-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:200px}
+  .cr-life-tile--6{grid-column:span 2}
+}
+@media (max-width:767px){
+  .cr-life-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-top:32px;padding:0 0 8px;scrollbar-width:none}
+  .cr-life-grid::-webkit-scrollbar{display:none}
+  .cr-life-tile{flex:0 0 82%;height:300px;scroll-snap-align:start}
+  .cr-life-tile:not(.cr-life-tile--1) .cr-life-cap p{display:block}
+}
+@media (prefers-reduced-motion:reduce){.cr-life-media{transition:none}}
+

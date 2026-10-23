@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CTA from "@/components/CTA";
 import CareersSplit from "@/components/careers/CareersSplit";
+import LifeAtGamcs from "@/components/careers/LifeAtGamcs";
 import FluteShader from "@/components/ui/flute-shader";
 import { careers, story, whyUs } from "@/lib/content/gamcs";
 import { pages } from "@/lib/content/pages";
@@ -54,6 +55,9 @@ export default function CareersPage() {
           <p>{story.mission}</p>
         </section>
       </CareersSplit>
+
+      {/* Offsites, festivals and day outs (client, 2026-10-23). */}
+      <LifeAtGamcs />
 
       <section className="cr-wide cr-close cr-dark">
         <div className="container">
