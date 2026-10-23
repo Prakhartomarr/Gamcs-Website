@@ -2304,7 +2304,8 @@ export const solutions: Solution[] = [
    them for public use. The Excel clip shows only the variance chart and its
    row labels, at the client's request. Files are
    /public/video/solutions/<slug>.mp4 with a .webp poster of the first frame.
-   `app` and `title` fill the window bar; `label` is the video's accessible
+   `title` fills the window bar (`app` is kept but no longer shown, client
+   2026-10-23); `label` is the video's accessible
    name. */
 export const solutionDemos: Record<string, { app: string; title: string; label: string }> = {
   "fpa-cfo-advisory": {

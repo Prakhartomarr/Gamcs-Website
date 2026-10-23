@@ -8143,8 +8143,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .svd-dots{display:flex;gap:6px;flex:none}
 .svd-dots i{display:block;width:10px;height:10px;border-radius:50%;background:#D5DBE0}
 .svd-title{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.svd-app{flex:none;padding:4px 8px;border-radius:999px;font-size:11px;
-  color:var(--blue);background:rgba(15,94,151,.09)}
 /* One frame for every clip: the dashboards are ~16:9, the Excel model is
    wider and letterboxes on white, which is the sheet's own colour. */
 .svd-screen{aspect-ratio:16/9;background:#fff}

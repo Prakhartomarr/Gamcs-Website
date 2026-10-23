@@ -59,7 +59,6 @@ export default function SolutionDemo({
           <i />
         </span>
         <span className="svd-title">{demo.title}</span>
-        <span className="svd-app">{demo.app}</span>
       </figcaption>
       <div className="svd-screen">
         <video
