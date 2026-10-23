@@ -3419,7 +3419,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 /* Inside the dark page head (client, 2026-10-22): no band of its own, centred,
    and a solid pale pill, since the 6% tint above vanishes on navy. */
 .page-head .sol-rail{background:none;padding:0;margin-top:26px}
-.page-head .sol-rail>.container{padding:0}
 .page-head .sol-rail ul{justify-content:center}
 .page-head .sol-rail-pill{background:#F1F3F6}
 .page-head .sol-rail-pill:focus-visible{outline-color:#9ECBFF}
