@@ -2317,7 +2317,7 @@ export const solutionDemos: Record<string, { app: string; title: string; label: 
   "finance-team-extension": {
     app: "Power BI",
     title: "People Cost Dashboard",
-    label: "Demo: a Power BI people-cost dashboard, zooming into the cost trend and the salary-range chart as filters change.",
+    label: "Demo: a Power BI people-cost dashboard, zooming into the headline cost cards, the people-cost trend and the salary-range chart as filters change.",
   },
   "digital-transformation": {
     app: "Power BI",
