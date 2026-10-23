@@ -1,15 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { dur, ease } from "@/lib/motion";
-import { ASCENT, curvePath, curveY, progressT, rubberBand, snapTarget, stageT } from "./ascent";
-
-/* The scene is ~6KB of WebGL that nothing above the fold needs: it loads
-   only once the instrument is near the viewport (see `near`). */
-const AscentScene = dynamic(() => import("./AscentScene"), { ssr: false });
+import { ASCENT, baseY, curvePath, progressT, rubberBand, snapTarget, stageT } from "./ascent";
 
 type Stage = { n: string; name: string; tag: string };
 
@@ -25,10 +20,12 @@ type Props = {
   panelId: string;
 };
 
-/* The SVG fallback's drawing box. Its stroke is non-scaling, so the box can
-   stretch to any aspect and the line stays 1.6px. */
+/* The line's drawing box. Its stroke is non-scaling, so the box can stretch
+   to any aspect and the line keeps its width. The curve never changes, so
+   its path is computed once. */
 const VB_W = 1000;
 const VB_H = 300;
+const CURVE = curvePath(VB_W, VB_H);
 
 /**
  * The maturity curve as an instrument: drag along it (or tap a node, or use
@@ -37,16 +34,18 @@ const VB_H = 300;
  * Progress is a float in a ref, not React state: a drag writes it 60 times a
  * second, and only the integer stage it rounds to goes up to the parent.
  *
- * Three renderers, one geometry (./ascent.ts): the server-rendered SVG path
- * (no JS, no WebGL, reduced tier), and the lazy WebGL scene drawn over it once
- * it has painted a frame.
+ * One smooth curve in SVG (./ascent.ts), server-rendered: a pale track, and
+ * the same path in brand blue clipped to end at the marker, so the stretch
+ * already travelled reads darker. (A WebGL version with a noisy, damping
+ * line came out on 2026-10-23 at the client's word: a simple curve.)
  */
 export default function AscentInstrument({ stages, active, onChange, label, hint, panelId }: Props) {
   const count = stages.length;
   const reduced = usePrefersReducedMotion();
   const root = useRef<HTMLDivElement>(null);
   const area = useRef<HTMLDivElement>(null);
-  const path = useRef<SVGPathElement>(null);
+  const paths = useRef<SVGGElement>(null);
+  const done = useRef<SVGRectElement>(null);
   const marker = useRef<HTMLSpanElement>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -61,26 +60,18 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
   const activeRef = useRef(active);
   activeRef.current = active;
 
-  const [near, setNear] = useState(false);
-  const [mode, setMode] = useState<"svg" | "gl" | "fallback">("svg");
-  const [why, setWhy] = useState<string>();
-  const modeRef = useRef(mode);
-  modeRef.current = mode;
   const [touched, setTouched] = useState(false);
 
-  /* The SVG path and the marker, at a frozen clock. The WebGL scene paints
-     the marker itself (its clock moves), so this stands down in "gl". */
+  /* The travelled stretch, the draw-in, and the marker on the curve. */
   const paint = useCallback(() => {
-    if (modeRef.current === "gl") return;
-    const { p } = prog.current;
-    path.current?.setAttribute("d", curvePath(p, count, 0, VB_W, VB_H));
+    const t = progressT(prog.current.p, count);
     const r = reveal.current.r;
-    if (path.current) path.current.style.strokeDashoffset = String(1 - r);
+    done.current?.setAttribute("width", String(t * VB_W));
+    paths.current?.style.setProperty("--reveal", String(1 - r));
     const m = marker.current;
     const { w, h } = size.current;
     if (m && w) {
-      const t = progressT(p, count);
-      m.style.transform = `translate3d(${(t * w).toFixed(1)}px, ${((1 - curveY(t, p, count, 0)) * h).toFixed(1)}px, 0)`;
+      m.style.transform = `translate3d(${(t * w).toFixed(1)}px, ${((1 - baseY(t)) * h).toFixed(1)}px, 0)`;
       m.style.opacity = r >= t ? "1" : "0";
     }
   }, [count]);
@@ -147,19 +138,15 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
     return () => ro.disconnect();
   }, [paint]);
 
-  /* Near the viewport: load the scene. In view: draw the line in, then —
-     on touch, once — nudge the marker as a hint that it moves. */
+  /* In view: draw the line in, then — on touch, once — nudge the marker as
+     a hint that it moves. */
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const pre = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        setNear(true);
-        pre.disconnect();
-      }
-    }, { rootMargin: "400px 0px" });
-    pre.observe(el);
-    if (reduced) return () => pre.disconnect();
+    if (reduced) {
+      paint();
+      return;
+    }
 
     const rv = reveal.current;
     rv.r = 0;
@@ -182,7 +169,6 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
     }, { threshold: 0.35 });
     io.observe(el);
     return () => {
-      pre.disconnect();
       io.disconnect();
       draw?.kill();
       nudge.current?.kill();
@@ -266,7 +252,7 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
   };
 
   return (
-    <div className="mc-ascent" ref={root} data-mode={mode} data-fallback={why} data-touched={touched || undefined}>
+    <div className="mc-ascent" ref={root} data-touched={touched || undefined}>
       <div
         className="mc-ascent-area"
         ref={area}
@@ -277,29 +263,17 @@ export default function AscentInstrument({ stages, active, onChange, label, hint
         aria-hidden="true"
       >
         <svg className="mc-ascent-svg" viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="none">
-          <path
-            ref={path}
-            d={curvePath(active, count, 0, VB_W, VB_H)}
-            pathLength={1}
-            strokeDasharray="1 1"
-            vectorEffect="non-scaling-stroke"
-          />
+          <defs>
+            <clipPath id="mc-ascent-done">
+              <rect ref={done} x="0" y="0" width={progressT(active, count) * VB_W} height={VB_H} />
+            </clipPath>
+          </defs>
+          <g ref={paths}>
+            <path className="mc-ascent-track" d={CURVE} pathLength={1} vectorEffect="non-scaling-stroke" />
+            <path className="mc-ascent-done" d={CURVE} pathLength={1} vectorEffect="non-scaling-stroke"
+              clipPath="url(#mc-ascent-done)" />
+          </g>
         </svg>
-        {near && mode !== "fallback" && (
-          <AscentScene
-            count={count}
-            getProgress={() => prog.current.p}
-            getReveal={() => reveal.current.r}
-            reduced={reduced}
-            marker={marker}
-            onReady={() => setMode("gl")}
-            onFallback={(reason) => {
-              setWhy(reason);
-              setMode("fallback");
-              requestAnimationFrame(paint);
-            }}
-          />
-        )}
         <span className="mc-ascent-marker" ref={marker} />
       </div>
 

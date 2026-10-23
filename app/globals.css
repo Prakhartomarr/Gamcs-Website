@@ -6692,11 +6692,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .mc-ascent-area::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(to bottom,transparent 0 calc(25% - 1px),
     rgba(15,94,151,.07) calc(25% - 1px) 25%)}
-.mc-ascent-svg,.mc-ascent-host,.mc-ascent-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
-.mc-ascent-svg path{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;
-  transition:opacity .4s var(--ease-out)}
-/* WebGL has painted: it draws the line now, the SVG stands down. */
-.mc-ascent[data-mode="gl"] .mc-ascent-svg path{opacity:0}
+.mc-ascent-svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* One smooth curve (client, 2026-10-23): a pale track, and the same path in
+   brand blue clipped to end at the marker. --reveal draws both in. */
+.mc-ascent-svg path{fill:none;stroke-linecap:round;
+  stroke-dasharray:1 1;stroke-dashoffset:var(--reveal,0)}
+.mc-ascent-track{stroke:rgba(15,94,151,.25);stroke-width:2.5}
+.mc-ascent-done{stroke:var(--blue);stroke-width:3}
 /* Placed and shown by script; invisible until then so it never sits at 0,0. */
 .mc-ascent-marker{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;
   border-radius:50%;background:#fff;border:3px solid var(--blue);opacity:0;
@@ -6741,7 +6743,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 @media (prefers-reduced-motion:reduce){
   .mc-ascent-hint span{animation:none}
-  .mc-node-n,.mc-ascent-marker,.mc-ascent-svg path{transition:none}
+  .mc-node-n,.mc-ascent-marker{transition:none}
 }
 
 .mc[data-anim="pending"] .mc-h2,
