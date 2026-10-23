@@ -7930,6 +7930,76 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    line, so 1,080px holds it in three balanced lines under the heading. */
 .hwh-after .fin-lead{max-width:1080px;text-wrap:balance}
 .hwh-platforms{padding-top:68px}
+/* The platforms orbit, the band below lg (components/ui/platforms-orbit.tsx,
+   client, 2026-10-23). The orbit is nested transforms so every moving part
+   stays on the compositor: .po-dial takes the swipe (GSAP), .po-spin turns
+   the ring (CSS), each .po-arm points at its tool, .po-node pushes the tile
+   out along it and turns it back upright, .po-upright cancels the spin, and
+   .po-tile is the one GSAP scales in and out. The radius follows the stage
+   width (cqw) so a 320px phone keeps every tile inside the card. */
+.po{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:2rem;
+  background:radial-gradient(120% 70% at 50% 30%,#1670B0 0%,#0F5E97 45%,#0A4169 100%);padding:14px 0 12px}
+.po-rail{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 16px;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+.po-rail::-webkit-scrollbar{display:none}
+.po-tab{position:relative;flex:none;scroll-snap-align:center;min-height:44px;padding:0 16px;border-radius:999px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.78);font-size:12.5px;font-weight:500;
+  letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;transition:background-color .35s,color .35s,border-color .35s,transform .2s}
+.po-tab:active{transform:scale(.96)}
+.po-tab[aria-selected="true"]{background:#fff;border-color:#fff;color:#0F5E97}
+.po-tab:focus-visible,.po-step:focus-visible{outline:2px solid #F2C230;outline-offset:2px}
+/* The autoplay bar along the foot of the picked chip; its animationend steps
+   the band. Gone once the visitor takes over. */
+.po-fill{position:absolute;left:14px;right:14px;bottom:7px;height:2px;border-radius:2px;background:rgba(15,94,151,.35);
+  transform:scaleX(0);transform-origin:left;animation:po-fill 5s linear forwards;animation-play-state:paused}
+.po[data-play="on"] .po-fill{animation-play-state:running}
+.po[data-auto="off"] .po-fill{display:none}
+@keyframes po-fill{to{transform:scaleX(1)}}
+
+.po-stage{position:relative;container-type:inline-size;width:100%;max-width:360px;margin:6px auto 0;aspect-ratio:1;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.po-dial{--r:min(124px,35cqw);position:absolute;inset:0}
+.po-ring{position:absolute;left:50%;top:50%;width:calc(var(--r)*2);height:calc(var(--r)*2);translate:-50% -50%;border-radius:50%;border:1px dashed rgba(255,255,255,.2)}
+.po-ring--in{width:var(--r);height:var(--r);border-style:solid;border-color:rgba(255,255,255,.08);background:radial-gradient(circle,rgba(255,255,255,.1),transparent 70%)}
+.po-spin{position:absolute;inset:0;animation:po-spin 90s linear infinite}
+.po-arm{position:absolute;inset:0;transform:rotate(var(--a))}
+.po-ray{position:absolute;left:50%;bottom:50%;width:1px;height:calc(var(--r) - 28px);transform-origin:bottom;
+  background:linear-gradient(to top,rgba(255,255,255,.04),rgba(255,255,255,.4))}
+/* A pulse leaves each tile for the hub, staggered round the ring. */
+.po-pulse{position:absolute;left:-2px;top:0;width:5px;height:5px;border-radius:50%;background:#F2C230;box-shadow:0 0 8px 1px rgba(242,194,48,.7);
+  opacity:0;animation:po-flow 2.6s cubic-bezier(.55,0,.75,.4) infinite;animation-delay:calc(var(--i)*-.37s)}
+@keyframes po-flow{0%{transform:translateY(0);opacity:0}15%{opacity:1}80%{opacity:1}
+  100%{transform:translateY(calc(var(--r) - 72px));opacity:0}}
+.po-node{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(calc(var(--r)*-1)) rotate(calc(var(--a)*-1))}
+.po-upright{display:block;animation:po-spin 90s linear infinite reverse}
+.po-tile{display:flex;width:54px;height:54px;align-items:center;justify-content:center;border-radius:16px;background:#fff;
+  box-shadow:0 10px 24px -10px rgba(4,30,52,.6),inset 0 0 0 1px rgba(10,65,105,.08)}
+.po-tile img{max-width:32px;max-height:30px;object-fit:contain;pointer-events:none}
+.po-hub{position:absolute;left:50%;top:50%;width:78px;height:78px;margin:-39px 0 0 -39px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:#fff;color:#0F5E97;box-shadow:0 0 0 8px rgba(255,255,255,.08),0 18px 40px -12px rgba(4,30,52,.7)}
+.po-hub svg{width:30px;height:30px}
+.po-hub::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.5);animation:po-ping 2.6s ease-out infinite}
+@keyframes po-ping{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
+@keyframes po-spin{to{transform:rotate(360deg)}}
+.po-step{position:absolute;bottom:4px;display:flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:50%;
+  color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);transition:background-color .2s,transform .2s}
+.po-step:active{transform:scale(.92);background:rgba(255,255,255,.2)}
+.po-step--prev{left:12px}
+.po-step--next{right:12px}
+
+.po-read{margin:10px 12px 0;padding:18px 18px 16px;border-radius:1.4rem;background:#fff;box-shadow:0 20px 40px -24px rgba(4,30,52,.6)}
+.po-count{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#5B6067}
+.po-count span{color:#0F5E97}
+.po-title{margin-top:6px;font-size:1.2rem;font-weight:600;line-height:1.2;letter-spacing:-.01em;color:#202020;text-wrap:balance}
+.po-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.po-tools li{padding:5px 10px;border-radius:999px;background:#F1F3F4;color:#464646;font-size:12.5px;font-weight:500}
+.po-desc{margin-top:12px;padding-top:12px;border-top:1px solid #D9DEE1;font-size:.875rem;line-height:1.45;color:#5B6067}
+@media (prefers-reduced-motion:reduce){
+  .po-spin,.po-upright,.po-pulse,.po-hub::after{animation:none}
+  .po-pulse{opacity:0}
+  .po-fill{display:none}
+  .po-tab,.po-step{transition:none}
+}
 @media (max-width:767px){
   .hwv--route{padding-top:42px} /* the same 30% off the phone's 60 */
   .hwv--route .fin-center{margin-bottom:32px}

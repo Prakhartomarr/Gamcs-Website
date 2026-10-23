@@ -1,14 +1,17 @@
 "use client";
 
-import { useState, useEffect, useCallback, type ReactNode } from "react";
+import { useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
  * 21st.dev feature-carousel, re-skinned for the platforms band: a rail of
  * category chips on a brand-blue panel spins to the active one while a card
- * stack on the right shows that category's logo grid. Autoplays every 3s,
- * pauses on hover/focus, and stays put under prefers-reduced-motion.
+ * stack on the right shows that category's logo grid. Autoplays every 3s
+ * while on screen, pauses on hover/focus, and stays put under
+ * prefers-reduced-motion. "On screen" since 2026-10-23: below lg this sits
+ * in the page under display:none (the platforms orbit replaces it), and the
+ * interval kept re-rendering it there on phones.
  */
 export type CarouselItem = {
   id: string;
@@ -33,6 +36,8 @@ const wrap = (min: number, max: number, v: number) => {
 export function FeatureCarousel({ items }: { items: CarouselItem[] }) {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const len = items.length;
 
@@ -46,10 +51,16 @@ export function FeatureCarousel({ items }: { items: CarouselItem[] }) {
   };
 
   useEffect(() => {
-    if (isPaused || reduceMotion) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting));
+    io.observe(rootRef.current!);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || reduceMotion || !inView) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused, reduceMotion]);
+  }, [nextStep, isPaused, reduceMotion, inView]);
 
   const getCardStatus = (index: number) => {
     let diff = index - currentIndex;
@@ -69,7 +80,7 @@ export function FeatureCarousel({ items }: { items: CarouselItem[] }) {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl" {...pause}>
+    <div ref={rootRef} className="mx-auto w-full max-w-7xl" {...pause}>
       <div className="relative flex min-h-[600px] flex-col overflow-hidden rounded-[2rem] border border-line lg:aspect-video lg:flex-row lg:rounded-[3rem]">
         {/* Chip rail */}
         <div className="relative z-30 flex min-h-[350px] w-full flex-col items-start justify-center overflow-hidden bg-gradient-to-br from-blue to-blue-dark px-6 md:min-h-[420px] md:px-16 lg:h-full lg:w-[42%] lg:pl-14">

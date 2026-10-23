@@ -1,5 +1,6 @@
 import { BarChart3, Boxes, Users, TrendingUp, Code2, Database, Sparkles, type LucideIcon } from "lucide-react";
 import FeatureCarousel from "@/components/ui/feature-carousel";
+import PlatformsOrbit from "@/components/ui/platforms-orbit";
 import { platforms } from "@/lib/content/gamcs";
 
 /**
@@ -8,6 +9,11 @@ import { platforms } from "@/lib/content/gamcs";
  * rail of seven tool categories on the left, a card of that category's
  * logos on the right. Heading and line sit centred above it; the page's
  * closing CTA band follows (the "Talk to us" button went, 2026-10-23).
+ *
+ * Below lg the carousel gives way to the platforms orbit (client,
+ * 2026-10-23: on phones its rail stacked into a pill picker). Both are in
+ * the markup and CSS shows one; the hidden one does no work, as each only
+ * animates while on screen.
  *
  * Categories and logos come from `platforms.categories`; the icons are keyed
  * by category id here so the content file stays plain data.
@@ -37,8 +43,11 @@ export default function HowWeHelpPlatforms() {
             {platforms.sub}
           </p>
         </div>
-        <div className="mt-10 md:mt-14">
+        <div className="mt-10 hidden md:mt-14 lg:block">
           <FeatureCarousel items={items} />
+        </div>
+        <div className="mt-8 md:mt-12 lg:hidden">
+          <PlatformsOrbit items={items} />
         </div>
       </div>
     </section>
