@@ -7958,20 +7958,19 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 @media (max-width:767px){.tool-logos--page{padding:36px 0 30px}} /* 48px each side on a phone */
 
 /* =====================================================================
-   THE LEAK (2026-10-23) — the decision gap on a phone. The four pains hang
-   off one pipe from "the numbers" to "the decision"; a canvas behind drips
-   digits out of each leak. Phone only: desktop keeps the fanned deck.
-   Markup and behaviour: components/sections/DecisionGapFlow.tsx,
-   components/gap/leak.ts.
+   THE DECISION GAP ON A PHONE (2026-10-23). The four pains sit on one plain
+   line from "the numbers" to "the decision", each at a still red node (the
+   falling-digits canvas came out the same day at the client's word).
+   Phone only: desktop keeps the fanned deck.
+   Markup: components/sections/DecisionGapFlow.tsx.
    ===================================================================== */
 .dgf{display:none}
 @media (max-width:767px){
   .dg-stage{display:none}
   .dgf{display:block;position:relative;margin:36px 0 0;--pipe:14px;
     interpolate-size:allow-keywords}
-  .dgf-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-  .dgf>:not(.dgf-canvas){position:relative;z-index:1}
-  /* The pipe, drawn whether or not the canvas ever runs. */
+  .dgf>*{position:relative;z-index:1}
+  /* The line. */
   .dgf::before{content:"";position:absolute;left:var(--pipe);top:10px;bottom:10px;width:2px;
     margin-left:-1px;border-radius:2px;z-index:0;
     background:linear-gradient(to bottom,rgba(15,94,151,.6),rgba(15,94,151,.14))}
@@ -7992,14 +7991,10 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
     transition:opacity .55s var(--ease-out),transform .55s var(--ease-out)}
   .dgf[data-js] .dgf-leak[data-in]{opacity:1;transform:none}
 
-  /* The leak itself: a red node on the pipe, breathing. */
+  /* Each pain's mark: a still red node on the line. */
   .dgf-node{position:absolute;left:calc(var(--pipe) - 8px);top:21px;width:16px;height:16px;
     border-radius:50%;background:#fff;border:2px solid #C7261A;
     transition:background var(--dur-hover) var(--ease-out)}
-  .dgf-node::after{content:"";position:absolute;inset:-7px;border-radius:50%;
-    border:1px solid rgba(199,38,26,.45);animation:dgfPulse 2.4s ease-out infinite;
-    animation-delay:calc(var(--i) * .6s)}
-  @keyframes dgfPulse{from{transform:scale(.55);opacity:1}to{transform:scale(1.5);opacity:0}}
   .dgf-d[open] .dgf-node{background:#C7261A}
 
   .dgf-d{border:1px solid var(--line);border-radius:16px;background:#fff;
@@ -8047,7 +8042,6 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 @media (max-width:767px) and (prefers-reduced-motion:reduce){
   .dgf[data-js] .dgf-leak{transition:none}
-  .dgf-node::after{animation:none}
   .dgf-sum,.dgf-chev,.dgf-d::details-content{transition:none}
   .dg-sub .dg-mark{transition:none;background-size:100% 1.5px}
 }
