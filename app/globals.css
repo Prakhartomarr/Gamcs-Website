@@ -8203,8 +8203,9 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    Markup: components/careers/LifeAtGamcs.tsx.
    ===================================================================== */
 .cr-life{padding:24px 0 8px}
-.cr-life-head{max-width:760px}
-.cr-life-head .fin-lead{max-width:62ch}
+/* Centred (client, 2026-10-23). */
+.cr-life-head{max-width:860px;margin:0 auto;text-align:center}
+.cr-life-head .fin-lead{max-width:62ch;margin-left:auto;margin-right:auto}
 /* The site's accent is nowrap for short phrases; this one is a clause. */
 .cr-life .fin-h2 .accent{white-space:normal}
 .cr-life-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
