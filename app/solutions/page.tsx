@@ -38,13 +38,16 @@ export default function SolutionsHubPage() {
           <h1>
             {solutionsHub.h1Lead} <em>{solutionsHub.h1Accent}</em>
           </h1>
+          {/* The five pillars as jump buttons, BETWEEN the headline and the
+              subhead (client, 2026-10-22). They sat under the whole band
+              before. Inside the head they are on navy rather than the
+              off-white, so the pill carries a light-on-dark treatment there
+              — see `.page-head .sol-rail-pill` in globals.css. PillarRail
+              renders no .container of its own; it is already inside one. */}
+          <PillarRail />
           <p>{solutionsHub.subhead}</p>
         </div>
       </section>
-
-      {/* The five pillars as jump buttons, under the head and above the
-          blocks they point at (client, 2026-10-22). */}
-      <PillarRail />
 
       <div className="sol">
         <PillarBlocks />

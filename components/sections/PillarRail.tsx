@@ -12,6 +12,13 @@ import { solutions } from "@/lib/content/gamcs";
  *
  * STATIC, NOT STICKY (client).
  *
+ * IT SITS INSIDE THE PAGE HEAD, between the headline and the subhead
+ * (client, 2026-10-22). It renders no `.container` of its own because the
+ * head already provides one — a second would double the gutter. That also
+ * means the pills are on navy, not the off-white they were designed
+ * against, so `.page-head .sol-rail-pill` flips them light-on-dark. Move
+ * this out of a page head and the base light-background rule applies again.
+ *
  * ALL FIVE PILLS LOOK THE SAME (client, 2026-10-22). An earlier version
  * marked the pillar in view with aria-current and painted that pill blue,
  * which is why this was a client component. The observer is gone, so this is
@@ -23,17 +30,15 @@ export default function PillarRail() {
 
   return (
     <nav className="sol-rail" aria-label="Solution pillars">
-      <div className="container">
-        <ul>
-          {solutions.map((s) => (
-            <li key={s.slug}>
-              <a href={`#${s.slug}`} className="sol-rail-pill">
-                {s.navLabel}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul>
+        {solutions.map((s) => (
+          <li key={s.slug}>
+            <a href={`#${s.slug}`} className="sol-rail-pill">
+              {s.navLabel}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }
