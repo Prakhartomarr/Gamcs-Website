@@ -6692,11 +6692,13 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 .mc-ascent-area::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(to bottom,transparent 0 calc(25% - 1px),
     rgba(15,94,151,.07) calc(25% - 1px) 25%)}
-.mc-ascent-svg,.mc-ascent-host,.mc-ascent-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
-.mc-ascent-svg path{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;
-  transition:opacity .4s var(--ease-out)}
-/* WebGL has painted: it draws the line now, the SVG stands down. */
-.mc-ascent[data-mode="gl"] .mc-ascent-svg path{opacity:0}
+.mc-ascent-svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+/* One smooth curve (client, 2026-10-23): a pale track, and the same path in
+   brand blue clipped to end at the marker. --reveal draws both in. */
+.mc-ascent-svg path{fill:none;stroke-linecap:round;
+  stroke-dasharray:1 1;stroke-dashoffset:var(--reveal,0)}
+.mc-ascent-track{stroke:rgba(15,94,151,.25);stroke-width:2.5}
+.mc-ascent-done{stroke:var(--blue);stroke-width:3}
 /* Placed and shown by script; invisible until then so it never sits at 0,0. */
 .mc-ascent-marker{position:absolute;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;
   border-radius:50%;background:#fff;border:3px solid var(--blue);opacity:0;
@@ -6741,7 +6743,7 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
 }
 @media (prefers-reduced-motion:reduce){
   .mc-ascent-hint span{animation:none}
-  .mc-node-n,.mc-ascent-marker,.mc-ascent-svg path{transition:none}
+  .mc-node-n,.mc-ascent-marker{transition:none}
 }
 
 .mc[data-anim="pending"] .mc-h2,
@@ -8026,3 +8028,92 @@ html.is-locked body{overflow:hidden!important;height:100%!important;
    strip and the cards under it read as one block. */
 .tool-logos--page{padding:44px 0 43px;background:#F9F9F8}
 @media (max-width:767px){.tool-logos--page{padding:36px 0 30px}} /* 48px each side on a phone */
+
+/* =====================================================================
+   THE DECISION GAP ON A PHONE (2026-10-23). The four pains sit on one plain
+   line from "the numbers" to "the decision", each at a still red node (the
+   falling-digits canvas came out the same day at the client's word).
+   Phone only: desktop keeps the fanned deck.
+   Markup: components/sections/DecisionGapFlow.tsx.
+   ===================================================================== */
+.dgf{display:none}
+@media (max-width:767px){
+  .dg-stage{display:none}
+  .dgf{display:block;position:relative;margin:36px 0 0;--pipe:14px;
+    interpolate-size:allow-keywords}
+  .dgf>*{position:relative;z-index:1}
+  /* The line. */
+  .dgf::before{content:"";position:absolute;left:var(--pipe);top:10px;bottom:10px;width:2px;
+    margin-left:-1px;border-radius:2px;z-index:0;
+    background:linear-gradient(to bottom,rgba(15,94,151,.6),rgba(15,94,151,.14))}
+
+  .dgf-end{display:flex;flex-wrap:wrap;align-items:center;column-gap:14px;row-gap:4px;margin:0;
+    font:700 12px/1.2 var(--font-sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+  .dgf-dot{flex:none;width:12px;height:12px;margin-left:calc(var(--pipe) - 6px);border-radius:50%;
+    background:var(--blue);box-shadow:0 0 0 5px rgba(15,94,151,.12)}
+  .dgf-end--to{margin-top:2px}
+  .dgf-end--to .dgf-dot{background:#fff;border:2px solid var(--blue)}
+  .dgf-hint{flex-basis:100%;padding-left:calc(var(--pipe) + 20px);
+    font:500 14px/1.4 var(--font-sans);letter-spacing:0;text-transform:none;color:#6B7280}
+
+  .dgf-leaks{display:grid;gap:12px;margin:22px 0;padding:0;list-style:none}
+  .dgf-leak{position:relative;padding-left:52px}
+  /* Arrival: only once script runs (data-js), so JS-off never hides them. */
+  .dgf[data-js] .dgf-leak{opacity:0;transform:translateY(16px);
+    transition:opacity .55s var(--ease-out),transform .55s var(--ease-out)}
+  .dgf[data-js] .dgf-leak[data-in]{opacity:1;transform:none}
+
+  /* Each pain's mark: a still red node on the line. */
+  .dgf-node{position:absolute;left:calc(var(--pipe) - 8px);top:21px;width:16px;height:16px;
+    border-radius:50%;background:#fff;border:2px solid #C7261A;
+    transition:background var(--dur-hover) var(--ease-out)}
+  .dgf-d[open] .dgf-node{background:#C7261A}
+
+  .dgf-d{border:1px solid var(--line);border-radius:16px;background:#fff;
+    transition:border-color var(--dur-hover) var(--ease-out),box-shadow var(--dur-hover) var(--ease-out)}
+  .dgf-d[open]{border-color:rgba(199,38,26,.28);box-shadow:0 14px 34px -22px rgba(199,38,26,.45)}
+  .dgf-sum{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 16px;
+    cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent;
+    transition:transform var(--dur-press) var(--ease-out)}
+  .dgf-sum::-webkit-details-marker{display:none}
+  /* The tap's own answer: a small squish, inside --dur-press. */
+  .dgf-sum:active{transform:scale(.985)}
+  .dgf-sum:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:15px}
+  .dgf-n{flex:none;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;color:#8C959E}
+  .dgf-title{flex:1;font:600 16px/1.3 var(--font-sans);color:var(--ink)}
+  .dgf-chev{flex:none;width:14px;height:14px;fill:none;stroke:#6B7280;stroke-width:1.6;
+    stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease-out)}
+  .dgf-d[open] .dgf-chev{transform:rotate(180deg)}
+  .dgf-body{margin:0;padding:0 16px 18px 42px;font-size:16px;line-height:1.55;color:#4A5560}
+  /* Open and close animate to the content's height where supported. */
+  .dgf-d::details-content{block-size:0;overflow:hidden;
+    transition:block-size .36s var(--ease-out),content-visibility .36s allow-discrete}
+  .dgf-d[open]::details-content{block-size:auto}
+
+  /* The red phrases in the lead underline themselves in turn as the
+     section arrives (the entrance gate flips data-anim to "in"). */
+  .dg-sub .dg-mark{background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;
+    transition:background-size .7s var(--ease-out)}
+  .dg[data-anim="in"] .dg-sub .dg-mark{background-size:100% 1.5px}
+  .dg-sub .dg-mark:nth-of-type(2){transition-delay:.45s}
+  .dg-sub .dg-mark:nth-of-type(4){transition-delay:.7s}
+  .dg-sub .dg-mark:nth-of-type(6){transition-delay:.95s}
+  .dg-sub .dg-mark:nth-of-type(8){transition-delay:1.2s}
+
+  /* The evidence as a row you swipe: native scroll-snap, so momentum is the
+     phone's own; each card peeks the next. Full-bleed, aligned to the
+     container's edge, never wider than the viewport. */
+  /* `.dg .dg-stats` to match the older phone block's (0,2,0), which set
+     display:block and width:100% — the full bleed needs width:auto. */
+  .dg .dg-stats{display:flex;gap:12px;width:auto;overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-inline:calc(50% - 50vw);padding:4px calc(50vw - 50%) 14px;
+    scroll-padding-inline:calc(50vw - 50%);scrollbar-width:none;overscroll-behavior-x:contain}
+  .dg .dg-stats::-webkit-scrollbar{display:none}
+  .dg .dg-stats .dg-stat{flex:0 0 84%;scroll-snap-align:start;
+    padding:22px 20px;border-radius:16px;background:var(--soft)}
+}
+@media (max-width:767px) and (prefers-reduced-motion:reduce){
+  .dgf[data-js] .dgf-leak{transition:none}
+  .dgf-sum,.dgf-chev,.dgf-d::details-content{transition:none}
+  .dg-sub .dg-mark{transition:none;background-size:100% 1.5px}
+}

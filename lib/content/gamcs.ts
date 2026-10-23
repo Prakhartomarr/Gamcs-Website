@@ -2916,6 +2916,13 @@ export const clients = {
  */
 export const decisionGap = {
   headingLead: "Between the numbers and the decision,",
+  /* The Leak (phones, 2026-10-23): the two ends of the pipe the pain points
+     hang off, and the cue to open one. */
+  flow: {
+    from: "The numbers",
+    to: "The decision",
+    hint: "Tap a leak to see what it costs",
+  },
   /** Flows inline after the lead, mid-sentence, in --blue. */
   headingAccent: "too much gets lost.",
   /* Client's rewrite, 2026-10-21. Two changes: the second and third

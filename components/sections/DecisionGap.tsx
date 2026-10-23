@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import CountUp from "@/components/motion/CountUp";
 import DecisionGapMotion from "@/components/motion/DecisionGapMotion";
 import DecisionGapSignal from "@/components/motion/DecisionGapSignal";
+import DecisionGapFlow from "@/components/sections/DecisionGapFlow";
 import { decisionGap as c } from "@/lib/content/gamcs";
 import { fill } from "@/lib/content/fill";
 import { sections } from "@/lib/content/ui";
@@ -142,6 +143,11 @@ export default function DecisionGap() {
             ))}
           </ul>
         </div>
+
+        {/* THE LEAK (phones, 2026-10-23). The pains as leaks in one pipe
+            from the numbers to the decision; the stylesheet shows it below
+            768px and hides .dg-stage there. Same copy, from c.pains. */}
+        <DecisionGapFlow />
 
         {/* The turn. Its quote mark is a pseudo-element on the row: it is
             punctuation around the sentence, not content, and a screen reader
