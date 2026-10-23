@@ -23,11 +23,14 @@ export const LEAK = {
   speed: 70,
   speedPerScroll: 0.12,
   speedMax: 260,
-  /** A lost number's sideways throw (px/s), gravity (px/s²), fade (1/s). */
-  throwMin: 50,
-  throwMax: 140,
-  gravity: 150,
-  fade: 1.3,
+  /** A lost number's sideways throw (px/s), gravity (px/s²), fade (1/s).
+      Small throws on purpose: lost numbers drip down the gutter between
+      the pipe and the cards, where they stay visible, rather than flying
+      under the cards. */
+  throwMin: 12,
+  throwMax: 48,
+  gravity: 170,
+  fade: 1.05,
   /** Pool size per tier; the pool is preallocated and recycled. */
   pool: { high: 180, mid: 100 },
   /** Device-pixel-ratio cap. */
