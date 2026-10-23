@@ -6,14 +6,13 @@ import type { Part } from "./fill";
  * so text, links and emphasis all stay plain strings here. `{legalName}`,
  * `{email}`, `{url}` and `{formFields}` are filled from `site` and `contact`.
  *
- * The privacy policy is the client's draft (2026-10-23, "Draft pending legal
- * review"), corrected against this build the same day: the fonts are
- * self-hosted (no Google Fonts request), the careers form can post to
- * app/api/careers and on through Resend, office "Directions" links go to
- * Google Maps, and the careers route rate-limits by IP in memory. Business
- * facts the repository cannot know are `tbc` parts, rendered as visible "to be
- * confirmed" markers. The cookie policy is the approved copy (doc page 13) and
- * carries no markers.
+ * Both policies were rewritten on 2026-10-24 as publish-ready copy (no
+ * draft banner, no "to be confirmed" markers), modelled on the structure of
+ * abacum.ai and threesixtyfinance.com's legal pages and checked against this
+ * build: self-hosted fonts, mailto contact form, careers via app/api/careers
+ * and Resend, GA4 only after consent, AWS Amplify hosting. Gaps the code
+ * cannot answer (retention periods, grievance contact) use conservative
+ * defaults the client approved; they are not legal advice.
  */
 export type LegalBlock =
   | { h2: string }
@@ -30,151 +29,103 @@ export const legal = {
 
 export const privacy = {
   title: "Privacy Policy",
-  intro: [
-    "This Privacy Policy explains how GA Management Consultants LLP (“GAMCS”, “we”, “us” or “our”) handles personal information when you visit our website, contact us, or apply for a position with us.",
-  ] as Part[],
-  /** The draft banner, until the policy has been reviewed. */
-  draft: [
-    { text: "Status: Draft pending legal review.", strong: true },
-    " Items marked “to be confirmed” need input from GA Management Consultants before publication.",
-  ] as Part[],
+  intro: [{ text: "Last updated:", strong: true }, " 24 October 2026"] as Part[],
   blocks: [
-    { h2: "1. Who We Are" },
-    { p: ["GA Management Consultants LLP is responsible for the personal information described in this Privacy Policy, subject to the applicable data protection laws."] },
+    { p: ["This Privacy Policy explains how GA Management Consultants LLP (“GAMCS”, “we”, “us” or “our”) collects, uses, shares and protects personal data when you visit our website, contact us, work with us, or apply for a role with us. It is written to meet India’s Digital Personal Data Protection Act, 2023 (“DPDP Act”) and, for visitors in the UK and European Economic Area, the UK GDPR and EU GDPR."] },
+
+    { h2: "1. Who we are" },
+    { p: ["GA Management Consultants LLP is the data fiduciary (under the DPDP Act) and data controller (under the GDPR) for the personal data described in this policy."] },
     { p: [{ text: "Registered office:", strong: true }, " 2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32, Gurugram, Haryana 122001, India."] },
-    { p: [{ text: "General contact:", strong: true }, " ", { text: "{email}", href: "mailto:{email}" }] },
-    { p: ["For privacy-related questions or requests concerning your personal information, please contact us at the email address above."] },
+    { p: [{ text: "Grievance Officer:", strong: true }, " Grievance Officer, GA Management Consultants LLP, ", { text: "{email}", href: "mailto:{email}" }, ". Write to this address for any question, request or complaint about your personal data."] },
 
-    { h2: "2. Information You Provide to Us" },
-    { h3: "Contact enquiries" },
-    { p: ["Our website's contact form asks for your full name, title, company, phone number, how you heard about us, email address, and the goal or assistance you are seeking."] },
-    { p: ["The form is designed to open a pre-filled email in your own email application, addressed to ", { text: "{email}", href: "mailto:{email}" }, ". It does not submit the form information to a GAMCS server. We receive the information when you choose to send the prepared email."] },
-    { p: ["If you do not send the email, the form information is not transmitted to GAMCS through the form's submission process."] },
-    { h3: "Email and other correspondence" },
-    { p: ["If you email us or contact us through LinkedIn or another communication channel, we may retain your correspondence and the information you choose to share so that we can respond and maintain the relevant business communication."] },
-    { h3: "Careers and recruitment" },
-    { p: ["If you apply for a position with GAMCS, we may receive information such as your name, contact details, CV or résumé, employment history, qualifications, and other information you choose to provide."] },
-    { p: ["Our careers application form asks for your full name, email address, phone number (optional), the track you are applying for, your location preference, a LinkedIn or portfolio URL (optional), a short note (optional), and your CV (PDF or Word, up to 4 MB). It also asks you to agree to GAMCS storing your details to assess your application."] },
-    { p: ["Where online applications are enabled, the form sends your application over HTTPS to our website's server, which checks it and forwards it by email, with your CV attached, to our careers mailbox (careers@gamcs.in) using Resend, an email delivery service. The website server does not keep a copy of your application after forwarding it."] },
-    { p: ["Where online applications are not enabled, the form instead opens a pre-filled email in your own email application, addressed to careers@gamcs.in, and you attach your CV yourself. We receive your application only if you choose to send that email."] },
-    { p: ["We use this information to assess your application, communicate with you about recruitment, and administer the recruitment process. Access to recruitment correspondence is handled by our HR team."] },
-    { p: ["Please avoid including unnecessary sensitive personal information in your application."] },
-
-    { h2: "3. Information Collected Automatically" },
-    { h3: "Website hosting and technical logs" },
-    { p: ["Our website is hosted using AWS Amplify. The hosting service may process and record technical information associated with requests to the website, such as IP address, request time, requested resource, and browser or user-agent information."] },
-    { p: ["We use this information, where available, to deliver the website, maintain its security, troubleshoot errors, and investigate potentially harmful activity."] },
-    { p: [{ text: "hosting region, and any additional log-retention or deletion arrangements", tbc: true }] },
-    { h3: "Preventing abuse of the careers form" },
-    { p: ["Where online applications are enabled, the website's server briefly uses the IP address of a submission to limit repeated submissions (no more than five from one address in ten minutes). This counter is held in the server's memory only, is not written to storage, and is cleared after it expires or when the server restarts."] },
-    { h3: "Analytics" },
-    { p: ["Google Analytics 4 is integrated into the website's implementation, but analytics is not currently enabled on this build because no measurement ID is configured. Accordingly, the website does not currently load the Google Analytics measurement script or collect Google Analytics measurement data through that integration."] },
-    { p: ["If analytics is enabled in the future, it will be configured to operate only after a visitor has consented to optional analytics cookies. Subject to the final configuration, analytics may record information such as pages viewed, approximate location, browser and device information, and interactions with website elements."] },
-    { p: ["This description of future analytics functionality does not mean that such measurement is currently taking place."] },
-
-    { h2: "4. How We Use Personal Information" },
-    { p: ["We may use personal information for the following purposes:"] },
+    { h2: "2. Personal data we collect" },
+    { h3: "Information you give us" },
     {
       ul: [
-        ["To respond to enquiries and maintain communications you initiate."],
-        ["To assess and manage job applications and communicate with candidates."],
-        ["To operate, maintain, troubleshoot, and secure our website."],
-        ["To understand aggregate website usage and improve our services, if analytics is enabled and you have consented to it."],
-        ["To comply with applicable legal obligations and establish, exercise, or defend legal claims where appropriate."],
+        [{ text: "Enquiries:", strong: true }, " your name, job title, company, phone number, email address, how you heard about us and what you would like help with. Our contact form opens a pre-filled email in your own email app; we receive these details only if you send that email."],
+        [{ text: "Correspondence:", strong: true }, " anything you choose to share when you email us, message us on LinkedIn, or speak to us."],
+        [{ text: "Job applications:", strong: true }, " your name, email, phone number, the role and location you are interested in, a LinkedIn or portfolio link, a short note, and your CV. Please do not include sensitive information (such as health, religion or financial account details) in your application."],
+        [{ text: "Client engagements:", strong: true }, " business contact details of the people we work with at our clients, and any personal data contained in information a client shares with us to deliver our services."],
       ],
     },
-    { p: ["We do not sell personal information. We do not use website analytics information for advertising or cross-site advertising profiles as described in this policy."] },
-
-    { h2: "5. Cookies and Similar Technologies" },
-    { h3: "Essential cookies and storage" },
-    { p: ["Essential cookies or similar browser storage may be used where necessary for the website to function, including to remember your cookie preferences."] },
-    { h3: "Optional analytics cookies" },
-    { p: ["Google Analytics 4 is intended to be used for optional website analytics only after you consent through the website's cookie preferences mechanism. Analytics is not currently active on this build."] },
-    { p: ["You can decline optional analytics cookies without losing access to the website's essential functionality. You can also withdraw your analytics consent or change your preferences through the ", { text: "“Cookie Preferences”", action: "cookie-prefs" }, " link in the website footer."] },
-    { p: ["When you withdraw consent, the website should stop future analytics collection and update the relevant consent state. Withdrawal does not retrospectively invalidate processing that took place lawfully before withdrawal."] },
-
-    { h2: "6. Third-Party Services" },
-    { p: ["Our website and communications may involve the following third-party services:"] },
+    { h3: "Information collected automatically" },
     {
       ul: [
-        [{ text: "Amazon Web Services (AWS Amplify):", strong: true }, " Hosts the website and may process technical request information and access logs."],
-        [{ text: "Resend:", strong: true }, " Where online applications are enabled, delivers careers applications, including the attached CV, from our website to our careers mailbox."],
-        [{ text: "Google Analytics 4:", strong: true }, " Intended for optional website analytics, but not currently active on this build."],
-        [{ text: "LinkedIn:", strong: true }, " If you follow a LinkedIn link, LinkedIn's own privacy practices apply to your subsequent activity on its platform."],
-        [{ text: "Google Maps:", strong: true }, " Our office locations include “Directions” links. Nothing is loaded from Google Maps unless you follow one; if you do, Google's own privacy practices apply."],
-        [{ text: "Your email provider:", strong: true }, " The contact form opens a message in your own email application. Your email provider processes the message when you send it."],
+        [{ text: "Technical data:", strong: true }, " when you visit the website, our hosting provider records standard request information such as your IP address, browser type, the page requested and the time of the request."],
+        [{ text: "Analytics (only with your consent):", strong: true }, " if you accept analytics cookies, we use Google Analytics 4 to understand how visitors use the site, for example which pages are viewed and which buttons are clicked. See our ", { text: "Cookie Policy", href: "/cookie-policy" }, "."],
+        [{ text: "Your cookie choice:", strong: true }, " stored in your own browser so we remember it; it is not sent to us."],
       ],
     },
-    { p: ["Our typefaces are served from our own website, so viewing the site does not send requests to a font provider."] },
-    { p: ["These providers may process information under their own terms and privacy policies and, where applicable, under arrangements with GAMCS."] },
-    { p: ["Third-party services may process information in locations outside your own country. ", { text: "processing locations of each provider, and any required contractual or transfer safeguards", tbc: true }] },
 
-    { h2: "7. Legal Basis for Processing" },
-    { p: ["We process personal information only where an applicable legal basis permits us to do so."] },
-    { p: ["Depending on the circumstances and the laws that apply, this may include:"] },
+    { h2: "3. How and why we use your data" },
     {
       ul: [
-        ["Responding to enquiries and taking steps requested by you."],
-        ["Processing recruitment information for recruitment-related purposes."],
-        ["Meeting legal obligations and protecting or pursuing legitimate legal interests where permitted by applicable law."],
-        ["Obtaining consent where consent is required, including for optional analytics cookies."],
+        [{ text: "To respond to enquiries and arrange meetings", strong: true }, " — on the basis of your consent and the steps you ask us to take."],
+        [{ text: "To deliver and manage client engagements", strong: true }, " — to perform our contract with the client and our legitimate interest in running the engagement."],
+        [{ text: "To assess job applications", strong: true }, " — on the basis of the consent you give when you apply."],
+        [{ text: "To run, secure and improve the website", strong: true }, " — our legitimate interest in a safe, working site; analytics only with your consent."],
+        [{ text: "To meet legal obligations", strong: true }, " — for example tax, accounting and regulatory record-keeping, and responding to lawful requests."],
       ],
     },
-    { p: ["The precise lawful basis for each processing activity, and the requirements for notice, consent, withdrawal, and individual rights, will be determined in accordance with the data protection laws applicable to GAMCS and the relevant individual."] },
+    { p: ["We do not sell personal data, use it for third-party advertising, or make decisions about you based solely on automated processing."] },
 
-    { h2: "8. Security" },
-    { p: ["We use technical measures intended to protect the website and information handled through it."] },
-    { p: ["The website is served over HTTPS, which encrypts information transmitted between your browser and the website. The current implementation also sends protective HTTP security headers intended to reduce certain browser-based risks, including content-type guessing, unauthorised framing, unnecessary referrer disclosure, and access to browser features such as the camera, microphone, and location."] },
-    { p: ["These measures help protect the website but cannot guarantee absolute security."] },
-    { p: ["The contact form does not send information to a GAMCS server. Where online applications are enabled, the careers form sends your application to our website's server over HTTPS; the server checks the CV's file type and size and forwards the application by email without keeping a copy. Information sent to GAMCS by email is subsequently subject to the security and access controls of our business email environment. Access to recruitment correspondence is handled by our HR team."] },
-    { p: ["Our internal access controls, mailbox security arrangements, incident-response procedures, and retention practices should be reviewed periodically."] },
-
-    { h2: "9. Data Retention" },
-    { p: ["We retain personal information only for as long as necessary for the purposes for which it was collected, subject to applicable legal requirements and the need to establish, exercise, or defend legal claims."] },
+    { h2: "4. Who we share it with" },
+    { p: ["We share personal data only where needed, with:"] },
     {
       ul: [
-        [{ text: "Enquiries and business correspondence:", strong: true }, " Retained according to our business email retention policy. ", { text: "retention period", tbc: true }],
-        [{ text: "Recruitment information:", strong: true }, " Retained according to our recruitment retention policy. ", { text: "retention period", tbc: true }],
-        [{ text: "Hosting logs:", strong: true }, " AWS Amplify provides access logs for hosted applications. ", { text: "retention and deletion arrangements under GAMCS's AWS configuration", tbc: true }],
-        [{ text: "Applications delivered through Resend:", strong: true }, " Resend may keep a record of the messages it delivers under its own settings and policies. ", { text: "Resend retention settings for the GAMCS account", tbc: true }],
-        [{ text: "Analytics information:", strong: true }, " If Google Analytics is enabled, the retention of user-level and event-level data will depend on the settings configured for the relevant Analytics property and Google's applicable policies."],
+        [{ text: "Service providers", strong: true }, " who act on our instructions: Amazon Web Services (website hosting), Microsoft 365 (email), Resend (delivery of online job applications to our careers inbox), and Google Analytics (only if you consent)."],
+        [{ text: "Professional advisers", strong: true }, " such as auditors and legal advisers, under confidentiality."],
+        [{ text: "Authorities", strong: true }, " where required by law or to protect our rights."],
+        [{ text: "A buyer or successor", strong: true }, " if our business is reorganised or sold, under equivalent protection."],
       ],
     },
-    { p: ["We will update this section once the relevant retention periods and deletion arrangements have been confirmed."] },
+    { p: ["Links on the site to LinkedIn and Google Maps take you to those services, whose own privacy policies then apply."] },
 
-    { h2: "10. Your Privacy Rights" },
-    { p: ["Depending on the data protection laws that apply to you and the circumstances of the processing, you may have rights concerning your personal information. These may include the right to:"] },
+    { h2: "5. International transfers" },
+    { p: ["Our main operations are in India. Some of our service providers store or process data in other countries. Where data leaves India we rely on providers bound by appropriate contractual and security commitments, and we transfer data only to countries the Government of India has not restricted under the DPDP Act. For UK and EEA visitors, transfers are protected by safeguards such as the European Commission’s Standard Contractual Clauses."] },
+
+    { h2: "6. How long we keep it" },
     {
       ul: [
-        ["Request access to personal information held about you."],
-        ["Request correction of inaccurate or incomplete information."],
-        ["Request deletion of personal information where the applicable law provides that right."],
-        ["Withdraw consent where processing is based on consent."],
-        ["Object to or restrict certain processing where applicable law provides those rights."],
-        ["Raise a complaint with the relevant competent authority."],
+        [{ text: "Enquiries and correspondence:", strong: true }, " up to 24 months after our last contact, unless they lead to an engagement."],
+        [{ text: "Client engagement records:", strong: true }, " for the duration of the engagement and up to 8 years afterwards, in line with Indian tax and accounting requirements."],
+        [{ text: "Job applications:", strong: true }, " up to 12 months after the role is filled, or longer if you agree to be considered for future roles. If you join us, your application becomes part of your employee record."],
+        [{ text: "Website logs:", strong: true }, " up to 90 days, unless needed to investigate a security incident."],
+        [{ text: "Analytics data:", strong: true }, " up to 14 months (Google Analytics’ retention setting)."],
       ],
     },
-    { p: ["To submit a privacy request, contact ", { text: "{email}", href: "mailto:{email}" }, ". We may need to verify your identity and request further information to process your request. We will respond in accordance with the applicable legal requirements."] },
-    { p: ["The precise rights, response periods, exemptions, and competent supervisory or regulatory authority depend on the laws applicable to the request."] },
+    { p: ["When data is no longer needed we delete or anonymise it."] },
 
-    { h2: "11. Children" },
-    { p: ["Our website is intended for businesses and professional audiences and is not directed at children."] },
-    { p: ["We do not knowingly seek to collect personal information from children through this website. If you believe that a child has provided personal information to us, please contact ", { text: "{email}", href: "mailto:{email}" }, " so that we can assess the matter and take any action required by applicable law."] },
+    { h2: "7. Your rights" },
+    { p: ["Subject to the law that applies to you, you can:"] },
+    {
+      ul: [
+        ["ask for a summary of the personal data we hold about you and how we use it;"],
+        ["ask us to correct, complete, update or erase it;"],
+        ["withdraw your consent at any time, without affecting processing already done;"],
+        ["nominate another person to exercise your rights if you die or become incapacitated (DPDP Act);"],
+        ["object to or restrict certain processing, and receive your data in a portable format (UK/EEA visitors);"],
+        ["raise a grievance with us, and if unresolved, complain to the Data Protection Board of India, or to your local supervisory authority if you are in the UK or EEA."],
+      ],
+    },
+    { p: ["Email the Grievance Officer at ", { text: "{email}", href: "mailto:{email}" }, ". We will acknowledge your request within 7 days and respond within 30 days. We may ask you to verify your identity first."] },
 
-    { h2: "12. International Processing" },
-    { p: ["Our website may be accessible to visitors in countries other than India. Some third-party service providers may process technical information outside India."] },
-    { p: ["Where applicable law requires additional safeguards for international transfers or access to personal information, GAMCS will assess and implement the necessary measures."] },
+    { h2: "8. Cookies" },
+    { p: ["We use one item of browser storage to remember your cookie choice, and analytics cookies only if you accept them. You can change your mind at any time through ", { text: "Cookie Preferences", action: "cookie-prefs" }, ". Full details are in our ", { text: "Cookie Policy", href: "/cookie-policy" }, "."] },
 
-    { h2: "13. Changes to This Privacy Policy" },
-    { p: ["We may update this Privacy Policy to reflect changes in our website, services, data-handling practices, or legal obligations."] },
-    { p: ["The latest version will be published on this page, together with its effective date. We encourage you to review the policy periodically."] },
-    { p: [{ text: "Effective date:", strong: true }, " ", { text: "effective date of this version", tbc: true }] },
+    { h2: "9. Security" },
+    { p: ["The website is served only over encrypted HTTPS and sends security headers that limit framing, content sniffing and access to device features. Online job applications are checked for file type and size and forwarded by email without being stored on the website. Access to enquiries and applications is limited to the people who need it. No system is completely secure, but we take reasonable measures to protect your data and will notify you and the authorities of a personal data breach where the law requires."] },
 
-    { h2: "14. Contact Us" },
-    { p: ["For questions about this Privacy Policy, requests relating to personal information, or concerns about how your information is handled, contact:"] },
-    { p: [{ text: "GA Management Consultants LLP", strong: true }] },
+    { h2: "10. Children" },
+    { p: ["Our website and services are intended for businesses and adults. We do not knowingly collect personal data from anyone under 18. If you believe a child has sent us personal data, contact us and we will delete it."] },
+
+    { h2: "11. Changes to this policy" },
+    { p: ["We may update this policy from time to time. The latest version, with its “last updated” date, will always be on this page. Where a change significantly affects how we use your data, we will take reasonable steps to tell you."] },
+
+    { h2: "12. Contact us" },
+    { p: [{ text: "GA Management Consultants LLP", strong: true }, " — Grievance Officer"] },
     { p: [{ text: "Email:", strong: true }, " ", { text: "{email}", href: "mailto:{email}" }] },
-    { p: [{ text: "Registered office:", strong: true }, " 2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32, Gurugram, Haryana 122001, India."] },
+    { p: [{ text: "Post:", strong: true }, " 2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32, Gurugram, Haryana 122001, India."] },
   ] as LegalBlock[],
 };
 
@@ -187,7 +138,7 @@ export const privacy = {
    build's GA ID, so the page stays true whether or not analytics is on. */
 export const cookiePolicy = {
   title: "Cookie Policy",
-  intro: [{ text: "Effective date:", strong: true }, " October 23, 2026"] as Part[],
+  intro: [{ text: "Last updated:", strong: true }, " 24 October 2026"] as Part[],
   blocks: [
     { h2: "1. Introduction" },
     { p: ["GA Management Consultants LLP (“GAMCS,” “we,” “us,” or “our”) uses a small number of technologies on our website to support essential functionality, remember your privacy preferences and, only where optional analytics is enabled and you have agreed to it, understand how visitors use the website."] },
@@ -250,3 +201,59 @@ export const cookiePolicy = {
     { p: ["For further information about our handling of personal information, please read our ", { text: "Privacy Policy", href: "/privacy-policy" }, "."] },
   ] as LegalBlock[],
 };
+
+/* Terms of Use (2026-10-24): website terms for gamcs.in, modelled on
+   threesixtyfinance.com's legal page, governed by Indian law. */
+export const terms = {
+  title: "Terms of Use",
+  intro: [{ text: "Last updated:", strong: true }, " 24 October 2026"] as Part[],
+  blocks: [
+    { p: ["These Terms of Use govern your use of {url} (the “website”), operated by GA Management Consultants LLP (“GAMCS”, “we”, “us”). By using the website you agree to these terms. If you do not agree, please do not use it."] },
+
+    { h2: "1. About the website" },
+    { p: ["The website describes our finance advisory, FP&A, digital transformation, transaction and training services. It is for general information only. Any engagement with GAMCS is governed by a separate written agreement, which takes precedence over these terms."] },
+
+    { h2: "2. Not professional advice" },
+    { p: ["Content on the website — including articles, case studies, dashboards, figures and the finance maturity assessment — is general information, not financial, accounting, tax, legal or investment advice. It does not create a client relationship. Case studies and demonstration dashboards are illustrative, may use sample data, and do not guarantee similar results. Please take professional advice for your own circumstances before acting on anything you read here."] },
+
+    { h2: "3. Intellectual property" },
+    { p: ["The website and its content — text, design, logos, the GA mark, graphics, videos, dashboards and code — belong to GAMCS or its licensors and are protected by intellectual property laws. You may view and print pages for your own non-commercial reference. You may not copy, reproduce, modify, republish or commercially exploit any content without our prior written permission. Third-party names and logos shown (for example the platforms we work with) belong to their owners and do not imply endorsement."] },
+
+    { h2: "4. Acceptable use" },
+    { p: ["You agree not to:"] },
+    {
+      ul: [
+        ["use the website unlawfully, or in a way that harms GAMCS or anyone else;"],
+        ["attempt to gain unauthorised access to the website, its servers or any connected system;"],
+        ["introduce viruses or other harmful code, or overload or disrupt the website;"],
+        ["scrape, copy or harvest content or data by automated means without permission;"],
+        ["submit false information, or another person’s details, through our forms."],
+      ],
+    },
+
+    { h2: "5. Information you send us" },
+    { p: ["When you contact us or apply for a role, you confirm the information you provide is accurate and that you are entitled to share it. We handle it as described in our ", { text: "Privacy Policy", href: "/privacy-policy" }, ". Please do not send confidential information through the website until an engagement and any confidentiality agreement are in place."] },
+
+    { h2: "6. Links to other websites" },
+    { p: ["The website links to third-party sites such as LinkedIn, Google Maps and published research. We do not control those sites and are not responsible for their content, availability or privacy practices."] },
+
+    { h2: "7. Availability and accuracy" },
+    { p: ["We work to keep the website accurate and available, but it is provided “as is”. We do not warrant that it will be uninterrupted, error-free or free of harmful components, or that its content is complete or current. We may change, suspend or remove any part of it at any time."] },
+
+    { h2: "8. Limitation of liability" },
+    { p: ["To the fullest extent permitted by law, GAMCS is not liable for any indirect, incidental or consequential loss, or for any loss of profit, revenue, data or goodwill, arising from your use of, or inability to use, the website or reliance on its content. Nothing in these terms limits liability that cannot be limited by law."] },
+
+    { h2: "9. Indemnity" },
+    { p: ["You agree to compensate GAMCS for any loss or claim arising from your breach of these terms or misuse of the website."] },
+
+    { h2: "10. Governing law" },
+    { p: ["These terms are governed by the laws of India. The courts at Gurugram, Haryana have exclusive jurisdiction over any dispute arising from them or from your use of the website."] },
+
+    { h2: "11. Changes to these terms" },
+    { p: ["We may update these terms from time to time. The version on this page, with its “last updated” date, applies from the date it is posted. Continuing to use the website means you accept the updated terms."] },
+
+    { h2: "12. Contact" },
+    { p: ["Questions about these terms: ", { text: "{email}", href: "mailto:{email}" }, " — GA Management Consultants LLP, 2nd Floor, WonderWorks Mudit Square, B-3, Plot No. 24, Institutional Area, Sector 32, Gurugram, Haryana 122001, India."] },
+  ] as LegalBlock[],
+};
+

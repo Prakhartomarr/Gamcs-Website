@@ -1602,6 +1602,7 @@ export const footer = {
   legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Cookie Policy", href: "/cookie-policy" },
+    { label: "Terms of Use", href: "/terms-of-use" },
   ],
 } as const;
 

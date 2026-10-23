@@ -154,6 +154,11 @@ export const pages = {
     description:
       "How GA Management Consultants handles the information you share through this website — the contact form, cookies, analytics and third-party services.",
   },
+  terms: {
+    title: "Terms of Use",
+    description:
+      "The terms that govern your use of the GA Management Consultants website: intellectual property, acceptable use, liability and governing law.",
+  },
   cookiePolicy: {
     title: "Cookie Policy",
     description:

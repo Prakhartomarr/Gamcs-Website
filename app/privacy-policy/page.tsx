@@ -39,12 +39,6 @@ export default function PrivacyPolicyPage() {
 
       <section className="section legal-page">
         <div className="container">
-          {/* TODO(legal): delete this banner once the policy has been reviewed
-              and the placeholders below have been filled in. */}
-          <p className="legal-draft" role="note">
-            <Rich parts={privacy.draft} vars={vars} />
-          </p>
-
           <LegalBlocks blocks={privacy.blocks} vars={vars} />
         </div>
       </section>
