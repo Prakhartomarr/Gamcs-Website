@@ -19,7 +19,9 @@ export default function LifeAtGamcs() {
         <div className="cr-life-head reveal">
           <div className="cr-caps">{life.eyebrow}</div>
           <h2 id="cr-life-h" className="fin-h2">
-            {life.headingLead} <span className="accent">{life.headingAccent}</span>
+            {life.headingLead}
+            <br />
+            <span className="accent">{life.headingAccent}</span>
           </h2>
           <p className="fin-lead">{life.lead}</p>
         </div>
