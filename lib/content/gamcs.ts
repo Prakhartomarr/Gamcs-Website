@@ -2308,12 +2308,20 @@ export const solutions: Solution[] = [
    /public/video/solutions/<slug>.mp4 with a .webp poster of the first frame.
    `title` fills the window bar (`app` is kept but no longer shown, client
    2026-10-23); `label` is the video's accessible
-   name. */
-export const solutionDemos: Record<string, { app: string; title: string; label: string }> = {
+   name. Two clips are joined tours (client, 2026-10-28): the first pillar
+   plays the demand dial then the rides replay (~21s), and digital
+   transformation plays two Sports House dashboards (~19s, the recorder's
+   watermark painted out). `chapters` switches the window title at each
+   crossfade's midpoint (seconds into the clip). */
+export const solutionDemos: Record<
+  string,
+  { app: string; title: string; label: string; chapters?: { at: number; title: string }[] }
+> = {
   "fpa-cfo-advisory": {
     app: "Power BI",
     title: "Weekly Demand Rhythm",
-    label: "Demo: a custom Power BI radial chart of bookings by weekday and hour, zooming into the dial and then the trip-length chart.",
+    chapters: [{ at: 7.75, title: "A Year of Rides, Replayed" }],
+    label: "Demo: a custom Power BI radial chart of bookings by weekday and hour rebuilding, then a custom visual replaying a year of ride bookings in a day, zooming into the headline figures.",
   },
   "finance-team-extension": {
     app: "Power BI",
@@ -2322,8 +2330,9 @@ export const solutionDemos: Record<string, { app: string; title: string; label: 
   },
   "digital-transformation": {
     app: "Power BI",
-    title: "A Year of Rides, Replayed",
-    label: "Demo: a custom Power BI visual replaying a year of ride bookings in a day, zooming into the filling dot columns and then the headline figures.",
+    title: "CEO Daily Sales Dashboard",
+    chapters: [{ at: 7.6, title: "Executive Action Center" }],
+    label: "Demo: a Power BI retail sales dashboard where the sales-versus-budget trend extends as the day filter moves forward, then an executive action center filtered by region and city, updating the KPI cards, budget bars and month-end forecast.",
   },
   "deal-advisory": {
     app: "Power BI",
